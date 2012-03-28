@@ -75,7 +75,7 @@
 
 ;;
 ;;; ECB
-(when (try-require 'ecb)
+(when (try-require 'ecb "      ")
   ;; load all necessary for ecb
   (require 'ecb-autoloads)
 
@@ -160,7 +160,7 @@
         ;; fichiers a ignorer dans les source !! lire la doc !!
         '(ecb-source-file-regexps
            (quote ((".*"
-                     ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|lis\\|a\\|so\\|tcl\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
+                     ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
                      ("^\\.\\(emacs\\|gnus\\)$")))))
 
         ;;;; fichiers a ignorer comme Version Control VC

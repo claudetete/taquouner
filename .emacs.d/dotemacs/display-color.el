@@ -53,7 +53,7 @@
 ;;; COLOR-THEME
   (progn
     ;; Choose what theme you want
-    (when (try-require 'color-theme)
+    (when (try-require 'color-theme "    ")
       ;; DARK
       (load-file (concat dotemacs-path "/plugins/themes/color-theme-clt-mm.el"))
       (color-theme-clt)
@@ -123,7 +123,7 @@
     ;;                  mode    `paren'
     (when section-display-color-parentheses-mode (message "    6.5.2 Parentheses Mode...")
       ;; highlight parentheses at point
-      (when (try-require 'paren)
+      (when (try-require 'paren "      ")
         (show-paren-mode t)
         (setq show-paren-ring-bell-on-mismatch t))
       (message "    6.5.2 Parentheses Mode... Done"))
@@ -134,7 +134,7 @@
     ;;                  mode    `mic-paren'
     (when section-display-color-parentheses-visible (message "    6.5.3 Matched Parentheses display in Minibuffer ...")
       ;; affiche dans la barre d'etat la parenthese compl non visible
-      (when (try-require 'mic-paren)
+      (when (try-require 'mic-paren "      ")
         (paren-activate))
       (message "    6.5.3 Matched Parentheses display in Minibuffer... Done"))
 
@@ -145,7 +145,7 @@
     (when section-display-color-parentheses-highlight (message "    6.5.4 Parentheses Highlight Mode ...")
       ;; display parentheses in same color when they match else in and other
       ;; color
-      (try-require 'highlight-parentheses)
+      (try-require 'highlight-parentheses "      ")
       (message "    6.5.4 Parentheses Highlight Mode... Done"))
 
 ;;

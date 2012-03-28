@@ -50,7 +50,7 @@
 ;;
 ;;; DECORATION
 ;; REQUIREMENT: var     `section-interface-decoration'
-(when section-interface-decoration (message "    1.1 Decoration...")
+(when section-interface-decoration (message "  1.1 Decoration...")
   ;; pas de menu /* faire Ctrl ou Shift + Clic (gauche/milieu/droit)
   (and (fboundp 'menu-bar-mode)   (menu-bar-mode   -1))
   ;;
@@ -62,24 +62,24 @@
   ;;
   ;; pas de tooltip (bulles d'aide)
   (and (fboundp 'tooltip-mode) (fboundp 'x-show-tip) (tooltip-mode -1))
-  (message "    1.1 Decoration... Done"))
+  (message "  1.1 Decoration... Done"))
 
 ;;
 ;;; FULLSCREEN
 ;; REQUIREMENT: var     `section-interface-fullscreen'
 ;;              var     `section-environment-os-recognition'
-(when section-interface-fullscreen (message "    1.2 FullScreen...")
+(when section-interface-fullscreen (message "  1.2 FullScreen...")
   ;; start in fullscreen (only MS Windows and does not work with vanilla)
   (when running-on-ms-windows
     (add-hook 'term-setup-hook
       #'(lambda () (w32-send-sys-command ?\xF030)))
     )
-  (message "    1.2 FullScreen... Done"))
+  (message "  1.2 FullScreen... Done"))
 
 ;;
 ;;; MODELINE
 ;; REQUIREMENT: var     `section-interface-modeline'
-(when section-interface-modeline (message "    1.3 Modeline...")
+(when section-interface-modeline (message "  1.3 Modeline...")
   ;; affichage du numero de la colonne du curseur
   (column-number-mode t)
 
@@ -137,7 +137,7 @@
 
   ;; display size of file in the modeline
   (size-indication-mode t)
-  (message "    1.3 Modeline... Done"))
+  (message "  1.3 Modeline... Done"))
 
 ;;
 ;; nom du buffer dans la barre de titre (exemple "<[ foobar.c ]>")

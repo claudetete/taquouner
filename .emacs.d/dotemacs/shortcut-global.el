@@ -124,11 +124,19 @@
 ;;; HOME/END
 ;; REQUIREMENT: var     `section-external-home-end'
 (when section-external-home-end
-;; bind home avec les nouvelles fonctionnalites
+  ;; bind home avec les nouvelles fonctionnalites
   (global-set-key       (kbd "<home>")          'pc-keys-home)
-;;
-;; bind home avec les nouvelles fonctionnalites
+  ;;
+  ;; bind home avec les nouvelles fonctionnalites
   (global-set-key       (kbd "<end>")           'pc-keys-end)
+  )
+
+;;
+;;; OUTLINE
+;; REQUIREMENT: var     `section-mode-outline'
+(when section-mode-outline
+  ;; bind toogle hide/show block
+  (global-set-key       (kbd "C-c h")           'outline-toggle-children)
   )
 
 ;;; shortcut-global.el ends here

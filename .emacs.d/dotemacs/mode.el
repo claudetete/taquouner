@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -30,6 +30,10 @@
 ;; REQUIREMENT: var     `section-mode'
 
 ;;; Change Log:
+;; 2012-03-27 (1.5)
+;;    add auto highlight symbol minor mode
+;; 2012-03-26 (1.4)
+;;    add outline minor mode
 ;; 2012-03-18 (1.3)
 ;;    add mode for RTRT script (.ptu)
 ;; 2012-03-03 (1.2)
@@ -54,7 +58,7 @@
 ;; need to configure and use it
 ;; REQUIREMENT: var     `section-mode-doxymacs'
 (when section-mode-doxymacs (message "  3.1 Doxymacs...")
-  (when (try-require 'doxymacs)
+  (when (try-require 'doxymacs "    ")
     (add-hook 'c-mode-common-hook 'doxymacs-mode)
     (defvar doxymacs-doxygen-style "JavaDoc")
     (defun my-doxymacs-font-lock-hook ()
@@ -70,7 +74,7 @@
 ;; pose un petit souci avec les fichiers ayant des noms un peu exotique
 ;; il apparait une erreur avec le module 'tramp'
 (when section-mode-ido (message "  3.2 Ido...")
-  (when (try-require 'ido)
+  (when (try-require 'ido "    ")
     (ido-mode t))
   (message "  3.2 Ido... Done"))
 
@@ -79,7 +83,7 @@
 ;; REQUIREMENT: var     `section-mode-uniquify'
 ;; create unique buffer names with shared directoy components)
 (when section-mode-uniquify (message "  3.3 Uniquify...")
-  (when (try-require 'uniquify)
+  (when (try-require 'uniquify "    ")
     (custom-set-variables
       '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))))
   (message "  3.3 Uniquify... Done"))
@@ -119,7 +123,7 @@
       )
     ;; load from the emacs included cedet
     (progn
-      (if (try-require 'cedet)
+      (if (try-require 'cedet "    ")
         (setq clt-cedet-loaded t)
         (message "    cedet was not loaded. Have you GNU/Emacs 23.x ?")
         )
@@ -169,7 +173,7 @@
 ;; (donne un numero au windows et permet de switcher facilement avec le
 ;; raccourci `M-<numero>').
 (when section-mode-window-numbering (message "  3.7 Windows Numbering...")
-  (when (try-require 'window-numbering)
+  (when (try-require 'window-numbering "    ")
     (window-numbering-mode 1))
   (message "  3.7 Windows Numbering... Done"))
 
@@ -203,7 +207,7 @@
   ;; affiche les petits warning de code
   ;; voir raccourci M-:
   (when section-mode-c-data-debug (message "2.8.2 C Data Debug...")
-    (when (try-require 'data-debug))
+    (when (try-require 'data-debug "    "))
     (message "2.8.2 C Data Debug... Done"))
 
   (autoload 'rebox-comment "rebox" nil t)
@@ -228,7 +232,7 @@
 (when section-mode-yasnippet (message "  3.10 Yasnippet...")
 ;; Completion pour le c
   (add-to-list 'load-path (concat dotemacs-path "/plugins/yasnippet-0.6.1c"))
-  (when (try-require 'yasnippet) ; not yasnippet-bundle
+  (when (try-require 'yasnippet "    ") ; not yasnippet-bundle
     (setq yas/root-directory (concat dotemacs-path "/plugins/yasnippet-0.6.1c/snippets"))
     (yas/load-directory yas/root-directory))
   (yas/global-mode)
@@ -238,7 +242,7 @@
 ;;; BROWSE KILL RING
 ;; REQUIREMENT: var     `section-mode-browse-kill-ring'
 (when section-mode-browse-kill-ring (message "  3.11 Browse Kill-Ring...")
-  (try-require 'browse-kill-ring)
+  (try-require 'browse-kill-ring "    ")
   (browse-kill-ring-default-keybindings)
   (message "  3.11 Browse Kill-Ring... Done"))
 
@@ -269,14 +273,14 @@
 ;;; DIRED+
 ;; REQUIREMENT: var     `section-mode-dired-plus'
 (when section-mode-dired-plus (message "  3.13 Dired+...")
-  (try-require 'dired+)
+  (try-require 'dired+ "    ")
   (message "  3.13 Dired+... Done"))
 
 ;;
 ;;; GNU/GLOBAL
 ;; REQUIREMENT: var     `section-mode-gnu-global'
 (when section-mode-gnu-global (message "  3.14 GNU/Global...")
-  (try-require 'gtags)
+  (try-require 'gtags "    ")
   (autoload 'gtags-mode "gtags" "" t)
   (defun gtags-c-mode ()
     (gtags-mode 1)
@@ -332,6 +336,31 @@
   (add-to-list 'auto-mode-alist '("\\.ahk$" . ahk-mode))
   (autoload 'ahk-mode-fix "ahk-mode")
   (message "  3.19 AutoHotKey... Done"))
+
+;;
+;;; OUTLINE
+;; REQUIREMENT: var     `section-mode-outline'
+(when section-mode-outline (message "  3.20 Outline minor mode...")
+  ;; to manually hide some block in code source
+  (outline-minor-mode 1)
+  (message "  3.20 Outline minor mode... Done"))
+
+;;
+;;; AUTO HIGHLIGHT SYMBOL
+;; REQUIREMENT: var     `section-mode-auto-highlight-symbol'
+(when section-mode-auto-highlight-symbol (message "  3.21 Auto highlight symbol minor mode...")
+  ;; after some idle time the symbol at point will be highlighted in display area
+  (require 'auto-highlight-symbol)
+  ;; active the mode
+  (global-auto-highlight-symbol-mode t)
+  (custom-set-variables
+    ;; do not ignore case
+    '(ahs-case-fold-search nil)
+    ;; increase idle time to display highlight
+    '(ahs-idle-interval 2.2)
+    )
+  (message "  3.21 Auto highlight symbol minor mode... Done"))
+
 
 (custom-set-variables
 

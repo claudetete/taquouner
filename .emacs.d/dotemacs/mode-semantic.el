@@ -124,9 +124,14 @@
     ;;(require 'semanticdb) ; already done with (semantic-load-enable-excessive-code-helpers)
     ;;(global-semanticdb-minor-mode 1)
 
-    ;; set option to locate a file with GNU Global
+
     (custom-set-variables
+      ;; set option to locate a file with GNU Global
       '(ede-locate-setup-options (quote (ede-locate-global ede-locate-locate)))
+
+      ;; disable highlight local symbol mode
+      '(global-semantic-idle-local-symbol-highlight-mode nil nil (semantic-idle))
+
       )
     ) ; (progn
 
@@ -146,7 +151,7 @@
     (load-file (concat dotemacs-path "/dotemacs/project.el"))
 
     ;; semanticdb is used
-    (try-require 'semantic/db)
+    (try-require 'semantic/db "      ")
 
     ;;;; load GNU/Global for semantic
     ;;(try-require 'semantic/db-global)

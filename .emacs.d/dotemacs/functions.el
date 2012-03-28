@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-external-functions'
 
 ;;; Change Log:
+;; 2012-03-26 (3.3)
+;;    fix bug with rtrt align
 ;; 2012-03-20 (3.2)
 ;;    add function for rtrt align and replace
 ;; 2012-03-12 (3.1)
@@ -604,24 +606,27 @@
 (defvar missing-packages-list nil
   "List of packages that `try-require' can't find.")
 
-(defun try-require (feature)
+(defun try-require (feature &optional indent)
   "Attempt to load a library or module (FEATURE).  Return true if the library \
 given as argument is successfully loaded.  If not, instead of an error, just \
-add the package to a list of missing packages."
+add the package to a list of missing packages. INDENT contains string to add \
+before message."
+  (let ()
+    (if (eq indent nil) (setq indent ""))
   (condition-case err
       ;; protected form
       (progn
-        (message "Checking for library `%s'..." feature)
+        (message "%sChecking for library `%s'..." indent feature)
         (if (stringp feature)
             (load-library feature)
           (require feature))
-        (message "Checking for library `%s'... Found" feature))
+        (message "%sChecking for library `%s'... Found" indent feature))
     ;; error handler
     (file-error  ; condition
      (progn
-       (message "Checking for library `%s'... Missing" feature)
+       (message "%sChecking for library `%s'... Missing" indent feature)
        (add-to-list 'missing-packages-list feature 'append))
-     nil)))
+     nil))))
 ;;  } /* try-require */                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -973,7 +978,7 @@ add the package to a list of missing packages."
   (interactive "r")
   (unless (and start end)
     (error "The mark is not set now, so there is no region"))
-  (align-regexp start end (concat "\\(\\s-*\\)" "init ") 1 1)
+  (align-regexp start end (concat "\\(\\s-*\\)" "\\binit ") 1 1)
 )
 ;;  } /* rtrt-align-init */                                                   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -989,7 +994,7 @@ add the package to a list of missing packages."
   (interactive "r")
   (unless (and start end)
     (error "The mark is not set now, so there is no region"))
-  (align-regexp start end (concat "\\(\\s-*\\)" "ev ") 1 1)
+  (align-regexp start end (concat "\\(\\s-*\\)" "\\bev ") 1 1)
 )
 ;;  } /* rtrt-align-ev */                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -41,7 +41,7 @@
 
 ;;; Code:
 ;; ferme le buffer courant
-(global-set-key         (kbd "\M-`")            'kill-this-buffer)
+(global-set-key         (kbd "M-`")            'kill-this-buffer)
 ;;
 ;; f11 pour switcher entre les buffer puis enter
 (global-set-key         [f11]                   'switch-to-buffer)
