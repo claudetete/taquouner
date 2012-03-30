@@ -20,7 +20,7 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.3
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2012-03-29 (1.3)
+;;    translate comments in english
 ;; 2012-03-02 (1.2)
 ;;    remove "display" in name file et section
 ;; 2011-04-21 (1.1)
@@ -41,26 +43,26 @@
 
 
 ;;; Code:
-;; organise le menu de buffer /* a ouvrir avec "Ctlr + Clic gauche"
+;; sort the buffer menu (open with control + left click)
 (msb-mode 1)
 ;;
-;; affiche le raccourci de la derniere commande tapee dans le minibuffer
+;; show shortcut of last command launch with M-x in minibuffer
 (setq teach-extended-commands-p t)
 
 ;;
 ;;; DECORATION
 ;; REQUIREMENT: var     `section-interface-decoration'
 (when section-interface-decoration (message "  1.1 Decoration...")
-  ;; pas de menu /* faire Ctrl ou Shift + Clic (gauche/milieu/droit)
+  ;; no more menu bar (to open it Ctrl + right click)
   (and (fboundp 'menu-bar-mode)   (menu-bar-mode   -1))
   ;;
-  ;; pas de scroll-bar (ascenseur)
+  ;; no more scroll bar
   (and (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
   ;;
-  ;; pas de toolbar (barre d'outils) /* utiliser Ctrl + Clic */
+  ;; no more toolbar
   (and (fboundp 'tool-bar-mode)   (tool-bar-mode   -1))
   ;;
-  ;; pas de tooltip (bulles d'aide)
+  ;; no more tooltip (I don't know if this works)
   (and (fboundp 'tooltip-mode) (fboundp 'x-show-tip) (tooltip-mode -1))
   (message "  1.1 Decoration... Done"))
 
@@ -80,16 +82,16 @@
 ;;; MODELINE
 ;; REQUIREMENT: var     `section-interface-modeline'
 (when section-interface-modeline (message "  1.3 Modeline...")
-  ;; affichage du numero de la colonne du curseur
+  ;; show column number in modeline
   (column-number-mode t)
 
-  ;; heure au format 24h /* exemple 23:59 */
+  ;; show time in 24H format (example 23:59)
   (setq display-time-24hr-format t)
   ;;
-  ;; la date est affichee /* exemple Wed Oct 20 */
+  ;; show time and date in modeline
   (setq display-time-day-and-date t)
-  ;;
-  ;; changer la date de "Jour Mois Nth" en "Jour Nth Mois"
+
+  ;; show date in european format (example: jeu. 29 mars)
   (custom-set-variables
     '(display-time-string-forms
        (quote
@@ -132,7 +134,7 @@
              ""))))
     )
   ;;
-  ;; affiche l'heure dans la modeline (sorte de barre d'etat)
+  ;; show time in modeline
   (display-time-mode t)
 
   ;; display size of file in the modeline
@@ -140,8 +142,7 @@
   (message "  1.3 Modeline... Done"))
 
 ;;
-;; nom du buffer dans la barre de titre (exemple "<[ foobar.c ]>")
-;; /* stealing from grandm_y */
+;; buffer name in title bar (example "<[ foobar.c ]>") (from grandm_y)
 (setq frame-title-format "<[ %b ]>")
 
 ;;; interface.el ends here

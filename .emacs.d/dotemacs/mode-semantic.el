@@ -20,7 +20,7 @@
 
 ;; Keywords: config, semantic, bovinate, cedet
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.4
 ;; Created: August 2010
 ;; Last-Updated: March 2012
 
@@ -53,6 +53,10 @@
 ;; again.
 
 ;;; Change Log:
+;; 2012-03-30 (1.4)
+;;    translate comments in english
+;; 2012-03-28 (1.3)
+;;    disable idle completion and local symbol highlight
 ;; 2012-03-20 (1.2)
 ;;    add settings + use gnu global to locate file
 ;; 2012-03-02 (1.1)
@@ -66,7 +70,7 @@
 
 ;;; Code:
 ;;
-;;; CEDET bzr
+;;; CEDET bzr (snapshot)
 (if clt-cedet-bzr
   (progn
     ;; set option to locate a file
@@ -99,32 +103,6 @@
     ;; load the different projects
     (load-file (concat dotemacs-path "/dotemacs/project.el"))
 
-    ;;;; To add some path to list of system include paths
-    ;;(semantic-add-system-include "" 'c-mode)
-
-    ;;;; Enable SRecode (Template management) minor-mode.
-    ;;(global-srecode-minor-mode 1)
-
-    ;;;; current parse state of the current buffer is displayed in the mode line
-    ;;(semantic-show-parser-state-mode t) ; do nothing ?
-
-    ;;;; the header line is enabled, and the first line of the current function
-    ;;;; or method is displayed in it.
-    ;;(semantic-stickyfunc-mode t) ; already set with (semantic-load-enable-excessive-code-helpers)
-
-    ;; need to try again
-    ;;;; Increase the delay before activation
-    ;;(setq semantic-idle-scheduler-idle-time 10)
-    ;;;; Don't reparse really big buffers.
-    ;;(setq semantic-idle-scheduler-max-buffer-size 100000)
-    ;;;; Increase the delay before doing slow work to 2 minutes.
-    ;;(setq semantic-idle-scheduler-work-idle-time 120)
-
-    ;;;; active semanticdb
-    ;;(require 'semanticdb) ; already done with (semantic-load-enable-excessive-code-helpers)
-    ;;(global-semanticdb-minor-mode 1)
-
-
     (custom-set-variables
       ;; set option to locate a file with GNU Global
       '(ede-locate-setup-options (quote (ede-locate-global ede-locate-locate)))
@@ -132,16 +110,18 @@
       ;; disable highlight local symbol mode
       '(global-semantic-idle-local-symbol-highlight-mode nil nil (semantic-idle))
 
+      ;; disable completions, I dont use it
+      '(global-semantic-idle-completions-mode nil nil (semantic-idle))
       )
     ) ; (progn
 
 ;;
-;;; CEDET included in emacs
+;;; CEDET included in emacs (built-in CEDET)
   (progn
     ;; launch semantic mode
     (semantic-mode t)
 
-    ;; lance ede pour avoir la gestion des fichiers de projet
+    ;; run ede mode to manage project files
     (global-ede-mode t)
 
     ;;;; set GNU/Global as fisrt database

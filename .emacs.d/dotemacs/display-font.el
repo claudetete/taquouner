@@ -20,7 +20,7 @@
 
 ;; Keywords: config, display, font
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -32,6 +32,8 @@
 ;;              var     `section-environment-terminal-vs-graphics'
 
 ;;; Change Log:
+;; 2012-03-28 (1.4)
+;;    translate comments in english
 ;; 2012-03-02 (1.3)
 ;;    add some elegant font for other than simple ascii character
 ;; 2011-07-09 (1.2)
@@ -50,8 +52,8 @@
 (if running-on-ms-windows
   (progn
     (if running-in-graphical
-      ;; Graphique
-;;; impossible d'utiliser misc-fixed ??
+      ;; Graphical
+;;; impossible to use misc-fixed ??
       ;; to have only ascii and very tiny
       ;;(progn (set-face-font 'default "-raster-Terminal-medium-normal-normal-mono-8-*-*-*-c-*-ms-oemlatin"))
       ;; to have accent character but bigger
@@ -66,25 +68,11 @@
 ;;; INTERNATIONAL
 ;; REQUIREMENT: var     `section-display-font-international'
 (when section-display-font-international (message "    6.4.1 International...")
-  ;;;; Support accents et UTF-8
-  ;;(setq-default enable-multibyte-characters 1)
-  ;;(if (not (featurep 'xemacs))
-  ;;  (prefer-coding-system 'utf-8)
-  ;;;; Au XXIème siècle, Unicode ne marche juste pas sous xemacs
-  ;;;; http://www.xemacs.org/Documentation/21.5/html/xemacs-faq_2.html#SEC72
-  ;;;; Alors on fait ce qu'on peut.
-  ;;(require 'un-define)
-  ;;(set-coding-priority-list '(utf-8))
-  ;;(set-coding-category-system 'utf-8 'utf-8)
-  ;;;; TODO : XEmacs 21.4.21 n'affiche même pas les accents par défaut
-  ;;;; lorsqu'il ouvre un fichier Unicode, sauf si on fait :
-  ;;(standard-display-european t)
-  ;;;; auquel cas... il se plante !!
-  ;;  )
+  ;; no more setting to have unicode
   (message "    6.4.1 International... Done"))
 
 ;;
-;; autres caracteres sont affiches comme ceci : ^@
+;; all other characters will be displayed like this: ^@
 (setq-default ctl-arrow t)
 
 ;;; display-font.el ends here

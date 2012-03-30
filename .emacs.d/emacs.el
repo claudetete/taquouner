@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 6.4
+;; Version: 6.6
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -133,6 +133,11 @@
 ;;  - ajoute fonctionnalites a "end" et "home" x1, x2 et x3
 
 ;;; Change Log:
+;; 2012-04-01 (6.6)
+;;    add elpa package manager + translate some comment in english + google
+;;    calendar
+;; 2012-03-27 (6.5)
+;;    add outline mode + auto highlight symbol minor mode
 ;; 2012-03-20 (6.4)
 ;;    add rtrt script mode + vc clearcase
 ;; 2012-03-03 (6.3)
@@ -235,7 +240,7 @@
     (defvar dotemacs-path "d:/cygwin/usr/bin/.emacs.d"))
   ;; Alstom Transport
   ((string= clt-working-environment "Alstom Transport")
-    (defvar dotemacs-path "d:/Users/ctete/tools/.emacs-cedet.d"))
+    (defvar dotemacs-path "d:/Users/ctete/tools/.emacs.d"))
   ;; LEA
   ((string= clt-working-environment "LEA-arch")
     (defvar dotemacs-path "r:/Configuration/.emacs.d"))
@@ -283,6 +288,10 @@
   ;; EXECUTABLE                                                         0.6
   ;; REQUIREMENT: section-environment-os-recognition: t
   (defvar section-environment-executable t)
+  ;;
+  ;; ELPA                                                               0.7
+  ;; with Emacs 24 for multiple repo and up to date
+  (defvar section-environment-elpa t)
   ) ; progn
 
 
@@ -473,6 +482,21 @@
   ;; AUTOHOTKEY                                                         3.19
   ;; AutoHotKey mode
   (defvar section-mode-autohotkey nil)
+
+  ;;
+  ;; OUTLINE                                                            3.20
+  ;; Outline mode to manually hide/show source code block
+  (defvar section-mode-outline t)
+
+  ;;
+  ;; AUTO HIGHLIGHT SYMBOL                                              3.21
+  ;; to automatically highlight symbol at point
+  (defvar section-mode-auto-highlight-symbol t)
+
+  ;;
+  ;; GOOGLE CALENDAR                                                    3.22
+  ;; to import google calendar
+  (defvar section-mode-google-calendar t)
   ) ; (progn
 
 
@@ -492,6 +516,10 @@
   ;; TAB                                                                4.3
   ;; tab always in space
   (defvar section-languages-tabulation t)
+  ;;
+  ;; RTRT SCRIPT PTU                                                    4.4
+  ;; set indentation style
+  (defvar section-languages-rtrt-script t)
   ) ; (progn
 
 

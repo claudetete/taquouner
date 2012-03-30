@@ -20,7 +20,7 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.6
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-03-29 (1.6)
+;;    translate comments in english + add rtrt script indent
 ;; 2012-03-02 (1.5)
 ;;    add working environment condition
 ;; 2011-10-21 (1.4)
@@ -89,19 +91,19 @@
   ;; add personal style
   (c-add-style "eZSystems" ezsystems-c-style)
 
-  ;; a appeler qu'au chargement du c-mode sinon quelques variables ne sont
-  ;; peut etre pas definies
+  ;; must be only load with c-mode else some variables are not defined
   (cond
     ;; Magneti Marelli ---------------------------------------------------------
     ((string= clt-working-environment "Magneti Marelli")
       (defun clt-c-mode ()
-        ;; Indentation style k&r and not gnu
+        ;; style k&r and not gnu
         (c-set-style "k&r")
         ;;(c-set-style "eZSystems")
-        ;; configuration du nombre d'espace pour une indentation
+        ;; set number of space for One indentation
         (setq c-basic-offset 2)
-        ;; change l'indentation du case dans un switch
+        ;; increase "case" indentation in a "switch"
         (c-set-offset 'case-label '+)
+        ;; hungry mode is enable, for hungry delete...
         (c-toggle-hungry-state t)
         )
       ) ; Magneti Marelli
@@ -109,13 +111,14 @@
     ;; Alstom Transport --------------------------------------------------------
     ((string= clt-working-environment "Alstom Transport")
       (defun clt-c-mode ()
-        ;; Indentation style k&r and not gnu
+        ;; style k&r and not gnu
         (c-set-style "k&r")
         ;;(c-set-style "eZSystems")
-        ;; configuration du nombre d'espace pour une indentation
+        ;; set number of space for One indentation
         (setq c-basic-offset 3)
-        ;; change l'indentation du case dans un switch
+        ;; increase "case" indentation in a "switch"
         (c-set-offset 'case-label '+)
+        ;; hungry mode is enable, for hungry delete...
         (c-toggle-hungry-state t)
         )
       ) ; Alstom Transport
@@ -123,63 +126,7 @@
     ) ; cond -------------------------------------------------------------------
   (add-hook 'c-mode-common-hook 'clt-c-mode)
 
-  ;; need to test
-  ;; Author: Stefan Reichoer, stefan@xsteve.at
-  (when (require 'align nil t)
-    (setq xsteve-c-align-rules-list
-      `((c-comment-one-line
-          (regexp . "[^- \t]\\(\\s-*\\)/\\*.*\\*/$")
-          (group  . 1)
-          (repeat . nil))
-
-         (c-macro-definition
-           (regexp   . "^\\s-*#\\s-*define\\s-+\\S-+\\(\\s-+\\)"))
-
-         (c-macro-line-continuation
-           (regexp   . "\\(\\s-*\\)\\\\$")
-           (column   . c-backslash-column))
-
-         (c-variable-declaration
-           (regexp   . ,(concat "[*&0-9A-Za-z_]>?[&*]*\\(\\s-+[*&]*\\)"
-                          "[A-Za-z_][0-9A-Za-z:_]*\\s-*\\(\\()\\|"
-                          "=[^=\n].*\\|(.*)\\|\\(\\[.*\\]\\)*\\)?"
-                          "\\s-*[;,]\\|)\\s-*$\\)"))
-           (group    . 1)
-           (justify  . t)
-           (valid
-             . ,(function
-                  (lambda ()
-                    (not (or (save-excursion
-                               (goto-char (match-beginning 1))
-                               (backward-word 1)
-                               (looking-at
-                                 "\\(goto\\|return\\|new\\|delete\\|throw\\)"))
-                           (if (and (boundp 'font-lock-mode) font-lock-mode)
-                             (eq (cadr (memq 'face (text-properties-at (point))))
-                               'font-lock-comment-face)
-                             (eq (caar (c-guess-basic-syntax)) 'c))))))))
-
-         (c-assignment
-           (regexp   . ,(concat "[^-=!^&*+<>/| \t\n]\\(\\s-*[-=!^&*+<>/|]*\\)"
-                          "=\\(\\s-*\\)\\([^= \t\n]\\|$\\)"))
-           (group    . (1 2))
-           (justify  . t)
-           (tab-stop . nil))
-
-         (c-chain-logic
-           (regexp   . "\\(\\s-*\\)\\(&&\\|||\\|\\<and\\>\\|\\<or\\>\\)")
-           (modes    . align-c++-modes)
-           (valid    . ,(function
-                          (lambda ()
-                            (save-excursion
-                              (goto-char (match-end 2))
-                              (looking-at "\\s-*\\(/[*/]\\|$\\)"))))))
-         ))
-
-    (add-hook 'c-mode-hook (lambda () (setq align-mode-rules-list xsteve-c-align-rules-list))))
-
   (custom-set-variables
-    ;; customiser les variables de c-macro (cmacexp.el)
     ;; command to preprocess
     '(c-macro-preprocessor "cpp -C")
     ;; do not prompt for flags
@@ -205,12 +152,21 @@
 ;;
 ;;; TABULATION
 (when section-languages-tabulation (message "  4.3 Tabulation...")
-  ;; Change l'indentation et les tabulation (M-i) en espaces
+  ;; set number of space for One indentation
   (setq-default indent-tabs-mode nil)
   ;;
-  ;; change la taille des tabulation (M-i) /* ne fait pas ce que je pensais */
-  ;; /* lancer 'edit-tab-stops' et changer la taille
+  ;;;; modify size of tab (M-i) /* do not do what I want */
+  ;;;; /* try with 'edit-tab-stops'
   ;;(setq-default tab-width 2)
   (message "  4.3 Tabulation... Done"))
+
+;;
+;;; RTRT SCRIPT PTU
+(when section-languages-rtrt-script (message "  4.4 RTRT script ptu...")
+  (custom-set-variables
+    ;; set number of space for indentation in rtrt script .ptu
+    '(rtrt-script-indent 4)
+   )
+  (message "  4.4 RTRT script ptu... Done"))
 
 ;;; languages.el ends here

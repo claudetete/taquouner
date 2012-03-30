@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-selection'
 
 ;;; Change Log:
+;; 2012-03-30 (1.3)
+;;    translate comments in english
 ;; 2012-03-02 (1.2)
 ;;    add else for selection with shift key
 ;; 2011-04-21 (1.1)
@@ -41,10 +43,10 @@
 
 
 ;;; Code:
-;; Possibilite de supprimer la selection
+;; selection can be killed
 (delete-selection-mode t)
 ;;
-;; permet d'avoir la selection en couleur
+;; selection is highlighted
 (setq transient-mark-mode t)
 
 ;;
@@ -53,14 +55,15 @@
 (if section-selection-with-shift
   (progn
     (message "  5.1 Selection with Shift...")
-    ;; selection avec shift
+    ;; selection with shift (default in Emacs 23.4)
     (setq shift-selection-mode t)
     (message "  5.1 Selection with Shift... Done")
     )
-  (setq shift-selection-mode nil)
+  ;; try to disable it
+  (progn (setq shift-selection-mode nil))
   )
 
-;; permet de copier meme si en lecture seul
+;; read only buffer can be put in kill ring without delete characters
 (setq kill-read-only-ok t)
 
 ;;; selection.el ends here

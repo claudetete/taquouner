@@ -20,7 +20,7 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment'
 
 ;;; Change Log:
+;; 2012-03-28 (1.5)
+;;    translate comments in english
 ;; 2012-03-02 (1.4)
 ;;    add working environment and change "OS" message
 ;; 2012-03-02 (1.3)
@@ -87,7 +89,7 @@
 ;; REQUIREMENT: var     `section-environment-os-recognition'
 (when section-environment-cygwin (message "  0.3 Cygwin...")
   (if running-on-ms-windows
-    ;; pour integrer cygwin a emacs (surtout pour grep-find)
+    ;; to integrate cygwin with emacs (mostly for grep-find)
     (progn
       (cond
         ;; Magneti Marelli -----------------------------------------------------
@@ -103,7 +105,8 @@
           (defvar cygwin-bin "d:/cygwin/bin")
           (defvar cv-bin "C:/Program Files/IBM/RationalSDLC/ClearCase/bin")
           (defvar gnu-bin "d:/Users/ctete/tools/gnuwin32/bin")
-          (defvar win-path "d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;c:/Program Files/IBM/RationalSDLC/common;c:/Program Files/PRQA/PDFReports/texmf/miktex/bin;c:/Program Files/Analog Devices/VisualDSP;c:/Program Files/Analog Devices/VisualDSP/System;c:/WINDOWS/system32;c:/WINDOWS;c:/WINDOWS/System32/Wbem;c:/Program Files/QuickTime/QTSystem;c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;d:/system/Notes;c:/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;c:/Program Files/Rational/TestRealTime/bin/intel/win32;c:/Program Files/Rational/common;c:/Program Files/Lotus/Notes;c:/Program Files/IBM/RationalSDLC/ClearCase/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;d:/Users/ctete/tools/gnuwin32/bin")
+          ;; I put the whole PATH Environment variable to work with clearcase
+          (defvar win-path "d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;c:/Program Files/IBM/RationalSDLC/common;c:/Program Files/PRQA/PDFReports/texmf/miktex/bin;c:/Program Files/Analog Devices/VisualDSP;c:/Program Files/Analog Devices/VisualDSP/System;c:/WINDOWS/system32;c:/WINDOWS;c:/WINDOWS/System32/Wbem;c:/Program Files/QuickTime/QTSystem;c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;d:/system/Notes;c:/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;c:/Program Files/Rational/TestRealTime/bin/intel/win32;c:/Program Files/Rational/common;c:/Program Files/Lotus/Notes;c:/Program Files/IBM/RationalSDLC/ClearCase/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;d:/Users/ctete/tools/gnuwin32/bin;C:/Python27")
           ) ; Alstom Transport
 
         ) ; cond ---------------------------------------------------------------
@@ -118,7 +121,7 @@
 ;;
 ;;; TERMINAL VS GRAPHICS
 (when section-environment-terminal-vs-graphics (message "  0.4 Terminal VS Graphics...")
-  ;; or (display-graphic-p) ?
+  ;; or (display-graphic-p) ? it works like this in MS Windows
   (if (window-system)
     (progn
       (defvar running-in-graphical t)
@@ -139,7 +142,6 @@
   ;; significantly speeds up startup time. (Seems to work for me, but my
   ;; computer is pretty modern. Disable if you are on anything less than 1
   ;; ghz).
-  ;; augmente la taille du garbage collector pour gagner en performances
   (setq gc-cons-threshold 50000000)
   ;;
   ;; try to improve slow performance on windows.
@@ -176,5 +178,23 @@
       ) ; cond -----------------------------------------------------------------
     )
   (message "  0.6 Executable... Done"))
+
+;;
+;;; ELPA
+(when section-environment-elpa (message "  0.7 ELPA...")
+  ;; This was installed by package-install.el.  This provides support for the
+  ;; package system and interfacing with ELPA, the package archive.  Move this
+  ;; code earlier if you want to reference packages in your .emacs.
+  (when (load (expand-file-name (concat dotemacs-path "/plugins/elpa/package.el"))) (package-initialize))
+
+  ;;;; set package server
+  ;;; only with Emacs 24
+  (setq package-archives
+    '(("ELPA" . "http://tromey.com/elpa/")
+       ("gnu" . "http://elpa.gnu.org/packages/")
+       ("marmalade" . "http://marmalade-repo.org/packages/")
+       )
+    )
+  (message "  0.7 ELPA... Done"))
 
 ;;; environment.el ends here

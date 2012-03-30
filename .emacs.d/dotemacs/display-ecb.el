@@ -20,7 +20,7 @@
 
 ;; Keywords: config, display, ecb
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2010
 ;; Last-Updated: March 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-mode-cedet-ecb'
 
 ;;; Change Log:
+;; 2012-03-28 (1.4)
+;;    translate comments in english
 ;; 2012-03-12 (1.3)
 ;;    add condition about ecb active or not
 ;; 2012-07-09 (1.1)
@@ -46,52 +48,49 @@
 ;;; Code:
 (when section-mode-cedet-ecb
   (custom-set-variables
-    ;; activer fichier en lecture seule dans "ecb sources" (fichiers)
+    ;; check read only files in "ecb sources"
     '(ecb-sources-perform-read-only-check t)
 
-    ;; l'arborescence en ascii dans "ecb directories" (repertoires)
+    ;; ascii tree in "ecb directories"
     '(ecb-tree-buffer-style (quote ascii-guides))
     ;;
-    ;; le symbole/image des dossiers developpe ou non (avec '+' ou '-')
-    ;; est apres le nom
+    ;; no symbol/image are show for tree only '+' or '-'
     '(ecb-tree-expand-symbol-before nil)
     ;;
-    ;; indentation de 2 escpaces de l'arborescence dans "ecb directories"
+    ;; indent of 2 spaces for the tree in "ecb directories"
     '(ecb-tree-indent 2)
     ;;
-    ;; la premiere ligne affichee dans "ecb directories" (repertoires) est
-    ;; le dossier parent du fichier/repertoires si cache
+    ;; first showed line is the parent folder (if it not visible)
     '(ecb-tree-make-parent-node-sticky t)
     ;;
-    ;; l'arborescence en ascii dans "ecb methods" (fonctions)
-    ;;'(ecb-change-layout leftright-analyse)
+    ;; ascii tree in "ecb methods" (functions)
     '(ecb-display-image-icons-for-semantic-tags nil)
 
-    ;; desactive le pop-up de l'astuce du jour a chaque demarrage
+    ;; disable tip of the day show at each start up
     '(ecb-tip-of-the-day nil)
 
-    ;;;; largeur de la fenetre de ecb (ici 10% de la largeur total d'emacs)
+    ;;;; width of ecb window (here 10% of the total width of Emacs)
     ;;'(ecb-windows-width 0.1) ;see mystart-up in functions.el
     ;;
-    ;;;; hauteur de la fenetre de compilation/grep/... geree par ecb
+    ;;;; height of compil/grep window
     ;;'(ecb-compile-window-height 25) ;see mystart-up in functions.el
     ;;
-    ;; hauteur max de la fenetre de compilation/grep/... geree par ecb
+    ;; max height of compil/grep window
     ;;  - value > 1 -> size in character
     ;;  - 0.0 < value < 1.0 -> size in percent of height
     '(ecb-enlarged-compilation-window-max-height 0.25)
 
-    ;; affiche le plus de donnees possible dans tags-apropos
+    ;; tags apropos display more data
     '(tags-apropos-verbose t)
 
-    ;; defini le nom du buffer de l'analyse
+    ;; define the buffer name of analyze
     '(ecb-analyse-buffer-name "*ECB Analyse*")
 
-    ;; surligne dans la window methods
+    ;; highlight function in methods window
     '(ecb-highlight-tag-with-point (quote highlight-scroll))
 
-    ;; augmente le delai avant le rafraichissement du surlignage
-    ;; (pour eviter de ralentir la navigation)
+    ;; increase delay before refresh of highlight function to avoid slow down
+    ;; browsing
     '(ecb-highlight-tag-with-point-delay 0.5)
     )
   ) ; when section-mode-cedet-ecb

@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shorcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.3
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-03-30 (1.3)
+;;    translate comments in english
 ;; 2012-03-22 (1.2)
 ;;    add condition about working environment
 ;; 2011-07-27 (1.1)
@@ -45,36 +47,36 @@
 (cond
 ;; Magneti Marelli -------------------------------------------------------------
   ((string= clt-working-environment "Magneti Marelli")
-    ;; grep perso pour projet nsfnbnf
+    ;; custom grep for NBNF LL project
     (global-set-key     "\C-cnn"                'nll-grep-find)
     ;;
-    ;; grep perso pour projet nbnfhl
+    ;; custom grep for NBNF HL project
     (global-set-key     "\C-cnh"                'nhl-grep-find)
     ;;
-    ;; grep perso pour projet nsf
+    ;; custom grep for NSF project
     (global-set-key     "\C-cns"                'nsf-grep-find)
     ;;
-    ;; grep perso pour projet ensf
+    ;; custom grep for ENSF project
     (global-set-key     "\C-cne"                'ecar-grep-find)
     ) ; Magneti Marelli
   ) ; cond ---------------------------------------------------------------------
 
-;; prochaine occurence de grep
+;; next occurrence of grep
 (global-set-key         [f3]                    'next-match)
 ;;
-;; precedente occurence de grep
+;; previous occurrence of grep
 (global-set-key         [f5]                    'previous-error)
 ;;
-;; prochaine occurence
+;; next occurrence
 (global-set-key         [f6]                    'occur-next-error)
 ;;
-;; occurence precedente
+;; previous occurrence
 (global-set-key         [f7]                    'compilation-previous-error)
 
-;; compilation
+;; to compil
 (global-set-key         [f10]                   'compile)
 ;;
-;;;; erreur suivante (next error)
+;;;; next error
 ;;(global-set-key         [f12]                   'next-error)
 
 ;;; shortcut-grep.el ends here

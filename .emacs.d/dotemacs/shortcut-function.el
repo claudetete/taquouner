@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shorcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.0
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: March 2011
+;; Last-Updated: March 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-03-30 (1.5)
+;;    translate comments in english
+;; 2012-03-29 (1.4)
+;;    add new align shortcut
 ;; 2012-03-19 (1.3)
 ;;    add align shortcut and replace for rtrt
 ;; 2011-11-03 (1.2)
@@ -44,38 +48,39 @@
 
 
 ;;; Code:
-;;;; inserer truc dans can changelog.txt
+;;;; insert something in CAN changelog.txt (Magneti Marelli not used...)
 ;;(global-set-key "\C-cr"                 'mm-can-insert-del-signal)
 ;;(global-set-key "\C-cf"                 'mm-can-insert-add-signal)
 ;;(global-set-key "\C-ct"                 'mm-can-insert-del-message)
 ;;(global-set-key "\C-cg"                 'mm-can-insert-add-message)
 ;;(global-set-key "\C-cd"                 'mm-can-insert-separation)
 
-;; selectionne le mot entier sous le curseur
-(global-set-key "\C-\M-z"               'select-word-under)
-(global-set-key "\C-\M-c"           'occur-word-at-point)
+;; select the whole word at point
+(global-set-key         "\C-\M-z"           'select-word-under)
+(global-set-key         "\C-\M-c"           'occur-word-at-point)
 
-;; lance les modes au demarrage
+;; some setting are done after launch (only MS Windows)
 (global-set-key         "\C-cl"             'mystart-up)
 
 ;; use align regexp for .ptu file (rtrt script)
 (global-set-key         "\C-cpo"            'rtrt-align-init)
 (global-set-key         "\C-cp;"            'rtrt-align-ev)
 (global-set-key         "\C-cp["            'rtrt-align-declaration)
+(global-set-key         "\C-cp="            'rtrt-align-set)
 
 ;; format the .ptu file (rtrt script)
 (global-set-key         "\C-crv"            'rtrt-upcase-var-string)
 (global-set-key         "\C-crs"            'rtrt-remove-whitespace-before-colon)
 
-;;;; preprocess entierement une macro pour le projet NSF
+;;;; preprocess a C macro for NSF project
 ;;(global-set-key         "\C-cms"            'nsf-c-expand-macro)
-;;;; preprocess entierement une macro pour le projet NBNF_HL
+;;;; preprocess a C macro for NBNF HL project
 ;;(global-set-key         "\C-cmh"            'nhl-c-expand-macro)
-;;;; preprocess entierement une macro pour le projet NBNF_LL
+;;;; preprocess a C macro for NBNF LL project
 ;;(global-set-key         "\C-cmn"            'nll-c-expand-macro)
-;;;; preprocess entierement une macro pour le projet ECAR
+;;;; preprocess a C macro for ENSF project
 ;;(global-set-key         "\C-cme"            'ecar-c-expand-macro)
-;;;; preprocess entierement une macro pour le projet ECAR
+;;;; preprocess a C macro for XL1 project
 ;;(global-set-key         "\C-cmx"            'xl1-c-expand-macro)
 
 ;;; shortcut-function.el ends here

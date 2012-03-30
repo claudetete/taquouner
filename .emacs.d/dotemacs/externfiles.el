@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-external'
 
 ;;; Change Log:
+;; 2012-03-28 (1.3)
+;;    translate comments in english
 ;; 2012-03-02 (1.2)
 ;;    change hard path by a variable + remove ms windows
 ;; 2011-07-09 (1.1)
@@ -56,15 +58,15 @@
 ;;
 ;;; FONCTIONS
 ;; REQUIREMENT: var     `section-external-functions'
-(when section-external-functions (message "  2.2 Functions perso...")
+(when section-external-functions (message "  2.2 Functions custom...")
   (load-file (concat dotemacs-path "/dotemacs/functions.el"))
-  (message "  2.2 Functions perso... Done"))
+  (message "  2.2 Functions custom... Done"))
 
 ;;
 ;;; VECTRA
 ;; REQUIREMENT: var     `section-external-vectra'
 (when section-external-vectra (message "  2.3 Vectra...")
-;; Vectra man et doc (reste pas tres utile)
+;; Vectra man and doc (the rest is not very useful)
   (load-file (concat dotemacs-path "/plugins/vectra.el"))
   (message "  2.3 Vectra... Done"))
 
@@ -72,7 +74,8 @@
 ;;; SETNU
 ;; REQUIREMENT: var     `section-external-setnu'
 (when section-external-setnu (message "  2.4 Setnu...")
-  ;; affichage des numeros de lignes (deprecated exist in emacs)
+  ;; show number line (deprecated exist in emacs with (global-linum-mode 1) )
+  ;; and ugly with ECB
   (load-file (concat dotemacs-path "/plugins/setnu.el"))
   (message "  2.4 Setnu... Done"))
 
@@ -80,7 +83,8 @@
 ;;; HOME/END
 ;; REQUIREMENT: var     `section-external-home-end'
 (when section-external-home-end (message "  2.5 Home/End...")
-  ;; pour avoir plus de fonctionnalites avec les touches home et end
+  ;; to add features to home/end key (two push will get you at the end/start
+  ;; of display) (three push will get you at the end/start of buffer)
   (load-file (concat dotemacs-path "/plugins/pc-keys.elc"))
   (message "  2.5 Home/End... Done"))
 

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, completion
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.0
+;; Version: 1.1
 ;; Created: October 2006
-;; Last-Updated: March 2011
+;; Last-Updated: March 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-completion'
 
 ;;; Change Log:
+;; 2012-03-28 (1.1)
+;;    translate comments in english
 ;; 2011-03-10 (1.0)
 ;;    split .emacs file
 ;; 2006-10-13 (0.1)
@@ -38,10 +40,10 @@
 
 
 ;;; Code:
-;; la completion respecte la casse
+;; completion is case sensitive
 (defvar dabbrev-case-replace nil)
 
-;; active la completion dynamique de mot
+;; enable dynamic word completion
 ;; from grandm_y
 (dynamic-completion-mode)
 

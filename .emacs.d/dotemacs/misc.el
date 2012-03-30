@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.3
 ;; Created: October 2006
-;; Last-Updated: July 2011
+;; Last-Updated: March 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-03-29 (1.3)
+;;    translate comments in english + calendar + diary
 ;; 2011-07-25 (1.2)
 ;;    add test about ms windows for cygwin shell
 ;; 2011-04-21 (1.1)
@@ -42,39 +44,39 @@
 
 
 ;;; Code:
-;; supprime les espaces inutile en fin de ligne
+;; remove useless space at the end of line
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 
-;; defini le nom de l'utilisateur
+;; define user name
 (setq user-full-name "Claude TETE")
 
 ;; use compression
 (auto-compression-mode t)
 
-;; s'assure que une nouvelle ligne est presente a la fin du fichier lors de la
-;; sauvegarde
+;; be sure that a new line is at the end of a file when it's saved
 (setq require-final-newline t)
 ;;
-;; ne pas avoir l'incidence de `backup-directory-alist' pour TRAMP files
+;; to do not have bug `backup-directory-alist' for TRAMP files
 (add-to-list 'backup-directory-alist
   (cons tramp-file-name-regexp nil))
 
-;; permet de justifier un paragraphe a la colonne 78
+;; fill-xxx is set with a width of 78 character
 (custom-set-variables
   '(fill-column 78))
 
 ;; Set web browser to use
+;; I don't use it
 (setq browse-url-generic-program "opera")
 (setq browse-url-browser-function 'browse-url-w3)
 
-
+;;
 ;;; CALENDAR
 ;; REQUIREMENT: var     `clt-working-environment'
 (when section-misc-calendar (message "  11.1 Calendar...")
-  ;; la semaine commence le lundi dans 'calendar'
+  ;; start week with monday in 'calendar'
   (defvar calendar-week-start-day 1)
   ;;
-  ;; Lever/Coucher du soleil
+  ;; to have Sunrise/Sunse time
   (cond
     ;; Magneti Marelli ---------------------------------------------------------
     ((string= clt-working-environment "Magneti Marelli")
@@ -92,51 +94,105 @@
 
     ) ; cond -------------------------------------------------------------------
 
-  ;;(setq calendar-date-display-form ((if dayname (concat dayname ", ")) day " " monthname " " year))
-  ;;(setq calendar-time-display-form (24-hours ":" minutes (if time-zone " (") time-zone (if time-zone ")")))
+  ;; set holidays
+  (setq calendar-general-holidays nil)
+  (setq calendar-christian-holidays nil)
+  (setq calendar-hebrew-holidays nil)
+  (setq calendar-islamic-holidays nil)
+  (setq calendar-oriental-holidays nil)
+  (setq calendar-solar-holidays nil)
 
-  (setq calendar-christian-all-holidays-flag t)
-  (setq calendar-bahai-all-holidays-flag nil)
-  (setq calendar-hebrew-all-holidays-flag nil)
-  (setq calendar-islamic-all-holidays-flag nil)
+  ;; ??
+  (setq european-calendar-style 't)
+
+  ;; display today mark in calendar
+  (setq today-visible-calendar-hook 'calendar-mark-today)
+  (setq calendar-today-marker 'highlight)
+
+  ;; load french holidays
+  (when (try-require 'french-holidays)
+    (setq calendar-holidays holiday-french-holidays))
+
 
   (custom-set-variables
+    ;; set display date in european format
     '(calendar-date-display-form
        (quote ((if dayname
                  (concat dayname " ")) day " " monthname " " year)))
+    ;; set name of day's week
     '(calendar-day-name-array
-       ["Dimanche" "Lundi" "Mardi" "Mercredi" "Jeudi" "Vendredi" "Samedi"])
-    '(calendar-mark-holidays-flag t)
+       [
+         "Dimanche"
+         "Lundi"
+         "Mardi"
+         "Mercredi"
+         "Jeudi"
+         "Vendredi"
+         "Samedi"])
+    ;;;; holidays are visible in calendar
+    ;;'(calendar-mark-holidays-flag t)
+    ;; set name of month's year
     '(calendar-month-name-array
-       ["Janvier" "Fevrier" "Mars"
-         "Avril" "Mai" "Juin"
-         "Juillet" "Aout" "Septembre"
-         "Octobre" "Novembre" "Decembre"])
+       [
+         "Janvier"
+         "Fevrier"
+         "Mars"
+         "Avril"
+         "Mai"
+         "Juin"
+         "Juillet"
+         "Aout"
+         "Septembre"
+         "Octobre"
+         "Novembre"
+         "Decembre"
+         ])
+    ;; set display time in 24H format
     '(calendar-time-display-form
              (quote (24-hours ":" minutes
                       (if time-zone " (") time-zone (if time-zone ")"))))
-    '(calendar-view-holidays-initially-flag t)
-    '(holiday-general-holidays
-       (quote (
-                (holiday-fixed 1 1 "Nouvel An")
-                (holiday-fixed 4 1 "1er Avril")
-                (holiday-fixed 5 1 "Jour du Travail")
-                (holiday-fixed 5 8 "Armistice WW1")
-                (holiday-float 6 0 3 "Fete des Peres")
-                (holiday-float 5 0 2 "Fete des Meres")
-                (holiday-fixed 7 14 "Prise de la Bastille")
-                (holiday-fixed 8 15 "??")
-                (holiday-fixed 11 1 "Toussaint")
-                (holiday-fixed 11 11 "Armistice WW2")
-                (holiday-fixed 12 25 "Noel"))))
+    ;; do not show holidays by default
+    '(calendar-view-holidays-initially-flag nil)
+    ;; show diary mark in calendar
+    '(calendar-mark-diary-entries-flag t)
+    ;; set name of lunar phase
     '(lunar-phase-names
        (quote ("Nouvelle Lune" "Premier Quartile" "Plein Lune" "Dernier Quartile")))
-
     )
+
+  ;; TRY
+  ;; Diary (by Marc Tommasi)
+  (setq view-diary-entries-initially t
+    diary-file (concat dotemacs-path "/diary")
+    mark-diary-entries-in-calendar t
+    number-of-diary-entries 7)
+
+  (add-hook 'diary-display-hook 'fancy-diary-display)
+  (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
+
+  (defun start-diary ()
+    "Starts the diary."
+    (calendar)
+    (setq number-of-diary-entries 5)
+                                        ;(view-diary-entries)
+    (diary)
+    (mark-diary-entries)
+    (other-window 1))
+
+
+  ;; Montrer les rendez-vous
+  (add-hook 'diary-hook 'appt-make-list)
+  (display-time)
+  (add-hook 'diary-hook 'appt-make-list)
+  (diary 0)
+
+  (start-diary)
+
   (message "  11.1 Calendar... Done"))
 
 ;;
-;; configure le shell de cygwin
+;; set cygwin shell
+;; on MS Windows it works bad
 (when running-on-ms-windows
   (cond
     ;; Magneti Marelli ---------------------------------------------------------
@@ -153,7 +209,8 @@
   )
 
 ;;
-;; la langue du dictionnaire
+;;;; dictionnary lanaguage
+;;;; never used
 ;;(setq ispell-dictionary "english")
 
 ;;; misc.el ends here

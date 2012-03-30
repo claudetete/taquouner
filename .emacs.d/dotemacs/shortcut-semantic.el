@@ -20,7 +20,7 @@
 
 ;; Keywords: config, semantic, bovinate, cedet, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.2
 ;; Created: October 2010
 ;; Last-Updated: March 2012
 
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-semantic'
 
 ;;; Change Log:
+;; 2012-03-28 (1.2)
+;;    change shortcut and add go/back to the tag
 ;; 2012-03-20 (1.1)
 ;;    add shortcut for tags
 ;; 2011-08-10 (1.0)
@@ -41,18 +43,19 @@
 
 
 ;;; Code:
-;; go to the tag with shift + left click
-(global-set-key         (kbd "<S-down-mouse-1>")        'ignore)
-(global-set-key         (kbd "<S-mouse-1>")             'semantic-ia-fast-mouse-jump)
+(when section-mode-cedet-semantic
+  ;; go to the tag with shift + left click
+  (global-set-key         (kbd "<S-down-mouse-1>")        'ignore)
+  (global-set-key         (kbd "<S-mouse-1>")             'semantic-goto-definition)
 
-;; got to the tag
-(global-set-key         (kbd "M-.")                     'semantic-ia-fast-jump)
+  ;; go to the tag
+  (global-set-key         (kbd "M-.")                     'semantic-goto-definition)
+  (global-set-key         [(control  >)]                  'semantic-goto-definition)
 
-;;;; return back after "go to the tag"
-;;;; do not use it, use the default shortcut: M-xB
-;;(global-set-key         (kbd "<mouse-4>")               ')
-;;(global-set-key         (kbd "M-*")                     'semantic-mrub-switch-tag)
-;;(global-set-key         (kbd "M-<kp-multiply>")         'semantic-mrub-switch-tag)
+  ;; return back after "go to the tag"
+  ;; you can use the default shortcut: M-xB, which ask where you want go back
+  (global-set-key         [(control  <)]                  'semantic-pop-tag-mark)
+)
 
 ;;
 ;;; GNU GLOBAL

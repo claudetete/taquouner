@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-mode'
 
 ;;; Change Log:
+;; 2012-03-30 (1.6)
+;;    translate comments in english + google calendar
 ;; 2012-03-27 (1.5)
 ;;    add auto highlight symbol minor mode
 ;; 2012-03-26 (1.4)
@@ -47,7 +49,7 @@
 
 
 ;;; Code:
-;; Chemin du repertoires customize (si jamais ce n'est pas fait au dessus)
+;; set path of plugin directory
 (add-to-list 'load-path  dotemacs-path)
 (add-to-list 'load-path  (concat dotemacs-path "/plugins"))
 (setq load-path (cons (expand-file-name dotemacs-path) load-path))
@@ -70,9 +72,9 @@
 ;;
 ;;; IDO
 ;; REQUIREMENT: var     `section-mode-ido'
-;; meilleur 'switch buffers' (C-x C-b ou M-a) et 'open file' (C-x C-f)
-;; pose un petit souci avec les fichiers ayant des noms un peu exotique
-;; il apparait une erreur avec le module 'tramp'
+;; better 'switch buffers' (C-x C-b ou M-a) and 'open file' (C-x C-f)
+;; erratic behavior with exotic filename
+;; bug with module 'tramp' (not used)
 (when section-mode-ido (message "  3.2 Ido...")
   (when (try-require 'ido "    ")
     (ido-mode t))
@@ -81,7 +83,7 @@
 ;;
 ;;; UNIQUIFY
 ;; REQUIREMENT: var     `section-mode-uniquify'
-;; create unique buffer names with shared directoy components)
+;; create unique buffer names with shared directory components)
 (when section-mode-uniquify (message "  3.3 Uniquify...")
   (when (try-require 'uniquify "    ")
     (custom-set-variables
@@ -121,7 +123,7 @@
         (message "    cedet was not loaded. Have you removed your-emacs-path/lisp/cedet/ your-emacs-path/lisp/speedbar.* and your-emacs-path/lisp/emacs-lisp/eieio* ?")
         )
       )
-    ;; load from the emacs included cedet
+    ;; load from Emacs built-in cedet
     (progn
       (if (try-require 'cedet "    ")
         (setq clt-cedet-loaded t)
@@ -131,9 +133,29 @@
     )
   ;; only if cedet can be loaded
   (when clt-cedet-loaded
+    (cond
+      ;; Magneti Marelli -------------------------------------------------------
+      ((string= clt-working-environment "Magneti Marelli")
+        (custom-set-variables
+          ;; bin path of gnu global for cedet
+          '(cedet-global-command "d:/cygwin/bin/global.exe")
+          '(cedet-global-gtags-command "d:/cygwin/bin/gtags.exe"))
+        ) ; Magneti Marelli
+
+      ;; Alstom Transport ------------------------------------------------------
+      ((string= clt-working-environment "Alstom Transport")
+        (custom-set-variables
+          ;; bin path of gnu global for cedet
+          '(cedet-global-command "d:/cygwin/usr/local/bin/global.exe")
+          '(cedet-global-gtags-command "d:/cygwin/usr/local/bin/gtags.exe"))
+        ) ; Alstom Transport
+
+      ) ; cond -----------------------------------------------------------------
+
     ;;
     ;;; SEMANTIC
     ;; REQUIREMENT:     var     `section-mode-cedet-semantic'
+    ;; code source parser, etc
     (when section-mode-cedet-semantic (message "    3.4.1 Semantic...")
       (load-file (concat dotemacs-path "/dotemacs/mode-semantic.el"))
       (message "    3.4.1 Semantic... Done"))
@@ -141,6 +163,7 @@
     ;;
     ;;; ECB (Emacs Code Browser)
     ;; REQUIREMENT:     var     `section-mode-cedet-ecb'
+    ;; transform Emacs interface to IDE
     (when section-mode-cedet-ecb (message "    3.4.2 ECB...")
       (load-file (concat dotemacs-path "/dotemacs/mode-ecb.el"))
       (message "    3.4.2 ECB... Done"))
@@ -150,7 +173,7 @@
 ;;
 ;;;    BATCH
 ;; REQUIREMENT: var     `section-mode-batch'
-;; coloration syntaxique des scripts .bat de windows
+;; syntax color for .bat script for MS Windows
 (when section-mode-batch (message "  3.5 Batch Windows...")
   (autoload 'batch-mode "batch-mode" "Load batch-mode")
   (add-to-list 'auto-mode-alist '("\\.bat\\'" . batch-mode))
@@ -159,7 +182,7 @@
 ;;
 ;;; VISUAL BASIC
 ;; REQUIREMENT: var     `section-mode-vb'
-;; coloration syntaxique des sources en vb et vba
+;; syntax color for sources in VB and VBA
 (when section-mode-vb (message "  3.6 Visual Basic...")
   (autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
   (setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\)$" .
@@ -169,9 +192,9 @@
 ;;
 ;;; WINDOW NUMBERING
 ;; REQUIREMENT: var     `section-mode-window-numbering'
-;; raccourci numerotes vers les windows
-;; (donne un numero au windows et permet de switcher facilement avec le
-;; raccourci `M-<numero>').
+;; shortcut to go to window
+;; (give a number at each window so you can easily switch between window with
+;; shortcut `M-<number>')
 (when section-mode-window-numbering (message "  3.7 Windows Numbering...")
   (when (try-require 'window-numbering "    ")
     (window-numbering-mode 1))
@@ -181,7 +204,7 @@
 ;;; C
 ;; REQUIREMENT: var     `section-mode-c'
 (when section-mode-c (message "  3.8 C...")
-  ;; Nouveaux types
+  ;; new types
   (defvar c-font-lock-extra-types
     (list "ubyte" "ushort" "ulong" "ulonglong" "sbyte" "sshort" "slong" "slonglong"))
 
@@ -196,16 +219,16 @@
 
   ;;; CWARN
   ;; REQUIREMENT:       var     `section-mode-c-cwarn'
-  ;; affiche les petits warning de code
-  ;; (ex: affectation dans test, point virgule apres condition...)
+  ;; show small warning in code source
+  ;; (ex: set in test, semi colon after test...)
   (when section-mode-c-cwarn (message "    3.8.1 CWarn...")
     (cwarn-mode t)
     (message "    3.8.1 CWarn... Done"))
 
   ;;; DATA DEBUG
   ;; REQUIREMENT:       var     `section-mode-c-data-debug'
-  ;; affiche les petits warning de code
-  ;; voir raccourci M-:
+  ;; ??
+  ;; see sortcut `M-:'
   (when section-mode-c-data-debug (message "2.8.2 C Data Debug...")
     (when (try-require 'data-debug "    "))
     (message "2.8.2 C Data Debug... Done"))
@@ -214,7 +237,7 @@
   (autoload 'rebox-region "rebox" nil t)
   (setq rebox-default-style 245)
 
-  ;;; Compilation mode
+  ;;; Compil mode
   (setq compile-command "ccm objectmake")
   (message "  3.8 C... Done"))
 
@@ -222,7 +245,7 @@
 ;;; ICOMPLETION
 ;; REQUIREMENT: var     `section-mode-icompletion'
 (when section-mode-icompletion (message "  3.9 Icompletion...")
-  ;; Completion pour la barre 'minibuffer'
+  ;; Completion in minibuffer
   (icomplete-mode t)
   (message "  3.9 Icompletion... Done"))
 
@@ -230,7 +253,7 @@
 ;;; YASNIPPET
 ;; REQUIREMENT: var     `section-mode-yasnippet'
 (when section-mode-yasnippet (message "  3.10 Yasnippet...")
-;; Completion pour le c
+;; enable snippet (see `../emacs.el' for definition)
   (add-to-list 'load-path (concat dotemacs-path "/plugins/yasnippet-0.6.1c"))
   (when (try-require 'yasnippet "    ") ; not yasnippet-bundle
     (setq yas/root-directory (concat dotemacs-path "/plugins/yasnippet-0.6.1c/snippets"))
@@ -360,6 +383,22 @@
     '(ahs-idle-interval 2.2)
     )
   (message "  3.21 Auto highlight symbol minor mode... Done"))
+
+;;
+;;; GOOGLE CALENDAR
+;; REQUIREMENT: var     `section-mode-auto-highlight-symbol'
+(when section-mode-google-calendar (message "  3.22 Google Calendar...")
+  ;; can import google calendar in Emacs calendar
+  (when (try-require 'icalendar)
+    (when (try-require 'google-calendar)
+      (setq google-calendar-user           "personne146@gmail.com")
+      (setq google-calendar-code-directory (concat dotemacs-path "/plugins/google"))
+        (setq google-calendar-directory      "~/tmp")
+        (setq google-calendar-url            "http://www.google.com/calendar/ical/personne146%40gmail.com/private-9d0820c331c8b9b271a921d00fe017aa/basic.ics")
+        (setq google-calendar-auto-update    t)
+        (google-calendar-download)
+      ))
+  (message "  3.22 Google Calendar... Done"))
 
 
 (custom-set-variables

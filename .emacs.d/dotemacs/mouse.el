@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mouse
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.3
 ;; Created: October 2006
-;; Last-Updated: February 2012
+;; Last-Updated: March 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              car     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-02-30 (1.3)
+;;    translate comments in english
 ;; 2012-02-28 (1.2)
 ;;    add lazy fontify when scroll
 ;; 2011-04-21 (1.1)
@@ -42,21 +44,20 @@
 
 
 ;;; Code:
-;; active la smooth roulette (stealing from y grandmaitre)
+;; enable smooth scroll (from y grandmaitre)
 (setq scroll-step 1)
 
 ;;
 ;;; PASTE CURSOR
 ;; REQUIREMENT: var     `section-mouse-paste-to-point-not-mouse-cursor'
 (when section-mouse-paste-to-point-not-mouse-cursor (message "  9.1 Paste to point...")
-  ;; coller au curseur pas a la souris
+  ;; yank at point and not mouse cursor
   (setq mouse-yank-at-point t)
   (message "  9.1 Paste to point... Done"))
 
-;; bouger le curseur au bord de l'ecran lors de la saisie
+;; move mouse cursor at top right of the buffer to not bother me
 (when running-in-graphical
   (when (and (display-mouse-p) (require 'avoid nil t))
-    ;; Move the mouse to the lower-right corner instead of default up-right
     (mouse-avoidance-mode 'banish)
     )
   )
@@ -64,3 +65,5 @@
 ;; Setting this to t makes scrolling faster, but may momentarily present
 ;; unfontified areas when you scroll into them.
 (setq lazy-lock-defer-on-scrolling t)
+
+;;; mouse.el ends here

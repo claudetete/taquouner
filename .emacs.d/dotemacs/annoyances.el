@@ -20,7 +20,7 @@
 
 ;; Keywords: config, annoying
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-annoyances'
 
 ;;; Change Log:
+
+;; 2012-03-30 (1.4)
+;;    comments in english + preserve cursor
 ;; 2012-03-21 (1.3)
 ;;    add directory for backup file
 ;; 2012-03-02 (1.2)
@@ -43,50 +46,67 @@
 
 
 ;;; Code:
-;; virer le message d'acceuil
+;; remove home page message
 (setq inhibit-startup-message t)
 
-;; C'est penible de taper yes pour confirmer
-;; maintenant 'y' pour 'yes' et 'n' pour 'no'
+;; all answer will be y or n
+;; no more mix between y/yes and n/no
 (fset 'yes-or-no-p 'y-or-n-p)
+
 ;;
-;; ne pas demander pour rafraichir un buffer
+;; do not ask confirmation when I want refresh buffer
 (setq revert-without-query '(".*"))
 
 ;;
-;; virer le insert et le remplacer par suppr (ne marche pas tout le temps)
+;; remove insert shorcut, no more insertion mode
 (global-set-key [insert] 'ignore)
 ;;
-;; virer raccourci C-PageUp & C-PageDown
+;; disable shortcut C-PageUp & C-PageDown
 (global-set-key (kbd "<C-next>") 'ignore)
 (global-set-key (kbd "<C-prior>") 'ignore)
 
-;; virer menu to pop for a C-MiddleButton
-(global-set-key (kbd "<C-down-mouse-2>") 'ignore)
+;; disable menu to pop with a C-MiddleButton
+;(global-set-key (kbd "<C-down-mouse-2>") 'ignore)
 ;;
-;; virer les boites de dialogue pour poser des questions
+;; no more dialog boxes
 (setq use-dialog-box nil)
 ;;
-;; virer les boites de dialogue pour des demandes sur les fichiers
+;; no more dialog boxes for files
 (setq use-file-dialog nil)
 ;;
-;; ne plus avoir les fichier #foo.bar#
+;; no more #foo.bar# files (autosave file)
 ;;; I don't want it
 ;;;(auto-save-mode nil)
 ;;
-;; ne plus avoir ses saloperies de "tooltips"
+;; Put autosave files #foo.bar# in one directory,
+;; do not put it all over file system
+(defvar autosave-dir (concat dotemacs-path "/cache"))
+
+;; no more tooltips (delay of 9999 seconds before displayed)
 (setq tooltip-delay 9999)
 
-;; demande obligatoirement a chaque fermeture de Emacs
-;;; do not use it's a pain
-;;;(setq confirm-kill-emacs t)
+;;;; aks confirmation to quit Emacs
+;;;; do not use it's a pain
+;;(setq confirm-kill-emacs t)
+
+;; enable up/down case region
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
+;; enable narrow to region (C-x n n) (C-x n w)
+;; you can display only the region and do not mess up with rest
+(put 'narrow-to-region 'disabled nil)
+
+;; preserve cursor when scrolling
+(setq scroll-preserve-screen-position t)
 
 ;;
 ;;;; TRUNCATE LINE
 ;; REQUIREMENT: var     `section-annoyances-truncate-line'
 (when section-annoyances-truncate-line (message "  10.1 Truncate Line...")
-  ;; pour ceux qui ne veulent pas avoir les retours a la ligne
-  ;; 1 ligne n'est visible que sur une ligne mais pas entierment visible
+  ;; do not truncate line
+  ;; a displayed line is a file line but can be hide outside window (need to
+  ;; horizontally scroll)
   (setq-default truncate-lines nil)
   (message "  10.1 Truncate Line... Done"))
 
@@ -111,7 +131,9 @@
 ;; REQUIREMENT: var     `section-annoyances-backup-file-in-directory'
 (when section-annoyances-backup-file-in-directory (message "  10.4 All backup files in a directory...")
   ;; All backup files goes in a directory.
-  (setq backup-directory-alist `(("." . "d:/Users/ctete/tmp/emacs")))
+  (custom-set-variables
+    '(backup-directory-alist (quote ((".*" . "d:/Users/ctete/tools/.emacs.d/backup"))))
+    )
   (setq backup-by-copying t   ; don't clobber symlinks
     version-control t         ; use versioned backups
     delete-old-versions t

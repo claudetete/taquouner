@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shorcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.3
 ;; Created: October 2006
 ;; Last-Updated: August 2011
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-03-30 (1.3)
+;;    translate comments in english
 ;; 2011-08-03 (1.2)
 ;;    add shortcut for pair of parentheses
 ;; 2011-07-27 (1.1)
@@ -42,59 +44,54 @@
 
 
 ;;; Code:
-;; home et end
+;; home and end keys
 (global-set-key         "\e[7~"                 'beginning-of-line)
 (global-set-key         "\e[8~"                 'end-of-line)
 
-;;;; si C-h ne fait pas de backspaces
+;;;; if C-h do not do backspaces
 ;;(normal-erase-is-backspace-mode)
 
-;; ferme le buffer courant ainsi que la window
+;; close current buffer and its window
 (global-set-key         [f4]                    'kill-buffer-and-window)
 
-;;;; lance ispell (dictionnaire) (configurer la langue dans MISC)
+;;;; run ispell (dictionnary) (set language in `section-misc')
+;;;; never used
 ;;(global-set-key         [f7]                    'ispell-buffer)
 ;;(global-set-key         [S-f7]                  'ispell-word)
 ;;(global-set-key         [\M-f7]                 'ispell-region)
 
-;;;; inserer printf ou ifdef pour debug (used dans kaneton epita)
+;;;; insert printf or ifdef for debug (used in epita kaneton project)
 ;;(global-set-key         [f7]                    'printf-debug-shortcut)
 ;;(global-set-key         [f8]                    'ifdef-debug-shortcut)
 
-;;;; lance l'apropos sur le mot ou se trouve le curseur
+;;;; run apropos for the word at point
 ;;(global-set-key [f1]                            'vectra-apropos-on-word)
 
 ;; execute the most recent keyboard macro
 (global-set-key         [f8]                    'call-last-kbd-macro)
 
-;; chercher fichier et ouvrir
+;; search a file in a directory (recursively) to open it
 (global-set-key         "\M-f"                  'find-name-dired)
 
-;; chercher dans les fichiers dans l'arborescence actuelle
+;; search a file in the current folder (recursively)
 (global-set-key         "\M-g"                  'find-grep-dired)
 
-;; aller a la ligne #
+;; go to line #
 (global-set-key         "\M-l"                  'goto-line)
 
-;; remplacer string
+;; replace string
 (global-set-key         "\M-r"                  'replace-string)
 
-;; enregistrer le buffer courant en bookmark
+;; save current buffer as a bookmark
 (global-set-key         "\C-cv"                 'bookmark-set)
 
-;;;; naviguer comme scroll souris
+;;;; ??
 ;;(global-set-key         "\C-up"                 'backward-sentence)
 
-;; supprimer le mot entier (sens de backspace)
+;; delete backear a word
 (global-set-key         "\C-z"                  'backward-kill-word)
 
-;;;; lance man sur le mot ou se trouve le curseur /* x2 */
-;;(global-set-key         [S-f1]                  'vectra-man-on-word)
-
-;;;; lance ispell sur un mot (configurer la langue dans MISC) /* x2 */
-;;(global-set-key         [S-f7]                  'ispell-word)
-
-;; ouvre calendar avec `C-c c'
+;; open calendar with `C-c c'
 (global-set-key         "\C-cc"                 'calendar)
 
 ;; copie la ligne dans la kill-ring `C-j' (ne plus faire C-k C-y)

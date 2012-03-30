@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shorcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.2
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-03-30 (1.2)
+;;    translate comments in english + cleaning
 ;; 2012-03-23 (1.1)
 ;;    change kill this buffer shortcut to have logical ecb shortcut
 ;; 2011-03-10 (1.0)
@@ -40,28 +42,22 @@
 
 
 ;;; Code:
-;; ferme le buffer courant
+;; close the current buffer
 (global-set-key         (kbd "M-`")            'kill-this-buffer)
 ;;
-;; f11 pour switcher entre les buffer puis enter
+;; f11 to switch between buffers (not used)
 (global-set-key         [f11]                   'switch-to-buffer)
 ;;
-;; affiche une liste des buffers selectionnable  /* deprecated */
+;; show a list of buffers in a new window
 (global-set-key         (kbd "C-x C-b")         'electric-buffer-list)
 ;;
-;; ouvrir fenetre des bookmarks
+;; show the window of bookmark
 (global-set-key         "\C-cb"                 'bookmark-bmenu-list)
 
-;;;; va au buffer suivant /* suit la logique des editeurs classiques */
+;;;; go to the next buffer (like new editor which I never like it)
 ;;(global-set-key         [(control tab)]         'previous-user-buffer)
 ;;;;
-;;;; va au buffer precedent /* suit la logique des editeurs classiques */
+;;;; go to the previous buffer (like new editor which I never like it)
 ;;(global-set-key         [(control backtab)]     'next-user-buffer)
-;;
-;; va au buffer suivant /* suit la logique des editeurs classiques */
-(global-set-key         [(control x) (right)]   'previous-user-buffer)
-;;
-;; va au buffer precedent /* suit la logique des editeurs classiques */
-(global-set-key         [(control x) (left)]    'next-user-buffer)
 
 ;;; shortcut-buffers.el ends here

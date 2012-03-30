@@ -20,7 +20,7 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2012-03-28 (1.4)
+;;    translate comments in english
 ;; 2012-03-20 (1.3)
 ;;    modify color for grep/occur matches
 ;; 2011-12-02 (1.2)
@@ -57,17 +59,17 @@
       ;; DARK
       (load-file (concat dotemacs-path "/plugins/themes/color-theme-clt-mm.el"))
       (color-theme-clt)
-      ;;;; blanc sur noir, clair, string en orange, select en bleu clair
+      ;;;; white on black, light, string in orange, selection in light blue
       ;;(color-theme-clarity)
-      ;;;; fond turquoise sombre
+      ;;;; dark turquoise background
       ;;(color-theme-classic)
-      ;;;; ok sombre
+      ;;;; dark but ok
       ;;(color-theme-dark-laptop)
-      ;;;; psycheldelique
+      ;;;; psychedelic
       ;;(color-theme-euphoria)
-      ;;;; gnome color (fond turqoise sombtre)
+      ;;;; gnome color (dark turqoise background)
       ;;(color-theme-gnome2)
-      ;;;; tres tres sombre
+      ;;;; extremely dark
       ;;(color-theme-late-night)
       ;;;; matrix
       ;;(color-theme-lawrence)
@@ -96,23 +98,23 @@
 ;;; MISC
     ;; REQUIREMENT:     var     `section-display-color-misc'
     (when section-display-color-misc (message "    6.5.1 Color Misc...")
-      ;; Ligne courante en surbrillance
+      ;; highlight current line in the buffer
       (global-hl-line-mode t)
 
-      ;; coloration syntaxique
+      ;; syntax color
       (global-font-lock-mode t)
       (setq font-lock-maximum-decoration t)
 
-      ;; Toutes les couleurs seulement en mode graphique
+      ;; put all colors only when run graphical
       (when running-in-graphical
         (set-face-background 'default "black")
         (set-face-foreground 'default "white"))
 
       (custom-set-faces
-        ;; coloration en gris au lieu de souligner
+        ;; grey highlight instead of underline
         '(underline ((((supports :underline t)) (:background "grey20"))))
 
-        ;; pas de style 3d dans la barre d'etat (mode-line)
+        ;; no 3d style in state bar (mode-line)
         '(mode-line ((((class color) (min-colors 88)) (:background "grey75" :foreground "black"))))
         '(mode-line-highlight ((((class color) (min-colors 88)) nil))))
       (message "    6.5.1 Color Misc... Done"))
@@ -133,7 +135,7 @@
     ;; REQUIREMENT:     var     `section-display-color-parentheses-visible'
     ;;                  mode    `mic-paren'
     (when section-display-color-parentheses-visible (message "    6.5.3 Matched Parentheses display in Minibuffer ...")
-      ;; affiche dans la barre d'etat la parenthese compl non visible
+      ;; show complementary parenthese (if not displayed) in mode-line
       (when (try-require 'mic-paren "      ")
         (paren-activate))
       (message "    6.5.3 Matched Parentheses display in Minibuffer... Done"))
@@ -152,38 +154,38 @@
 ;;; MODE
     ;; REQUIREMENT:     var     `section-display-color-mode'
     (when section-display-color-mode (message "    6.5.5 Color Mode...")
-      ;; style et couleur des strings (gras et vert)
+      ;; style and color of strings (bold and green)
       ;;(copy-face 'bold 'font-lock-string-face)
       (set-face-foreground 'font-lock-string-face "chartreuse3")
       ;;
-      ;; style et couleur des types (gras et violet clair)
+      ;; style and color of types (bold and light purple)
       ;;(copy-face 'bold 'font-lock-type-face)
       (set-face-foreground 'font-lock-type-face "orchid2")
       ;;
-      ;; style et couleur des keyword (gras et cyan)
+      ;; style and color of keyword (bold and cyan)
       (copy-face 'bold 'font-lock-keyword-face)
       (set-face-foreground 'font-lock-keyword-face "cyan1")
       ;;
-      ;;        style et couleur des preprocessor (gris)
+      ;; style and color of preprocessor (grey)
       ;;(copy-face 'bold 'font-lock-preprocessor-face)
       (set-face-foreground 'font-lock-preprocessor-face "ivory4")
       ;;
-      ;; style et couleur des function (vert pale)
+      ;; style and color of function (pale green)
       ;;(copy-face 'bold 'font-lock-function-name-face)
       (set-face-foreground 'font-lock-function-name-face "PaleGreen1")
       ;;
-      ;; style et couleur des function (jaune clair)
+      ;; style and color of variable (light yellow)
       ;;(copy-face 'bold 'font-lock-variable-name-face)
       (set-face-foreground 'font-lock-variable-name-face "LightGoldenrod1")
       ;;
-      ;; style et couleur des commentaires (orange sanguine)
+      ;; style and color of comments (blood orange)
       ;;(copy-face 'bold 'font-lock-comment-face)
       (set-face-foreground 'font-lock-comment-face "OrangeRed2")
       ;;
-      ;; style et couleur des de la ligne courante (gris fonce)
+      ;; style and color of current line (dark grey)
       (set-face-background 'hl-line "gray20")
       ;;
-      ;; style et couleur du curseur (rose)
+      ;; style and color of cursor (pink)
       (set-face-background 'cursor "HotPink")
 
       (custom-set-faces
@@ -198,46 +200,46 @@
 ;;; GREP
     ;; REQUIREMENT:     var     `section-display-color-grep'
     (when section-display-color-grep (message "    6.5.6 Color Grep...")
-      ;;;; style et couleur pour 'grep hits'
+      ;;;; style and color of 'grep hits'
       ;;(set-face-foreground 'compilation-info "magenta")
       ;;(set-face-underline  'compilation-info nil)
       ;;
-      ;; style et couleur pour 'grep matches'
+      ;; style and color of 'grep matches'
       (set-face-background 'match "red3")
       (set-face-foreground 'match "white")
       ;;
-      ;;;; style et couleur pour 'grep error messages'
+      ;;;; style and color of 'grep error messages'
       ;;;;(set-face-foreground 'compilation-error "yellow")
       ;;
-      ;; style et couleur pour 'grep context lines'
+      ;; style and color of 'grep context lines'
       (set-face-foreground 'shadow "yellow")
       ;;
-      ;;;; style et couleur pour 'grep numero de ligne'
+      ;;;; style and color of 'grep line number'
       ;;(set-face-foreground 'compilation-line-number "chartreuse3")
       ;;(set-face-underline  'compilation-line-number nil)
       ;;
-      ;;;; style des liens
+      ;;;; style of link
       ;;(set-face-foreground 'link "chartreuse3")
       ;;
       (custom-set-faces
-      ;; couleur des liens 'grep nom et chemin de fichiers'
+      ;; color of links 'grep name et path of file'
         '(link
            ((((class color)
                (min-colors 88)
                (background dark)) (:foreground "chartreuse3"))))
-        ;; style et couleur pour 'grep hits'
+        ;; style and color of 'grep hits'
         '(compilation-info
            ((((class color)
                (background dark))
               (:background "black"
                 :foreground "magenta"))))
-        ;; style et couleur pour 'grep error messages'
+        ;; style and color of 'grep error messages'
         '(compilation-error
            ((((class color)
                (background dark))
               (:background "black"
                 :foreground "yellow"))))
-        ;; style et couleur pour 'grep numero de ligne'
+        ;; style and color of 'grep line number'
         '(compilation-line-number
            ((((class color)
                (background dark))
@@ -252,16 +254,16 @@
     (when section-mode-cedet-ecb
       (when section-display-color-ecb (message "    6.5.7 Color Ecb...")
         (custom-set-variables
-          ;; style utilise pour la surbrillance de la fonction dans le buffer
+          ;; style used for function name (method)
           '(ecb-method-face (quote ecb-method-face))
-          ;; style du fichier en lecture seule dans "ecb sources" (fichiers)
+          ;; style of read only file in "ecb sources"
           '(ecb-source-read-only-face (quote ecb-source-read-only-face))
           ;;
-          ;; style de l'analyse
+          ;; style of analyze
           '(ecb-analyse-face (quote ecb-analyse-face))
           '(ecb-analyse-general-face (quote ecb-analyse-general-face))
           ;;
-          ;; style du root (defini dans ecb-directory) affiche dans ecb-history;;
+          ;; style of root (defined in ecb-directory) show in ecb-history
           '(ecb-history-bucket-node-dir-soure-path-face (quote dired-header))
           ;;
           '(ecb-method-non-semantic-face (quote font-lock-function-name-face))
@@ -270,43 +272,43 @@
 
         ;; style
         (custom-set-faces
-          ;; style de ??
+          ;; style of ??
           '(ecb-analyse-face
              ((((class color)
                  (background dark))
                 (:inherit ecb-default-highlight-face))))
           ;;
-          ;; style de highlight
+          ;; style of highlight
           '(ecb-default-highlight-face
              ((((class color)
                  (background dark))
                 (:background "firebrick3"))))
           ;;
-          ;; style de directory
+          ;; style of directory
           '(ecb-directory-face
              ((((class color)
                  (background dark))
                 (:inherit ecb-default-highlight-face))))
           ;;
-          ;; style de history
+          ;; style of history
           '(ecb-history-face
              ((((class color)
                  (background dark))
                 (:inherit ecb-default-highlight-face))))
           ;;
-          ;; style de methode
+          ;; style of methode
           '(ecb-method-face
              ((((class color)
                  (background dark))
                 (:inherit ecb-default-highlight-face))))
           ;;
-          ;; style de source
+          ;; style of source
           '(ecb-source-face
              ((((class color)
                  (background dark))
                 (:inherit ecb-default-highlight-face))))
           ;;
-          ;; style des fichiers en lecture seul
+          ;; style of read only file
           '(ecb-source-read-only-face
              ((((class color)
                  (background dark))
@@ -314,7 +316,7 @@
                   :background "grey15"
                   :foreground "MistyRose3"))))
           ;;
-          ;; style des tags header
+          ;; style of tags header
           '(ecb-tag-header-face
              ((((class color)
                  (background dark))

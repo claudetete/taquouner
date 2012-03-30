@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.2
+;; Version: 3.5
 ;; Created: October 2006
 ;; Last-Updated: March 2012
 
@@ -28,8 +28,14 @@
 ;;
 ;; load by `emacs.el' (where all requirements are defined)
 ;; REQUIREMENT: var     `section-external-functions'
+;;
+;; it need to be split...
 
 ;;; Change Log:
+;; 2012-03-29 (3.5)
+;;    add function align with =
+;; 2012-03-28 (3.4)
+;;    translate comments in english and change old format
 ;; 2012-03-26 (3.3)
 ;;    fix bug with rtrt align
 ;; 2012-03-20 (3.2)
@@ -69,60 +75,42 @@
 
 
 ;;; Code:
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  CONST                                                                     ;;
-;;  {                                                                         ;;
-      (defconst clt-symbol-regexp "[A-Za-z_][A-Za-z_0-9]*"
-        "Regexp matching tag name.")
+;;;  CONST
+(defconst clt-symbol-regexp "[A-Za-z_][A-Za-z_0-9]*"
+  "Regexp matching tag name.")
 
-      (cond
-;;      Magneti Marelli --------------------------------------------------------
-        ((string= clt-working-environment "Magneti Marelli")
-          (defconst clt-nsf-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -DC_COMP_COSMIC_MC9S12 -D__MC9S12xx__ -D__MC9S12XHZ__ -I d:/ccm_wa/NSF/NSF/NSF_CLIENT/out/include")
+(cond
+  ;; Magneti Marelli -----------------------------------------------------------
+  ((string= clt-working-environment "Magneti Marelli")
+    (defconst clt-nsf-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -DC_COMP_COSMIC_MC9S12 -D__MC9S12xx__ -D__MC9S12XHZ__ -I d:/ccm_wa/NSF/NSF/NSF_CLIENT/out/include")
 
-          (defconst clt-nbnfhl-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/NBNF/NBNF_HL/NBNF_CLIENT_HL/out/include")
+    (defconst clt-nbnfhl-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/NBNF/NBNF_HL/NBNF_CLIENT_HL/out/include")
 
-          (defconst clt-nbnfll-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -DC_COMP_COSMIC_MC9S12 -D__MC9S12xx__ -D__MC9S12XHZ__ -I d:/ccm_wa/NBNF/NBNF_LL/NSFNBNF_CLIENT/out/include")
+    (defconst clt-nbnfll-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -DC_COMP_COSMIC_MC9S12 -D__MC9S12xx__ -D__MC9S12XHZ__ -I d:/ccm_wa/NBNF/NBNF_LL/NSFNBNF_CLIENT/out/include")
 
-          (defconst clt-ecar-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/ECAR/ENSF_CLIENT/out/include")
+    (defconst clt-ecar-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/ECAR/ENSF_CLIENT/out/include")
 
-          (defconst clt-xl1-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/XL1/XL1_CLIENT/out/include")
-          ) ;; Magneti Marelli
-        ) ;; cond --------------------------------------------------------------
-;;  } /* CONST */                                                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    (defconst clt-xl1-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/XL1/XL1_CLIENT/out/include")
+    ) ; Magneti Marelli
 
+  ) ; cond ---------------------------------------------------------------------
 
-
-;;;;;;;;;;;;;;;;
-;; FLAG DEBUG ;;
-;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              printf-debug-shortcut                                 ;;
-;;  @CREATED BY:        Kevin Prigent                                         ;;
-;;  @ABOUT:             insere un printf pour du debug                        ;;
-;;                              printf("\n"); //DEBUG                         ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; FLAG DEBUG
+;;; insert printf for debug (by Kevin Prigent)
+;;   printf("\n"); //DEBUG
 (defun printf-debug-shortcut ()
   "Insert a printf(\"n\"); //DEBUG."
   (interactive)
   (insert "printf(\"\\n\");//DEBUG")
   (indent-according-to-mode) (backward-char 12)
   )
-;;  } /* printf-debug-shortcut */                                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ifdef-debug-shortcut                                  ;;
-;;  @CREATED BY:        Kevin Prigent                                         ;;
-;;  @ABOUT:             insere un test de macro pour du debug                 ;;
-;;                              #ifdef OUR_DEBUG                              ;;
-;;                              \n                                            ;;
-;;                              #endif                                        ;;
-;;  {                                                                         ;;
+;;; insert a test of macro for debug (by Kevin Prigent)
+;;   #ifdef OUR_DEBUG
+;;     \n
+;;   #endif
 (defun ifdef-debug-shortcut ()
   "Insert a #ifdef OUR_DEBUG."
   (interactive)
@@ -131,33 +119,16 @@
       "#endif\n")
   (indent-according-to-mode) (backward-char 8)
   )
-;;  } /* ifdef-debug-shortcut */                                              ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;;;;;;
-;; SELECT WORD ;;
-;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              clt-match-string                                      ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             match une string                                      ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; SELECT WORD
+;;; match a string (by Claude TETE)
 (defun clt-match-string (n)
   "Match a string (N)."
   (buffer-substring (match-beginning n) (match-end n)))
-;;  } /* clt-match-string */                                                  ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              clt-select-word                                       ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             selectionne le mot sous le curseur                    ;;
-;;  {                                                                         ;;
+;;; select the word at point (by Claude TETE)
 (defun clt-select-word ()
   "Select the word under cursor."
   (cond
@@ -171,15 +142,8 @@
   (if (looking-at clt-symbol-regexp)
     (clt-match-string 0) nil)
   )
-;;  } /* clt-select-word */                                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              select-word-under                                     ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             selectionne le mot sous le curseur                    ;;
-;;  {                                                                         ;;
+;;; interactive select word at point (by Claude TETE)
 (defun select-word-under ()
   "Select the word under cursor."
   (interactive)
@@ -190,15 +154,8 @@
     (set-mark pt)
     )
   )
-;;  } /* select-word-under */                                                 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              occur-word-at-point                                   ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             search the word at the point for the whole buffer     ;;
-;;  {                                                                         ;;
+;;; search the word at the point for the whole buffer (by Claude TETE
 (defun occur-word-at-point ()
   "Search the word under cursor in the current buffer."
   (interactive)
@@ -215,18 +172,9 @@
     (occur word)
     )
   )
-;;  } /* occur-word-at-point */                                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              isearch-forward-at-point                              ;;
-;;  @CREATED BY:        from www.emacswiki.org                                ;;
-;;  @ABOUT:             incremental search the word at the point              ;;
-;;  {                                                                         ;;
- ;; I-search with initial contents
+;;; incremental search the word at the point (from www.emacswiki.org)
+;; I-search with initial contents
 (defvar isearch-initial-string nil)
 (defun isearch-set-initial-string ()
   "Set initialization of isearch."
@@ -249,181 +197,82 @@
       )
     )
   )
-;;  } /* isearch-forward-at-point */                                          ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              search-word-at-point                                  ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             incremental search the word at the point              ;;
-;;                      do not work :(                                        ;;
-;;  {                                                                         ;;
-(defun search-word-at-point ()
-  "Incremental search the word under cursor."
-  (interactive)
-  (let (word)
-    (setq word (clt-select-word))
-    (if word
-      (progn
-;        (setq
-;          isearch-regexp t
-;          isearch-string (concat "" word)
-;          isearch-message (mapconcat 'isearch-text-char-description isearch-string "")
-;          isearch-yank-flag t
-;          )
-;        )
-;      (progn
-        ;; For consistent behavior, restart Isearch from starting point
-        ;; (or end point if using `isearch-backward') of symbol.
-;        (isearch-search)
-        (setq isearch-string (concat "" word))
-        )
-      (message "No symbol at point")
-      )
-    (isearch-search-and-update)
-    )
-  )
-;;  } /* search-word-at-point */                                              ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;
-;; GREP-FIND ;;
-;;;;;;;;;;;;;;;
-
+;;
+;;;
+;;; GREP-FIND
 (cond
 ;; Magneti Marelli -------------------------------------------------------------
   ((string= clt-working-environment "Magneti Marelli")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              nsf-grep-find                                         ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             grep perso                                            ;;
-;;  {                                                                         ;;
-(defun nsf-grep-find ()
-  "Search word (egrep regex) in all files for NSF project."
-  (interactive)
-  (let (word prompt input)
-    (setq word (clt-select-word))
-    (if word
-      (setq prompt (concat "Grep word NSF project: (default " word ") "))
-      (setq prompt "Grep word (NSF): "))
+    ;;; grep custom (by Claude TETE)
+    (defun nsf-grep-find ()
+      "Search word (egrep regex) in all files for NSF project."
+      (interactive)
+      (let (word prompt input)
+        (setq word (clt-select-word))
+        (if word
+          (setq prompt (concat "Grep word NSF project: (default " word ") "))
+          (setq prompt "Grep word (NSF): "))
+        (setq input (completing-read prompt 'try-completion nil nil nil nil))
+        (if (not (equal "" input))
+          (setq word input))
+        (grep (concat "cat d:/ccm_wa/NSF/NSF/NSF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\"")))
+      )
 
-    (setq input (completing-read prompt 'try-completion nil nil nil nil))
-    (if (not (equal "" input))
-      (setq word input))
+    ;;; grep custom (by Claude TETE)
+    (defun nll-grep-find ()
+      "Search word (egrep regex) in all files for NBNF LL project."
+      (interactive)
+      (let (word prompt input)
+        (setq word (clt-select-word))
+        (if word
+          (setq prompt (concat "Grep word NBNF_LL project: (default " word ") "))
+          (setq prompt "Grep word (NBNF_LL): "))
+        (setq input (completing-read prompt 'try-completion nil nil nil nil))
+        (if (not (equal "" input))
+          (setq word input))
+        (grep (concat "cat d:/ccm_wa/NBNF/NBNF_LL/NSFNBNF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\""))
+        )
+      )
 
-    (grep (concat "cat d:/ccm_wa/NSF/NSF/NSF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\"")))
+    ;;; grep custom (by Claude TETE)
+    (defun nhl-grep-find ()
+      "Search word (egrep regex) in all files for NBNF_HL project."
+      (interactive)
+      (let (word prompt input)
+        (setq word (clt-select-word))
+        (if word
+          (setq prompt (concat "Grep word NBNF_HL project: (default " word ") "))
+          (setq prompt "Grep word (NBNF_HL): "))
+        (setq input (completing-read prompt 'try-completion nil nil nil nil))
+        (if (not (equal "" input))
+          (setq word input))
+        (grep (concat "cat d:/ccm_wa/NBNF/NBNF_HL/NBNF_CLIENT_HL/*.files | xargs grep --color=always -nsIE \""word"\""))
+        )
+      )
 
-;  (grep "cat d:/ccm_wa/NSF/NSF_CLIENT/NSF.files | xargs grep --color -nsIE lcdc | sed \"s#D:/ccm_wa/NSF/.*\\([^/]+:\\)#\\1#\"")
-;  (grep (concat "cat d:/ccm_wa/NSF/GTAGS.files | xargs grep --color -nsIE \""s"\""))
-)
-;;  } /* nsf-grep-find */                                                     ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;; grep custom (by Claude TETE)
+    (defun ecar-grep-find ()
+      "Search word (egrep regex) in all files for ECAR project."
+      (interactive)
+      (let (word prompt input)
+        (setq word (clt-select-word))
+        (if word
+          (setq prompt (concat "Grep word ECAR project: (default " word ") "))
+          (setq prompt "Grep word (ECAR): "))
+        (setq input (completing-read prompt 'try-completion nil nil nil nil))
+        (if (not (equal "" input))
+          (setq word input))
+        (grep (concat "cat d:/ccm_wa/ECAR/ENSF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\""))
+        )
+      )
+    ) ; Magneti Marelli
+  ) ; cond ---------------------------------------------------------------------
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              nll-grep-find                                         ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             grep perso                                            ;;
-;;  {                                                                         ;;
-(defun nll-grep-find ()
-  "Search word (egrep regex) in all files for NBNF LL project."
-  (interactive)
-  (let (word prompt input)
-    (setq word (clt-select-word))
-    (if word
-      (setq prompt (concat "Grep word NBNF_LL project: (default " word ") "))
-      (setq prompt "Grep word (NBNF_LL): "))
-
-    (setq input (completing-read prompt 'try-completion nil nil nil nil))
-    (if (not (equal "" input))
-      (setq word input))
-
-  (grep (concat "cat d:/ccm_wa/NBNF/NBNF_LL/NSFNBNF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\""))
-  )
-;xargs grep -nIE --color=always \""s"\" | sed \"s#/cyg[^:]*/##\""))
-)
-;;  } /* nll-grep-find */                                                     ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              nhl-grep-find                                         ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             grep perso                                            ;;
-;;  {                                                                         ;;
-(defun nhl-grep-find ()
-  "Search word (egrep regex) in all files for NBNF_HL project."
-  (interactive)
-  (let (word prompt input)
-    (setq word (clt-select-word))
-    (if word
-      (setq prompt (concat "Grep word NBNF_HL project: (default " word ") "))
-      (setq prompt "Grep word (NBNF_HL): "))
-
-    (setq input (completing-read prompt 'try-completion nil nil nil nil))
-    (if (not (equal "" input))
-      (setq word input))
-
-    (grep (concat "cat d:/ccm_wa/NBNF/NBNF_HL/NBNF_CLIENT_HL/*.files | xargs grep --color=always -nsIE \""word"\""))
-  )
-)
-;;  } /* nhl-grep-find */                                                     ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ecar-grep-find                                        ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             grep perso                                            ;;
-;;  {                                                                         ;;
-(defun ecar-grep-find ()
-  "Search word (egrep regex) in all files for ECAR project."
-  (interactive)
-  (let (word prompt input)
-    (setq word (clt-select-word))
-    (if word
-      (setq prompt (concat "Grep word ECAR project: (default " word ") "))
-      (setq prompt "Grep word (ECAR): "))
-
-    (setq input (completing-read prompt 'try-completion nil nil nil nil))
-    (if (not (equal "" input))
-      (setq word input))
-
-    (grep (concat "cat d:/ccm_wa/ECAR/ENSF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\""))
-  )
-)
-;;  } /* ecar-grep-find */                                                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              grep-project-tmp                                      ;;
-;;  @CREATED BY:        Personne_146                                          ;;
-;;  @ABOUT:             grep perso                                            ;;
-;;  {                                                                         ;;
-;(defun grep-find-project-tmp (s)
-;  (interactive "sSearch project tmp for: ")
-;  (grep (concat "cat d:/ccm_wa/..._CLIENT/*.files | xargs grep --color=always -nsIE \""s"\""))
-;  )
-;;  } /* grep-project-tmp */                                                  ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ) ;; Magneti Marelli
-) ;; cond ----------------------------------------------------------------------
-
-
-;;;;;;;;;
-;; ECB ;;
-;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ecb-toggle-width                                      ;;
-;;  @CREATED BY:        Personne_146                                          ;;
-;;  @ABOUT:             augmente/diminue la largeur de ecb                    ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; ECB
+;;; increase/decrease width of ecb window (by Claude TETE)
 (defun ecb-toggle-width ()
   "Toggle variable ecb-window-width between 10% and 25%."
   (interactive)
@@ -431,88 +280,89 @@
   (ecb-redraw-layout)
   (message "Ecb width set to %d." ecb-windows-width)
   )
-;;  } /* ecb-toggle-width */                                                  ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ecb-myopen-history                                    ;;
-;;  @CREATED BY:        Personne_146                                          ;;
-;;  @ABOUT:             ouvre l'historique ecb meme si il n'est pas visible   ;;
-;;  {                                                                         ;;
+;;; open ecb history when ecb window is hide (by Claude TETE)
 (defun ecb-myopen-history ()
   "Open ecb-history."
   (interactive)
-;  (ecb-show-ecb-windows)
+  ;;(ecb-show-ecb-windows) ; this is bugged
   (ecb-goto-window-history)
   (message "Ecb History.")
   )
-;;  } /* ecb-myopen-history */                                                ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ecb-myopen-directories                                ;;
-;;  @CREATED BY:        Personne_146                                          ;;
-;;  @ABOUT:             ouvre l'arborescence ecb                              ;;
-;;                      meme si elle n'est pas visible                        ;;
-;;  {                                                                         ;;
+;;; open ecb tree directory when ecb window is hide (by Claude TETE)
 (defun ecb-myopen-directories ()
   "Open ecb-directories."
   (interactive)
-;  (ecb-show-ecb-windows)
+  ;;(ecb-show-ecb-windows) ; this is bugged
   (ecb-goto-window-directories)
   (message "Ecb Directories.")
   )
-;;  } /* ecb-myopen-directories */                                            ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ecb-myopen-sources                                    ;;
-;;  @CREATED BY:        Personne_146                                          ;;
-;;  @ABOUT:             ouvre les fichiers source ecb                         ;;
-;;                      meme si ce n'est pas visible                          ;;
-;;  {                                                                         ;;
+;;; open ecb source list when ecb window is hide (by Claude TETE)
 (defun ecb-myopen-sources ()
   "Open ecb-sources."
   (interactive)
-;  (ecb-show-ecb-windows)
+  ;;(ecb-show-ecb-windows) ; this is bugged
   (ecb-goto-window-sources)
   (message "Ecb Sources.")
   )
-;;  } /* ecb-myopen-sources */                                                ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ecb-myopen-methods                                    ;;
-;;  @CREATED BY:        Personne_146                                          ;;
-;;  @ABOUT:             ouvre les fonctions ecb                               ;;
-;;                      meme si ce n'est pas visible                          ;;
-;;  {                                                                         ;;
+;;; open ecb function list when ecb window is hide (by Claude TETE)
 (defun ecb-myopen-methods ()
   "Open ecb-methods."
   (interactive)
-;  (ecb-show-ecb-windows)
+  ;;(ecb-show-ecb-windows) ; this is bugged
   (ecb-goto-window-methods)
   (message "Ecb Methods.")
   )
-;;  } /* ecb-myopen-methods */                                                ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+;;
+;;;
+;;;; SEMANTIC
+(when section-mode-cedet-semantic
+ (defvar semantic-tags-location-ring (make-ring 20))
 
-;;;;;;;;;;;;;;;;;;
-;; BUFFER CYCLE ;;
-;;;;;;;;;;;;;;;;;;
+  ;;; got to the definition and put it in a memory ring (by Roberto E. Vargas Caballero)
+  (defun semantic-goto-definition (point)
+    "Goto definition using semantic-ia-fast-jump
+   save the pointer marker if tag is found"
+    (interactive "d")
+    (condition-case err
+      (progn
+        (ring-insert semantic-tags-location-ring (point-marker))
+        (let* ((ctxt (semantic-analyze-current-context point))
+                (pf (and ctxt (reverse (oref ctxt prefix))))
+                (first (car pf)))
+          (if (semantic-tag-p first)
+            (semantic-ia--fast-jump-helper first)
+            (semantic-complete-jump))))
+      (error
+        ;;if not found remove the tag saved in the ring
+        (set-marker (ring-remove semantic-tags-location-ring 0) nil nil)
+        (signal (car err) (cdr err)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              next-user-buffer                                      ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             navigue dans les buffers sans prendre les *name*      ;;
-;;  {                                                                         ;;
+  ;;; go back with memory ring  (by Roberto E. Vargas Caballero)
+  (defun semantic-pop-tag-mark ()
+    "popup the tag save by semantic-goto-definition"
+    (interactive)
+    (if (ring-empty-p semantic-tags-location-ring)
+      (message "%s" "No more tags available")
+      (let* ((marker (ring-remove semantic-tags-location-ring 0))
+              (buff (marker-buffer marker))
+              (pos (marker-position marker)))
+        (if (not buff)
+          (message "Buffer has been deleted")
+          (switch-to-buffer buff)
+          (goto-char pos)))))
+  ) ; (when section-mode-cedet-semantic
+
+;;
+;;;
+;;;; BUFFER CYCLE
+
+;;; browse in buffers without name start with * (by Claude TETE)
+;; I don't use it
 (defun next-user-buffer ()
   "Switch to the next user buffer in cyclic order.  User buffers are those not starting with *."
   (interactive)
@@ -520,15 +370,9 @@
   (let ((i 0))
     (while (and (string-match "\\(^\\*\\|TAGS\\)" (buffer-name)) (< i 50))
       (setq i (1+ i)) (next-buffer) )))
-;;  } /* next-user-buffer */                                                  ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              previous-user-buffer                                  ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             navigue dans les buffers sans prendre les *name*      ;;
-;;  {                                                                         ;;
+;;; browse in buffers without name start with * (by Claude TETE)
+;; I don't use it
 (defun previous-user-buffer ()
   "Switch to the previous user buffer in cyclic order.  User buffers are those not starting with *."
   (interactive)
@@ -536,73 +380,42 @@
   (let ((i 0))
     (while (and (string-match "\\(^\\*\\|TAGS\\)" (buffer-name)) (< i 50))
       (setq i (1+ i)) (previous-buffer) )))
-;;  } /* previous-user-buffer */                                              ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;;;;;;;;;;;;;;
-;; START UP ;;
-;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              mystart-up                                            ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             lance ce qu'il faut au demarrage                      ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; START UP
+;;; run everything needed after start (needed with Emacs on MS Windows with
+;;; maximize bug (by Claude TETE)
 (defun mystart-up ()
   "Start all mode necessary to work."
   (interactive)
-  ;; to wait the maximize of the main window                                  ;;
+  ;; to wait the maximize of the main window
   (custom-set-variables
    '(ecb-compile-window-height 25)
    '(ecb-windows-width 0.1))
   (ecb-activate)
   )
-;;  } /* mystart-up */                                                        ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;
-;; CONFIG ;;
-;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              cfg-noob                                              ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             putain de soulard                                     ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; CONFIG
+;;; load config for awful people who cannot read code source on dark
+;;; background and tiny font (by Claude TETE)
 (defun cfg-noob ()
   "Configure GNU/Emacs for whose seem to want work."
   (interactive)
   (load-file (concat dotemacs-path "/dotemacs/noob.el"))
   )
-;;  } /* cfg-noob */                                                          ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              cfg-classic                                           ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             putain de soulard                                     ;;
-;;  {                                                                         ;;
+;;; load config for me after cfg-noob (by Claude TETE)
+;; it do not revert all some bug...
 (defun cfg-classic ()
   "Configure GNU/Emacs for whose want work."
   (interactive)
   (load-file (concat dotemacs-path "/emacs.el"))
   )
-;;  } /* cfg-classic */                                                       ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              try-require                                           ;;
-;;  @CREATED BY:        Fabrice Niessen                                       ;;
-;;  @ABOUT:             attempt to load a feature/library, failing silently   ;;
-;;  {                                                                         ;;
+;;; attempt to load a feature/library, failing silently (by Fabrice Niessen)
+;; patched by Claude TETE to add string before message
 (defvar missing-packages-list nil
   "List of packages that `try-require' can't find.")
 
@@ -627,352 +440,227 @@ before message."
        (message "%sChecking for library `%s'... Missing" indent feature)
        (add-to-list 'missing-packages-list feature 'append))
      nil))))
-;;  } /* try-require */                                                       ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;;;;;;;
-;; SEARCH ERROR ;;
-;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              search-tab                                            ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             search a tab in buffer                                ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; SEARCH ERROR
+;;; search a tab in buffer (by Claude TETE)
 (defun search-tab ()
   "Search a tab in the current buffer."
   (interactive)
   (occur "[\t\v]")
 )
-;;  } /* push-line */                                                         ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (cond
-;; Magneti Marelli--------------------------------------------------------------
+  ;; Magneti Marelli------------------------------------------------------------
   ((string= clt-working-environment "Magneti Marelli")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              search-fault                                          ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             search a fault in buffer                              ;;
-;;  {                                                                         ;;
-(defun search-fault ()
-  "Search a fault in the current buffer."
-  (interactive)
-  ;; no space after ( after keyword                                           ;;
-  (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\)[ ]*([ ]+" 'hi-green)
-  ;; no space before ) after keyword                                          ;;
-  (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\)[ ]*([^()]*[ ]+)" 'hi-green)
-  ;; missing space after keyword                                              ;;
-  (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\|#if\\|#endif\\)[^ ]*(" 'hi-yellow)
-  ;; too space after/before parentheses                                       ;;
-;  (highlight-regexp "^[^/\\n]*([ ]\\{1,\\}" 'hi-yellow)
-;  (highlight-regexp "^[^/\\n]*[ ]\\{1,\\})" 'hi-yellow)
-  (highlight-regexp "^[^/\\n]*[A-Za-z0-9]\\{4,7\\}_\\w[ ]\\{1,\\}(.*[),]" 'hi-yellow)
-  ;; wrong type used                                                          ;;
-  (highlight-regexp "^[^/\\n]*[^us_]\\(byte\\|short\\|long\\))" 'hi-pink)
-  ;; space before a ( for a call/declaration of function                      ;;
-  (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]+(" 'hi-yellow)
-  ;; space after a ( for a call/declaration of function                       ;;
-  (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]*([ ]+[[:alnum:]_]*" 'hi-green)
-  ;; space before a ) for a call/decalaration of function                     ;;
-  (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]*([ ]*[[:alnum:]_]*\\([ ]+[[:alnum:]_]*\\|[ ]*([[:alnum:]_]*\\(,[[:alnum:]_]\\)*)\\)[ ]+)" 'hi-green)
-)
-;;  } /* search-fault */                                                      ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;; search a fault in buffer (by Claude TETE)
+    (defun search-fault ()
+      "Search a fault in the current buffer."
+      (interactive)
+      ;; no space after ( after keyword
+      (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\)[ ]*([ ]+" 'hi-green)
+      ;; no space before ) after keyword
+      (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\)[ ]*([^()]*[ ]+)" 'hi-green)
+      ;; missing space after keyword
+      (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\|#if\\|#endif\\)[^ ]*(" 'hi-yellow)
+      ;;;; too space after/before parentheses
+      ;;(highlight-regexp "^[^/\\n]*([ ]\\{1,\\}" 'hi-yellow)
+      ;;(highlight-regexp "^[^/\\n]*[ ]\\{1,\\})" 'hi-yellow)
+      (highlight-regexp "^[^/\\n]*[A-Za-z0-9]\\{4,7\\}_\\w[ ]\\{1,\\}(.*[),]" 'hi-yellow)
+      ;; wrong type used
+      (highlight-regexp "^[^/\\n]*[^us_]\\(byte\\|short\\|long\\))" 'hi-pink)
+      ;; space before a ( for a call/declaration of function
+      (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]+(" 'hi-yellow)
+      ;; space after a ( for a call/declaration of function
+      (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]*([ ]+[[:alnum:]_]*" 'hi-green)
+      ;; space before a ) for a call/decalaration of function
+      (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]*([ ]*[[:alnum:]_]*\\([ ]+[[:alnum:]_]*\\|[ ]*([[:alnum:]_]*\\(,[[:alnum:]_]\\)*)\\)[ ]+)" 'hi-green)
+      )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              search-fault-size                                     ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             search a fault in buffer                              ;;
-;;  {                                                                         ;;
-(defun search-fault-size ()
-  "Search a sizing fault in the current buffer."
-  (interactive)
-  ;; wrong function header used                                               ;;
-  (highlight-regexp "/\\**/" 'hi-blue)
-  ;; line more than 80 column                                                 ;;
-  (highlight-regexp ".\\{81,\\}" 'hi-green)
-)
-;;  } /* search-fault-size */                                                 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ) ;; Magneti Marelli
-) ;; cond ----------------------------------------------------------------------
+    ;;; search a fault size in buffer (by Claude TETE)
+    (defun search-fault-size ()
+      "Search a sizing fault in the current buffer."
+      (interactive)
+      ;; wrong function header used
+      (highlight-regexp "/\\**/" 'hi-blue)
+      ;; line more than 80 column
+      (highlight-regexp ".\\{81,\\}" 'hi-green)
+      )
+    ) ; Magneti Marelli
+
+  ) ; cond ---------------------------------------------------------------------
 
 
-
-;;;;;;;;;;;;;;;;;;;;;
-;; COLOR TRACE CAN ;;
-;;;;;;;;;;;;;;;;;;;;;
-
+;;
+;;;
+;;;; COLOR TRACE CAN
 (cond
-;; Magneti Marelli -------------------------------------------------------------
+  ;; Magneti Marelli -----------------------------------------------------------
   ((string= clt-working-environment "Magneti Marelli")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              color-trace-can-immo                                  ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             color trace can for immo                              ;;
-;;  {                                                                         ;;
-(defun color-trace-can-immo ()
-  "Color the trace in the current buffer."
-  (interactive)
-  ;; Response OK and NOK from IMMO                                            ;;
-  (highlight-regexp " 0?17[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6\\}[ ]*[0-9A-F][13579BDF]" 'font-lock-function-name-face)
-  (highlight-regexp " 0?17[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6\\}[ ]*[0-9A-F][02468ACE]" 'font-lock-preprocessor-face)
-  ;; request from ELV                                                         ;;
-  (highlight-regexp " 0?16[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-comment-face)
-  ;; response from KESSY                                                      ;;
-  (highlight-regexp " 29D[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6,\\}[ ]*[1-9A-F][0-9A-F]  [0-9A-F][0-9A-F]" 'font-lock-variable-name-face)
-  (highlight-regexp " 29D[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-variable-name-face)
-  ;; request from IMMO                                                        ;;
-  (highlight-regexp " 155[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-string-face)
-  (highlight-regexp " 157[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-string-face)
-  ;; button start                                                             ;;
-  (highlight-regexp " 5F1[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*[0-9A-F][89A-F]" 'font-lock-type-face)
-  ;; KL 15 ON                                                                 ;;
-  (highlight-regexp " 5F1[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-  ;; KL S-Contact ON ;;
-  (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF]" 'font-lock-keyword-face)
-  ;; not recognized key                                                       ;;
-  (highlight-regexp " 621[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}[ ]*[0-9A-F]0" 'compilation-warning)
-  ;; recognised key                                                           ;;
-  (highlight-regexp " 621[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}[ ]*[0-9A-F][1-9A-F]" 'font-lock-function-name-face)
-)
-;;  } /* color-trace-can-immo */                                              ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;; color CAN trace for immo (by Claude TETE)
+    (defun color-trace-can-immo ()
+      "Color the trace in the current buffer."
+      (interactive)
+      ;; Response OK and NOK from IMMO
+      (highlight-regexp " 0?17[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6\\}[ ]*[0-9A-F][13579BDF]" 'font-lock-function-name-face)
+      (highlight-regexp " 0?17[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6\\}[ ]*[0-9A-F][02468ACE]" 'font-lock-preprocessor-face)
+      ;; request from ELV
+      (highlight-regexp " 0?16[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-comment-face)
+      ;; response from KESSY
+      (highlight-regexp " 29D[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6,\\}[ ]*[1-9A-F][0-9A-F]  [0-9A-F][0-9A-F]" 'font-lock-variable-name-face)
+      (highlight-regexp " 29D[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-variable-name-face)
+      ;; request from IMMO
+      (highlight-regexp " 155[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-string-face)
+      (highlight-regexp " 157[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-string-face)
+      ;; button start
+      (highlight-regexp " 5F1[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*[0-9A-F][89A-F]" 'font-lock-type-face)
+      ;; KL 15 ON
+      (highlight-regexp " 5F1[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
+      ;; KL S-Contact ON ;;
+      (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF]" 'font-lock-keyword-face)
+      ;; not recognized key
+      (highlight-regexp " 621[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}[ ]*[0-9A-F]0" 'compilation-warning)
+      ;; recognised key
+      (highlight-regexp " 621[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}[ ]*[0-9A-F][1-9A-F]" 'font-lock-function-name-face)
+      )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              color-trace-can-cvsensor                              ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             color trace can for cv sensor                         ;;
-;;  {                                                                         ;;
-(defun color-trace-can-cvsensor ()
-  "Color the trace in the current buffer."
-  (interactive)
-  ;; BRAKE                                                                    ;;
-  (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*8[0-9A-F]" 'font-lock-type-face)
-  ;; error                                                                    ;;
-  (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*[9AB][0-9A-F]" 'font-lock-comment-face)
-  ;; OFF                                                                      ;;
-  (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*C[0-9A-F]" 'font-lock-preprocessor-face)
-  ;; ON                                                                       ;;
-  (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*D[0-9A-F]" 'font-lock-function-name-face)
+    ;;; color CAN trace for cv sensor (by Claude TETE)
+    (defun color-trace-can-cvsensor ()
+      "Color the trace in the current buffer."
+      (interactive)
+      ;; BRAKE
+      (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*8[0-9A-F]" 'font-lock-type-face)
+      ;; error
+      (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*[9AB][0-9A-F]" 'font-lock-comment-face)
+      ;; OFF
+      (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*C[0-9A-F]" 'font-lock-preprocessor-face)
+      ;; ON
+      (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*D[0-9A-F]" 'font-lock-function-name-face)
+      ;;
+      ;; KL 15 ON
+      (highlight-regexp " 575[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
+      ;; KL 15 ON
+      (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
+      )
 
-  ;; KL 15 ON                                                                 ;;
-  (highlight-regexp " 575[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-  ;; KL 15 ON                                                                 ;;
-  (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-)
-;;  } /* color-trace-can-cvsensor */                                          ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;; color CAN trace for NMH (by Claude TETE)
+    (defun color-trace-can-nmh ()
+      "Color the trace in the current buffer."
+      (interactive)
+      ;; NMH message
+      (highlight-regexp " 72[4-9A-F][ ]*Tx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-type-face)
+      (highlight-regexp " 73[0-9A-F][ ]*Tx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-type-face)
+      ;;
+      ;; comment state
+      (highlight-regexp "\"    START       \"" 'font-lock-variable-name-face)
+      (highlight-regexp "\" READY_TO_SLEEP \"" 'font-lock-variable-name-face)
+      (highlight-regexp "\"PREPARE_TO_SLEEP\"" 'font-lock-variable-name-face)
+      (highlight-regexp "\"    SLEEP       \"" 'font-lock-variable-name-face)
+      (highlight-regexp "\"    NORMAL      \"" 'font-lock-variable-name-face)
+      ;;
+      (highlight-regexp "/\\*.*\\*/" 'font-lock-comment-face)
+      ;;
+      ;; State of kombi bus
+      ;;  Sleep -> Start            (pale green)
+      (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]1\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-function-name-face)
+      ;;
+      ;;  PrepareToSleep -> Start   (cyan)
+      (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]2\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-keyword-face)
+      ;;
+      ;;  Start -> Normal           (pale turquoise)
+      (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]4\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'font-lock-constant-face)
+      ;;
+      ;;  ReadyToSleep -> Normal    (pale grey blue)
+      (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]8\\([ ]*[0-9A-F][0-9A-F]\\)\\{3\\}" 'fonct-lock-builtin-face)
+      )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              color-trace-can-nmh                                   ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             color trace can for cv sensor                         ;;
-;;  {                                                                         ;;
-(defun color-trace-can-nmh ()
-  "Color the trace in the current buffer."
-  (interactive)
-  ;; NMH message                                                              ;;
-  (highlight-regexp " 72[4-9A-F][ ]*Tx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-type-face)
-  (highlight-regexp " 73[0-9A-F][ ]*Tx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-type-face)
+    ;;; color CAN trace for current problem (by Claude TETE)
+    (defun color-trace-can-curr ()
+      "Color the trace in the current buffer."
+      (interactive)
+      ;; mBSG_Kombi message KL58d != 0
+      (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[1-9A-F][0-9A-F]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-type-face)
+      (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[0-9A-F][1-9A-F]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-type-face)
+      ;;
+      ;; mBSG_Kombi message KL58d = 0
+      (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*00\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-variable-name-face)
+      ;;
+      ;; mBSG_Last KL15 ON
+      (highlight-regexp " 570[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-string-face)
+      ;;
+      ;; mBSG_Last KL15 OFF
+      (highlight-regexp " 570[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][014589CD]\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-constant-face)
+      ;;
+      ;; mSystem_info1
+      (highlight-regexp " 5D0[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][4567CDEF]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-comment-face)
+      ;;
+      ;; comment
+      (highlight-regexp "/\\*.*\\*/" 'font-lock-comment-face)
+      ;;
+      ;; State of kombi bus
+      ;;  Sleep -> Start            (pale green)
+      (highlight-regexp " 727[ ]*[RT]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]1\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-function-name-face)
+      ;;
+      ;;  PrepareToSleep -> Start   (cyan)
+      (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]2\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-keyword-face)
+      ;;
+      ;;  Start -> Normal           (pale turquoise)
+      (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]4\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'font-lock-constant-face)
+      ;;
+      ;;  ReadyToSleep -> Normal    (pale grey blue)
+      (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]8\\([ ]*[0-9A-F][0-9A-F]\\)\\{3\\}" 'fonct-lock-builtin-face)
+      )
 
-  ;; comment state
-  (highlight-regexp "\"    START       \"" 'font-lock-variable-name-face)
-  (highlight-regexp "\" READY_TO_SLEEP \"" 'font-lock-variable-name-face)
-  (highlight-regexp "\"PREPARE_TO_SLEEP\"" 'font-lock-variable-name-face)
-  (highlight-regexp "\"    SLEEP       \"" 'font-lock-variable-name-face)
-  (highlight-regexp "\"    NORMAL      \"" 'font-lock-variable-name-face)
+    ;;; color CAN trace for fuel tank (by Claude TETE)
+    (defun color-trace-can-fuel ()
+      "Color the trace in the current buffer."
+      (interactive)
+      ;; mKombi_1
+      ;; Tankinhalt
+      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[1-9A-F][0-9A-F]" 'font-lock-comment-face)
+      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[0-9A-F][1-9A-F]" 'font-lock-comment-face)
+      ;; Tankstop
+      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF][ ]*[89ABCDEF]" 'font-lock-constant-face)
+      ;; Sta_tank
+      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF]" 'font-lock-function-name-face)
+      ;; Warn_tank
+      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[4567CDEF][0-9A-F]" 'font-lock-type-face)
+      ;;
+      ;; mMFA_1
+      ;; Reichweite
+      (highlight-regexp " 629[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-preprocessor-face)
+      ;;
+      ;; mMFA_1
+      ;; Verbrauch
+      (highlight-regexp " 62B[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'compilation-warning)
+      ;;
+      ;; KL 15 ON
+      (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
+      )
 
-  (highlight-regexp "/\\*.*\\*/" 'font-lock-comment-face)
+    ;;; color CAN trace for electric range (by Claude TETE)
+    (defun color-trace-can-erange ()
+      "Color the trace in the current buffer."
+      (interactive)
+      ;; battery charge in percent in mMotor_EV1
+      (highlight-regexp " 61[Aa][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}[ ]*[0-9A-F][0-9A-F]" 'font-lock-comment-face)
+      ;; battery charge in kWh in mMotor_EV1
+      (highlight-regexp " 61[Aa][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}[ ]*[0-9A-F][0-9A-F][ ]*[0-9A-F][0-9A-F]" 'font-lock-type-face)
+      ;; consumption in mMotor_15
+      (highlight-regexp " 57[Ff][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{8\\}" 'font-lock-function-name-face)
+      ;;
+      ;; KL 15 ON
+      (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
+      )
+    ) ; Magneti Marelli
 
-  ;; State of kombi bus                                                       ;;
-  ;;  Sleep -> Start            (vert pastel)                                 ;;
-  (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]1\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-function-name-face)
+  ) ; cond ---------------------------------------------------------------------
 
-  ;;  PrepareToSleep -> Start   (cyan)
-  (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]2\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-keyword-face)
-
-  ;;  Start -> Normal           (turquoise pastel)
-  (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]4\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'font-lock-constant-face)
-
-  ;;  ReadyToSleep -> Normal    (bleu gris pastel)
-  (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]8\\([ ]*[0-9A-F][0-9A-F]\\)\\{3\\}" 'fonct-lock-builtin-face)
-)
-;;  } /* color-trace-can-nmh */                                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              color-trace-can-curr                                  ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             color trace can for current problem                   ;;
-;;  {                                                                         ;;
-(defun color-trace-can-curr ()
-  "Color the trace in the current buffer."
-  (interactive)
-  ;; mBSG_Kombi message KL58d != 0                                            ;;
-  (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[1-9A-F][0-9A-F]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-type-face)
-  (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[0-9A-F][1-9A-F]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-type-face)
-
-  ;; mBSG_Kombi message KL58d = 0                                             ;;
-  (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*00\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-variable-name-face)
-
-
-  ;; mBSG_Last KL15 ON                                                       ;;
-  (highlight-regexp " 570[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-string-face)
-
-  ;; mBSG_Last KL15 OFF                                                       ;;
-  (highlight-regexp " 570[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][014589CD]\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-constant-face)
-
-
-  ;; mSystem_info1
-  (highlight-regexp " 5D0[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][4567CDEF]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-comment-face)
-
-
-  ;; comment
-  (highlight-regexp "/\\*.*\\*/" 'font-lock-comment-face)
-
-
-  ;; State of kombi bus                                                       ;;
-  ;;  Sleep -> Start            (vert pastel)                                 ;;
-  (highlight-regexp " 727[ ]*[RT]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]1\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-function-name-face)
-
-  ;;  PrepareToSleep -> Start   (cyan)
-  (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]2\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-keyword-face)
-
-  ;;  Start -> Normal           (turquoise pastel)
-  (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]4\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'font-lock-constant-face)
-
-  ;;  ReadyToSleep -> Normal    (bleu gris pastel)
-  (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]8\\([ ]*[0-9A-F][0-9A-F]\\)\\{3\\}" 'fonct-lock-builtin-face)
-)
-;;  } /* color-trace-can-nmh */                                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              color-trace-can-fuel                                  ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             color trace can for fuel tank                         ;;
-;;  {                                                                         ;;
-(defun color-trace-can-fuel ()
-  "Color the trace in the current buffer."
-  (interactive)
-  ;; mKombi_1                                                                 ;;
-  ;; Tankinhalt                                                               ;;
-  (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[1-9A-F][0-9A-F]" 'font-lock-comment-face)
-  (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[0-9A-F][1-9A-F]" 'font-lock-comment-face)
-  ;; Tankstop                                                                 ;;
-  (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF][ ]*[89ABCDEF]" 'font-lock-constant-face)
-  ;; Sta_tank                                                                 ;;
-  (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF]" 'font-lock-function-name-face)
-  ;; Warn_tank                                                                ;;
-  (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[4567CDEF][0-9A-F]" 'font-lock-type-face)
-
-  ;; mMFA_1
-  ;; Reichweite                                                               ;;
-  (highlight-regexp " 629[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-preprocessor-face)
-
-  ;; mMFA_1
-  ;; Verbrauch                                                                ;;
-  (highlight-regexp " 62B[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'compilation-warning)
-
-  ;; KL 15 ON                                                                 ;;
-  (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-)
-;;  } /* color-trace-can-fuel */                                              ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              color-trace-can-erange                                ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             color trace can for electric range                    ;;
-;;  {                                                                         ;;
-(defun color-trace-can-erange ()
-  "Color the trace in the current buffer."
-  (interactive)
-  ;; battery charge in percent in mMotor_EV1                                  ;;
-  (highlight-regexp " 61[Aa][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}[ ]*[0-9A-F][0-9A-F]" 'font-lock-comment-face)
-  ;; battery charge in kWh in mMotor_EV1                                      ;;
-  (highlight-regexp " 61[Aa][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}[ ]*[0-9A-F][0-9A-F][ ]*[0-9A-F][0-9A-F]" 'font-lock-type-face)
-  ;; consumption in mMotor_15                                                 ;;
-  (highlight-regexp " 57[Ff][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{8\\}" 'font-lock-function-name-face)
-  ;; ON                                                                       ;;
-;  (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*D[0-9A-F]" 'font-lock-function-name-face)
-
-  ;; KL 15 ON                                                                 ;;
-  (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-)
-;;  } /* color-trace-can-erange */                                            ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ) ;; Magneti Marelli
-) ;; cond ----------------------------------------------------------------------
-
-
-
-;;;;;;;;;;;;;;;;;;
-;; ALIGN C MODE ;;
-;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              align-function                                        ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             align variable in declaration of function             ;;
-;;  {                                                                         ;;
-;(defun align-function (beg end)
-;  "Align variable in declaration of function."
-;  (interactive "r")
-;  (unless (and beg end)
-;    (error "The mark is not set now, so there is no region"))
-;;  (shell-command-on-region b e "figlet" (current-buffer) t)
-;  (align-regexp beg end "[A-Za-z0-9_\\*]*\\(\\[[0-9]*\\]\\)\\{0,1\\}[,;)]\\{1,2\\}")
-;  ; [A-Za-z0-9_\*]*\(\[[0-9]*\]\)\{0,1\}[,;)]\{1,2\}
-;)
-;;  } /* align-function */                                                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              align-variable                                        ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             align name in declaration of variable                 ;;
-;;  {                                                                         ;;
-;(defun align-variable (beg end)
-;  "Align name in declaration of variable."
-;  (interactive "r")
-;  (unless (and beg end)
-;    (error "The mark is not set now, so there is no region"))
-;  (let (regex "[=+-/\\*!]\\{0,1\\}= [A-Za-z0-9_\\*]*\\(\\[[0-9]*\\]\\)\\{0,1\\}")
-;    (align-regexp beg end 'regex))
-;  ; [=+-/\*!]\{0,1\}= [A-Za-z0-9_\*]*\(\[[0-9]*\]\)\{0,1\}
-;;  (insert marker-position region-end)
-;)
-;;  } /* align-variable */                                                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;;;;;;;;;;;;;;;;;;;;;
-;; ALIGN RTRT MODE ;;
-;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              rtrt-align-init                                       ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             align init in ptu script for rtrt                     ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; ALIGN RTRT MODE
+;;; align "init" in ptu script for RTRT (by Claude TETE)
 (defun rtrt-align-init (start end)
   "Align init variable test case (between START and END)."
   (interactive "r")
@@ -980,15 +668,8 @@ before message."
     (error "The mark is not set now, so there is no region"))
   (align-regexp start end (concat "\\(\\s-*\\)" "\\binit ") 1 1)
 )
-;;  } /* rtrt-align-init */                                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              rtrt-align-ev                                         ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             align expected value in ptu script for rtrt           ;;
-;;  {                                                                         ;;
+;;; align "expected value" in ptu script for RTRT (by Claude TETE)
 (defun rtrt-align-ev (start end)
   "Align expected value variable (between START and END)."
   (interactive "r")
@@ -996,39 +677,30 @@ before message."
     (error "The mark is not set now, so there is no region"))
   (align-regexp start end (concat "\\(\\s-*\\)" "\\bev ") 1 1)
 )
-;;  } /* rtrt-align-ev */                                                     ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              rtrt-align-declaration                                ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             align expected value in ptu script for rtrt           ;;
-;;  {                                                                         ;;
+;;; align "expected value" and "init" in ptu script for rtrt (by Claude TETE)
 (defun rtrt-align-declaration (start end)
   "Align variable (between START and END)."
   (interactive "r")
   (unless (and start end)
     (error "The mark is not set now, so there is no region"))
   (rtrt-align-init start end)
-  (rtrt-align-ev start end)
+  (rtrt-align-ev start end) ; sometimes it bugs the last ev is not align or two line after region is align
 )
-;;  } /* rtrt-align-declaration */                                            ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;; align "=" in ptu script for RTRT (by Claude TETE)
+(defun rtrt-align-set (start end)
+  "Align = (between START and END)."
+  (interactive "r")
+  (unless (and start end)
+    (error "The mark is not set now, so there is no region"))
+  (align-regexp start end (concat "\\(\\s-*\\)" "[-+=]\\{0,1\\}=") 1 1)
+)
 
-
-;;;;;;;;;;;;;;;;;;;;;;
-;; FORMAT RTRT MODE ;;
-;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              rtrt-remove-whitespace-before-colon                   ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             remove withespace before a colon in ptu script for    ;;
-;;                      RTRT                                                  ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; FORMAT RTRT MODE
+;;; remove withespace before a colon in ptu script for RTRT (by Claude TETE)
 (defun rtrt-remove-whitespace-before-colon (start end)
   "Remove all space before a colon (between START and END)."
   (interactive "r")
@@ -1036,15 +708,7 @@ before message."
     (error "The mark is not set now, so there is no region"))
   (replace-regexp "\\s-+," "," nil start end)
 )
-;;  } /* rtrt-remove-whitespace-before-colon */                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              rtrt-replace-var-string                               ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             align init in ptu script for rtrt                     ;;
-;;  {                                                                         ;;
+;;; upcase "var" in ptu script for RTRT (by Claude TETE)
 (defun rtrt-upcase-var-string (start end)
   "Upcase the var string (between START and END)."
   (interactive "r")
@@ -1052,21 +716,11 @@ before message."
     (error "The mark is not set now, so there is no region"))
   (replace-regexp "[vV]ar " "VAR " nil start end)
 )
-;;  } /* rtrt-replace-var-string */                                           ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;;;;;;
-;; END OF LINE ;;
-;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              dos2unix                                              ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             convert MS-DOS format \r\n to Unix format \n          ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; END OF LINE
+;;; convert MS-DOS format \r\n to Unix format \n (by Claude TETE)
 (defun dos2unix ()
   "Transform a DOS file to a Unix file."
   (interactive)
@@ -1075,15 +729,7 @@ before message."
     (replace-match "")
   )
 )
-;;  } /* dos2unix */                                                          ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              unix2dos                                              ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             convert Unix format \n to MS-DOS format \r\n          ;;
-;;  {                                                                         ;;
+;;; convert Unix format \n to MS-DOS format \r\n (by Claude TETE)
 (defun unix2dos ()
   "Transform a Unix file to a DOS file."
   (interactive)
@@ -1092,21 +738,11 @@ before message."
     (replace-match "\r\n")
   )
 )
-;;  } /* unix2dos */                                                          ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;;;;;;;
-;; TRANSPARENCY ;;
-;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              toggle-transparency                                   ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             toggle the window transparency to alpha 100->85->100  ;;
-;;  {                                                                         ;;
+;;
+;;;
+;;;; TRANSPARENCY
+;;; toggle the window transparency to alpha 100->85->100... (by Claude TETE)
 (eval-when-compile (require 'cl))
 (defun toggle-transparency ()
   "Toggle the transparency of whole Emacs window."
@@ -1117,111 +753,98 @@ before message."
     (set-frame-parameter nil 'alpha '(100 100))
     (set-frame-parameter nil 'alpha '(85 50))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
-;;  } /* toggle-transparency */                                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;;;;;;;;;
-;; C-EXPAND-MACRO ;;
-;;;;;;;;;;;;;;;;;;;;
-
+;;
+;;;
+;;;; C-EXPAND-MACRO
 (cond
-;; Magneti Marelli -------------------------------------------------------------
+  ;; Magneti Marelli -----------------------------------------------------------
   ((string= clt-working-environment "Magneti Marelli")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              nsf-c-expand-macro                                    ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             expand macro for project NSF                          ;;
-;;  {                                                                         ;;
-(defun nsf-c-expand-macro (start end)
-  "Expand macro in C language for the NSF project (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (setq c-macro-cppflags clt-nsf-flag)
-  (c-macro-expand start end nil)
-)
-;;  } /* nsf-c-expand-macro */                                                ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;; expand macro for project NSF (by Claude TETE)
+    (defun nsf-c-expand-macro (start end)
+      "Expand macro in C language for the NSF project (between START and END)."
+      (interactive "r")
+      (unless (and start end)
+        (error "The mark is not set now, so there is no region"))
+      (setq c-macro-cppflags clt-nsf-flag)
+      (c-macro-expand start end nil)
+      )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              nhl-c-expand-macro                                    ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             expand macro for project NBNF_HL                      ;;
-;;  {                                                                         ;;
-(defun nhl-c-expand-macro (start end)
-  "Expand macro in C language for the NBNF_HL project (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (setq c-macro-cppflags clt-nbnfhl-flag)
-  (c-macro-expand start end nil)
-)
-;;  } /* nhl-c-expand-macro */                                                ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;; expand macro for project NBNF HL (by Claude TETE)
+    (defun nhl-c-expand-macro (start end)
+      "Expand macro in C language for the NBNF_HL project (between START and END)."
+      (interactive "r")
+      (unless (and start end)
+        (error "The mark is not set now, so there is no region"))
+      (setq c-macro-cppflags clt-nbnfhl-flag)
+      (c-macro-expand start end nil)
+      )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              nll-c-expand-macro                                    ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             expand macro for project NBNF_LL                      ;;
-;;  {                                                                         ;;
-(defun nll-c-expand-macro (start end)
-  "Expand macro in C language for the NBNF_LL project (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (setq c-macro-cppflags clt-nbnfll-flag)
-  (c-macro-expand start end nil)
-)
-;;  } /* nll-c-expand-macro */                                                ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;; expand macro for project NBNF LL (by Claude TETE)
+    (defun nll-c-expand-macro (start end)
+      "Expand macro in C language for the NBNF_LL project (between START and END)."
+      (interactive "r")
+      (unless (and start end)
+        (error "The mark is not set now, so there is no region"))
+      (setq c-macro-cppflags clt-nbnfll-flag)
+      (c-macro-expand start end nil)
+      )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ecar-c-expand-macro                                   ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             expand macro for project ECAR                         ;;
-;;  {                                                                         ;;
-(defun ecar-c-expand-macro (start end)
-  "Expand macro in C language for the ECAR project (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (setq c-macro-cppflags clt-ecar-flag)
-  (c-macro-expand start end nil)
-)
-;;  } /* ecar-c-expand-macro */                                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;; expand macro for project ENSF (by Claude TETE)
+    (defun ecar-c-expand-macro (start end)
+      "Expand macro in C language for the ECAR project (between START and END)."
+      (interactive "r")
+      (unless (and start end)
+        (error "The mark is not set now, so there is no region"))
+      (setq c-macro-cppflags clt-ecar-flag)
+      (c-macro-expand start end nil)
+      )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              xl1-c-expand-macro                                    ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             expand macro for project XL1                          ;;
-;;  {                                                                         ;;
-(defun xl1-c-expand-macro (start end)
-  "Expand macro in C language for the XL1 project (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (setq c-macro-cppflags clt-xl1-flag)
-  (c-macro-expand start end nil)
-)
-;;  } /* xl1-c-expand-macro */                                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ) ;; Magneti Marelli
-) ;; cond ----------------------------------------------------------------------
+    ;;; expand macro for project XL1 (by Claude TETE)
+    (defun xl1-c-expand-macro (start end)
+      "Expand macro in C language for the XL1 project (between START and END)."
+      (interactive "r")
+      (unless (and start end)
+        (error "The mark is not set now, so there is no region"))
+      (setq c-macro-cppflags clt-xl1-flag)
+      (c-macro-expand start end nil)
+      )
+    ) ; Magneti Marelli
+
+  ) ; cond ---------------------------------------------------------------------
+
+;;
+;;;
+;;;; GTAGS
+;; to put in gtags.el
+;;; get a pattern from current buffer name (by Claude TETE)
+;;(defun gtags-current-buffer ()
+;;  (interactive)
+;;  (setq buffername (buffer-name))
+;;  (setq buffername (substring buffername 0 4))
+;;)
+
+;; to put in gtags.el
+;;; find a related file from a pattern of current buffer (by Claude TETE)
+;;(defun gtags-find-file-custom ()
+;;  "Input pattern and move to the top of the file."
+;;  (interactive)
+;;  (let (tagname prompt input)
+;;    (setq tagname (gtags-current-buffer))
+;;    (if tagname
+;;      (setq prompt (concat "Find related files: (default " tagname ") "))
+;;      (setq prompt "Find related files: "))
+;;    (setq input (completing-read prompt 'gtags-completing-files
+;;                  nil nil nil gtags-history-list))
+;;    (if (not (equal "" input))
+;;      (setq tagname input))
+;;    (gtags-push-context)
+;;    (gtags-goto-tag tagname "Po")))
 
 
-
-;;;;;;;;;;
-;; TEST ;;
-;;;;;;;;;;
-
+;;
+;;;
+;;;; TEST (all after is for testing
 (defun clt-test ()
   "Plein de test."
   (interactive)
@@ -1231,25 +854,21 @@ before message."
 (setq semantic-c-takeover-hideif t)
 
 (cond
-;; Magneti Marelli -------------------------------------------------------------
+  ;; Magneti Marelli -----------------------------------------------------------
   ((string= clt-working-environment "Magneti Marelli")
-(fset 'header-function
-   [home right right ?\C-7 ?\C-6 delete ?\C-7 ?\C-6 kp-subtract home])
-(global-set-key (kbd "C-c '") 'header-function)
+    (fset 'header-function
+      [home right right ?\C-7 ?\C-6 delete ?\C-7 ?\C-6 kp-subtract home])
+    (global-set-key (kbd "C-c '") 'header-function)
 
-(fset 'delete-space-before-function-parenthese
-   [home ?\C-s ?\( left backspace home])
-(global-set-key (kbd "C-c ;") 'delete-space-before-function-parenthese)
-  ) ;; Magneti Marelli
-) ;; cond ----------------------------------------------------------------------
+    (fset 'delete-space-before-function-parenthese
+      [home ?\C-s ?\( left backspace home])
+    (global-set-key (kbd "C-c ;") 'delete-space-before-function-parenthese)
+    ) ; Magneti Marelli
+
+  ) ; cond ---------------------------------------------------------------------
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              push-line                                             ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             Copy entire line in kill ring (whitout Home C-k C-y)  ;;
-;;  {                                                                         ;;
+;;; Copy entire line in kill ring (whitout Home C-k C-y) (by Claude TETE)
 (defun push-line ()
   "Select current line, push onto kill ring."
   (interactive)
@@ -1257,57 +876,52 @@ before message."
     (copy-region-as-kill (re-search-backward "^") (re-search-forward "$"))
   )
 )
-;;  } /* push-line */                                                         ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              toggle-source-header                                  ;;
-;;  @CREATED BY:        Jan Borsodi                                           ;;
-;;  @ABOUT:             ??                                                    ;;
-;;  {                                                                         ;;
-;; Switches between source/header files
-(defun toggle-source-header()
-  "Switches to the source buffer if currently in the header buffer and vice versa."
+;;;
+(defun compact-uncompact-block ()
+  "Remove or add line ending chars on current paragraph.
+This command is similar to a toggle of `fill-paragraph'.
+When there is a text selection, act on the region."
   (interactive)
-  (let ((buf (current-buffer))
-	(name (file-name-nondirectory (buffer-file-name)))
-	file
-	offs)
-    (setq offs (string-match c++-header-ext-regexp name))
-    (if offs
-	(let ((lst c++-source-extension-list)
-	      (ok nil)
-	      ext)
-	  (setq file (substring name 0 offs))
-	  (while (and lst (not ok))
-	    (setq ext (car lst))
-	    (if (file-exists-p (concat file "." ext))
-		  (setq ok t))
-	    (setq lst (cdr lst)))
-	  (if ok
-	      (find-file (concat file "." ext))))
-      (let ()
-	(setq offs (string-match c++-source-ext-regexp name))
-	(if offs
-	    (let ((lst c++-header-extension-list)
-		  (ok nil)
-		  ext)
-	      (setq file (substring name 0 offs))
-	      (while (and lst (not ok))
-		(setq ext (car lst))
-		(if (file-exists-p (concat file "." ext))
-		    (setq ok t))
-		(setq lst (cdr lst)))
-	      (if ok
-		  (find-file (concat file "." ext)))))))))
-;;  } /* toggle-source-header */                                                         ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; This command symbol has a property "stateIsCompact-p".
+  (let (currentStateIsCompact (bigFillColumnVal 4333999) (deactivate-mark nil))
+
+    (save-excursion
+      ;; Determine whether the text is currently compact.
+      (setq currentStateIsCompact
+        (if (eq last-command this-command)
+          (get this-command 'stateIsCompact-p)
+          (if (> (- (line-end-position) (line-beginning-position)) fill-column) t nil) ) )
+
+      (if (region-active-p)
+        (if currentStateIsCompact
+          (fill-region (region-beginning) (region-end))
+          (let ((fill-column bigFillColumnVal))
+            (fill-region (region-beginning) (region-end))) )
+        (if currentStateIsCompact
+          (fill-paragraph nil)
+          (let ((fill-column bigFillColumnVal))
+            (fill-paragraph nil)) ) )
+
+      (put this-command 'stateIsCompact-p (if currentStateIsCompact nil t)) ) ) )
 
 
+;;;; from guillaume salagnac
 
+;(global-set-key (kbd "<C-S-up>") 'scroll-one-down)
+;(global-set-key (kbd "<C-S-down>") 'scroll-one-up)
+
+(defun scroll-one-up ()
+        (interactive)
+        (scroll-up 1))
+
+(defun scroll-one-down ()
+        (interactive)
+        (scroll-up -1))
+
+;; Pour par taper sur 'inser' par erreur
+(put 'overwrite-mode 'disabled t)
 
 ;;list-colors-display to display all color
 
@@ -1343,164 +957,93 @@ before message."
 ;  (unless (lookup-key (current-global-map) (read-kbd-macro key))
 ;    (define-key (current-global-map) (read-kbd-macro key) 'scroll-lock-mode)))
 
-
-;;;;;;;;;;;
-;; GTAGS ;;
-;;;;;;;;;;;
-
-;; to put in gtags.el
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              gtags-current-buffer                                  ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             get a pattern from current buffer name                ;;
-;;  {                                                                         ;;
-;(defun gtags-current-buffer ()
-;  (interactive)
-;  (setq buffername (buffer-name))
-;  (setq buffername (substring buffername 0 4))
-;;  (insert (concat "toto=" buffername ";"))
-;)
-;;;  } /* gtags-current-buffer */                                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; to put in gtags.el
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              gtags-find-file-custom                                ;;
-;;  @CREATED BY:        Claude TETE                                           ;;
-;;  @ABOUT:             find a related file from a pattern of current buffer  ;;
-;;  {                                                                         ;;
-;(defun gtags-find-file-custom ()
-;  "Input pattern and move to the top of the file."
-;  (interactive)
-;  (let (tagname prompt input)
-;    (setq tagname (gtags-current-buffer))
-;    (if tagname
-;      (setq prompt (concat "Find related files: (default " tagname ") "))
-;      (setq prompt "Find related files: "))
-;    (setq input (completing-read prompt 'gtags-completing-files
-;                  nil nil nil gtags-history-list))
-;    (if (not (equal "" input))
-;      (setq tagname input))
-;    (gtags-push-context)
-;    (gtags-goto-tag tagname "Po")))
-;(global-set-key (kbd "C-c t") 'toggle-transparency)
-;;  } /* gtags-find-file-custom */                                            ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              ww-next-gtag                                          ;;
-;;  @CREATED BY:        William Wong                                          ;;
-;;  @ABOUT:             cycling through multiple tags results                 ;;
-;;  {                                                                         ;;
-;(when section-mode-gnu-global
-;(defun ww-next-gtag ()
-;  "Find next matching tag, for GTAGS."
-;  (interactive)
-;  (let ((latest-gtags-buffer
-;         (car (delq nil  (mapcar (lambda (x) (and (string-match "GTAGS SELECT" (buffer-name x)) (buffer-name x)) )
-;                                 (buffer-list)) ))))
-;    (cond (latest-gtags-buffer
-;           (switch-to-buffer latest-gtags-buffer)
-;           (next-line)
-;           (gtags-select-it nil))
-;          ) ))
-;)
-;;  } /* ww-next-gtag */                                                      ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;(global-set-key (kbd "C-c t") 'toggle-transparency)
 
 ;; I don't have tested
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  Fonction                                                                  ;;
-;;  @NAME:              gtags-global-update                                   ;;
-;;  @CREATED BY:        Kevin Rodgers                                         ;;
-;;  @ABOUT:             cyclin through multiple tags results                 ;;
-;;  {                                                                         ;;
-;(when (locate-library "gtags")
-;
-;  (autoload 'gtags-mode "gtags" nil t)
-;
-;  (when (executable-find "global")
-;
-;    (defadvice gtags-visit-rootdir (after make-complete-list activate)
-;      "Rebuilds completion list when changing GLOBAL database rootdir."
-;      (gtags-make-complete-list))
-;
-;    (defun gtags-global-dir-p (dir)
-;      "Return non-nil if directory DIR contains a GLOBAL database."
-;      (and (file-exists-p (expand-file-name "GPATH" dir))
-;           (file-exists-p (expand-file-name "GRTAGS" dir))
-;           (file-exists-p (expand-file-name "GSYMS" dir))
-;           (file-exists-p (expand-file-name "GTAGS" dir))))
-;
-;    (defun gtags-global-dir (&optional dir)
-;      "Return the nearest super directory that contains a GLOBAL database."
-;      (interactive)
-;      (when (null dir)
-;        (setq dir default-directory))
-;      (cond ((gtags-global-dir-p dir) dir)
-;            ((equal (file-truename dir) (file-truename "/")) nil)
-;            (t (gtags-global-dir (file-name-as-directory
-;                                  (expand-file-name ".." dir))))))
-;
-;    (defvar gtags-global-complete-list-obsolete-flag nil
-;      "When non-nil, the GLOBAL complete list should be rebuilt.")
-;
-;    (defun gtags-global-update ()
-;      "If current directory is part of a GLOBAL database update it."
-;      (interactive)
-;      (when (gtags-global-dir)
-;        (if (equal (call-process "global" nil nil nil "-vu") 0)
-;            (setq gtags-global-complete-list-obsolete-flag t)
-;          (error "Global database update failed"))))
-;
-;    (defun gtags-global-complete-list-maybe ()
-;      "Rebuild the GLOBAL complete list when indicated.
-;See `gtags-global-complete-list-obsolete-flag'."
-;      (interactive)
-;      (when gtags-global-complete-list-obsolete-flag
-;        (gtags-make-complete-list)
-;        (setq gtags-global-complete-list-obsolete-flag nil)))
-;
-;    (add-hook 'gtags-mode-hook
-;              (lambda ()
-;                (add-hook 'after-save-hook 'gtags-global-update nil t)
-;                (defadvice gtags-find-tag
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                (defadvice gtags-find-rtag
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                (defadvice gtags-find-symbol
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                (defadvice gtags-find-pattern
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                (defadvice gtags-find-with-grep
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                (defadvice gtags-find-with-idutils
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                (defadvice gtags-find-file
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                (defadvice gtags-parse-file
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                (defadvice gtags-find-tag-from-here
-;                  (before gtags-global-complete-list-maybe activate)
-;                  (gtags-global-complete-list-maybe))
-;                )                       ; (lambda () ...)
-;              )                        ; (add-hook 'gtags-mode-hook ...)
-;    )                            ; (when (executable-find "global") ...)
-;
-;  ;; Use gtags in all modes for now.
-;  (gtags-mode 1)
-;  )                                ; (when (locate-library "gtags") ...)
-;
+;;; cyclin through multiple tags results (by Kevin Rodgers)
+;;(when (locate-library "gtags")
+;;
+;;  (autoload 'gtags-mode "gtags" nil t)
+;;
+;;  (when (executable-find "global")
+;;
+;;    (defadvice gtags-visit-rootdir (after make-complete-list activate)
+;;      "Rebuilds completion list when changing GLOBAL database rootdir."
+;;      (gtags-make-complete-list))
+;;
+;;    (defun gtags-global-dir-p (dir)
+;;      "Return non-nil if directory DIR contains a GLOBAL database."
+;;      (and (file-exists-p (expand-file-name "GPATH" dir))
+;;           (file-exists-p (expand-file-name "GRTAGS" dir))
+;;           (file-exists-p (expand-file-name "GSYMS" dir))
+;;           (file-exists-p (expand-file-name "GTAGS" dir))))
+;;
+;;    (defun gtags-global-dir (&optional dir)
+;;      "Return the nearest super directory that contains a GLOBAL database."
+;;      (interactive)
+;;      (when (null dir)
+;;        (setq dir default-directory))
+;;      (cond ((gtags-global-dir-p dir) dir)
+;;            ((equal (file-truename dir) (file-truename "/")) nil)
+;;            (t (gtags-global-dir (file-name-as-directory
+;;                                  (expand-file-name ".." dir))))))
+;;
+;;    (defvar gtags-global-complete-list-obsolete-flag nil
+;;      "When non-nil, the GLOBAL complete list should be rebuilt.")
+;;
+;;    (defun gtags-global-update ()
+;;      "If current directory is part of a GLOBAL database update it."
+;;      (interactive)
+;;      (when (gtags-global-dir)
+;;        (if (equal (call-process "global" nil nil nil "-vu") 0)
+;;            (setq gtags-global-complete-list-obsolete-flag t)
+;;          (error "Global database update failed"))))
+;;
+;;    (defun gtags-global-complete-list-maybe ()
+;;      "Rebuild the GLOBAL complete list when indicated.
+;;See `gtags-global-complete-list-obsolete-flag'."
+;;      (interactive)
+;;      (when gtags-global-complete-list-obsolete-flag
+;;        (gtags-make-complete-list)
+;;        (setq gtags-global-complete-list-obsolete-flag nil)))
+;;
+;;    (add-hook 'gtags-mode-hook
+;;              (lambda ()
+;;                (add-hook 'after-save-hook 'gtags-global-update nil t)
+;;                (defadvice gtags-find-tag
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                (defadvice gtags-find-rtag
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                (defadvice gtags-find-symbol
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                (defadvice gtags-find-pattern
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                (defadvice gtags-find-with-grep
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                (defadvice gtags-find-with-idutils
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                (defadvice gtags-find-file
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                (defadvice gtags-parse-file
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                (defadvice gtags-find-tag-from-here
+;;                  (before gtags-global-complete-list-maybe activate)
+;;                  (gtags-global-complete-list-maybe))
+;;                )                       ; (lambda () ...)
+;;              )                        ; (add-hook 'gtags-mode-hook ...)
+;;    )                            ; (when (executable-find "global") ...)
+;;
+;;  ;; Use gtags in all modes for now.
+;;  (gtags-mode 1)
+;;  )                                ; (when (locate-library "gtags") ...)
+;;
 
 ;;; functions.el ends here

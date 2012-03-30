@@ -20,18 +20,20 @@
 
 ;; Keywords: config, display, speedbar
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.0
+;; Version: 1.1
 ;; Created: October 2006
-;; Last-Updated: March 2011
+;; Last-Updated: March 2012
 
 ;;; Commentary:
 ;;
-;; Chiant car ca ouvre une nouvelle fenetre et pas integree
+;; it's a pain because it open a new window but not integrated
 ;;
 ;; load by `emacs.el' (where all requirements are defined)
 ;; REQUIREMENT: var     `section-display-speedbar'
 
 ;;; Change Log:
+;; 2012-03-28 (1.1)
+;;    translate comments in english
 ;; 2011-03-10 (1.0)
 ;;    split .emacs file
 ;; 2006-10-13 (0.1)
@@ -39,19 +41,21 @@
 
 
 ;;; Code:
-;; nouvelle fenetre independante des buffer/window qui est lier a un buffer,
-;; affiche le dossier courant dans lequel est le buffer (touche 'f') ou la
-;; liste des buffer (touche 'b'), la touche 'espace' permet d'afficher la
-;; liste des fonctions contenu dans un fichier C et d'y aller directement
-;; (touche 'entree').
-(set-variable speedbar-frame-plist (quote (
-                                            width 50
-                                            border-width 0
-                                            internal-border-width 0
-                                            unsplittable t
-                                            default-toolbar-visible-p nil
-                                            has-modeline-p nil
-                                            menubar-visible-p nil)))
+;; new independant window from Emacs buffer/window and show current directory
+;; ('f' key) (where buffer is) or buffer list ('b' key), 'space' key can show
+;; function in C buffers and go with 'enter'
+(set-variable speedbar-frame-plist
+  (quote
+    (
+      width 50
+      border-width 0
+      internal-border-width 0
+      unsplittable t
+      default-toolbar-visible-p nil
+      has-modeline-p nil
+      menubar-visible-p nil)
+    )
+  )
 (set-variable speedbar-track-mouse-flag nil)
 (set-variable speedbar-use-images nil)
 

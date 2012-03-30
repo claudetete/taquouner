@@ -20,7 +20,7 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: August 2010
 ;; Last-Updated: March 2012
 
@@ -38,6 +38,8 @@
 ;; pour lancer tous les jours faire 'ecb-activate' une fois Emacs demarrer
 
 ;;; Change Log:
+;; 2012-03-29 (1.5)
+;;    translate comments in english + add some fix
 ;; 2012-03-05 (1.4)
 ;;    remove fix fullscreen + add some settings
 ;; 2012-03-02 (1.3)
@@ -53,24 +55,7 @@
 
 
 ;;; Code:
-(cond
-  ;; Magneti Marelli -----------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
-    (custom-set-variables
-      '(cedet-global-command "d:/cygwin/bin/global.exe")
-      '(cedet-global-gtags-command "d:/cygwin/bin/gtags.exe"))
-    ) ; Magneti Marelli
-
-  ;; Alstom Transport ----------------------------------------------------------
-  ((string= clt-working-environment "Alstom Transport")
-    (custom-set-variables
-      '(cedet-global-command "d:/cygwin/usr/local/bin/global.exe")
-      '(cedet-global-gtags-command "d:/cygwin/usr/local/bin/gtags.exe"))
-    ) ; Alstom Transport
-
-  ) ; cond ---------------------------------------------------------------------
-
-;; donne le chemin d'installation d'ecb
+;; path of ecb
 (add-to-list 'load-path (concat dotemacs-path "/plugins/ecb-snap"))
 
 ;;
@@ -82,19 +67,19 @@
   (custom-set-variables
     '(ecb-auto-activate t)
 
-    ;; donne la version /* pas tres utile sauf pour check install */
+    ;; set version (only for check install)
     '(ecb-options-version "2.40")
     )
 
-  ;; les chemins par defaut dans "ecb directories" (repertoires)
   (cond
     ;; Magneti Marelli-----------------------------------------------------
     ((string= clt-working-environment "Magneti Marelli")
       (custom-set-variables
+        ;; set default path in "ecb directories"
         '(ecb-source-path
            (quote
              (
-               ;; here is put the ede project (see project.el)
+               ;; before is put the ede projects (see project.el)
                ("c:/Documents and Settings/tete"            "/tete")
                ("h:/"                                       "/home")
                ("d:/cygwin/usr/bin"                         "/bin")
@@ -102,7 +87,7 @@
                ("c:/Documents and Settings/tete/Local Settings/Temp" "/temp")
                )))
 
-        ;; regex des dossiers a exclure de la window directory
+        ;; regexp of folder to exclude in "ecb directories"
         '(ecb-excluded-directories-regexps
            (quote (
                     "^\\(CVS\\|\\.[^xX]*\\)$"
@@ -110,16 +95,16 @@
                     "\\(01_ProjectPlan\\|02_ProjectMonitoringAndControl\\|03_RequirementManagement\\|04_SupplierAgreementManagement\\|05_ProcessAndProductQualityAssurance\\|06_ConfigurationManagement\\|07_RequirementDevelopment\\|08_TechnicalSolution\\|10_Verification\\|11_Validation\\)$"
                     "\\(01_SystemIntegrationAndValidationPlan\\|02_SystemIntegrationTestCases\\|03_SystemIntegrationTestReport\\|05_DeliveryToCustomer\\|06_DeliveryToInternal\\|88_VerificationReportsAndChecklists\\|99_OtherPI\\)$")))
 
-        ;; fichiers a ignorer dans les source !! lire la doc !!
+        ;; files to be ignored in "ecb source" !! RTFM !!
         '(ecb-source-file-regexps
            (quote ((".*"
                      ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\)$\\)\\)")
                      ("^\\.\\(emacs\\|gnus\\)$")))))
 
-        ;; fichiers a ignorer comme Version Control VC
+        ;; files to be ignored from Version Control VC
         '(ecb-sources-exclude-cvsignore (quote ("_ccmwaid.inf")))
 
-        ;; regexp pour regrouper dans ecb-history
+        ;; regexp to form group in "ecb history"
         '(ecb-history-make-buckets
            (quote (
                     "|ECAR"
@@ -135,38 +120,37 @@
     ;; Alstom Transport------------------------------------------------------
     ((string= clt-working-environment "Alstom Transport")
       (custom-set-variables
+        ;; set default path in "ecb directories"
         '(ecb-source-path
            (quote
              (
-               ;; here is put the ede project (see project.el)
+               ;; before is put the ede projects (see project.el)
                ("m:/e_ctete/a2kc/test/CCN4/test_s/pm4s/RTRT/"          ".../test_s/pm4s/RTRT")
-               ;;("m:/e_ctete"                                           "/myClearCase")
                ("d:/Documents and Settings/100516805/Application Data" "/home")
                ("m:/"                                                  "/ClearCase")
                ("d:/Users/ctete/tools"                                 "/tools")
                ("d:/Users/ctete/tmp"                                   "/tmp")
                )))
 
-        ;; regex des dossiers a exclure de la window directory
+        ;; regexp of folder to exclude in "ecb directories"
         '(ecb-excluded-directories-regexps
            (quote (
-                    ;;"^\\(CVS\\|\\.[^xX]*\\)$"
                     "^\\.+$"
                     "^\\(TOTO\\|TITI\\)$"
                     "\\(Cvisualdspplus2\\|RTRT_res\\)$" ; RTRT
                     "\\(TOTO\\|TITI\\)$")))             ; example
 
 
-        ;; fichiers a ignorer dans les source !! lire la doc !!
+        ;; files to be ignored in "ecb source" !! RTFM !!
         '(ecb-source-file-regexps
            (quote ((".*"
                      ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
                      ("^\\.\\(emacs\\|gnus\\)$")))))
 
-        ;;;; fichiers a ignorer comme Version Control VC
+        ;;;; files to be ignored from Version Control VC
         ;;'(ecb-sources-exclude-cvsignore (quote ("_ccmwaid.inf")))
 
-        ;; regexp pour regrouper dans ecb-history
+        ;; regexp to form group in "ecb history"
         '(ecb-history-make-buckets
            (quote (
                     "ccn4_pm4s"
@@ -182,11 +166,11 @@
 
 (custom-set-variables
 
-  ;;;; demande a chaque fois qu'un buffer est fermer si il doit etre supprimer
-  ;;;; de la liste ecb-history
+  ;;;; ask each time I kill a buffer if I want keep it in "ecb history"
+  ;;;; a pain to ask each time...
   ;;'(ecb-kill-buffer-clears-history (quote ask))
 
-  ;; comment afficher les fonctions dans "ecb methods"
+  ;; how to show functions in "ecb methods"
   '(ecb-show-tags
      (quote ((default
                (include collapsed nil)
@@ -197,8 +181,8 @@
                (label hidden nil)
                (t collapsed nil))
 
-              ;; mode C (collapsed = arborescence ; flattened = a plat
-              ;; nil = pas de tri)
+              ;; mode C (collapsed = tree ; flattened = flat
+              ;; nil = no order)
               (c-mode
                 (include collapsed nil)
                 (parent collapsed nil)
@@ -210,7 +194,7 @@
                 (t collapsed nil))
               )))
 
-  ;; aucune idee
+  ;; no idea??
   '(ecb-type-tag-expansion
      (quote ((default
                "class"
@@ -220,13 +204,14 @@
               (c-mode))
        ))
 
-  ;; desactive la gestion des systemes de controle de version (VC)
+  ;; disable Version Control for ecb
   '(ecb-vc-enable-support nil)
 
-  ;;;; donne la fonction courrante dans la barre d'etat
+  ;;;; show current function inf modeline
+  ;;;; see semantic
   ;;'(which-function-mode t)
 
-  ;; ajoute buffers que je veux afficher dans la window de compilation
+  ;; add all buffers name I want in the compil window of ecb
   '(ecb-compilation-buffer-names
      (quote (
               ("*Calculator*")
@@ -255,27 +240,25 @@
               ("\\*Symref .*" . t)
               ("*ECB Analyse*"))))
 
-
   ;; auto expand tree
   '(ecb-auto-expand-tag-tree-collapse-other (quote only-if-on-tag))
   '(ecb-expand-methods-switch-off-auto-expand nil)
 
-;; do not prescan the directory for emptyness
+  ;; do not prescan the directory for emptyness
   '(ecb-prescan-directories-for-emptyness nil)
 
-;; do not process file without semantic
+  ;; do not process file without semantic
   '(ecb-process-non-semantic-files nil)
   ) ; (custom-variables
 
 (custom-set-variables
-  ;; permet de modifier le fichier TAGS lors de l'ouverture de fichier
+  ;; tags file can be modified when a file is opened
   '(tags-loop-revert-buffers t)
   ;;
-  ;; couleur des lignes trouver dans le buffer *Tag List*
+  ;; color of lines find in *Tag List*
   '(tags-tag-face (quote match)))
 
-;; permet a ecb de prendre la main lors de l'ouverture de la fenetre de
-;; compilation/grep/...
+;; let ecb take control of opening of compil window
 (add-hook 'ecb-activate-hook
   (lambda ()
     (let ((compwin-buffer (ecb-get-compile-window-buffer)))
@@ -284,5 +267,41 @@
         (ecb-toggle-compile-window -1)))))
 
 ) ; (when (try-require 'ecb)
+
+;; The adviced version of switch-to-buffer-other-window can redraw the layout
+;; (e.g. if the buffer in the compile-window is the slave and the
+;; compile-window has been made visible), so <window> in the code below can be
+;; a destroyed window-object! we have to prevent from this (e.g. by selecting
+;; the window before by number).
+(when-ecb-running-emacs
+ (defecb-advice master-says around ecb-compatibility-advices
+   "Makes the function compatible with ECB."
+   (if (or (not ecb-minor-mode)
+           (not (equal (selected-frame) ecb-frame)))
+       (ecb-with-original-basic-functions ad-do-it)
+     (if (null (buffer-live-p (get-buffer master-of)))
+         (error "Slave buffer has disappeared")
+       (let ((window  (selected-window))
+             (point-loc (ecb-where-is-point))
+             (p (point)))
+         (if (not (eq (window-buffer window) (get-buffer master-of)))
+             (switch-to-buffer-other-window master-of))
+         (if (ad-get-arg 0)
+             (condition-case nil
+                 (apply (ad-get-arg 0) (ad-get-arg 1))
+               (error nil)))
+         (select-window (case (car point-loc)
+                          (ecb
+                           (ecb-get-ecb-window-by-number (cdr point-loc)))
+                          (edit
+                           (ecb-get-edit-window-by-number (cdr point-loc)))
+                          (compile
+                           ecb-compile-window)
+                          (minibuf
+                           (minibuffer-window ecb-frame))
+                          (other-dedicated
+                           (ecb-get-window-by-number (cdr point-loc)))))
+         (goto-char (point))))))
+   )
 
 ;;; mode-ecb.el ends here

@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-display-windows-buffers'
 
 ;;; Change Log:
+;; 2012-03-20 (1.2)
+;;    translate comments in english
 ;; 2012-03-20 (1.1)
 ;;    add buffer name to list of compilation window
 ;; 2011-03-10 (1.0)
@@ -57,25 +59,24 @@
 (add-to-list 'same-window-regexps "\\*Help\\*\\(\\|<[0-9]+>\\)")
 (add-to-list 'same-window-regexps "\\*Symref .*")
 
-;; affiche la limite du buffer sur la gauche
-;; represente avec fleches et petit L pour la EOF
+;; display an arrows or a corner at left to show beginning and ending of a
+;; file
 (setq-default indicate-buffer-boundaries (quote left))
 
 ;;
 ;;;; TRANSPARENCY
 ;; REQUIREMENT: var     `section-display-windows-buffers-transparency'
 (when section-display-windows-buffers-transparency (message "    6.1.1 Transparency...")
-  ;; permet de rendre transparent tout emacs
+  ;; the whole window of Emacs will be transparent
   (set-frame-parameter (selected-frame) 'alpha '(90 90))
   (add-to-list 'default-frame-alist '(alpha 90 90))
   (message "    6.1.1 Transparency... Done"))
 
-
-;; affiche 5 ligne en commun lors d'une page suivante/precedente
+;; after a PageUp or Down, it will display 5 shared lines
 (custom-set-variables
   '(next-screen-context-lines 5))
 
-;;; do not work properly
+;;; do not work as expected
 ;;; (custom-set-faces
 ;;;   '(default ((t (:stipple "d:/wallpaper.png")))))
 

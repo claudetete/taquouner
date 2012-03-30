@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: September 2010
 ;; Last-Updated: March 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2012-03-30 (1.4)
+;;    translate comments in english
 ;; 2012-03-02 (1.3)
 ;;    add condition about semantic
 ;; 2011-08-10 (1.2)
@@ -47,14 +49,14 @@
 ;;; ETAGS
 ;; REQUIREMENT: var     `section-shortcut-tags-exhuberant-ctags'
 (when section-shortcut-tags-exhuberant-ctags (message "    8.7.1 Etags Shortcuts...")
-  ;; completion avec le fichier de tags (affiche une liste)
+  ;; completion with taag file (show a list)
   (global-set-key       [?\C-/]                 'complete-tag)
-  ;; recherche dans le fichier de tags
+  ;; search in tag file
   (global-set-key       "\C-c\,"                'tags-search)
-  ;; resultat suivant dans la recherche dans le fichier de tags
+  ;; next result for tag search
   (global-set-key       [\C-,]                  'tags-loop-continue)
 
-  ;; resultat precedent dans la recherche dans le fichier de tags
+  ;; previous result for tag search
   (global-set-key       [\C->]                  'pop-tag-mark)
   (message "    8.7.1 Etags Shortcuts... Done"))
 
@@ -73,32 +75,32 @@
       ;; find tag
       (global-set-key   "\M-."                  'gtags-find-tag)
 
-      ;; resultat precedent dans la recherche dans le fichier de tags
+      ;; go back after find tag
       (global-set-key   "\M-*"                  'gtags-pop-stack)
       (global-set-key   (kbd "M-<kp-multiply>") 'gtags-pop-stack)
       ) ; if section-mode-cedet-semantic nil
 
-    ;; recherche le fichier (pour ...-file-custom voir gtags modifie)
+    ;; find file in the gnu global project (regexp) (need new function of gtags see function.el)
     (global-set-key     "\C-cf"                 'gtags-find-file)
     (global-set-key     "\C-cf"                 'gtags-find-file-custom)
 
-    ;; find all references of regex
+    ;; find all references (regexp)
     (global-set-key       (kbd "C-M-.")         'gtags-find-with-grep)
     (message "    8.7.2 Gtags Shortcuts... Done")
     ) ; when section-shortcut-tags-gnu-global
   ) ; when section-mode-gnu-global
 
-;; surligner toute les occurences 'regex'
+;; highlight all occurences (regexp)
 (global-set-key         "\C-cx"                 'highlight-regexp)
 
-;; rechercher toutes les occurences
-;; (mode de recherche le plus proche des editeurs classiques)
+;; search all occurences in the current buffer
+;; (more like modern graphical editor)
 (global-set-key         "\C-ce"                 'occur)
 
 ;;
 ;;; DATA DEBUG
 ;; REQUIREMENT: var     `section-mode-c-data-debug'
-;; evaluation d'une variable
+;; ??
 (when section-mode-c-data-debug
   (global-set-key       "\M-:"                  'data-debug-eval-expression))
 

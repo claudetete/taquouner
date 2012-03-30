@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shorcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.0
+;; Version: 1.1
 ;; Created: October 2006
-;; Last-Updated: March 2011
+;; Last-Updated: March 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-03-30 (1.1)
+;;    split .emacs file
 ;; 2011-03-10 (1.0)
 ;;    split .emacs file
 ;; 2006-10-13 (0.1)
@@ -38,27 +40,30 @@
 
 
 ;;; Code:
-;; changement de fenetre
+;; switch between window (like 'C-x o' but can be easily repeat
 (global-set-key         "\M-s"                  'other-window)
 
-;; creer fonction pour eviter d'avoir une erreur si est au bord
-;; aller a la window de gauche (stealing from biquette)
+;; go to the next left window (stealing from biquette)
+;; (need manage error when there is no window at left)
 (global-set-key         [M-left]                'windmove-left)
 ;;
-;; aller a la window de droite (stealing from biquette)
+;; go to the next right window (stealing from biquette)
+;; (need manage error when there is no window at right)
 (global-set-key         [M-right]               'windmove-right)
 ;;
-;; aller a la window du haut (stealing from biquette)
+;; go to the next up window (stealing from biquette)
+;; (need manage error when there is no window at up)
 (global-set-key         [M-up]                  'windmove-up)
 ;;
-;; aller a la window du bas (stealing from biquette)
+;; go to the next down window (stealing from biquette)
+;; (need manage error when there is no window at down)
 (global-set-key         [M-down]                'windmove-down)
 
-;; modifier taille windows plus facilement /* avant `C-x {' */
-;; vericalement :
+;; resize window more easily (before `C-x {'...)
+;; verical
 (global-set-key         (kbd "<C-S-up>")        'enlarge-window)
 (global-set-key         (kbd "<C-S-down>")      'shrink-window)
-;; horizontalement :
+;; horizontal
 (global-set-key         (kbd "<C-S-left>")      'enlarge-window-horizontally)
 (global-set-key         (kbd "<C-S-right>")     'shrink-window-horizontally)
 
