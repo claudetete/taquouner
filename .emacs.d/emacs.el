@@ -93,44 +93,45 @@
 ;;  - make a option to have cedet in Emacs or from repo
 ;;  - try rect-mark mode/plugin
 ;;  - put all comments in english
-;;  - essayer le mode browse-kill-ring
-;;  - utiliser les mark dans un buffer avec le mode bm.el
+;;  - try browse-kill-ring mode
+;;  - use mark in a buffer with bm.el mode
 ;;
 ;; DONE
-;;  - configurer semantic
-;;  -- utiliser gcc pour changer couleur ifdef (can be done with EDE and
-;;     semantic but doesn not work correctly)
-;;  - gerer windows ou linux proprement
-;;  - utiliser gcc pour faire le preprocessing des ifdef et autres macro
-;;  - utiliser GNU/Global pour gerer un projet et tag
-;;  - essayer un systeme de projet/session
-;;  - utiliser le mode intelligent pc-keys.el
-;;  - condition pour rendre parametrable
-;;  - message lors du chargement
-;;  - gestion de l'environnement
-;;  - changement de buffer sans tous les buffers Emacs
-;;  - fonction afficher suivant l'edition (voir ecb methods)
-;;  - couleurs grep /* virer underline en fond gris */
-;;  - grep ou autre pour definition et declaration avec chemin par defaut
-;;  - configurer ecb + raccourci + bug ouverture new window
-;;  - utiliser etags (et pas ctags) avec raccourci M-.  et C-/
-;;  - configurer speedbar  /* chiant sans raccourci correct */
-;;  - ajouter raccourci et fonction pour header
-;;  - ajouter speedbar
-;;  - ajouter bookmark + raccourci
-;;  - numeros des lignes
-;;  - selection avec shift
-;;  - selection en couleur
-;;  - police d'ecriture
-;;  - ligne courante en surbrillance
-;;  - couleur code
-;;  - completion respecte la casse
-;;  - deplace le curseur par mot/paragraphe avec M-fleches
-;;  - ne plus taper yes a la sortie
-;;  - insert fais un suppr
-;;  - suppression des espaces inutiles en fin de lignes
-;;  - utilisation de dired+  qui permet une navigation plus aiser
-;;  - ajoute fonctionnalites a "end" et "home" x1, x2 et x3
+;;  - configure semantic
+;;  -- use gcc to hide/show #ifdef... (can be done with EDE and semantic but
+;;     doesn not work correctly (GNU Global fault)) but it is configured for
+;;     preproc macro
+;;  - manage properly windows or linux
+;;  - use gcc for preprocessing of ifdef etc
+;;  - use GNU/Global to manage project and tag
+;;  - try system of project/session (not used)
+;;  - use pc-keys.el mode
+;;  - put condition to make it parametrable
+;;  - put message when loading
+;;  - manage environment
+;;  - switch buffer without all *buffer*
+;;  - show current function in ecb methods window
+;;  - put colors with grep (remove underline and put in grey background)
+;;  - grep definition and declaration with default path
+;;  - configure ecb + shortcut + bug opening new window
+;;  - use etags (and not ctags) with shortcut M-.  et C-/
+;;  - configure speedbar (it's a pain without good shortcut */
+;;  - add shortcut and function for header
+;;  - add speedbar
+;;  - add bookmark + shortcut
+;;  - line number
+;;  - selection with shift
+;;  - selection in color
+;;  - font
+;;  - highlight current line
+;;  - color code
+;;  - completion is case sensitive
+;;  - move cursor by word/paragraph with M-arrow
+;;  - do not type yes when quit
+;;  - insert do a delete
+;;  - remove trailling space
+;;  - use dired+ mode to comfy browsing
+;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
 ;; 2012-04-01 (6.6)
@@ -209,7 +210,7 @@
 ;; start the emacs server to have only one emacs client
 (server-start)
 
-;; debug ce fichier si erreur
+;; debug this fichier if error
 (setq debug-on-error t)
 
 ;; increase the size of the log *Messages*
@@ -261,8 +262,8 @@
 
 ;;
 ;;; SETTINGS
-;; (defvar section-xxx X) ou 'xxx' correspond a la section du .emacs
-;; et 'X' prend la valeur 'nil' si non inclus et 't' si inclus
+;; (defvar section-xxx X) where 'xxx' means a section of .emacs and 'X' take
+;; 'nil' or 't' value
 ;;
 ;;; ENVIRONMENT                                                         0
 ;; FILE: dotemacs/environment.el
@@ -872,8 +873,7 @@
 ;;
 ;;; CUSTOMIZE
 (when section-filecustomize (message "12 File custom...")
-  ;; les configurations modifiees par l'interface sont enregistres dans
-  ;; emacs-custom
+  ;; customize modification (made by Emacs interface) are put in custom.el
   (setq custom-file (concat dotemacs-path "/dotemacs/custom.el"))
   (load-file (concat dotemacs-path "/dotemacs/custom.el"))
   (message "12 File custom... Done"))
