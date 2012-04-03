@@ -229,7 +229,9 @@
 ;;                                      "Xebeche"
 ;;                                      "epita"
 ;;                                      "default"
-      (defvar clt-working-environment "Alstom Transport")
+;;;; put this line in the .emacs file before loading emacs.el
+(defvar clt-working-environment "Alstom Transport")
+
 
 ;;
 ;;;   DOTEMACS PATH
@@ -241,6 +243,7 @@
     (defvar dotemacs-path "d:/cygwin/usr/bin/.emacs.d"))
   ;; Alstom Transport
   ((string= clt-working-environment "Alstom Transport")
+    ;; some section are shunted in dotemacs/environment.el for terminal
     (defvar dotemacs-path "d:/Users/ctete/tools/.emacs.d"))
   ;; LEA
   ((string= clt-working-environment "LEA-arch")
@@ -272,15 +275,15 @@
   ;; OS RECOGNITION                                                     0.1
   (defvar section-environment-os-recognition t)
   ;;
-  ;; WORKING ENVIRONMENT                                                0.2
+  ;; TERMINAL VS GRAPHICS                                               0.2
+  (defvar section-environment-terminal-vs-graphics t)
+  ;;
+  ;; WORKING ENVIRONMENT                                                0.3
   (defvar section-environment-working-message t)
   ;;
-  ;; CYGWIN                                                             0.3
+  ;; CYGWIN                                                             0.4
   ;; REQUIREMENT: section-environment-os-recognition: t
   (defvar section-environment-cygwin t)
-  ;;
-  ;; TERMINAL VS GRAPHICS                                               0.4
-  (defvar section-environment-terminal-vs-graphics t)
   ;;
   ;; MS WINDOWS PERFORMANCE                                             0.5
   ;; improve performance
@@ -310,6 +313,7 @@
   (defvar section-interface-fullscreen nil)
   ;;
   ;; MODELINE                                                           1.3
+  ;; FILE: dotemacs/interface-modeline.el
   ;; set some option to add in the grey line at the bottom of each buffer
   (defvar section-interface-modeline t)
   ) ; (progn
@@ -426,7 +430,8 @@
 
   ;;
   ;; BROWSE KILL RING                                                   3.11
-  ;; mode to browse the kill ring memory (never used)
+  ;; mode to browse the kill ring memory
+  ;; yank only on the first left top window...
   (defvar section-mode-browse-kill-ring nil)
 
   ;;
@@ -498,6 +503,12 @@
   ;; GOOGLE CALENDAR                                                    3.22
   ;; to import google calendar
   (defvar section-mode-google-calendar t)
+
+  ;;
+  ;; FILL COLUMN INDICATOR                                              3.23
+  ;; show a line at fill-column (set at 80 in dotemacs/misc.el
+  ;; be careful enable truncate line
+  (defvar section-mode-fill-column-indicator t)
   ) ; (progn
 
 

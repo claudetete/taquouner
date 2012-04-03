@@ -265,8 +265,9 @@
 ;;; BROWSE KILL RING
 ;; REQUIREMENT: var     `section-mode-browse-kill-ring'
 (when section-mode-browse-kill-ring (message "  3.11 Browse Kill-Ring...")
-  (try-require 'browse-kill-ring "    ")
-  (browse-kill-ring-default-keybindings)
+  (when (try-require 'browse-kill-ring "    ")
+    (browse-kill-ring-default-keybindings))
+  (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
   (message "  3.11 Browse Kill-Ring... Done"))
 
 ;;
@@ -330,18 +331,23 @@
 ;;
 ;;; VC CLEARCASE
 ;; REQUIREMENT: var     `section-mode-vc-clearcase'
-(when section-mode-vc-clearcase (message "  3.17 VC ClearCase...")
-  (add-to-list 'load-path  (concat dotemacs-path "/plugins/vc-clearcase-3.6"))
-  (setq load-path (append load-path '(concat dotemacs-path "/plugins/vc-clearcase-3.6")))
-  (load "vc-clearcase-auto")
-  (custom-set-variables
-    '(clearcase-checkout-comment-type (quote normal))
-    ;;'(clearcase-mode-line-function nil)
-    '(clearcase-use-external-diff t)
-    '(clearcase-vtree-program "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/clearvtree.exe")
-    '(cleartool-program "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/cleartool.exe")
-    )
-  (message "  3.17 VC ClearCase... Done"))
+;;              var     `clt-working-environment' "Alstom Transport"
+(cond
+  ;; Alstom Transport ----------------------------------------------------------
+  ((string= clt-working-environment "Alstom Transport")
+    (when section-mode-vc-clearcase (message "  3.17 VC ClearCase...")
+      (add-to-list 'load-path  (concat dotemacs-path "/plugins/vc-clearcase-3.6"))
+      (setq load-path (append load-path '(concat dotemacs-path "/plugins/vc-clearcase-3.6")))
+      (load "vc-clearcase-auto")
+      (custom-set-variables
+        '(clearcase-checkout-comment-type (quote normal))
+        '(clearcase-use-external-diff t)
+        '(clearcase-vtree-program "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/clearvtree.exe")
+        '(cleartool-program "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/cleartool.exe")
+        )
+      (message "  3.17 VC ClearCase... Done"))
+    ) ; Alstom Transport
+  ) ; cond ---------------------------------------------------------------------
 
 ;;
 ;;; CLEARCASE
@@ -386,19 +392,37 @@
 
 ;;
 ;;; GOOGLE CALENDAR
-;; REQUIREMENT: var     `section-mode-auto-highlight-symbol'
+;; REQUIREMENT: var     `section-mode-google-calendar'
 (when section-mode-google-calendar (message "  3.22 Google Calendar...")
   ;; can import google calendar in Emacs calendar
   (when (try-require 'icalendar)
     (when (try-require 'google-calendar)
       (setq google-calendar-user           "personne146@gmail.com")
       (setq google-calendar-code-directory (concat dotemacs-path "/plugins/google"))
-        (setq google-calendar-directory      "~/tmp")
-        (setq google-calendar-url            "http://www.google.com/calendar/ical/personne146%40gmail.com/private-9d0820c331c8b9b271a921d00fe017aa/basic.ics")
-        (setq google-calendar-auto-update    t)
-        (google-calendar-download)
+      (setq google-calendar-directory      "~/tmp")
+      (setq google-calendar-url            "http://www.google.com/calendar/ical/personne146%40gmail.com/private-/basic.ics")
+      (setq google-calendar-auto-update    t)
+      (google-calendar-download)
       ))
   (message "  3.22 Google Calendar... Done"))
+
+;;
+;;; FILL COLUMN INDICATOR
+;; REQUIREMENT: var     `section-mode-fill-column-indicator'
+(when section-mode-fill-column-indicator (message "  3.23 Fill Column Indicator...")
+  ;; can import google calendar in Emacs calendar
+  (when (try-require 'fill-column-indicator)
+    ;; width of line
+    (setq fci-rule-width 1)
+    ;; color of line
+    (setq fci-rule-color "grey15")
+    ;; only in C mode
+    (add-hook 'c-mode-hook 'fci-mode)
+    (add-hook 'c++-mode-hook 'fci-mode)
+    ;;;; to show for all files
+    ;;(add-hook 'after-change-major-mode-hook 'fci-mode)
+    )
+  (message "  3.23 Fill Column Indicator... Done"))
 
 
 (custom-set-variables

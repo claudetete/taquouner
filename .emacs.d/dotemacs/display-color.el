@@ -57,14 +57,14 @@
     ;; Choose what theme you want
     (when (try-require 'color-theme "    ")
       ;; DARK
-      (load-file (concat dotemacs-path "/plugins/themes/color-theme-clt-mm.el"))
-      (color-theme-clt)
+      ;;(load-file (concat dotemacs-path "/plugins/themes/color-theme-clt-mm.el"))
+      ;;(color-theme-clt)
       ;;;; white on black, light, string in orange, selection in light blue
       ;;(color-theme-clarity)
       ;;;; dark turquoise background
       ;;(color-theme-classic)
       ;;;; dark but ok
-      ;;(color-theme-dark-laptop)
+      ;(color-theme-dark-laptop)
       ;;;; psychedelic
       ;;(color-theme-euphoria)
       ;;;; gnome color (dark turqoise background)
@@ -108,15 +108,16 @@
       ;; put all colors only when run graphical
       (when running-in-graphical
         (set-face-background 'default "black")
-        (set-face-foreground 'default "white"))
+        (set-face-foreground 'default "white")
+        (custom-set-faces
+          ;; no 3d style in state bar (mode-line)
+          '(mode-line ((((class color) (min-colors 88)) (:background "#5E4545" :foreground "grey78"))))
+          '(mode-line-highlight ((((class color) (min-colors 88)) nil))))
+        )
 
       (custom-set-faces
         ;; grey highlight instead of underline
-        '(underline ((((supports :underline t)) (:background "grey20"))))
-
-        ;; no 3d style in state bar (mode-line)
-        '(mode-line ((((class color) (min-colors 88)) (:background "grey75" :foreground "black"))))
-        '(mode-line-highlight ((((class color) (min-colors 88)) nil))))
+        '(underline ((((supports :underline t)) (:background "grey20")))))
       (message "    6.5.1 Color Misc... Done"))
 
 ;;
@@ -183,7 +184,8 @@
       (set-face-foreground 'font-lock-comment-face "OrangeRed2")
       ;;
       ;; style and color of current line (dark grey)
-      (set-face-background 'hl-line "gray20")
+      (when running-in-graphical
+        (set-face-background 'hl-line "gray20"))
       ;;
       ;; style and color of cursor (pink)
       (set-face-background 'cursor "HotPink")

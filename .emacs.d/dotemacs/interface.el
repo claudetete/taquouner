@@ -82,63 +82,7 @@
 ;;; MODELINE
 ;; REQUIREMENT: var     `section-interface-modeline'
 (when section-interface-modeline (message "  1.3 Modeline...")
-  ;; show column number in modeline
-  (column-number-mode t)
-
-  ;; show time in 24H format (example 23:59)
-  (setq display-time-24hr-format t)
-  ;;
-  ;; show time and date in modeline
-  (setq display-time-day-and-date t)
-
-  ;; show date in european format (example: jeu. 29 mars)
-  (custom-set-variables
-    '(display-time-string-forms
-       (quote
-         ((if
-            (and
-              (not display-time-format)
-              display-time-day-and-date)
-            (format-time-string "%a %e %b " now) "")
-           (propertize
-             (format-time-string
-               (or display-time-format
-                 (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
-               now)
-             (quote help-echo)
-             (format-time-string "%a %e %b, %Y" now))
-           load
-           (if mail
-             (concat " "
-               (propertize display-time-mail-string (quote display)
-                 (\` (when
-                       (and display-time-use-mail-icon
-                         (display-graphic-p))
-                       (\,@ display-time-mail-icon)
-                       (\,@ (if
-                              (and display-time-mail-face
-                                (memq
-                                  (plist-get
-                                    (cdr display-time-mail-icon)
-                                    :type)
-                                  (quote (pbm xbm))))
-                              (let
-                                ((bg
-                                   (face-attribute display-time-mail-face
-                                     :background)))
-                                (if
-                                  (stringp bg)
-                                  (list :background bg)))))))
-                 (quote face) display-time-mail-face (quote help-echo) "You have new mail; mouse-2: Read mail" (quote mouse-face) (quote mode-line-highlight) (quote local-map)
-                 (make-mode-line-mouse-map (quote mouse-2) read-mail-command)))
-             ""))))
-    )
-  ;;
-  ;; show time in modeline
-  (display-time-mode t)
-
-  ;; display size of file in the modeline
-  (size-indication-mode t)
+  (load-file (concat dotemacs-path "/dotemacs/interface-modeline.el"))
   (message "  1.3 Modeline... Done"))
 
 ;;

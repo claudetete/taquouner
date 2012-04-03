@@ -20,9 +20,9 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment'
 
 ;;; Change Log:
+;; 2012-04-03 (1.6)
+;;    add terminal environment to Alstom Transport
 ;; 2012-03-28 (1.5)
 ;;    translate comments in english
 ;; 2012-03-02 (1.4)
@@ -37,7 +39,7 @@
 ;; 2012-03-02 (1.3)
 ;;    add/change/remove some path
 ;; 2011-07-09 (1.2)
-;;    add running-graphics or terminal
+;;    add running-in-graphical or terminal
 ;; 2011-04-21 (1.1)
 ;;    add running-on-ms-windows or gnu-linux
 ;; 2010-10-11 (1.0)
@@ -67,9 +69,25 @@
   (message "  0.1 OS Recognition... Done"))
 
 ;;
+;;; TERMINAL VS GRAPHICS
+(when section-environment-terminal-vs-graphics (message "  0.2 Terminal VS Graphics...")
+  ;; or (display-graphic-p) ? it works like this in MS Windows
+  (if (window-system)
+    (progn
+      (defvar running-in-graphical t)
+      (defvar running-in-terminal nil)
+      )
+    (progn
+      (defvar running-in-graphical nil)
+      (defvar running-in-terminal t)
+      )
+    )
+  (message "  0.2 Terminal VS Graphics... Done"))
+
+;;
 ;;; WORKING ENVIRONMENT
 ;; only displayed message (settings are done in ../emacs.el)
-(when section-environment-working-message (message "  0.2 Working Environment...")
+(when section-environment-working-message (message "  0.3 Working Environment...")
   (cond
     ;; Magneti Marelli ---------------------------------------------------------
     ((string= clt-working-environment "Magneti Marelli")
@@ -78,16 +96,40 @@
 
     ;; Alstom Transport --------------------------------------------------------
     ((string= clt-working-environment "Alstom Transport")
-      (message "    * Alstom Transport")
+      (if running-in-graphical
+        (message "    * Alstom Transport")
+        (progn
+          (setq dotemacs-path "/cygdrive/d/Users/ctete/tools/.emacs.d")
+          ;; can overwrite some option from ../emacs.el
+          (setq section-environment-elpa nil)
+          (setq section-display-color nil)
+          ;;(setq section-display-color-theme t)
+          (setq section-display-color-mode nil)
+          (setq section-display-color-grep nil)
+          (setq section-display-color-ecb nil)
+          (setq section-mode-cedet nil)
+          (setq section-mode-vc-clearcase nil)
+          (setq section-mode-clearcase nil)
+          (setq section-mode-google-calendar nil)
+          (setq section-display-windows-buffers-transparency nil)
+          (setq section-display-ecb nil)
+          (setq section-display-color-ecb nil)
+          (setq section-shortcut-ecb nil)
+          (setq section-shortcut-semantic nil)
+          (setq section-mouse nil)
+          (setq section-misc-calendar nil)
+          (message "    * Alstom Transport Cygwin")
+          )
+        ) ; if
       ) ; Alstom Transport
 
     ) ; cond -------------------------------------------------------------------
-  (message "  0.2 Working Environment:... Done"))
+  (message "  0.3 Working Environment:... Done"))
 
 ;;
 ;;; CYGWIN
 ;; REQUIREMENT: var     `section-environment-os-recognition'
-(when section-environment-cygwin (message "  0.3 Cygwin...")
+(when section-environment-cygwin (message "  0.4 Cygwin...")
   (if running-on-ms-windows
     ;; to integrate cygwin with emacs (mostly for grep-find)
     (progn
@@ -101,12 +143,23 @@
           ) ; Magneti Marelli
 
         ;; Alstom Transport ----------------------------------------------------
-        ((string= clt-working-environment"Alstom Transport")
-          (defvar cygwin-bin "d:/cygwin/bin")
-          (defvar cv-bin "C:/Program Files/IBM/RationalSDLC/ClearCase/bin")
-          (defvar gnu-bin "d:/Users/ctete/tools/gnuwin32/bin")
-          ;; I put the whole PATH Environment variable to work with clearcase
-          (defvar win-path "d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;c:/Program Files/IBM/RationalSDLC/common;c:/Program Files/PRQA/PDFReports/texmf/miktex/bin;c:/Program Files/Analog Devices/VisualDSP;c:/Program Files/Analog Devices/VisualDSP/System;c:/WINDOWS/system32;c:/WINDOWS;c:/WINDOWS/System32/Wbem;c:/Program Files/QuickTime/QTSystem;c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;d:/system/Notes;c:/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;c:/Program Files/Rational/TestRealTime/bin/intel/win32;c:/Program Files/Rational/common;c:/Program Files/Lotus/Notes;c:/Program Files/IBM/RationalSDLC/ClearCase/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;d:/Users/ctete/tools/gnuwin32/bin;C:/Python27")
+        ((string= clt-working-environment "Alstom Transport")
+          (if running-in-graphical
+            (progn
+              (defvar cygwin-bin "d:/cygwin/bin")
+              (defvar cv-bin "C:/Program Files/IBM/RationalSDLC/ClearCase/bin")
+              (defvar gnu-bin "d:/Users/ctete/tools/gnuwin32/bin")
+              ;; I put the whole PATH Environment variable to work with clearcase
+              (defvar win-path "d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;c:/Program Files/IBM/RationalSDLC/common;c:/Program Files/PRQA/PDFReports/texmf/miktex/bin;c:/Program Files/Analog Devices/VisualDSP;c:/Program Files/Analog Devices/VisualDSP/System;c:/WINDOWS/system32;c:/WINDOWS;c:/WINDOWS/System32/Wbem;c:/Program Files/QuickTime/QTSystem;c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;d:/system/Notes;c:/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;c:/Program Files/Rational/TestRealTime/bin/intel/win32;c:/Program Files/Rational/common;c:/Program Files/Lotus/Notes;c:/Program Files/IBM/RationalSDLC/ClearCase/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;d:/Users/ctete/tools/gnuwin32/bin;C:/Python27")
+              )
+            (progn
+              (defvar cygwin-bin "")
+              (defvar cv-bin "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin")
+              (defvar gnu-bin "")
+              ;; I put the whole PATH Environment variable to work with clearcase
+              (defvar win-path "/cygdrive/d/cygwin/bin;/cygdrive/c/WINDOWS;/cygdrive/c/WINDOWS/System32;/cygdrive/d/cygwin/bin;/cygdrive/c/WINDOWS;/cygdrive/c/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;/cygdrive/c/Program Files/IBM/RationalSDLC/common;/cygdrive/c/Program Files/PRQA/PDFReports/texmf/miktex/bin;/cygdrive/c/Program Files/Analog Devices/VisualDSP;/cygdrive/c/Program Files/Analog Devices/VisualDSP/System;/cygdrive/c/WINDOWS/system32;/cygdrive/c/WINDOWS;/cygdrive/c/WINDOWS/System32/Wbem;/cygdrive/c/Program Files/QuickTime/QTSystem;/cygdrive/c/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;/cygdrive/d/system/Notes;/cygdrive/c/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;/cygdrive/c/Program Files/Rational/TestRealTime/bin/intel/win32;/cygdrive/c/Program Files/Rational/common;/cygdrive/c/Program Files/Lotus/Notes;/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin;/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;/cygdrive/d/Users/ctete/tools/gnuwin32/bin;/CYGDRIVE/C/Python27")
+              )
+            )
           ) ; Alstom Transport
 
         ) ; cond ---------------------------------------------------------------
@@ -116,23 +169,7 @@
         '(win-path cygwin-bin gnu-bin cv-bin))
       )
     )
-  (message "  0.3 Cygwin... Done"))
-
-;;
-;;; TERMINAL VS GRAPHICS
-(when section-environment-terminal-vs-graphics (message "  0.4 Terminal VS Graphics...")
-  ;; or (display-graphic-p) ? it works like this in MS Windows
-  (if (window-system)
-    (progn
-      (defvar running-in-graphical t)
-      (defvar running-in-terminal nil)
-      )
-    (progn
-      (defvar running-in-graphical nil)
-      (defvar running-in-terminal t)
-      )
-    )
-  (message "  0.4 Terminal VS Graphics... Done"))
+  (message "  0.4 Cygwin... Done"))
 
 ;;
 ;;; MS WINDOWS PERFORMANCE
@@ -166,13 +203,14 @@
 
       ;; Alstom Transport ------------------------------------------------------
       ((string= clt-working-environment"Alstom Transport")
-        (custom-set-variables
-          '(ediff-cmp-program "d:/cygwin/bin/cmp.exe")
-          '(ediff-diff-program "d:/cgwin/bin/diff.exe")
-          '(ediff-diff3-program "d:/cygwin/bin/diff3.exe")
-          '(shell-file-name "D:/cygwin/bin/bash.exe")
-          ;;'(shell-file-name "C:/WINDOWS/system32/cmd.exe")
-          )
+        (when running-in-graphical
+          (custom-set-variables
+            '(ediff-cmp-program "d:/cygwin/bin/cmp.exe")
+            '(ediff-diff-program "d:/cgwin/bin/diff.exe")
+            '(ediff-diff3-program "d:/cygwin/bin/diff3.exe")
+            '(shell-file-name "D:/cygwin/bin/bash.exe")
+            ;;'(shell-file-name "C:/WINDOWS/system32/cmd.exe")
+            ))
         (setq explicit-bash-args '("--login" "-i"))
         ) ; Alstom Transport
       ) ; cond -----------------------------------------------------------------

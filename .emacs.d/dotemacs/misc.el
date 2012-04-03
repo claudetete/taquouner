@@ -62,7 +62,7 @@
 
 ;; fill-xxx is set with a width of 78 character
 (custom-set-variables
-  '(fill-column 78))
+  '(fill-column 80))
 
 ;; Set web browser to use
 ;; I don't use it
@@ -202,7 +202,8 @@
 
     ;; Alstom Transport --------------------------------------------------------
     ((string= clt-working-environment "Alstom Transport")
-      (setq w32shell-cygwin-bin "d:/cygwin/bin/zsh.exe")
+      (when running-in-graphical
+        (setq w32shell-cygwin-bin "d:/cygwin/bin/zsh.exe"))
       ) ; Alstom Transport
 
     ) ; cond -------------------------------------------------------------------
