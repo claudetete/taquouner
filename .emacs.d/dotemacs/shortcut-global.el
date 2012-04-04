@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-04-03 (1.4)
+;;    add shortcut for fill-paragraph
 ;; 2012-03-30 (1.3)
 ;;    translate comments in english
 ;; 2011-08-03 (1.2)
@@ -116,6 +118,9 @@
 
 ;; incremental search at point
 (global-set-key         (kbd "C-M-x")           'isearch-forward-at-point)
+
+;; fill paragraph at point
+(global-set-key         (kbd "C-c ]")           'fill-paragraph)
 
 ;;
 ;;; HOME/END

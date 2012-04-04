@@ -400,7 +400,7 @@
       (setq google-calendar-user           "personne146@gmail.com")
       (setq google-calendar-code-directory (concat dotemacs-path "/plugins/google"))
       (setq google-calendar-directory      "~/tmp")
-      (setq google-calendar-url            "http://www.google.com/calendar/ical/personne146%40gmail.com/private-/basic.ics")
+      (setq google-calendar-url            "http://www.google.com/calendar/ical/personne146%40gmail.com/private-9d0820c331c8b9b271a921d00fe017aa/basic.ics")
       (setq google-calendar-auto-update    t)
       (google-calendar-download)
       ))
@@ -423,6 +423,23 @@
     ;;(add-hook 'after-change-major-mode-hook 'fci-mode)
     )
   (message "  3.23 Fill Column Indicator... Done"))
+
+;;
+;;; MUSE
+;; REQUIREMENT: var     `section-mode-muse'
+(when section-mode-muse (message "  3.24 Muse...")
+  (add-to-list 'load-path  (concat dotemacs-path "/plugins/muse-3.20/bin"))
+  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/muse-3.20/bin")) load-path))
+
+  (try-require 'muse-mode "    ")     ; load authoring mode
+
+  (try-require 'muse-html "    ")     ; load publishing styles I use
+  (try-require 'muse-latex "    ")
+  (try-require 'muse-texinfo "    ")
+  (try-require 'muse-docbook "    ")
+
+  (try-require 'muse-project "    ")  ; publish files in projects
+  (message "  3.24 Muse... Done"))
 
 
 (custom-set-variables

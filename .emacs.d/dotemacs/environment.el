@@ -75,10 +75,12 @@
   (if (window-system)
     (progn
       (defvar running-in-graphical t)
+      (message "##########  graph")
       (defvar running-in-terminal nil)
       )
     (progn
       (defvar running-in-graphical nil)
+      (message "##########  term")
       (defvar running-in-terminal t)
       )
     )
@@ -86,7 +88,7 @@
 
 ;;
 ;;; WORKING ENVIRONMENT
-;; only displayed message (settings are done in ../emacs.el)
+;; can overwrite settings done in ../emacs.el
 (when section-environment-working-message (message "  0.3 Working Environment...")
   (cond
     ;; Magneti Marelli ---------------------------------------------------------
@@ -97,9 +99,11 @@
     ;; Alstom Transport --------------------------------------------------------
     ((string= clt-working-environment "Alstom Transport")
       (if running-in-graphical
-        (message "    * Alstom Transport")
         (progn
-          (setq dotemacs-path "/cygdrive/d/Users/ctete/tools/.emacs.d")
+          (defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-snap/common/cedet.elc"))
+          (message "    * Alstom Transport")
+          )
+        (progn
           ;; can overwrite some option from ../emacs.el
           (setq section-environment-elpa nil)
           (setq section-display-color nil)
@@ -150,7 +154,7 @@
               (defvar cv-bin "C:/Program Files/IBM/RationalSDLC/ClearCase/bin")
               (defvar gnu-bin "d:/Users/ctete/tools/gnuwin32/bin")
               ;; I put the whole PATH Environment variable to work with clearcase
-              (defvar win-path "d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;c:/Program Files/IBM/RationalSDLC/common;c:/Program Files/PRQA/PDFReports/texmf/miktex/bin;c:/Program Files/Analog Devices/VisualDSP;c:/Program Files/Analog Devices/VisualDSP/System;c:/WINDOWS/system32;c:/WINDOWS;c:/WINDOWS/System32/Wbem;c:/Program Files/QuickTime/QTSystem;c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;d:/system/Notes;c:/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;c:/Program Files/Rational/TestRealTime/bin/intel/win32;c:/Program Files/Rational/common;c:/Program Files/Lotus/Notes;c:/Program Files/IBM/RationalSDLC/ClearCase/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;d:/Users/ctete/tools/gnuwin32/bin;C:/Python27")
+              (defvar win-path "D:/Users/ctete/tools/MikTex/miktex/bin;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;c:/Program Files/IBM/RationalSDLC/common;c:/Program Files/PRQA/PDFReports/texmf/miktex/bin;c:/Program Files/Analog Devices/VisualDSP;c:/Program Files/Analog Devices/VisualDSP/System;c:/WINDOWS/system32;c:/WINDOWS;c:/WINDOWS/System32/Wbem;c:/Program Files/QuickTime/QTSystem;c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;d:/system/Notes;c:/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;c:/Program Files/Rational/TestRealTime/bin/intel/win32;c:/Program Files/Rational/common;c:/Program Files/Lotus/Notes;c:/Program Files/IBM/RationalSDLC/ClearCase/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;d:/Users/ctete/tools/gnuwin32/bin;C:/Python27")
               )
             (progn
               (defvar cygwin-bin "")

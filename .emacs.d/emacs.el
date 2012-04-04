@@ -208,7 +208,8 @@
 (message "* --[ Loading my Emacs 23.4 Cedet init file ]--")
 
 ;; start the emacs server to have only one emacs client
-(server-start)
+(if (window-system)
+  (server-start))
 
 ;; debug this fichier if error
 (setq debug-on-error t)
@@ -232,7 +233,6 @@
 ;;;; put this line in the .emacs file before loading emacs.el
 (defvar clt-working-environment "Alstom Transport")
 
-
 ;;
 ;;;   DOTEMACS PATH
 ;; define path of dotemacs
@@ -244,7 +244,9 @@
   ;; Alstom Transport
   ((string= clt-working-environment "Alstom Transport")
     ;; some section are shunted in dotemacs/environment.el for terminal
-    (defvar dotemacs-path "d:/Users/ctete/tools/.emacs.d"))
+    (if (window-system)
+      (defvar dotemacs-path "d:/Users/ctete/tools/.emacs.d")
+      (defvar dotemacs-path "/cygdrive/d/Users/ctete/tools/.emacs.d")))
   ;; LEA
   ((string= clt-working-environment "LEA-arch")
     (defvar dotemacs-path "r:/Configuration/.emacs.d"))
@@ -377,7 +379,8 @@
   ;;    "your-emacs-path/lisp/cedet"
   ;;    "your-emacs-path/lisp/speedbar.*"
   ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
-  (defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-snap/common/cedet.elc"))
+  ;;;; see in dotemacs/environment.el
+  ;;(defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-snap/common/cedet.elc"))
   (progn
     ;; SEMANTIC                                                         3.4.1
     ;; FILE: dotemacs/mode-semantic.el
@@ -509,6 +512,12 @@
   ;; show a line at fill-column (set at 80 in dotemacs/misc.el
   ;; be careful enable truncate line
   (defvar section-mode-fill-column-indicator t)
+
+  ;;
+  ;; MUSE                                                               3.24
+  ;; show a line at fill-column (set at 80 in dotemacs/misc.el
+  ;; muse mode to have nice doc
+  (defvar section-mode-muse t)
   ) ; (progn
 
 

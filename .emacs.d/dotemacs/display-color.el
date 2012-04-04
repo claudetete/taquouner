@@ -59,6 +59,8 @@
       ;; DARK
       ;;(load-file (concat dotemacs-path "/plugins/themes/color-theme-clt-mm.el"))
       ;;(color-theme-clt)
+      (load-file (concat dotemacs-path "/plugins/themes/zenburn.el"))
+      (color-theme-zenburn)
       ;;;; white on black, light, string in orange, selection in light blue
       ;;(color-theme-clarity)
       ;;;; dark turquoise background
