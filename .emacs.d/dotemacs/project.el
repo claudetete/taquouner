@@ -45,7 +45,7 @@
 ;; the order is important: display in reverse order (first->last)
 
 (cond
-  ;; Magneti Marelli------------------------------------------------------------
+  ;; Magneti Marelli -----------------------------------------------------------
   ((string= clt-working-environment "Magneti Marelli")
     ;; XL1
     (load-file "d:/ccm_wa/XL1/XL1.ede.el")
@@ -66,7 +66,7 @@
     (load-file "d:/ccm_wa/PQ36/PQ36_HL/PQ35GPHL.ede.el")
     ) ; Magneti Marelli
 
-  ;; Alstom Transport-----------------------------------------------------------
+  ;; Alstom Transport ----------------------------------------------------------
   ((string= clt-working-environment "Alstom Transport")
     ;; PM4S
     (load-file "m:/e_ctete/a2kc/soft/ccn4/ccn4_pm4s/PM4S.ede.el")
@@ -74,6 +74,10 @@
     ;;;; PM4S
     ;;(load-file "d:/Users/ctete/PM4S/src/1.2.0_RC01/PM4S.ede.el")
     ) ; Alstom Transport
+
+  ;; default -------------------------------------------------------------------
+  ((string= clt-working-environment "default")
+    ) ; default
 
   ) ; cond ---------------------------------------------------------------------
 

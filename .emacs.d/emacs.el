@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 6.6
+;; Version: 6.8
 ;; Created: October 2006
 ;; Last-Updated: April 2012
 
@@ -90,13 +90,13 @@
 ;;
 
 ;; TODO
-;;  - make a option to have cedet in Emacs or from repo
-;;  - try rect-mark mode/plugin
-;;  - put all comments in english
 ;;  - try browse-kill-ring mode
 ;;  - use mark in a buffer with bm.el mode
 ;;
 ;; DONE
+;;  - put all comments in english
+;;  - try rect-mark mode/plugin (use CUA rectangle mode)
+;;  - make a option to have cedet in Emacs or from repo
 ;;  - configure semantic
 ;;  -- use gcc to hide/show #ifdef... (can be done with EDE and semantic but
 ;;     doesn not work correctly (GNU Global fault)) but it is configured for
@@ -134,6 +134,10 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-04-019 (6.8)
+;;    add dictionary
+;; 2012-04-04 (6.7)
+;;    add perl language
 ;; 2012-04-01 (6.6)
 ;;    add elpa package manager + translate some comment in english + google
 ;;    calendar
@@ -230,7 +234,7 @@
 ;;                                      "Xebeche"
 ;;                                      "epita"
 ;;                                      "default"
-;;;; put this line in the .emacs file before loading emacs.el
+;(defvar clt-working-environment "Alstom Transport")
 (defvar clt-working-environment "Alstom Transport")
 
 ;;
@@ -248,7 +252,7 @@
       (defvar dotemacs-path "d:/Users/ctete/tools/.emacs.d")
       (defvar dotemacs-path "/cygdrive/d/Users/ctete/tools/.emacs.d")))
   ;; LEA
-  ((string= clt-working-environment "LEA-arch")
+  ((string= clt-working-environment "LEA")
     (defvar dotemacs-path "r:/Configuration/.emacs.d"))
   ;; LEA-arch
   ((string= clt-working-environment "LEA-arch")
@@ -261,6 +265,9 @@
     (defvar dotemacs-path "~/.emacs.d"))
   ;; default
   ((string= clt-working-environment "default")
+    ;; !!!
+    ;; !!! all sections are overiden in dotemacs/environment.el
+    ;; !!!
     (defvar dotemacs-path "~/.emacs.d"))
   )
 
@@ -281,18 +288,22 @@
   (defvar section-environment-terminal-vs-graphics t)
   ;;
   ;; WORKING ENVIRONMENT                                                0.3
+  ;; REQUIREMENT:       section-environment-terminal-vs-graphics
   (defvar section-environment-working-message t)
   ;;
   ;; CYGWIN                                                             0.4
-  ;; REQUIREMENT: section-environment-os-recognition: t
+  ;; REQUIREMENT:       section-environment-os-recognition
+  ;;                    section-environment-terminal-vs-graphics
   (defvar section-environment-cygwin t)
   ;;
   ;; MS WINDOWS PERFORMANCE                                             0.5
+  ;; REQUIREMENT:       section-environment-os-recognition
   ;; improve performance
   (defvar section-environment-ms-windows-performance t)
   ;;
   ;; EXECUTABLE                                                         0.6
-  ;; REQUIREMENT: section-environment-os-recognition: t
+  ;; REQUIREMENT:       section-environment-os-recognition
+  ;;                    section-environment-terminal-vs-graphics
   (defvar section-environment-executable t)
   ;;
   ;; ELPA                                                               0.7
@@ -312,6 +323,7 @@
   (defvar section-interface-decoration t)
   ;;
   ;; FULLSCREEN                                                         1.2
+  ;; REQUIREMENT:       section-environment-os-recognition
   (defvar section-interface-fullscreen nil)
   ;;
   ;; MODELINE                                                           1.3
@@ -322,7 +334,7 @@
 
 
 ;;
-;;; FICHIERS EXTERNES                                                   2
+;;; EXTERN FILES                                                        2
 ;; FILE: dotemacs/externfiles.el
 (defvar section-external t)
 ;; load extern files which are not modes
@@ -333,6 +345,7 @@
   ;;
   ;; FONCTIONS                                                          2.2
   ;; FILE: dotemacs/functions.el
+  ;; REQUIREMENT:       section-environment-os-recognition
   ;; load custom function
   (defvar section-external-functions t)
   ;;
@@ -511,13 +524,13 @@
   ;; FILL COLUMN INDICATOR                                              3.23
   ;; show a line at fill-column (set at 80 in dotemacs/misc.el
   ;; be careful enable truncate line
-  (defvar section-mode-fill-column-indicator t)
+  (defvar section-mode-fill-column-indicator nil)
 
   ;;
   ;; MUSE                                                               3.24
   ;; show a line at fill-column (set at 80 in dotemacs/misc.el
   ;; muse mode to have nice doc
-  (defvar section-mode-muse t)
+  (defvar section-mode-muse nil)
   ) ; (progn
 
 
@@ -541,6 +554,10 @@
   ;; RTRT SCRIPT PTU                                                    4.4
   ;; set indentation style
   (defvar section-languages-rtrt-script t)
+  ;;
+  ;; PERL                                                               4.5
+  ;; set indentation style
+  (defvar section-languages-perl t)
   ) ; (progn
 
 
@@ -551,7 +568,7 @@
 (defvar section-selection t)
 (progn
   ;; SHIFT SELECTION                                                    5.1
-  ;; selection can be done with shit and arrow keys
+  ;; selection can be done with shit and arrow keys (default setting since 23.3)
   (defvar section-selection-with-shift nil)
   ) ; (progn
 
@@ -580,13 +597,15 @@
   ;;
   ;; ECB                                                                6.3
   ;; FILE: dotemacs/display-ecb.el
-  ;; REQUIREMENT: section-mode-cedet-ecb: t
+  ;; REQUIREMENT:       section-mode-cedet-ecb
   ;; set size, display, refresh and remove opening tips
   (defvar section-display-ecb t)
 
   ;;
   ;; FONT                                                               6.4
   ;; FILE: dotemacs/display-font.el
+  ;; REQUIREMENT:       section-environment-os-recognition
+  ;;                    section-environment-terminal-vs-graphics
   ;; set font in terminal or in graphic
   (defvar section-display-font t)
   (progn
@@ -604,6 +623,7 @@
   (defvar section-display-color-theme nil)
   (progn
     ;; MISC                                                             6.5.1
+    ;; REQUIREMENT:     section-environment-terminal-vs-graphics
     ;; current line highlight + full syntax coloration
     (defvar section-display-color-misc t)
 
@@ -619,6 +639,7 @@
     (defvar section-display-color-parentheses-highlight nil)
     ;;
     ;; MODE                                                             6.5.5
+    ;; REQUIREMENT:     section-environment-terminal-vs-graphics
     ;; set color for c-mode, cursor and current line
     (defvar section-display-color-mode t)
     ;;
@@ -627,6 +648,7 @@
     (defvar section-display-color-grep t)
     ;;
     ;; ECB                                                              6.5.7
+    ;; REQUIREMENT:     section-mode-cedet-ecb
     ;; set color for ecb-mode
     (defvar section-display-color-ecb t)
     ) ; (progn
@@ -648,6 +670,10 @@
   ;; FILE: dotemacs/shortcut-global.el
   ;; add global shortcut
   (defvar section-shortcut-global t)
+  (progn
+    ;; CUA                                                              8.1.1
+    (defvar section-shortcut-global-cua nil)
+    ) ; (progn
 
   ;; WINDOWS                                                            8.2
   ;; FILE: dotemacs/shortcut-windows.el
@@ -661,6 +687,7 @@
 
   ;; ECB                                                                8.4
   ;; FILE: dotemacs/shortcut-ecb.el
+  ;; REQUIREMENT:       section-mode-cedet-ecb
   ;; add shortcut to manage ecb windows
   (defvar section-shortcut-ecb t)
 
@@ -683,11 +710,13 @@
     (defvar section-shortcut-tags-exhuberant-ctags nil)
     ;;
     ;; GTAGS                                                            8.7.2
+    ;; REQUIREMENT:       section-mode-gnu-global
     (defvar section-shortcut-tags-gnu-global t)
     ) ; (progn
 
   ;; SEMANTIC                                                           8.8
   ;; FILE: dotemacs/shortcut-semantic.el
+  ;; REQUIREMENT:       section-mode-cedet-semantic
   ;; add shortcut to move in source code with semantic
   (defvar section-shortcut-semantic t)
   ) ; (progn
@@ -696,6 +725,7 @@
 ;;
 ;;; MOUSE                                                               9
 ;; FILE: dotemacs/mouse.el
+;; REQUIREMENT: section-environment-terminal-vs-graphics
 ;; smooth wheel + mouse avoid cursor when typing + lazy decoration when scroll
 (defvar section-mouse t)
 (progn
@@ -743,8 +773,12 @@
   ;;
   ;; CALENDAR                                                           11.1
   ;; set latitude/longitude + location + holidays + custom date in modeline
-  ;; lunar phase and time
+  ;; lunar phase, sunrise/sunset, time etc
   (defvar section-misc-calendar t)
+  ;;
+  ;; DICTIONARY                                                         11.2
+  ;; set default dictionary, etc
+  (defvar section-misc-dictionary t)
   ) ; (progn
 
 
@@ -769,7 +803,7 @@
   (message "1 Interface... Done"))
 
 ;;
-;;; FICHIERS EXTERNES
+;;; EXTERN FILES
 (when section-external (message "2 External files...")
   (load-file (concat dotemacs-path "/dotemacs/externfiles.el"))
   (message "2 External files... Done"))

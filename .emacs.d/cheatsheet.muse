@@ -1,145 +1,210 @@
-#author Claude TETE
-#title Cheat Sheet for shortcut in GNU/Emacs
+#title Cheat Sheet
+#desc shortcuts in GNU/Emacs
 
-<contents>
 * Introduction
 All shortcut are case sensitive. Some custom shortcut override default shortcut...
 
-
 * GNU/Emacs
 ** Macro
- - C-x (        start record macro
- - C-x )        end record macro
- - C-x C-k r    run macro on region
- - C-x e        run macro
+C-x (     | start record macro
+C-x )     | end record macro
+C-x C-k r | run macro on region
+C-x e     | run macro
 
 ** Move
- - C-M-Home     begining function
- - C-M-a        begining function
- - C-M-End      ending function
- - C-M-e        ending function
- - C-M-u        begining block
- - C-M-         ending block
- - C-M-d        move forward down one level of parentheses
- - C-M-u        move backward out of one level of parentheses
- - C-M-f        move forward accross one balanced expression
- - C-M-b        move backward accross one balanced expression
- - M-e          move forward to next end of sentence
- - C-c C-u      move backward to begining of preproc
+C-M-Home | begining function
+C-M-a    | begining function
+C-M-End  | ending function
+C-M-e    | ending function
+C-M-u    | begining block
+C-M-d    | begining of subblock
+C-M-d    | move forward down one level of parentheses
+C-M-u    | move backward out of one level of parentheses
+C-M-f    | move forward accross one balanced expression
+C-M-b    | move backward accross one balanced expression
+M-e      | move forward to next end of sentence
+C-c C-u  | move backward to begining of preproc
+M-m      | move begining of indentation
 
 ** Edit
 *** Modify
- - M-c          uppercase the first character and down others
- - M-U          uppercase the following word
+M-c           | uppercase the first character and down others
+M-U           | uppercase the following word
+M-l           | downcase the following word
 *** Select
- - M-h          select the whole block
- - C-M-h        select the whole function
+M-h           | select the whole block
+C-M-h         | select the whole function
+C-M-@         | select the whole block of source code (point must be at begining)
 *** Switch
- - C-x C-t      switch current line with previous
- - C-t          switch current character with previous
+M-t           | switch current word with next
+C-M-t         | swith current word with next (_ not in word)
+C-x C-t       | switch current line with previous
+C-t           | switch current character with previous
 *** Delete
- - C-x C-o      remove all empty line except *one*
- - M-Space      remove all space expect *one*
- - C-S-Backspace        delete the whole line
+C-x C-o       | remove all empty line except *one*
+M-Space       | remove all space expect *one*
+C-k           | delete the rest line (put in kill ring)
+C-S-Backspace | delete the whole line (put in kill ring)
 *** Insert
- - C-o          insert a new line without moving the cursor
- - M-/          completion
- - M-(          add parentheses to the region
+C-o           | insert a new line without moving the cursor
+C-M-o         | insert a new line + align with the cursor
+M-/           | completion
+M-(           | add parentheses to the region
+
+**Search
+*** Incremental
+C-s         | incremental search forward
+C-s C-s     | incremental search forward with last search
+C-r         | incremental search backward
+C-r C-r     | incremental search backward with last search
+C-M-s       | incremental regexp search forward
+C-M-s C-M-s | incremental regexp search forward with last search
+C-M-r       | incremental regexp search backward
+C-M-r C-M-r | incremental regexp search backward with last search
+M-s w       | incremental search a word (not subword)
+C-u C-Space | after incremental search go back to the start
+M-%         | start query replace (during a incremental search)
+*** Occur
+M-s o       | show each occurences in this buffer (can be rebind with at point)
+*** Minibuffer
+M-s         | Move to an earlier item in the minibuffer history that matches a regexp you enter.
+M-r         | Move to a later item in the minibuffer history that matches a regexp you enter.
+
 
 ** File
- - C-x C-q      toggle read only/read and write
+C-x C-q | toggle read only/read and write
 
 ** Display
- - C-x n n      invoke narrow (show only the region)
- - C-x n w      quit narrow
+*** Buffers
+C-x n n              | invoke narrow (show only the region)
+C-x n w              | quit narrow
+*** Windows
+C-x 2                | split horizontally the current window
+C-x 3                | split vertically the current window
+C-x 1                | show only the current window (close others)
+C-x 0                | close the current window
+C-x 5 2              | show an external window of the current window
+C-x r f              | store window configuration in a register
+C-x r j              | restore window configuration from a register
+C-x +                | balance windows
+C-x C-+              | increase font size for the current window
+C-x C--              | decrease font size for the current window
+S-Up/Down/Left/Right | move to the direction window
 
 ** Information
- - M-=          information about region
- - C-x =        information about character
+M-=       | information about region
+C-x =     | information about character
+C-u C-x = | information about text (face/color/style...)
 
 ** Rectangle
- - C-x r r      copy region/rectangle in a named register
- - C-x r i      insert a named register like a rectangle
- - C-x r t      replace a region/rectangle by a *string*
- - C-x r o      insert whitespace rectangle
- - C-x r d      delete region/rectangle
+C-x r r | copy region/rectangle in a named register
+C-x r i | insert a named register like a rectangle
+C-x r t | replace a region/rectangle by a *string*
+C-x r o | insert whitespace rectangle
+C-x r d | delete region/rectangle
 
 ** CUA Rectangle
- - C-Enter      start rectangle selection (like C-Space but for rectangle)
+C-Enter | start rectangle selection (like C-Space but for rectangle)
 
 
 ** Highlight
- - C-x w r      unhighlight regexp
+C-x w r | unhighlight regexp
 
-* Languages
- - C-M-\        indent region
- - M-;          insert a comment in the right place
- - C-c C-w      toogle subword mode (in c-mode)
- - C-c @ C-d    hide block of preproc
- - C-c @ C-s    show block of preproc
-
-
-* Calendar
- - C-c c        invoke calendar (custom)
- - d            show diary of selected day
- - S            give sunrise and sunset time
- - M            give moon phase
+** Languages
+C-M-\     | indent region
+M-;       | insert a comment in the right place
+C-c C-w   | toogle subword mode (in c-mode)
+C-c @ C-d | hide block of preproc
+C-c @ C-s | show block of preproc
 
 
-* Calc
- - C-x * c      invoke calc in a new buffer
- - C-x * *      invoke calc with last used mmode
- - C-x * q      invoke quick calc in minibuffer
- - C-x * r      grab region/rectangle into calc
- - C-x * :      grab region/rectangle and sum the columns
- - C-x * _      grab region/rectangle and sum the rows
- - C-x * x      quit calc
- - C-x * e      grab region , compute and yank the result
- - y            yank in buffer
- - $            last result
- - 16#          prefix for hexadecimal
- - 8#           prefix for octal
- - 2#           prefix for binary
+** Calendar
+C-c c | invoke calendar (custom)
+d     | show diary of selected day
+S     | give sunrise and sunset time
+M     | give moon phase
 
-* Help
- - C-h a        regexp search in help
- - C-h k        give help about shortcut
- - C-c C-b      previous topic
- - C-c C-f      next topic
- - u            ??
- - s            search
- - t            top topic
- - l            back
+
+** Calc
+C-x * c | invoke calc in a new buffer
+C-x * * | invoke calc with last used mmode
+C-x * q | invoke quick calc in minibuffer
+C-x * r | grab region/rectangle into calc
+C-x * : | grab region/rectangle and sum the columns
+C-x * _ | grab region/rectangle and sum the rows
+C-x * x | quit calc
+C-x * e | grab region , compute and yank the result
+y       | yank in buffer
+$       | last result
+16#     | prefix for hexadecimal
+8#      | prefix for octal
+2#      | prefix for binary
+
+** Help
+C-h a   | regexp search in help
+C-h k   | give help about shortcut
+C-h w   | give shortcut about function
+C-h v   | give help about a variable
+C-c C-b | previous topic
+C-c C-f | next topic
+u       | ??
+s       | search
+t       | top topic
+l       | back
 
 * Custom
 ** Window/Buffer
- - F4           kill current buffer and window
+F4        | kill current buffer and window
+M-`       | kill current buffer
+C-x C-b   | show a list of buffers
+C-c b     | show list of file/directory bookmark
+C-S-Up    | enlarge vertically window
+C-S-Down  | shrink vertically window
+C-S-Left  | enlarge horizontally window
+C-S-Right | shrink horizontally window
+*** ECB
+C-c\      | show/hide ecb window
+F2        | show/hide compile window
+C-cw      | toggle between two width of ecb window
+M-q       | go to the ecb directory window
+M-a       | go to the ecb source window
+M-z       | go to the ecb history window
+M-\       | go to the ecb method window
 
 ** Align
- - C-c p p      align region with rules of current mode
- - C-c p l      align region with regexp
- - C-c p =      align =, ==, +=, *= etc
+C-c p p | align region with rules of current mode
+C-c p l | align region with regexp
+C-c p = | align =, ==, +=, \*= etc
 *** RTRT script
- - C-c p o      align *init* for RTRT
- - C-c p ;      align *ev* for RTRT
- - C-c p [      align *init* and *ev* for RTRT
+C-c p o | align *init* for RTRT
+C-c p ; | align *ev* for RTRT
+C-c p [ | align *init* and *ev* for RTRT
 
 ** Search
 *** Occur
- - C-c e        list all occurrences in buffer
- - C-M-c        list all occurrences in buffer (default word at point)
+C-c e | list all occurrences in buffer
+C-M-c | list all occurrences in buffer (default word at point)
 *** Tags
- - M-.          go to the definition (semantic)
- - C->          go to the definition (semantic)
- - C-<          go back from definition
+M-.   | go to the definition (semantic)
+C->   | go to the definition (semantic)
+C-<   | go back from definition (semantic)
+C-M-. | find tags with grep (gtags)
 *** Files
- - C-c f        find file in project (regexp)
+C-c f | find file in project (regexp with gtags)
+*** Grep/Compile
+F3    | next match/error
+F5    | previous match/error
+F6    | next occur
+F10   | invoke compilator
 
 **  Edit
+*** Selection
+C-M-z | select word under pointer
 *** Delete
- - M-d          delete forward word
- - C-z          delete backward word
- - C-(          delete parenthese with balanced expression
+M-d | delete forward word
+C-z | delete backward word
+C-( | delete parenthese with balanced expression
 
 * Misc
- - M-x list-color-display       show a list of named color
+M-x list-color-display | show a list of named color
+C-cl                   | launch custom settings which need Emacs fully started

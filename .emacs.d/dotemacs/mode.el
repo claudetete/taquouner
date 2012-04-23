@@ -20,16 +20,19 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
 ;; load by `emacs.el' (where all requirements are defined)
 ;; REQUIREMENT: var     `section-mode'
+;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-04-16 (1.7)
+;;    change some comments and working environment
 ;; 2012-03-30 (1.6)
 ;;    translate comments in english + google calendar
 ;; 2012-03-27 (1.5)
@@ -49,12 +52,6 @@
 
 
 ;;; Code:
-;; set path of plugin directory
-(add-to-list 'load-path  dotemacs-path)
-(add-to-list 'load-path  (concat dotemacs-path "/plugins"))
-(setq load-path (cons (expand-file-name dotemacs-path) load-path))
-(setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins")) load-path))
-
 ;;
 ;;; DOXYMACS
 ;; need to configure and use it
@@ -332,22 +329,22 @@
 ;;; VC CLEARCASE
 ;; REQUIREMENT: var     `section-mode-vc-clearcase'
 ;;              var     `clt-working-environment' "Alstom Transport"
-(cond
-  ;; Alstom Transport ----------------------------------------------------------
-  ((string= clt-working-environment "Alstom Transport")
-    (when section-mode-vc-clearcase (message "  3.17 VC ClearCase...")
-      (add-to-list 'load-path  (concat dotemacs-path "/plugins/vc-clearcase-3.6"))
-      (setq load-path (append load-path '(concat dotemacs-path "/plugins/vc-clearcase-3.6")))
-      (load "vc-clearcase-auto")
+(when section-mode-vc-clearcase (message "  3.17 VC ClearCase...")
+  (add-to-list 'load-path  (concat dotemacs-path "/plugins/vc-clearcase-3.6"))
+  (setq load-path (append load-path '(concat dotemacs-path "/plugins/vc-clearcase-3.6")))
+  (load "vc-clearcase-auto")
+  (cond
+    ;; Alstom Transport --------------------------------------------------------
+    ((string= clt-working-environment "Alstom Transport")
       (custom-set-variables
         '(clearcase-checkout-comment-type (quote normal))
         '(clearcase-use-external-diff t)
         '(clearcase-vtree-program "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/clearvtree.exe")
         '(cleartool-program "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/cleartool.exe")
         )
-      (message "  3.17 VC ClearCase... Done"))
-    ) ; Alstom Transport
-  ) ; cond ---------------------------------------------------------------------
+      ) ; Alstom Transport
+    ) ; cond -------------------------------------------------------------------
+  (message "  3.17 VC ClearCase... Done"))
 
 ;;
 ;;; CLEARCASE
@@ -453,6 +450,15 @@
   )
 
 ;; TRY
+(when 0
+  (add-to-list 'load-path  (concat dotemacs-path "/plugins/emacs-w3m-1.4.4"))
+  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/emacs-w3m-1.4.4")) load-path))
+
+ (setq browse-url-browser-function 'w3m-browse-url)
+ (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+ ;; optional keyboard short-cut
+ (global-set-key "\C-xm" 'browse-url-at-point)
+)
 ;; need to try
 ;(autoload 'ifdef:ifdef-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:ifndef-region "ifdef" "ifdef your code" t)

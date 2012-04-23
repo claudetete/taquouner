@@ -394,6 +394,18 @@
    '(ecb-windows-width 0.1))
   (ecb-activate)
   )
+;;; run muse mode (by Claude TETE)
+(defun mymuse-mode ()
+  "Start muse mode."
+  (interactive)
+  (add-to-list 'load-path  (concat dotemacs-path "/plugins/muse-3.20/bin"))
+  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/muse-3.20/bin")) load-path))
+  (try-require 'muse-mode "    ")     ; load authoring mode
+  (try-require 'muse-html "    ")     ; load publishing styles I use
+  (try-require 'muse-latex "    ")
+  (muse-mode t)
+  )
+
 
 ;;
 ;;;
@@ -403,6 +415,7 @@
 (defun cfg-noob ()
   "Configure GNU/Emacs for whose seem to want work."
   (interactive)
+  ;; deprecated
   (load-file (concat dotemacs-path "/dotemacs/noob.el"))
   )
 

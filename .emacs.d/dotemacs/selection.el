@@ -53,6 +53,7 @@
 
 ;; to have rectangle mode
 (cua-selection-mode t)
+;; Why inserting a character different of alphanum = insert 0x0 ??
 
 ;; read under
 

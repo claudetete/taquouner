@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-04-19 (1.4)
+;;    add dictionary + keep minibuffer history
 ;; 2012-03-29 (1.3)
 ;;    translate comments in english + calendar + diary
 ;; 2011-07-25 (1.2)
@@ -48,6 +50,7 @@
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 
 ;; define user name
+;;FIXME working environment default
 (setq user-full-name "Claude TETE")
 
 ;; use compression
@@ -60,14 +63,12 @@
 (add-to-list 'backup-directory-alist
   (cons tramp-file-name-regexp nil))
 
-;; fill-xxx is set with a width of 78 character
+;; fill-xxx is set with a width of 80 character
 (custom-set-variables
   '(fill-column 80))
 
-;; Set web browser to use
-;; I don't use it
-(setq browse-url-generic-program "opera")
-(setq browse-url-browser-function 'browse-url-w3)
+;; keep history between session of emacs (even after close it) for minibuffer
+(savehist-mode 1)
 
 ;;
 ;;; CALENDAR
@@ -76,7 +77,7 @@
   ;; start week with monday in 'calendar'
   (defvar calendar-week-start-day 1)
   ;;
-  ;; to have Sunrise/Sunse time
+  ;; to have Sunrise/Sunset time
   (cond
     ;; Magneti Marelli ---------------------------------------------------------
     ((string= clt-working-environment "Magneti Marelli")
@@ -180,7 +181,7 @@
     (other-window 1))
 
 
-  ;; Montrer les rendez-vous
+  ;; show rendez-vous
   (add-hook 'diary-hook 'appt-make-list)
   (display-time)
   (add-hook 'diary-hook 'appt-make-list)
@@ -206,12 +207,29 @@
         (setq w32shell-cygwin-bin "d:/cygwin/bin/zsh.exe"))
       ) ; Alstom Transport
 
+    ;; default -----------------------------------------------------------------
+    ((string= clt-working-environment "default")
+      (when running-in-graphical
+        ;;FIXME working environment default
+        (setq w32shell-cygwin-bin "c:/path/to/cygwin/bin/bash.exe"))
+      ) ; default
+
     ) ; cond -------------------------------------------------------------------
   )
 
 ;;
 ;;;; dictionnary lanaguage
-;;;; never used
-;;(setq ispell-dictionary "english")
+(when section-misc-dictionary (message "  11.2 Dictionary...")
+  (cond
+    ;; Alstom Transport --------------------------------------------------------
+    ((string= clt-working-environment "Alstom Transport")
+      (add-to-list 'exec-path "C:/Program Files/Aspell/bin/")
+      (setq ispell-program-name "aspell")
+      (setq ispell-dictionary "english")
+      (try-require 'ispell)
+      ) ; Alstom Transport
+
+    ) ; cond -------------------------------------------------------------------
+  (message "  11.2 Dictionary... Done"))
 
 ;;; misc.el ends here

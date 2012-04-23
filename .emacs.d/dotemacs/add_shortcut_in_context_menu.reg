@@ -9,5 +9,5 @@ Windows Registry Editor Version 5.00
 # (The '&' makes the next character a shortcut.)
 
 [HKEY_CLASSES_ROOT\*\shell\openwemacs\command]
-@="D:\\Users\\ctete\\tools\\emacs-23.4\\bin\\emacsclientw.exe -n --alternate-editor=\"D:\\Users\\ctete\\tools\\emacs-23.4\\bin\\runemacs.exe\" \"%1\""
+@="C:\\path\\to\\emacs-23.4\\bin\\emacsclientw.exe -n --alternate-editor=\"C:\\path\\to\\emacs-23.4\\bin\\runemacs.exe\" \"%1\""
 # The above has to point to where you install Emacs

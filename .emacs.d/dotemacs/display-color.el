@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2012-04-20 (1.5)
+;;    add working environment for setting color
 ;; 2012-03-28 (1.4)
 ;;    translate comments in english
 ;; 2012-03-20 (1.3)
@@ -54,46 +56,50 @@
 ;;
 ;;; COLOR-THEME
   (progn
-    ;; Choose what theme you want
-    (when (try-require 'color-theme "    ")
-      ;; DARK
-      ;;(load-file (concat dotemacs-path "/plugins/themes/color-theme-clt-mm.el"))
-      ;;(color-theme-clt)
-      (load-file (concat dotemacs-path "/plugins/themes/zenburn.el"))
-      (color-theme-zenburn)
-      ;;;; white on black, light, string in orange, selection in light blue
-      ;;(color-theme-clarity)
-      ;;;; dark turquoise background
-      ;;(color-theme-classic)
-      ;;;; dark but ok
-      ;(color-theme-dark-laptop)
-      ;;;; psychedelic
-      ;;(color-theme-euphoria)
-      ;;;; gnome color (dark turqoise background)
-      ;;(color-theme-gnome2)
-      ;;;; extremely dark
-      ;;(color-theme-late-night)
-      ;;;; matrix
-      ;;(color-theme-lawrence)
-      ;;(color-theme-matrix)
-      ;;;; retro
-      ;;(color-theme-retro-green)
-      ;;(color-theme-retro-orange)
-      ;;;;
-      ;;(color-theme-subtle-hacker)
+    (when (try-require 'color-theme)
+      ;; color theme is applied everywhere
+      (setq color-theme-is-global t)
+      ;; color theme can be cumulated
+      (setq color-theme-is-cumulative t)
+      ;; load all color theme
+      (setq color-theme-load-all-themes t)
 
-      ;; LIGHT
-      ;; default
-      ;;(color-theme-emacs-21)
-      ;;(color-theme-high-contrast)
-      ;;(color-theme-rotor)
-      ;;(color-theme-scintilla)
-      ;;(color-theme-sitaramv-nt)
-      ;;(color-theme-snapshot)
-      ;;(color-theme-vim-colors)
-      ;;(color-theme-xp)
-      )
-    )
+      ;; load custom color theme
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-billc.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-blackboard.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-desert.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-empty-void.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-hober2.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-inkpot.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-mac-classic.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-tango.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-tangotango.el")) ; ok
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-zenburn.el")) ; ok
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-solarized.el"))
+
+      ;; Choose what theme you want with "Global Menu"->"Tools"->"Color Theme"
+      (cond
+        ;; Magneti Marelli -----------------------------------------------------
+        ((string= clt-working-environment "Magneti Marelli")
+          (color-theme-clt-mm)
+          ) ; Magneti Marelli
+
+        ;; Alstom Transport ----------------------------------------------------
+        ((string= clt-working-environment "Alstom Transport")
+          (if running-in-graphical
+            (color-theme-clt-at)
+            (color-theme-clt-at-cygwin))
+          ) ; Alstom Transport
+
+        ;; default -------------------------------------------------------------
+        ((string= clt-working-environment "default")
+          ;;FIXME working environment default
+          (color-theme-zenburn)
+          ) ; default
+
+        ) ; cond ---------------------------------------------------------------
+      ) ; when try-require color-theme
+    ) ; if section-display-color-theme
 
   (progn
 ;;

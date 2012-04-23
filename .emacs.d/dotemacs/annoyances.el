@@ -30,7 +30,8 @@
 ;; REQUIREMENT: var     `section-annoyances'
 
 ;;; Change Log:
-
+;; 2012-04-16 (1.5)
+;;    add working environment condition
 ;; 2012-03-30 (1.4)
 ;;    comments in english + preserve cursor
 ;; 2012-03-21 (1.3)
@@ -97,6 +98,10 @@
 ;; you can display only the region and do not mess up with rest
 (put 'narrow-to-region 'disabled nil)
 
+;; enable goal column (C-x C-n) (C-u C-x C-n)
+;; the point will stick with the set column when you go up/down
+(put 'set-goal-column 'disabled nil)
+
 ;; preserve cursor when scrolling
 (setq scroll-preserve-screen-position t)
 
@@ -131,9 +136,25 @@
 ;; REQUIREMENT: var     `section-annoyances-backup-file-in-directory'
 (when section-annoyances-backup-file-in-directory (message "  10.4 All backup files in a directory...")
   ;; All backup files goes in a directory.
-  (custom-set-variables
-    '(backup-directory-alist (quote ((".*" . "d:/Users/ctete/tools/.emacs.d/backup"))))
-    )
+  (cond
+    ;; Alstom Transport --------------------------------------------------------
+    ((string= clt-working-environment "Alstom Transport")
+      (custom-set-variables
+        '(backup-directory-alist (quote ((".*" . "d:/Users/ctete/tools/.emacs.d/backup"))))
+        )
+      ) ; Alstom Transport
+
+    ;; default -----------------------------------------------------------------
+    ((string= clt-working-environment "default")
+      ;; put all backup file in the temporary directory of the system
+      (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
+      ;; put all autosave file in the temporary directory of the system
+      (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t)))
+      ) ; default
+
+    ) ; cond -------------------------------------------------------------------
   (setq backup-by-copying t   ; don't clobber symlinks
     version-control t         ; use versioned backups
     delete-old-versions t

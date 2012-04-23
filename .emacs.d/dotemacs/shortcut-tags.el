@@ -49,7 +49,7 @@
 ;;; ETAGS
 ;; REQUIREMENT: var     `section-shortcut-tags-exhuberant-ctags'
 (when section-shortcut-tags-exhuberant-ctags (message "    8.7.1 Etags Shortcuts...")
-  ;; completion with taag file (show a list)
+  ;; completion with tag file (show a list)
   (global-set-key       [?\C-/]                 'complete-tag)
   ;; search in tag file
   (global-set-key       "\C-c\,"                'tags-search)

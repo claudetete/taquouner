@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,10 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-04-20 (1.8)
+;;    add working environment default
+;; 2012-04-06 (1.7)
+;;    add perl indent
 ;; 2012-03-29 (1.6)
 ;;    translate comments in english + add rtrt script indent
 ;; 2012-03-02 (1.5)
@@ -123,7 +127,24 @@
         )
       ) ; Alstom Transport
 
+    ;; default -----------------------------------------------------------------
+    ((string= clt-working-environment "default")
+      (defun clt-c-mode ()
+        ;; style k&r and not gnu
+        (c-set-style "k&r")
+        ;;(c-set-style "eZSystems")
+        ;; set number of space for One indentation
+        (setq c-basic-offset 2)
+        ;; increase "case" indentation in a "switch"
+        (c-set-offset 'case-label '+)
+        ;; hungry mode is enable, for hungry delete...
+        (c-toggle-hungry-state t)
+        )
+      ) ; default
+
     ) ; cond -------------------------------------------------------------------
+
+  ;; set c mode
   (add-hook 'c-mode-common-hook 'clt-c-mode)
 
   (custom-set-variables
@@ -145,7 +166,7 @@
 ;;
 ;;; LISP
 (when section-languages-lisp (message "  4.2 Languages Lisp...")
-  ;; configuration du nombre d'espace pour une indentation
+  ;; set indent size
   (setq lisp-indent-offset 2)
   (message "  4.2 Languages Lisp... Done"))
 
@@ -168,5 +189,12 @@
     '(rtrt-script-indent 4)
    )
   (message "  4.4 RTRT script ptu... Done"))
+
+;;
+;;; PERL
+(when section-languages-perl (message "  4.5 Languages Perl...")
+  ;; set indent size
+  (setq perl-indent-level 2)
+  (message "  4.5 Languages Perl... Done"))
 
 ;;; languages.el ends here

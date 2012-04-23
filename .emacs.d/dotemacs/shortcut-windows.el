@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shorcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.2
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-04-17 (1.2)
+;;    remove M-s and M-arrow to switch between window
 ;; 2012-03-30 (1.1)
 ;;    split .emacs file
 ;; 2011-03-10 (1.0)
@@ -40,24 +42,14 @@
 
 
 ;;; Code:
-;; switch between window (like 'C-x o' but can be easily repeat
-(global-set-key         "\M-s"                  'other-window)
+;;;; switch between window (like 'C-x o' but can be easily repeat
+;;;; use S-arrow to navigate between windows
+;;(global-set-key         "\M-s"                  'other-window)
 
-;; go to the next left window (stealing from biquette)
-;; (need manage error when there is no window at left)
-(global-set-key         [M-left]                'windmove-left)
-;;
-;; go to the next right window (stealing from biquette)
-;; (need manage error when there is no window at right)
-(global-set-key         [M-right]               'windmove-right)
-;;
-;; go to the next up window (stealing from biquette)
-;; (need manage error when there is no window at up)
-(global-set-key         [M-up]                  'windmove-up)
-;;
-;; go to the next down window (stealing from biquette)
-;; (need manage error when there is no window at down)
-(global-set-key         [M-down]                'windmove-down)
+;; use default binding to move between window
+;; S-arrow
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
 
 ;; resize window more easily (before `C-x {'...)
 ;; verical

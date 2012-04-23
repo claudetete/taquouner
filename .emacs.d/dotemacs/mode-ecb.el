@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: August 2010
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -31,13 +31,11 @@
 ;;              var     `section-mode-cedet'
 ;;
 ;; INSTALL
-;; ne pas oublier de lancer cedet (pas le plus sinon ca bug) avant et
-;; une fois dans Emacs d'activer avec ecb-byte-compile pour finir :)
-;;
-;; LOAD & SETTING
-;; pour lancer tous les jours faire 'ecb-activate' une fois Emacs demarrer
+;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-04-20 (1.6)
+;;    add working environment default
 ;; 2012-03-29 (1.5)
 ;;    translate comments in english + add some fix
 ;; 2012-03-05 (1.4)
@@ -72,7 +70,7 @@
     )
 
   (cond
-    ;; Magneti Marelli-----------------------------------------------------
+    ;; Magneti Marelli ---------------------------------------------------------
     ((string= clt-working-environment "Magneti Marelli")
       (custom-set-variables
         ;; set default path in "ecb directories"
@@ -117,7 +115,7 @@
         )
       ) ; Magneti Marelli
 
-    ;; Alstom Transport------------------------------------------------------
+    ;; Alstom Transport --------------------------------------------------------
     ((string= clt-working-environment "Alstom Transport")
       (custom-set-variables
         ;; set default path in "ecb directories"
@@ -128,7 +126,7 @@
                ("m:/e_ctete/a2kc/test/CCN4/test_s/pm4s/RTRT/"          ".../test_s/pm4s/RTRT")
                ("d:/Documents and Settings/100516805/Application Data" "/home")
                ("m:/"                                                  "/ClearCase")
-               ("d:/Users/ctete/tools"                                 "/tools")
+               ("d:/Users/ctete"                                       "/Users")
                ("d:/Users/ctete/tmp"                                   "/tmp")
                )))
 
@@ -155,12 +153,53 @@
            (quote (
                     "ccn4_pm4s"
                     "include"
+                    "\\.muse$"
                     "\\.ptu$"
                     "\\.ahk$"
                     "\\.[hc][p]*$"
                     "\\.el$")))
         )
       ) ; Alstom Transport
+
+    ;; default -----------------------------------------------------------------
+    ((string= clt-working-environment "default")
+      (custom-set-variables
+        ;; set default path in "ecb directories"
+        '(ecb-source-path
+           (quote
+             (
+               ;;FIXME working environment default
+               ;; before is put the ede projects (see project.el)
+               ("/path/i/want/to/have/in/ecb/directory/"        "display name")
+               ("/second/path/i/want/to/have/in/ecb/directory/" "display name2")
+               )))
+
+        ;; regexp of folder to exclude in "ecb directories"
+        '(ecb-excluded-directories-regexps
+           (quote (
+                    "^\\.+$" ; hided folder
+                    "\\(TOTO\\|TITI\\)$")))             ; example
+
+        ;; files to be ignored in "ecb source" !! RTFM !!
+        '(ecb-source-file-regexps
+           (quote ((".*"
+                     ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\)$\\)\\)")
+                     ("^\\.\\(emacs\\|gnus\\)$")))))
+
+        ;;;; files to be ignored from Version Control VC
+        '(ecb-sources-exclude-cvsignore (quote ("example")))
+
+        ;; regexp to form a group in "ecb history"
+        '(ecb-history-make-buckets
+           (quote (
+                    "include" ; all file from an include folder
+                    "\\.[hc][p]*$" ; all c cpp and h files
+                    "\\.el$" ; all elisp files
+                    )
+             )
+           )
+        )
+      ) ; default
 
     ) ; cond ------------------------------------------------------------
 
@@ -214,6 +253,7 @@
   ;; add all buffers name I want in the compil window of ecb
   '(ecb-compilation-buffer-names
      (quote (
+              ;;FIXME working environment default
               ("*Calculator*")
               ("*vc*")
               ("*vc-diff*")

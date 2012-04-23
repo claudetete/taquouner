@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shorcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: August 2011
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-04-20 (1.5)
+;;    add CUA mode
 ;; 2012-04-03 (1.4)
 ;;    add shortcut for fill-paragraph
 ;; 2012-03-30 (1.3)
@@ -75,8 +77,8 @@
 ;; search a file in a directory (recursively) to open it
 (global-set-key         "\M-f"                  'find-name-dired)
 
-;; search a file in the current folder (recursively)
-(global-set-key         "\M-g"                  'find-grep-dired)
+;;;; search a file in the current folder (recursively)
+;;(global-set-key         "\M-g"                  'find-grep-dired)
 
 ;; go to line #
 (global-set-key         "\M-l"                  'goto-line)
@@ -140,5 +142,15 @@
   ;; bind toogle hide/show block
   (global-set-key       (kbd "C-c h")           'outline-toggle-children)
   )
+
+;;
+;;; CUA
+;; not used
+(when section-shortcut-global-cua (message "    8.1.1 CUA Shortcut...")
+  (cua-mode t)
+  (setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
+  (transient-mark-mode 1) ; No region when it is not highlighted
+  (setq cua-keep-region-after-copy t) ; Standard Windows behaviour
+  (message "    8.1.1 CUA Shortcut... Done"))
 
 ;;; shortcut-global.el ends here

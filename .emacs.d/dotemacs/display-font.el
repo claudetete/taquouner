@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, font
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-environment-terminal-vs-graphics'
 
 ;;; Change Log:
+;; 2012-04-20 (1.5)
+;;    add working environment
 ;; 2012-03-28 (1.4)
 ;;    translate comments in english
 ;; 2012-03-02 (1.3)
@@ -47,22 +49,76 @@
 
 
 ;;; Code:
-;;
-;;; MS Windows
-(if running-on-ms-windows
-  (progn
+
+(cond
+  ;; Magneti Marelli -----------------------------------------------------------
+  ((string= clt-working-environment "Magneti Marelli")
+    ;; to have only ascii and very very tiny
+    (set-face-font 'default "-raster-Terminal-normal-normal-normal-mono-8-*-*-*-c-*-ms-oemlatin")
+    ) ; Magneti Marelli
+
+  ;; Alstom Transport ----------------------------------------------------------
+  ((string= clt-working-environment "Alstom Transport")
     (if running-in-graphical
-      ;; Graphical
-;;; impossible to use misc-fixed ??
-      ;; to have only ascii and very tiny
-      ;;(progn (set-face-font 'default "-raster-Terminal-medium-normal-normal-mono-8-*-*-*-c-*-ms-oemlatin"))
-      ;; to have accent character but bigger
+      ;; to have accent character and tiny
       (progn (set-face-font 'default "-raster-ProggyTinySZ-normal-normal-normal-mono-10-*-*-*-c-*-iso8859-1"))
       ;; Terminal (Cygwin)
       (progn (set-face-font 'default "-raster-Terminal-normal-normal-normal-mono-8-*-*-*-c-*-ms-oemlatin"))
       )
-    )
-  )
+    ) ; Alstom Transport
+
+    ;; default -----------------------------------------------------------------
+    ((string= clt-working-environment "default")
+      (if running-on-ms-windows
+        (progn
+          ;;FIXME working environment default
+          ;;; Anonymous Pro, 10
+          ;; nice, big (slashed 'zero', 'one' and minus 'L' can be mixed up)
+          ;(set-face-font 'default "-outline-Anonymous Pro-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+
+          ;;; Anonymous Pro, 8
+          ;; nice, small (slashed 'zero', 'one' and minus 'L' can be mixed up, parentheses and curly bracket can be mixed up)
+          ;(set-face-font 'default "-outline-Anonymous Pro-normal-normal-normal-mono-11-*-*-*-c-*-iso8859-1")
+
+          ;;; Proggy Tiny Z, 8
+          ;; good, very tiny (slashed 'zero', dot and comma can be mixed)
+          ;(set-face-font 'default "-raster-ProggyTinySZ-normal-normal-normal-mono-10-*-*-*-c-*-iso8859-1")
+
+          ;;; DejaVu Sans Mono, 10
+          ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
+          ;(set-face-font 'default "-outline-DejaVu Sans Mono-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+
+          ;;; Inconsolata, 9
+          ;; not so good with ms window (slashed 'zero', capitalized 'i' and minus 'L' can be mixed up)
+          ;(set-face-font 'default "-outline-Inconsolata-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+
+          ;;; Lucida Console, 10
+          ;; nice, big, large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
+          ;(set-face-font 'default "-outline-Lucida Console-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+
+          ;;; Lucida Console, 8
+          ;; nice, small large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
+          ;(set-face-font 'default "-outline-Lucida Console-normal-normal-normal-mono-11-*-*-*-c-*-iso8859-1")
+
+          ;;; Monaco, 10
+          ;; nice, very big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
+          ;(set-face-font 'default "-outline-Monaco-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+
+          ;; Monaco, 8
+          ;; nice, big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
+          ;(set-face-font 'default "-outline-Monaco-normal-normal-normal-mono-11-*-*-*-c-*-iso8859-1")
+
+          ;; ProFont, 8
+          ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
+          ;(set-face-font 'default "-outline-ProFontWindows-normal-normal-normal-mono-12-*-*-*-c-*-iso8859-1")
+          )
+        (progn
+          (set-face-font 'default "to be defined")
+          )
+        )
+      ) ; default
+
+  ) ; cond -------------------------------------------------------------------
 
 ;;
 ;;; INTERNATIONAL
