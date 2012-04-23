@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
 ;; Last-Updated: April 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-04-23 (1.8)
+;;    add undo tree mode to visualize undo/redo
 ;; 2012-04-16 (1.7)
 ;;    change some comments and working environment
 ;; 2012-03-30 (1.6)
@@ -437,6 +439,18 @@
 
   (try-require 'muse-project "    ")  ; publish files in projects
   (message "  3.24 Muse... Done"))
+
+;;
+;;; UNDO TREE
+;; REQUIREMENT: var     `section-mode-muse'
+(when section-mode-undo-tree (message "  3.25 Undo Tree...")
+  (when (try-require 'undo-tree)
+    ;; If you want to replace the standard Emacs' undo system with the
+    ;; `undo-tree-mode' system in all buffers, you can enable it globally by
+    ;; adding:
+    ;;
+    (global-undo-tree-mode t))
+  (message "  3.25 Undo Tree... Done"))
 
 
 (custom-set-variables

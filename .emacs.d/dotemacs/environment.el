@@ -153,6 +153,7 @@
       (setq section-mode-google-calendar       nil)
       (setq section-mode-fill-column-indicator nil)
       (setq section-mode-muse                  nil)
+      (setq section-mode-undo-tree             t)
 
       ;; LANGUAGES
       (setq section-languages             t)
@@ -204,6 +205,7 @@
       ;; MOUSE
       (setq section-mouse                                 t)
       (setq section-mouse-paste-to-point-not-mouse-cursor nil)
+      (setq section-mouse-avoidance                       nil)
 
       ;; ANNOYANCES
       (setq section-annoyances                                 t)

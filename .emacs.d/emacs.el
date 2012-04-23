@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 6.8
+;; Version: 6.9
 ;; Created: October 2006
 ;; Last-Updated: April 2012
 
@@ -134,7 +134,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
-;; 2012-04-019 (6.8)
+;; 2012-04-23 (6.9)
+;;    add section mouse avoidance
+;; 2012-04-19 (6.8)
 ;;    add dictionary
 ;; 2012-04-04 (6.7)
 ;;    add perl language
@@ -234,8 +236,7 @@
 ;;                                      "Xebeche"
 ;;                                      "epita"
 ;;                                      "default"
-;(defvar clt-working-environment "Alstom Transport")
-(defvar clt-working-environment "Alstom Transport")
+(defvar clt-working-environment "default")
 
 ;;
 ;;;   DOTEMACS PATH
@@ -531,6 +532,11 @@
   ;; show a line at fill-column (set at 80 in dotemacs/misc.el
   ;; muse mode to have nice doc
   (defvar section-mode-muse nil)
+
+  ;;
+  ;; UNDO TREE                                                          3.25
+  ;; replace the undo built in function
+  (defvar section-mode-undo-tree t)
   ) ; (progn
 
 
@@ -726,13 +732,17 @@
 ;;; MOUSE                                                               9
 ;; FILE: dotemacs/mouse.el
 ;; REQUIREMENT: section-environment-terminal-vs-graphics
-;; smooth wheel + mouse avoid cursor when typing + lazy decoration when scroll
+;; smooth wheel + lazy decoration when scroll
 (defvar section-mouse t)
 (progn
   ;;
   ;; PASTE CURSOR                                                       9.1
   ;; yank at point not mouse cursor (either when yank with mouse wheel)
   (defvar section-mouse-paste-to-point-not-mouse-cursor t)
+  ;;
+  ;; AVOIDANCE                                                          9.2
+  ;; mouse cursor avoid the keyboard cursor when typing
+  (defvar section-mouse-avoidance t)
 ) ; (progn
 
 
