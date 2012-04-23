@@ -85,7 +85,7 @@
 (when section-external-home-end (message "  2.5 Home/End...")
   ;; to add features to home/end key (two push will get you at the end/start
   ;; of display) (three push will get you at the end/start of buffer)
-  (load-file (concat dotemacs-path "/plugins/pc-keys.elc"))
+  (load-file (concat dotemacs-path "/plugins/pc-keys.el"))
   (message "  2.5 Home/End... Done"))
 
 ;;; externfiles.el ends here

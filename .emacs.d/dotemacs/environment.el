@@ -94,6 +94,8 @@
 
     ;; default -----------------------------------------------------------------
     ((string= clt-working-environment "default")
+      (defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
+
       ;; ENVIRONMENT
       (setq section-environment                        t) ; if I am here it is already true
       (setq section-environment-os-recognition         t)
