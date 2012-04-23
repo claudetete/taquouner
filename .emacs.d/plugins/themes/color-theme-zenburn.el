@@ -499,7 +499,13 @@
      (wl-highlight-summary-thread-top-face ((t (:foreground ,zenburn-yellow))))
      (wl-highlight-thread-indent-face ((t (:foreground ,zenburn-magenta))))
      (wl-highlight-summary-refiled-face ((t (:foreground ,zenburn-fg))))
-     (wl-highlight-summary-displaying-face ((t (:underline t :weight bold)))))))
+     (wl-highlight-summary-displaying-face ((t (:underline t :weight bold))))
+     
+     ;; ecb
+     (ecb-default-highlight-face ((t (:background ,zenburn-bg-1))))
+     )
+   )
+ )
 
 (add-to-list 'color-themes '(color-theme-zenburn
                              "Zenburn"
