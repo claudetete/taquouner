@@ -76,6 +76,7 @@
       (load-file (concat dotemacs-path "/plugins/themes/color-theme-tangotango.el")) ; ok
       (load-file (concat dotemacs-path "/plugins/themes/color-theme-zenburn.el")) ; ok
       (load-file (concat dotemacs-path "/plugins/themes/color-theme-solarized.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-clt.el"))
 
       ;; Choose what theme you want with "Global Menu"->"Tools"->"Color Theme"
       (cond
@@ -87,7 +88,7 @@
         ;; Alstom Transport ----------------------------------------------------
         ((string= clt-working-environment "Alstom Transport")
           (if running-in-graphical
-            (color-theme-clt-at)
+            (color-theme-clt)
             (color-theme-clt-at-cygwin))
           ) ; Alstom Transport
 

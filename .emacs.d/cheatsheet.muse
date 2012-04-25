@@ -25,6 +25,7 @@ C-M-b    | move backward accross one balanced expression
 M-e      | move forward to next end of sentence
 C-c C-u  | move backward to begining of preproc
 M-m      | move begining of indentation
+C-c C-w  | in C mode enable navigation from subword to subword
 
 ** Edit
 *** Modify
@@ -145,6 +146,7 @@ C-h a   | regexp search in help
 C-h k   | give help about shortcut
 C-h w   | give shortcut about function
 C-h v   | give help about a variable
+C-h f   | give help about a function
 C-c C-b | previous topic
 C-c C-f | next topic
 u       | ??

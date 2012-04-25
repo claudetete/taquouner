@@ -211,11 +211,11 @@
 ;;; Code:
 ;;
 ;;;  INIT
-(message "* --[ Loading my Emacs 23.4 Cedet init file ]--")
+(message "--[ Loading my Emacs 23.4 init file ]--")
 
 ;; start the emacs server to have only one emacs client
-(if (window-system)
-  (server-start))
+;;(if (window-system)
+;;  (server-start))
 
 ;; debug this fichier if error
 (setq debug-on-error t)

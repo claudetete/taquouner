@@ -20,9 +20,9 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2012-04-25 (1.4)
+;;    replace setting to remove tooltip
 ;; 2012-03-29 (1.3)
 ;;    translate comments in english
 ;; 2012-03-02 (1.2)
@@ -62,8 +64,8 @@
   ;; no more toolbar
   (and (fboundp 'tool-bar-mode)   (tool-bar-mode   -1))
   ;;
-  ;; no more tooltip (I don't know if this works)
-  (and (fboundp 'tooltip-mode) (fboundp 'x-show-tip) (tooltip-mode -1))
+  ;; no more tooltips (delay of 9999 seconds before displayed)
+  (setq tooltip-delay 9999)
   (message "  1.1 Decoration... Done"))
 
 ;;

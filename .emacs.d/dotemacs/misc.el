@@ -20,7 +20,7 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
 ;; Last-Updated: April 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-04-25 (1.5)
+;;    remove setting to remove tooltip
 ;; 2012-04-19 (1.4)
 ;;    add dictionary + keep minibuffer history
 ;; 2012-03-29 (1.3)
