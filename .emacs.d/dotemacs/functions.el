@@ -727,7 +727,7 @@ before message."
   (interactive "r")
   (unless (and start end)
     (error "The mark is not set now, so there is no region"))
-  (replace-regexp "[vV]ar " "VAR " nil start end)
+  (replace-regexp " [vV]ar " " VAR " nil start end)
 )
 
 ;;

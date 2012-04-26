@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-04-26 (1.9)
+;;    update GNU Global to 6.2.2
 ;; 2012-04-23 (1.8)
 ;;    add undo tree mode to visualize undo/redo
 ;; 2012-04-16 (1.7)
@@ -303,13 +305,14 @@
 ;;; GNU/GLOBAL
 ;; REQUIREMENT: var     `section-mode-gnu-global'
 (when section-mode-gnu-global (message "  3.14 GNU/Global...")
-  (try-require 'gtags "    ")
-  (autoload 'gtags-mode "gtags" "" t)
-  (defun gtags-c-mode ()
-    (gtags-mode 1)
-    (setq gtags-select-buffer-single t)
+  (when (try-require 'gtags "    ")
+    (autoload 'gtags-mode "gtags" "" t)
+    (defun gtags-c-mode ()
+      (gtags-mode 1)
+      (setq gtags-select-buffer-single t)
+      )
+    (add-hook 'c-mode-common-hook 'gtags-c-mode)
     )
-  (add-hook 'c-mode-common-hook 'gtags-c-mode)
   (message "  3.14 GNU/Global... Done"))
 
 ;;

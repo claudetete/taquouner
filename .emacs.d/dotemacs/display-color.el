@@ -20,7 +20,7 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
 ;; Last-Updated: April 2012
 
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2012-04-26 (1.6)
+;;    add a new beta theme
 ;; 2012-04-20 (1.5)
 ;;    add working environment for setting color
 ;; 2012-03-28 (1.4)
@@ -77,6 +79,7 @@
       (load-file (concat dotemacs-path "/plugins/themes/color-theme-zenburn.el")) ; ok
       (load-file (concat dotemacs-path "/plugins/themes/color-theme-solarized.el"))
       (load-file (concat dotemacs-path "/plugins/themes/color-theme-clt.el"))
+      (load-file (concat dotemacs-path "/plugins/themes/color-theme-sweet.el"))
 
       ;; Choose what theme you want with "Global Menu"->"Tools"->"Color Theme"
       (cond
