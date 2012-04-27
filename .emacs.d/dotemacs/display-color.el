@@ -20,7 +20,7 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
 ;; Last-Updated: April 2012
 
@@ -33,6 +33,9 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2012-04-27 (1.7)
+;;    fix bugs about highlight current line + syntax coloration + parentheses
+;;    + etc... if color-theme is used
 ;; 2012-04-26 (1.6)
 ;;    add a new beta theme
 ;; 2012-04-20 (1.5)
@@ -54,10 +57,53 @@
 
 
 ;;; Code:
+
+;; highlight current line in the buffer
+(global-hl-line-mode t)
+
+;; syntax color
+(global-font-lock-mode t)
+(setq font-lock-maximum-decoration t)
+
+;;
+;;; PARENTHESES MODE
+;; REQUIREMENT: var     `section-display-color-parentheses-mode'
+;;              mode    `paren'
+(when section-display-color-parentheses-mode (message "    6.5.1 Parentheses Mode...")
+  ;; highlight parentheses at point
+  (when (try-require 'paren "      ")
+    (show-paren-mode t)
+    (setq show-paren-ring-bell-on-mismatch t))
+  (message "    6.5.1 Parentheses Mode... Done"))
+
+;;
+;;; PARENTHESES MINIBUFFER
+;; REQUIREMENT: var     `section-display-color-parentheses-visible'
+;;              mode    `mic-paren'
+(when section-display-color-parentheses-visible (message "    6.5.2 Matched Parentheses display in Minibuffer ...")
+  ;; show complementary parenthese (if not displayed) in mode-line
+  (when (try-require 'mic-paren "      ")
+    (paren-activate))
+  (message "    6.5.2 Matched Parentheses display in Minibuffer... Done"))
+
+;;
+;;; PARENTHESES HIGHLIGHT
+;; REQUIREMENT: var     `section-display-color-parentheses-highlight'
+;;              mode    `highlight-parentheses'
+(when section-display-color-parentheses-highlight (message "    6.5.3 Parentheses Highlight Mode ...")
+  ;; display parentheses in same color when they match else in and other
+  ;; color
+  (try-require 'highlight-parentheses "      ")
+  (message "    6.5.3 Parentheses Highlight Mode... Done"))
+
+;;
+;;; COLOR THEME
+;; REQUIREMENT: var     `section-display-color-theme'
 (if section-display-color-theme
 ;;
 ;;; COLOR-THEME
   (progn
+    (message "    6.5.4 Color Theme...")
     (when (try-require 'color-theme)
       ;; color theme is applied everywhere
       (setq color-theme-is-global t)
@@ -103,20 +149,14 @@
 
         ) ; cond ---------------------------------------------------------------
       ) ; when try-require color-theme
+    (message "    6.5.4 Color Theme... Done")
     ) ; if section-display-color-theme
 
   (progn
 ;;
 ;;; MISC
     ;; REQUIREMENT:     var     `section-display-color-misc'
-    (when section-display-color-misc (message "    6.5.1 Color Misc...")
-      ;; highlight current line in the buffer
-      (global-hl-line-mode t)
-
-      ;; syntax color
-      (global-font-lock-mode t)
-      (setq font-lock-maximum-decoration t)
-
+    (when section-display-color-misc (message "    6.5.4 Color Misc...")
       ;; put all colors only when run graphical
       (when running-in-graphical
         (set-face-background 'default "black")
@@ -130,38 +170,7 @@
       (custom-set-faces
         ;; grey highlight instead of underline
         '(underline ((((supports :underline t)) (:background "grey20")))))
-      (message "    6.5.1 Color Misc... Done"))
-
-;;
-;;; PARENTHESES MODE
-    ;; REQUIREMENT:     var     `section-display-color-parentheses-mode'
-    ;;                  mode    `paren'
-    (when section-display-color-parentheses-mode (message "    6.5.2 Parentheses Mode...")
-      ;; highlight parentheses at point
-      (when (try-require 'paren "      ")
-        (show-paren-mode t)
-        (setq show-paren-ring-bell-on-mismatch t))
-      (message "    6.5.2 Parentheses Mode... Done"))
-
-;;
-;;; PARENTHESES MINIBUFFER
-    ;; REQUIREMENT:     var     `section-display-color-parentheses-visible'
-    ;;                  mode    `mic-paren'
-    (when section-display-color-parentheses-visible (message "    6.5.3 Matched Parentheses display in Minibuffer ...")
-      ;; show complementary parenthese (if not displayed) in mode-line
-      (when (try-require 'mic-paren "      ")
-        (paren-activate))
-      (message "    6.5.3 Matched Parentheses display in Minibuffer... Done"))
-
-;;
-;;; PARENTHESES HIGHLIGHT
-    ;; REQUIREMENT:     var     `section-display-color-parentheses-highlight'
-    ;;                  mode    `highlight-parentheses'
-    (when section-display-color-parentheses-highlight (message "    6.5.4 Parentheses Highlight Mode ...")
-      ;; display parentheses in same color when they match else in and other
-      ;; color
-      (try-require 'highlight-parentheses "      ")
-      (message "    6.5.4 Parentheses Highlight Mode... Done"))
+      (message "    6.5.4 Color Misc... Done"))
 
 ;;
 ;;; MODE

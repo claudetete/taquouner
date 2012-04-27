@@ -625,24 +625,27 @@
   ;; FILE: dotemacs/display-color.el
   ;; set manual color
   (defvar section-display-color t)
-  ;; set color by color-theme mode (no used)
-  (defvar section-display-color-theme nil)
   (progn
-    ;; MISC                                                             6.5.1
-    ;; REQUIREMENT:     section-environment-terminal-vs-graphics
-    ;; current line highlight + full syntax coloration
-    (defvar section-display-color-misc t)
-
-    ;; PARENTHESES MODE                                                 6.5.2
+    ;; PARENTHESES MODE                                                 6.5.1
     ;; matched parentheses are highlight
     (defvar section-display-color-parentheses-mode t)
-    ;; PARENTHESES MINIBUFFER                                           6.5.3
+    ;; PARENTHESES MINIBUFFER                                           6.5.2
     ;; matched parentheses are highlight and if not visible show it in the
     ;; minibuffer
     (defvar section-display-color-parentheses-visible t)
-    ;; PARENTHESES HIGHLIGHT                                            6.5.4
+    ;; PARENTHESES HIGHLIGHT                                            6.5.3
     ;; matched parentheses are highlight in rainbow color
     (defvar section-display-color-parentheses-highlight nil)
+
+    ;; COLOR THEME                                                      6.5.4
+    ;; set color by color-theme mode
+    (defvar section-display-color-theme nil)
+
+    ;; MISC                                                             6.5.4
+    ;; REQUIREMENT:     section-environment-terminal-vs-graphics
+    ;;                  section-display-color-theme nil
+    ;; current line highlight + full syntax coloration
+    (defvar section-display-color-misc t)
     ;;
     ;; MODE                                                             6.5.5
     ;; REQUIREMENT:     section-environment-terminal-vs-graphics

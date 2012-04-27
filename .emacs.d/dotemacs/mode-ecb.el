@@ -278,6 +278,7 @@
               ("*Semantic Context Analyze*")
               ("*Macroexpansion*")
               ("\\*Symref .*" . t)
+              ("*Choices*")
               ("*ECB Analyse*"))))
 
   ;; auto expand tree

@@ -53,11 +53,16 @@
 (add-to-list 'same-window-buffer-names "msg.txt")
 (add-to-list 'same-window-buffer-names "*GTAGS SELECT*")
 (add-to-list 'same-window-buffer-names "*Completions*")
+(add-to-list 'same-window-buffer-names "*Choices*")
 (add-to-list 'same-window-regexps "\\*GTAGS SELECT\\* ([A-Z])\\sw*")
 (add-to-list 'same-window-regexps "\\*compilation\\*\\(\\|<[0-9]+>\\)")
 (add-to-list 'same-window-regexps "\\*grep\\*\\(\\|<[0-9]+>\\)")
 (add-to-list 'same-window-regexps "\\*Help\\*\\(\\|<[0-9]+>\\)")
 (add-to-list 'same-window-regexps "\\*Symref .*")
+
+(let ((display-buffer-overriding-action '(nil (inhibit-same-window . t))))
+  (with-output-to-temp-buffer "*Help*"
+    (princ "GNU Emacs Calculator.\n")))
 
 ;; display an arrows or a corner at left to show beginning and ending of a
 ;; file

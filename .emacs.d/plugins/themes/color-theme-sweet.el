@@ -17,9 +17,11 @@
 ;; 00B74A 23884C 00752F 4DE78B 8AE7B0 *00240E *013E19
 
 ;; color definitions
-(defvar sweet-fg "#FFE1C5")
 (defvar sweet-fg+1 "#D0B8A2")
-(defvar sweet-bg "grey10")
+(defvar sweet-fg "#FFF1E3")
+(defvar sweet-bg+2 "black")
+(defvar sweet-bg+1 "grey8")
+(defvar sweet-bg "grey15")
 (defvar sweet-bg-1 "grey20")
 (defvar sweet-bg-2 "grey35")
 
@@ -44,7 +46,7 @@
 (defvar sweet-green+2 "#00752F")
 (defvar sweet-green+1 "#23884C")
 (defvar sweet-green "#00B74A")
-(defvar sweet-green-1 "4DE78B")
+(defvar sweet-green-1 "#4DE78B")
 (defvar sweet-green-2 "#8AE7B0")
 
 (defvar sweet-cyan+2 "#015B63")
@@ -56,7 +58,7 @@
 (defvar sweet-pink+2 "#793758")
 (defvar sweet-pink+1 "#B15382")
 (defvar sweet-pink "HotPink")
-(defvar sweet-pink-1 "orchid2")
+(defvar sweet-pink-1 "#CC6EC8") ; "orchid2")
 (defvar sweet-pink-2 "MistyRose3")
 
 (defvar sweet-grey+4 "grey10")
@@ -93,7 +95,7 @@
        (shadow ((t (:foreground ,sweet-orange))))
        (underline ((t (:background ,sweet-bg-1))))
        (vertical-border ((t (nil))))
-       (region ((t (:background ,sweet-bg-1))))
+       (region ((t (:background ,sweet-bg+2))))
 
        ;; font lock
        (font-lock-builtin-face ((t (:foreground ,sweet-cyan))))
@@ -105,8 +107,8 @@
        (font-lock-keyword-face ((t (:foreground ,sweet-cyan-1))))
        (font-lock-preprocessor-face ((t (:foreground ,sweet-orange-1))))
        (font-lock-string-face ((t (:foreground ,sweet-green))))
-       (font-lock-type-face ((t (:foreground ,sweet-pink-2))))
-       (font-lock-variable-name-face ((t (:foreground ,sweet-orange-1))))
+       (font-lock-type-face ((t (:foreground ,sweet-pink-1))))
+       (font-lock-variable-name-face ((t (:foreground ,sweet-orange-2))))
        (font-lock-warning-face ((t (:bold t :foreground ,sweet-pink))))
 
        ;; mode line
@@ -133,7 +135,7 @@
        (isearch-fail ((t (:background ,sweet-red))))
 
        ;; edit
-       (show-paren-match ((t (:background ,sweet-cyan+2))))
+       (show-paren-match ((t (:background ,sweet-cyan))))
        (show-paren-mismatch ((t (:background ,sweet-pink+2))))
        (trailing-whitespace ((t (:background ,sweet-red-1))))
 
