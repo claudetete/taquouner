@@ -47,45 +47,45 @@
 ;;; Code:
 ;;; DIRECTORY
 ;; REQUIREMENT: var     `section-external-directory'
-(when section-external-directory (message "  2.1 Directory .emacs.d...")
+(when section-external-directory (message "  1.1 Directory .emacs.d...")
   ;; path to load mode
   (add-to-list 'load-path dotemacs-path)
   (setq load-path (cons (expand-file-name dotemacs-path) load-path))
   (add-to-list 'load-path  (concat dotemacs-path "/plugins"))
   (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins")) load-path))
-  (message "  2.1 Directory .emacs.d ... Done"))
+  (message "  1.1 Directory .emacs.d ... Done"))
 
 ;;
 ;;; FONCTIONS
 ;; REQUIREMENT: var     `section-external-functions'
-(when section-external-functions (message "  2.2 Functions custom...")
+(when section-external-functions (message "  1.2 Functions custom...")
   (load-file (concat dotemacs-path "/dotemacs/functions.el"))
-  (message "  2.2 Functions custom... Done"))
+  (message "  1.2 Functions custom... Done"))
 
 ;;
 ;;; VECTRA
 ;; REQUIREMENT: var     `section-external-vectra'
-(when section-external-vectra (message "  2.3 Vectra...")
+(when section-external-vectra (message "  .3 Vectra...")
 ;; Vectra man and doc (the rest is not very useful)
   (load-file (concat dotemacs-path "/plugins/vectra.el"))
-  (message "  2.3 Vectra... Done"))
+  (message "  1.3 Vectra... Done"))
 
 ;;
 ;;; SETNU
 ;; REQUIREMENT: var     `section-external-setnu'
-(when section-external-setnu (message "  2.4 Setnu...")
+(when section-external-setnu (message "  1.4 Setnu...")
   ;; show number line (deprecated exist in emacs with (global-linum-mode 1) )
   ;; and ugly with ECB
   (load-file (concat dotemacs-path "/plugins/setnu.el"))
-  (message "  2.4 Setnu... Done"))
+  (message "  1.4 Setnu... Done"))
 
 ;;
 ;;; HOME/END
 ;; REQUIREMENT: var     `section-external-home-end'
-(when section-external-home-end (message "  2.5 Home/End...")
+(when section-external-home-end (message "  1.5 Home/End...")
   ;; to add features to home/end key (two push will get you at the end/start
   ;; of display) (three push will get you at the end/start of buffer)
   (load-file (concat dotemacs-path "/plugins/pc-keys.el"))
-  (message "  2.5 Home/End... Done"))
+  (message "  1.5 Home/End... Done"))
 
 ;;; externfiles.el ends here

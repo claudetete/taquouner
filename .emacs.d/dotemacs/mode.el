@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-05-02 (2.0)
+;;    add setting for browse kill ring + add csv mode + svn mode + diff color
 ;; 2012-04-26 (1.9)
 ;;    update GNU Global to 6.2.2
 ;; 2012-04-23 (1.8)
@@ -60,7 +62,7 @@
 ;;; DOXYMACS
 ;; need to configure and use it
 ;; REQUIREMENT: var     `section-mode-doxymacs'
-(when section-mode-doxymacs (message "  3.1 Doxymacs...")
+(when section-mode-doxymacs (message "  2.1 Doxymacs...")
   (when (try-require 'doxymacs "    ")
     (add-hook 'c-mode-common-hook 'doxymacs-mode)
     (defvar doxymacs-doxygen-style "JavaDoc")
@@ -68,7 +70,7 @@
       (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
         (doxymacs-font-lock)))
     (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook))
-  (message "  3.1 Doxymacs... Done"))
+  (message "  2.1 Doxymacs... Done"))
 
 ;;
 ;;; IDO
@@ -76,20 +78,20 @@
 ;; better 'switch buffers' (C-x C-b ou M-a) and 'open file' (C-x C-f)
 ;; erratic behavior with exotic filename
 ;; bug with module 'tramp' (not used)
-(when section-mode-ido (message "  3.2 Ido...")
+(when section-mode-ido (message "  2.2 Ido...")
   (when (try-require 'ido "    ")
     (ido-mode t))
-  (message "  3.2 Ido... Done"))
+  (message "  2.2 Ido... Done"))
 
 ;;
 ;;; UNIQUIFY
 ;; REQUIREMENT: var     `section-mode-uniquify'
 ;; create unique buffer names with shared directory components)
-(when section-mode-uniquify (message "  3.3 Uniquify...")
+(when section-mode-uniquify (message "  2.3 Uniquify...")
   (when (try-require 'uniquify "    ")
     (custom-set-variables
       '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))))
-  (message "  3.3 Uniquify... Done"))
+  (message "  2.3 Uniquify... Done"))
 
 ;;
 ;;; CEDET
@@ -102,7 +104,7 @@
   ;; if the path is define use it to load cedet
   (if clt-cedet-path
     (progn
-      (message "  3.4 CEDET bzr...")
+      (message "  2.4 CEDET bzr...")
       ;; REQUIREMENT:
       ;; need to remove `your-emacs-path/lisp/cedet'
       ;;                `your-emacs-path/lisp/speedbar.*'
@@ -110,7 +112,7 @@
       (defvar clt-cedet-bzr t)
       )
     (progn
-      (message "  3.4 emacs included CEDET...")
+      (message "  2.4 emacs included CEDET...")
       (defvar clt-cedet-bzr nil)
       )
     )
@@ -157,38 +159,38 @@
     ;;; SEMANTIC
     ;; REQUIREMENT:     var     `section-mode-cedet-semantic'
     ;; code source parser, etc
-    (when section-mode-cedet-semantic (message "    3.4.1 Semantic...")
+    (when section-mode-cedet-semantic (message "    2.4.1 Semantic...")
       (load-file (concat dotemacs-path "/dotemacs/mode-semantic.el"))
-      (message "    3.4.1 Semantic... Done"))
+      (message "    2.4.1 Semantic... Done"))
 
     ;;
     ;;; ECB (Emacs Code Browser)
     ;; REQUIREMENT:     var     `section-mode-cedet-ecb'
     ;; transform Emacs interface to IDE
-    (when section-mode-cedet-ecb (message "    3.4.2 ECB...")
+    (when section-mode-cedet-ecb (message "    2.4.2 ECB...")
       (load-file (concat dotemacs-path "/dotemacs/mode-ecb.el"))
-      (message "    3.4.2 ECB... Done"))
+      (message "    2.4.2 ECB... Done"))
     )
-  (message "  3.4 CEDET... Done"))
+  (message "  2.4 CEDET... Done"))
 
 ;;
 ;;;    BATCH
 ;; REQUIREMENT: var     `section-mode-batch'
 ;; syntax color for .bat script for MS Windows
-(when section-mode-batch (message "  3.5 Batch Windows...")
+(when section-mode-batch (message "  2.5 Batch Windows...")
   (autoload 'batch-mode "batch-mode" "Load batch-mode")
   (add-to-list 'auto-mode-alist '("\\.bat\\'" . batch-mode))
-  (message "  3.5 Batch Windows... Done"))
+  (message "  2.5 Batch Windows... Done"))
 
 ;;
 ;;; VISUAL BASIC
 ;; REQUIREMENT: var     `section-mode-vb'
 ;; syntax color for sources in VB and VBA
-(when section-mode-vb (message "  3.6 Visual Basic...")
+(when section-mode-vb (message "  2.6 Visual Basic...")
   (autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
   (setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\)$" .
                                     visual-basic-mode)) auto-mode-alist))
-  (message "  3.6 Visual Basic... Done"))
+  (message "  2.6 Visual Basic... Done"))
 
 ;;
 ;;; WINDOW NUMBERING
@@ -196,15 +198,15 @@
 ;; shortcut to go to window
 ;; (give a number at each window so you can easily switch between window with
 ;; shortcut `M-<number>')
-(when section-mode-window-numbering (message "  3.7 Windows Numbering...")
+(when section-mode-window-numbering (message "  2.7 Windows Numbering...")
   (when (try-require 'window-numbering "    ")
     (window-numbering-mode 1))
-  (message "  3.7 Windows Numbering... Done"))
+  (message "  2.7 Windows Numbering... Done"))
 
 ;;
 ;;; C
 ;; REQUIREMENT: var     `section-mode-c'
-(when section-mode-c (message "  3.8 C...")
+(when section-mode-c (message "  2.8 C...")
   ;; new types
   (defvar c-font-lock-extra-types
     (list "ubyte" "ushort" "ulong" "ulonglong" "sbyte" "sshort" "slong" "slonglong"))
@@ -222,9 +224,9 @@
   ;; REQUIREMENT:       var     `section-mode-c-cwarn'
   ;; show small warning in code source
   ;; (ex: set in test, semi colon after test...)
-  (when section-mode-c-cwarn (message "    3.8.1 CWarn...")
+  (when section-mode-c-cwarn (message "    2.8.1 CWarn...")
     (cwarn-mode t)
-    (message "    3.8.1 CWarn... Done"))
+    (message "    2.8.1 CWarn... Done"))
 
   ;;; DATA DEBUG
   ;; REQUIREMENT:       var     `section-mode-c-data-debug'
@@ -240,71 +242,84 @@
 
   ;;; Compil mode
   (setq compile-command "ccm objectmake")
-  (message "  3.8 C... Done"))
+  (message "  2.8 C... Done"))
 
 ;;
 ;;; ICOMPLETION
 ;; REQUIREMENT: var     `section-mode-icompletion'
-(when section-mode-icompletion (message "  3.9 Icompletion...")
+(when section-mode-icompletion (message "  2.9 Icompletion...")
   ;; Completion in minibuffer
   (icomplete-mode t)
-  (message "  3.9 Icompletion... Done"))
+  (message "  2.9 Icompletion... Done"))
 
 ;;
 ;;; YASNIPPET
 ;; REQUIREMENT: var     `section-mode-yasnippet'
-(when section-mode-yasnippet (message "  3.10 Yasnippet...")
+(when section-mode-yasnippet (message "  2.10 Yasnippet...")
 ;; enable snippet (see `../emacs.el' for definition)
   (add-to-list 'load-path (concat dotemacs-path "/plugins/yasnippet-0.6.1c"))
   (when (try-require 'yasnippet "    ") ; not yasnippet-bundle
     (setq yas/root-directory (concat dotemacs-path "/plugins/yasnippet-0.6.1c/snippets"))
     (yas/load-directory yas/root-directory))
   (yas/global-mode)
-  (message "  3.10 Yasnippet... Done"))
+  (message "  2.10 Yasnippet... Done"))
 
 ;;
 ;;; BROWSE KILL RING
 ;; REQUIREMENT: var     `section-mode-browse-kill-ring'
-(when section-mode-browse-kill-ring (message "  3.11 Browse Kill-Ring...")
+(when section-mode-browse-kill-ring (message "  2.11 Browse Kill-Ring...")
   (when (try-require 'browse-kill-ring "    ")
+    ;; all settings from Fabrice Niessen
+    ;; string separating entries in the `separated' style
+    (setq browse-kill-ring-separator
+          "\n--separator------------------------------")
+
+    ;; temporarily highlight the inserted `kill-ring' entry
+    (setq browse-kill-ring-highlight-inserted-item t)
+
+    ;; face in which to highlight the `browse-kill-ring-separator'
+;    (defface separator-face '((t (:foreground "Blueviolet" :weight bold))) nil)
+                                        ; slate gray
+;    (setq browse-kill-ring-separator-face 'separator-face)
+
+    ;; use `M-y' to invoke `browse-kill-ring'
     (browse-kill-ring-default-keybindings))
-  (global-set-key "\C-cy" '(lambda () (interactive) (popup-menu 'yank-menu)))
-  (message "  3.11 Browse Kill-Ring... Done"))
+  (message "  2.11 Browse Kill-Ring... Done"))
 
 ;;
 ;;; MAGNETI MARELLI
 ;; REQUIREMENT: var     `section-mode-mm'
-(when section-mode-mm (message "  3.12 Magneti Marelli...")
+(when section-mode-mm (message "  2.12 Magneti Marelli...")
   ;;; EOL
   ;; REQUIREMENT:       var     `section-mode-mm-eol'
-  (when section-mode-mm-eol (message "    3.12.1 EOL...")
+  (when section-mode-mm-eol (message "    2.12.1 EOL...")
     (load-file (concat dotemacs-path "/plugins/mm-eol.el"))
-    (message "    3.12.1 EOL... Done"))
+    (message "    2.12.1 EOL... Done"))
 
   ;;; CAN DBC
   ;; REQUIREMENT:       var     `section-mode-mm-dbc'
-  (when section-mode-mm-dbc (message "    3.12.2 CAN Dbc...")
+  (when section-mode-mm-dbc (message "    2.12.2 CAN Dbc...")
     (load-file (concat dotemacs-path "/plugins/mm-dbc.el"))
-    (message "    3.12.2 CAN Dbc... Done"))
+    (message "    2.12.2 CAN Dbc... Done"))
 
   ;;; CCM DIFF
   ;; REQUIREMENT:       var     `section-mode-mm-diff'
-  (when section-mode-mm-diff (message "    3.12.3 Synergy Diff...")
+  (when section-mode-mm-diff (message "    2.12.3 Synergy Diff...")
     (load-file (concat dotemacs-path "/plugins/mm-diff.el"))
-    (message "    3.12.3 Synergy Diff... Done"))
-  (message "  3.12 Magneti Marelli... Done"))
+    (message "    2.12.3 Synergy Diff... Done"))
+  (message "  2.12 Magneti Marelli... Done"))
 
 ;;
 ;;; DIRED+
 ;; REQUIREMENT: var     `section-mode-dired-plus'
-(when section-mode-dired-plus (message "  3.13 Dired+...")
+(when section-mode-dired-plus (message "  2.13 Dired+...")
   (try-require 'dired+ "    ")
-  (message "  3.13 Dired+... Done"))
+  (message "  2.13 Dired+... Done"))
 
 ;;
 ;;; GNU/GLOBAL
 ;; REQUIREMENT: var     `section-mode-gnu-global'
-(when section-mode-gnu-global (message "  3.14 GNU/Global...")
+(when section-mode-gnu-global (message "  2.14 GNU/Global...")
   (when (try-require 'gtags "    ")
     (autoload 'gtags-mode "gtags" "" t)
     (defun gtags-c-mode ()
@@ -313,28 +328,28 @@
       )
     (add-hook 'c-mode-common-hook 'gtags-c-mode)
     )
-  (message "  3.14 GNU/Global... Done"))
+  (message "  2.14 GNU/Global... Done"))
 
 ;;
 ;;; EPROJECT (grischka) ; never used
 ;; REQUIREMENT: var     `section-mode-eproject'
-(when section-mode-eproject (message "  3.15 Eproject...")
+(when section-mode-eproject (message "  2.15 Eproject...")
   (load-file (concat dotemacs-path "/plugins/eproject.el"))
   ;;(when (try-require 'eproject))
-  (message "  3.15 Eproject... Done"))
+  (message "  2.15 Eproject... Done"))
 
 ;;
 ;;; RTRT SCRIPT
 ;; REQUIREMENT: var     `section-mode-rtrt-script'
-(when section-mode-rtrt-script (message "  3.16 RTRT script...")
+(when section-mode-rtrt-script (message "  2.16 RTRT script...")
   (load-file (concat dotemacs-path "/plugins/rtrt-script.elc"))
-  (message "  3.16 RTRT script... Done"))
+  (message "  2.16 RTRT script... Done"))
 
 ;;
 ;;; VC CLEARCASE
 ;; REQUIREMENT: var     `section-mode-vc-clearcase'
 ;;              var     `clt-working-environment' "Alstom Transport"
-(when section-mode-vc-clearcase (message "  3.17 VC ClearCase...")
+(when section-mode-vc-clearcase (message "  2.17 VC ClearCase...")
   (add-to-list 'load-path  (concat dotemacs-path "/plugins/vc-clearcase-3.6"))
   (setq load-path (append load-path '(concat dotemacs-path "/plugins/vc-clearcase-3.6")))
   (load "vc-clearcase-auto")
@@ -349,37 +364,37 @@
         )
       ) ; Alstom Transport
     ) ; cond -------------------------------------------------------------------
-  (message "  3.17 VC ClearCase... Done"))
+  (message "  2.17 VC ClearCase... Done"))
 
 ;;
 ;;; CLEARCASE
 ;; REQUIREMENT: var     `section-mode-clearcase'
-(when section-mode-clearcase (message "  3.18 ClearCase...")
+(when section-mode-clearcase (message "  2.18 ClearCase...")
   (load "clearcase")
-  (message "  3.18 ClearCase... Done"))
+  (message "  2.18 ClearCase... Done"))
 
 ;;
 ;;; AUTOHOTKEY
 ;; REQUIREMENT: var     `section-mode-autohotkey'
-(when section-mode-autohotkey (message "  3.19 AutoHotKey...")
+(when section-mode-autohotkey (message "  2.19 AutoHotKey...")
   ;; this folder doesn't exist anymore ; os the mode doesn't work
   (setq ahk-syntax-directory "PATHTO/AutoHotkey/Extras/Editors/Syntax/")
   (add-to-list 'auto-mode-alist '("\\.ahk$" . ahk-mode))
   (autoload 'ahk-mode-fix "ahk-mode")
-  (message "  3.19 AutoHotKey... Done"))
+  (message "  2.19 AutoHotKey... Done"))
 
 ;;
 ;;; OUTLINE
 ;; REQUIREMENT: var     `section-mode-outline'
-(when section-mode-outline (message "  3.20 Outline minor mode...")
+(when section-mode-outline (message "  2.20 Outline minor mode...")
   ;; to manually hide some block in code source
   (outline-minor-mode 1)
-  (message "  3.20 Outline minor mode... Done"))
+  (message "  2.20 Outline minor mode... Done"))
 
 ;;
 ;;; AUTO HIGHLIGHT SYMBOL
 ;; REQUIREMENT: var     `section-mode-auto-highlight-symbol'
-(when section-mode-auto-highlight-symbol (message "  3.21 Auto highlight symbol minor mode...")
+(when section-mode-auto-highlight-symbol (message "  2.21 Auto highlight symbol minor mode...")
   ;; after some idle time the symbol at point will be highlighted in display area
   (require 'auto-highlight-symbol)
   ;; active the mode
@@ -390,12 +405,12 @@
     ;; increase idle time to display highlight
     '(ahs-idle-interval 2.2)
     )
-  (message "  3.21 Auto highlight symbol minor mode... Done"))
+  (message "  2.21 Auto highlight symbol minor mode... Done"))
 
 ;;
 ;;; GOOGLE CALENDAR
 ;; REQUIREMENT: var     `section-mode-google-calendar'
-(when section-mode-google-calendar (message "  3.22 Google Calendar...")
+(when section-mode-google-calendar (message "  2.22 Google Calendar...")
   ;; can import google calendar in Emacs calendar
   (when (try-require 'icalendar)
     (when (try-require 'google-calendar)
@@ -406,12 +421,12 @@
       (setq google-calendar-auto-update    t)
       (google-calendar-download)
       ))
-  (message "  3.22 Google Calendar... Done"))
+  (message "  2.22 Google Calendar... Done"))
 
 ;;
 ;;; FILL COLUMN INDICATOR
 ;; REQUIREMENT: var     `section-mode-fill-column-indicator'
-(when section-mode-fill-column-indicator (message "  3.23 Fill Column Indicator...")
+(when section-mode-fill-column-indicator (message "  2.23 Fill Column Indicator...")
   ;; can import google calendar in Emacs calendar
   (when (try-require 'fill-column-indicator)
     ;; width of line
@@ -424,12 +439,12 @@
     ;;;; to show for all files
     ;;(add-hook 'after-change-major-mode-hook 'fci-mode)
     )
-  (message "  3.23 Fill Column Indicator... Done"))
+  (message "  2.23 Fill Column Indicator... Done"))
 
 ;;
 ;;; MUSE
 ;; REQUIREMENT: var     `section-mode-muse'
-(when section-mode-muse (message "  3.24 Muse...")
+(when section-mode-muse (message "  2.24 Muse...")
   (add-to-list 'load-path  (concat dotemacs-path "/plugins/muse-3.20/bin"))
   (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/muse-3.20/bin")) load-path))
 
@@ -441,23 +456,41 @@
   (try-require 'muse-docbook "    ")
 
   (try-require 'muse-project "    ")  ; publish files in projects
-  (message "  3.24 Muse... Done"))
+  (message "  2.24 Muse... Done"))
 
 ;;
 ;;; UNDO TREE
 ;; REQUIREMENT: var     `section-mode-muse'
-(when section-mode-undo-tree (message "  3.25 Undo Tree...")
-  (when (try-require 'undo-tree)
+(when section-mode-undo-tree (message "  2.25 Undo Tree...")
+  (when (try-require 'undo-tree "    ")
     ;; If you want to replace the standard Emacs' undo system with the
     ;; `undo-tree-mode' system in all buffers, you can enable it globally by
     ;; adding:
     ;;
     (global-undo-tree-mode t))
-  (message "  3.25 Undo Tree... Done"))
+  (message "  2.25 Undo Tree... Done"))
 
+;;
+;;; CSV
+(when section-mode-csv (message "  2.26 CSV...")
+  (when (try-require 'csv-mode "    ")
+    ;; field separators: a list of *single-character* strings
+    (setq csv-separators '("," ";")))
+  (message "  2.26 CSV... Done"))
+
+;;
+;;; SUBVERSION
+(when section-mode-subversion (message "  2.27 Subversion 1.7...")
+  (try-require 'vc-svn17 "    ")
+  (message "  2.27 Subversion 1.7... Done"))
+
+;;
+;;; DIFF COLOR
+(when section-mode-diff-color (message "  2.28 Diff Color...")
+  (try-require 'diff-mode- "    ")
+  (message "  2.28 Diff Color... Done"))
 
 (custom-set-variables
-
 ;;
 ;;; HIDE IFDEF
   '(hide-ifdef-initially t)
@@ -468,13 +501,7 @@
 
 ;; TRY
 (when 0
-  (add-to-list 'load-path  (concat dotemacs-path "/plugins/emacs-w3m-1.4.4"))
-  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/emacs-w3m-1.4.4")) load-path))
-
- (setq browse-url-browser-function 'w3m-browse-url)
- (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
- ;; optional keyboard short-cut
- (global-set-key "\C-xm" 'browse-url-at-point)
+  (try-require 'psvn)
 )
 ;; need to try
 ;(autoload 'ifdef:ifdef-region "ifdef" "ifdef your code" t)

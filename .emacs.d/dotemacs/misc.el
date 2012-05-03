@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,9 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-05-03 (1.6)
+;;    remove try about diary, add ignore case during completion, set path of
+;;    bookmarks
 ;; 2012-04-25 (1.5)
 ;;    remove setting to remove tooltip
 ;; 2012-04-19 (1.4)
@@ -71,6 +74,15 @@
 
 ;; keep history between session of emacs (even after close it) for minibuffer
 (savehist-mode 1)
+
+;; ignore case when reading a file name completion
+(setq read-file-name-completion-ignore-case t)
+
+;; ignore case when reading a buffer name
+(setq read-buffer-completion-ignore-case t)
+
+;; check all variables and non-interactive functions with apropos
+(setq apropos-do-all t)
 
 ;;
 ;;; CALENDAR
@@ -165,31 +177,32 @@
 
   ;; TRY
   ;; Diary (by Marc Tommasi)
-  (setq view-diary-entries-initially t
-    diary-file (concat dotemacs-path "/diary")
-    mark-diary-entries-in-calendar t
-    number-of-diary-entries 7)
-
-  (add-hook 'diary-display-hook 'fancy-diary-display)
-  (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
-
-  (defun start-diary ()
-    "Starts the diary."
-    (calendar)
-    (setq number-of-diary-entries 5)
-                                        ;(view-diary-entries)
-    (diary)
-    (mark-diary-entries)
-    (other-window 1))
-
-
-  ;; show rendez-vous
-  (add-hook 'diary-hook 'appt-make-list)
-  (display-time)
-  (add-hook 'diary-hook 'appt-make-list)
-  (diary 0)
-
-  (start-diary)
+;;  (setq view-diary-entries-initially t
+;;    diary-file (concat dotemacs-path "/diary")
+;;    mark-diary-entries-in-calendar t
+;;    number-of-diary-entries 7)
+;;
+;;  (add-hook 'diary-display-hook 'fancy-diary-display)
+;;  (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
+;;
+;;  (defun start-diary ()
+;;    "Starts the diary."
+;;    (calendar)
+;;    (setq number-of-diary-entries 5)
+;;                                        ;(view-diary-entries)
+;;    (diary)
+;;    (mark-diary-entries)
+;;    (other-window 1))
+;;
+;;
+;;  ;; show rendez-vous
+;;  (add-hook 'diary-hook 'appt-make-list)
+;;  (display-time)
+;;  (add-hook 'diary-hook 'appt-make-list)
+;;  (diary 0)
+;;
+;;  (start-diary)
+;  (diary)
 
   (message "  11.1 Calendar... Done"))
 
@@ -220,7 +233,7 @@
   )
 
 ;;
-;;;; dictionnary lanaguage
+;;;; DICTIONNARY lanaguage
 (when section-misc-dictionary (message "  11.2 Dictionary...")
   (cond
     ;; Alstom Transport --------------------------------------------------------
@@ -233,5 +246,15 @@
 
     ) ; cond -------------------------------------------------------------------
   (message "  11.2 Dictionary... Done"))
+
+;;
+;;;; BOOKMARK
+(when section-misc-bookmark (message "  11.3 Bookmarks...")
+  ;; where to save the bookmarks
+  (setq bookmark-default-file (concat dotemacs-path "/bookmarks"))
+  ;;
+  ;; each command that sets a bookmark will also save your bookmarks
+  (setq bookmark-save-flag 1)
+  (message "  11.3 Bookmark... Done"))
 
 ;;; misc.el ends here

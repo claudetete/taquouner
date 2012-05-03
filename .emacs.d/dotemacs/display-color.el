@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2012-05-02 (1.8)
+;;    move section for fixing bug fullscreen
 ;; 2012-04-27 (1.7)
 ;;    fix bugs about highlight current line + syntax coloration + parentheses
 ;;    + etc... if color-theme is used
@@ -69,32 +71,32 @@
 ;;; PARENTHESES MODE
 ;; REQUIREMENT: var     `section-display-color-parentheses-mode'
 ;;              mode    `paren'
-(when section-display-color-parentheses-mode (message "    6.5.1 Parentheses Mode...")
+(when section-display-color-parentheses-mode (message "    5.4.1 Parentheses Mode...")
   ;; highlight parentheses at point
   (when (try-require 'paren "      ")
     (show-paren-mode t)
     (setq show-paren-ring-bell-on-mismatch t))
-  (message "    6.5.1 Parentheses Mode... Done"))
+  (message "    5.4.1 Parentheses Mode... Done"))
 
 ;;
 ;;; PARENTHESES MINIBUFFER
 ;; REQUIREMENT: var     `section-display-color-parentheses-visible'
 ;;              mode    `mic-paren'
-(when section-display-color-parentheses-visible (message "    6.5.2 Matched Parentheses display in Minibuffer ...")
+(when section-display-color-parentheses-visible (message "    5.4.2 Matched Parentheses display in Minibuffer ...")
   ;; show complementary parenthese (if not displayed) in mode-line
   (when (try-require 'mic-paren "      ")
     (paren-activate))
-  (message "    6.5.2 Matched Parentheses display in Minibuffer... Done"))
+  (message "    5.4.2 Matched Parentheses display in Minibuffer... Done"))
 
 ;;
 ;;; PARENTHESES HIGHLIGHT
 ;; REQUIREMENT: var     `section-display-color-parentheses-highlight'
 ;;              mode    `highlight-parentheses'
-(when section-display-color-parentheses-highlight (message "    6.5.3 Parentheses Highlight Mode ...")
+(when section-display-color-parentheses-highlight (message "    5.4.3 Parentheses Highlight Mode ...")
   ;; display parentheses in same color when they match else in and other
   ;; color
   (try-require 'highlight-parentheses "      ")
-  (message "    6.5.3 Parentheses Highlight Mode... Done"))
+  (message "    5.4.3 Parentheses Highlight Mode... Done"))
 
 ;;
 ;;; COLOR THEME
@@ -103,7 +105,7 @@
 ;;
 ;;; COLOR-THEME
   (progn
-    (message "    6.5.4 Color Theme...")
+    (message "    5.4.4 Color Theme...")
     (when (try-require 'color-theme)
       ;; color theme is applied everywhere
       (setq color-theme-is-global t)
@@ -149,14 +151,14 @@
 
         ) ; cond ---------------------------------------------------------------
       ) ; when try-require color-theme
-    (message "    6.5.4 Color Theme... Done")
+    (message "    5.4.4 Color Theme... Done")
     ) ; if section-display-color-theme
 
   (progn
 ;;
 ;;; MISC
     ;; REQUIREMENT:     var     `section-display-color-misc'
-    (when section-display-color-misc (message "    6.5.4 Color Misc...")
+    (when section-display-color-misc (message "    5.4.4 Color Misc...")
       ;; put all colors only when run graphical
       (when running-in-graphical
         (set-face-background 'default "black")
@@ -170,12 +172,12 @@
       (custom-set-faces
         ;; grey highlight instead of underline
         '(underline ((((supports :underline t)) (:background "grey20")))))
-      (message "    6.5.4 Color Misc... Done"))
+      (message "    5.4.4 Color Misc... Done"))
 
 ;;
 ;;; MODE
     ;; REQUIREMENT:     var     `section-display-color-mode'
-    (when section-display-color-mode (message "    6.5.5 Color Mode...")
+    (when section-display-color-mode (message "    5.4.5 Color Mode...")
       ;; style and color of strings (bold and green)
       ;;(copy-face 'bold 'font-lock-string-face)
       (set-face-foreground 'font-lock-string-face "chartreuse3")
@@ -217,12 +219,12 @@
                  :background "#101E1E"
                  :foreground "grey40"
                  :box nil)))))
-      (message "    6.5.5 Color Mode... Done"))
+      (message "    5.4.5 Color Mode... Done"))
 
 ;;
 ;;; GREP
     ;; REQUIREMENT:     var     `section-display-color-grep'
-    (when section-display-color-grep (message "    6.5.6 Color Grep...")
+    (when section-display-color-grep (message "    5.4.6 Color Grep...")
       ;;;; style and color of 'grep hits'
       ;;(set-face-foreground 'compilation-info "magenta")
       ;;(set-face-underline  'compilation-info nil)
@@ -269,13 +271,13 @@
               (:background "black"
                 :foreground "chartreuse3"))))
         )
-      (message "    6.5.6 Color Grep... Done"))
+      (message "    5.4.6 Color Grep... Done"))
 
 ;;
 ;;; ECB
     ;; REQUIREMENT:     var     `section-display-color-ecb'
     (when section-mode-cedet-ecb
-      (when section-display-color-ecb (message "    6.5.7 Color Ecb...")
+      (when section-display-color-ecb (message "    5.4.7 Color Ecb...")
         (custom-set-variables
           ;; style used for function name (method)
           '(ecb-method-face (quote ecb-method-face))
@@ -345,7 +347,7 @@
                  (background dark))
                 (:background "SeaGreen"))))
           )
-        (message "    6.5.7 Color Ecb... Done"))
+        (message "    5.4.7 Color Ecb... Done"))
       ) ; when section-mode-cedet-ecb
     ) ; (progn
   ) ; if section-display-color-theme

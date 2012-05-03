@@ -60,10 +60,6 @@
 (add-to-list 'same-window-regexps "\\*Help\\*\\(\\|<[0-9]+>\\)")
 (add-to-list 'same-window-regexps "\\*Symref .*")
 
-(let ((display-buffer-overriding-action '(nil (inhibit-same-window . t))))
-  (with-output-to-temp-buffer "*Help*"
-    (princ "GNU Emacs Calculator.\n")))
-
 ;; display an arrows or a corner at left to show beginning and ending of a
 ;; file
 (setq-default indicate-buffer-boundaries (quote left))
@@ -71,11 +67,11 @@
 ;;
 ;;;; TRANSPARENCY
 ;; REQUIREMENT: var     `section-display-windows-buffers-transparency'
-(when section-display-windows-buffers-transparency (message "    6.1.1 Transparency...")
+(when section-display-windows-buffers-transparency (message "    5.1.1 Transparency...")
   ;; the whole window of Emacs will be transparent
   (set-frame-parameter (selected-frame) 'alpha '(90 90))
   (add-to-list 'default-frame-alist '(alpha 90 90))
-  (message "    6.1.1 Transparency... Done"))
+  (message "    5.1.1 Transparency... Done"))
 
 ;; after a PageUp or Down, it will display 5 shared lines
 (custom-set-variables

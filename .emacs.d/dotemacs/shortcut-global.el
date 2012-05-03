@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shorcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,9 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-05-03 (1.6)
+;;    add shortcut to add line without jump + give number of line + bind C-TAB
+;;    to M-TAB
 ;; 2012-04-20 (1.5)
 ;;    add CUA mode
 ;; 2012-04-03 (1.4)
@@ -82,6 +85,7 @@
 
 ;; go to line #
 (global-set-key         "\M-l"                  'goto-line)
+(global-set-key         "\M-L"                  'what-line)
 
 ;; replace string
 (global-set-key         "\M-r"                  'replace-string)
@@ -98,18 +102,20 @@
 ;; open calendar with `C-c c'
 (global-set-key         "\C-cc"                 'calendar)
 
-;; copie la ligne dans la kill-ring `C-j' (ne plus faire C-k C-y)
+;; copy line in kill-ring `C-j' (no more C-k C-y)
 (global-set-key         "\C-j"                  'push-line)
+;; add a new line whitout jump on it
+(global-set-key         (kbd "<S-return>")      'open-line)
 
-;; aligne la region suivant une regexp (avec des espaces)
+;; align a region following regexp
 (global-set-key         "\C-cpp"                'align)
 (global-set-key         "\C-cpl"                'align-regexp)
 
-;; supprime une paire de parentheses/crochets/accolades ensembles
-;; voir "\M-(" pour en creer deux nouvelles entourant la region
+;; remove a pair of matched parentheses/brackets
+;; see "M-(" to create a pair of matched parentheses around the region
 (global-set-key         (kbd "C-(")             'delete-pair)
 
-;; rafraichis le buffer courant
+;; refresh current buffer
 (global-set-key         (kbd "M-p")             'revert-buffer)
 
 ;; switch between header/source file
@@ -123,6 +129,20 @@
 
 ;; fill paragraph at point
 (global-set-key         (kbd "C-c ]")           'fill-paragraph)
+
+;; (by Fabrice Niessen)
+;; It's more or less a convention that each language mode binds its symbol
+;; completion command to `M-TAB' which is a reserved hot key under Windows.
+;; Way to solve this: when you hit `C-TAB', the command normally bound to
+;; `M-TAB' will be called.
+(global-set-key         (kbd "<C-tab>")
+  '(lambda ()
+     (interactive)
+     (call-interactively (key-binding (kbd "M-TAB")))
+     )
+  )
+
+
 
 ;;
 ;;; HOME/END

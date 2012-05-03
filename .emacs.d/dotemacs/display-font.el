@@ -123,9 +123,9 @@
 ;;
 ;;; INTERNATIONAL
 ;; REQUIREMENT: var     `section-display-font-international'
-(when section-display-font-international (message "    6.4.1 International...")
+(when section-display-font-international (message "    5.3.1 International...")
   ;; no more setting to have unicode
-  (message "    6.4.1 International... Done"))
+  (message "    5.3.1 International... Done"))
 
 ;;
 ;; all other characters will be displayed like this: ^@

@@ -1,4 +1,4 @@
-;;; display-ecb.el --- a config file for ecb display setting
+;;; interface-ecb.el --- a config file for ecb display setting
 
 ;; Copyright (c) 2010, 2011, 2012 Claude Tete
 ;;
@@ -18,19 +18,22 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 
-;; Keywords: config, display, ecb
+;; Keywords: config, display, ecb, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.5
 ;; Created: October 2010
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
 ;; load by `emacs.el' (where all requirements are defined)
-;; REQUIREMENT: var     `section-display-ecb'
+;; REQUIREMENT: var     `section-interface-ecb'
 ;;              var     `section-mode-cedet-ecb'
 
 ;;; Change Log:
+;; 2012-05-02 (1.6)
+;;    rename from display-ecb.el to interface-ecb.el and load after font and
+;;    fullscreen
 ;; 2012-04-20 (1.5)
 ;;    add working environment default
 ;; 2012-03-28 (1.4)
@@ -74,11 +77,11 @@
         ;; disable tip of the day show at each start up
         '(ecb-tip-of-the-day nil)
 
-    ;;;; width of ecb window (here 10% of the total width of Emacs)
-        ;;'(ecb-windows-width 0.1) ;see mystart-up in functions.el
+        ;; width of ecb window (here 10% of the total width of Emacs)
+        '(ecb-windows-width 0.1) ;see mystart-up in functions.el
         ;;
-    ;;;; height of compil/grep window
-        ;;'(ecb-compile-window-height 25) ;see mystart-up in functions.el
+        ;; height of compil/grep window
+        '(ecb-compile-window-height 25) ;see mystart-up in functions.el
         ;;
         ;; max height of compil/grep window
         ;;  - value > 1 -> size in character
@@ -123,11 +126,11 @@
         ;; disable tip of the day show at each start up
         '(ecb-tip-of-the-day nil)
 
-    ;;;; width of ecb window (here 10% of the total width of Emacs)
-        ;;'(ecb-windows-width 0.1) ;see mystart-up in functions.el
+        ;; width of ecb window (here 10% of the total width of Emacs)
+        '(ecb-windows-width 0.1)
         ;;
-    ;;;; height of compil/grep window
-        ;;'(ecb-compile-window-height 25) ;see mystart-up in functions.el
+        ;; height of compil/grep window
+        '(ecb-compile-window-height 25)
         ;;
         ;; max height of compil/grep window
         ;;  - value > 1 -> size in character
@@ -151,4 +154,4 @@
     ) ; if string= clt-working-environment "default"
   ) ; when section-mode-cedet-ecb
 
-;;; display-ecb.el ends here
+;;; interface-ecb.el ends here

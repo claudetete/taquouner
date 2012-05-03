@@ -20,9 +20,9 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment'
 
 ;;; Change Log:
+;; 2012-05-03 (1.8)
+;;    change environment variable management
 ;; 2012-04-20 (1.7)
 ;;    add default environment
 ;; 2012-04-03 (1.6)
@@ -160,6 +162,9 @@
       (setq section-mode-fill-column-indicator nil)
       (setq section-mode-muse                  nil)
       (setq section-mode-undo-tree             t)
+      (setq section-mode-csv                   t)
+      (setq section-mode-subversion            t)
+      (setq section-mode-diff-color            t)
 
       ;; LANGUAGES
       (setq section-languages             t)
@@ -224,6 +229,7 @@
       (setq section-misc            t)
       (setq section-misc-calendar   nil)
       (setq section-misc-dictionary nil)
+      (setq section-misc-bookmark   t)
 
       ;; CUSTOMIZE
       (setq section-filecustomize t)
@@ -278,29 +284,139 @@
     (cond
       ;; Magneti Marelli -------------------------------------------------------
       ((string= clt-working-environment "Magneti Marelli")
-        (defvar cygwin-bin "d:/cygwin/bin")
-        (defvar gnu-bin "d:/cygwin/usr/bin/gnuwin32/bin")
-        (defvar cv-bin "C:/Program Files/IBM/RationalSDLC/ClearCase/bin")
-        (defvar win-path "")
+        (setenv "PATH" (concat
+                         "d:/cygwin/bin" ";"
+                         "d:/cygwin/usr/bin/gnuwin32/bin" ";"
+                         (getenv "PATH")))
         ) ; Magneti Marelli
 
       ;; Alstom Transport ------------------------------------------------------
       ((string= clt-working-environment "Alstom Transport")
         (if running-in-graphical
           (progn
-            (defvar cygwin-bin "d:/cygwin/bin")
-            (defvar cv-bin "C:/Program Files/IBM/RationalSDLC/ClearCase/bin")
-            (defvar gnu-bin "d:/Users/ctete/tools/gnuwin32/bin")
-            ;; I put the whole PATH Environment variable to work with clearcase
-            (defvar win-path "D:/Users/ctete/tools/MikTex/miktex/bin;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;d:/cygwin/bin;c:/WINDOWS;c:/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;c:/Program Files/IBM/RationalSDLC/common;c:/Program Files/PRQA/PDFReports/texmf/miktex/bin;c:/Program Files/Analog Devices/VisualDSP;c:/Program Files/Analog Devices/VisualDSP/System;c:/WINDOWS/system32;c:/WINDOWS;c:/WINDOWS/System32/Wbem;c:/Program Files/QuickTime/QTSystem;c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;d:/system/Notes;c:/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;c:/Program Files/Rational/TestRealTime/bin/intel/win32;c:/Program Files/Rational/common;c:/Program Files/Lotus/Notes;c:/Program Files/IBM/RationalSDLC/ClearCase/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;d:/Users/ctete/tools/gnuwin32/bin;C:/Python27")
+            (setenv "PATH" (concat
+                             "d:/cygwin/bin"                                                         ";"
+                             "d:/cygwin/usr/bin"                                                     ";"
+                             "d:/cygwin/usr/local/bin"                                               ";"
+                             "C:/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
+                             "d:/Users/ctete/tools/gnuwin32/bin"                                     ";"
+                             "D:/Users/ctete/tools/MikTex/miktex/bin"                                ";"
+                             "d:/cygwin/bin"                                                         ";"
+                             "c:/WINDOWS"                                                            ";"
+                             "c:/WINDOWS/System32"                                                   ";"
+                             "d:/cygwin/bin"                                                         ";"
+                             "c:/WINDOWS"                                                            ";"
+                             "c:/WINDOWS/System32"                                                   ";"
+                             "/usr/local/bin"                                                        ";"
+                             "/usr/bin;/bin"                                                         ";"
+                             "c:/Program Files/IBM/RationalSDLC/common"                              ";"
+                             "c:/Program Files/PRQA/PDFReports/texmf/miktex/bin"                     ";"
+                             "c:/Program Files/Analog Devices/VisualDSP"                             ";"
+                             "c:/Program Files/Analog Devices/VisualDSP/System"                      ";"
+                             "c:/WINDOWS/system32"                                                   ";"
+                             "c:/WINDOWS"                                                            ";"
+                             "c:/WINDOWS/System32/Wbem"                                              ";"
+                             "c:/Program Files/QuickTime/QTSystem"                                   ";"
+                             "c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32" ";"
+                             "d:/system/Notes"                                                       ";"
+                             "c:/Program Files/Symantec/pcAnywhere"                                  ";"
+                             "c:/Program Files/UltraEdit"                                            ";"
+                             "c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils"                 ";"
+                             "c:/Program Files/Rational/TestRealTime/bin/intel/win32"                ";"
+                             "c:/Program Files/Rational/common"                                      ";"
+                             "c:/Program Files/Lotus/Notes"                                          ";"
+                             "c:/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
+                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"           ";"
+                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"                ";"
+                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"                   ";"
+                             "d:/Users/ctete/tools/gnuwin32/bin"                                     ";"
+                             "C:/Python27"                                                           ";"
+                             dotemacs-path "/gnu_global_622wb/bin"
+                             ))
+
+            (setq exec-path
+              '(
+                 "d:/cygwin/bin"
+                 "d:/cygwin/usr/bin"
+                 "d:/cygwin/usr/local/bin"
+                 "d:/Users/ctete/tools/gnuwin32/bin"
+                 "D:/Users/ctete/tools/MikTex/miktex/bin"
+                 "c:/WINDOWS"
+                 "c:/WINDOWS/System32"
+                 "c:/Program Files/IBM/RationalSDLC/ClearCase/bin"
+                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"
+                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"
+                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"
+                 "C:/Python27"
+                 "c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils"
+                 "c:/Program Files/Rational/TestRealTime/bin/intel/win32"
+                 "c:/Program Files/Rational/common"
+                 "c:/Program Files/Analog Devices/VisualDSP"
+                 "c:/Program Files/Analog Devices/VisualDSP/System"
+                 (concat dotemacs-path "/gnu_global_622wb/bin")
+                 ))
+            (setenv "LC_ALL" "C") ; for subversion
             )
+
           (progn
-            (defvar cygwin-bin "")
-            (defvar cv-bin "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin")
-            (defvar gnu-bin "")
-            ;; I put the whole PATH Environment variable to work with clearcase
-            (defvar win-path "/cygdrive/d/cygwin/bin;/cygdrive/c/WINDOWS;/cygdrive/c/WINDOWS/System32;/cygdrive/d/cygwin/bin;/cygdrive/c/WINDOWS;/cygdrive/c/WINDOWS/System32;/usr/local/bin;/usr/bin;/bin;/cygdrive/c/Program Files/IBM/RationalSDLC/common;/cygdrive/c/Program Files/PRQA/PDFReports/texmf/miktex/bin;/cygdrive/c/Program Files/Analog Devices/VisualDSP;/cygdrive/c/Program Files/Analog Devices/VisualDSP/System;/cygdrive/c/WINDOWS/system32;/cygdrive/c/WINDOWS;/cygdrive/c/WINDOWS/System32/Wbem;/cygdrive/c/Program Files/QuickTime/QTSystem;/cygdrive/c/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32;/cygdrive/d/system/Notes;/cygdrive/c/Program Files/Symantec/pcAnywhere;%Program Files%/UltraEdit;/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/etc/utils;/cygdrive/c/Program Files/Rational/TestRealTime/bin/intel/win32;/cygdrive/c/Program Files/Rational/common;/cygdrive/c/Program Files/Lotus/Notes;/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin;/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin;/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin;/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin;/cygdrive/d/Users/ctete/tools/gnuwin32/bin;/CYGDRIVE/C/Python27")
+            (setenv "PATH" (concat
+                             "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin" ";"
+                             "/cygdrive/d/cygwin/bin"                                                         ";"
+                             "/cygdrive/c/WINDOWS"                                                            ";"
+                             "/cygdrive/c/WINDOWS/System32"                                                   ";"
+                             "/cygdrive/d/cygwin/bin"                                                         ";"
+                             "/cygdrive/c/WINDOWS"                                                            ";"
+                             "/cygdrive/c/WINDOWS/System32"                                                   ";"
+                             "/usr/local/bin"                                                                 ";"
+                             "/usr/bin"                                                                       ";"
+                             "/bin"                                                                           ";"
+                             "/cygdrive/c/Program Files/IBM/RationalSDLC/common"                              ";"
+                             "/cygdrive/c/Program Files/PRQA/PDFReports/texmf/miktex/bin"                     ";"
+                             "/cygdrive/c/Program Files/Analog Devices/VisualDSP"                             ";"
+                             "/cygdrive/c/Program Files/Analog Devices/VisualDSP/System"                      ";"
+                             "/cygdrive/c/WINDOWS/system32"                                                   ";"
+                             "/cygdrive/c/WINDOWS"                                                            ";"
+                             "/cygdrive/c/WINDOWS/System32/Wbem"                                              ";"
+                             "/cygdrive/c/Program Files/QuickTime/QTSystem"                                   ";"
+                             "/cygdrive/c/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32" ";"
+                             "/cygdrive/d/system/Notes"                                                       ";"
+                             "/cygdrive/c/Program Files/Symantec/pcAnywhere"                                  ";"
+                             "/cygdrive/c/Program Files/UltraEdit"                                            ";"
+                             "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/etc/utils"                 ";"
+                             "/cygdrive/c/Program Files/Rational/TestRealTime/bin/intel/win32"                ";"
+                             "/cygdrive/c/Program Files/Rational/common"                                      ";"
+                             "/cygdrive/c/Program Files/Lotus/Notes"                                          ";"
+                             "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
+                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"           ";"
+                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"                ";"
+                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"                   ";"
+                             "/cygdrive/d/Users/ctete/tools/gnuwin32/bin"                                     ";"
+                             "/cygdrive/c/Python27"))
+
+            (setq exec-path
+              '(
+                 "/cygdrive/d/cygwin/bin"
+                 "/cygdrive/d/cygwin/usr/bin"
+                 "/cygdrive/d/cygwin/usr/local/bin"
+                 "/cygdrive/d/Users/ctete/tools/gnuwin32/bin"
+                 "/cygdrive/d/Users/ctete/tools/MikTex/miktex/bin"
+                 "/cygdrive/c/WINDOWS"
+                 "/cygdrive/c/WINDOWS/System32"
+                 "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin"
+                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"
+                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"
+                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"
+                 "/cygdrive/c/Python27"
+                 "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/etc/utils"
+                 "/cygdrive/c/Program Files/Rational/TestRealTime/bin/intel/win32"
+                 "/cygdrive/c/Program Files/Rational/common"
+                 "/cygdrive/c/Program Files/Analog Devices/VisualDSP"
+                 "/cygdrive/c/Program Files/Analog Devices/VisualDSP/System"
+                 )
+              )
+            (setenv "LC_ALL" "C") ; for subversion
             )
+
           )
         ) ; Alstom Transport
 
@@ -310,27 +426,38 @@
           (if running-in-graphical
             (progn
               ;;FIXME working environment default
-              (defvar cygwin-bin "c:/path/to/cywin/bin")
-              (defvar cv-bin "c:/path/to/version/control/bin")
-              (defvar gnu-bin "c:/path/to/gnuwin32/bin")
-              (defvar win-path (getenv "PATH"))
+              (setenv "PATH" (concat
+                               "c:/path/to/cywin/bin"           ";"
+                               "c:/path/to/version/control/bin" ";"
+                               "c:/path/to/gnuwin32/bin"        ";"
+                               (getenv "PATH")))
+
+              (setq exec-path
+                '(
+                   "d:/cygwin/bin"
+                   "d:/cygwin/usr/bin"
+                   "d:/cygwin/usr/local/bin"
+                   "c:/WINDOWS"
+                   "c:/WINDOWS/System32"
+                   )
+                )
             )
+
             (progn
-              (defvar cygwin-bin (concat "/usr/local/bin" ";" "/usr/bin" ";" "/bin"))
-              (defvar cv-bin "/cygdrive/c/path/to/version/control/bin")
-              (defvar gnu-bin "/cygdrive/c/path/to/gnuwin32/bin")
-              (defvar win-path "/cygdrive/c/all/PATH/value")
+              (setenv "PATH" (concat
+                               "/usr/local/bin"                          ";"
+                               "/usr/bin"                                ";"
+                               "/bin"                                    ";"
+                               "/cygdrive/c/path/to/version/control/bin" ";"
+                               "/cygdrive/c/all/PATH/value"              ";"
+                               (getenv "PATH")))
               )
+
             )
           )
         ) ; default
 
       ) ; cond -----------------------------------------------------------------
-
-    (setenv "PATH"
-      (concat win-path ";" cygwin-bin ";" gnu-bin ";" cv-bin ";"))
-    (setq exec-path
-      '(win-path cygwin-bin gnu-bin cv-bin))
     )
   (message "  0.4 Cygwin... Done"))
 
@@ -368,11 +495,7 @@
       ((string= clt-working-environment"Alstom Transport")
         (when running-in-graphical
           (custom-set-variables
-            '(ediff-cmp-program "d:/cygwin/bin/cmp.exe")
-            '(ediff-diff-program "d:/cgwin/bin/diff.exe")
-            '(ediff-diff3-program "d:/cygwin/bin/diff3.exe")
             '(shell-file-name "D:/cygwin/bin/bash.exe")
-            ;;'(shell-file-name "C:/WINDOWS/system32/cmd.exe")
             ))
         (setq explicit-bash-args '("--login" "-i"))
         ) ; Alstom Transport

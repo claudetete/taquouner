@@ -20,9 +20,9 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2012-05-03 (1.5)
+;;    fix bug about fullscreen and ecb
 ;; 2012-04-25 (1.4)
 ;;    replace setting to remove tooltip
 ;; 2012-03-29 (1.3)
@@ -54,7 +56,7 @@
 ;;
 ;;; DECORATION
 ;; REQUIREMENT: var     `section-interface-decoration'
-(when section-interface-decoration (message "  1.1 Decoration...")
+(when section-interface-decoration (message "  6.1 Decoration...")
   ;; no more menu bar (to open it Ctrl + right click)
   (and (fboundp 'menu-bar-mode)   (menu-bar-mode   -1))
   ;;
@@ -66,29 +68,35 @@
   ;;
   ;; no more tooltips (delay of 9999 seconds before displayed)
   (setq tooltip-delay 9999)
-  (message "  1.1 Decoration... Done"))
+  (message "  6.1 Decoration... Done"))
+
+;;
+;;; MODELINE
+;; REQUIREMENT: var     `section-interface-modeline'
+(when section-interface-modeline (message "  6.2 Modeline...")
+  (load-file (concat dotemacs-path "/dotemacs/interface-modeline.el"))
+  (message "  6.2 Modeline... Done"))
+
+;;
+;; buffer name in title bar (example "<[ foobar.c ]>") (from grandm_y)
+(setq frame-title-format "<[ %b ]>")
 
 ;;
 ;;; FULLSCREEN
 ;; REQUIREMENT: var     `section-interface-fullscreen'
 ;;              var     `section-environment-os-recognition'
-(when section-interface-fullscreen (message "  1.2 FullScreen...")
-  ;; start in fullscreen (only MS Windows and does not work with vanilla)
+(when section-interface-fullscreen (message "  6.3 FullScreen...")
+  ;; start in fullscreen (only MS Windows)
+  ;; need to put fullscreen after font settings
   (when running-on-ms-windows
-    (add-hook 'term-setup-hook
-      #'(lambda () (w32-send-sys-command ?\xF030)))
+    ;; send command FullScreen to the window of Emacs
+    (w32-send-sys-command 61488)
+
+    ;; annoying but needed to wait true fullscreen
+    ;; wait 1 second
+    (sit-for 1)
+
     )
-  (message "  1.2 FullScreen... Done"))
-
-;;
-;;; MODELINE
-;; REQUIREMENT: var     `section-interface-modeline'
-(when section-interface-modeline (message "  1.3 Modeline...")
-  (load-file (concat dotemacs-path "/dotemacs/interface-modeline.el"))
-  (message "  1.3 Modeline... Done"))
-
-;;
-;; buffer name in title bar (example "<[ foobar.c ]>") (from grandm_y)
-(setq frame-title-format "<[ %b ]>")
+  (message "  6.3 FullScreen... Done"))
 
 ;;; interface.el ends here

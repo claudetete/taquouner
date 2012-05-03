@@ -56,7 +56,7 @@
 ;;
 ;;; C
 ;; REQUIREMENT: var     `section-languages-c'
-(when section-languages-c (message "  4.1 Languages C...")
+(when section-languages-c (message "  3.1 Languages C...")
   ;; create a C style from Jan Borsodi
   (defconst ezsystems-c-style
     ;; Always indent c/c++ sources, never insert tabs
@@ -161,40 +161,40 @@
     '(c-syntactic-indentation t)
     )
 
-  (message "  4.1 Languages C... Done"))
+  (message "  3.1 Languages C... Done"))
 
 ;;
 ;;; LISP
-(when section-languages-lisp (message "  4.2 Languages Lisp...")
+(when section-languages-lisp (message "  3.2 Languages Lisp...")
   ;; set indent size
   (setq lisp-indent-offset 2)
-  (message "  4.2 Languages Lisp... Done"))
+  (message "  3.2 Languages Lisp... Done"))
 
 ;;
 ;;; TABULATION
-(when section-languages-tabulation (message "  4.3 Tabulation...")
+(when section-languages-tabulation (message "  3.3 Tabulation...")
   ;; set number of space for One indentation
   (setq-default indent-tabs-mode nil)
   ;;
   ;;;; modify size of tab (M-i) /* do not do what I want */
   ;;;; /* try with 'edit-tab-stops'
   ;;(setq-default tab-width 2)
-  (message "  4.3 Tabulation... Done"))
+  (message "  3.3 Tabulation... Done"))
 
 ;;
 ;;; RTRT SCRIPT PTU
-(when section-languages-rtrt-script (message "  4.4 RTRT script ptu...")
+(when section-languages-rtrt-script (message "  3.4 RTRT script ptu...")
   (custom-set-variables
     ;; set number of space for indentation in rtrt script .ptu
     '(rtrt-script-indent 4)
    )
-  (message "  4.4 RTRT script ptu... Done"))
+  (message "  3.4 RTRT script ptu... Done"))
 
 ;;
 ;;; PERL
-(when section-languages-perl (message "  4.5 Languages Perl...")
+(when section-languages-perl (message "  3.5 Languages Perl...")
   ;; set indent size
   (setq perl-indent-level 2)
-  (message "  4.5 Languages Perl... Done"))
+  (message "  3.5 Languages Perl... Done"))
 
 ;;; languages.el ends here

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 6.9
+;; Version: 7.0
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -134,6 +134,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-05-02 (7.0)
+;;    fix bug about fullscreen (must be set after a change of font) + add some
+;;    mode
 ;; 2012-04-23 (6.9)
 ;;    add section mouse avoidance
 ;; 2012-04-19 (6.8)
@@ -314,53 +317,32 @@
 
 
 ;;
-;;; INTERFACE                                                           1
-;; FILE: dotemacs/interface.el
-(defvar section-interface t)
-;; display buffer name in titlebar (example "<[ foobar.c ]>")
-(progn
-  ;; DECORATION                                                         1.1
-  ;; remove all mouse interface (toolbar, menubar, scrollbar)
-  (defvar section-interface-decoration t)
-  ;;
-  ;; FULLSCREEN                                                         1.2
-  ;; REQUIREMENT:       section-environment-os-recognition
-  (defvar section-interface-fullscreen nil)
-  ;;
-  ;; MODELINE                                                           1.3
-  ;; FILE: dotemacs/interface-modeline.el
-  ;; set some option to add in the grey line at the bottom of each buffer
-  (defvar section-interface-modeline t)
-  ) ; (progn
-
-
-;;
-;;; EXTERN FILES                                                        2
+;;; EXTERN FILES                                                        1
 ;; FILE: dotemacs/externfiles.el
 (defvar section-external t)
 ;; load extern files which are not modes
 (progn
-  ;; DIRECTORY                                                          2.1
+  ;; DIRECTORY                                                          1.1
   ;; add "plugins/" to load path
   (defvar section-external-directory t)
   ;;
-  ;; FONCTIONS                                                          2.2
+  ;; FONCTIONS                                                          1.2
   ;; FILE: dotemacs/functions.el
   ;; REQUIREMENT:       section-environment-os-recognition
   ;; load custom function
   (defvar section-external-functions t)
   ;;
-  ;; VECTRA                                                             2.3
+  ;; VECTRA                                                             1.3
   ;; FILE: plugins/vectra.el
   ;; man and doc in emacs (never used)
   (defvar section-external-vectra nil)
   ;;
-  ;; SETNU                                                              2.4
+  ;; SETNU                                                              1.4
   ;; FILE: plugins/setnu.el
   ;; display line number at each line (deprecated exist in emacs)
   (defvar section-external-setnu nil)
   ;;
-  ;; HOME/END                                                           2.5
+  ;; HOME/END                                                           1.5
   ;; FILE: plugins/pc-keys.elc
   ;; add some usefull function to home and end keys
   (defvar section-external-home-end t)
@@ -368,24 +350,24 @@
 
 
 ;;
-;;; MODE                                                                3
+;;; MODE                                                                2
 ;; FILE: dotemacs/mode.el
 (defvar section-mode t)
 ;; load extern files which are modes in plugins/
 (progn
-  ;; DOXYMACS                                                           3.1
+  ;; DOXYMACS                                                           2.1
   ;; emacs interface for doxygen comments
   (defvar section-mode-doxymacs nil)
   ;;
-  ;; IDO                                                                3.2
+  ;; IDO                                                                2.2
   ;; yet another switch buffer
   (defvar section-mode-ido nil)
   ;;
-  ;; UNIQUIFY                                                           3.3
+  ;; UNIQUIFY                                                           2.3
   ;; create unique buffer name
   (defvar section-mode-uniquify t)
   ;;
-  ;; CEDET                                                              3.4
+  ;; CEDET                                                              2.4
   ;; "Collection of Emacs Development Environment Tools"
   (defvar section-mode-cedet t)
   ;; if you want to use emacs included cedet set to nil
@@ -396,12 +378,12 @@
   ;;;; see in dotemacs/environment.el
   ;;(defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-snap/common/cedet.elc"))
   (progn
-    ;; SEMANTIC                                                         3.4.1
+    ;; SEMANTIC                                                         2.4.1
     ;; FILE: dotemacs/mode-semantic.el
     ;; can do tag, list of function/variable..., preproc, etc
     (defvar section-mode-cedet-semantic t)
     ;;
-    ;; ECB                                                              3.4.2
+    ;; ECB                                                              2.4.2
     ;; FILE: dotemacs/mode-ecb.el
     ;; "Emacs Code Browser"
     ;; can display other windows or speedbar to view folder tree, source
@@ -410,257 +392,279 @@
     ) ; (progn
 
   ;;
-  ;; BATCH                                                              3.5
+  ;; BATCH                                                              2.5
   ;; mode for .bat script in MS Windows
   (defvar section-mode-batch t)
   ;;
-  ;; VISUAL BASIC                                                       3.6
+  ;; VISUAL BASIC                                                       2.6
   ;; mode for VisualBasic and VisualBasicAdvance
   (defvar section-mode-vb t)
   ;;
-  ;; WINDOW NUMBERING                                                   3.7
+  ;; WINDOW NUMBERING                                                   2.7
   ;; give a number of each window to easly jump in it
   (defvar section-mode-window-numbering nil)
   ;;
-  ;; C                                                                  3.8
+  ;; C                                                                  2.8
   ;; define new type in C
   (defvar section-mode-c t)
   (progn
-    ;; CWARN                                                            3.8.1
+    ;; CWARN                                                            2.8.1
     ;; display small error in source code (forget semi-colon, etc)
     (defvar section-mode-c-cwarn nil)
     ;;
-    ;; DATA DEBUG                                                       3.8.3
+    ;; DATA DEBUG                                                       2.8.3
     ;; ??  (not used)
     (defvar section-mode-c-data-debug nil)
     ) ; (progn
 
   ;;
-  ;; ICOMPLETION                                                        3.9
+  ;; ICOMPLETION                                                        2.9
   ;; more completion in minibuffer
   (defvar section-mode-icompletion nil)
 
   ;;
-  ;; YASNIPPET                                                          3.10
+  ;; YASNIPPET                                                          2.10
   ;; snippet mode (not used)
   (defvar section-mode-yasnippet nil)
 
   ;;
-  ;; BROWSE KILL RING                                                   3.11
+  ;; BROWSE KILL RING                                                   2.11
   ;; mode to browse the kill ring memory
   ;; yank only on the first left top window...
-  (defvar section-mode-browse-kill-ring nil)
+  (defvar section-mode-browse-kill-ring t)
 
   ;;
-  ;; MAGNETI MARELLI                                                    3.12
+  ;; MAGNETI MARELLI                                                    2.12
   (defvar section-mode-mm nil)
   (progn
-    ;; EOL                                                              3.12.1
+    ;; EOL                                                              2.12.1
     ;; light syntax color for End Of Line file
     (defvar section-mode-mm-eol t)
     ;;
-    ;; CAN DBC                                                          3.12.3
+    ;; CAN DBC                                                          2.12.3
     ;; light syntax color for DataBase CAN file
     (defvar section-mode-mm-dbc t)
     ;;
-    ;; CCM DIFF                                                         3.12.3
+    ;; CCM DIFF                                                         2.12.3
     ;; light syntax color for synergy diff file
     (defvar section-mode-mm-diff t)
     ) ; (progn
 
   ;;
-  ;; DIRED+                                                             3.13
+  ;; DIRED+                                                             2.13
   ;; improve dired mode, color, open with, etc
   (defvar section-mode-dired-plus t)
 
   ;;
-  ;; GNU/GLOBAL                                                         3.14
+  ;; GNU/GLOBAL                                                         2.14
   ;; Tag management mode
   ;; use modified gtags.el:
   ;; see function to add from function.el and put the absolute path of
   ;; global executable
   (defvar section-mode-gnu-global t)
-
   ;;
-  ;; EPROJECT (grischka)                                                3.15
+  ;; EPROJECT (grischka)                                                2.15
   ;; project management mode (never used)
   (defvar section-mode-eproject nil)
-
   ;;
-  ;; RTRT SCRIPT                                                        3.16
+  ;; RTRT SCRIPT                                                        2.16
   ;; rtrt script mode (syntax coloration)
   (defvar section-mode-rtrt-script t)
-
   ;;
-  ;; VC CLEARCASE                                                       3.17
+  ;; VC CLEARCASE                                                       2.17
   ;; vc ClearCase mode
   (defvar section-mode-vc-clearcase t)
-
   ;;
-  ;; CLEARCASE                                                          3.18
+  ;; CLEARCASE                                                          2.18
   ;; ClearCase mode
   (defvar section-mode-clearcase nil)
-
   ;;
-  ;; AUTOHOTKEY                                                         3.19
+  ;; AUTOHOTKEY                                                         2.19
   ;; AutoHotKey mode
   (defvar section-mode-autohotkey nil)
-
   ;;
-  ;; OUTLINE                                                            3.20
+  ;; OUTLINE                                                            2.20
   ;; Outline mode to manually hide/show source code block
   (defvar section-mode-outline t)
-
   ;;
-  ;; AUTO HIGHLIGHT SYMBOL                                              3.21
+  ;; AUTO HIGHLIGHT SYMBOL                                              2.21
   ;; to automatically highlight symbol at point
   (defvar section-mode-auto-highlight-symbol t)
-
   ;;
-  ;; GOOGLE CALENDAR                                                    3.22
+  ;; GOOGLE CALENDAR                                                    2.22
   ;; to import google calendar
   (defvar section-mode-google-calendar t)
-
   ;;
-  ;; FILL COLUMN INDICATOR                                              3.23
+  ;; FILL COLUMN INDICATOR                                              2.23
   ;; show a line at fill-column (set at 80 in dotemacs/misc.el
   ;; be careful enable truncate line
   (defvar section-mode-fill-column-indicator nil)
-
   ;;
-  ;; MUSE                                                               3.24
+  ;; MUSE                                                               2.24
   ;; show a line at fill-column (set at 80 in dotemacs/misc.el
   ;; muse mode to have nice doc
   (defvar section-mode-muse nil)
-
   ;;
-  ;; UNDO TREE                                                          3.25
+  ;; UNDO TREE                                                          2.25
   ;; replace the undo built in function
   (defvar section-mode-undo-tree t)
+  ;;
+  ;; CSV                                                                2.26
+  ;; parse/edit/sort csv file
+  (defvar section-mode-csv t)
+  ;;
+  ;; SUBVERSION                                                         2.27
+  ;; support Subversion 1.7
+  (defvar section-mode-subversion t)
+  ;;
+  ;; DIFF COLOR                                                         2.28
+  ;; add color to diff mode
+  (defvar section-mode-diff-color t)
   ) ; (progn
 
 
 ;;
-;;; LANGUAGES                                                           4
+;;; LANGUAGES                                                           3
 ;; FILE: dotemacs/languages.el
 (defvar section-languages t)
 (progn
-  ;; C                                                                  4.1
+  ;; C                                                                  3.1
   ;; set indentation style and preprocessing option
   (defvar section-languages-c t)
   ;;
-  ;; LISP                                                               4.2
+  ;; LISP                                                               3.2
   ;; set indentation style
   (defvar section-languages-lisp t)
   ;;
-  ;; TAB                                                                4.3
+  ;; TAB                                                                3.3
   ;; tab always in space
   (defvar section-languages-tabulation t)
   ;;
-  ;; RTRT SCRIPT PTU                                                    4.4
+  ;; RTRT SCRIPT PTU                                                    3.4
   ;; set indentation style
   (defvar section-languages-rtrt-script t)
   ;;
-  ;; PERL                                                               4.5
+  ;; PERL                                                               3.5
   ;; set indentation style
   (defvar section-languages-perl t)
   ) ; (progn
 
 
 ;;
-;;; SELECTION                                                           5
+;;; SELECTION                                                           4
 ;; FILE: dotemacs/selection.el
 ;; selection can be kill + selection is highlight + kill->copy in read only
 (defvar section-selection t)
 (progn
-  ;; SHIFT SELECTION                                                    5.1
+  ;; SHIFT SELECTION                                                    4.1
   ;; selection can be done with shit and arrow keys (default setting since 23.3)
   (defvar section-selection-with-shift nil)
   ) ; (progn
 
 
 ;;
-;;; DISPLAY                                                             6
+;;; DISPLAY                                                             5
 (defvar section-mydisplay t)
 (progn
-;; WINDOWS/BUFFERS                                                      6.1
+;; WINDOWS/BUFFERS                                                      5.1
 ;; FILE: dotemacs/display-buffer.el
 ;; buffers with *buffername* should be displayed in the same window
 ;; first column in window will display buffer limit
 ;; next page will leave 5 shared line
   (defvar section-display-windows-buffers t)
   (progn
-    ;; TRANSPARENCY                                                     6.1.1
+    ;; TRANSPARENCY                                                     5.1.1
     ;; the whole emacs will be transparent
     (defvar section-display-windows-buffers-transparency t)
     ) ; (progn
 
   ;;
-  ;; SPEEDBAR                                                           6.2
+  ;; SPEEDBAR                                                           5.2
   ;; FILE: dotemacs/display-speedbar.el
   ;; set size and display of speedbar (see GLOSSARY) (no used)
   (defvar section-display-speedbar nil)
-  ;;
-  ;; ECB                                                                6.3
-  ;; FILE: dotemacs/display-ecb.el
-  ;; REQUIREMENT:       section-mode-cedet-ecb
-  ;; set size, display, refresh and remove opening tips
-  (defvar section-display-ecb t)
 
   ;;
-  ;; FONT                                                               6.4
+  ;; FONT                                                               5.3
   ;; FILE: dotemacs/display-font.el
   ;; REQUIREMENT:       section-environment-os-recognition
   ;;                    section-environment-terminal-vs-graphics
   ;; set font in terminal or in graphic
   (defvar section-display-font t)
   (progn
-    ;; INTERNATIONAL                                                    6.4.1
+    ;; INTERNATIONAL                                                    5.3.1
     ;; iso or utf-8 or ...  (not used)
     (defvar section-display-font-international t)
     ) ; (progn
 
   ;;
-  ;; COLOR                                                              6.5
+  ;; COLOR                                                              5.4
   ;; FILE: dotemacs/display-color.el
   ;; set manual color
   (defvar section-display-color t)
   (progn
-    ;; PARENTHESES MODE                                                 6.5.1
+    ;; PARENTHESES MODE                                                 5.4.1
     ;; matched parentheses are highlight
     (defvar section-display-color-parentheses-mode t)
-    ;; PARENTHESES MINIBUFFER                                           6.5.2
+    ;; PARENTHESES MINIBUFFER                                           5.4.2
     ;; matched parentheses are highlight and if not visible show it in the
     ;; minibuffer
     (defvar section-display-color-parentheses-visible t)
-    ;; PARENTHESES HIGHLIGHT                                            6.5.3
+    ;; PARENTHESES HIGHLIGHT                                            5.4.3
     ;; matched parentheses are highlight in rainbow color
     (defvar section-display-color-parentheses-highlight nil)
 
-    ;; COLOR THEME                                                      6.5.4
+    ;; COLOR THEME                                                      5.4.4
     ;; set color by color-theme mode
     (defvar section-display-color-theme nil)
 
-    ;; MISC                                                             6.5.4
+    ;; MISC                                                             5.4.4
     ;; REQUIREMENT:     section-environment-terminal-vs-graphics
     ;;                  section-display-color-theme nil
     ;; current line highlight + full syntax coloration
     (defvar section-display-color-misc t)
     ;;
-    ;; MODE                                                             6.5.5
+    ;; MODE                                                             5.4.5
     ;; REQUIREMENT:     section-environment-terminal-vs-graphics
     ;; set color for c-mode, cursor and current line
     (defvar section-display-color-mode t)
     ;;
-    ;; GREP                                                             6.5.6
+    ;; GREP                                                             5.4.6
     ;; set color for grep window (all search, occur, grep, grep-find, etc)
     (defvar section-display-color-grep t)
     ;;
-    ;; ECB                                                              6.5.7
+    ;; ECB                                                              5.4.7
     ;; REQUIREMENT:     section-mode-cedet-ecb
     ;; set color for ecb-mode
     (defvar section-display-color-ecb t)
     ) ; (progn
+  ) ; (progn
+
+
+;;
+;;; INTERFACE                                                           6
+;; FILE: dotemacs/interface.el
+(defvar section-interface t)
+;; display buffer name in titlebar (example "<[ foobar.c ]>")
+(progn
+  ;; DECORATION                                                         6.1
+  ;; remove all mouse interface (toolbar, menubar, scrollbar)
+  (defvar section-interface-decoration t)
+  ;;
+  ;; MODELINE                                                           6.2
+  ;; FILE: dotemacs/interface-modeline.el
+  ;; set some option to add in the grey line at the bottom of each buffer
+  (defvar section-interface-modeline t)
+  ;;
+  ;; FULLSCREEN                                                         6.3
+  ;; REQUIREMENT:       section-environment-os-recognition
+  (defvar section-interface-fullscreen t)
+  ;;
+  ;; ECB                                                                6.4
+  ;; FILE: dotemacs/interface-ecb.el
+  ;; REQUIREMENT:       section-mode-cedet-ecb
+  ;; set size, display, refresh and remove opening tips
+  (defvar section-interface-ecb t)
   ) ; (progn
 
 
@@ -792,6 +796,10 @@
   ;; DICTIONARY                                                         11.2
   ;; set default dictionary, etc
   (defvar section-misc-dictionary t)
+  ;;
+  ;; BOOKMARK                                                           11.3
+  ;; set default dictionary, etc
+  (defvar section-misc-bookmark t)
   ) ; (progn
 
 
@@ -810,64 +818,63 @@
   (message "0 Environment... Done"))
 
 ;;
-;;; INTERFACE
-(when section-interface (message "1 Interface...")
-  (load-file (concat dotemacs-path "/dotemacs/interface.el"))
-  (message "1 Interface... Done"))
-
-;;
 ;;; EXTERN FILES
-(when section-external (message "2 External files...")
+(when section-external (message "1 External files...")
   (load-file (concat dotemacs-path "/dotemacs/externfiles.el"))
-  (message "2 External files... Done"))
+  (message "1 External files... Done"))
 
 ;;
 ;;; MODE
-(when section-mode (message "3 Mode...")
+(when section-mode (message "2 Mode...")
   (load-file (concat dotemacs-path "/dotemacs/mode.el"))
-  (message "3 Mode... Done"))
+  (message "2 Mode... Done"))
 
 ;;
 ;;; LANGUAGES
-(when section-languages (message "4 Languages...")
+(when section-languages (message "3 Languages...")
   (load-file (concat dotemacs-path "/dotemacs/languages.el"))
-  (message "4 Languages... Done"))
+  (message "3 Languages... Done"))
 
 ;;
 ;;; SELECTION
-(when section-selection (message "5 Selection...")
+(when section-selection (message "4 Selection...")
   (load-file (concat dotemacs-path "/dotemacs/selection.el"))
-  (message "5 Selection... Done"))
+  (message "4 Selection... Done"))
 
 ;;
 ;;; DISPLAY
-(when section-mydisplay (message "6 Display...")
-
+(when section-mydisplay (message "5 Display...")
   ;; WINDOWS/BUFFERS
-  (when section-display-windows-buffers (message "  6.1 Windows / Buffers...")
+  (when section-display-windows-buffers (message "  5.1 Windows / Buffers...")
     (load-file (concat dotemacs-path "/dotemacs/display-buffer.el"))
-    (message "  6.1 Windows / Buffers... Done"))
+    (message "  5.1 Windows / Buffers... Done"))
   ;;
   ;; SPEEDBAR
-  (when section-display-speedbar (message "  6.2 SpeedBar...")
+  (when section-display-speedbar (message "  5.2 SpeedBar...")
     (load-file (concat dotemacs-path "/dotemacs/display-speedbar.el"))
-    (message "  6.2 SpeedBar... Done"))
-  ;;
-  ;; ECB
-  (when section-display-ecb (message "  6.3 Ecb...")
-    (load-file (concat dotemacs-path "/dotemacs/display-ecb.el"))
-    (message "  6.3 Ecb... Done"))
+    (message "  5.2 SpeedBar... Done"))
   ;;
   ;; FONT
-  (when section-display-font (message "  6.4 Font...")
+  (when section-display-font (message "  5.3 Font...")
     (load-file (concat dotemacs-path "/dotemacs/display-font.el"))
-    (message "  6.4 Font... Done"))
+    (message "  5.3 Font... Done"))
   ;;
   ;; COLOR
-  (when section-display-color (message "  6.5 Color...")
+  (when section-display-color (message "  5.4 Color...")
     (load-file (concat dotemacs-path "/dotemacs/display-color.el"))
-    (message "  6.5 Color... Done"))
-  (message "6 Display... Done"))
+    (message "  5.4 Color... Done"))
+  (message "5 Display... Done"))
+
+
+;;
+;;; INTERFACE
+(when section-interface (message "6 Interface...")
+  (load-file (concat dotemacs-path "/dotemacs/interface.el"))
+  ;; ECB
+  (when section-interface-ecb (message "  6.4 Ecb...")
+    (load-file (concat dotemacs-path "/dotemacs/interface-ecb.el"))
+    (message "  6.4 Ecb... Done"))
+  (message "6 Interface... Done"))
 
 ;;
 ;;; COMPLETION

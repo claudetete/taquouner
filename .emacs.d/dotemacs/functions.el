@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.5
+;; Version: 3.6
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,9 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-05-02 (3.6)
+;;    add function about isearch, macro, windows swap + comment for fix
+;;    fullscreen bug
 ;; 2012-03-29 (3.5)
 ;;    add function align with =
 ;; 2012-03-28 (3.4)
@@ -155,6 +158,34 @@
     )
   )
 
+;;
+;;;
+;;; COPY/CUT
+;; Change cutting behavior (by Fabrice Niessen):
+;; "Many times you'll do a kill-line command with the only intention of
+;; getting the contents of the line into the killring. Here's an idea stolen
+;; from Slickedit, if you press copy or cut when no region is active, you'll
+;; copy or cut the current line."
+;; <http://www.zafar.se/bkz/Articles/EmacsTips>
+(defadvice kill-ring-save (before slickcopy activate compile)
+  "When called interactively with no active region, copy the
+current line instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
+
+(defadvice kill-region (before slickcut activate compile)
+  "When called interactively with no active region, kill the
+current line instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
+
+;;
+;;;
+;;; SEARCH
 ;;; search the word at the point for the whole buffer (by Claude TETE
 (defun occur-word-at-point ()
   "Search the word under cursor in the current buffer."
@@ -172,6 +203,15 @@
     (occur word)
     )
   )
+
+;; occur when incremental search (by Fabrice Niessen)
+(defun isearch-occur ()
+  "Invoke `occur' from within isearch."
+  (interactive)
+  (let ((case-fold-search isearch-case-fold-search))
+    (occur (if isearch-regexp isearch-string (regexp-quote isearch-string)))))
+
+(define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
 
 ;;; incremental search the word at the point (from www.emacswiki.org)
 ;; I-search with initial contents
@@ -197,6 +237,23 @@
       )
     )
   )
+
+;;
+;;;
+;;; MACRO
+;; toogle macro recording on/off (by Fabrice Niessen)
+(defun my-toggle-kbd-macro-recording-on ()
+  "Start recording a keyboard macro and toggle functionality of key binding."
+  (interactive)
+  (global-set-key (kbd "<S-f8>") 'my-toggle-kbd-macro-recording-off)
+  (start-kbd-macro nil))
+;; toogle macro recording on/off (by Fabrice Niessen)
+(defun my-toggle-kbd-macro-recording-off ()
+  "Stop recording a keyboard macro and toggle functionality of key binding."
+  (interactive)
+  (global-set-key (kbd "<S-f8>") 'my-toggle-kbd-macro-recording-on)
+  (end-kbd-macro))
+;; shortcuts are put in shortcut-function.el
 
 ;;
 ;;;
@@ -385,6 +442,7 @@
 ;;;; START UP
 ;;; run everything needed after start (needed with Emacs on MS Windows with
 ;;; maximize bug (by Claude TETE)
+;; not used anymore (bug fixed)
 (defun mystart-up ()
   "Start all mode necessary to work."
   (interactive)
@@ -828,32 +886,102 @@ before message."
 
 ;;
 ;;;
-;;;; GTAGS
-;; to put in gtags.el
-;;; get a pattern from current buffer name (by Claude TETE)
-;;(defun gtags-current-buffer ()
-;;  (interactive)
-;;  (setq buffername (buffer-name))
-;;  (setq buffername (substring buffername 0 4))
-;;)
+;;; COMPLETIONS
+;; expand text trying various ways to find its expansion (by Fabrice Niessen)
+(when (try-require 'hippie-exp)
+  ;; list of expansion functions tried (in order) by `hippie-expand'
+  (setq hippie-expand-try-functions-list
+    '(
+       try-expand-dabbrev   ; from current buffer
+       try-expand-dabbrev-visible   ; from visible parts of all windows
+       try-expand-dabbrev-all-buffers   ; from all other buffers
+       try-expand-dabbrev-from-kill
+       try-complete-file-name-partially
+       try-complete-file-name
+       try-expand-all-abbrevs
+       try-expand-list
+       try-expand-line
+       try-complete-lisp-symbol-partially
+       try-complete-lisp-symbol
+       try-expand-whole-kill
+       )
+    )
 
-;; to put in gtags.el
-;;; find a related file from a pattern of current buffer (by Claude TETE)
-;;(defun gtags-find-file-custom ()
-;;  "Input pattern and move to the top of the file."
-;;  (interactive)
-;;  (let (tagname prompt input)
-;;    (setq tagname (gtags-current-buffer))
-;;    (if tagname
-;;      (setq prompt (concat "Find related files: (default " tagname ") "))
-;;      (setq prompt "Find related files: "))
-;;    (setq input (completing-read prompt 'gtags-completing-files
-;;                  nil nil nil gtags-history-list))
-;;    (if (not (equal "" input))
-;;      (setq tagname input))
-;;    (gtags-push-context)
-;;    (gtags-goto-tag tagname "Po")))
+  ;; expand-function (by Fabrice Niessen)
+  (defun my-hippie-expand (arg)
+    ;; called with a positive prefix `P', it jumps directly to the `P'-th
+    ;; `try-function'
+    (interactive "P")
+    ;; `hippie-expand' does not have a customization-feature (like
+    ;; `dabbrev-expand') to search case-sensitive for completions. So we
+    ;; must set `case-fold-search' temporarily to nil!
+    (let ((old-case-fold-search case-fold-search))
+      (setq case-fold-search nil)
+      (hippie-expand arg)
+      (setq case-fold-search old-case-fold-search)
+      )
+    )
+)
 
+;;
+;;;
+;;; SWAP/SPLIT WINDOWS
+;; swap 2 windows (by Fabrice Niessen)
+(defun my-swap-windows ()
+  "If you have 2 windows, it swaps them."
+  (interactive)
+  (cond ((not (= (count-windows) 2))
+          (message "You need exactly 2 windows to do this."))
+    (t
+      (let* ((w1 (first (window-list)))
+              (w2 (second (window-list)))
+              (b1 (window-buffer w1))
+              (b2 (window-buffer w2))
+              (s1 (window-start w1))
+              (s2 (window-start w2)))
+        (set-window-buffer w1 b2)
+        (set-window-buffer w2 b1)
+        (set-window-start w1 s2)
+        (set-window-start w2 s1)
+        )
+      )
+    )
+  )
+
+;; toggle between horizontal and vertical split for 2 windows (by Fabrice
+;; Niessen)
+(defun my-toggle-window-split ()
+  "Vertical split shows more of each line, horizontal split shows
+more lines. This code toggles between them. It only works for
+frames with exactly two windows."
+  (interactive)
+  (if (= (count-windows) 2)
+    (let* ((this-win-buffer (window-buffer))
+            (next-win-buffer (window-buffer (next-window)))
+            (this-win-edges (window-edges (selected-window)))
+            (next-win-edges (window-edges (next-window)))
+            (this-win-2nd (not (and (<= (car this-win-edges)
+                                      (car next-win-edges))
+                                 (<= (cadr this-win-edges)
+                                   (cadr next-win-edges)))))
+            (splitter
+	      (if (= (car this-win-edges)
+                    (car (window-edges (next-window))))
+                'split-window-horizontally
+		'split-window-vertically)
+              )
+            )
+      (delete-other-windows)
+      (let ((first-win (selected-window)))
+        (funcall splitter)
+        (if this-win-2nd (other-window 1))
+        (set-window-buffer (selected-window) this-win-buffer)
+        (set-window-buffer (next-window) next-win-buffer)
+        (select-window first-win)
+        (if this-win-2nd (other-window 1)))
+      )
+    )
+  )
 
 ;;
 ;;;
@@ -913,8 +1041,8 @@ When there is a text selection, act on the region."
           (let ((fill-column bigFillColumnVal))
             (fill-region (region-beginning) (region-end))) )
         (if currentStateIsCompact
-          (fill-paragraph nil)
           (let ((fill-column bigFillColumnVal))
+          (fill-paragraph nil)
             (fill-paragraph nil)) ) )
 
       (put this-command 'stateIsCompact-p (if currentStateIsCompact nil t)) ) ) )

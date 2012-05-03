@@ -99,10 +99,10 @@
 ;; REQUIREMENT: var     `section-selection-with-shift'
 (if section-selection-with-shift
   (progn
-    (message "  5.1 Selection with Shift...")
+    (message "  4.1 Selection with Shift...")
     ;; selection with shift (default in Emacs 23.4)
     (setq shift-selection-mode t)
-    (message "  5.1 Selection with Shift... Done")
+    (message "  4.1 Selection with Shift... Done")
     )
   ;; try to disable it
   (progn (setq shift-selection-mode nil))

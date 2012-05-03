@@ -12,26 +12,31 @@ C-x C-k r | run macro on region
 C-x e     | run macro
 
 ** Move
-C-M-Home | begining function
-C-M-a    | begining function
-C-M-End  | ending function
-C-M-e    | ending function
-C-M-u    | begining block
-C-M-d    | begining of subblock
-C-M-d    | move forward down one level of parentheses
-C-M-u    | move backward out of one level of parentheses
-C-M-f    | move forward accross one balanced expression
-C-M-b    | move backward accross one balanced expression
-M-e      | move forward to next end of sentence
-C-c C-u  | move backward to begining of preproc
-M-m      | move begining of indentation
-C-c C-w  | in C mode enable navigation from subword to subword
+C-M-Home    | begining function
+C-M-a       | begining function
+C-M-End     | ending function
+C-M-e       | ending function
+C-M-u       | begining block
+C-M-d       | begining of subblock
+C-M-d       | move forward down one level of parentheses
+C-M-u       | move backward out of one level of parentheses
+C-M-f       | move forward accross one balanced expression
+C-M-b       | move backward accross one balanced expression
+M-e         | move forward to next end of sentence
+C-c C-u     | move backward to begining of preproc
+M-m         | move begining of indentation
+C-c C-w     | in C mode enable navigation from subword to subword
+*** Register/Bookmark
+C-x r Space | register/bookmark a point in a buffer (must name it)
+C-x r j     | jump/go to a register/bookmark (by name)
 
 ** Edit
 *** Modify
 M-c           | uppercase the first character and down others
 M-U           | uppercase the following word
 M-l           | downcase the following word
+M-w           | Copy
+C-w           | Cut (kill)
 *** Select
 M-h           | select the whole block
 C-M-h         | select the whole function
@@ -51,6 +56,25 @@ C-o           | insert a new line without moving the cursor
 C-M-o         | insert a new line + align with the cursor
 M-/           | completion
 M-(           | add parentheses to the region
+C-y           | Paste (Yank)
+M-y           | browse in kill ring memory
+*** Browse Kill Ring
+y             | insert
+i             | insert
+Enter         | insert and quit
+u             | insert, move and quit
+o             | insert and move
+q             | quit
+d             | delete current killed text
+s             | search forward
+r             | search backward
+e             | edit
+n             | forward
+p             | previous
+g             | update
+l             | occur
+h             | help
+Middle Click  | insert
 
 **Search
 *** Incremental
@@ -73,7 +97,16 @@ M-r         | Move to a later item in the minibuffer history that matches a rege
 
 
 ** File
-C-x C-q | toggle read only/read and write
+C-x C-q                | toggle read only/read and write
+C-x Enter f dos Enter  | save the current buffer with CRLF line endings (\r\n)
+C-x Enter f unix Enter | save the current buffer with LF line endings (\n)
+*** Bookmarks
+C-x r m                | set the current bookmark
+C-x r l                | show list of bookmarked files
+d                      | mark to delete bookmark
+e                      | edit annotations
+a                      | show annotations
+x                      | apply all changes
 
 ** Display
 *** Buffers
@@ -85,6 +118,7 @@ C-x 3                | split vertically the current window
 C-x 1                | show only the current window (close others)
 C-x 0                | close the current window
 C-x 5 2              | show an external window of the current window
+C-x 5 0              | to quit the external window
 C-x r f              | store window configuration in a register
 C-x r j              | restore window configuration from a register
 C-x +                | balance windows
@@ -125,6 +159,17 @@ d     | show diary of selected day
 S     | give sunrise and sunset time
 M     | give moon phase
 
+** Version Control
+C-x v v   | do the next logical action on the file
+C-x v =   | diff
+C-x v l   | show history
+C-x v i   | add a new file
+C-x v +   | update
+C-x v u   | undo checkout
+C-x v ~   | look at other version
+C-x v d   | show all files which are not up to date in a directory
+C-x v g   | show track each line who added/edited it
+C-x v C-h | show all command for Version Control
 
 ** Calc
 C-x * c | invoke calc in a new buffer
