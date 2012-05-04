@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 2.1
 ;; Created: October 2006
 ;; Last-Updated: April 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-05-04 (2.1)
+;;    add dired sort mode
 ;; 2012-05-02 (2.0)
 ;;    add setting for browse kill ring + add csv mode + svn mode + diff color
 ;; 2012-04-26 (1.9)
@@ -460,7 +462,7 @@
 
 ;;
 ;;; UNDO TREE
-;; REQUIREMENT: var     `section-mode-muse'
+;; REQUIREMENT: var     `section-mode-undo-tree'
 (when section-mode-undo-tree (message "  2.25 Undo Tree...")
   (when (try-require 'undo-tree "    ")
     ;; If you want to replace the standard Emacs' undo system with the
@@ -472,6 +474,7 @@
 
 ;;
 ;;; CSV
+;; REQUIREMENT: var     `section-mode-csv'
 (when section-mode-csv (message "  2.26 CSV...")
   (when (try-require 'csv-mode "    ")
     ;; field separators: a list of *single-character* strings
@@ -480,15 +483,35 @@
 
 ;;
 ;;; SUBVERSION
+;; REQUIREMENT: var     `section-mode-subversion'
 (when section-mode-subversion (message "  2.27 Subversion 1.7...")
   (try-require 'vc-svn17 "    ")
   (message "  2.27 Subversion 1.7... Done"))
 
 ;;
 ;;; DIFF COLOR
+;; REQUIREMENT: var     `section-mode-diff-color'
 (when section-mode-diff-color (message "  2.28 Diff Color...")
   (try-require 'diff-mode- "    ")
   (message "  2.28 Diff Color... Done"))
+
+;;
+;;; DIRED SORT
+;; REQUIREMENT: var     `section-mode-dired-sort'
+(when section-mode-dired-sort (message "  2.29 Dired Sort...")
+  (try-require 'dired-sort-menu)
+  (custom-set-variables
+    ;; set a profile of sorting
+    '(dired-sort-menu-saved-config
+       (quote (
+                (dired-actual-switches . "-alh")
+                (ls-lisp-ignore-case . t)
+                (ls-lisp-dirs-first . t))))
+    ;; set this profile by default
+    '(ls-lisp-dirs-first t)
+    '(ls-lisp-ignore-case t)
+    )
+  (message "  2.29 Dired Sort... Done"))
 
 (custom-set-variables
 ;;
@@ -501,6 +524,7 @@
 
 ;; TRY
 (when 0
+  ;; it add a small round in modeline where color give status of svn
   (try-require 'psvn)
 )
 ;; need to try

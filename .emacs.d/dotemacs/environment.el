@@ -20,7 +20,7 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-environment'
 
 ;;; Change Log:
+;; 2012-05-04 (1.9)
+;;    complete default working environment + change location to avoid french
+;;    message
 ;; 2012-05-03 (1.8)
 ;;    change environment variable management
 ;; 2012-04-20 (1.7)
@@ -114,12 +117,6 @@
       (setq section-environment-executable             t)
       (setq section-environment-elpa                   nil)
 
-      ;; INTERFACE
-      (setq section-interface            t)
-      (setq section-interface-decoration nil)
-      (setq section-interface-fullscreen nil)
-      (setq section-interface-modeline   t)
-
       ;; EXTERN FILES
       (setq section-external           t)
       (setq section-external-directory t)
@@ -165,6 +162,7 @@
       (setq section-mode-csv                   t)
       (setq section-mode-subversion            t)
       (setq section-mode-diff-color            t)
+      (setq section-mode-dired-sort            t)
 
       ;; LANGUAGES
       (setq section-languages             t)
@@ -181,9 +179,9 @@
       ;; DISPLAY
       (setq section-mydisplay                            t)
       (setq section-display-windows-buffers              t)
-      (setq section-display-windows-buffers-transparency nil)
+      (setq section-display-windows-buffers-transparency t)
+      (setq clt-frame-transparency                       90)
       (setq section-display-speedbar                     nil)
-      (setq section-display-ecb                          t)
       (setq section-display-font                         t)
       (setq section-display-font-international           nil)
       (setq section-display-color                        t)
@@ -195,6 +193,14 @@
       (setq section-display-color-mode                   nil)
       (setq section-display-color-grep                   nil)
       (setq section-display-color-ecb                    nil)
+
+      ;; INTERFACE
+      (setq section-interface                 t)
+      (setq section-interface-decoration      nil)
+      (setq section-interface-fullscreen      t)
+      (setq section-interface-modeline        t)
+      (setq section-interface-ecb             t)
+      (setq section-interface-ecb-ascii-tree  nil)
 
       ;; COMPLETION
       (setq section-completion t)
@@ -355,7 +361,7 @@
                  "c:/Program Files/Analog Devices/VisualDSP/System"
                  (concat dotemacs-path "/gnu_global_622wb/bin")
                  ))
-            (setenv "LC_ALL" "C") ; for subversion
+            (setenv "LANG" "en_US") ; for subversion and dired
             )
 
           (progn
@@ -414,7 +420,7 @@
                  "/cygdrive/c/Program Files/Analog Devices/VisualDSP/System"
                  )
               )
-            (setenv "LC_ALL" "C") ; for subversion
+            (setenv "LANG" "en_US") ; for subversion and dired
             )
 
           )
@@ -427,16 +433,18 @@
             (progn
               ;;FIXME working environment default
               (setenv "PATH" (concat
-                               "c:/path/to/cywin/bin"           ";"
-                               "c:/path/to/version/control/bin" ";"
-                               "c:/path/to/gnuwin32/bin"        ";"
+                               "c:/path/to/cywin/bin"            ";"
+                               "c:/path/to/cygwin/usr/bin"       ";"
+                               "c:/path/to/cygwin/usr/local/bin" ";"
+                               "c:/path/to/version/control/bin"  ";"
+                               "c:/path/to/gnuwin32/bin"         ";"
                                (getenv "PATH")))
 
               (setq exec-path
                 '(
-                   "d:/cygwin/bin"
-                   "d:/cygwin/usr/bin"
-                   "d:/cygwin/usr/local/bin"
+                   "c:/path/to/cygwin/bin"
+                   "c:/path/to/cygwin/usr/bin"
+                   "c:/path/to/cygwin/usr/local/bin"
                    "c:/WINDOWS"
                    "c:/WINDOWS/System32"
                    )
@@ -504,9 +512,6 @@
       ((string= clt-working-environment"default")
         (when running-in-graphical
           (custom-set-variables
-            '(ediff-cmp-program "c:/path/to/cygwin/bin/cmp.exe")
-            '(ediff-diff-program "c:/path/to/cgwin/bin/diff.exe")
-            '(ediff-diff3-program "c:/path/to/cygwin/bin/diff3.exe")
             ;;FIXME working environment default
             '(shell-file-name "c:/path/to/cygwin/bin/bash.exe")
             ))

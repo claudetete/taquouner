@@ -20,9 +20,9 @@
 
 ;; Keywords: config, completion
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.2
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-completion'
 
 ;;; Change Log:
+;; 2012-05-04 (1.2)
+;;    add configuration for hippie expand
 ;; 2012-03-28 (1.1)
 ;;    translate comments in english
 ;; 2011-03-10 (1.0)
@@ -46,5 +48,27 @@
 ;; enable dynamic word completion
 ;; from grandm_y
 (dynamic-completion-mode)
+
+;; HIPPIE
+;; expand text trying various ways to find its expansion (by Fabrice Niessen)
+(when (try-require 'hippie-exp)
+  ;; list of expansion functions tried (in order) by `hippie-expand'
+  (setq hippie-expand-try-functions-list
+    '(
+       try-expand-dabbrev   ; from current buffer
+       try-expand-dabbrev-visible   ; from visible parts of all windows
+       try-expand-dabbrev-all-buffers   ; from all other buffers
+       try-expand-dabbrev-from-kill
+       try-complete-file-name-partially
+       try-complete-file-name
+       try-expand-all-abbrevs
+       try-expand-list
+       try-expand-line
+       try-complete-lisp-symbol-partially
+       try-complete-lisp-symbol
+       try-expand-whole-kill
+       )
+    )
+)
 
 ;;; completion.el ends here

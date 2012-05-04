@@ -20,9 +20,9 @@
 
 ;; Keywords: config, annoying
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: April 2012
 
 ;;; Commentary:
 ;;
@@ -66,8 +66,6 @@
 (global-set-key (kbd "<C-next>") 'ignore)
 (global-set-key (kbd "<C-prior>") 'ignore)
 
-;; disable menu to pop with a C-MiddleButton
-;(global-set-key (kbd "<C-down-mouse-2>") 'ignore)
 ;;
 ;; no more dialog boxes
 (setq use-dialog-box nil)

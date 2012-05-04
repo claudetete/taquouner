@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.6
+;; Version: 3.7
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -32,6 +32,9 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-05-03 (3.7)
+;;    add function to checkout/diff/history file from clearcase + remove hippie
+;;    expand custom
 ;; 2012-05-02 (3.6)
 ;;    add function about isearch, macro, windows swap + comment for fix
 ;;    fullscreen bug
@@ -448,7 +451,7 @@ current line instead."
   (interactive)
   ;; to wait the maximize of the main window
   (custom-set-variables
-   '(ecb-compile-window-height 25)
+   '(ecb-compile-window-height 0.25)
    '(ecb-windows-width 0.1))
   (ecb-activate)
   )
@@ -469,7 +472,7 @@ current line instead."
 ;;;
 ;;;; CONFIG
 ;;; load config for awful people who cannot read code source on dark
-;;; background and tiny font (by Claude TETE)
+;;; background and tiny font (by Claude TETE) deprecated
 (defun cfg-noob ()
   "Configure GNU/Emacs for whose seem to want work."
   (interactive)
@@ -886,45 +889,6 @@ before message."
 
 ;;
 ;;;
-;;; COMPLETIONS
-;; expand text trying various ways to find its expansion (by Fabrice Niessen)
-(when (try-require 'hippie-exp)
-  ;; list of expansion functions tried (in order) by `hippie-expand'
-  (setq hippie-expand-try-functions-list
-    '(
-       try-expand-dabbrev   ; from current buffer
-       try-expand-dabbrev-visible   ; from visible parts of all windows
-       try-expand-dabbrev-all-buffers   ; from all other buffers
-       try-expand-dabbrev-from-kill
-       try-complete-file-name-partially
-       try-complete-file-name
-       try-expand-all-abbrevs
-       try-expand-list
-       try-expand-line
-       try-complete-lisp-symbol-partially
-       try-complete-lisp-symbol
-       try-expand-whole-kill
-       )
-    )
-
-  ;; expand-function (by Fabrice Niessen)
-  (defun my-hippie-expand (arg)
-    ;; called with a positive prefix `P', it jumps directly to the `P'-th
-    ;; `try-function'
-    (interactive "P")
-    ;; `hippie-expand' does not have a customization-feature (like
-    ;; `dabbrev-expand') to search case-sensitive for completions. So we
-    ;; must set `case-fold-search' temporarily to nil!
-    (let ((old-case-fold-search case-fold-search))
-      (setq case-fold-search nil)
-      (hippie-expand arg)
-      (setq case-fold-search old-case-fold-search)
-      )
-    )
-)
-
-;;
-;;;
 ;;; SWAP/SPLIT WINDOWS
 ;; swap 2 windows (by Fabrice Niessen)
 (defun my-swap-windows ()
@@ -979,6 +943,79 @@ frames with exactly two windows."
         (set-window-buffer (next-window) next-win-buffer)
         (select-window first-win)
         (if this-win-2nd (other-window 1)))
+      )
+    )
+  )
+
+;;
+;;;
+;;; CLEARCASE
+;; Checkout file from view in clearcase (by Claude TETE)
+(defun clearcase-checkout-graphical ()
+  "Checkout the current buffer if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase checkout
+          (async-shell-command (concat "cleardlg.exe /window 5061e /windowmsg A065 /checkout \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+;;
+;; Graphical diff file with its predecessor (by Claude TETE)
+(defun clearcase-diff-graphical ()
+  "Show diff with the current buffer and its predecessor if it is from
+clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase diff
+          (async-shell-command (concat "cleartool.exe diff -graphical -predecessor \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+;;
+;; Graphical history of current file (by Claude TETE)
+(defun clearcase-history-graphical ()
+  "Show history of the current buffer if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase history
+          (async-shell-command (concat "clearhistory.exe \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
       )
     )
   )

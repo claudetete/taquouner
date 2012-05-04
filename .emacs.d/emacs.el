@@ -134,6 +134,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-05-04 (7.1)
+;;    add dired sort mode + transparency setting + ecb ascii tree setting
 ;; 2012-05-02 (7.0)
 ;;    fix bug about fullscreen (must be set after a change of font) + add some
 ;;    mode
@@ -520,6 +522,10 @@
   ;; DIFF COLOR                                                         2.28
   ;; add color to diff mode
   (defvar section-mode-diff-color t)
+  ;;
+  ;; DIRED SORT                                                         2.29
+  ;; more option to sort in dired mode
+  (defvar section-mode-dired-sort t)
   ) ; (progn
 
 
@@ -576,6 +582,7 @@
     ;; TRANSPARENCY                                                     5.1.1
     ;; the whole emacs will be transparent
     (defvar section-display-windows-buffers-transparency t)
+    (defvar clt-frame-transparency 96) ; 100 = opaque
     ) ; (progn
 
   ;;
@@ -616,7 +623,7 @@
 
     ;; COLOR THEME                                                      5.4.4
     ;; set color by color-theme mode
-    (defvar section-display-color-theme nil)
+    (defvar section-display-color-theme t)
 
     ;; MISC                                                             5.4.4
     ;; REQUIREMENT:     section-environment-terminal-vs-graphics
@@ -644,8 +651,8 @@
 ;;
 ;;; INTERFACE                                                           6
 ;; FILE: dotemacs/interface.el
-(defvar section-interface t)
 ;; display buffer name in titlebar (example "<[ foobar.c ]>")
+(defvar section-interface t)
 (progn
   ;; DECORATION                                                         6.1
   ;; remove all mouse interface (toolbar, menubar, scrollbar)
@@ -665,6 +672,11 @@
   ;; REQUIREMENT:       section-mode-cedet-ecb
   ;; set size, display, refresh and remove opening tips
   (defvar section-interface-ecb t)
+  (progn
+    ;; ECB ASCII TREE
+    ;; display ascii guides instead of image for arborescence tree      6.4.1
+    (defvar section-interface-ecb-ascii-tree t)
+    )
   ) ; (progn
 
 

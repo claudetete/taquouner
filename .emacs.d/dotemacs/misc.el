@@ -31,9 +31,9 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
-;; 2012-05-03 (1.6)
+;; 2012-05-04 (1.6)
 ;;    remove try about diary, add ignore case during completion, set path of
-;;    bookmarks
+;;    bookmarks + add dired human size
 ;; 2012-04-25 (1.5)
 ;;    remove setting to remove tooltip
 ;; 2012-04-19 (1.4)
@@ -83,6 +83,9 @@
 
 ;; check all variables and non-interactive functions with apropos
 (setq apropos-do-all t)
+
+;; change size display in dired mode
+(setq dired-listing-switches "-alh")
 
 ;;
 ;;; CALENDAR

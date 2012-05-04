@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shorcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-05-04 (1.7)
+;;    remove hippie expand + add clearcase shortcut
 ;; 2012-05-03 (1.6)
 ;;    add shortcut to new functions for macros, and windows swap
 ;; 2012-03-30 (1.5)
@@ -88,20 +90,27 @@
 ;; macro (by Fabrice Niessen)
 ;; start/stop recording a keyboard macro (if you change it you also must change
 ;; it in functions.el)
-(global-set-key (kbd "<S-f8>") 'my-toggle-kbd-macro-recording-on)
+(global-set-key         (kbd "<S-f8>")          'my-toggle-kbd-macro-recording-on)
 ;;
 ;; execute the most recent keyboard macro
-(global-set-key (kbd "<f8>") 'call-last-kbd-macro)
+(global-set-key         (kbd "<f8>")            'call-last-kbd-macro)
 ;;
 ;; assign a name to the last keyboard macro defined
-(global-set-key (kbd "<C-f8>") 'name-last-kbd-macro)
+(global-set-key         (kbd "<C-f8>")          'name-last-kbd-macro)
 
+;;
 ;; swap 2 windows
-(global-set-key (kbd "C-c ~") 'my-swap-windows)
+(global-set-key         (kbd "C-c ~")           'my-swap-windows)
 ;; toggle the split (horizontal or vertical)
-(global-set-key (kbd "C-c |") 'my-toggle-window-split)
+(global-set-key         (kbd "C-c |")           'my-toggle-window-split)
 
-;; override expand with hippie expand
-(global-set-key (kbd "M-/") 'hippie-expand)
+;;
+;;; clearcase bind
+;; checkout
+(global-set-key         (kbd "C-c c c")         'clearcase-checkout-graphical)
+;; diff
+(global-set-key         (kbd "C-c c d")         'clearcase-diff-graphical)
+;; history
+(global-set-key         (kbd "C-c c h")         'clearcase-history-graphical)
 
 ;;; shortcut-function.el ends here

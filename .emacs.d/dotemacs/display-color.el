@@ -139,7 +139,7 @@
         ;; Alstom Transport ----------------------------------------------------
         ((string= clt-working-environment "Alstom Transport")
           (if running-in-graphical
-            (color-theme-clt)
+            (color-theme-sweet)
             (color-theme-clt-at-cygwin))
           ) ; Alstom Transport
 

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: September 2010
-;; Last-Updated: March 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2012-05-04 (1.5)
+;;    add shortcuts to search symbol assignation
 ;; 2012-03-30 (1.4)
 ;;    translate comments in english
 ;; 2012-03-02 (1.3)
@@ -86,6 +88,7 @@
 
     ;; find all references (regexp)
     (global-set-key       (kbd "C-M-.")         'gtags-find-with-grep)
+    (global-set-key       (kbd "C-M-=")         'gtags-find-with-grep-symbol-assigned)
     (message "    8.7.2 Gtags Shortcuts... Done")
     ) ; when section-shortcut-tags-gnu-global
   ) ; when section-mode-gnu-global

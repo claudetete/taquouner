@@ -1,76 +1,95 @@
+;;; color-theme-sweet.el --- config file for Emacs
 
+;; Copyright (c) 2012 Claude Tete
+;;
+;; This file is NOT part of GNU Emacs.
+;;
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;
+
+;; Keywords: config, emacs, color, theme
+;; Author: Claude Tete  <claude.tete@gmail.com>
+;; Version: 1.0
+;; Created: April 2012
+;; Last-Updated: May 2012
+
+;;; Commentary:
+;; from the custom color I was manually set, with a lot of polish to have less
+;; aggressive contrast between color but still colorful
+;;
+;; TODO change Auto Highlight Symbol + finish dired+
+
+;;; Change Log:
+;; 2012-05-04 (1.0)
+;;    add dired+ color + change highlight default for ecb and cursor
+
+;;; Code:
 (require 'color-theme)
-
-
-;; toujours du tres fonce au plus clair avec au milieu le petant
-
-;; Primary Color: Orange Sanguine
-;; A31F00 *BD4C31 FF3100 FF7555 FFAC98
-;;
-;; Secondary Color A: jaune orange
-;; FF7800 BD7331 A34D00 FFA555 FFC998 FFE1C5
-;;
-;; Secondary Color B: bleu cyan
-;; 028E9B 1F6C73 015B63 *4BD1DD *86D6DD
-;;
-;; Complementary Color: vert sapin
-;; 00B74A 23884C 00752F 4DE78B 8AE7B0 *00240E *013E19
 
 ;; color definitions
 (defvar sweet-fg+1 "#D0B8A2")
-(defvar sweet-fg "#FFF1E3")
-(defvar sweet-bg+2 "black")
-(defvar sweet-bg+1 "grey8")
-(defvar sweet-bg "grey15")
-(defvar sweet-bg-1 "grey20")
-(defvar sweet-bg-2 "grey35")
+(defvar sweet-fg   "#FFF1E3")
 
-;(defvar sweet-bg "#080D0A")
-;(defvar sweet-bg-1 "#060F0A")
-;(defvar sweet-bg-2 "#071F10")
+(defvar sweet-bg+2 "#000000") ; black
+(defvar sweet-bg+1 "#191919") ; grey8
+(defvar sweet-bg   "#262626") ; grey15
+(defvar sweet-bg-1 "#363636") ; grey20
+(defvar sweet-bg-2 "#5B5B5B") ; grey35
 
-(defvar sweet-red+2 "#A31F00")
+(defvar sweet-red+2 "#6F2716")
 (defvar sweet-red+1 "#BD4C31")
-(defvar sweet-red "#FF3100")
+(defvar sweet-red   "#FF3100")
 (defvar sweet-red-1 "#FF7555")
 (defvar sweet-red-2 "#FFAC98")
 (defvar sweet-red-3 "#5F4741")
 
 (defvar sweet-orange+2 "#A34D00")
 (defvar sweet-orange+1 "#BD7331")
-(defvar sweet-orange "#FF7800")
+(defvar sweet-orange   "#FF7800")
 (defvar sweet-orange-1 "#FFA555")
 (defvar sweet-orange-2 "#FFC998")
 (defvar sweet-orange-3 "#FFE1C5")
 
 (defvar sweet-green+2 "#00752F")
 (defvar sweet-green+1 "#23884C")
-(defvar sweet-green "#00B74A")
+(defvar sweet-green   "#00B74A")
 (defvar sweet-green-1 "#4DE78B")
 (defvar sweet-green-2 "#8AE7B0")
 
 (defvar sweet-cyan+2 "#015B63")
 (defvar sweet-cyan+1 "#1F6C73")
-(defvar sweet-cyan "#028E9B")
+(defvar sweet-cyan   "#028E9B")
 (defvar sweet-cyan-1 "#4BD1DD")
 (defvar sweet-cyan-2 "#86D6DD")
 
 (defvar sweet-pink+2 "#793758")
 (defvar sweet-pink+1 "#B15382")
-(defvar sweet-pink "HotPink")
-(defvar sweet-pink-1 "#CC6EC8") ; "orchid2")
-(defvar sweet-pink-2 "MistyRose3")
+(defvar sweet-pink   "#FF69B4") ; HotPink
+(defvar sweet-pink-1 "#CC6EC8") ; orchid2
+(defvar sweet-pink-2 "#AD6B8C")
+(defvar sweet-pink-3 "#CQB5B3") ; MistyRose3
 
-(defvar sweet-grey+4 "grey10")
-(defvar sweet-grey+3 "grey20")
-(defvar sweet-grey+2 "grey30")
-(defvar sweet-grey+1 "grey40")
-(defvar sweet-grey-3 "grey80")
-(defvar sweet-grey-4 "grey90")
-(defvar sweet-grey-5 "grey100")
+(defvar sweet-grey+4 "#1E1E1E") ; grey10
+(defvar sweet-grey+3 "#363636") ; grey20
+(defvar sweet-grey+2 "#4F4F4F") ; grey30
+(defvar sweet-grey+1 "#676767") ; grey40
+(defvar sweet-grey-3 "#C9C9C9") ; grey80
+(defvar sweet-grey-4 "#E1E1E1") ; grey90
+(defvar sweet-grey-5 "#FAFAFA") ; grey100
 
 (defun color-theme-sweet ()
-  "Color theme by Claude TETE, created 2012-04-24."
+  "Color theme Sweet by Claude TETE."
   (interactive)
   (color-theme-install
     `(color-theme-sweet
@@ -78,18 +97,18 @@
          (foreground-color . ,sweet-fg)
          (background-color . ,sweet-bg)
          (background-mode . dark)
-         (cursor-color . ,sweet-pink)
+         (cursor-color . ,sweet-pink-1)
          (border-color . ,sweet-bg))
 
        ;; basic
        (default ((t (:foreground ,sweet-fg))))
-       (cursor ((t (:background ,sweet-pink))))
+       (cursor ((t (:background ,sweet-pink-1))))
        (escape-glyph ((t (:foreground ,sweet-cyan))))
-       (fringe ((t (:background ,sweet-bg-2))))
+       (fringe ((t (:background ,sweet-bg-1))))
        (header-line ((t (:background ,sweet-bg-1 :foreground ,sweet-fg+1))))
        (highlight ((t (:background ,sweet-bg-2))))
        (hl-line ((t (:background ,sweet-bg-1))))
-       (lazy-highlight ((t (:background ,sweet-cyan-1))))
+       (lazy-highlight ((t (:background ,sweet-red+2))))
        (link ((t (:foreground ,sweet-green))))
        (link-visited ((t (:foreground ,sweet-pink+2))))
        (shadow ((t (:foreground ,sweet-orange))))
@@ -101,11 +120,11 @@
        (font-lock-builtin-face ((t (:foreground ,sweet-cyan))))
        (font-lock-comment-delimiter-face ((t (:foreground ,sweet-red+1))))
        (font-lock-comment-face ((t (:foreground ,sweet-red+1))))
-       (font-lock-constant-face ((t (:foreground ,sweet-cyan+1))))
+       (font-lock-constant-face ((t (:foreground ,sweet-cyan-2))))
        (font-lock-doc-face ((t (:foreground ,sweet-green))))
        (font-lock-function-name-face ((t (:foreground ,sweet-green-1))))
        (font-lock-keyword-face ((t (:foreground ,sweet-cyan-1))))
-       (font-lock-preprocessor-face ((t (:foreground ,sweet-orange-1))))
+       (font-lock-preprocessor-face ((t (:foreground ,sweet-grey-3))))
        (font-lock-string-face ((t (:foreground ,sweet-green))))
        (font-lock-type-face ((t (:foreground ,sweet-pink-1))))
        (font-lock-variable-name-face ((t (:foreground ,sweet-orange-2))))
@@ -119,7 +138,7 @@
        (which-func ((t (:foreground ,sweet-green-1))))
 
        ;; compilation
-       (compilation-column-number ((t (:foreground ,sweet-pink-2))))
+       (compilation-column-number ((t (:foreground ,sweet-pink-3))))
        (compilation-error ((t (:foreground ,sweet-orange-1))))
        (compilation-info ((t (:foreground ,sweet-pink+1))))
        (compilation-line-number ((t (:foreground ,sweet-green))))
@@ -131,7 +150,7 @@
        (minibuffer-prompt ((t (:foreground ,sweet-cyan))))
 
        ;; isearch
-       (isearch ((t (:background ,sweet-red+1 :foreground ,sweet-orange+2))))
+       (isearch ((t (:background ,sweet-orange+2))))
        (isearch-fail ((t (:background ,sweet-red))))
 
        ;; edit
@@ -150,16 +169,38 @@
 
        ;; ECB
        (ecb-analyse-face ((t (:background ,sweet-grey+3))))
-       (ecb-default-highlight-face ((t (:background ,sweet-orange+2))))
+       (ecb-default-highlight-face ((t (:background ,sweet-pink-2))))
        (ecb-directory-face ((t (:inherit ecb-default-highlight-face))))
        (ecb-history-face ((t (:inherit ecb-default-highlight-face))))
        (ecb-method-face ((t (:inherit ecb-default-highlight-face))))
        (ecb-method-non-semantic-face ((t (:inherit font-lock-function-name-face))))
        (ecb-methods-general-face ((t (:inherit font-lock-function-name-face))))
        (ecb-source-face ((t (:inherit ecb-default-highlight-face))))
-       (ecb-source-read-only-face ((t (:background ,sweet-grey+3 :foreground ,sweet-pink+2 :height 1.0))))
+       (ecb-source-read-only-face ((t (:background ,sweet-grey+3 :foreground ,sweet-fg+1 :height 1.0))))
        (ecb-tag-header-face ((t (:background ,sweet-cyan+1))))
        (ecb-history-bucket-node-dir-soure-path-face ((t (:inherit dired-header))))
+
+       ;; dired+
+       (diredp-file-name ((t (:foreground ,sweet-orange-2))))
+       (diredp-file-suffix ((t (:foreground ,sweet-green-1))))
+       (diredp-dir-priv ((t (:foreground ,sweet-cyan))))
+       (diredp-dir-heading ((t (:foreground ,sweet-orange-2))))
+       (diredp-number ((t (:foreground ,sweet-cyan-2))))
+       (diredp-read-priv ((t (:foreground ,sweet-orange-2))))
+       (diredp-write-priv ((t (:foreground ,sweet-green))))
+       (diredp-exec-priv ((t (:foreground ,sweet-red+1))))
+       (diredp-ignored-file-name ((t (:foreground ,sweet-red-3))))
+       (diredp-date-time ((t (:foreground ,sweet-pink+1))))
+
+       ;; diff
+       (diff-removed ((t (:foreground ,sweet-orange+2))))
+       (diff-indicator-removed ((t (:background ,sweet-orange+2))))
+       (diff-added ((t (:foreground ,sweet-green+1))))
+       (diff-indicator-added ((t (:background ,sweet-green+1))))
+       (diff-header ((t (:foreground ,sweet-cyan+1))))
+       (diff-index ((t (:foreground ,sweet-pink+1))))
+       (diff-file-header ((t (:foreground ,sweet-cyan :background ,sweet-bg+2))))
+       (diff-hunk-header ((t (:foreground ,sweet-bg+2 :background ,sweet-cyan))))
 
        ;; hide-ifdef
        (hide-ifdef-shadow ((t (:background ,sweet-grey+4 :foreground ,sweet-grey-4 :box nil))))

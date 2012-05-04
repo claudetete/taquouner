@@ -94,7 +94,14 @@ M-s o       | show each occurences in this buffer (can be rebind with at point)
 *** Minibuffer
 M-s         | Move to an earlier item in the minibuffer history that matches a regexp you enter.
 M-r         | Move to a later item in the minibuffer history that matches a regexp you enter.
-
+*** Symbols
+C-x C-Space | go back after using tags search
+*** Semantic
+C-c , , | Parse current buffer
+C-c , j | jump to symbol (see M-. in custom)
+C-c , u | go to the current included file
+C-c , g | find all references of symbol at point
+C-c , G | find all call of the current function
 
 ** File
 C-x C-q                | toggle read only/read and write
@@ -140,7 +147,6 @@ C-x r d | delete region/rectangle
 
 ** CUA Rectangle
 C-Enter | start rectangle selection (like C-Space but for rectangle)
-
 
 ** Highlight
 C-x w r | unhighlight regexp

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: August 2010
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-05-04 (1.7)
+;;    add new path for directories
 ;; 2012-04-20 (1.6)
 ;;    add working environment default
 ;; 2012-03-29 (1.5)
@@ -59,6 +61,22 @@
 ;;
 ;;; ECB
 (when (try-require 'ecb "      ")
+  ;; to prevent ecb failing to start up
+  (setq ecb-version-check nil)
+
+  ;; TRY
+  (when 0
+    ;; ??
+    (defadvice ecb-check-requirements (around no-version-check activate compile)
+      "ECB version checking code is very old so that it thinks that the latest
+cedet/emacs is not new enough when in fact it is years newer than the latest
+version that it is aware of.  So simply bypass the version check."
+      (if (or (< emacs-major-version 23)
+            (and (= emacs-major-version 23)
+              (< emacs-minor-version 3)))
+        ad-do-it))
+    )
+
   ;; load all necessary for ecb
   (require 'ecb-autoloads)
 
@@ -123,7 +141,8 @@
            (quote
              (
                ;; before is put the ede projects (see project.el)
-               ("m:/e_ctete/a2kc/test/CCN4/test_s/pm4s/RTRT/"          ".../test_s/pm4s/RTRT")
+               ("m:/e_ctete/a2kc/test/CCN4/test_s/pm4s/RTRT/"          "PM4S_RTRT")
+               ("m:/e_ctete/a2kc/test/CCN4/test_s/puma/TestU/sharc/"   "PUMA_RTRT")
                ("d:/Documents and Settings/100516805/Application Data" "/home")
                ("m:/"                                                  "/ClearCase")
                ("d:/Users/ctete"                                       "/Users")

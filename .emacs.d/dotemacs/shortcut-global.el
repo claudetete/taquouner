@@ -33,7 +33,7 @@
 ;;; Change Log:
 ;; 2012-05-03 (1.6)
 ;;    add shortcut to add line without jump + give number of line + bind C-TAB
-;;    to M-TAB
+;;    to M-TAB + remove shortcut to calendar
 ;; 2012-04-20 (1.5)
 ;;    add CUA mode
 ;; 2012-04-03 (1.4)
@@ -98,9 +98,6 @@
 
 ;; delete backear a word
 (global-set-key         "\C-z"                  'backward-kill-word)
-
-;; open calendar with `C-c c'
-(global-set-key         "\C-cc"                 'calendar)
 
 ;; copy line in kill-ring `C-j' (no more C-k C-y)
 (global-set-key         "\C-j"                  'push-line)

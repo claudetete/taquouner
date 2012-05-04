@@ -69,6 +69,14 @@
 ;; If 'gtags-disable-pushy-mouse-mapping' is set, any mouse mapping is not done.
 ;;
 
+;; Claude TETE
+;; add customize function for personal use.
+;; - gtags-current-buffer()
+;; - gtags-find-file-custom()
+;; - gtags-find-with-grep-symbol-assigned
+;; TODO add optional parameter to function already present to add my
+;; customization
+
 ;;; Code
 
 (defvar gtags-mode nil
@@ -821,6 +829,22 @@
       (setq tagname (concat "/" tagname)))
     (gtags-push-context)
     (gtags-goto-tag tagname "Po")))
+
+;; find all references where the symbol is assigned (by Claude TETE)
+(defun gtags-find-with-grep-symbol-assigned ()
+  "Input pattern, search with grep(1) and move to the locations."
+  (interactive)
+  (let (tagname prompt input)
+    (setq tagname (gtags-current-token))
+    (if tagname
+        (setq prompt (concat "Find assignation of symbol: (default " tagname ") "))
+      (setq prompt "Find assignation of symbol: "))
+    (setq input (read-from-minibuffer prompt nil nil nil gtags-history-list))
+    (if (not (equal "" input)) (setq tagname input))
+    (gtags-push-context)
+    (setq tagname (concat tagname "[ ]*[-+\*/]?="))
+    (gtags-goto-tag tagname (if gtags-grep-all-text-files "go" "g"))))
+
 
 ;;;###autoload
 (defun gtags-mode (&optional forces)
