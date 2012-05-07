@@ -526,6 +526,10 @@
   ;; DIRED SORT                                                         2.29
   ;; more option to sort in dired mode
   (defvar section-mode-dired-sort t)
+  ;;
+  ;; ORG MODE                                                           2.30
+  ;; to organize everthing (also use on Android)
+  (defvar section-mode-org-mode nil)
   ) ; (progn
 
 

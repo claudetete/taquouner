@@ -27,7 +27,7 @@ C-c C-u     | move backward to begining of preproc
 M-m         | move begining of indentation
 C-c C-w     | in C mode enable navigation from subword to subword
 *** Register/Bookmark
-C-x r Space | register/bookmark a point in a buffer (must name it)
+C-x r Space | register/bookmark a point in a buffer (must be named)
 C-x r j     | jump/go to a register/bookmark (by name)
 
 ** Edit
@@ -97,11 +97,11 @@ M-r         | Move to a later item in the minibuffer history that matches a rege
 *** Symbols
 C-x C-Space | go back after using tags search
 *** Semantic
-C-c , , | Parse current buffer
-C-c , j | jump to symbol (see M-. in custom)
-C-c , u | go to the current included file
-C-c , g | find all references of symbol at point
-C-c , G | find all call of the current function
+C-c , ,     | Parse current buffer
+C-c , j     | jump to symbol (see M-. in custom)
+C-c , u     | go to the current included file
+C-c , g     | find all references of symbol at point
+C-c , G     | find all call of the current function
 
 ** File
 C-x C-q                | toggle read only/read and write
@@ -117,7 +117,7 @@ x                      | apply all changes
 
 ** Display
 *** Buffers
-C-x n n              | invoke narrow (show only the region)
+C-x n n              | invoke narrow (show only the region and do not interact with the rest)
 C-x n w              | quit narrow
 *** Windows
 C-x 2                | split horizontally the current window
@@ -177,7 +177,7 @@ C-x v d   | show all files which are not up to date in a directory
 C-x v g   | show track each line who added/edited it
 C-x v C-h | show all command for Version Control
 
-** Calc
+** Calculator
 C-x * c | invoke calc in a new buffer
 C-x * * | invoke calc with last used mmode
 C-x * q | invoke quick calc in minibuffer
@@ -254,9 +254,9 @@ F10   | invoke compilator
 *** Selection
 C-M-z | select word under pointer
 *** Delete
-M-d | delete forward word
-C-z | delete backward word
-C-( | delete parenthese with balanced expression
+M-d   | delete forward word
+C-z   | delete backward word
+C-(   | delete parenthese with balanced expression
 
 * Misc
 M-x list-color-display | show a list of named color

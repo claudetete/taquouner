@@ -70,7 +70,7 @@
     ((string= clt-working-environment "Alstom Transport")
       ;; set gnu global path
       (when (string-equal system-type "windows-nt")
-        (setenv "GTAGSGLOBAL" "d:/cygwin/usr/local/bin/global.exe"))
+        (setenv "GTAGSGLOBAL" (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe")))
       (if (window-system)
         (progn
           (defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-snap/common/cedet.elc"))
@@ -105,7 +105,7 @@
       (defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
 
       (when (string-equal system-type "windows-nt")
-        (setenv "GTAGSGLOBAL" (concat dotemacs-path "/gnu_global_622wb/bin/global.exe"))) ;
+        (setenv "GTAGSGLOBAL" (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))) ;
 
       ;; ENVIRONMENT
       (setq section-environment                        t) ; if I am here it is already true
