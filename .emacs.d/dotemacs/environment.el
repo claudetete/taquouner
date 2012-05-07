@@ -180,7 +180,7 @@
       (setq section-mydisplay                            t)
       (setq section-display-windows-buffers              t)
       (setq section-display-windows-buffers-transparency t)
-      (setq clt-frame-transparency                       90)
+      (setq clt-frame-transparency                       96)
       (setq section-display-speedbar                     nil)
       (setq section-display-font                         t)
       (setq section-display-font-international           nil)

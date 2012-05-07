@@ -31,6 +31,8 @@
 ;;              var     `section-mode-cedet'
 
 ;;; Change Log:
+;; 2012-05-07 (1.3)
+;;    add project PUMA for AT
 ;; 2012-03-02 (1.2)
 ;;    add project for AT
 ;; 2011-09-02 (1.1)
@@ -68,8 +70,11 @@
 
   ;; Alstom Transport ----------------------------------------------------------
   ((string= clt-working-environment "Alstom Transport")
+    ;; PUMA
+    (load-file "z:/a2kc/soft/ccn4/ccn4_puma/PUMA.ede.el")
+
     ;; PM4S
-    (load-file "m:/e_ctete/a2kc/soft/ccn4/ccn4_pm4s/PM4S.ede.el")
+    (load-file "z:/a2kc/soft/ccn4/ccn4_pm4s/PM4S.ede.el")
 
     ;;;; PM4S
     ;;(load-file "d:/Users/ctete/PM4S/src/1.2.0_RC01/PM4S.ede.el")
