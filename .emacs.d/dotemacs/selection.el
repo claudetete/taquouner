@@ -20,9 +20,9 @@
 
 ;; Keywords: config, selection, text
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-selection'
 
 ;;; Change Log:
+;; 2012-05-10 (1.5)
+;;    add comment for bug with cua
 ;; 2012-04-03 (1.4)
 ;;    add cua mode only for rectangle selection...
 ;; 2012-03-30 (1.3)
@@ -53,7 +55,7 @@
 
 ;; to have rectangle mode
 (cua-selection-mode t)
-;; Why inserting a character different of alphanum = insert 0x0 ??
+;; bug with enabled dynamic completion it insert 0x00
 
 ;; read under
 

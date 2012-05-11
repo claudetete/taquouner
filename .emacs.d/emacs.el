@@ -90,10 +90,9 @@
 ;;
 
 ;; TODO
-;;  - try browse-kill-ring mode
-;;  - use mark in a buffer with bm.el mode
 ;;
 ;; DONE
+;;  - try browse-kill-ring mode (do not work properly with ecb)
 ;;  - put all comments in english
 ;;  - try rect-mark mode/plugin (use CUA rectangle mode)
 ;;  - make a option to have cedet in Emacs or from repo
@@ -134,6 +133,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-05-11 (7.2)
+;;    add hyoer and super keys + org mode + fix some bugs
 ;; 2012-05-04 (7.1)
 ;;    add dired sort mode + transparency setting + ecb ascii tree setting
 ;; 2012-05-02 (7.0)
@@ -313,8 +314,16 @@
   (defvar section-environment-executable t)
   ;;
   ;; ELPA                                                               0.7
-  ;; with Emacs 24 for multiple repo and up to date
+  ;; for multiple repo and up to date
   (defvar section-environment-elpa t)
+  ;;
+  ;; HYPER                                                              0.8
+  ;; set menu key as hyper key
+  (defvar section-environment-hyper t)
+  ;;
+  ;; SUPER                                                              0.9
+  ;; set windows key as super key
+  (defvar section-environment-super nil)
   ) ; progn
 
 
@@ -814,7 +823,7 @@
   (defvar section-misc-dictionary t)
   ;;
   ;; BOOKMARK                                                           11.3
-  ;; set default dictionary, etc
+  ;; set default bookmark storage
   (defvar section-misc-bookmark t)
   ) ; (progn
 

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.5
 ;; Created: August 2010
-;; Last-Updated: March 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-ecb'
 
 ;;; Change Log:
+;; 2012-05-10 (1.5)
+;;    add go back with M-*
 ;; 2012-04-17 (1.4)
 ;     add condition about section ecb mode + remove C-c qaz shortcut
 ;; 2012-03-30 (1.3)
@@ -77,6 +79,9 @@
   ;;
   ;; got to the ecb history window (all opened file, not all buffers)
   (global-set-key         "\M-z"                  'ecb-goto-window-history)
+
+  ;; go back thaks to ecb
+  (global-set-key         (kbd "<M-kp-multiply>") 'ecb-nav-goto-previous)
 ) ; when section-mode-cedet-ecb
 
 ;;; shortcut-ecb.el ends here

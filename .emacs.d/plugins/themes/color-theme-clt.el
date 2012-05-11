@@ -1,20 +1,38 @@
+;;; color-theme-clt.el --- config file for Emacs
 
+;; Copyright (c) 2012 Claude Tete
+;;
+;; This file is NOT part of GNU Emacs.
+;;
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;
+
+;; Keywords: config, emacs, color, theme
+;; Author: Claude Tete  <claude.tete@gmail.com>
+;; Version: 1.0
+;; Created: May 2012
+;; Last-Updated: May 2012
+
+;;; Commentary:
+;; exact copy of the custom color I was manually set
+
+;;; Change Log:
+;; 2012-05-10 (1.0)
+;;    add header
+
+;;; Code:
 (require 'color-theme)
-
-
-;; toujours du tres fonce au plus clair avec au milieu le petant
-
-;; Primary Color: Orange Sanguine
-;; A31F00 BD4C31 FF3100 FF7555 FFAC98
-;;
-;; Secondary Color A: jaune orange
-;; FF7800 BD7331 A34D00 FFA555 FFC998
-;;
-;; Secondary Color B: bleu cyan
-;; 028E9B 1F6C73 015B63 4BD1DD 86D6DD
-;;
-;; Complementary Color: vert sapin
-;; 00B74A 23884C 00752F 4DE78B 8AE7B0
 
 ;; color definitions
 (defvar clt-fg "white")
@@ -56,7 +74,7 @@
 (defvar clt-grey-5 "grey100")
 
 (defun color-theme-clt ()
-  "Color theme by Claude TETE, created 2012-04-24."
+  "Color theme by Claude TETE."
   (interactive)
   (color-theme-install
     `(color-theme-clt
@@ -154,7 +172,7 @@
     )
   )
 (add-to-list 'color-themes '(color-theme-clt
-                              "Clt-contrast"
+                              "clt"
                               "Claude TETE <claude.tete@gmail.com"))
 
 (provide 'color-theme-clt)

@@ -20,7 +20,7 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.0
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment'
 
 ;;; Change Log:
+;; 2012-05-11 (2.0)
+;;    use color-theme in terminal + change path for AT + add hyper and super
 ;; 2012-05-04 (1.9)
 ;;    complete default working environment + change location to avoid french
 ;;    message
@@ -79,8 +81,8 @@
         (progn
           ;; can overwrite some option from ../emacs.el
           (setq section-environment-elpa nil)
-          (setq section-display-color nil)
-          ;;(setq section-display-color-theme t)
+          (setq section-display-color t)
+          (setq section-display-color-theme t)
           (setq section-display-color-mode nil)
           (setq section-display-color-grep nil)
           (setq section-display-color-ecb nil)
@@ -116,6 +118,8 @@
       (setq section-environment-ms-windows-performance t)
       (setq section-environment-executable             t)
       (setq section-environment-elpa                   nil)
+      (setq section-environment-hyper                  t)
+      (setq section-environment-super                  nil)
 
       ;; EXTERN FILES
       (setq section-external           t)
@@ -240,7 +244,29 @@
       ;; CUSTOMIZE
       (setq section-filecustomize t)
 
-      (message "    * default")
+      (if (window-system)
+        (progn
+          (message "    * default")
+          )
+        (progn
+          ;; MODE
+          (setq section-mode-cedet           nil)
+          (setq section-mode-cedet-semantic  nil)
+          (setq section-mode-cedet-ecb       nil)
+
+          ;; DISPLAY
+          (setq section-display-windows-buffers-transparency nil)
+          (setq section-display-color                        t)
+
+          ;; INTERFACE
+          (setq section-interface-fullscreen  nil)
+          (setq section-interface-ecb         nil)
+
+          ;; MOUSE
+          (setq section-mouse-paste-to-point-not-mouse-cursor t)
+          (message "    * default terminal")
+          )
+        )
       ) ; default
 
     ) ; cond -------------------------------------------------------------------
@@ -544,5 +570,31 @@
        )
     )
   (message "  0.7 ELPA... Done"))
+
+;;
+;;; HYPER
+;; be careful with this it fully disable menu key when Emacs has focus
+(when section-environment-hyper (message "  0.8 Hyper...")
+  (when running-on-ms-windows
+    (setq
+      w32-pass-apps-to-system nil
+      w32-apps-modifier 'hyper) ;; Menu key
+    )
+  (message "  0.8 Hyper... Done"))
+
+;;
+;;; SUPER
+;; be careful with this it fully disable windows key when Emacs has focus
+(when section-environment-super (message "  0.9 Super...")
+  (when running-on-ms-windows
+    ;; setting the PC keyboard's various keys to
+    ;; Super or Hyper, for emacs running on Windows.
+    (setq
+      w32-pass-lwindow-to-system nil
+      w32-pass-rwindow-to-system nil
+      w32-lwindow-modifier 'super ;; Left Windows key
+      w32-rwindow-modifier 'super) ;; Right Windows key
+    )
+  (message "  0.9 Super... Done"))
 
 ;;; environment.el ends here

@@ -1,0 +1,321 @@
+#title Emacs Features
+#desc features in GNU/Emacs
+
+#module pre-07
+
+<slide title="Features already in Emacs">
+ - Presentation of several features which are not always present in other text editor or IDE
+</slide>
+
+<slide title="Split Screen">
+ - split current frame as often as you want with horizontaly "=Ctrl+x 2=", verticaly "=Ctrl+x 3=", undo all split "=Ctrl+x 1="
+ - increase/decrease size of frame (window for Emacs) with "=Alt+x enlarge-window, enlarge-window-horizontally, shrink-window or shrink-window-horizontally="
+[[./slide/split_windows.png][Split in four windows]]
+</slide>
+
+<slide title="No Tab">
+ - Emacs do not use tab but history of opened files (buffers for Emacs)
+ - "=Ctrl+x=" "=Ctrl+b=" (for electric-buffer-list) or ECB history or "=Ctrl+Left Click=" to open context menu
+[[./slide/history_buffer.png][ECB History (bottom-left), Buffer List (top-right) and Context Menu]]
+</slide>
+
+<slide title="Move by paragraph/word/expression">
+ - move from word to word with "=Ctrl+LEFT/RIGHT="
+ - move from empty line to empty line (between paragraph/block) with "=Ctrl+UP/DOWN="
+ - move from function begining to ending with "=Ctrl+Shift+HOME/END="
+ - move to preprocessing begining with "=Ctrl+c Ctrl+u="
+ - switch to *move from word to word* to *move from subword to subword* (place at CapitalLetterInThisWord) with "=Clrl+c Ctrl+w="
+ - and more about parentheses/bracket or source code block or sentence
+</slide>
+
+<slide title="Highlight current line">
+[[./slide/highlight_line.png][The highlight current line in center]]
+</slide>
+
+<slide title="Selection with or without Shift">
+ - put a mark "=Ctrl+SPACE=" (do not hold it) and move to select something
+ - select the whole current block with "=Alt+h="
+ - select the whole function with "=Ctrl+Alt+h="
+ - use keep "=Shift=" press and move (or with mouse)
+[[./slide/select_region.png][A region is selected]]
+</slide>
+
+<slide title="Delete by word/block">
+ - remove all empty line except one "=Ctrl+x Ctrl+o="
+ - remove all space except one "=Alt+SPACE="
+ - delete word left "=Alt+BACKSPACE=" or "=Ctrl+BACKSPACE="
+ - delete word right "=Alt+d="
+</slide>
+
+<slide title="Add/Remove parentheses">
+ - around a selection with parentheses with "=Alt+(="
+ - remove a pair of parentheses with "=Alt+x delete-pair ENTER="
+</slide>
+
+<slide title="Incremental Search">
+ - start an forward incremental search with "=Ctrl+s=", regex with "=Ctrl+Alt+s="
+ - backward incremental search with "=Ctrl+r=", regex with "=Ctrl+Alt+r="
+ - last searched in forward with "=Ctrl+s Ctrl+s=" same for backward "=Ctrl+r Ctrl+r=", search in history "=Ctrl+s ENTER Alt+r=", etc
+ - during incremental search, select to the end of the word with "=Ctrl+w=", paste with "=Alt+y=", case sensitive with "=Alt+c=", start query replace with "=Alt+%="
+ - the incremental search highlight all matches in the buffer
+ - any keys to move will close incremental search
+ - incremental search can be very useful to move in a buffer, even during selection
+</slide>
+
+<slide title="Occurrences">
+ - search each occurences of a regex with "=Alt+s o="
+ - you can navigate to the next or previous match with "=Alt+g Alt+n=" and "=Alt+g Alt+p=" (if you want use them I recommend to rebind them like "=F3=" "=Shift+F3=")
+ - to refresh with "=g=" when in * Occur* buffer
+[[./slide/occur.png][Search occurences of "emacs"]]
+</slide>
+
+<slide title="Replace query">
+ - query replace without regex with "=Alt+%="
+ - query replace with regex with "=Ctrl+Alt+%="
+[[./slide/query.png][Query replacing "emacs" with "vim"]]
+</slide>
+
+<slide title="Replace on a selected region">
+ - replace without regex with "=Alt+x replace-string ENTER="
+ - replace with regex with "=Alt+x replace-regexp ENTER="
+ - it replace only in the selected region and do not interact with rest of the buffer
+</slide>
+
+<slide title="Alignment">
+ - align declaration, parameters of functions with "=Alt+x align ENTER=" (following the current languages)
+ - align anything with regex with "=Alt+x align-regexp ENTER="
+[[./slide/align_before.png][Before]]
+[[./slide/align_after.png][After align declarations]]
+</slide>
+
+<slide title="Information">
+ - Count number of character and line in a selected region with "Alt+ <literal>=</literal>"
+ - Information about a character with "Ctrl+x <literal>=</literal>"
+ - line and column number in status bar of current buffer (modeline in Emacs)
+[[./slide/information.png][Information about a selected region and line and column number of cursor]]
+</slide>
+
+<slide title="undo">
+</slide>
+
+<slide title="advanced clipboard (kill ring)">
+ - "=Ctrl+k=" to cut rest of line
+</slide>
+
+<slide title="rectangle">
+</slide>
+
+<slide title="cua selection">
+</slide>
+
+<slide title="macro">
+</slide>
+
+<slide title="minor column mode">
+</slide>
+
+<slide title="buffer point register">
+</slide>
+
+<slide title="integrated explorer">
+</slide>
+
+<slide title="bookmarks">
+</slide>
+
+<slide title="command completion/search... (minibuffer)">
+</slide>
+
+<slide title="highlight">
+</slide>
+
+<slide title="indent (line/region following languages and settings)">
+</slide>
+
+<slide title="folding (hide/show block)">
+</slide>
+
+<slide title="version control integration (csv/svn by default)">
+</slide>
+
+<slide title="calculator (on region/rectangle, hextodec...)">
+</slide>
+
+<slide title="help (not welcoming)">
+</slide>
+
+<slide title="help about a unknown shortcut/function...">
+</slide>
+
+<slide title="compile">
+</slide>
+
+<slide title="shortcuts with Windows and Menu keys">
+</slide>
+
+<slide title="full customization (font/decoration/color/new function/shortcuts)">
+</slide>
+
+<slide title="settings and customization in simple text file (lisp code)">
+</slide>
+
+<slide title="completion (dumb)">
+</slide>
+
+<slide title="calendar">
+</slide>
+
+<slide title="transparency">
+</slide>
+
+<slide title="parentheses match">
+</slide>
+
+<slide title="mouse avoidance">
+</slide>
+
+<slide title="word wrap (truncate line to show all line but on multiple line)">
+</slide>
+
+<slide title="backup file">
+</slide>
+
+<slide title="dictionnary">
+</slide>
+
+<slide title="up/down case word/region">
+</slide>
+
+<slide title="see only one selected region without interact with rest (narrow)">
+</slide>
+
+<slide title="acceleration mouse scroll">
+</slide>
+
+<slide title="remove all useless space (trailing space)">
+</slide>
+
+<slide title="history in command (like shell)">
+</slide>
+
+<slide title="fill (justify plain text)">
+</slide>
+
+<slide title="find file (recursively with regex)">
+</slide>
+
+
+<slide title="Mode">
+</slide>
+
+<slide title="cedet/semantic/completion (smart for oriented object)/ede (manage project)">
+</slide>
+
+<slide title="ecb (quake like window but bottom for compile/grep/custom...) source list/ directory list/ method list (with filter and group)">
+</slide>
+
+<slide title="gtags (search file in project)">
+</slide>
+
+<slide title="which function">
+</slide>
+
+<slide title="dired+ / dired sort (sort like in MS Windows Explorer + open with associated application)">
+</slide>
+
+<slide title="packages repository">
+</slide>
+
+<slide title="home end">
+</slide>
+
+<slide title="syntax coloration for every languages (just search on internet)">
+</slide>
+
+<slide title="highlight current symbol">
+</slide>
+
+<slide title="google calendar">
+</slide>
+
+<slide title="column indicator">
+</slide>
+
+<slide title="produce document, wiki, pdf, presentation... (muse mode)">
+</slide>
+
+<slide title="show undo like a tree (undo tree mode)">
+</slide>
+
+<slide title="org mode">
+</slide>
+
+<slide title="parentheses match not visible">
+</slide>
+
+<slide title="color theme">
+</slide>
+
+
+<slide title="Function">
+</slide>
+
+<slide title="memory ring for tags with semantic">
+</slide>
+
+<slide title="check missing mode">
+</slide>
+
+<slide title="incremental search at point">
+</slide>
+
+
+<slide title="My Function">
+</slide>
+
+<slide title="manage setting profile (my configuration)">
+</slide>
+
+<slide title="select word at point">
+</slide>
+
+<slide title="occur at point">
+</slide>
+
+<slide title="toggle width of ecb window">
+</slide>
+
+<slide title="search tab">
+</slide>
+
+<slide title="graphical clearcase integration">
+</slide>
+
+<slide title="new theme color">
+</slide>
+
+<slide title="better integration in MS Windows">
+</slide>
+
+
+<slide title="Customize">
+</slide>
+
+<slide title="ignore insert key">
+</slide>
+
+<slide title="never dialog box">
+</slide>
+
+<slide title="never tooltips">
+</slide>
+
+<slide title="add filesize, date and time (modeline)">
+</slide>
+
+<slide title="french calendar">
+</slide>
+
+<slide title="filter/group ecb windows (source/directory/method...)">
+</slide>
+

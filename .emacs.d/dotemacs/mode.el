@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-05-10 (2.2)
+;;    add org mode (not used)
 ;; 2012-05-04 (2.1)
 ;;    add dired sort mode
 ;; 2012-05-02 (2.0)
@@ -536,6 +538,7 @@
 ;; TRY
 (when 0
   ;; it add a small round in modeline where color give status of svn
+  ;; + show all file status of a directory
   (try-require 'psvn)
 )
 ;; need to try

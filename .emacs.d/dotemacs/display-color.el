@@ -20,7 +20,7 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2012-05-11 (1.9)
+;;    use color theme with terminal + renamed for MM
 ;; 2012-05-02 (1.8)
 ;;    move section for fixing bug fullscreen
 ;; 2012-04-27 (1.7)
@@ -133,14 +135,12 @@
       (cond
         ;; Magneti Marelli -----------------------------------------------------
         ((string= clt-working-environment "Magneti Marelli")
-          (color-theme-clt-mm)
+          (color-theme-clt)
           ) ; Magneti Marelli
 
         ;; Alstom Transport ----------------------------------------------------
         ((string= clt-working-environment "Alstom Transport")
-          (if running-in-graphical
             (color-theme-sweet)
-            (color-theme-clt-at-cygwin))
           ) ; Alstom Transport
 
         ;; default -------------------------------------------------------------

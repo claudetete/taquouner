@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shorcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,9 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-05-10 (1.7)
+;;    change goto line shortcut to not override the default downcase-word +
+;;    shortcut for dired plus to avoid problem with cua selection
 ;; 2012-05-03 (1.6)
 ;;    add shortcut to add line without jump + give number of line + bind C-TAB
 ;;    to M-TAB + remove shortcut to calendar
@@ -84,7 +87,7 @@
 ;;(global-set-key         "\M-g"                  'find-grep-dired)
 
 ;; go to line #
-(global-set-key         "\M-l"                  'goto-line)
+(global-set-key         "\M-g"                  'goto-line)
 (global-set-key         "\M-L"                  'what-line)
 
 ;; replace string
@@ -139,8 +142,6 @@
      )
   )
 
-
-
 ;;
 ;;; HOME/END
 ;; REQUIREMENT: var     `section-external-home-end'
@@ -158,6 +159,14 @@
 (when section-mode-outline
   ;; bind toogle hide/show block
   (global-set-key       (kbd "C-c h")           'outline-toggle-children)
+  )
+
+;;
+;; DIRED PLUS
+;; REQUIREMENT: var     `section-mode-dired-plus'
+(when section-mode-dired-plus
+  ;; open with default associated application
+  (global-set-key (kbd "<H-return>")            'dired-w32-browser)
   )
 
 ;;

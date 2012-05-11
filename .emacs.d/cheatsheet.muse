@@ -5,11 +5,11 @@
 All shortcut are case sensitive. Some custom shortcut override default shortcut...
 
 * GNU/Emacs
-** Macro
-C-x (     | start record macro
-C-x )     | end record macro
-C-x C-k r | run macro on region
-C-x e     | run macro
+** Most important
+C-g     | cancel every command
+C-x C-c | quit Emacs
+C-x C-s | save current buffer
+C-x C-f | open a file
 
 ** Move
 C-M-Home    | begining function
@@ -26,6 +26,9 @@ M-e         | move forward to next end of sentence
 C-c C-u     | move backward to begining of preproc
 M-m         | move begining of indentation
 C-c C-w     | in C mode enable navigation from subword to subword
+*** minor Column Mode
+C-x C-n     | set a column to be the cursor place every time you move on an other line
+C-u C-x C-n | unset the column to be the cursor place ...
 *** Register/Bookmark
 C-x r Space | register/bookmark a point in a buffer (must be named)
 C-x r j     | jump/go to a register/bookmark (by name)
@@ -48,7 +51,7 @@ C-x C-t       | switch current line with previous
 C-t           | switch current character with previous
 *** Delete
 C-x C-o       | remove all empty line except *one*
-M-Space       | remove all space expect *one*
+M-Space       | remove all space except *one*
 C-k           | delete the rest line (put in kill ring)
 C-S-Backspace | delete the whole line (put in kill ring)
 *** Insert
@@ -120,6 +123,7 @@ x                      | apply all changes
 C-x n n              | invoke narrow (show only the region and do not interact with the rest)
 C-x n w              | quit narrow
 *** Windows
+C-l                  | recenter the screen at cursor position
 C-x 2                | split horizontally the current window
 C-x 3                | split vertically the current window
 C-x 1                | show only the current window (close others)
@@ -147,6 +151,12 @@ C-x r d | delete region/rectangle
 
 ** CUA Rectangle
 C-Enter | start rectangle selection (like C-Space but for rectangle)
+
+** Macro
+C-x (     | start record macro
+C-x )     | end record macro
+C-x C-k r | run macro on region
+C-x e     | run macro
 
 ** Highlight
 C-x w r | unhighlight regexp
@@ -193,17 +203,18 @@ $       | last result
 2#      | prefix for binary
 
 ** Help
-C-h a   | regexp search in help
-C-h k   | give help about shortcut
-C-h w   | give shortcut about function
-C-h v   | give help about a variable
-C-h f   | give help about a function
-C-c C-b | previous topic
-C-c C-f | next topic
-u       | ??
-s       | search
-t       | top topic
-l       | back
+C-h a       | regexp search in help
+C-h k       | give help about shortcut
+C-h w       | give shortcut about function
+C-h v       | give help about a variable
+C-h f       | give help about a function
+C-c C-b     | previous topic
+C-c C-f     | next topic
+u           | ??
+s           | search
+t           | top topic
+l           | back
+C-x ESC ESC | see last full lisp command
 
 * Custom
 ** Window/Buffer
@@ -260,4 +271,3 @@ C-(   | delete parenthese with balanced expression
 
 * Misc
 M-x list-color-display | show a list of named color
-C-cl                   | launch custom settings which need Emacs fully started
