@@ -1,6 +1,7 @@
 #title Emacs Features
 #desc features in GNU/Emacs
 
+
 ; ;
 ; ; EMACS
 <slide>
@@ -14,12 +15,12 @@
 </slide>
 
 ; interface
-<slide title="Emacs: Split Screen Part 1/2">
+<slide title="Emacs: Split Screen 1/2">
  - split current frame as often as you want with horizontaly "=Ctrl+x 2=", verticaly "=Ctrl+x 3=", undo all split "=Ctrl+x 1="
  - increase/decrease size of frame (window for Emacs) with "=Alt+x enlarge-window ENTER=", "=Alt+x enlarge-window-horizontally ENTER=", "=Alt+x shrink-window ENTER=" or "=Alt+x shrink-window-horizontally ENTER="
 </slide>
 
-<slide title="Emacs: Split Screen Part 2/2">
+<slide title="Emacs: Split Screen 2/2">
 [[./slide/split_windows.png][Split in four windows]]
 </slide>
 
@@ -320,7 +321,7 @@
  - insert a rectangle of space with "=Ctrl+x r o="
 </slide>
 
-<slide title="Emacs: Yet Another Column Mode or CUA Selection Part 1/3">
+<slide title="Emacs: Yet Another Column Mode or CUA Selection 1/3">
  - CUA (Common User Access) set up shortcuts like Cut "Ctrl+x", Copy "Ctrl+c", Paste "Ctrl+v" and Undo "Ctrl+z"
  - CUA Selection add features from CUA mode without the common shortcuts
  - start a column selection with "=Ctrl+ENTER=" and insert anything by column
@@ -329,7 +330,7 @@
  - insert a rectangle of space with "=Alt+o=" (during column selection)
 </slide>
 
-<slide title="Emacs: Yet Another Column Mode or CUA Selection Part 2/3">
+<slide title="Emacs: Yet Another Column Mode or CUA Selection 2/3">
  - copy a selected rectangle with "=Alt+m=" (during column selection)
  - replace with regex in a selected rectangle with "=Alt+r=" (during column selection)
  - invert line order in a selected rectangle with "=Alt+R=" (during column selection)
@@ -337,7 +338,7 @@
  - upcase the selected rectangle with "=Alt+u=" (during column selection)
 </slide>
 
-<slide title="Emacs: Yet Another Column Mode or CUA Selection Part 3/3">
+<slide title="Emacs: Yet Another Column Mode or CUA Selection 3/3">
  - downcase the selected rectangle with "=Alt+l="  (during column selection)
  - more command with "=Ctrl+?=" (during column selection)
 [[./slide/cua_rectangle.png][A selected rectangle (highlight in pink) in CUA mode]]
@@ -352,7 +353,7 @@
 </slide>
 
 ; dired
-<slide title="Emacs: Integrated Explorer or Dired Part 1/3">
+<slide title="Emacs: Integrated Explorer or Dired 1/3">
  - explorer (dired in Emacs) is a buffer so can be manage like others
  - open it with "=Ctrl+x d=" or "=Ctrl+x Ctrl+f directory-name=" ("=Ctrl+x Ctrl+f=": open a file so one shortcut for 2 features)
  - when in dired mode:
@@ -363,7 +364,7 @@
    - mark many file to be delete with regex with "=% d=" (during dired mode)
 </slide>
 
-<slide title="Emacs: Integrated Explorer or Dired Part 2/3">
+<slide title="Emacs: Integrated Explorer or Dired 2/3">
  - when dired mode
    - mark current file with "=m=", mark all file with "=* s="
    - remove all marks with "=U=", toogle all marked file with "=t="
@@ -372,7 +373,7 @@
  - incremental search can be invoke to point on a file
 </slide>
 
-<slide title="Emacs: Integrated Explorer or Dired Part 3/3">
+<slide title="Emacs: Integrated Explorer or Dired 3/3">
    - edit directly in dired buffer, filename, group, users, rights with "=Ctrl+x Ctrl+q=", apply modification with "=Ctrl+c Ctrl+c="
 [[./slide/dired.png][Dired mode with some file marked and marked to delete]]
 </slide>
@@ -388,7 +389,7 @@
 </slide>
 
 ; help
-<slide title="Emacs: Help Part 1/2">
+<slide title="Emacs: Help 1/2">
  - Emacs help is pleasant like an old lady, she talks a lot and gives arcane answer
  - start help about emacs with "=Ctrl+h r="
  - start help about help with "=Ctrl+h i="
@@ -399,7 +400,7 @@
    - go to a node with "=m=",
 </slide>
 
-<slide title="Emacs: Help Part 2/2">
+<slide title="Emacs: Help 2/2">
  - help about a shortcut with "=Ctrl+h k=" and the shortcut
  - help about anything with "=Ctrl+h a="
  - help about the shortcut of a function with "=Ctrl+h w=" and the function
@@ -415,7 +416,7 @@
  - it can be useful to avoid shortcut like this one "=Ctrl+u Ctrl+x Ctrl+f=" which can replace with "=Hyper+f="
 </slide>
 
-<slide title="Emacs: Customization Part 1/2">
+<slide title="Emacs: Customization 1/2">
  - everything can be customize in Emacs "=Alt+x customize ENTER=":
    - font: size, color (different for each mode/buffer/window)
    - window decoratio: toolbar, menubar. scrollbar
@@ -424,7 +425,7 @@
    - a lot of function or mode already exists on the web, just dig
 </slide>
 
-<slide title="Emacs: Customization Part 2/2">
+<slide title="Emacs: Customization 2/2">
  - every settings or customization are put in text file (like ".emacs" file)
  - so it very easy to share/try/copy a setting or a new function
 [[./slide/customization.png][Customization of group Convenience]]
@@ -447,7 +448,7 @@
  - the following list is just an insight of Emacs modes
 </slide>
 
-<slide title="Mode: CEDET/EDE/Semantic/Completion Part 1/2">
+<slide title="Mode: CEDET/EDE/Semantic/Completion 1/2">
  - CEDET is a "=Collection of Emacs Development Environment Tools=" which contains:
    - EDE: a manager of project, generic or with GNU Global or with autotools
    - Semantic: a parser conjugated with a database for all functions, variable, symbols...
@@ -456,14 +457,14 @@
  - this mode is use by ECB mode
 </slide>
 
-<slide title="Mode: CEDET/EDE/Semantic/Completion Part 2/2">
+<slide title="Mode: CEDET/EDE/Semantic/Completion 2/2">
  - parse the current buffer with "=Ctrl+c , ,="
  - jump to definition of symbol with "=Ctrl+c , j="
  - open include file with "=Ctrl+c , u="
  - find all calls of current function with "=Ctrl+c , G="
 </slide>
 
-<slide title="Mode: ECB Part 1/3">
+<slide title="Mode: ECB 1/3">
  - ECB is an "=Emacs Code Browser=" wich contains:
    - directory list frame
    - source list frame
@@ -475,7 +476,7 @@
  - need CEDET to work
 </slide>
 
-<slide title="Mode: ECB Part 2/3">
+<slide title="Mode: ECB 2/3">
  - Example of a layout in the screenshot in Part 3/3
 <src>
 +-----------+----------------+
@@ -492,7 +493,7 @@
 </src>
 </slide>
 
-<slide title="Mode: ECB Part 3/3">
+<slide title="Mode: ECB 3/3">
 [[./slide/ecb.png][Example of layout]]
 </slide>
 
@@ -571,15 +572,15 @@
  - when try to match a parentheses not visible display in minibuffer the match and line after
 </slide>
 
-<slide title="Mode: Color Theme Part 1/3">
+<slide title="Mode: Color Theme 1/3">
 [[./slide/color_emacs.png][Default Colors without Color Theme mode]]
 </slide>
 
-<slide title="Mode: Color Theme Part 2/3">
+<slide title="Mode: Color Theme 2/3">
 [[./slide/color_zenburn.png][Zenburn Color Theme (a ported Vim color scheme)]]
 </slide>
 
-<slide title="Mode: Color Theme Part 3/3">
+<slide title="Mode: Color Theme 3/3">
 [[./slide/color_sweet.png][Sweet Color Theme (mine)]]
 </slide>
 
