@@ -7,8 +7,8 @@
                    "./other/include" ; put all the include path from your project
                    )
   :system-include-path '(
-                          "c:/path/to/compilator/include"
-                          "c:/path/to/compilator/other/include" ; put all include path from not your project
+                          "c:/path/to/compiler/include"
+                          "c:/path/to/compiler/other/include" ; put all include path from not your project
                           )
   :spp-table '(
                 ("FLAG1"    . "")

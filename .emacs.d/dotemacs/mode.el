@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-05-23 (2.3)
+;;    add two new style for muse and slides
 ;; 2012-05-10 (2.2)
 ;;    add org mode (not used)
 ;; 2012-05-04 (2.1)
@@ -456,8 +458,16 @@
 
   (try-require 'muse-html "    ")     ; load publishing styles I use
   (try-require 'muse-latex "    ")
-  (try-require 'muse-texinfo "    ")
-  (try-require 'muse-docbook "    ")
+
+  (muse-derive-style "my-slides-pdf" "slides-pdf"
+    :header (concat dotemacs-path "/plugins/themes/muse/header.tex")
+    :footer  (concat dotemacs-path "/plugins/themes/muse/footer.tex")
+    )
+
+  (muse-derive-style "my-slides" "slides"
+    :header (concat dotemacs-path "/plugins/themes/muse/header.tex")
+    :footer  (concat dotemacs-path "/plugins/themes/muse/footer.tex")
+    )
 
   (try-require 'muse-project "    ")  ; publish files in projects
   (message "  2.24 Muse... Done"))

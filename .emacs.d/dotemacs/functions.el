@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.7
+;; Version: 3.8
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-05-14 (3.8)
+;;    add function to improve tab key when hide show mode
 ;; 2012-05-03 (3.7)
 ;;    add function to checkout/diff/history file from clearcase + remove hippie
 ;;    expand custom
@@ -464,7 +466,7 @@ current line instead."
   (try-require 'muse-mode "    ")     ; load authoring mode
   (try-require 'muse-html "    ")     ; load publishing styles I use
   (try-require 'muse-latex "    ")
-  (muse-mode t)
+;  (muse-mode t)
   )
 
 
@@ -1021,6 +1023,33 @@ clearcase."
   )
 
 ;;
+;; improve tab key with hs-hide-mode (by Tassilo Horn and Alin Soare
+;; from http://old.nabble.com/suggestion-for-tab-keybinding-in-hideshow-minor-mode.-tp30359556p30359556.html)
+(defun tab-hs-hide ()
+  (interactive)
+  (let ((obj (car (overlays-in
+                    (save-excursion (move-beginning-of-line nil) (point))
+                    (save-excursion (move-end-of-line nil) (point))))))
+    (cond
+      ((and (null obj)
+         (eq last-command this-command))
+        (hs-hide-block)
+        )
+      ((and (overlayp obj)
+         (eq 'hs (overlay-get obj 'invisible)))
+        (progn
+          (move-beginning-of-line nil)
+          (hs-show-block)
+          )
+        )
+      (t
+        (funcall (lookup-key (current-global-map) (kbd "^I")))
+        )
+      )
+    )
+  )
+
+;;
 ;;;
 ;;;; TEST (all after is for testing
 (defun clt-test ()
@@ -1055,7 +1084,8 @@ clearcase."
   )
 )
 
-;;;
+;;; toggle fill-paragraph and "unfill" (by Xah Lee)
+;; do not work
 (defun compact-uncompact-block ()
   "Remove or add line ending chars on current paragraph.
 This command is similar to a toggle of `fill-paragraph'.

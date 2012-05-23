@@ -108,8 +108,8 @@
 ;; REQUIREMENT: var     `section-annoyances-truncate-line'
 (when section-annoyances-truncate-line (message "  10.1 Truncate Line...")
   ;; do not truncate line
-  ;; a displayed line is a file line but can be hide outside window (need to
-  ;; horizontally scroll)
+  ;; a displayed row is a line but can be hidden outside window (need to
+  ;; scroll horizontally)
   (setq-default truncate-lines nil)
   (message "  10.1 Truncate Line... Done"))
 

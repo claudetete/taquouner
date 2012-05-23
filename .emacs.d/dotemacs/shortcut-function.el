@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shorcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-05-14 (1.8)
+;;    add improve tab key when hide show mode
 ;; 2012-05-04 (1.7)
 ;;    remove hippie expand + add clearcase shortcut
 ;; 2012-05-03 (1.6)
@@ -112,5 +114,8 @@
 (global-set-key         (kbd "C-c c d")         'clearcase-diff-graphical)
 ;; history
 (global-set-key         (kbd "C-c c h")         'clearcase-history-graphical)
+
+;; improve tab key for hide show mode
+(define-key     hs-minor-mode-map       [tab]   'tab-hs-hide)
 
 ;;; shortcut-function.el ends here

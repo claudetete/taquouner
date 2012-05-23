@@ -1,0 +1,40 @@
+\documentclass[ignorenonframetext]{beamer}
+
+\usepackage[english]{babel}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+
+\def\museincludegraphics{
+  \begingroup
+  \catcode`\|=0
+  \catcode`\\=12
+  \catcode`\#=12
+  % pictures take 70% of text area
+  \includegraphics[width=0.7\textwidth]
+}
+
+% title page block rounded and shadow
+\useinnertheme[shadow]{rounded}
+% add footer (need to be before theme)
+\useoutertheme{infolines}
+% inherit theme
+\usetheme[height=7mm]{Rochester}
+% emacs icon color
+\usecolortheme[RGB={110,108,183}]{structure}
+% use ball instead of rectangle
+\setbeamertemplate{items}[ball]
+% remove navigation line
+\setbeamertemplate{navigation symbols}{}
+
+% get title, author and date
+\title{<lisp>(muse-publish-escape-specials-in-string (muse-publishing-directive "title") 'document)</lisp>}
+\author{<lisp>(muse-publishing-directive "author")</lisp>}
+\date{<lisp>(muse-publishing-directive "date")</lisp>}
+
+\begin{document}
+
+% add the title page
+\frame{\titlepage}
+

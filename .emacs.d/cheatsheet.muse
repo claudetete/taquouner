@@ -259,7 +259,7 @@ C-c f | find file in project (regexp with gtags)
 F3    | next match/error
 F5    | previous match/error
 F6    | next occur
-F10   | invoke compilator
+F10   | invoke compiler
 
 **  Edit
 *** Selection

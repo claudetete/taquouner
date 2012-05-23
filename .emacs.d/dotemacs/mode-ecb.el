@@ -196,7 +196,7 @@ version that it is aware of.  So simply bypass the version check."
         ;; regexp of folder to exclude in "ecb directories"
         '(ecb-excluded-directories-regexps
            (quote (
-                    "^\\.+$" ; hided folder
+                    "^\\.+$" ; hidden folder
                     "\\(TOTO\\|TITI\\)$")))             ; example
 
         ;; files to be ignored in "ecb source" !! RTFM !!

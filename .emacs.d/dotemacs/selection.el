@@ -59,6 +59,13 @@
 
 ;; read under
 
+;; [M-k] kills the rectangle as normal multi-line text (for paste)
+;; [M-t] performs text fill of the rectangle with TEXT (prompt)
+;; [M-m] copies the rectangle as normal multi-line text (for paste)
+;; [M-r] replaces REGEXP (prompt) by STRING (prompt) in rectangle
+;; [M-R] reverse the lines in the rectangle
+;; [M-s] fills each line of the rectangle with the same STRING (prompt)
+
 ;; cua-mode's rectangle support also includes all the normal rectangle
 ;; functions with easy access:
 ;;
@@ -70,9 +77,7 @@
 ;; [M-i] increases the first number found on each line of the rectangle
 ;;       by the amount given by the numeric prefix argument (default 1)
 ;;       It recognizes 0x... as hexadecimal numbers
-;; [M-k] kills the rectangle as normal multi-line text (for paste)
 ;; [M-l] downcases the rectangle
-;; [M-m] copies the rectangle as normal multi-line text (for paste)
 ;; [M-n] fills each line of the rectangle with increasing numbers using
 ;;       a supplied format string (prompt)
 ;; [M-o] opens the rectangle by moving the highlighted text to the
@@ -80,19 +85,27 @@
 ;; [M-p] toggles virtual straight rectangle edges
 ;; [M-P] inserts tabs and spaces (padding) to make real straight edges
 ;; [M-q] performs text filling on the rectangle
-;; [M-r] replaces REGEXP (prompt) by STRING (prompt) in rectangle
-;; [M-R] reverse the lines in the rectangle
-;; [M-s] fills each line of the rectangle with the same STRING (prompt)
-;; [M-t] performs text fill of the rectangle with TEXT (prompt)
 ;; [M-u] upcases the rectangle
 ;; [M-|] runs shell command on rectangle
 ;; [M-'] restricts rectangle to lines with CHAR (prompt) at left column
 ;; [M-/] restricts rectangle to lines matching REGEXP (prompt)
+
 ;; [C-?] Shows a brief list of the above commands.
 
 ;; [M-C-up] and [M-C-down] scrolls the lines INSIDE the rectangle up
 ;; and down; lines scrolled outside the top or bottom of the rectangle
 ;; are lost, but can be recovered using [C-z].
+
+
+9
+8
+7
+6
+5
+4
+3
+2
+1
 
 
 
