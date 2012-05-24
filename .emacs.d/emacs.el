@@ -242,8 +242,7 @@
 ;;                                      "Xebeche"
 ;;                                      "epita"
 ;;                                      "default"
-;(defvar clt-working-environment "default")
-(defvar clt-working-environment "Alstom Transport")
+(defvar clt-working-environment "default")
 
 ;;
 ;;;   DOTEMACS PATH
