@@ -35,7 +35,7 @@
 ;; 2012-04-25 (1.4)
 ;;    replace setting to remove tooltip
 ;; 2012-03-29 (1.3)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-02 (1.2)
 ;;    remove "display" in name file et section
 ;; 2011-04-21 (1.1)
@@ -50,7 +50,7 @@
 ;; sort the buffer menu (open with control + left click)
 (msb-mode 1)
 ;;
-;; show shortcut of last command launch with M-x in minibuffer
+;; show shortcut of last command launch with M-x in Minibuffer
 (setq teach-extended-commands-p t)
 
 ;;

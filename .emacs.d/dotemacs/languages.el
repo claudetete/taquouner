@@ -1,4 +1,4 @@
-;;; languages.el --- a config file for programation languages
+;;; languages.el --- a config file for programing languages
 
 ;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
 ;;
@@ -33,9 +33,9 @@
 ;; 2012-04-20 (1.8)
 ;;    add working environment default
 ;; 2012-04-06 (1.7)
-;;    add perl indent
+;;    add Perl indent
 ;; 2012-03-29 (1.6)
-;;    translate comments in english + add rtrt script indent
+;;    translate comments in English + add rtrt script indent
 ;; 2012-03-02 (1.5)
 ;;    add working environment condition
 ;; 2011-10-21 (1.4)
@@ -154,7 +154,7 @@
     '(c-macro-prompt-flag nil)
     ;; set flags
     '(c-macro-cppflags "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__")
-    ;; resize the height of the window like the size of the epxand macro
+    ;; resize the height of the window like the size of the expand macro
     '(c-macro-shrink-window-flag t)
 
     ;; ??

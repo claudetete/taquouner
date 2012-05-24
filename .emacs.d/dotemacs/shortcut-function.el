@@ -18,7 +18,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 
-;; Keywords: config, shorcut, function
+;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.8
 ;; Created: October 2006
@@ -38,13 +38,13 @@
 ;; 2012-05-03 (1.6)
 ;;    add shortcut to new functions for macros, and windows swap
 ;; 2012-03-30 (1.5)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-29 (1.4)
 ;;    add new align shortcut
 ;; 2012-03-19 (1.3)
 ;;    add align shortcut and replace for rtrt
 ;; 2011-11-03 (1.2)
-;;    add preprocessing funtion for each project
+;;    add preprocessing function for each project
 ;; 2011-10-27 (1.1)
 ;;    comment the Magneti CAN Changelog insert
 ;; 2011-03-10 (1.0)

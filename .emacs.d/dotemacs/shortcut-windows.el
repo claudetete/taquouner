@@ -18,7 +18,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 
-;; Keywords: config, shorcut, window
+;; Keywords: config, shortcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.2
 ;; Created: October 2006
@@ -52,7 +52,7 @@
   (windmove-default-keybindings))
 
 ;; resize window more easily (before `C-x {'...)
-;; verical
+;; vertical
 (global-set-key         (kbd "<C-S-up>")        'enlarge-window)
 (global-set-key         (kbd "<C-S-down>")      'shrink-window)
 ;; horizontal

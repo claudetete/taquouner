@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs, color, theme
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.0
+;; Version: 1.1
 ;; Created: April 2012
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,8 @@
 ;; TODO change Auto Highlight Symbol + finish dired+
 
 ;;; Change Log:
+;; 2012-05-24 (1.1)
+;;    change isearch background to see in comments
 ;; 2012-05-04 (1.0)
 ;;    add dired+ color + change highlight default for ecb and cursor
 
@@ -150,7 +152,7 @@
        (minibuffer-prompt ((t (:foreground ,sweet-cyan))))
 
        ;; isearch
-       (isearch ((t (:background ,sweet-orange+2))))
+       (isearch ((t (:background ,sweet-pink+2))))
        (isearch-fail ((t (:background ,sweet-red))))
 
        ;; edit

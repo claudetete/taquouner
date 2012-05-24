@@ -35,7 +35,7 @@
 ;; 2012-04-20 (1.5)
 ;;    add working environment
 ;; 2012-03-28 (1.4)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-02 (1.3)
 ;;    add some elegant font for other than simple ascii character
 ;; 2011-07-09 (1.2)
@@ -124,7 +124,7 @@
 ;;; INTERNATIONAL
 ;; REQUIREMENT: var     `section-display-font-international'
 (when section-display-font-international (message "    5.3.1 International...")
-  ;; no more setting to have unicode
+  ;; no more setting to have Unicode
   (message "    5.3.1 International... Done"))
 
 ;;

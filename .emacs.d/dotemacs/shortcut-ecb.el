@@ -37,7 +37,7 @@
 ;; 2012-04-17 (1.4)
 ;     add condition about section ecb mode + remove C-c qaz shortcut
 ;; 2012-03-30 (1.3)
-;;    translate comments in english + cleaning
+;;    translate comments in English + cleaning
 ;; 2012-03-23 (1.2)
 ;;    add shortcut for methods & source
 ;; 2011-07-21 (1.1)
@@ -56,7 +56,7 @@
   (global-set-key         "\C-c\\"                'ecb-toggle-ecb-windows)
 
   ;;
-  ;; hide/show ecb compil window
+  ;; hide/show ecb compile window
   (global-set-key         [f2]                    'ecb-toggle-compile-window)
   (global-set-key         (kbd "<mouse-5>")       'ecb-toggle-compile-window)
 
@@ -80,7 +80,7 @@
   ;; got to the ecb history window (all opened file, not all buffers)
   (global-set-key         "\M-z"                  'ecb-goto-window-history)
 
-  ;; go back thaks to ecb
+  ;; go back thanks to ecb
   (global-set-key         (kbd "<M-kp-multiply>") 'ecb-nav-goto-previous)
 ) ; when section-mode-cedet-ecb
 

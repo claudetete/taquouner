@@ -54,7 +54,7 @@
 
 ;;; Change Log:
 ;; 2012-03-30 (1.4)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-28 (1.3)
 ;;    disable idle completion and local symbol highlight
 ;; 2012-03-20 (1.2)
@@ -110,7 +110,7 @@
       ;; disable highlight local symbol mode
       '(global-semantic-idle-local-symbol-highlight-mode nil nil (semantic-idle))
 
-      ;; disable completions, I dont use it
+      ;; disable completions, I don't use it
       '(global-semantic-idle-completions-mode nil nil (semantic-idle))
       )
     ) ; (progn
@@ -124,7 +124,7 @@
     ;; run ede mode to manage project files
     (global-ede-mode t)
 
-    ;;;; set GNU/Global as fisrt database
+    ;;;; set GNU/Global as first database
     ;;(setq ede-locate-setup-options '(ede-locate-global ede-locate-base)) ; do not work ?
 
     ;; load the different projects
@@ -135,7 +135,7 @@
 
     ;;;; load GNU/Global for semantic
     ;;(try-require 'semantic/db-global)
-    ;;;; sematic database is used in c and c++ mode
+    ;;;; semantic database is used in c and c++ mode
     ;;(semanticdb-enable-gnu-global-databases 'c-mode)
     ;;(semanticdb-enable-gnu-global-databases 'c++-mode)
 

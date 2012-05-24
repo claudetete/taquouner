@@ -31,7 +31,7 @@
 
 ;;; Change Log:
 ;; 2012-03-28 (1.3)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-02 (1.2)
 ;;    change hard path by a variable + remove ms windows
 ;; 2011-07-09 (1.1)
@@ -56,7 +56,7 @@
   (message "  1.1 Directory .emacs.d ... Done"))
 
 ;;
-;;; FONCTIONS
+;;; FUNCTIONS
 ;; REQUIREMENT: var     `section-external-functions'
 (when section-external-functions (message "  1.2 Functions custom...")
   (load-file (concat dotemacs-path "/dotemacs/functions.el"))

@@ -20,7 +20,7 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: August 2010
 ;; Last-Updated: May 2012
 
@@ -34,12 +34,14 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-05-24 (1.8)
+;;    do not put all *buffer* in compile window, that fix bug with ispell
 ;; 2012-05-04 (1.7)
 ;;    add new path for directories
 ;; 2012-04-20 (1.6)
 ;;    add working environment default
 ;; 2012-03-29 (1.5)
-;;    translate comments in english + add some fix
+;;    translate comments in English + add some fix
 ;; 2012-03-05 (1.4)
 ;;    remove fix fullscreen + add some settings
 ;; 2012-03-02 (1.3)
@@ -95,7 +97,7 @@ version that it is aware of.  So simply bypass the version check."
         '(ecb-source-path
            (quote
              (
-               ;; before is put the ede projects (see project.el)
+               ;; before is put the EDE projects (see project.el)
                ("c:/Documents and Settings/tete"            "/tete")
                ("h:/"                                       "/home")
                ("d:/cygwin/usr/bin"                         "/bin")
@@ -269,7 +271,7 @@ version that it is aware of.  So simply bypass the version check."
   ;;;; see semantic
   ;;'(which-function-mode t)
 
-  ;; add all buffers name I want in the compil window of ecb
+  ;; add all buffers name I want in the compile window of ecb
   '(ecb-compilation-buffer-names
      (quote (
               ;;FIXME working environment default
@@ -291,20 +293,19 @@ version that it is aware of.  So simply bypass the version check."
               ("msg.txt.*" . t)
               ("*ccm*")
               ("\\*GTAGS SELECT\\*.*" . t)
-              ("\\*.*\\*" . t)
               ("*Bookmark List*")
               ("*Shell Command Output*")
               ("*Semantic Context Analyze*")
               ("*Macroexpansion*")
               ("\\*Symref .*" . t)
-              ("*Choices*")
-              ("*ECB Analyse*"))))
+              ("*ECB Analyse*")
+              )))
 
   ;; auto expand tree
   '(ecb-auto-expand-tag-tree-collapse-other (quote only-if-on-tag))
   '(ecb-expand-methods-switch-off-auto-expand nil)
 
-  ;; do not prescan the directory for emptyness
+  ;; do not prescan the directory for emptiness
   '(ecb-prescan-directories-for-emptyness nil)
 
   ;; do not process file without semantic
@@ -318,7 +319,7 @@ version that it is aware of.  So simply bypass the version check."
   ;; color of lines find in *Tag List*
   '(tags-tag-face (quote match)))
 
-;; let ecb take control of opening of compil window
+;; let ecb take control of opening of compile window
 (add-hook 'ecb-activate-hook
   (lambda ()
     (let ((compwin-buffer (ecb-get-compile-window-buffer)))
@@ -328,7 +329,7 @@ version that it is aware of.  So simply bypass the version check."
 
 ) ; (when (try-require 'ecb)
 
-;; The adviced version of switch-to-buffer-other-window can redraw the layout
+;; The advised version of switch-to-buffer-other-window can redraw the layout
 ;; (e.g. if the buffer in the compile-window is the slave and the
 ;; compile-window has been made visible), so <window> in the code below can be
 ;; a destroyed window-object! we have to prevent from this (e.g. by selecting

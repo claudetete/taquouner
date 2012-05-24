@@ -33,7 +33,7 @@
 ;; 2012-05-04 (1.3)
 ;;    add three possibility of transparency
 ;; 2012-03-20 (1.2)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-20 (1.1)
 ;;    add buffer name to list of compilation window
 ;; 2011-03-10 (1.0)
@@ -50,12 +50,11 @@
 (add-to-list 'same-window-buffer-names "*Colors*")
 (add-to-list 'same-window-buffer-names "*Command History*")
 (add-to-list 'same-window-buffer-names "*Diff*")
-(add-to-list 'same-window-buffer-names "*Proced*")
+(add-to-list 'same-window-buffer-names "*Proceed*")
 (add-to-list 'same-window-buffer-names "*vc-dir*")
 (add-to-list 'same-window-buffer-names "msg.txt")
 (add-to-list 'same-window-buffer-names "*GTAGS SELECT*")
 (add-to-list 'same-window-buffer-names "*Completions*")
-(add-to-list 'same-window-buffer-names "*Choices*")
 (add-to-list 'same-window-regexps "\\*GTAGS SELECT\\* ([A-Z])\\sw*")
 (add-to-list 'same-window-regexps "\\*compilation\\*\\(\\|<[0-9]+>\\)")
 (add-to-list 'same-window-regexps "\\*grep\\*\\(\\|<[0-9]+>\\)")

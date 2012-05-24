@@ -36,9 +36,9 @@
 ;; 2012-05-10 (2.2)
 ;;    add org mode (not used)
 ;; 2012-05-04 (2.1)
-;;    add dired sort mode
+;;    add Dired sort mode
 ;; 2012-05-02 (2.0)
-;;    add setting for browse kill ring + add csv mode + svn mode + diff color
+;;    add setting for browse kill ring + add CSV mode + SVN mode + diff color
 ;; 2012-04-26 (1.9)
 ;;    update GNU Global to 6.2.2
 ;; 2012-04-23 (1.8)
@@ -46,7 +46,7 @@
 ;; 2012-04-16 (1.7)
 ;;    change some comments and working environment
 ;; 2012-03-30 (1.6)
-;;    translate comments in english + google calendar
+;;    translate comments in English + Google calendar
 ;; 2012-03-27 (1.5)
 ;;    add auto highlight symbol minor mode
 ;; 2012-03-26 (1.4)
@@ -54,7 +54,7 @@
 ;; 2012-03-18 (1.3)
 ;;    add mode for RTRT script (.ptu)
 ;; 2012-03-03 (1.2)
-;;    add selection of wich cedet is used
+;;    add selection of which cedet is used
 ;; 2011-04-21 (1.1)
 ;;    add some test about ms windows for paths
 ;; 2010-10-13 (1.0)
@@ -81,7 +81,7 @@
 ;;
 ;;; IDO
 ;; REQUIREMENT: var     `section-mode-ido'
-;; better 'switch buffers' (C-x C-b ou M-a) and 'open file' (C-x C-f)
+;; better 'switch buffers' (C-x C-b or M-a) and 'open file' (C-x C-f)
 ;; erratic behavior with exotic filename
 ;; bug with module 'tramp' (not used)
 (when section-mode-ido (message "  2.2 Ido...")
@@ -246,7 +246,7 @@
   (autoload 'rebox-region "rebox" nil t)
   (setq rebox-default-style 245)
 
-  ;;; Compil mode
+  ;;; Compile mode
   (setq compile-command "ccm objectmake")
   (message "  2.8 C... Done"))
 
@@ -254,7 +254,7 @@
 ;;; ICOMPLETION
 ;; REQUIREMENT: var     `section-mode-icompletion'
 (when section-mode-icompletion (message "  2.9 Icompletion...")
-  ;; Completion in minibuffer
+  ;; Completion in Minibuffer
   (icomplete-mode t)
   (message "  2.9 Icompletion... Done"))
 
@@ -547,7 +547,7 @@
 
 ;; TRY
 (when 0
-  ;; it add a small round in modeline where color give status of svn
+  ;; it add a small round in modeline where color give status of SVN
   ;; + show all file status of a directory
   (try-require 'psvn)
 )

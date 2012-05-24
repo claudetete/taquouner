@@ -18,7 +18,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 
-;; Keywords: config, shorcut, grep
+;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.3
 ;; Created: October 2006
@@ -32,7 +32,7 @@
 
 ;;; Change Log:
 ;; 2012-03-30 (1.3)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-22 (1.2)
 ;;    add condition about working environment
 ;; 2011-07-27 (1.1)
@@ -73,7 +73,7 @@
 ;; previous occurrence
 (global-set-key         [f7]                    'compilation-previous-error)
 
-;; to compil
+;; to compile
 (global-set-key         [f10]                   'compile)
 ;;
 ;;;; next error

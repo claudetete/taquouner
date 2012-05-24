@@ -45,7 +45,7 @@
 ;; 2012-04-20 (1.5)
 ;;    add working environment for setting color
 ;; 2012-03-28 (1.4)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-20 (1.3)
 ;;    modify color for grep/occur matches
 ;; 2011-12-02 (1.2)
@@ -85,7 +85,7 @@
 ;; REQUIREMENT: var     `section-display-color-parentheses-visible'
 ;;              mode    `mic-paren'
 (when section-display-color-parentheses-visible (message "    5.4.2 Matched Parentheses display in Minibuffer ...")
-  ;; show complementary parenthese (if not displayed) in mode-line
+  ;; show complementary parenthesis (if not displayed) in mode-line
   (when (try-require 'mic-paren "      ")
     (paren-activate))
   (message "    5.4.2 Matched Parentheses display in Minibuffer... Done"))
@@ -321,7 +321,7 @@
                  (background dark))
                 (:inherit ecb-default-highlight-face))))
           ;;
-          ;; style of methode
+          ;; style of method
           '(ecb-method-face
              ((((class color)
                  (background dark))

@@ -33,7 +33,7 @@
 ;; 2012-04-16 (1.5)
 ;;    add working environment condition
 ;; 2012-03-30 (1.4)
-;;    comments in english + preserve cursor
+;;    comments in English + preserve cursor
 ;; 2012-03-21 (1.3)
 ;;    add directory for backup file
 ;; 2012-03-02 (1.2)
@@ -59,7 +59,7 @@
 (setq revert-without-query '(".*"))
 
 ;;
-;; remove insert shorcut, no more insertion mode
+;; remove insert shortcut, no more insertion mode
 (global-set-key [insert] 'ignore)
 ;;
 ;; disable shortcut C-PageUp & C-PageDown
@@ -73,18 +73,18 @@
 ;; no more dialog boxes for files
 (setq use-file-dialog nil)
 ;;
-;; no more #foo.bar# files (autosave file)
+;; no more #foo.bar# files (auto-save file)
 ;;; I don't want it
 ;;;(auto-save-mode nil)
 ;;
-;; Put autosave files #foo.bar# in one directory,
+;; Put auto-save files #foo.bar# in one directory,
 ;; do not put it all over file system
 (defvar autosave-dir (concat dotemacs-path "/cache"))
 
 ;; no more tooltips (delay of 9999 seconds before displayed)
 (setq tooltip-delay 9999)
 
-;;;; aks confirmation to quit Emacs
+;;;; ask confirmation to quit Emacs
 ;;;; do not use it's a pain
 ;;(setq confirm-kill-emacs t)
 
@@ -147,14 +147,14 @@
       ;; put all backup file in the temporary directory of the system
       (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
-      ;; put all autosave file in the temporary directory of the system
+      ;; put all auto-save file in the temporary directory of the system
       (setq auto-save-file-name-transforms
         `((".*" ,temporary-file-directory t)))
       ) ; default
 
     ) ; cond -------------------------------------------------------------------
   (setq backup-by-copying t   ; don't clobber symlinks
-    version-control t         ; use versioned backups
+    version-control t         ; use version backups
     delete-old-versions t
     kept-new-versions 6
     kept-old-versions 2)

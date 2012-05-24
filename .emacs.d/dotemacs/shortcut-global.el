@@ -18,7 +18,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 
-;; Keywords: config, shorcut, emacs
+;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.7
 ;; Created: October 2006
@@ -33,7 +33,7 @@
 ;;; Change Log:
 ;; 2012-05-10 (1.7)
 ;;    change goto line shortcut to not override the default downcase-word +
-;;    shortcut for dired plus to avoid problem with cua selection
+;;    shortcut for dired plus to avoid problem with CUA selection
 ;; 2012-05-03 (1.6)
 ;;    add shortcut to add line without jump + give number of line + bind C-TAB
 ;;    to M-TAB + remove shortcut to calendar
@@ -42,7 +42,7 @@
 ;; 2012-04-03 (1.4)
 ;;    add shortcut for fill-paragraph
 ;; 2012-03-30 (1.3)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2011-08-03 (1.2)
 ;;    add shortcut for pair of parentheses
 ;; 2011-07-27 (1.1)
@@ -64,7 +64,7 @@
 ;; close current buffer and its window
 (global-set-key         [f4]                    'kill-buffer-and-window)
 
-;;;; run ispell (dictionnary) (set language in `section-misc')
+;;;; run ispell (dictionary) (set language in `section-misc')
 ;;;; never used
 ;;(global-set-key         [f7]                    'ispell-buffer)
 ;;(global-set-key         [S-f7]                  'ispell-word)
@@ -99,7 +99,7 @@
 ;;;; ??
 ;;(global-set-key         "\C-up"                 'backward-sentence)
 
-;; delete backear a word
+;; delete backward a word
 (global-set-key         "\C-z"                  'backward-kill-word)
 
 ;; copy line in kill-ring `C-j' (no more C-k C-y)
@@ -146,10 +146,10 @@
 ;;; HOME/END
 ;; REQUIREMENT: var     `section-external-home-end'
 (when section-external-home-end
-  ;; bind home avec les nouvelles fonctionnalites
+  ;; bind home with new features
   (global-set-key       (kbd "<home>")          'pc-keys-home)
   ;;
-  ;; bind home avec les nouvelles fonctionnalites
+  ;; bind home with new features
   (global-set-key       (kbd "<end>")           'pc-keys-end)
   )
 
@@ -157,7 +157,7 @@
 ;;; OUTLINE
 ;; REQUIREMENT: var     `section-mode-outline'
 (when section-mode-outline
-  ;; bind toogle hide/show block
+  ;; bind toggle hide/show block
   (global-set-key       (kbd "C-c h")           'outline-toggle-children)
   )
 

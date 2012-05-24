@@ -34,7 +34,7 @@
 ;; 2012-04-23 (1.4)
 ;;    add section for mouse avoidance
 ;; 2012-02-30 (1.3)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-02-28 (1.2)
 ;;    add lazy fontify when scroll
 ;; 2011-04-21 (1.1)

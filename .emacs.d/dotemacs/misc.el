@@ -33,15 +33,15 @@
 ;;; Change Log:
 ;; 2012-05-04 (1.6)
 ;;    remove try about diary, add ignore case during completion, set path of
-;;    bookmarks + add dired human size
+;;    bookmarks + add Dired human size
 ;; 2012-04-25 (1.5)
 ;;    remove setting to remove tooltip
 ;; 2012-04-19 (1.4)
-;;    add dictionary + keep minibuffer history
+;;    add dictionary + keep Minibuffer history
 ;; 2012-03-29 (1.3)
-;;    translate comments in english + calendar + diary
+;;    translate comments in English + calendar + diary
 ;; 2011-07-25 (1.2)
-;;    add test about ms windows for cygwin shell
+;;    add test about ms windows for Cygwin shell
 ;; 2011-04-21 (1.1)
 ;;    add user name + longitude latitude + calendar
 ;; 2011-03-10 (1.0)
@@ -72,7 +72,7 @@
 (custom-set-variables
   '(fill-column 80))
 
-;; keep history between session of emacs (even after close it) for minibuffer
+;; keep history between session of emacs (even after close it) for Minibuffer
 (savehist-mode 1)
 
 ;; ignore case when reading a file name completion
@@ -84,14 +84,14 @@
 ;; check all variables and non-interactive functions with apropos
 (setq apropos-do-all t)
 
-;; change size display in dired mode
+;; change size display in Dired mode
 (setq dired-listing-switches "-alh")
 
 ;;
 ;;; CALENDAR
 ;; REQUIREMENT: var     `clt-working-environment'
 (when section-misc-calendar (message "  11.1 Calendar...")
-  ;; start week with monday in 'calendar'
+  ;; start week with Monday in 'calendar'
   (defvar calendar-week-start-day 1)
   ;;
   ;; to have Sunrise/Sunset time
@@ -127,13 +127,13 @@
   (setq today-visible-calendar-hook 'calendar-mark-today)
   (setq calendar-today-marker 'highlight)
 
-  ;; load french holidays
+  ;; load French holidays
   (when (try-require 'french-holidays)
     (setq calendar-holidays holiday-french-holidays))
 
 
   (custom-set-variables
-    ;; set display date in european format
+    ;; set display date in European format
     '(calendar-date-display-form
        (quote ((if dayname
                  (concat dayname " ")) day " " monthname " " year)))
@@ -210,7 +210,7 @@
   (message "  11.1 Calendar... Done"))
 
 ;;
-;; set cygwin shell
+;; set Cygwin shell
 ;; on MS Windows it works bad
 (when running-on-ms-windows
   (cond
@@ -236,7 +236,7 @@
   )
 
 ;;
-;;;; DICTIONNARY lanaguage
+;;;; DICTIONARY language
 (when section-misc-dictionary (message "  11.2 Dictionary...")
   (cond
     ;; Alstom Transport --------------------------------------------------------

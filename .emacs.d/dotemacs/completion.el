@@ -36,7 +36,7 @@
 ;; 2012-05-04 (1.2)
 ;;    add configuration for hippie expand
 ;; 2012-03-28 (1.1)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2011-03-10 (1.0)
 ;;    split .emacs file
 ;; 2006-10-13 (0.1)

@@ -31,11 +31,11 @@
 
 ;;; Change Log:
 ;; 2012-05-10 (1.5)
-;;    add comment for bug with cua
+;;    add comment for bug with CUA
 ;; 2012-04-03 (1.4)
-;;    add cua mode only for rectangle selection...
+;;    add CUA mode only for rectangle selection...
 ;; 2012-03-30 (1.3)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-02 (1.2)
 ;;    add else for selection with shift key
 ;; 2011-04-21 (1.1)

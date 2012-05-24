@@ -33,7 +33,7 @@
 ;; 2012-05-11 (2.0)
 ;;    use color-theme in terminal + change path for AT + add hyper and super
 ;; 2012-05-04 (1.9)
-;;    complete default working environment + change location to avoid french
+;;    complete default working environment + change location to avoid French
 ;;    message
 ;; 2012-05-03 (1.8)
 ;;    change environment variable management
@@ -42,7 +42,7 @@
 ;; 2012-04-03 (1.6)
 ;;    add terminal environment to Alstom Transport
 ;; 2012-03-28 (1.5)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-02 (1.4)
 ;;    add working environment and change "OS" message
 ;; 2012-03-02 (1.3)
@@ -210,18 +210,18 @@
       (setq section-completion t)
 
       ;; SHORTCUT
-      (setq section-shortcut                       t)
-      (setq section-shortcut-global                t)
-      (setq section-shortcut-global-cua            nil) ; you can use it but I don't recommand it
-      (setq section-shortcut-windows               t)
-      (setq section-shortcut-buffers               t)
-      (setq section-shortcut-ecb                   t)
-      (setq section-shortcut-grep                  t)
-      (setq section-shortcut-function              t)
-      (setq section-shortcut-tags                  t)
-      (setq section-shortcut-tags-exhuberant-ctags nil)
-      (setq section-shortcut-tags-gnu-global       t)
-      (setq section-shortcut-semantic              t)
+      (setq section-shortcut                      t)
+      (setq section-shortcut-global               t)
+      (setq section-shortcut-global-cua           nil) ; you can use it but I don't recommend it
+      (setq section-shortcut-windows              t)
+      (setq section-shortcut-buffers              t)
+      (setq section-shortcut-ecb                  t)
+      (setq section-shortcut-grep                 t)
+      (setq section-shortcut-function             t)
+      (setq section-shortcut-tags                 t)
+      (setq section-shortcut-tags-exuberant-ctags nil)
+      (setq section-shortcut-tags-gnu-global      t)
+      (setq section-shortcut-semantic             t)
 
       ;; MOUSE
       (setq section-mouse                                 t)
@@ -312,7 +312,7 @@
 ;; REQUIREMENT: var     `section-environment-os-recognition'
 (when section-environment-cygwin (message "  0.4 Cygwin...")
   (when running-on-ms-windows
-    ;; to integrate cygwin with emacs (mostly for grep-find)
+    ;; to integrate Cygwin with emacs (mostly for grep-find)
     (cond
       ;; Magneti Marelli -------------------------------------------------------
       ((string= clt-working-environment "Magneti Marelli")
@@ -363,7 +363,7 @@
                              "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"                   ";"
                              "d:/Users/ctete/tools/gnuwin32/bin"                                     ";"
                              "C:/Python27"                                                           ";"
-                             dotemacs-path "/gnu_global_622wb/bin"
+                             "d:/Users/ctete/tools/.emacs.d/plugins/gnu_global_622wb/bin"
                              ))
 
             (setq exec-path
@@ -385,9 +385,9 @@
                  "c:/Program Files/Rational/common"
                  "c:/Program Files/Analog Devices/VisualDSP"
                  "c:/Program Files/Analog Devices/VisualDSP/System"
-                 (concat dotemacs-path "/gnu_global_622wb/bin")
+                 "d:/Users/ctete/tools/.emacs.d/plugins/gnu_global_622wb/bin"
                  ))
-            (setenv "LANG" "en_US") ; for subversion and dired
+            (setenv "LANG" "en_US") ; for subversion and Dired
             )
 
           (progn
@@ -446,7 +446,7 @@
                  "/cygdrive/c/Program Files/Analog Devices/VisualDSP/System"
                  )
               )
-            (setenv "LANG" "en_US") ; for subversion and dired
+            (setenv "LANG" "en_US") ; for subversion and Dired
             )
 
           )

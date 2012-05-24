@@ -42,7 +42,7 @@
 ;;
 ;;   Customize: Emacs/"mode" settings saved by the interface
 ;;
-;;   Cygwin: unix environment in a MS Windows world
+;;   Cygwin: Unix environment in a MS Windows world
 ;;
 ;;   Dired: explorer "mode", to explore file and folder
 ;;
@@ -57,7 +57,7 @@
 ;;   Minibuffer: last line in Emacs interface (kind of status bar) but some
 ;;               time can be editable to call a function, put parameter, etc
 ;;
-;;   Mode: plugin, extension, add-on, of Emacs to add functionalities (ex:
+;;   Mode: plug in, extension, add-on, of Emacs to add functionalities (ex:
 ;;         new language, make coffee, etc)
 ;;
 ;;   nil: empty, null, 0, nothing, false, etc (see t)
@@ -92,15 +92,15 @@
 ;; TODO
 ;;
 ;; DONE
-;;  - try browse-kill-ring mode (do not work properly with ecb)
-;;  - put all comments in english
-;;  - try rect-mark mode/plugin (use CUA rectangle mode)
-;;  - make a option to have cedet in Emacs or from repo
+;;  - try browse-kill-ring mode (do not work properly with ECB)
+;;  - put all comments in English
+;;  - try rect-mark mode/plug-in (use CUA rectangle mode)
+;;  - make a option to have CEDET in Emacs or from repo
 ;;  - configure semantic
 ;;  -- use gcc to hide/show #ifdef... (can be done with EDE and semantic but
-;;     doesn not work correctly (GNU Global fault)) but it is configured for
+;;     does not work correctly (GNU Global fault)) but it is configured for
 ;;     preproc macro
-;;  - manage properly windows or linux
+;;  - manage properly windows or Linux
 ;;  - use gcc for preprocessing of ifdef etc
 ;;  - use GNU/Global to manage project and tag
 ;;  - try system of project/session (not used)
@@ -109,10 +109,10 @@
 ;;  - put message when loading
 ;;  - manage environment
 ;;  - switch buffer without all *buffer*
-;;  - show current function in ecb methods window
+;;  - show current function in ECB methods window
 ;;  - put colors with grep (remove underline and put in grey background)
 ;;  - grep definition and declaration with default path
-;;  - configure ecb + shortcut + bug opening new window
+;;  - configure ECB + shortcut + bug opening new window
 ;;  - use etags (and not ctags) with shortcut M-.  et C-/
 ;;  - configure speedbar (it's a pain without good shortcut */
 ;;  - add shortcut and function for header
@@ -128,15 +128,15 @@
 ;;  - move cursor by word/paragraph with M-arrow
 ;;  - do not type yes when quit
 ;;  - insert do a delete
-;;  - remove trailling space
-;;  - use dired+ mode to comfy browsing
+;;  - remove trailing space
+;;  - use Dired+ mode to comfy browsing
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
 ;; 2012-05-11 (7.2)
-;;    add hyoer and super keys + org mode + fix some bugs
+;;    add hyper and super keys + org mode + fix some bugs
 ;; 2012-05-04 (7.1)
-;;    add dired sort mode + transparency setting + ecb ascii tree setting
+;;    add Dired sort mode + transparency setting + ECB ascii tree setting
 ;; 2012-05-02 (7.0)
 ;;    fix bug about fullscreen (must be set after a change of font) + add some
 ;;    mode
@@ -145,9 +145,9 @@
 ;; 2012-04-19 (6.8)
 ;;    add dictionary
 ;; 2012-04-04 (6.7)
-;;    add perl language
+;;    add Perl language
 ;; 2012-04-01 (6.6)
-;;    add elpa package manager + translate some comment in english + google
+;;    add elpa package manager + translate some comment in English + Google
 ;;    calendar
 ;; 2012-03-27 (6.5)
 ;;    add outline mode + auto highlight symbol minor mode
@@ -156,7 +156,7 @@
 ;; 2012-03-03 (6.3)
 ;;    add a glossary + comment for each option
 ;; 2012-03-02 (6.2)
-;;    add some option about cedet and semantic
+;;    add some option about CEDET and semantic
 ;; 2012-02-28 (6.1)
 ;;    change hard path by a variable path which is defined in .emacs
 ;; 2012-02-27 (6.0)
@@ -172,7 +172,7 @@
 ;; 2011-07-09 (5.5)
 ;;    rename indentation to languages
 ;; 2011-06-10 (5.4)
-;;    add eproject, must try it without ecb
+;;    add eproject, must try it without ECB
 ;; 2011-05-25 (5.3)
 ;;    add some option about tags
 ;; 2011-03-10 (5.2)
@@ -182,7 +182,7 @@
 ;; 2010-11-09 (5.0)
 ;;    add mode yasnippet
 ;; 2010-11-03 (4.9)
-;;    date in minibuffer and in french format
+;;    date in Minibuffer and in French format
 ;; 2010-11-02 (4.8)
 ;;    messages + condition (parametrable)
 ;; 2010-10-21 (4.7)
@@ -190,9 +190,9 @@
 ;; 2010-10-07 (4.6)
 ;;    some minor modification
 ;; 2010-10-05 (4.5)
-;;    add semantic for ecb methods
+;;    add semantic for ECB methods
 ;; 2010-09-16 (4.4)
-;;    shortcut buffer + selectword + colors ecb
+;;    shortcut buffer + selectword + colors ECB
 ;; 2010-08-31 (4.3)
 ;;    utf-8 and function for grep + etags
 ;; 2010-08-26 (4.2)
@@ -223,7 +223,7 @@
 ;;(if (window-system)
 ;;  (server-start))
 
-;; debug this fichier if error
+;; debug this file if error
 (setq debug-on-error t)
 
 ;; increase the size of the log *Messages*
@@ -242,7 +242,8 @@
 ;;                                      "Xebeche"
 ;;                                      "epita"
 ;;                                      "default"
-(defvar clt-working-environment "default")
+;(defvar clt-working-environment "default")
+(defvar clt-working-environment "Alstom Transport")
 
 ;;
 ;;;   DOTEMACS PATH
@@ -273,7 +274,7 @@
   ;; default
   ((string= clt-working-environment "default")
     ;; !!!
-    ;; !!! all sections are overiden in dotemacs/environment.el
+    ;; !!! all sections are overridden in dotemacs/environment.el
     ;; !!!
     (defvar dotemacs-path "~/.emacs.d"))
   )
@@ -337,7 +338,7 @@
   ;; add "plugins/" to load path
   (defvar section-external-directory t)
   ;;
-  ;; FONCTIONS                                                          1.2
+  ;; FUNCTIONS                                                          1.2
   ;; FILE: dotemacs/functions.el
   ;; REQUIREMENT:       section-environment-os-recognition
   ;; load custom function
@@ -355,7 +356,7 @@
   ;;
   ;; HOME/END                                                           1.5
   ;; FILE: plugins/pc-keys.elc
-  ;; add some usefull function to home and end keys
+  ;; add some useful function to home and end keys
   (defvar section-external-home-end t)
   ) ; (progn
 
@@ -381,7 +382,7 @@
   ;; CEDET                                                              2.4
   ;; "Collection of Emacs Development Environment Tools"
   (defvar section-mode-cedet t)
-  ;; if you want to use emacs included cedet set to nil
+  ;; if you want to use emacs included CEDET set to nil
   ;; otherwise set the path of cedet.el and you need to remove:
   ;;    "your-emacs-path/lisp/cedet"
   ;;    "your-emacs-path/lisp/speedbar.*"
@@ -412,7 +413,7 @@
   (defvar section-mode-vb t)
   ;;
   ;; WINDOW NUMBERING                                                   2.7
-  ;; give a number of each window to easly jump in it
+  ;; give a number of each window to easily jump in it
   (defvar section-mode-window-numbering nil)
   ;;
   ;; C                                                                  2.8
@@ -430,7 +431,7 @@
 
   ;;
   ;; ICOMPLETION                                                        2.9
-  ;; more completion in minibuffer
+  ;; more completion in Minibuffer
   (defvar section-mode-icompletion nil)
 
   ;;
@@ -453,7 +454,7 @@
     (defvar section-mode-mm-eol t)
     ;;
     ;; CAN DBC                                                          2.12.3
-    ;; light syntax color for DataBase CAN file
+    ;; light syntax color for Database CAN file
     (defvar section-mode-mm-dbc t)
     ;;
     ;; CCM DIFF                                                         2.12.3
@@ -463,7 +464,7 @@
 
   ;;
   ;; DIRED+                                                             2.13
-  ;; improve dired mode, color, open with, etc
+  ;; improve Dired mode, color, open with, etc
   (defvar section-mode-dired-plus t)
 
   ;;
@@ -503,7 +504,7 @@
   (defvar section-mode-auto-highlight-symbol t)
   ;;
   ;; GOOGLE CALENDAR                                                    2.22
-  ;; to import google calendar
+  ;; to import Google calendar
   (defvar section-mode-google-calendar t)
   ;;
   ;; FILL COLUMN INDICATOR                                              2.23
@@ -521,7 +522,7 @@
   (defvar section-mode-undo-tree t)
   ;;
   ;; CSV                                                                2.26
-  ;; parse/edit/sort csv file
+  ;; parse/edit/sort CSV file
   (defvar section-mode-csv t)
   ;;
   ;; SUBVERSION                                                         2.27
@@ -533,11 +534,11 @@
   (defvar section-mode-diff-color t)
   ;;
   ;; DIRED SORT                                                         2.29
-  ;; more option to sort in dired mode
+  ;; more option to sort in Dired mode
   (defvar section-mode-dired-sort t)
   ;;
   ;; ORG MODE                                                           2.30
-  ;; to organize everthing (also use on Android)
+  ;; to organize everything (also use on Android)
   (defvar section-mode-org-mode nil)
   ) ; (progn
 
@@ -613,7 +614,7 @@
   (defvar section-display-font t)
   (progn
     ;; INTERNATIONAL                                                    5.3.1
-    ;; iso or utf-8 or ...  (not used)
+    ;; ISO or utf-8 or ...  (not used)
     (defvar section-display-font-international t)
     ) ; (progn
 
@@ -628,7 +629,7 @@
     (defvar section-display-color-parentheses-mode t)
     ;; PARENTHESES MINIBUFFER                                           5.4.2
     ;; matched parentheses are highlight and if not visible show it in the
-    ;; minibuffer
+    ;; Minibuffer
     (defvar section-display-color-parentheses-visible t)
     ;; PARENTHESES HIGHLIGHT                                            5.4.3
     ;; matched parentheses are highlight in rainbow color
@@ -696,7 +697,7 @@
 ;;
 ;;; COMPLETION                                                          7
 ;; FILE: dotemacs/completion.el
-;; active letter case completion + dynamique completion
+;; active letter case completion + dynamic completion
 (defvar section-completion t)
 
 
@@ -745,7 +746,7 @@
   (defvar section-shortcut-tags t)
   (progn
     ;; ETAGS                                                            8.7.1
-    (defvar section-shortcut-tags-exhuberant-ctags nil)
+    (defvar section-shortcut-tags-exuberant-ctags nil)
     ;;
     ;; GTAGS                                                            8.7.2
     ;; REQUIREMENT:       section-mode-gnu-global
@@ -781,8 +782,8 @@
 ;;
 ;;; ANNOYANCES                                                          10
 ;; FILE: dotemacs/annoyances.el
-;; no welcome message + yes->y + do not query to refresh buffer + remove inser
-;; key + remove C-Pup & C-Dwn + wheel click od nothing + no dialog box + no
+;; no welcome message + yes->y + do not query to refresh buffer + remove insert
+;; key + remove C-Pup & C-Dwn + wheel click do nothing + no dialog box + no
 ;; tooltips
 (defvar section-annoyances t)
 (progn
@@ -814,7 +815,7 @@
 (progn
   ;;
   ;; CALENDAR                                                           11.1
-  ;; set latitude/longitude + location + holidays + custom date in modeline
+  ;; set latitude/longitude + location + holidays + custom date in Modeline
   ;; lunar phase, sunrise/sunset, time etc
   (defvar section-misc-calendar t)
   ;;
@@ -837,7 +838,7 @@
 
 
 ;;
-;;; ENVIRONNEMENT
+;;; ENVIRONMENT
 (when section-environment (message "0 Environment...")
   (load-file (concat dotemacs-path "/dotemacs/environment.el"))
   (message "0 Environment... Done"))

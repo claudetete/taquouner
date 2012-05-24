@@ -12,19 +12,19 @@ C-x C-s | save current buffer
 C-x C-f | open a file
 
 ** Move
-C-M-Home    | begining function
-C-M-a       | begining function
+C-M-Home    | beginning function
+C-M-a       | beginning function
 C-M-End     | ending function
 C-M-e       | ending function
-C-M-u       | begining block
-C-M-d       | begining of subblock
+C-M-u       | beginning block
+C-M-d       | beginning of subblock
 C-M-d       | move forward down one level of parentheses
 C-M-u       | move backward out of one level of parentheses
-C-M-f       | move forward accross one balanced expression
-C-M-b       | move backward accross one balanced expression
+C-M-f       | move forward across one balanced expression
+C-M-b       | move backward across one balanced expression
 M-e         | move forward to next end of sentence
-C-c C-u     | move backward to begining of preproc
-M-m         | move begining of indentation
+C-c C-u     | move backward to beginning of preproc
+M-m         | move beginning of indentation
 C-c C-w     | in C mode enable navigation from subword to subword
 *** minor Column Mode
 C-x C-n     | set a column to be the cursor place every time you move on an other line
@@ -43,10 +43,10 @@ C-w           | Cut (kill)
 *** Select
 M-h           | select the whole block
 C-M-h         | select the whole function
-C-M-@         | select the whole block of source code (point must be at begining)
+C-M-@         | select the whole block of source code (point must be at beginning)
 *** Switch
 M-t           | switch current word with next
-C-M-t         | swith current word with next (_ not in word)
+C-M-t         | switch current word with next (_ not in word)
 C-x C-t       | switch current line with previous
 C-t           | switch current character with previous
 *** Delete
@@ -93,10 +93,10 @@ M-s w       | incremental search a word (not subword)
 C-u C-Space | after incremental search go back to the start
 M-%         | start query replace (during a incremental search)
 *** Occur
-M-s o       | show each occurences in this buffer (can be rebind with at point)
+M-s o       | show each occurrences in this buffer (can be rebind with at point)
 *** Minibuffer
-M-s         | Move to an earlier item in the minibuffer history that matches a regexp you enter.
-M-r         | Move to a later item in the minibuffer history that matches a regexp you enter.
+M-s         | Move to an earlier item in the Minibuffer history that matches a regexp you enter.
+M-r         | Move to a later item in the Minibuffer history that matches a regexp you enter.
 *** Symbols
 C-x C-Space | go back after using tags search
 *** Semantic
@@ -164,7 +164,7 @@ C-x w r | unhighlight regexp
 ** Languages
 C-M-\     | indent region
 M-;       | insert a comment in the right place
-C-c C-w   | toogle subword mode (in c-mode)
+C-c C-w   | toggle subword mode (in c-mode)
 C-c @ C-d | hide block of preproc
 C-c @ C-s | show block of preproc
 
@@ -189,8 +189,8 @@ C-x v C-h | show all command for Version Control
 
 ** Calculator
 C-x * c | invoke calc in a new buffer
-C-x * * | invoke calc with last used mmode
-C-x * q | invoke quick calc in minibuffer
+C-x * * | invoke calc with last used mode
+C-x * q | invoke quick calc in Minibuffer
 C-x * r | grab region/rectangle into calc
 C-x * : | grab region/rectangle and sum the columns
 C-x * _ | grab region/rectangle and sum the rows
@@ -267,7 +267,7 @@ C-M-z | select word under pointer
 *** Delete
 M-d   | delete forward word
 C-z   | delete backward word
-C-(   | delete parenthese with balanced expression
+C-(   | delete parenthesis with balanced expression
 
 * Misc
 M-x list-color-display | show a list of named color

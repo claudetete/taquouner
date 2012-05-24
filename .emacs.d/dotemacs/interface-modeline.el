@@ -1,4 +1,4 @@
-;;; interface-modeline.el --- a config file for Emacs modeline
+;;; interface-modeline.el --- a config file for Emacs Modeline
 
 ;; Copyright (c) 2012 Claude Tete
 ;;
@@ -50,7 +50,7 @@
     ;; show time and date in modeline
     (setq display-time-day-and-date t)
 
-    ;; show date in european format (example: jeu. 29 mars)
+    ;; show date in European format (example: jeu. 29 mars)
     (custom-set-variables
       '(display-time-string-forms
          (quote

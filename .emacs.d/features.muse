@@ -16,7 +16,7 @@
 
 ; interface
 <slide title="Emacs: Split Screen 1/2">
- - split current frame as often as you want with horizontaly "=Ctrl+x 2=", verticaly "=Ctrl+x 3=", undo all split "=Ctrl+x 1="
+ - split current frame as often as you want with horizontally "=Ctrl+x 2=", vertically "=Ctrl+x 3=", undo all split "=Ctrl+x 1="
  - increase/decrease size of frame (window for Emacs) with "=Alt+x enlarge-window ENTER=", "=Alt+x enlarge-window-horizontally ENTER=", "=Alt+x shrink-window ENTER=" or "=Alt+x shrink-window-horizontally ENTER="
 </slide>
 
@@ -65,9 +65,9 @@
 <slide title="Emacs: Move by paragraph/word/expression">
  - move from word to word with "=Ctrl+LEFT/RIGHT="
  - move from empty line to empty line (between paragraph/block) with "=Ctrl+UP/DOWN="
- - move from function begining to ending with "=Ctrl+Shift+HOME/END="
- - move to preprocessing begining with "=Ctrl+c Ctrl+u="
- - switch to *move from word to word* to *move from subword to subword* (place at CapitalLetterInThisWord) with "=Clrl+c Ctrl+w="
+ - move from function beginning to ending with "=Ctrl+Shift+HOME/END="
+ - move to preprocessing beginning with "=Ctrl+c Ctrl+u="
+ - switch to *move from word to word* to *move from subword to subword* (place at CapitalLetterInThisWord) with "=Ctrl+c Ctrl+w="
  - and more about parentheses/bracket or source code block or sentence
 </slide>
 
@@ -129,10 +129,10 @@
 </slide>
 
 <slide title="Emacs: Occurrences">
- - search each occurences of a regex with "=Alt+s o="
+ - search each occurrences of a regex with "=Alt+s o="
  - you can navigate to the next or previous match with "=Alt+g Alt+n=" and "=Alt+g Alt+p=" (if you want use them I recommend to rebind them like "=F3=" "=Shift+F3=")
  - to refresh with "=g=" when in * Occur* buffer
-[[./slide/occur.png][Search occurences of "emacs"]]
+[[./slide/occur.png][Search occurrences of "emacs"]]
 </slide>
 
 <slide title="Emacs: Replace Query">
@@ -154,8 +154,8 @@
 </slide>
 
 <slide title="Emacs: Parentheses Match">
- - highlight automatically current parenthese and its matching when you put the cursor on a parenthese
- - it work for for parenthese, square bracket and curly bracket
+ - highlight automatically current parenthesis and its matching when you put the cursor on a parenthesis
+ - it work for for parenthesize, square bracket and curly bracket
 [[./slide/parenthese.png][Parentheses match]]
 </slide>
 
@@ -177,7 +177,7 @@
 <slide title="Emacs: Indentation">
  - indentation depend of the current language of the file
  - all settings can be modify, tab vs space, number of space, etc
- - indent correctely current line with "=TAB=" (cursor can be anywhere on the line)
+ - indent correctly current line with "=TAB=" (cursor can be anywhere on the line)
  - indent a selected region with "=Ctrl+Alt+\="
  - merge previous line and current without indentation with "=Alt+^="
  - split the current line and align new line with cursor with "=Ctrl+Alt+o="
@@ -267,7 +267,7 @@
 <slide title="Emacs: Mouse Avoidance">
  - when you start to type, the mouse cursor will move away:
    - at a given position "=(mouse-avoidance-mode 'banish)="
-   - just do not cover text at keysboard cursor "=(mouse-avoidance-mode 'jump)="
+   - just do not cover text at keyboard cursor "=(mouse-avoidance-mode 'jump)="
    - some exotics "=animate, exile, proteus="
 </slide>
 
@@ -281,12 +281,12 @@
 <slide title="Emacs: Backup File">
  - each saved file are backup (by default "=myfile.c~=" in file directory)
  - an auto save is enable (by default "=#myfile.c#=" in file directory)
- - backup/autosave file can be put in an unique folder
- - backup/autosave file can be save by date, location, etc
+ - backup/auto-save file can be put in an unique folder
+ - backup/auto-save file can be save by date, location, etc
 </slide>
 
-<slide title="Emacs: Dictionnary">
- - a speller can be used (ispell mode, with aspell tool)
+<slide title="Emacs: Dictionary">
+ - a speller can be used (ispell mode, with Aspell tool)
  - it can complete a word with "=Alt+Tab=", check spelling with "=Alt+$="
  - multiple languages are supported
 </slide>
@@ -306,8 +306,8 @@
  - it is also used when a function has a number parameter
 </slide>
 
-<slide title="Emacs: StatusBar or Modeline">
- - it can display file rights, encoding, line number, column number, position in file, filesize, major and minor mode (languages, etc), date and time...
+<slide title="Emacs: Status Bar or Modeline">
+ - it can display file rights, encoding, line number, column number, position in file, file size, major and minor mode (languages, etc), date and time...
 [[./slide/modeline.png][An example of Modeline]]
 </slide>
 
@@ -347,8 +347,8 @@
 <slide title="Emacs: minor Column Mode">
  - a minor column mode where the cursor is jumping always on the same column
  - set the column goal with "=Ctrl+x Ctrl+n=" it will take the current column as goal
- - everytime the cursor is moving on a line (Up/Down arrow) it will jump one the selected column
- - you can add/remove more easly with a goal column without using home/end left/right keys
+ - every time the cursor is moving on a line (Up/Down arrow) it will jump one the selected column
+ - you can add/remove more easily with a goal column without using home/end left/right keys
  - unset the column goal with "=Ctrl+u Ctrl+x Ctrl+n="
 </slide>
 
@@ -367,7 +367,7 @@
 <slide title="Emacs: Integrated Explorer or Dired 2/3">
  - when dired mode
    - mark current file with "=m=", mark all file with "=* s="
-   - remove all marks with "=U=", toogle all marked file with "=t="
+   - remove all marks with "=U=", toggle all marked file with "=t="
    - mark many file with regex with "=% m="
    - upcase all marked file with "=% u=", downcase all marked file with "=% l="
  - incremental search can be invoke to point on a file
@@ -419,7 +419,7 @@
 <slide title="Emacs: Customization 1/2">
  - everything can be customize in Emacs "=Alt+x customize ENTER=":
    - font: size, color (different for each mode/buffer/window)
-   - window decoratio: toolbar, menubar. scrollbar
+   - window decoration toolbar, menubar. scrollbar
    - shortcuts: you can bind everything to anything
    - new functions/mode: you can extend Emacs by scripting it (in Emacs Lisp)
    - a lot of function or mode already exists on the web, just dig
@@ -465,7 +465,7 @@
 </slide>
 
 <slide title="Mode: ECB 1/3">
- - ECB is an "=Emacs Code Browser=" wich contains:
+ - ECB is an "=Emacs Code Browser=" which contains:
    - directory list frame
    - source list frame
    - method/function frame
@@ -607,7 +607,7 @@
  - ignore insert key
  - never dialog box
  - never tooltips
- - filter/group ecb windows (source/directory/method...)
+ - filter/group ECB windows (source/directory/method...)
    - do not show hidden folder
    - do not show compiled file
    - group C file, Lisp file,

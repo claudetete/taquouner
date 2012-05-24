@@ -33,7 +33,7 @@
 
 ;;; Change Log:
 ;; 2012-03-28 (1.1)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2011-03-10 (1.0)
 ;;    split .emacs file
 ;; 2006-10-13 (0.1)
@@ -41,7 +41,7 @@
 
 
 ;;; Code:
-;; new independant window from Emacs buffer/window and show current directory
+;; new independent window from Emacs buffer/window and show current directory
 ;; ('f' key) (where buffer is) or buffer list ('b' key), 'space' key can show
 ;; function in C buffers and go with 'enter'
 (set-variable speedbar-frame-plist

@@ -43,7 +43,7 @@
 ;; 2012-03-29 (3.5)
 ;;    add function align with =
 ;; 2012-03-28 (3.4)
-;;    translate comments in english and change old format
+;;    translate comments in English and change old format
 ;; 2012-03-26 (3.3)
 ;;    fix bug with rtrt align
 ;; 2012-03-20 (3.2)
@@ -246,13 +246,13 @@ current line instead."
 ;;
 ;;;
 ;;; MACRO
-;; toogle macro recording on/off (by Fabrice Niessen)
+;; toggle macro recording on/off (by Fabrice Niessen)
 (defun my-toggle-kbd-macro-recording-on ()
   "Start recording a keyboard macro and toggle functionality of key binding."
   (interactive)
   (global-set-key (kbd "<S-f8>") 'my-toggle-kbd-macro-recording-off)
   (start-kbd-macro nil))
-;; toogle macro recording on/off (by Fabrice Niessen)
+;; toggle macro recording on/off (by Fabrice Niessen)
 (defun my-toggle-kbd-macro-recording-off ()
   "Stop recording a keyboard macro and toggle functionality of key binding."
   (interactive)
@@ -550,7 +550,7 @@ before message."
       (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]+(" 'hi-yellow)
       ;; space after a ( for a call/declaration of function
       (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]*([ ]+[[:alnum:]_]*" 'hi-green)
-      ;; space before a ) for a call/decalaration of function
+      ;; space before a ) for a call/declaration of function
       (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]*([ ]*[[:alnum:]_]*\\([ ]+[[:alnum:]_]*\\|[ ]*([[:alnum:]_]*\\(,[[:alnum:]_]\\)*)\\)[ ]+)" 'hi-green)
       )
 
@@ -776,7 +776,7 @@ before message."
 ;;
 ;;;
 ;;;; FORMAT RTRT MODE
-;;; remove withespace before a colon in ptu script for RTRT (by Claude TETE)
+;;; remove whitespace before a colon in ptu script for RTRT (by Claude TETE)
 (defun rtrt-remove-whitespace-before-colon (start end)
   "Remove all space before a colon (between START and END)."
   (interactive "r")
@@ -1075,7 +1075,7 @@ clearcase."
   ) ; cond ---------------------------------------------------------------------
 
 
-;;; Copy entire line in kill ring (whitout Home C-k C-y) (by Claude TETE)
+;;; Copy entire line in kill ring (without Home C-k C-y) (by Claude TETE)
 (defun push-line ()
   "Select current line, push onto kill ring."
   (interactive)

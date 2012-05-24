@@ -39,11 +39,11 @@
 ;; 2012-04-20 (1.5)
 ;;    add working environment default
 ;; 2012-03-28 (1.4)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-12 (1.3)
 ;;    add condition about ecb active or not
 ;; 2012-07-09 (1.1)
-;;    add max size of compil window
+;;    add max size of compile window
 ;; 2011-04-21 (1.1)
 ;;    add delay before refresh
 ;; 2011-03-10 (1.0)
@@ -86,10 +86,10 @@
     ;; width of ecb window (here 10% of the total width of Emacs)
     '(ecb-windows-width 0.1)
     ;;
-    ;; height of compil/grep window
+    ;; height of compile/grep window
     '(ecb-compile-window-height 0.25)
     ;;
-    ;; max height of compil/grep window
+    ;; max height of compile/grep window
     ;;  - value > 1 -> size in character
     ;;  - 0.0 < value < 1.0 -> size in percent of height
     '(ecb-enlarged-compilation-window-max-height 0.25)

@@ -18,7 +18,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 
-;; Keywords: config, shorcut, buffer
+;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.2
 ;; Created: October 2006
@@ -32,7 +32,7 @@
 
 ;;; Change Log:
 ;; 2012-03-30 (1.2)
-;;    translate comments in english + cleaning
+;;    translate comments in English + cleaning
 ;; 2012-03-23 (1.1)
 ;;    change kill this buffer shortcut to have logical ecb shortcut
 ;; 2011-03-10 (1.0)

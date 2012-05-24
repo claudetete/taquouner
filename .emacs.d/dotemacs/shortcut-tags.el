@@ -33,7 +33,7 @@
 ;; 2012-05-04 (1.5)
 ;;    add shortcuts to search symbol assignation
 ;; 2012-03-30 (1.4)
-;;    translate comments in english
+;;    translate comments in English
 ;; 2012-03-02 (1.3)
 ;;    add condition about semantic
 ;; 2011-08-10 (1.2)
@@ -49,8 +49,8 @@
 ;;; Code:
 ;;
 ;;; ETAGS
-;; REQUIREMENT: var     `section-shortcut-tags-exhuberant-ctags'
-(when section-shortcut-tags-exhuberant-ctags (message "    8.7.1 Etags Shortcuts...")
+;; REQUIREMENT: var     `section-shortcut-tags-exuberant-ctags'
+(when section-shortcut-tags-exuberant-ctags (message "    8.7.1 Etags Shortcuts...")
   ;; completion with tag file (show a list)
   (global-set-key       [?\C-/]                 'complete-tag)
   ;; search in tag file
@@ -93,10 +93,10 @@
     ) ; when section-shortcut-tags-gnu-global
   ) ; when section-mode-gnu-global
 
-;; highlight all occurences (regexp)
+;; highlight all occurrences (regexp)
 (global-set-key         "\C-cx"                 'highlight-regexp)
 
-;; search all occurences in the current buffer
+;; search all occurrences in the current buffer
 ;; (more like modern graphical editor)
 (global-set-key         "\C-ce"                 'occur)
 
