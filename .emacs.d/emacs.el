@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 7.0
+;; Version: 7.3
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -133,6 +133,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-05-25 (7.3)
+;;    add isearch+ mode
 ;; 2012-05-11 (7.2)
 ;;    add hyper and super keys + org mode + fix some bugs
 ;; 2012-05-04 (7.1)
@@ -242,7 +244,8 @@
 ;;                                      "Xebeche"
 ;;                                      "epita"
 ;;                                      "default"
-(defvar clt-working-environment "default")
+;(defvar clt-working-environment "default")
+(defvar clt-working-environment "Alstom Transport")
 
 ;;
 ;;;   DOTEMACS PATH
@@ -539,6 +542,10 @@
   ;; ORG MODE                                                           2.30
   ;; to organize everything (also use on Android)
   (defvar section-mode-org-mode nil)
+  ;;
+  ;; ISEARCH+                                                           2.31
+  ;; add some features to isearch
+  (defvar section-mode-isearch+ t)
   ) ; (progn
 
 

@@ -20,7 +20,7 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment'
 
 ;;; Change Log:
+;; 2012-05-25 (2.1)
+;;    add path for msys + new mode for default working environment
 ;; 2012-05-11 (2.0)
 ;;    use color-theme in terminal + change path for AT + add hyper and super
 ;; 2012-05-04 (1.9)
@@ -167,6 +169,8 @@
       (setq section-mode-subversion            t)
       (setq section-mode-diff-color            t)
       (setq section-mode-dired-sort            t)
+      (setq section-mode-org-mode              nil)
+      (setq section-mode-isearch+              t)
 
       ;; LANGUAGES
       (setq section-languages             t)
@@ -327,6 +331,7 @@
         (if running-in-graphical
           (progn
             (setenv "PATH" (concat
+                             "d:/User/ctete/tools/MinGW/msys/1.0/bin"                                ";"
                              "d:/cygwin/bin"                                                         ";"
                              "d:/cygwin/usr/bin"                                                     ";"
                              "d:/cygwin/usr/local/bin"                                               ";"
@@ -368,6 +373,7 @@
 
             (setq exec-path
               '(
+                 "d:/User/ctete/tools/MinGW/msys/1.0/bin"
                  "d:/cygwin/bin"
                  "d:/cygwin/usr/bin"
                  "d:/cygwin/usr/local/bin"
@@ -459,15 +465,19 @@
             (progn
               ;;FIXME working environment default
               (setenv "PATH" (concat
+                               "c:/path/to/msys/bin"             ";"
                                "c:/path/to/cywin/bin"            ";"
                                "c:/path/to/cygwin/usr/bin"       ";"
                                "c:/path/to/cygwin/usr/local/bin" ";"
                                "c:/path/to/version/control/bin"  ";"
                                "c:/path/to/gnuwin32/bin"         ";"
+                               "c:/WINDOWS"                      ";"
+                               "c:/WINDOWS/System32"             ";"
                                (getenv "PATH")))
 
               (setq exec-path
                 '(
+                   "c:/path/to/msys/bin"
                    "c:/path/to/cygwin/bin"
                    "c:/path/to/cygwin/usr/bin"
                    "c:/path/to/cygwin/usr/local/bin"

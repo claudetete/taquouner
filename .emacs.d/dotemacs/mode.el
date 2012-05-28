@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,9 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-05-25 (2.4)
+;;    modify path for global.exe and gtags.exe for cedet and add default working
+;;    environment + add isearch+ mode
 ;; 2012-05-23 (2.3)
 ;;    add two new style for muse and slides
 ;; 2012-05-10 (2.2)
@@ -155,10 +158,18 @@
       ((string= clt-working-environment "Alstom Transport")
         (custom-set-variables
           ;; bin path of gnu global for cedet
-          '(cedet-global-command "d:/cygwin/usr/local/bin/global.exe")
-          '(cedet-global-gtags-command "d:/cygwin/usr/local/bin/gtags.exe"))
+          '(cedet-global-command (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
+          '(cedet-global-gtags-command (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe")))
         ) ; Alstom Transport
 
+      ;;FIXME working environment default
+      ;; default ---------------------------------------------------------------
+      ((string= clt-working-environment "default")
+        (custom-set-variables
+          ;; bin path of gnu global for cedet
+          '(cedet-global-command (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
+          '(cedet-global-gtags-command (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe")))
+        ) ; default
       ) ; cond -----------------------------------------------------------------
 
     ;;
@@ -535,6 +546,14 @@
   (global-set-key "\C-ca" 'org-agenda)
   (global-set-key "\C-cb" 'org-iswitchb)
   (message "  2.30 Org Mode... Done"))
+
+;;
+;;; ISEARCH+
+;; REQUIREMENT: var     `section-mode-isearch+'
+(when section-mode-isearch+ (message "  2.31 Isearch+...")
+  (eval-after-load "isearch" '(require 'isearch+))
+  (message "  2.31 Isearch+... Done"))
+
 
 (custom-set-variables
 ;;
