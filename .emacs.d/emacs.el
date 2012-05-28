@@ -244,8 +244,7 @@
 ;;                                      "Xebeche"
 ;;                                      "epita"
 ;;                                      "default"
-;(defvar clt-working-environment "default")
-(defvar clt-working-environment "Alstom Transport")
+(defvar clt-working-environment "default")
 
 ;;
 ;;;   DOTEMACS PATH
@@ -545,7 +544,7 @@
   ;;
   ;; ISEARCH+                                                           2.31
   ;; add some features to isearch
-  (defvar section-mode-isearch+ t)
+  (defvar section-mode-isearch+ nil)
   ) ; (progn
 
 

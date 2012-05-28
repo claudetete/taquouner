@@ -20,7 +20,7 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment'
 
 ;;; Change Log:
+;; 2012-05-28 (2.2)
+;;    modify path for cedet for AT + disable isearch+ for default
 ;; 2012-05-25 (2.1)
 ;;    add path for msys + new mode for default working environment
 ;; 2012-05-11 (2.0)
@@ -77,7 +79,7 @@
         (setenv "GTAGSGLOBAL" (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe")))
       (if (window-system)
         (progn
-          (defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-snap/common/cedet.elc"))
+          (defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
           (message "    * Alstom Transport")
           )
         (progn
@@ -170,7 +172,7 @@
       (setq section-mode-diff-color            t)
       (setq section-mode-dired-sort            t)
       (setq section-mode-org-mode              nil)
-      (setq section-mode-isearch+              t)
+      (setq section-mode-isearch+              nil)
 
       ;; LANGUAGES
       (setq section-languages             t)

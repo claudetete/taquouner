@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: September 2010
 ;; Last-Updated: May 2012
 
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2012-05-28 (1.6)
+;;    do not use gtags find with grep with cedet (replaced see
+;;    shortcut-semantic.el)
 ;; 2012-05-04 (1.5)
 ;;    add shortcuts to search symbol assignation
 ;; 2012-03-30 (1.4)
@@ -80,6 +83,9 @@
       ;; go back after find tag
       (global-set-key   "\M-*"                  'gtags-pop-stack)
       (global-set-key   (kbd "M-<kp-multiply>") 'gtags-pop-stack)
+
+      ;; find all references (regexp)
+      (global-set-key   (kbd "C-M-.")           'gtags-find-with-grep)
       ) ; if section-mode-cedet-semantic nil
 
     ;; find file in the gnu global project (regexp) (need new function of gtags see function.el)
@@ -87,8 +93,7 @@
     (global-set-key     "\C-cf"                 'gtags-find-file-custom)
 
     ;; find all references (regexp)
-    (global-set-key       (kbd "C-M-.")         'gtags-find-with-grep)
-    (global-set-key       (kbd "C-M-=")         'gtags-find-with-grep-symbol-assigned)
+    (global-set-key     (kbd "C-M-=")           'gtags-find-with-grep-symbol-assigned)
     (message "    8.7.2 Gtags Shortcuts... Done")
     ) ; when section-shortcut-tags-gnu-global
   ) ; when section-mode-gnu-global

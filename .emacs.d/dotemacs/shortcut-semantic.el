@@ -20,7 +20,7 @@
 
 ;; Keywords: config, semantic, bovinate, cedet, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.3
 ;; Created: October 2010
 ;; Last-Updated: March 2012
 
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-semantic'
 
 ;;; Change Log:
+;; 2012-05-28 (1.3)
+;;    add new  shortcut to 'grep' in project all occurences
 ;; 2012-03-28 (1.2)
 ;;    change shortcut and add go/back to the tag
 ;; 2012-03-20 (1.1)
@@ -45,12 +47,15 @@
 ;;; Code:
 (when section-mode-cedet-semantic
   ;; go to the tag with shift + left click
-  (global-set-key         (kbd "<S-down-mouse-1>")        'ignore)
-  (global-set-key         (kbd "<S-mouse-1>")             'semantic-goto-definition)
+  (global-set-key       (kbd "<S-down-mouse-1>")        'ignore)
+  (global-set-key       (kbd "<S-mouse-1>")             'semantic-goto-definition)
 
   ;; go to the tag
-  (global-set-key         (kbd "M-.")                     'semantic-goto-definition)
-  (global-set-key         [(control  >)]                  'semantic-goto-definition)
+  (global-set-key       (kbd "M-.")                     'semantic-goto-definition)
+  (global-set-key       [(control  >)]                  'semantic-goto-definition)
+
+  ;; find all references of a symbol by regexp
+  (global-set-key       (kbd "C-M-.")                   'semantic-symref-regexp)
 
   ;; return back after "go to the tag"
   ;; you can use the default shortcut: M-xB, which ask where you want go back
