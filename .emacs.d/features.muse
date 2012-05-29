@@ -24,10 +24,17 @@
 [[./slide/split_windows.png][Split in four windows]]
 </slide>
 
-<slide title="Emacs: No Tab">
+<slide title="Emacs: No Tab 1/2">
  - Emacs do not use tab but history of opened files (buffers for Emacs)
  - "=Ctrl+x=" "=Ctrl+b=" (for electric-buffer-list) or ECB history or "=Ctrl+Left Click=" to open context menu
 [[./slide/history_buffer.png][ECB History (bottom-left), Buffer List (top-right) and Context Menu]]
+</slide>
+
+<slide title="Emacs: No Tab 2/2">
+ - List of buffer with "=Ctrl+x=" "=Ctrl+b=" show some informations about opened files
+ - in front a "=%=" means read only, "= * =" means modified and not saved
+ - mark a file/buffer to delete with "=d=" or "=Ctrl+d=", mark to save with "=s=", unmark with "=u=", apply to all marked with "=x="
+[[./slide/list_buffer.png][Buffer List with some marked buffers]]
 </slide>
 
 <slide title="Emacs: Highlight current line">

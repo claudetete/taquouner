@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.8
+;; Version: 3.9
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-05-29 (3.9)
+;;    add function for integration with clearcase
 ;; 2012-05-14 (3.8)
 ;;    add function to improve tab key when hide show mode
 ;; 2012-05-03 (3.7)
@@ -1020,6 +1022,169 @@ clearcase."
         )
       )
     )
+  )
+;; Undo Checkout file from view in clearcase (by Claude TETE)
+(defun clearcase-uncheckout-graphical ()
+  "Uncheckout the current buffer if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase uncheckout
+          (async-shell-command (concat "cleardlg.exe /window c04ca /windowmsg A065 /uncheckout \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+;; Version Tree file from view in clearcase (by Claude TETE)
+(defun clearcase-version-tree-graphical ()
+  "Version tree of the current buffer if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase version tree
+          (async-shell-command (concat "clearvtree.exe \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+;; ClearCase explorer of file from view in clearcase (by Claude TETE)
+(defun clearcase-explorer-graphical ()
+  "ClearCase Explorer of the current buffer if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase explorer
+          (async-shell-command (concat "clearexplorer.exe \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+;; Version properties of file from view in clearcase (by Claude TETE)
+(defun clearcase-version-properties-graphical ()
+  "Version properties of the current buffer if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase describe
+          (async-shell-command (concat "cleardescribe.exe \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+;; Properties of file from view in clearcase (by Claude TETE)
+(defun clearcase-properties-graphical ()
+  "Properties of the current buffer if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase describe
+          (async-shell-command (concat "cleardescribe.exe \"" my-buffer "@@\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+;; Checkin file from view in clearcase (by Claude TETE)
+(defun clearcase-checkin-graphical ()
+  "Checkin the current buffer if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase describe
+          (async-shell-command (concat "cleardlg.exe /window 606f6 /windowmsg A065 /checkin \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+;; Find checkout files from view in clearcase (by Claude TETE)
+(defun clearcase-find-checkout-graphical ()
+  "Find checkout for the current directory if it is from clearcase."
+  (interactive)
+  ;; do not show a new window
+  (save-window-excursion
+    ;; get full path of current buffer
+    (let ((my-buffer buffer-file-name))
+      ;; the path is from M: or Z:
+      (if (string-match "^[mzMZ]:" my-buffer)
+        (progn
+          ;; set in windows path
+          (setq my-buffer (replace-regexp-in-string "/[^/]*$" "" my-buffer))
+          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+          ;; call clearcase describe
+          (async-shell-command (concat "clearfindco.exe \"" my-buffer "\""))
+          )
+        ;; the current file is not from clearcase
+        (message (concat "This file is not part of a clearcase view: " my-buffer))
+        )
+      )
+    )
+  )
+
+
+;;
+;; Switching Between Two Recently Used Buffers (by Mathias Dahl)
+(defun switch-to-previous-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1))
   )
 
 ;;

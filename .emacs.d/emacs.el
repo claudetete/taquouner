@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 7.3
+;; Version: 7.4
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -133,6 +133,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-05-29 (7.4)
+;;    add condition to change clt-working-environment (profile) + enable server
 ;; 2012-05-25 (7.3)
 ;;    add isearch+ mode
 ;; 2012-05-11 (7.2)
@@ -222,8 +224,8 @@
 (message "--[ Loading my Emacs 23.4 init file ]--")
 
 ;; start the emacs server to have only one emacs client
-;;(if (window-system)
-;;  (server-start))
+(if (window-system)
+  (server-start))
 
 ;; debug this file if error
 (setq debug-on-error t)
@@ -234,7 +236,7 @@
 
 
 ;;
-;;; WORKING ENVIRONMENT
+;;; WORKING ENVIRONMENT (PROFILE)
 ;; this will change some path, function and settings.
 ;; to work it must be define with one of following:
 ;;                                      "Magneti Marelli"
@@ -245,6 +247,10 @@
 ;;                                      "epita"
 ;;                                      "default"
 (defvar clt-working-environment "default")
+
+;; profile depends of name and system on the machine
+(if (and (string= system-name "CWVBN16EWJ") (string= system-configuration "i386-mingw-nt5.1.2600")
+  (setq clt-working-environment "Alstom Transport"))
 
 ;;
 ;;;   DOTEMACS PATH

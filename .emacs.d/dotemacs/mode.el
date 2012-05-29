@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.4
+;; Version: 2.5
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,9 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-05-29 (2.5)
+;;    remove custom compile command (put in EDE project file see in
+;;    `.emacs.d/myproject.ede.el')
 ;; 2012-05-25 (2.4)
 ;;    modify path for global.exe and gtags.exe for cedet and add default working
 ;;    environment + add isearch+ mode
@@ -256,9 +259,6 @@
   (autoload 'rebox-comment "rebox" nil t)
   (autoload 'rebox-region "rebox" nil t)
   (setq rebox-default-style 245)
-
-  ;;; Compile mode
-  (setq compile-command "ccm objectmake")
   (message "  2.8 C... Done"))
 
 ;;

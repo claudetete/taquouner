@@ -334,6 +334,9 @@
           (progn
             (setenv "PATH" (concat
                              "d:/User/ctete/tools/MinGW/msys/1.0/bin"                                ";"
+                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"           ";"
+                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"                ";"
+                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"                   ";"
                              "d:/cygwin/bin"                                                         ";"
                              "d:/cygwin/usr/bin"                                                     ";"
                              "d:/cygwin/usr/local/bin"                                               ";"
@@ -365,9 +368,6 @@
                              "c:/Program Files/Rational/common"                                      ";"
                              "c:/Program Files/Lotus/Notes"                                          ";"
                              "c:/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
-                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"           ";"
-                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"                ";"
-                             "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"                   ";"
                              "d:/Users/ctete/tools/gnuwin32/bin"                                     ";"
                              "C:/Python27"                                                           ";"
                              "d:/Users/ctete/tools/.emacs.d/plugins/gnu_global_622wb/bin"
@@ -376,6 +376,9 @@
             (setq exec-path
               '(
                  "d:/User/ctete/tools/MinGW/msys/1.0/bin"
+                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"
+                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"
+                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"
                  "d:/cygwin/bin"
                  "d:/cygwin/usr/bin"
                  "d:/cygwin/usr/local/bin"
@@ -384,9 +387,6 @@
                  "c:/WINDOWS"
                  "c:/WINDOWS/System32"
                  "c:/Program Files/IBM/RationalSDLC/ClearCase/bin"
-                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"
-                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"
-                 "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"
                  "C:/Python27"
                  "c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils"
                  "c:/Program Files/Rational/TestRealTime/bin/intel/win32"
@@ -400,7 +400,10 @@
 
           (progn
             (setenv "PATH" (concat
-                             "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin" ";"
+                             "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
+                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"           ";"
+                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"                ";"
+                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"                   ";"
                              "/cygdrive/d/cygwin/bin"                                                         ";"
                              "/cygdrive/c/WINDOWS"                                                            ";"
                              "/cygdrive/c/WINDOWS/System32"                                                   ";"
@@ -427,14 +430,14 @@
                              "/cygdrive/c/Program Files/Rational/common"                                      ";"
                              "/cygdrive/c/Program Files/Lotus/Notes"                                          ";"
                              "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
-                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"           ";"
-                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"                ";"
-                             "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"                   ";"
                              "/cygdrive/d/Users/ctete/tools/gnuwin32/bin"                                     ";"
                              "/cygdrive/c/Python27"))
 
             (setq exec-path
               '(
+                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"
+                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"
+                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"
                  "/cygdrive/d/cygwin/bin"
                  "/cygdrive/d/cygwin/usr/bin"
                  "/cygdrive/d/cygwin/usr/local/bin"
@@ -443,9 +446,6 @@
                  "/cygdrive/c/WINDOWS"
                  "/cygdrive/c/WINDOWS/System32"
                  "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/bin"
-                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"
-                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"
-                 "/cygdrive/d/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"
                  "/cygdrive/c/Python27"
                  "/cygdrive/c/Program Files/IBM/RationalSDLC/ClearCase/etc/utils"
                  "/cygdrive/c/Program Files/Rational/TestRealTime/bin/intel/win32"

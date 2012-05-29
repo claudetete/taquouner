@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-05-29 (1.9)
+;;    add new filter for source file for AT profile
 ;; 2012-05-24 (1.8)
 ;;    do not put all *buffer* in compile window, that fix bug with ispell
 ;; 2012-05-04 (1.7)
@@ -163,7 +165,7 @@ version that it is aware of.  So simply bypass the version check."
         ;; files to be ignored in "ecb source" !! RTFM !!
         '(ecb-source-file-regexps
            (quote ((".*"
-                     ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
+                     ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|err\\|i\\|met\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
                      ("^\\.\\(emacs\\|gnus\\)$")))))
 
         ;;;; files to be ignored from Version Control VC

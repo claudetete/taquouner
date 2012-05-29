@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: May 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-05-29 (1.9)
+;;    to remove asking about command ine to compile
 ;; 2012-04-20 (1.8)
 ;;    add working environment default
 ;; 2012-04-06 (1.7)
@@ -125,6 +127,9 @@
         ;; hungry mode is enable, for hungry delete...
         (c-toggle-hungry-state t)
         )
+
+      ;;; Compile mode without ask
+      (setq compilation-read-command nil)
       ) ; Alstom Transport
 
     ;; default -----------------------------------------------------------------

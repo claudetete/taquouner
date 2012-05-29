@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-05-29 (1.9)
+;;    add shortcuts for new clearcase integration function
 ;; 2012-05-14 (1.8)
 ;;    add improve tab key when hide show mode
 ;; 2012-05-04 (1.7)
@@ -111,9 +113,23 @@
 ;; checkout
 (global-set-key         (kbd "C-c c c")         'clearcase-checkout-graphical)
 ;; diff
-(global-set-key         (kbd "C-c c d")         'clearcase-diff-graphical)
+(global-set-key         (kbd "C-c c =")         'clearcase-diff-graphical)
 ;; history
-(global-set-key         (kbd "C-c c h")         'clearcase-history-graphical)
+(global-set-key         (kbd "C-c c l")         'clearcase-history-graphical)
+;; uncheckout
+(global-set-key         (kbd "C-c c u")         'clearcase-uncheckout-graphical)
+;; version tree
+(global-set-key         (kbd "C-c c L")         'clearcase-version-tree-graphical)
+;; clearcase explorer
+(global-set-key         (kbd "C-c c e")         'clearcase-explorer-graphical)
+;; version properties
+(global-set-key         (kbd "C-c c v")         'clearcase-version-properties-graphical)
+;; element properties
+(global-set-key         (kbd "C-c c p")         'clearcase-properties-graphical)
+;; element properties
+(global-set-key         (kbd "C-c c i")         'clearcase-checkin-graphical)
+;; element properties
+(global-set-key         (kbd "C-c c f")         'clearcase-find-checkout-graphical)
 
 ;; improve tab key for hide show mode
 (define-key     hs-minor-mode-map       [tab]   'tab-hs-hide)

@@ -14,4 +14,7 @@
                 ("FLAG1"    . "")
                 ("FLAG2"  . "myflag") ; define here each macro/flag are defined when you build your project
                 )
+  :local-variables (list
+                     (cons 'compile-command "cd c:/path/to/makefile && run your compilation") ; define here the command line to run the compilation for this project (F10 by default)
+                     )
   )

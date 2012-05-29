@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
 ;; Last-Updated: May 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-05-29 (1.8)
+;;    add shortcuts to fill region and to change dictionary in ispell mode
 ;; 2012-05-10 (1.7)
 ;;    change goto line shortcut to not override the default downcase-word +
 ;;    shortcut for dired plus to avoid problem with CUA selection
@@ -129,6 +131,11 @@
 
 ;; fill paragraph at point
 (global-set-key         (kbd "C-c ]")           'fill-paragraph)
+;; fill region
+(global-set-key         (kbd "C-c [")           'fill-region)
+
+;; change local dictionary
+(global-set-key         (kbd "C-c $")           'ispell-change-dictionary)
 
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol
