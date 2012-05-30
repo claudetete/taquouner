@@ -249,7 +249,7 @@
 (defvar clt-working-environment "default")
 
 ;; profile depends of name and system on the machine
-(if (and (string= system-name "CWVBN16EWJ") (string= system-configuration "i386-mingw-nt5.1.2600")
+(if (and (string= system-name "CWVBN16EWJ") (string= system-configuration "i386-mingw-nt5.1.2600"))
   (setq clt-working-environment "Alstom Transport"))
 
 ;;
