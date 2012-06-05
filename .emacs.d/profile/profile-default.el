@@ -40,6 +40,8 @@
 
 ;;
 ;;; CUSTOM
+(setq profile "default")
+
 ;; path
 (setq profile-path
   (concat
@@ -122,6 +124,10 @@
 ;;; ProFont, 8
 ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
 ;; (setq profile-font "-outline-ProFontWindows-normal-normal-normal-mono-12-*-*-*-c-*-iso8859-1")
+;;
+;;; Courier New
+;; classic but big and large
+;; (setq profile-font "-outline-Courier New-normal-normal-normal-mono-*-*-*-*-c-*-iso10646-1"
 
 ;; indentation offset in C
 (setq profile-c-indent-offset 2)

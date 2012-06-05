@@ -28,6 +28,9 @@
 ;; load private variable
 (try-require 'profile-magneti-marelli-private "    ")
 
+
+(setq profile "Magneti Marelli")
+
 (setq profile-path
   (concat
     "d:/cygwin/bin" ";"

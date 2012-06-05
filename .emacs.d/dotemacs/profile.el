@@ -20,7 +20,7 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: June 2012
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-06-05 (0.2)
+;;    put profile name in profile file
 ;; 2012-06-01 (0.1)
 ;;    creation from scratch
 
@@ -42,11 +44,11 @@
 ;;
 ;;; LOAD
 ;; the load of profile can be depended of name and system
+;; you see the value of system-name or system-configuration with M-:
 
 ;; ALSTOM TRANSPORT
 (if (and (string= system-name "CWVBN16EWJ") (string= system-configuration "i386-mingw-nt5.1.2600"))
   (progn
-    (setq profile "Alstom Transport")
     (try-require 'profile-alstom-transport "    ")
     ))
 

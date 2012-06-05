@@ -40,6 +40,8 @@
 
 ;;
 ;;; CUSTOM
+(setq profile "Alstom Transport")
+
 ;; path
 (setq profile-path
   (concat
