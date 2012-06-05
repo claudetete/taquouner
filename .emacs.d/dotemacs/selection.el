@@ -126,4 +126,7 @@
 ;; read only buffer can be put in kill ring without delete characters
 (setq kill-read-only-ok t)
 
+
+(provide 'selection)
+
 ;;; selection.el ends here

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: April 2012
-;; Last-Updated: April 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; TODO: put all option like now but with color
 
 ;;; Change Log:
+;; 2012-06-05 (0.2)
+;;    add new example from hollenback
 ;; 2012-04-03 (0.1)
 ;;    creation from emacs-fu blog + current value
 
@@ -186,5 +188,42 @@
            (help-echo "mouse-1: Select (drag to resize)\nmouse-2: Make current window occupy the whole frame\nmouse-3: Remove current window from display")))
       )
 
+    ;;; from www.hollenback.net
+    ;; Set the modeline to tell me the filename, hostname, etc..
+    (setq-default mode-line-format
+      (list " "
+        ;; */% indicators if the file has been modified
+        'mode-line-modified
+        "--"
+        ;; the name of the buffer (i.e. filename)
+        ;; note this gets automatically highlighted
+        'mode-line-buffer-identification
+        "--"
+        ;; major and minor modes in effect
+        'mode-line-modes
+        ;; if which-func-mode is in effect, display which
+        ;; function we are currently in.
+        '(which-func-mode ("" which-func-format "--"))
+        ;; line, column, file %
+        'mode-line-position
+        "--"
+        ;; if vc-mode is in effect, display version control
+        ;; info here
+        `(vc-mode vc-mode)
+        "--"
+        ;; hostname
+        'system-name
+        ;; dashes sufficient to fill rest of modeline.
+        "-%-"
+        )
+      )
+      ;;; This results in a modeline like this:
+      ;;;  **--.emacs --[(Emacs-Lisp)]--[prefix-region]--28% (201,23) --ourtownadd-lm----------------------
+
     ) ; progn
   ) ; if
+
+
+(provide 'interface-modeline)
+
+;; interface-modeline.el ends here

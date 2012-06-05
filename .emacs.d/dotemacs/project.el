@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ede, cedet, project, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.4
 ;; Created: July 2011
-;; Last-Updated: March 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-mode-cedet'
 
 ;;; Change Log:
+;; 2012-06-05 (1.4)
+;;    remove project and use a list of it in profile file
 ;; 2012-05-07 (1.3)
 ;;    add project PUMA for AT
 ;; 2012-03-02 (1.2)
@@ -44,46 +46,17 @@
 
 
 ;;; Code:
-;; the order is important: display in reverse order (first->last)
+(while profile-ede-project
+  (let (file)
+    (setq file (pop profile-ede-project))
+    (if (file-exists-p file)
+      (load-file file)
+      (message "** file not found: %s" file)
+      )
+    )
+  )
 
-(cond
-  ;; Magneti Marelli -----------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
-    ;; XL1
-    (load-file "d:/ccm_wa/XL1/XL1.ede.el")
 
-    ;; NSF
-    (load-file "d:/ccm_wa/NSF/NSF/NSF_CLIENT.ede.el")
-
-    ;; NBNF_LL
-    (load-file "d:/ccm_wa/NBNF/NBNF_LL/NBNFLL.ede.el")
-
-    ;; NBNF_HL
-    (load-file "d:/ccm_wa/NBNF/NBNF_HL/NBNF_HL.ede.el")
-
-    ;; ECAR
-    (load-file "d:/ccm_wa/ECAR/ENSF.ede.el")
-
-    ;; PQ36 HL
-    (load-file "d:/ccm_wa/PQ36/PQ36_HL/PQ35GPHL.ede.el")
-    ) ; Magneti Marelli
-
-  ;; Alstom Transport ----------------------------------------------------------
-  ((string= clt-working-environment "Alstom Transport")
-    ;; PUMA
-    (load-file "z:/a2kc/soft/ccn4/ccn4_puma/PUMA.ede.el")
-
-    ;; PM4S
-    (load-file "z:/a2kc/soft/ccn4/ccn4_pm4s/PM4S.ede.el")
-
-    ;;;; PM4S
-    ;;(load-file "d:/Users/ctete/PM4S/src/1.2.0_RC01/PM4S.ede.el")
-    ) ; Alstom Transport
-
-  ;; default -------------------------------------------------------------------
-  ((string= clt-working-environment "default")
-    ) ; default
-
-  ) ; cond ---------------------------------------------------------------------
+(provide 'project)
 
 ;;; project.el ends here

@@ -46,7 +46,7 @@
 ;;; Code:
 (cond
 ;; Magneti Marelli -------------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
+  ((string= profile "Magneti Marelli")
     ;; custom grep for NBNF LL project
     (global-set-key     "\C-cnn"                'nll-grep-find)
     ;;
@@ -78,5 +78,8 @@
 ;;
 ;;;; next error
 ;;(global-set-key         [f12]                   'next-error)
+
+
+(provide 'shortcut-grep)
 
 ;;; shortcut-grep.el ends here

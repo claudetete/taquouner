@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-06-05 (2.0)
+;;    remove all profile dependances + remove dead source
 ;; 2012-05-29 (1.9)
 ;;    add new filter for source file for AT profile
 ;; 2012-05-24 (1.8)
@@ -68,19 +70,6 @@
   ;; to prevent ecb failing to start up
   (setq ecb-version-check nil)
 
-  ;; TRY
-  (when 0
-    ;; ??
-    (defadvice ecb-check-requirements (around no-version-check activate compile)
-      "ECB version checking code is very old so that it thinks that the latest
-cedet/emacs is not new enough when in fact it is years newer than the latest
-version that it is aware of.  So simply bypass the version check."
-      (if (or (< emacs-major-version 23)
-            (and (= emacs-major-version 23)
-              (< emacs-minor-version 3)))
-        ad-do-it))
-    )
-
   ;; load all necessary for ecb
   (require 'ecb-autoloads)
 
@@ -91,140 +80,22 @@ version that it is aware of.  So simply bypass the version check."
     '(ecb-options-version "2.40")
     )
 
-  (cond
-    ;; Magneti Marelli ---------------------------------------------------------
-    ((string= clt-working-environment "Magneti Marelli")
-      (custom-set-variables
-        ;; set default path in "ecb directories"
-        '(ecb-source-path
-           (quote
-             (
-               ;; before is put the EDE projects (see project.el)
-               ("c:/Documents and Settings/tete"            "/tete")
-               ("h:/"                                       "/home")
-               ("d:/cygwin/usr/bin"                         "/bin")
-               ("d:/cygwin/usr/bin/.emacs.d"                "/emacs.d")
-               ("c:/Documents and Settings/tete/Local Settings/Temp" "/temp")
-               )))
+  (custom-set-variables
+    ;; set default path in "ecb directories"
+    '(ecb-source-path profile-ecb-source-path)
 
-        ;; regexp of folder to exclude in "ecb directories"
-        '(ecb-excluded-directories-regexps
-           (quote (
-                    "^\\(CVS\\|\\.[^xX]*\\)$"
-                    "^\\(Doc\\|Dev\\|.*_root\\|Application\\|Base\\|Control\\|System\\|Presentation\\|TechnicalNote\\|HTML\\)$"
-                    "\\(01_ProjectPlan\\|02_ProjectMonitoringAndControl\\|03_RequirementManagement\\|04_SupplierAgreementManagement\\|05_ProcessAndProductQualityAssurance\\|06_ConfigurationManagement\\|07_RequirementDevelopment\\|08_TechnicalSolution\\|10_Verification\\|11_Validation\\)$"
-                    "\\(01_SystemIntegrationAndValidationPlan\\|02_SystemIntegrationTestCases\\|03_SystemIntegrationTestReport\\|05_DeliveryToCustomer\\|06_DeliveryToInternal\\|88_VerificationReportsAndChecklists\\|99_OtherPI\\)$")))
+    ;; regexp of folder to exclude in "ecb directories"
+    '(ecb-excluded-directories-regexps profile-ecb-excluded-directories-regexps)
 
-        ;; files to be ignored in "ecb source" !! RTFM !!
-        '(ecb-source-file-regexps
-           (quote ((".*"
-                     ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\)$\\)\\)")
-                     ("^\\.\\(emacs\\|gnus\\)$")))))
+    ;; files to be ignored in "ecb source" !! RTFM !!
+    '(ecb-source-file-regexps profile-ecb-source-file-regexps)
 
-        ;; files to be ignored from Version Control VC
-        '(ecb-sources-exclude-cvsignore (quote ("_ccmwaid.inf")))
+    ;; files to be ignored from Version Control VC
+    '(ecb-sources-exclude-cvsignore profile-ecb-sources-exclude-cvsignore)
 
-        ;; regexp to form group in "ecb history"
-        '(ecb-history-make-buckets
-           (quote (
-                    "|ECAR"
-                    "|NBNF_LL"
-                    "|NBNF_HL"
-                    "|NSF"
-                    "|XL1"
-                    "|PQ35GPHL"
-                    "\\.el$")))
-        )
-      ) ; Magneti Marelli
-
-    ;; Alstom Transport --------------------------------------------------------
-    ((string= clt-working-environment "Alstom Transport")
-      (custom-set-variables
-        ;; set default path in "ecb directories"
-        '(ecb-source-path
-           (quote
-             (
-               ;; before is put the ede projects (see project.el)
-               ("m:/e_ctete/a2kc/test/CCN4/test_s/pm4s/RTRT/"          "PM4S_RTRT")
-               ("m:/e_ctete/a2kc/test/CCN4/test_s/puma/TestU/sharc/"   "PUMA_RTRT")
-               ("d:/Documents and Settings/100516805/Application Data" "/home")
-               ("m:/"                                                  "/ClearCase")
-               ("d:/Users/ctete"                                       "/Users")
-               ("d:/Users/ctete/tmp"                                   "/tmp")
-               )))
-
-        ;; regexp of folder to exclude in "ecb directories"
-        '(ecb-excluded-directories-regexps
-           (quote (
-                    "^\\.+$"
-                    "^\\(TOTO\\|TITI\\)$"
-                    "\\(Cvisualdspplus2\\|RTRT_res\\)$" ; RTRT
-                    "\\(TOTO\\|TITI\\)$")))             ; example
-
-
-        ;; files to be ignored in "ecb source" !! RTFM !!
-        '(ecb-source-file-regexps
-           (quote ((".*"
-                     ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|err\\|i\\|met\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
-                     ("^\\.\\(emacs\\|gnus\\)$")))))
-
-        ;;;; files to be ignored from Version Control VC
-        ;;'(ecb-sources-exclude-cvsignore (quote ("_ccmwaid.inf")))
-
-        ;; regexp to form group in "ecb history"
-        '(ecb-history-make-buckets
-           (quote (
-                    "ccn4_pm4s"
-                    "include"
-                    "\\.muse$"
-                    "\\.ptu$"
-                    "\\.ahk$"
-                    "\\.[hc][p]*$"
-                    "\\.el$")))
-        )
-      ) ; Alstom Transport
-
-    ;; default -----------------------------------------------------------------
-    ((string= clt-working-environment "default")
-      (custom-set-variables
-        ;; set default path in "ecb directories"
-        '(ecb-source-path
-           (quote
-             (
-               ;;FIXME working environment default
-               ;; before is put the ede projects (see project.el)
-               ("/path/i/want/to/have/in/ecb/directory/"        "display name")
-               ("/second/path/i/want/to/have/in/ecb/directory/" "display name2")
-               )))
-
-        ;; regexp of folder to exclude in "ecb directories"
-        '(ecb-excluded-directories-regexps
-           (quote (
-                    "^\\.+$" ; hidden folder
-                    "\\(TOTO\\|TITI\\)$")))             ; example
-
-        ;; files to be ignored in "ecb source" !! RTFM !!
-        '(ecb-source-file-regexps
-           (quote ((".*"
-                     ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\)$\\)\\)")
-                     ("^\\.\\(emacs\\|gnus\\)$")))))
-
-        ;;;; files to be ignored from Version Control VC
-        '(ecb-sources-exclude-cvsignore (quote ("example")))
-
-        ;; regexp to form a group in "ecb history"
-        '(ecb-history-make-buckets
-           (quote (
-                    "include" ; all file from an include folder
-                    "\\.[hc][p]*$" ; all c cpp and h files
-                    "\\.el$" ; all elisp files
-                    )
-             )
-           )
-        )
-      ) ; default
-
-    ) ; cond ------------------------------------------------------------
+    ;; regexp to form group in "ecb history"
+    '(ecb-history-make-buckets profile-ecb-history-make-buckets)
+    )
 
 (custom-set-variables
 
@@ -312,14 +183,13 @@ version that it is aware of.  So simply bypass the version check."
 
   ;; do not process file without semantic
   '(ecb-process-non-semantic-files nil)
-  ) ; (custom-variables
 
-(custom-set-variables
   ;; tags file can be modified when a file is opened
   '(tags-loop-revert-buffers t)
   ;;
   ;; color of lines find in *Tag List*
-  '(tags-tag-face (quote match)))
+  '(tags-tag-face (quote match))
+  ) ; (custom-set-variables
 
 ;; let ecb take control of opening of compile window
 (add-hook 'ecb-activate-hook
@@ -366,5 +236,8 @@ version that it is aware of.  So simply bypass the version check."
                            (ecb-get-window-by-number (cdr point-loc)))))
          (goto-char (point))))))
    )
+
+
+(provide 'mode-ecb)
 
 ;;; mode-ecb.el ends here

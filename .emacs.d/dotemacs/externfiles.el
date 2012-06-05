@@ -20,9 +20,9 @@
 
 ;; Keywords: config, file, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-external'
 
 ;;; Change Log:
+;; 2012-06-05 (1.4)
+;;    change load to require to have nicer *Messages* + remove
+;;    deprecated code
 ;; 2012-03-28 (1.3)
 ;;    translate comments in English
 ;; 2012-03-02 (1.2)
@@ -59,33 +62,27 @@
 ;;; FUNCTIONS
 ;; REQUIREMENT: var     `section-external-functions'
 (when section-external-functions (message "  1.2 Functions custom...")
-  (load-file (concat dotemacs-path "/dotemacs/functions.el"))
+  (try-require 'functions "    ")
   (message "  1.2 Functions custom... Done"))
 
 ;;
 ;;; VECTRA
 ;; REQUIREMENT: var     `section-external-vectra'
-(when section-external-vectra (message "  .3 Vectra...")
+(when section-external-vectra (message "  1.3 Vectra...")
 ;; Vectra man and doc (the rest is not very useful)
-  (load-file (concat dotemacs-path "/plugins/vectra.el"))
+  (try-require 'vectra "    ")
   (message "  1.3 Vectra... Done"))
-
-;;
-;;; SETNU
-;; REQUIREMENT: var     `section-external-setnu'
-(when section-external-setnu (message "  1.4 Setnu...")
-  ;; show number line (deprecated exist in emacs with (global-linum-mode 1) )
-  ;; and ugly with ECB
-  (load-file (concat dotemacs-path "/plugins/setnu.el"))
-  (message "  1.4 Setnu... Done"))
 
 ;;
 ;;; HOME/END
 ;; REQUIREMENT: var     `section-external-home-end'
-(when section-external-home-end (message "  1.5 Home/End...")
+(when section-external-home-end (message "  1.4 Home/End...")
   ;; to add features to home/end key (two push will get you at the end/start
   ;; of display) (three push will get you at the end/start of buffer)
-  (load-file (concat dotemacs-path "/plugins/pc-keys.el"))
-  (message "  1.5 Home/End... Done"))
+  (try-require 'pc-keys "    ")
+  (message "  1.4 Home/End... Done"))
+
+
+(provide 'externfiles)
 
 ;;; externfiles.el ends here

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.9
+;; Version: 4.0
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-06-05 (4.0)
+;;    start to split + remove dead source code
 ;; 2012-05-29 (3.9)
 ;;    add function for integration with clearcase
 ;; 2012-05-14 (3.8)
@@ -89,22 +91,6 @@
 (defconst clt-symbol-regexp "[A-Za-z_][A-Za-z_0-9]*"
   "Regexp matching tag name.")
 
-(cond
-  ;; Magneti Marelli -----------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
-    (defconst clt-nsf-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -DC_COMP_COSMIC_MC9S12 -D__MC9S12xx__ -D__MC9S12XHZ__ -I d:/ccm_wa/NSF/NSF/NSF_CLIENT/out/include")
-
-    (defconst clt-nbnfhl-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/NBNF/NBNF_HL/NBNF_CLIENT_HL/out/include")
-
-    (defconst clt-nbnfll-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -DC_COMP_COSMIC_MC9S12 -D__MC9S12xx__ -D__MC9S12XHZ__ -I d:/ccm_wa/NBNF/NBNF_LL/NSFNBNF_CLIENT/out/include")
-
-    (defconst clt-ecar-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/ECAR/ENSF_CLIENT/out/include")
-
-    (defconst clt-xl1-flag  "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__ -D__NEC_V850__ -D__NEC_V850_Dx3__ -D__NEC_V850_DL3__ -D__NEC_V850_DL3_F3427__ -DC_COMP_GHS_V850 -DC_COMP_GHS_V85X -I d:/ccm_wa/XL1/XL1_CLIENT/out/include")
-    ) ; Magneti Marelli
-
-  ) ; cond ---------------------------------------------------------------------
-
 ;;
 ;;;
 ;;;; FLAG DEBUG
@@ -158,6 +144,8 @@
   "Select the word under cursor."
   (interactive)
   (let (pt)
+    (when (boundp 'auto-highlight-symbol-mode)
+      (ahs-clear))
     (skip-chars-backward "-_A-Za-z0-9")
     (setq pt (point))
     (skip-chars-forward "-_A-Za-z0-9")
@@ -261,77 +249,6 @@ current line instead."
   (global-set-key (kbd "<S-f8>") 'my-toggle-kbd-macro-recording-on)
   (end-kbd-macro))
 ;; shortcuts are put in shortcut-function.el
-
-;;
-;;;
-;;; GREP-FIND
-(cond
-;; Magneti Marelli -------------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
-    ;;; grep custom (by Claude TETE)
-    (defun nsf-grep-find ()
-      "Search word (egrep regex) in all files for NSF project."
-      (interactive)
-      (let (word prompt input)
-        (setq word (clt-select-word))
-        (if word
-          (setq prompt (concat "Grep word NSF project: (default " word ") "))
-          (setq prompt "Grep word (NSF): "))
-        (setq input (completing-read prompt 'try-completion nil nil nil nil))
-        (if (not (equal "" input))
-          (setq word input))
-        (grep (concat "cat d:/ccm_wa/NSF/NSF/NSF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\"")))
-      )
-
-    ;;; grep custom (by Claude TETE)
-    (defun nll-grep-find ()
-      "Search word (egrep regex) in all files for NBNF LL project."
-      (interactive)
-      (let (word prompt input)
-        (setq word (clt-select-word))
-        (if word
-          (setq prompt (concat "Grep word NBNF_LL project: (default " word ") "))
-          (setq prompt "Grep word (NBNF_LL): "))
-        (setq input (completing-read prompt 'try-completion nil nil nil nil))
-        (if (not (equal "" input))
-          (setq word input))
-        (grep (concat "cat d:/ccm_wa/NBNF/NBNF_LL/NSFNBNF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\""))
-        )
-      )
-
-    ;;; grep custom (by Claude TETE)
-    (defun nhl-grep-find ()
-      "Search word (egrep regex) in all files for NBNF_HL project."
-      (interactive)
-      (let (word prompt input)
-        (setq word (clt-select-word))
-        (if word
-          (setq prompt (concat "Grep word NBNF_HL project: (default " word ") "))
-          (setq prompt "Grep word (NBNF_HL): "))
-        (setq input (completing-read prompt 'try-completion nil nil nil nil))
-        (if (not (equal "" input))
-          (setq word input))
-        (grep (concat "cat d:/ccm_wa/NBNF/NBNF_HL/NBNF_CLIENT_HL/*.files | xargs grep --color=always -nsIE \""word"\""))
-        )
-      )
-
-    ;;; grep custom (by Claude TETE)
-    (defun ecar-grep-find ()
-      "Search word (egrep regex) in all files for ECAR project."
-      (interactive)
-      (let (word prompt input)
-        (setq word (clt-select-word))
-        (if word
-          (setq prompt (concat "Grep word ECAR project: (default " word ") "))
-          (setq prompt "Grep word (ECAR): "))
-        (setq input (completing-read prompt 'try-completion nil nil nil nil))
-        (if (not (equal "" input))
-          (setq word input))
-        (grep (concat "cat d:/ccm_wa/ECAR/ENSF_CLIENT/*.files | xargs grep --color=always -nsIE \""word"\""))
-        )
-      )
-    ) ; Magneti Marelli
-  ) ; cond ---------------------------------------------------------------------
 
 ;;
 ;;;
@@ -530,208 +447,16 @@ before message."
 )
 
 (cond
-  ;; Magneti Marelli------------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
-    ;;; search a fault in buffer (by Claude TETE)
-    (defun search-fault ()
-      "Search a fault in the current buffer."
-      (interactive)
-      ;; no space after ( after keyword
-      (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\)[ ]*([ ]+" 'hi-green)
-      ;; no space before ) after keyword
-      (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\)[ ]*([^()]*[ ]+)" 'hi-green)
-      ;; missing space after keyword
-      (highlight-regexp "\\<\\(if\\|while\\|for\\|return\\|switch\\|#if\\|#endif\\)[^ ]*(" 'hi-yellow)
-      ;;;; too space after/before parentheses
-      ;;(highlight-regexp "^[^/\\n]*([ ]\\{1,\\}" 'hi-yellow)
-      ;;(highlight-regexp "^[^/\\n]*[ ]\\{1,\\})" 'hi-yellow)
-      (highlight-regexp "^[^/\\n]*[A-Za-z0-9]\\{4,7\\}_\\w[ ]\\{1,\\}(.*[),]" 'hi-yellow)
-      ;; wrong type used
-      (highlight-regexp "^[^/\\n]*[^us_]\\(byte\\|short\\|long\\))" 'hi-pink)
-      ;; space before a ( for a call/declaration of function
-      (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]+(" 'hi-yellow)
-      ;; space after a ( for a call/declaration of function
-      (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]*([ ]+[[:alnum:]_]*" 'hi-green)
-      ;; space before a ) for a call/declaration of function
-      (highlight-regexp "[[:alnum:]]\\{4,\\}_[[:alnum:]_]+[ ]*([ ]*[[:alnum:]_]*\\([ ]+[[:alnum:]_]*\\|[ ]*([[:alnum:]_]*\\(,[[:alnum:]_]\\)*)\\)[ ]+)" 'hi-green)
-      )
-
+  ;; Alstom Transport ----------------------------------------------------------
+  ((string= profile "Alstom Transport")
     ;;; search a fault size in buffer (by Claude TETE)
     (defun search-fault-size ()
       "Search a sizing fault in the current buffer."
       (interactive)
-      ;; wrong function header used
-      (highlight-regexp "/\\**/" 'hi-blue)
       ;; line more than 80 column
-      (highlight-regexp ".\\{81,\\}" 'hi-green)
+      (occur ".\\{81,\\}")
       )
-    ) ; Magneti Marelli
-
-  ) ; cond ---------------------------------------------------------------------
-
-
-;;
-;;;
-;;;; COLOR TRACE CAN
-(cond
-  ;; Magneti Marelli -----------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
-    ;;; color CAN trace for immo (by Claude TETE)
-    (defun color-trace-can-immo ()
-      "Color the trace in the current buffer."
-      (interactive)
-      ;; Response OK and NOK from IMMO
-      (highlight-regexp " 0?17[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6\\}[ ]*[0-9A-F][13579BDF]" 'font-lock-function-name-face)
-      (highlight-regexp " 0?17[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6\\}[ ]*[0-9A-F][02468ACE]" 'font-lock-preprocessor-face)
-      ;; request from ELV
-      (highlight-regexp " 0?16[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-comment-face)
-      ;; response from KESSY
-      (highlight-regexp " 29D[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{6,\\}[ ]*[1-9A-F][0-9A-F]  [0-9A-F][0-9A-F]" 'font-lock-variable-name-face)
-      (highlight-regexp " 29D[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-variable-name-face)
-      ;; request from IMMO
-      (highlight-regexp " 155[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-string-face)
-      (highlight-regexp " 157[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F]" 'font-lock-string-face)
-      ;; button start
-      (highlight-regexp " 5F1[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*[0-9A-F][89A-F]" 'font-lock-type-face)
-      ;; KL 15 ON
-      (highlight-regexp " 5F1[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-      ;; KL S-Contact ON ;;
-      (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF]" 'font-lock-keyword-face)
-      ;; not recognized key
-      (highlight-regexp " 621[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}[ ]*[0-9A-F]0" 'compilation-warning)
-      ;; recognised key
-      (highlight-regexp " 621[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}[ ]*[0-9A-F][1-9A-F]" 'font-lock-function-name-face)
-      )
-
-    ;;; color CAN trace for cv sensor (by Claude TETE)
-    (defun color-trace-can-cvsensor ()
-      "Color the trace in the current buffer."
-      (interactive)
-      ;; BRAKE
-      (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*8[0-9A-F]" 'font-lock-type-face)
-      ;; error
-      (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*[9AB][0-9A-F]" 'font-lock-comment-face)
-      ;; OFF
-      (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*C[0-9A-F]" 'font-lock-preprocessor-face)
-      ;; ON
-      (highlight-regexp " 366[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][0-9A-F][ ]*D[0-9A-F]" 'font-lock-function-name-face)
-      ;;
-      ;; KL 15 ON
-      (highlight-regexp " 575[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-      ;; KL 15 ON
-      (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-      )
-
-    ;;; color CAN trace for NMH (by Claude TETE)
-    (defun color-trace-can-nmh ()
-      "Color the trace in the current buffer."
-      (interactive)
-      ;; NMH message
-      (highlight-regexp " 72[4-9A-F][ ]*Tx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-type-face)
-      (highlight-regexp " 73[0-9A-F][ ]*Tx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-type-face)
-      ;;
-      ;; comment state
-      (highlight-regexp "\"    START       \"" 'font-lock-variable-name-face)
-      (highlight-regexp "\" READY_TO_SLEEP \"" 'font-lock-variable-name-face)
-      (highlight-regexp "\"PREPARE_TO_SLEEP\"" 'font-lock-variable-name-face)
-      (highlight-regexp "\"    SLEEP       \"" 'font-lock-variable-name-face)
-      (highlight-regexp "\"    NORMAL      \"" 'font-lock-variable-name-face)
-      ;;
-      (highlight-regexp "/\\*.*\\*/" 'font-lock-comment-face)
-      ;;
-      ;; State of kombi bus
-      ;;  Sleep -> Start            (pale green)
-      (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]1\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-function-name-face)
-      ;;
-      ;;  PrepareToSleep -> Start   (cyan)
-      (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]2\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-keyword-face)
-      ;;
-      ;;  Start -> Normal           (pale turquoise)
-      (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]4\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'font-lock-constant-face)
-      ;;
-      ;;  ReadyToSleep -> Normal    (pale grey blue)
-      (highlight-regexp " 727[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]8\\([ ]*[0-9A-F][0-9A-F]\\)\\{3\\}" 'fonct-lock-builtin-face)
-      )
-
-    ;;; color CAN trace for current problem (by Claude TETE)
-    (defun color-trace-can-curr ()
-      "Color the trace in the current buffer."
-      (interactive)
-      ;; mBSG_Kombi message KL58d != 0
-      (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[1-9A-F][0-9A-F]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-type-face)
-      (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[0-9A-F][1-9A-F]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-type-face)
-      ;;
-      ;; mBSG_Kombi message KL58d = 0
-      (highlight-regexp " 470[ ]*[TR]x[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*00\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}" 'font-lock-variable-name-face)
-      ;;
-      ;; mBSG_Last KL15 ON
-      (highlight-regexp " 570[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-string-face)
-      ;;
-      ;; mBSG_Last KL15 OFF
-      (highlight-regexp " 570[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][014589CD]\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-constant-face)
-      ;;
-      ;; mSystem_info1
-      (highlight-regexp " 5D0[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][4567CDEF]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}" 'font-lock-comment-face)
-      ;;
-      ;; comment
-      (highlight-regexp "/\\*.*\\*/" 'font-lock-comment-face)
-      ;;
-      ;; State of kombi bus
-      ;;  Sleep -> Start            (pale green)
-      (highlight-regexp " 727[ ]*[RT]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]1\\([ ]*[0-9A-F][0-9A-F]\\)\\{1\\}" 'font-lock-function-name-face)
-      ;;
-      ;;  PrepareToSleep -> Start   (cyan)
-      (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]2\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-keyword-face)
-      ;;
-      ;;  Start -> Normal           (pale turquoise)
-      (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]4\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'font-lock-constant-face)
-      ;;
-      ;;  ReadyToSleep -> Normal    (pale grey blue)
-      (highlight-regexp " 727[ ]*[TR]x[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F]8\\([ ]*[0-9A-F][0-9A-F]\\)\\{3\\}" 'fonct-lock-builtin-face)
-      )
-
-    ;;; color CAN trace for fuel tank (by Claude TETE)
-    (defun color-trace-can-fuel ()
-      "Color the trace in the current buffer."
-      (interactive)
-      ;; mKombi_1
-      ;; Tankinhalt
-      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[1-9A-F][0-9A-F]" 'font-lock-comment-face)
-      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}[ ]*[0-9A-F][1-9A-F]" 'font-lock-comment-face)
-      ;; Tankstop
-      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF][ ]*[89ABCDEF]" 'font-lock-constant-face)
-      ;; Sta_tank
-      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][13579BDF]" 'font-lock-function-name-face)
-      ;; Warn_tank
-      (highlight-regexp " 320[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[4567CDEF][0-9A-F]" 'font-lock-type-face)
-      ;;
-      ;; mMFA_1
-      ;; Reichweite
-      (highlight-regexp " 629[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{4\\}" 'font-lock-preprocessor-face)
-      ;;
-      ;; mMFA_1
-      ;; Verbrauch
-      (highlight-regexp " 62B[ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{2\\}" 'compilation-warning)
-      ;;
-      ;; KL 15 ON
-      (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-      )
-
-    ;;; color CAN trace for electric range (by Claude TETE)
-    (defun color-trace-can-erange ()
-      "Color the trace in the current buffer."
-      (interactive)
-      ;; battery charge in percent in mMotor_EV1
-      (highlight-regexp " 61[Aa][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{7\\}[ ]*[0-9A-F][0-9A-F]" 'font-lock-comment-face)
-      ;; battery charge in kWh in mMotor_EV1
-      (highlight-regexp " 61[Aa][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{5\\}[ ]*[0-9A-F][0-9A-F][ ]*[0-9A-F][0-9A-F]" 'font-lock-type-face)
-      ;; consumption in mMotor_15
-      (highlight-regexp " 57[Ff][ ]*Rx[ ]*[Dd][ ]*[0-9]\\([ ]*[0-9A-F][0-9A-F]\\)\\{8\\}" 'font-lock-function-name-face)
-      ;;
-      ;; KL 15 ON
-      (highlight-regexp " 570[ ]*Rx[ ]*[Dd][ ]*[0-9][ ]*[0-9A-F][2367ABEF]" 'font-lock-constant-face)
-      )
-    ) ; Magneti Marelli
+    ) ; Alstom Transport
 
   ) ; cond ---------------------------------------------------------------------
 
@@ -831,65 +556,6 @@ before message."
     (set-frame-parameter nil 'alpha '(100 100))
     (set-frame-parameter nil 'alpha '(85 50))))
 (global-set-key (kbd "C-c t") 'toggle-transparency)
-
-;;
-;;;
-;;;; C-EXPAND-MACRO
-(cond
-  ;; Magneti Marelli -----------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
-    ;;; expand macro for project NSF (by Claude TETE)
-    (defun nsf-c-expand-macro (start end)
-      "Expand macro in C language for the NSF project (between START and END)."
-      (interactive "r")
-      (unless (and start end)
-        (error "The mark is not set now, so there is no region"))
-      (setq c-macro-cppflags clt-nsf-flag)
-      (c-macro-expand start end nil)
-      )
-
-    ;;; expand macro for project NBNF HL (by Claude TETE)
-    (defun nhl-c-expand-macro (start end)
-      "Expand macro in C language for the NBNF_HL project (between START and END)."
-      (interactive "r")
-      (unless (and start end)
-        (error "The mark is not set now, so there is no region"))
-      (setq c-macro-cppflags clt-nbnfhl-flag)
-      (c-macro-expand start end nil)
-      )
-
-    ;;; expand macro for project NBNF LL (by Claude TETE)
-    (defun nll-c-expand-macro (start end)
-      "Expand macro in C language for the NBNF_LL project (between START and END)."
-      (interactive "r")
-      (unless (and start end)
-        (error "The mark is not set now, so there is no region"))
-      (setq c-macro-cppflags clt-nbnfll-flag)
-      (c-macro-expand start end nil)
-      )
-
-    ;;; expand macro for project ENSF (by Claude TETE)
-    (defun ecar-c-expand-macro (start end)
-      "Expand macro in C language for the ECAR project (between START and END)."
-      (interactive "r")
-      (unless (and start end)
-        (error "The mark is not set now, so there is no region"))
-      (setq c-macro-cppflags clt-ecar-flag)
-      (c-macro-expand start end nil)
-      )
-
-    ;;; expand macro for project XL1 (by Claude TETE)
-    (defun xl1-c-expand-macro (start end)
-      "Expand macro in C language for the XL1 project (between START and END)."
-      (interactive "r")
-      (unless (and start end)
-        (error "The mark is not set now, so there is no region"))
-      (setq c-macro-cppflags clt-xl1-flag)
-      (c-macro-expand start end nil)
-      )
-    ) ; Magneti Marelli
-
-  ) ; cond ---------------------------------------------------------------------
 
 ;;
 ;;;
@@ -1216,6 +882,13 @@ clearcase."
 
 ;;
 ;;;
+;;;; MAGNETI MARELLI
+(when section-external-function-mm (message "    1.2.1 Functions Magneti Marelli...")
+  (try-require 'function-mm "    ")
+  (message "    1.2.1 Functions Magneti Marelli... Done"))
+
+;;
+;;;
 ;;;; TEST (all after is for testing
 (defun clt-test ()
   "Plein de test."
@@ -1224,20 +897,6 @@ clearcase."
 )
 
 (setq semantic-c-takeover-hideif t)
-
-(cond
-  ;; Magneti Marelli -----------------------------------------------------------
-  ((string= clt-working-environment "Magneti Marelli")
-    (fset 'header-function
-      [home right right ?\C-7 ?\C-6 delete ?\C-7 ?\C-6 kp-subtract home])
-    (global-set-key (kbd "C-c '") 'header-function)
-
-    (fset 'delete-space-before-function-parenthese
-      [home ?\C-s ?\( left backspace home])
-    (global-set-key (kbd "C-c ;") 'delete-space-before-function-parenthese)
-    ) ; Magneti Marelli
-
-  ) ; cond ---------------------------------------------------------------------
 
 
 ;;; Copy entire line in kill ring (without Home C-k C-y) (by Claude TETE)
@@ -1299,124 +958,6 @@ When there is a text selection, act on the region."
 ;;list-colors-display to display all color
 
 
-;; S-RET leaves lazy-highlighted matches.
-;(defun my-isearch-exit-leave-lazy-highlight ()
-;  "Exit search and leave extra match highlighting."
-;  (interactive)
-;  (let ((lazy-highlight-cleanup nil))
-;    (when isearch-lazy-highlight
-;      (isearch-lazy-highlight-new-loop (point-min) (point-max)))
-;    (isearch-exit)))
-
-;(define-key isearch-mode-map [(shift return)]
-;                             'my-isearch-exit-leave-lazy-highlight)
-
-;; C-RET doesn't add the current search string to the history.
-;(add-hook 'isearch-mode-end-hook
-;          (lambda ()
-;            ;; On typing C-RET
-;            (when (eq last-input-char 'C-return)
-;              ;; Set the point at the beginning of the search string
-;              (if (and isearch-forward isearch-other-end)
-;                  (goto-char isearch-other-end))
-;              ;; Don't push the search string into the search ring
-;              (if isearch-regexp
-;                  (setq regexp-search-ring (cdr regexp-search-ring))
-;                (setq search-ring (cdr search-ring))))))
-
-;; Use ScrollLock key to activate scroll-lock-mode
-;; (from http://lists.gnu.org/archive/html/emacs-devel/2005-06/msg01274.html)
-;(let ((key (if (eq window-system 'w32) "<scroll>" "<Scroll_Lock>")))
-;  (unless (lookup-key (current-global-map) (read-kbd-macro key))
-;    (define-key (current-global-map) (read-kbd-macro key) 'scroll-lock-mode)))
-
-;;(global-set-key (kbd "C-c t") 'toggle-transparency)
-
-;; I don't have tested
-;;; cyclin through multiple tags results (by Kevin Rodgers)
-;;(when (locate-library "gtags")
-;;
-;;  (autoload 'gtags-mode "gtags" nil t)
-;;
-;;  (when (executable-find "global")
-;;
-;;    (defadvice gtags-visit-rootdir (after make-complete-list activate)
-;;      "Rebuilds completion list when changing GLOBAL database rootdir."
-;;      (gtags-make-complete-list))
-;;
-;;    (defun gtags-global-dir-p (dir)
-;;      "Return non-nil if directory DIR contains a GLOBAL database."
-;;      (and (file-exists-p (expand-file-name "GPATH" dir))
-;;           (file-exists-p (expand-file-name "GRTAGS" dir))
-;;           (file-exists-p (expand-file-name "GSYMS" dir))
-;;           (file-exists-p (expand-file-name "GTAGS" dir))))
-;;
-;;    (defun gtags-global-dir (&optional dir)
-;;      "Return the nearest super directory that contains a GLOBAL database."
-;;      (interactive)
-;;      (when (null dir)
-;;        (setq dir default-directory))
-;;      (cond ((gtags-global-dir-p dir) dir)
-;;            ((equal (file-truename dir) (file-truename "/")) nil)
-;;            (t (gtags-global-dir (file-name-as-directory
-;;                                  (expand-file-name ".." dir))))))
-;;
-;;    (defvar gtags-global-complete-list-obsolete-flag nil
-;;      "When non-nil, the GLOBAL complete list should be rebuilt.")
-;;
-;;    (defun gtags-global-update ()
-;;      "If current directory is part of a GLOBAL database update it."
-;;      (interactive)
-;;      (when (gtags-global-dir)
-;;        (if (equal (call-process "global" nil nil nil "-vu") 0)
-;;            (setq gtags-global-complete-list-obsolete-flag t)
-;;          (error "Global database update failed"))))
-;;
-;;    (defun gtags-global-complete-list-maybe ()
-;;      "Rebuild the GLOBAL complete list when indicated.
-;;See `gtags-global-complete-list-obsolete-flag'."
-;;      (interactive)
-;;      (when gtags-global-complete-list-obsolete-flag
-;;        (gtags-make-complete-list)
-;;        (setq gtags-global-complete-list-obsolete-flag nil)))
-;;
-;;    (add-hook 'gtags-mode-hook
-;;              (lambda ()
-;;                (add-hook 'after-save-hook 'gtags-global-update nil t)
-;;                (defadvice gtags-find-tag
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                (defadvice gtags-find-rtag
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                (defadvice gtags-find-symbol
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                (defadvice gtags-find-pattern
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                (defadvice gtags-find-with-grep
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                (defadvice gtags-find-with-idutils
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                (defadvice gtags-find-file
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                (defadvice gtags-parse-file
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                (defadvice gtags-find-tag-from-here
-;;                  (before gtags-global-complete-list-maybe activate)
-;;                  (gtags-global-complete-list-maybe))
-;;                )                       ; (lambda () ...)
-;;              )                        ; (add-hook 'gtags-mode-hook ...)
-;;    )                            ; (when (executable-find "global") ...)
-;;
-;;  ;; Use gtags in all modes for now.
-;;  (gtags-mode 1)
-;;  )                                ; (when (locate-library "gtags") ...)
-;;
+(provide 'functions)
 
 ;;; functions.el ends here

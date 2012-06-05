@@ -10,7 +10,7 @@
       "\C-u\M-xcomment-region")
 
 (defun vectra-indent-hilit-buffer ()
-  "Indente et colorise le buffer courant" 
+  "Indente et colorise le buffer courant"
   (interactive)
   (indent-region (point-min) (point-max) 'nil)
   (untabify  (point-min) (point-max))
@@ -18,7 +18,7 @@
   )
 
 (defun vectra-hilit-buffer ()
-  "Colorise le buffer courant" 
+  "Colorise le buffer courant"
   (interactive)
   (font-lock-fontify-buffer))
 
@@ -38,6 +38,8 @@
   (interactive)
   (apropos (current-word)))
 
-(defun suspend-emacs-old () 
+(defun suspend-emacs-old ()
   (interactive)
   (message "Pour stopper emacs, taper C-x C-z"))
+
+(provide 'vectra)

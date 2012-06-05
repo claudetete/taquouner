@@ -110,4 +110,7 @@
 
   ) ; when section-mode-cedet-ecb
 
+
+(provide 'interface-ecb)
+
 ;;; interface-ecb.el ends here

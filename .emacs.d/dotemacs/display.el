@@ -1,4 +1,4 @@
-;;; completion.el --- a config file for completion settings
+;;; display.el --- a config file for display setting
 
 ;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
 ;;
@@ -18,42 +18,47 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 
-;; Keywords: config, completion
+;; Keywords: config, display, buffer, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.0
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
 ;; load by `emacs.el' (where all requirements are defined)
-;; REQUIREMENT: var     `section-completion'
+;; REQUIREMENT: var     `section-display'
 
 ;;; Change Log:
-;; 2012-05-10 (1.3)
-;;    fix bug with CUA rectangle selection by disable dynamic completion +
-;;    remove hippie do not work properly
-;; 2012-05-04 (1.2)
-;;    add configuration for hippie expand
-;; 2012-03-28 (1.1)
-;;    translate comments in English
-;; 2011-03-10 (1.0)
+;; 2012-06-05 (1.0)
 ;;    split .emacs file
 ;; 2006-10-13 (0.1)
-;;    creation from scratch
+;;    creation from scratch (no history since)
 
 
-
 ;;; Code:
-;; completion is case sensitive
-(defvar dabbrev-case-replace nil)
+;;
+;; WINDOWS/BUFFERS
+(when section-display-windows-buffers (message "  5.1 Windows / Buffers...")
+  (try-require 'display-buffer "    ")
+  (message "  5.1 Windows / Buffers... Done"))
+;;
+;; SPEEDBAR
+(when section-display-speedbar (message "  5.2 SpeedBar...")
+  (try-require 'display-speedbar "    ")
+  (message "  5.2 SpeedBar... Done"))
+;;
+;; FONT
+(when section-display-font (message "  5.3 Font...")
+  (try-require 'display-font "    ")
+  (message "  5.3 Font... Done"))
+;;
+;; COLOR
+(when section-display-color (message "  5.4 Color...")
+  (try-require 'display-color "    ")
+  (message "  5.4 Color... Done"))
 
-;;;; enable dynamic word completion (never used)
-;;;; from grandm_y
-;;;; Interfere with CUA selection mode (insert only null character)
-;;(dynamic-completion-mode)
 
+(provide 'display)
 
-(provide 'completion)
-
-;;; completion.el ends here
+;;; display-buffer.el ends here

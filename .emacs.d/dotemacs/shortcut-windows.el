@@ -59,4 +59,7 @@
 (global-set-key         (kbd "<C-S-left>")      'enlarge-window-horizontally)
 (global-set-key         (kbd "<C-S-right>")     'shrink-window-horizontally)
 
+
+(provide 'shortcut-windows)
+
 ;;; shortcut-windows.el ends here

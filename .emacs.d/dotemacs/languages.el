@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.0
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-06-05 (2.0)
+;;    remove all profile dependances + use profile values + remove never used c
+;;    style
 ;; 2012-05-29 (1.9)
 ;;    to remove asking about command ine to compile
 ;; 2012-04-20 (1.8)
@@ -59,106 +62,31 @@
 ;;; C
 ;; REQUIREMENT: var     `section-languages-c'
 (when section-languages-c (message "  3.1 Languages C...")
-  ;; create a C style from Jan Borsodi
-  (defconst ezsystems-c-style
-    ;; Always indent c/c++ sources, never insert tabs
-    '((c-tab-always-indent        . t)
-       (c-basic-offset . 4)
-       ;; Offset for line only comments
-       (c-comment-only-line-offset . 0)
-       ;; Controls the insertion of newlines before and after braces.
-       (c-hanging-braces-alist     . ((substatement-open after)
-                                       (brace-list-open)))
-       ;; Controls the insertion of newlines before and after certain
-       ;; colons.
-       (c-hanging-colons-alist     . ((member-init-intro before)
-                                       (inher-intro)
-                                       (case-label after)
-                                       (label after)
-                                       (access-label after)))
-       ;; List of various C/C++/ObjC constructs to "clean up".
-       (c-cleanup-list             . (scope-operator
-                                       empty-defun-braces
-                                       defun-close-semi))
-       ;; Association list of syntactic element symbols and indentation
-       ;; offsets.
-       (c-offsets-alist            . (
-                                       (arglist-close . c-lineup-arglist)
-                                       (substatement-open . 0)
-                                       (case-label        . +)
-                                       (block-open        . 0)
-                                       (access-label      . -)
-                                       (label	      . 0)
-                                       (knr-argdecl-intro . -)))
-                                        ;(c-echo-syntactic-information-p . t)
-       )
-    "eZ systems Programming Style")
-
-  ;; add personal style
-  (c-add-style "eZSystems" ezsystems-c-style)
-
   ;; must be only load with c-mode else some variables are not defined
-  (cond
-    ;; Magneti Marelli ---------------------------------------------------------
-    ((string= clt-working-environment "Magneti Marelli")
-      (defun clt-c-mode ()
-        ;; style k&r and not gnu
-        (c-set-style "k&r")
-        ;;(c-set-style "eZSystems")
-        ;; set number of space for One indentation
-        (setq c-basic-offset 2)
-        ;; increase "case" indentation in a "switch"
-        (c-set-offset 'case-label '+)
-        ;; hungry mode is enable, for hungry delete...
-        (c-toggle-hungry-state t)
-        )
-      ) ; Magneti Marelli
-
-    ;; Alstom Transport --------------------------------------------------------
-    ((string= clt-working-environment "Alstom Transport")
-      (defun clt-c-mode ()
-        ;; style k&r and not gnu
-        (c-set-style "k&r")
-        ;;(c-set-style "eZSystems")
-        ;; set number of space for One indentation
-        (setq c-basic-offset 3)
-        ;; increase "case" indentation in a "switch"
-        (c-set-offset 'case-label '+)
-        ;; hungry mode is enable, for hungry delete...
-        (c-toggle-hungry-state t)
-        )
-
-      ;;; Compile mode without ask
-      (setq compilation-read-command nil)
-      ) ; Alstom Transport
-
-    ;; default -----------------------------------------------------------------
-    ((string= clt-working-environment "default")
-      (defun clt-c-mode ()
-        ;; style k&r and not gnu
-        (c-set-style "k&r")
-        ;;(c-set-style "eZSystems")
-        ;; set number of space for One indentation
-        (setq c-basic-offset 2)
-        ;; increase "case" indentation in a "switch"
-        (c-set-offset 'case-label '+)
-        ;; hungry mode is enable, for hungry delete...
-        (c-toggle-hungry-state t)
-        )
-      ) ; default
-
-    ) ; cond -------------------------------------------------------------------
+  (defun clt-c-mode ()
+    ;; style k&r and not gnu
+    (c-set-style "k&r")
+    ;;(c-set-style "eZSystems")
+    ;; set number of space for One indentation
+    (setq c-basic-offset profile-c-indent-offset)
+    ;; increase "case" indentation in a "switch"
+    (c-set-offset 'case-label '+)
+    ;; hungry mode is enable, for hungry delete...
+    (c-toggle-hungry-state t)
+    ;; new types
+    (setq c-font-lock-extra-types (append profile-c-extra-types c-font-lock-extra-types))
+    )
 
   ;; set c mode
   (add-hook 'c-mode-common-hook 'clt-c-mode)
 
   (custom-set-variables
     ;; command to preprocess
-    '(c-macro-preprocessor "cpp -C")
+    '(c-macro-preprocessor profile-c-macro-preprocessor)
     ;; do not prompt for flags
     '(c-macro-prompt-flag nil)
     ;; set flags
-    '(c-macro-cppflags "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__")
+    '(c-macro-cppflags profile-c-macro-cppflags)
     ;; resize the height of the window like the size of the expand macro
     '(c-macro-shrink-window-flag t)
 
@@ -172,7 +100,7 @@
 ;;; LISP
 (when section-languages-lisp (message "  3.2 Languages Lisp...")
   ;; set indent size
-  (setq lisp-indent-offset 2)
+  (setq lisp-indent-offset profile-lisp-indent-offset)
   (message "  3.2 Languages Lisp... Done"))
 
 ;;
@@ -201,5 +129,8 @@
   ;; set indent size
   (setq perl-indent-level 2)
   (message "  3.5 Languages Perl... Done"))
+
+
+(provide 'languages)
 
 ;;; languages.el ends here

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2012-06-05 (1.6)
+;;    add transparency from display-buffer.el and use profile value
 ;; 2012-05-03 (1.5)
 ;;    fix bug about fullscreen and ecb
 ;; 2012-04-25 (1.4)
@@ -74,18 +76,26 @@
 ;;; MODELINE
 ;; REQUIREMENT: var     `section-interface-modeline'
 (when section-interface-modeline (message "  6.2 Modeline...")
-  (load-file (concat dotemacs-path "/dotemacs/interface-modeline.el"))
+  (try-require 'interface-modeline "    ")
   (message "  6.2 Modeline... Done"))
 
 ;;
 ;; buffer name in title bar (example "<[ foobar.c ]>") (from grandm_y)
 (setq frame-title-format "<[ %b ]>")
 
+
+;;
+;;;; TRANSPARENCY
+;; REQUIREMENT: var     `section-interface-transparency'
+(when section-interface-transparency (message "    6.3 Transparency...")
+  (set-frame-parameter (selected-frame) 'alpha profile-transparency)
+  (message "    6.3 Transparency... Done"))
+
 ;;
 ;;; FULLSCREEN
 ;; REQUIREMENT: var     `section-interface-fullscreen'
 ;;              var     `section-environment-os-recognition'
-(when section-interface-fullscreen (message "  6.3 FullScreen...")
+(when section-interface-fullscreen (message "  6.4 FullScreen...")
   ;; start in fullscreen (only MS Windows)
   ;; need to put fullscreen after font settings
   (when running-on-ms-windows
@@ -97,6 +107,14 @@
     (sit-for 1)
 
     )
-  (message "  6.3 FullScreen... Done"))
+  (message "  6.4 FullScreen... Done"))
+
+;;
+;;; ECB
+(when section-interface-ecb (message "  6.5 Ecb...")
+  (try-require 'interface-ecb "    ")
+  (message "  6.5 Ecb... Done"))
+
+(provide 'interface)
 
 ;;; interface.el ends here

@@ -84,4 +84,7 @@
   (global-set-key         (kbd "<M-kp-multiply>") 'ecb-nav-goto-previous)
 ) ; when section-mode-cedet-ecb
 
+
+(provide 'shortcut-ecb)
+
 ;;; shortcut-ecb.el ends here

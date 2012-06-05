@@ -1,4 +1,4 @@
-;;; custom.el --- a config file to put all custom option from `customize'
+;;; my-custom.el --- a config file to put all custom option from `customize'
 
 ;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
 ;;
@@ -52,3 +52,8 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
 )
+
+
+(provide 'my-custom)
+
+;; my-custom.el ends here

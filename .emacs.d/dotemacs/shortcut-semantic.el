@@ -74,4 +74,7 @@
     )
   )
 
+
+(provide 'shortcut-semantic)
+
 ;;; shortcut-semantic.el ends here

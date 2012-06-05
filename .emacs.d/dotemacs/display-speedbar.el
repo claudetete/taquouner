@@ -59,4 +59,7 @@
 (set-variable speedbar-track-mouse-flag nil)
 (set-variable speedbar-use-images nil)
 
+
+(provide 'display-speedbar)
+
 ;;; display-speedbar.el ends here

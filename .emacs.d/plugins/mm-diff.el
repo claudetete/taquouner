@@ -1,33 +1,39 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; @NAME:               mm-diff.el                                            ;;
-;; @CREATED_BY:         Claude TETE                                           ;;
-;; @MAIL:               claude.tete@gmail.com                                 ;;
-;; @ABOUT:              generic mode to coloration of synergy diff file       ;;
-;; @VERSION:            1.0                                                   ;;
-;; @DATE:               2011 June                                             ;;
-;; @DATE_CREATION:      2011 June                                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; @CHANGELOG:          1.0 fix some bug                                      ;;
-;;                      0.1 creation from scratch                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; @EXPLANATION:                                                              ;;
-;;                                                                            ;;
-;;   This program is free software; you can redistribute it and/or modify it  ;;
-;;   under the terms of  the GNU General Public License  as published by the  ;;
-;;   Free Software Foundation ;  either version 3, or  (at your option)  any  ;;
-;;   later version.                                                           ;;
-;;                                                                            ;;
-;;   This program  is distributed  in the hope  that it will be  useful,      ;;
-;;   but  WITHOUT ANY WARRANTY ;  without even  the implied  warranty of      ;;
-;;   MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See the      ;;
-;;   GNU General Public License for more details.                             ;;
-;;                                                                            ;;
-;;   You should have received  a copy of the  GNU  General Public License     ;;
-;;   along with this program; see the file COPYING.  If not, write to the     ;;
-;;   Free Software Foundation,  Inc.,  51  Franklin Street,  Fifth Floor,     ;;
-;;   Boston, MA 02110-1301, USA.                                              ;;
-;;                                                                            ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; mm-diff.el --- generic mode to coloration of synergy diff file
+
+;; Copyright (c) 2011, 2012 Claude Tete
+;;
+;; This file is NOT part of GNU Emacs.
+;;
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;
+
+;; Keywords: mode, coloration, diff, synergy, telelogic, ibm
+;; Author: Claude Tete  <claude.tete@gmail.com>
+;; Version: 1.1
+;; Created: June 2011
+;; Last-Updated: June 2012
+
+;;; Commentary:
+;; only colors
+
+;;; Change Log:
+;; 2012-06-05 (1.1)
+;;    update header + add provide
+;; 2011-06-24 (1.0)
+;;    fix some bug
+;; 2011-06-17 (0.1)
+;;    creation from scratch
 
 (require 'generic-x) ;; we need this
 
@@ -82,3 +88,8 @@
   ;; doc string for this mode
   "A mode for Magneti Marelli synergy diff files"
   )
+
+
+(provide 'mm-diff)
+
+;;; mm-diff.el ends here

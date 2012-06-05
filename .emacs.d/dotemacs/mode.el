@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.5
+;; Version: 2.6
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-06-05 (2.6)
+;;    remove all profile dependances + use require to nicer messages
 ;; 2012-05-29 (2.5)
 ;;    remove custom compile command (put in EDE project file see in
 ;;    `.emacs.d/myproject.ede.el')
@@ -108,13 +110,13 @@
 ;;
 ;;; CEDET
 ;; REQUIREMENT: var     `section-mode-cedet'
-;;              var     `clt-cedet-path'
+;;              var     `profile-cedet-path'
 (when section-mode-cedet
 ;; to remove warning:
 ;; Warning: cedet-called-interactively-p called with 0 arguments, but requires 1
   (setq byte-compile-warnings nil)
   ;; if the path is define use it to load cedet
-  (if clt-cedet-path
+  (if profile-cedet-path
     (progn
       (message "  2.4 CEDET bzr...")
       ;; REQUIREMENT:
@@ -133,7 +135,7 @@
   (if clt-cedet-bzr
     ;; load from the path clt-cedet-path
     (progn
-      (if (load-file clt-cedet-path)
+      (if (load-file profile-cedet-path)
         (setq clt-cedet-loaded t)
         (message "    cedet was not loaded. Have you removed your-emacs-path/lisp/cedet/ your-emacs-path/lisp/speedbar.* and your-emacs-path/lisp/emacs-lisp/eieio* ?")
         )
@@ -148,39 +150,16 @@
     )
   ;; only if cedet can be loaded
   (when clt-cedet-loaded
-    (cond
-      ;; Magneti Marelli -------------------------------------------------------
-      ((string= clt-working-environment "Magneti Marelli")
-        (custom-set-variables
-          ;; bin path of gnu global for cedet
-          '(cedet-global-command "d:/cygwin/bin/global.exe")
-          '(cedet-global-gtags-command "d:/cygwin/bin/gtags.exe"))
-        ) ; Magneti Marelli
-
-      ;; Alstom Transport ------------------------------------------------------
-      ((string= clt-working-environment "Alstom Transport")
-        (custom-set-variables
-          ;; bin path of gnu global for cedet
-          '(cedet-global-command (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
-          '(cedet-global-gtags-command (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe")))
-        ) ; Alstom Transport
-
-      ;;FIXME working environment default
-      ;; default ---------------------------------------------------------------
-      ((string= clt-working-environment "default")
-        (custom-set-variables
-          ;; bin path of gnu global for cedet
-          '(cedet-global-command (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
-          '(cedet-global-gtags-command (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe")))
-        ) ; default
-      ) ; cond -----------------------------------------------------------------
+    ;; bin path of gnu global for cedet
+    (setq cedet-global-command profile-gnu-global)
+    (setq cedet-global-gtags-command profile-gnu-global-gtags)
 
     ;;
     ;;; SEMANTIC
     ;; REQUIREMENT:     var     `section-mode-cedet-semantic'
     ;; code source parser, etc
     (when section-mode-cedet-semantic (message "    2.4.1 Semantic...")
-      (load-file (concat dotemacs-path "/dotemacs/mode-semantic.el"))
+      (try-require 'mode-semantic "      ")
       (message "    2.4.1 Semantic... Done"))
 
     ;;
@@ -188,7 +167,7 @@
     ;; REQUIREMENT:     var     `section-mode-cedet-ecb'
     ;; transform Emacs interface to IDE
     (when section-mode-cedet-ecb (message "    2.4.2 ECB...")
-      (load-file (concat dotemacs-path "/dotemacs/mode-ecb.el"))
+      (try-require 'mode-ecb "      ")
       (message "    2.4.2 ECB... Done"))
     )
   (message "  2.4 CEDET... Done"))
@@ -224,22 +203,9 @@
   (message "  2.7 Windows Numbering... Done"))
 
 ;;
-;;; C
+;;; C must be put in languages,el
 ;; REQUIREMENT: var     `section-mode-c'
 (when section-mode-c (message "  2.8 C...")
-  ;; new types
-  (defvar c-font-lock-extra-types
-    (list "ubyte" "ushort" "ulong" "ulonglong" "sbyte" "sshort" "slong" "slonglong"))
-
-  ;;;; TRY
-  ;;;; define extra C types to font-lock
-  ;;(setq c-font-lock-extra-types
-  ;;  (append
-  ;;    '("CHAR" "BOOL" "BYTE" "SOCKET" "boolean" "UINT" "UINT16"
-  ;;       "UINT32" "ULONG" "FLOAT" "INT" "INT16" "INT32""uint" "ulong" "string"
-  ;;       "BOOLEAN" "\\sw+_T")
-  ;;    c-font-lock-extra-types))
-
   ;;; CWARN
   ;; REQUIREMENT:       var     `section-mode-c-cwarn'
   ;; show small warning in code source
@@ -310,19 +276,19 @@
   ;;; EOL
   ;; REQUIREMENT:       var     `section-mode-mm-eol'
   (when section-mode-mm-eol (message "    2.12.1 EOL...")
-    (load-file (concat dotemacs-path "/plugins/mm-eol.el"))
+    (try-require 'mm-eol "      ")
     (message "    2.12.1 EOL... Done"))
 
   ;;; CAN DBC
   ;; REQUIREMENT:       var     `section-mode-mm-dbc'
   (when section-mode-mm-dbc (message "    2.12.2 CAN Dbc...")
-    (load-file (concat dotemacs-path "/plugins/mm-dbc.el"))
+    (try-require 'mm-dbc "      ")
     (message "    2.12.2 CAN Dbc... Done"))
 
   ;;; CCM DIFF
   ;; REQUIREMENT:       var     `section-mode-mm-diff'
   (when section-mode-mm-diff (message "    2.12.3 Synergy Diff...")
-    (load-file (concat dotemacs-path "/plugins/mm-diff.el"))
+    (try-require 'mm-diff "      ")
     (message "    2.12.3 Synergy Diff... Done"))
   (message "  2.12 Magneti Marelli... Done"))
 
@@ -351,7 +317,7 @@
 ;;; EPROJECT (grischka) ; never used
 ;; REQUIREMENT: var     `section-mode-eproject'
 (when section-mode-eproject (message "  2.15 Eproject...")
-  (load-file (concat dotemacs-path "/plugins/eproject.el"))
+  (try-require 'eproject "    ")
   ;;(when (try-require 'eproject))
   (message "  2.15 Eproject... Done"))
 
@@ -359,35 +325,29 @@
 ;;; RTRT SCRIPT
 ;; REQUIREMENT: var     `section-mode-rtrt-script'
 (when section-mode-rtrt-script (message "  2.16 RTRT script...")
-  (load-file (concat dotemacs-path "/plugins/rtrt-script.elc"))
+  (try-require 'rtrt-ptu "    ")
   (message "  2.16 RTRT script... Done"))
 
 ;;
 ;;; VC CLEARCASE
 ;; REQUIREMENT: var     `section-mode-vc-clearcase'
-;;              var     `clt-working-environment' "Alstom Transport"
 (when section-mode-vc-clearcase (message "  2.17 VC ClearCase...")
   (add-to-list 'load-path  (concat dotemacs-path "/plugins/vc-clearcase-3.6"))
   (setq load-path (append load-path '(concat dotemacs-path "/plugins/vc-clearcase-3.6")))
-  (load "vc-clearcase-auto")
-  (cond
-    ;; Alstom Transport --------------------------------------------------------
-    ((string= clt-working-environment "Alstom Transport")
-      (custom-set-variables
-        '(clearcase-checkout-comment-type (quote normal))
-        '(clearcase-use-external-diff t)
-        '(clearcase-vtree-program "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/clearvtree.exe")
-        '(cleartool-program "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/cleartool.exe")
-        )
-      ) ; Alstom Transport
-    ) ; cond -------------------------------------------------------------------
+  (try-require 'vc-clearcase-auto "    ")
+  (custom-set-variables
+    '(clearcase-checkout-comment-type (quote normal))
+    '(clearcase-use-external-diff t)
+    '(clearcase-vtree-program profile-clearcase-vtree)
+    '(cleartool-program profile-cleartool)
+    )
   (message "  2.17 VC ClearCase... Done"))
 
 ;;
 ;;; CLEARCASE
 ;; REQUIREMENT: var     `section-mode-clearcase'
 (when section-mode-clearcase (message "  2.18 ClearCase...")
-  (load "clearcase")
+  (try-require 'clearcase "    ")
   (message "  2.18 ClearCase... Done"))
 
 ;;
@@ -413,7 +373,7 @@
 ;; REQUIREMENT: var     `section-mode-auto-highlight-symbol'
 (when section-mode-auto-highlight-symbol (message "  2.21 Auto highlight symbol minor mode...")
   ;; after some idle time the symbol at point will be highlighted in display area
-  (require 'auto-highlight-symbol)
+  (try-require 'auto-highlight-symbol "    ")
   ;; active the mode
   (global-auto-highlight-symbol-mode t)
   (custom-set-variables
@@ -429,12 +389,12 @@
 ;; REQUIREMENT: var     `section-mode-google-calendar'
 (when section-mode-google-calendar (message "  2.22 Google Calendar...")
   ;; can import google calendar in Emacs calendar
-  (when (try-require 'icalendar)
-    (when (try-require 'google-calendar)
-      (setq google-calendar-user           "personne146@gmail.com")
-      (setq google-calendar-code-directory (concat dotemacs-path "/plugins/google"))
-      (setq google-calendar-directory      "~/tmp")
-      (setq google-calendar-url            "http://www.google.com/calendar/ical/personne146%40gmail.com/private-9d0820c331c8b9b271a921d00fe017aa/basic.ics")
+  (when (try-require 'icalendar "    ")
+    (when (try-require 'google-calendar "    ")
+      (setq google-calendar-user           profile-google-calendar-user)
+      (setq google-calendar-code-directory profile-google-calendar-src)
+      (setq google-calendar-directory      profile-google-calendar-directory)
+      (setq google-calendar-url            profile-google-calendar-url)
       (setq google-calendar-auto-update    t)
       (google-calendar-download)
       ))
@@ -522,7 +482,7 @@
 ;;; DIRED SORT
 ;; REQUIREMENT: var     `section-mode-dired-sort'
 (when section-mode-dired-sort (message "  2.29 Dired Sort...")
-  (try-require 'dired-sort-menu)
+  (try-require 'dired-sort-menu "    ")
   (custom-set-variables
     ;; set a profile of sorting
     '(dired-sort-menu-saved-config
@@ -565,10 +525,10 @@
   )
 
 ;; TRY
-(when 0
+(when nil
   ;; it add a small round in modeline where color give status of SVN
   ;; + show all file status of a directory
-  (try-require 'psvn)
+  (try-require 'psvn "    ")
 )
 ;; need to try
 ;(autoload 'ifdef:ifdef-region "ifdef" "ifdef your code" t)
@@ -576,5 +536,8 @@
 ;(autoload 'ifdef:ifdef-else-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:if-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:if-else-region "ifdef" "ifdef your code" t)
+
+
+(provide 'mode)
 
 ;;; mode.el ends here

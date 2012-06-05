@@ -186,4 +186,7 @@
   (setq cua-keep-region-after-copy t) ; Standard Windows behaviour
   (message "    8.1.1 CUA Shortcut... Done"))
 
+
+(provide 'shortcut-global)
+
 ;;; shortcut-global.el ends here

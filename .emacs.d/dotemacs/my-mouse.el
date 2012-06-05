@@ -1,4 +1,4 @@
-;;; mouse.el --- a config file for mouse settings
+;;; my-mouse.el --- a config file for mouse settings
 
 ;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
 ;;
@@ -74,4 +74,7 @@
 ;; unfontified areas when you scroll into them.
 (setq lazy-lock-defer-on-scrolling t)
 
-;;; mouse.el ends here
+
+(provide 'my-mouse)
+
+;;; my-mouse.el ends here

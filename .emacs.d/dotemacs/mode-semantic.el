@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: August 2010
-;; Last-Updated: March 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -53,6 +53,8 @@
 ;; again.
 
 ;;; Change Log:
+;; 2012-06-05 (1.5)
+;;    use require to load project
 ;; 2012-03-30 (1.4)
 ;;    translate comments in English
 ;; 2012-03-28 (1.3)
@@ -101,7 +103,7 @@
     (require 'semantic-ia)
 
     ;; load the different projects
-    (load-file (concat dotemacs-path "/dotemacs/project.el"))
+    (try-require 'project "      ")
 
     (custom-set-variables
       ;; set option to locate a file with GNU Global
@@ -128,7 +130,7 @@
     ;;(setq ede-locate-setup-options '(ede-locate-global ede-locate-base)) ; do not work ?
 
     ;; load the different projects
-    (load-file (concat dotemacs-path "/dotemacs/project.el"))
+    (try-require 'project "      ")
 
     ;; semanticdb is used
     (try-require 'semantic/db "      ")
@@ -175,5 +177,8 @@
     (setq semantic-show-parser-state-mode t)
     ) ; (progn
   ) ; (if clt-cedet-bzr
+
+
+(provide 'mode-semantic)
 
 ;;; mode-semantic.el ends here

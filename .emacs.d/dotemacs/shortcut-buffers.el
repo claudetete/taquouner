@@ -60,4 +60,7 @@
 ;;;; go to the previous buffer (like new editor which I never like it)
 ;;(global-set-key         [(control backtab)]     'next-user-buffer)
 
+
+(provide 'shortcut-buffers)
+
 ;;; shortcut-buffers.el ends here

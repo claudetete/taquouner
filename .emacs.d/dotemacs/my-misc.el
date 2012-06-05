@@ -1,4 +1,4 @@
-;;; misc.el --- a config file for misc settings
+;;; my-misc.el --- a config file for misc settings
 
 ;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
 ;;
@@ -56,7 +56,7 @@
 
 ;; define user name
 ;;FIXME working environment default
-(setq user-full-name "Claude TETE")
+(setq user-full-name profile-username)
 
 ;; use compression
 (auto-compression-mode t)
@@ -69,8 +69,7 @@
   (cons tramp-file-name-regexp nil))
 
 ;; fill-xxx is set with a width of 80 character
-(custom-set-variables
-  '(fill-column 80))
+(setq fill-column profile-fill-column)
 
 ;; keep history between session of emacs (even after close it) for Minibuffer
 (savehist-mode 1)
@@ -89,94 +88,86 @@
 
 ;;
 ;;; CALENDAR
-;; REQUIREMENT: var     `clt-working-environment'
 (when section-misc-calendar (message "  11.1 Calendar...")
   ;; start week with Monday in 'calendar'
   (defvar calendar-week-start-day 1)
   ;;
   ;; to have Sunrise/Sunset time
-  (cond
-    ;; Magneti Marelli ---------------------------------------------------------
-    ((string= clt-working-environment "Magneti Marelli")
-      (setq calendar-latitude 46.84)
-      (setq calendar-longitude 0.55)
-      (setq calendar-location-name "Chatellerault, FR")
-      ) ; Magneti Marelli
-
-    ;; Alstom Transport --------------------------------------------------------
-    ((string= clt-working-environment "Alstom Transport")
-      (setq calendar-latitude 45.76)
-      (setq calendar-longitude 4.91)
-      (setq calendar-location-name "Villeurbanne, FR")
-      ) ; Alstom Transport
-
-    ) ; cond -------------------------------------------------------------------
-
-  ;; set holidays
-  (setq calendar-general-holidays nil)
-  (setq calendar-christian-holidays nil)
-  (setq calendar-hebrew-holidays nil)
-  (setq calendar-islamic-holidays nil)
-  (setq calendar-oriental-holidays nil)
-  (setq calendar-solar-holidays nil)
-
-  ;; ??
-  (setq european-calendar-style 't)
-
-  ;; display today mark in calendar
-  (setq today-visible-calendar-hook 'calendar-mark-today)
-  (setq calendar-today-marker 'highlight)
-
-  ;; load French holidays
-  (when (try-require 'french-holidays)
-    (setq calendar-holidays holiday-french-holidays))
-
+  (setq calendar-latitude profile-latitude)
+  (setq calendar-longitude profile-longitude)
+  (setq calendar-location-name profile-location-name)
 
   (custom-set-variables
-    ;; set display date in European format
-    '(calendar-date-display-form
-       (quote ((if dayname
-                 (concat dayname " ")) day " " monthname " " year)))
-    ;; set name of day's week
-    '(calendar-day-name-array
-       [
-         "Dimanche"
-         "Lundi"
-         "Mardi"
-         "Mercredi"
-         "Jeudi"
-         "Vendredi"
-         "Samedi"])
-    ;;;; holidays are visible in calendar
-    ;;'(calendar-mark-holidays-flag t)
-    ;; set name of month's year
-    '(calendar-month-name-array
-       [
-         "Janvier"
-         "Fevrier"
-         "Mars"
-         "Avril"
-         "Mai"
-         "Juin"
-         "Juillet"
-         "Aout"
-         "Septembre"
-         "Octobre"
-         "Novembre"
-         "Decembre"
-         ])
-    ;; set display time in 24H format
-    '(calendar-time-display-form
-             (quote (24-hours ":" minutes
-                      (if time-zone " (") time-zone (if time-zone ")"))))
     ;; do not show holidays by default
     '(calendar-view-holidays-initially-flag nil)
     ;; show diary mark in calendar
     '(calendar-mark-diary-entries-flag t)
-    ;; set name of lunar phase
-    '(lunar-phase-names
-       (quote ("Nouvelle Lune" "Premier Quartile" "Plein Lune" "Dernier Quartile")))
     )
+
+  (when section-misc-calendar-french (message "11.1.1 French calendar...")
+    ;; display today mark in calendar
+    (setq today-visible-calendar-hook 'calendar-mark-today)
+    (setq calendar-today-marker 'highlight)
+
+    ;; set holidays
+    (setq calendar-general-holidays nil)
+    (setq calendar-christian-holidays nil)
+    (setq calendar-hebrew-holidays nil)
+    (setq calendar-islamic-holidays nil)
+    (setq calendar-oriental-holidays nil)
+    (setq calendar-solar-holidays nil)
+
+    ;; ??
+    (setq european-calendar-style 't)
+
+    ;; load French holidays
+    (when (try-require 'french-holidays)
+      (setq calendar-holidays holiday-french-holidays))
+
+
+    (custom-set-variables
+      ;; set display date in European format
+      '(calendar-date-display-form
+         (quote ((if dayname
+                   (concat dayname " ")) day " " monthname " " year)))
+      ;; set name of day's week
+      '(calendar-day-name-array
+         [
+           "Dimanche"
+           "Lundi"
+           "Mardi"
+           "Mercredi"
+           "Jeudi"
+           "Vendredi"
+           "Samedi"])
+    ;;;; holidays are visible in calendar
+      ;;'(calendar-mark-holidays-flag t)
+      ;; set name of month's year
+      '(calendar-month-name-array
+         [
+           "Janvier"
+           "Fevrier"
+           "Mars"
+           "Avril"
+           "Mai"
+           "Juin"
+           "Juillet"
+           "Aout"
+           "Septembre"
+           "Octobre"
+           "Novembre"
+           "Decembre"
+           ])
+      ;; set display time in 24H format
+      '(calendar-time-display-form
+         (quote (24-hours ":" minutes
+                  (if time-zone " (") time-zone (if time-zone ")"))))
+      ;; set name of lunar phase
+      '(lunar-phase-names
+         (quote ("Nouvelle Lune" "Premier Quartile" "Plein Lune" "Dernier Quartile")))
+      )
+    (message "    11.1.1 French calendar...done")
+    ) ; (when section-misc-calendar-french
 
   ;; TRY
   ;; Diary (by Marc Tommasi)
@@ -213,41 +204,14 @@
 ;; set Cygwin shell
 ;; on MS Windows it works bad
 (when running-on-ms-windows
-  (cond
-    ;; Magneti Marelli ---------------------------------------------------------
-    ((string= clt-working-environment "Magneti Marelli")
-      (setq w32shell-cygwin-bin "d:/cygwin/bin/zsh.exe")
-      ) ; Magneti Marelli
-
-    ;; Alstom Transport --------------------------------------------------------
-    ((string= clt-working-environment "Alstom Transport")
-      (when running-in-graphical
-        (setq w32shell-cygwin-bin "d:/cygwin/bin/zsh.exe"))
-      ) ; Alstom Transport
-
-    ;; default -----------------------------------------------------------------
-    ((string= clt-working-environment "default")
-      (when running-in-graphical
-        ;;FIXME working environment default
-        (setq w32shell-cygwin-bin "c:/path/to/cygwin/bin/bash.exe"))
-      ) ; default
-
-    ) ; cond -------------------------------------------------------------------
-  )
+  (setq w32shell-cygwin-bin profile-shell-cygwin))
 
 ;;
 ;;;; DICTIONARY language
 (when section-misc-dictionary (message "  11.2 Dictionary...")
-  (cond
-    ;; Alstom Transport --------------------------------------------------------
-    ((string= clt-working-environment "Alstom Transport")
-      (add-to-list 'exec-path "C:/Program Files/Aspell/bin/")
-      (setq ispell-program-name "aspell")
-      (setq ispell-dictionary "english")
-      (try-require 'ispell)
-      ) ; Alstom Transport
-
-    ) ; cond -------------------------------------------------------------------
+  (setq ispell-program-name profile-ispell-program)
+  (setq ispell-dictionary profile-ispell-dictionary)
+  (try-require 'ispell)
   (message "  11.2 Dictionary... Done"))
 
 ;;
@@ -260,4 +224,7 @@
   (setq bookmark-save-flag 1)
   (message "  11.3 Bookmark... Done"))
 
-;;; misc.el ends here
+
+(provide 'my-misc)
+
+;;; my-misc.el ends here

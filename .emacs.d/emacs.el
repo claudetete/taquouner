@@ -90,6 +90,11 @@
 ;;
 
 ;; TODO
+;;  - replace working-environment by profile + make profile more easily by
+;;  adding a profile.el file with each configuration needed (maybe a
+;;  profile-end.el to add some config without changing other file to have easy
+;;  update)
+;;
 ;;
 ;; DONE
 ;;  - try browse-kill-ring mode (do not work properly with ECB)
@@ -227,64 +232,40 @@
 (if (window-system)
   (server-start))
 
-;; debug this file if error
-(setq debug-on-error t)
+;;;; debug this file if error
+;;;; do not always work and can be opened in use
+;;(setq debug-on-error t)
 
 ;; increase the size of the log *Messages*
 (custom-set-variables
   '(message-log-max 1000))
 
-
-;;
-;;; WORKING ENVIRONMENT (PROFILE)
-;; this will change some path, function and settings.
-;; to work it must be define with one of following:
-;;                                      "Magneti Marelli"
-;;                                      "Alstom Transport"
-;;                                      "LEA"
-;;                                      "LEA-arch"
-;;                                      "Xebeche"
-;;                                      "epita"
-;;                                      "default"
-(defvar clt-working-environment "default")
+;;; attempt to load a feature/library, failing silently (by Fabrice Niessen)
+;; patched by Claude TETE to add string before message
+(defvar missing-packages-list nil
+  "List of packages that `try-require' can't find.")
 
-;; profile depends of name and system on the machine
-(if (and (string= system-name "CWVBN16EWJ") (string= system-configuration "i386-mingw-nt5.1.2600"))
-  (setq clt-working-environment "Alstom Transport"))
-
-;;
-;;;   DOTEMACS PATH
-;; define path of dotemacs
-(cond
-;; "cond" is a block of code where each "line" (condition sequence)
-  ;; Magneti Marelli
-  ((string= clt-working-environment "Magneti Marelli")
-    (defvar dotemacs-path "d:/cygwin/usr/bin/.emacs.d"))
-  ;; Alstom Transport
-  ((string= clt-working-environment "Alstom Transport")
-    ;; some section are shunted in dotemacs/environment.el for terminal
-    (if (window-system)
-      (defvar dotemacs-path "d:/Users/ctete/tools/.emacs.d")
-      (defvar dotemacs-path "/cygdrive/d/Users/ctete/tools/.emacs.d")))
-  ;; LEA
-  ((string= clt-working-environment "LEA")
-    (defvar dotemacs-path "r:/Configuration/.emacs.d"))
-  ;; LEA-arch
-  ((string= clt-working-environment "LEA-arch")
-    (defvar dotemacs-path "~/.emacs.d"))
-  ;; Xebeche
-  ((string= clt-working-environment "Xebeche")
-    (defvar dotemacs-path "~/.emacs.d"))
-  ;; epita
-  ((string= clt-working-environment "epita")
-    (defvar dotemacs-path "~/.emacs.d"))
-  ;; default
-  ((string= clt-working-environment "default")
-    ;; !!!
-    ;; !!! all sections are overridden in dotemacs/environment.el
-    ;; !!!
-    (defvar dotemacs-path "~/.emacs.d"))
-  )
+(defun try-require (feature &optional indent)
+  "Attempt to load a library or module (FEATURE).  Return true if the library \
+given as argument is successfully loaded.  If not, instead of an error, just \
+add the package to a list of missing packages. INDENT contains string to add \
+before message."
+  (let ()
+    (if (eq indent nil) (setq indent ""))
+  (condition-case err
+      ;; protected form
+      (progn
+        (message "%sChecking for library `%s'..." indent feature)
+        (if (stringp feature)
+            (load-library feature)
+          (require feature))
+        (message "%sChecking for library `%s'... Found" indent feature))
+    ;; error handler
+    (file-error  ; condition
+     (progn
+       (message "%sChecking for library `%s'... Missing" indent feature)
+       (add-to-list 'missing-packages-list feature 'append))
+     nil))))
 
 
 ;;
@@ -296,20 +277,27 @@
 ;; FILE: dotemacs/environment.el
 (defvar section-environment t)
 (progn
-  ;; OS RECOGNITION                                                     0.1
+  ;; PROFILE                                                            0.1
+  (defvar section-environment-profile t)
+  (progn
+    (defvar profile "default")
+    ) ; (progn
+  ;;
+  ;; OS RECOGNITION                                                     0.2
   (defvar section-environment-os-recognition t)
   ;;
-  ;; TERMINAL VS GRAPHICS                                               0.2
+  ;; TERMINAL VS GRAPHICS                                               0.3
   (defvar section-environment-terminal-vs-graphics t)
   ;;
-  ;; WORKING ENVIRONMENT                                                0.3
-  ;; REQUIREMENT:       section-environment-terminal-vs-graphics
-  (defvar section-environment-working-message t)
-  ;;
-  ;; CYGWIN                                                             0.4
+  ;; SET PATH                                                           0.4
   ;; REQUIREMENT:       section-environment-os-recognition
   ;;                    section-environment-terminal-vs-graphics
-  (defvar section-environment-cygwin t)
+  (defvar section-environment-set-path t)
+  (progn
+    (defvar profile-path nil)
+    (defvar profile-exec-path nil)
+    (defvar profile-lang "en_US")
+    ) ; (progn
   ;;
   ;; MS WINDOWS PERFORMANCE                                             0.5
   ;; REQUIREMENT:       section-environment-os-recognition
@@ -320,10 +308,13 @@
   ;; REQUIREMENT:       section-environment-os-recognition
   ;;                    section-environment-terminal-vs-graphics
   (defvar section-environment-executable t)
+  (progn
+    (defvar profile-shell-file-name "bash")
+    ) ; (progn
   ;;
   ;; ELPA                                                               0.7
   ;; for multiple repo and up to date
-  (defvar section-environment-elpa t)
+  (defvar section-environment-elpa nil)
   ;;
   ;; HYPER                                                              0.8
   ;; set menu key as hyper key
@@ -350,18 +341,19 @@
   ;; REQUIREMENT:       section-environment-os-recognition
   ;; load custom function
   (defvar section-external-functions t)
+  (progn
+    ;; MAGNETI MARELLI                                                  1.2.1
+    ;; FILE: dotemacs/function-mm.el
+    ;; load custom function for MM profile
+    (defvar section-external-function-mm nil)
+    ) ; (progn
   ;;
   ;; VECTRA                                                             1.3
   ;; FILE: plugins/vectra.el
   ;; man and doc in emacs (never used)
   (defvar section-external-vectra nil)
   ;;
-  ;; SETNU                                                              1.4
-  ;; FILE: plugins/setnu.el
-  ;; display line number at each line (deprecated exist in emacs)
-  (defvar section-external-setnu nil)
-  ;;
-  ;; HOME/END                                                           1.5
+  ;; HOME/END                                                           1.4
   ;; FILE: plugins/pc-keys.elc
   ;; add some useful function to home and end keys
   (defvar section-external-home-end t)
@@ -394,13 +386,18 @@
   ;;    "your-emacs-path/lisp/cedet"
   ;;    "your-emacs-path/lisp/speedbar.*"
   ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
-  ;;;; see in dotemacs/environment.el
-  ;;(defvar clt-cedet-path (concat dotemacs-path "/plugins/cedet-snap/common/cedet.elc"))
   (progn
+    (defvar profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
+    (defvar profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
+    (defvar profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe"))
+
     ;; SEMANTIC                                                         2.4.1
     ;; FILE: dotemacs/mode-semantic.el
     ;; can do tag, list of function/variable..., preproc, etc
     (defvar section-mode-cedet-semantic t)
+    (progn
+      (defvar profile-ede-project nil)
+      ) ; (progn
     ;;
     ;; ECB                                                              2.4.2
     ;; FILE: dotemacs/mode-ecb.el
@@ -408,6 +405,13 @@
     ;; can display other windows or speedbar to view folder tree, source
     ;; list, variable/function list, buffer history, etc
     (defvar section-mode-cedet-ecb t)
+    (progn
+      (defvar profile-ecb-source-path nil)
+      (defvar profile-ecb-excluded-directories-regexps nil)
+      (defvar profile-ecb-source-file-regexps nil)
+      (defvar profile-ecb-sources-exclude-cvsignore nil)
+      (defvar profile-ecb-history-make-buckets nil)
+      ) ; (progn
     ) ; (progn
 
   ;;
@@ -444,13 +448,13 @@
   ;;
   ;; YASNIPPET                                                          2.10
   ;; snippet mode (not used)
-  (defvar section-mode-yasnippet nil)
+  (defvar section-mode-yasnippet t)
 
   ;;
   ;; BROWSE KILL RING                                                   2.11
   ;; mode to browse the kill ring memory
   ;; yank only on the first left top window...
-  (defvar section-mode-browse-kill-ring t)
+  (defvar section-mode-browse-kill-ring nil)
 
   ;;
   ;; MAGNETI MARELLI                                                    2.12
@@ -488,11 +492,15 @@
   ;;
   ;; RTRT SCRIPT                                                        2.16
   ;; rtrt script mode (syntax coloration)
-  (defvar section-mode-rtrt-script t)
+  (defvar section-mode-rtrt-script nil)
   ;;
   ;; VC CLEARCASE                                                       2.17
   ;; vc ClearCase mode
-  (defvar section-mode-vc-clearcase t)
+  (defvar section-mode-vc-clearcase nil)
+  (progn
+    (defvar profile-clearcase-vtree "clearvtree")
+    (defvar profile-cleartool "cleartool")
+    ) ; (progn
   ;;
   ;; CLEARCASE                                                          2.18
   ;; ClearCase mode
@@ -512,7 +520,7 @@
   ;;
   ;; GOOGLE CALENDAR                                                    2.22
   ;; to import Google calendar
-  (defvar section-mode-google-calendar t)
+  (defvar section-mode-google-calendar nil)
   ;;
   ;; FILL COLUMN INDICATOR                                              2.23
   ;; show a line at fill-column (set at 80 in dotemacs/misc.el
@@ -562,10 +570,19 @@
   ;; C                                                                  3.1
   ;; set indentation style and preprocessing option
   (defvar section-languages-c t)
+  (progn
+    (defvar profile-c-indent-offset 4)
+    (defvar profile-c-extra-types nil)
+    (defvar profile-c-macro-preprocessor "cpp -C")
+    (defvar profile-c-macro-cppflags "")
+    ) ; (progn
   ;;
   ;; LISP                                                               3.2
   ;; set indentation style
   (defvar section-languages-lisp t)
+  (progn
+    (defvar profile-lisp-indent-offset 4)
+    ) ; (progn
   ;;
   ;; TAB                                                                3.3
   ;; tab always in space
@@ -573,11 +590,14 @@
   ;;
   ;; RTRT SCRIPT PTU                                                    3.4
   ;; set indentation style
-  (defvar section-languages-rtrt-script t)
+  (defvar section-languages-rtrt-script nil)
   ;;
   ;; PERL                                                               3.5
   ;; set indentation style
   (defvar section-languages-perl t)
+  (progn
+    (defvar profile-perl-indent-offset 4)
+    ) ; (progn
   ) ; (progn
 
 
@@ -589,26 +609,20 @@
 (progn
   ;; SHIFT SELECTION                                                    4.1
   ;; selection can be done with shit and arrow keys (default setting since 23.3)
-  (defvar section-selection-with-shift nil)
+  (defvar section-selection-with-shift t)
   ) ; (progn
 
 
 ;;
 ;;; DISPLAY                                                             5
-(defvar section-mydisplay t)
+(defvar section-display t)
 (progn
-;; WINDOWS/BUFFERS                                                      5.1
-;; FILE: dotemacs/display-buffer.el
-;; buffers with *buffername* should be displayed in the same window
-;; first column in window will display buffer limit
-;; next page will leave 5 shared line
+  ;; WINDOWS/BUFFERS                                                    5.1
+  ;; FILE: dotemacs/display-buffer.el
+  ;; buffers with *buffername* should be displayed in the same window
+  ;; first column in window will display buffer limit
+  ;; next page will leave 5 shared line
   (defvar section-display-windows-buffers t)
-  (progn
-    ;; TRANSPARENCY                                                     5.1.1
-    ;; the whole emacs will be transparent
-    (defvar section-display-windows-buffers-transparency t)
-    (defvar clt-frame-transparency 96) ; 100 = opaque
-    ) ; (progn
 
   ;;
   ;; SPEEDBAR                                                           5.2
@@ -624,6 +638,9 @@
   ;; set font in terminal or in graphic
   (defvar section-display-font t)
   (progn
+    ;;
+    (defvar profile-font "-outline-Courier New-normal-normal-normal-mono-*-*-*-*-c-*-iso10646-1")
+    ;;
     ;; INTERNATIONAL                                                    5.3.1
     ;; ISO or utf-8 or ...  (not used)
     (defvar section-display-font-international t)
@@ -649,26 +666,29 @@
     ;; COLOR THEME                                                      5.4.4
     ;; set color by color-theme mode
     (defvar section-display-color-theme t)
+    (progn
+      (defvar profile-color-theme "zenburn")
+      ) ; (progn
 
     ;; MISC                                                             5.4.4
     ;; REQUIREMENT:     section-environment-terminal-vs-graphics
     ;;                  section-display-color-theme nil
     ;; current line highlight + full syntax coloration
-    (defvar section-display-color-misc t)
+    (defvar section-display-color-misc nil)
     ;;
     ;; MODE                                                             5.4.5
     ;; REQUIREMENT:     section-environment-terminal-vs-graphics
     ;; set color for c-mode, cursor and current line
-    (defvar section-display-color-mode t)
+    (defvar section-display-color-mode nil)
     ;;
     ;; GREP                                                             5.4.6
     ;; set color for grep window (all search, occur, grep, grep-find, etc)
-    (defvar section-display-color-grep t)
+    (defvar section-display-color-grep nil)
     ;;
     ;; ECB                                                              5.4.7
     ;; REQUIREMENT:     section-mode-cedet-ecb
     ;; set color for ecb-mode
-    (defvar section-display-color-ecb t)
+    (defvar section-display-color-ecb nil)
     ) ; (progn
   ) ; (progn
 
@@ -681,18 +701,24 @@
 (progn
   ;; DECORATION                                                         6.1
   ;; remove all mouse interface (toolbar, menubar, scrollbar)
-  (defvar section-interface-decoration t)
+  (defvar section-interface-decoration nil)
   ;;
   ;; MODELINE                                                           6.2
   ;; FILE: dotemacs/interface-modeline.el
   ;; set some option to add in the grey line at the bottom of each buffer
   (defvar section-interface-modeline t)
+  ;; TRANSPARENCY                                                       6.3
+  ;; the whole emacs will be transparent
+  (defvar section-interface-transparency t)
+  (progn
+    (defvar profile-transparency 100)
+    ) ; (progn
   ;;
-  ;; FULLSCREEN                                                         6.3
+  ;; FULLSCREEN                                                         6.4
   ;; REQUIREMENT:       section-environment-os-recognition
   (defvar section-interface-fullscreen t)
   ;;
-  ;; ECB                                                                6.4
+  ;; ECB                                                                6.5
   ;; FILE: dotemacs/interface-ecb.el
   ;; REQUIREMENT:       section-mode-cedet-ecb
   ;; set size, display, refresh and remove opening tips
@@ -700,7 +726,7 @@
   (progn
     ;; ECB ASCII TREE
     ;; display ascii guides instead of image for arborescence tree      6.4.1
-    (defvar section-interface-ecb-ascii-tree t)
+    (defvar section-interface-ecb-ascii-tree nil)
     )
   ) ; (progn
 
@@ -782,11 +808,11 @@
   ;;
   ;; PASTE CURSOR                                                       9.1
   ;; yank at point not mouse cursor (either when yank with mouse wheel)
-  (defvar section-mouse-paste-to-point-not-mouse-cursor t)
+  (defvar section-mouse-paste-to-point-not-mouse-cursor nil)
   ;;
   ;; AVOIDANCE                                                          9.2
   ;; mouse cursor avoid the keyboard cursor when typing
-  (defvar section-mouse-avoidance t)
+  (defvar section-mouse-avoidance nil)
 ) ; (progn
 
 
@@ -801,11 +827,11 @@
   ;;
   ;; TRUNCATE LINE                                                      10.1
   ;; whole line not visible (need to scroll right)
-  (defvar section-annoyances-truncate-line nil)
+  (defvar section-annoyances-truncate-line t)
   ;;
   ;; SCROLL PRESERVE CURSOR POSITION                                    10.2
   ;; when wheel scroll the cursor do not move
-  (defvar section-annoyances-scroll-preserve-cursor-position nil)
+  (defvar section-annoyances-scroll-preserve-cursor-position t)
   ;;
   ;; NO BACKUP FILE                                                     10.3
   ;; no backup file will be created
@@ -825,14 +851,22 @@
 (defvar section-misc t)
 (progn
   ;;
+  (defvar profile-backup-directory (concat dotemacs-path "/backup"))
+  (defvar profile-autosave-directory (concat dotemacs-path "/cache"))
+  (defvar profile-fill-column 78)
+  (defvar profile-ispell-program "aspell")
+  (defvar profile-ispell-dictionary "english")
+  ;;
   ;; CALENDAR                                                           11.1
   ;; set latitude/longitude + location + holidays + custom date in Modeline
   ;; lunar phase, sunrise/sunset, time etc
-  (defvar section-misc-calendar t)
+  (defvar section-misc-calendar nil)
+  ;;
+  (defvar profile-shell-cygwin "bash")
   ;;
   ;; DICTIONARY                                                         11.2
   ;; set default dictionary, etc
-  (defvar section-misc-dictionary t)
+  (defvar section-misc-dictionary nil)
   ;;
   ;; BOOKMARK                                                           11.3
   ;; set default bookmark storage
@@ -848,137 +882,81 @@
 (defvar section-filecustomize t)
 
 
+;; add to load path the dotemacs directory
+(add-to-list 'load-path (concat dotemacs-path "/dotemacs"))
+(setq load-path (cons (expand-file-name (concat dotemacs-path "/dotemacs")) load-path))
+
 ;;
 ;;; ENVIRONMENT
 (when section-environment (message "0 Environment...")
-  (load-file (concat dotemacs-path "/dotemacs/environment.el"))
+  (try-require 'environment "  ")
   (message "0 Environment... Done"))
 
 ;;
 ;;; EXTERN FILES
 (when section-external (message "1 External files...")
-  (load-file (concat dotemacs-path "/dotemacs/externfiles.el"))
+  (try-require 'externfiles "  ")
   (message "1 External files... Done"))
 
 ;;
 ;;; MODE
 (when section-mode (message "2 Mode...")
-  (load-file (concat dotemacs-path "/dotemacs/mode.el"))
+  (try-require 'mode "  ")
   (message "2 Mode... Done"))
 
 ;;
 ;;; LANGUAGES
 (when section-languages (message "3 Languages...")
-  (load-file (concat dotemacs-path "/dotemacs/languages.el"))
+  (try-require 'languages "  ")
   (message "3 Languages... Done"))
 
 ;;
 ;;; SELECTION
 (when section-selection (message "4 Selection...")
-  (load-file (concat dotemacs-path "/dotemacs/selection.el"))
+  (try-require 'selection "  ")
   (message "4 Selection... Done"))
 
 ;;
 ;;; DISPLAY
-(when section-mydisplay (message "5 Display...")
-  ;; WINDOWS/BUFFERS
-  (when section-display-windows-buffers (message "  5.1 Windows / Buffers...")
-    (load-file (concat dotemacs-path "/dotemacs/display-buffer.el"))
-    (message "  5.1 Windows / Buffers... Done"))
-  ;;
-  ;; SPEEDBAR
-  (when section-display-speedbar (message "  5.2 SpeedBar...")
-    (load-file (concat dotemacs-path "/dotemacs/display-speedbar.el"))
-    (message "  5.2 SpeedBar... Done"))
-  ;;
-  ;; FONT
-  (when section-display-font (message "  5.3 Font...")
-    (load-file (concat dotemacs-path "/dotemacs/display-font.el"))
-    (message "  5.3 Font... Done"))
-  ;;
-  ;; COLOR
-  (when section-display-color (message "  5.4 Color...")
-    (load-file (concat dotemacs-path "/dotemacs/display-color.el"))
-    (message "  5.4 Color... Done"))
+(when section-display (message "5 Display...")
+  (try-require 'display "  ")
   (message "5 Display... Done"))
 
 
 ;;
 ;;; INTERFACE
 (when section-interface (message "6 Interface...")
-  (load-file (concat dotemacs-path "/dotemacs/interface.el"))
-  ;; ECB
-  (when section-interface-ecb (message "  6.4 Ecb...")
-    (load-file (concat dotemacs-path "/dotemacs/interface-ecb.el"))
-    (message "  6.4 Ecb... Done"))
+  (try-require 'interface "  ")
   (message "6 Interface... Done"))
 
 ;;
 ;;; COMPLETION
 (when section-completion (message "7 Completion...")
-  (load-file (concat dotemacs-path "/dotemacs/completion.el"))
+  (try-require 'completion "  ")
   (message "7 Completion... Done"))
 
 ;;
 ;;; SHORTCUT
 (when section-shortcut (message "8 Shortcut...")
-  ;; GLOBAL
-  (when section-shortcut-global (message "  8.1 Global Shortcuts...")
-    (load-file (concat dotemacs-path "/dotemacs/shortcut-global.el"))
-    (message "  8.1 Global Shortcuts... Done"))
-  ;;
-  ;; WINDOWS
-  (when section-shortcut-windows (message "  8.2 Windows Shortcuts...")
-    (load-file (concat dotemacs-path "/dotemacs/shortcut-windows.el"))
-    (message "  8.2 Windows Shortcuts... Done"))
-  ;;
-  ;; BUFFERS
-  (when section-shortcut-buffers (message "  8.3 Buffers Shortcuts...")
-    (load-file (concat dotemacs-path "/dotemacs/shortcut-buffers.el"))
-    (message "  8.3 Buffers Shortcuts... Done"))
-  ;;
-  ;; ECB
-  (when section-shortcut-ecb (message "  8.4 Ecb Shortcuts...")
-    (load-file (concat dotemacs-path "/dotemacs/shortcut-ecb.el"))
-    (message "  8.4 Ecb Shortcuts... Done"))
-  ;;
-  ;; GREP
-  (when section-shortcut-grep (message "  8.5 Grep Shortcuts...")
-    (load-file (concat dotemacs-path "/dotemacs/shortcut-grep.el"))
-    (message "  8.5 Grep Shortcuts... Done"))
-  ;;
-  ;; FUNCTION
-  (when section-shortcut-function (message "  8.6 Functions Shortcuts...")
-    (load-file (concat dotemacs-path "/dotemacs/shortcut-function.el"))
-    (message "  8.6 Functions Shortcuts... Done"))
-  ;;
-  ;; TAGS
-  (when section-shortcut-tags (message "  8.7 Tags Shortcuts...")
-    (load-file (concat dotemacs-path "/dotemacs/shortcut-tags.el"))
-    (message "  8.7 Tags Shortcuts... Done"))
-  ;;
-  ;; SEMANTIC
-  (when section-shortcut-semantic (message "  8.8 Semantic Shortcuts...")
-    (load-file (concat dotemacs-path "/dotemacs/shortcut-semantic.el"))
-    (message "  8.8 Semantic Shortcuts... Done"))
+  (try-require 'shortcut "  ")
   (message "8 Shortcut... Done"))
 
 ;;
 ;;; MOUSE
 (when section-mouse (message "9 Mouse...")
-  (load-file (concat dotemacs-path "/dotemacs/mouse.el"))
+  (try-require 'my-mouse "  ")
   (message "9 Mouse... Done"))
 
 ;;
 ;;; ANNOYANCES
 (when section-annoyances (message "10 Annoyances...")
-  (load-file (concat dotemacs-path "/dotemacs/annoyances.el"))
+  (try-require 'annoyances "  ")
   (message "10 Annoyances... Done"))
 
 ;;
 ;;; MISC
 (when section-misc (message "11 Misc...")
-  (load-file (concat dotemacs-path "/dotemacs/misc.el"))
+  (try-require 'my-misc "  ")
   (message "11 Misc... Done"))
 
 ;;
@@ -986,7 +964,7 @@
 (when section-filecustomize (message "12 File custom...")
   ;; customize modification (made by Emacs interface) are put in custom.el
   (setq custom-file (concat dotemacs-path "/dotemacs/custom.el"))
-  (load-file (concat dotemacs-path "/dotemacs/custom.el"))
+  (try-require 'my-custom "  ")
   (message "12 File custom... Done"))
 
 ;;; emacs.el ends here

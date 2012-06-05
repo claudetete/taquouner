@@ -134,4 +134,7 @@
 ;; improve tab key for hide show mode
 (define-key     hs-minor-mode-map       [tab]   'tab-hs-hide)
 
+
+(provide 'shortcut-function)
+
 ;;; shortcut-function.el ends here

@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-annoyances'
 
 ;;; Change Log:
+;; 2012-06-05 (1.6)
+;;    autosave and backup directory are put in profile files when
+;;    nothing is set it take the temporary system folder
 ;; 2012-04-16 (1.5)
 ;;    add working environment condition
 ;; 2012-03-30 (1.4)
@@ -72,14 +75,6 @@
 ;;
 ;; no more dialog boxes for files
 (setq use-file-dialog nil)
-;;
-;; no more #foo.bar# files (auto-save file)
-;;; I don't want it
-;;;(auto-save-mode nil)
-;;
-;; Put auto-save files #foo.bar# in one directory,
-;; do not put it all over file system
-(defvar autosave-dir (concat dotemacs-path "/cache"))
 
 ;; no more tooltips (delay of 9999 seconds before displayed)
 (setq tooltip-delay 9999)
@@ -134,30 +129,34 @@
 ;; REQUIREMENT: var     `section-annoyances-backup-file-in-directory'
 (when section-annoyances-backup-file-in-directory (message "  10.4 All backup files in a directory...")
   ;; All backup files goes in a directory.
-  (cond
-    ;; Alstom Transport --------------------------------------------------------
-    ((string= clt-working-environment "Alstom Transport")
-      (custom-set-variables
-        '(backup-directory-alist (quote ((".*" . "d:/Users/ctete/tools/.emacs.d/backup"))))
-        )
-      ) ; Alstom Transport
-
-    ;; default -----------------------------------------------------------------
-    ((string= clt-working-environment "default")
+  (if profile-backup-directory
+    (progn
+      (setq backup-directory-alist
+        `((".*" . ,profile-backup-directory)))
+      (setq auto-save-file-name-transforms
+        `((".*" ,profile-autosave-directory t)))
+      ;;;; no more #foo.bar# files (auto-save file)
+      ;;;; I don't want it
+      ;;(auto-save-mode nil)
+      ) ; (progn
+    (progn
       ;; put all backup file in the temporary directory of the system
       (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
       ;; put all auto-save file in the temporary directory of the system
       (setq auto-save-file-name-transforms
         `((".*" ,temporary-file-directory t)))
-      ) ; default
+      ) ; (progn
+    ) ; (if profile-backup-directory
 
-    ) ; cond -------------------------------------------------------------------
   (setq backup-by-copying t   ; don't clobber symlinks
     version-control t         ; use version backups
     delete-old-versions t
     kept-new-versions 6
     kept-old-versions 2)
   (message "  10.4 All backup files in a directory... Done"))
+
+
+(provide 'annoyances)
 
 ;;; annoyances.el ends here

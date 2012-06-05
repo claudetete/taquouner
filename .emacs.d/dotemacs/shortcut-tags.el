@@ -112,4 +112,7 @@
 (when section-mode-c-data-debug
   (global-set-key       "\M-:"                  'data-debug-eval-expression))
 
+
+(provide 'shortcut-tags)
+
 ;;; shortcut-tags.el ends here

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, buffer, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-display-windows-buffers'
 
 ;;; Change Log:
+;; 2012-06-05 (1.4)
+;;    move transparency to interface.el
 ;; 2012-05-04 (1.3)
 ;;    add three possibility of transparency
 ;; 2012-03-20 (1.2)
@@ -65,20 +67,6 @@
 ;; file
 (setq-default indicate-buffer-boundaries (quote left))
 
-;;
-;;;; TRANSPARENCY
-;; REQUIREMENT: var     `section-display-windows-buffers-transparency'
-(when section-display-windows-buffers-transparency (message "    5.1.1 Transparency...")
-  ;; the whole window of Emacs will be transparent
-  (if (> clt-frame-transparency 100)
-    (add-to-list 'default-frame-alist '(alpha 100 100))
-    (if (> clt-frame-transparency 90)
-      (add-to-list 'default-frame-alist '(alpha 96 96))
-      (add-to-list 'default-frame-alist '(alpha 90 90))
-      )
-    )
-  (message "    5.1.1 Transparency... Done"))
-
 ;; after a PageUp or Down, it will display 5 shared lines
 (custom-set-variables
   '(next-screen-context-lines 5))
@@ -86,5 +74,8 @@
 ;;; do not work as expected
 ;;; (custom-set-faces
 ;;;   '(default ((t (:stipple "d:/wallpaper.png")))))
+
+
+(provide 'display-buffer)
 
 ;;; display-buffer.el ends here

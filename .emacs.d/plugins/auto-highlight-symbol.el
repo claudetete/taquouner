@@ -1617,6 +1617,7 @@ That's all."
 ;; Remove all overlays and exit edit mode before revert-buffer
 (add-hook 'before-revert-hook 'ahs-clear)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'auto-highlight-symbol)
