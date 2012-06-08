@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-08 (1.9)
+;;    add shortcut to (un)comment, and move by parenthesis
 ;; 2012-05-29 (1.8)
 ;;    add shortcuts to fill region and to change dictionary in ispell mode
 ;; 2012-05-10 (1.7)
@@ -136,6 +138,13 @@
 
 ;; change local dictionary
 (global-set-key         (kbd "C-c $")           'ispell-change-dictionary)
+
+;; (un)comment region
+(global-set-key         (kbd "H-/")             'comment-or-uncomment-region)
+
+;; move to the matched parenthesis
+(global-set-key         (kbd "<H-right>")        'forward-sexp)
+(global-set-key         (kbd "<H-left>")         'backward-sexp)
 
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol

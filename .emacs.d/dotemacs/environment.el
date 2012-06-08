@@ -20,7 +20,7 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,8 @@
 ;;              var     `dotemacs-path'
 
 ;;; Change Log:
+;; 2012-06-08 (2.4)
+;;    add ediff path + add environment variable for cygwin error
 ;; 2012-06-05 (2.3)
 ;;    use profile instead of working environment and put all settings
 ;;    in profile files
@@ -134,7 +136,9 @@
   ;;
   ;; try to improve slow performance on windows.
   (if running-on-ms-windows
-    (setq w32-get-true-file-attributes nil))
+    (setenv "CYGWIN" "nodosfilewarning")
+    (setq w32-get-true-file-attributes nil)
+    )
   (message "  0.5 Windows: improve performance... Done"))
 
 ;;
@@ -143,6 +147,9 @@
 (when section-environment-executable (message "  0.6 Executable...")
   (custom-set-variables
     '(shell-file-name profile-shell-file-name)
+    '(ediff-diff-program profile-ediff-diff-program)
+    '(ediff-diff3-program profile-ediff-diff3-program)
+    '(ediff-cmp-program profile-ediff-cmp-program)
     )
   (setq explicit-bash-args '("--login" "-i"))
   (message "  0.6 Executable... Done"))

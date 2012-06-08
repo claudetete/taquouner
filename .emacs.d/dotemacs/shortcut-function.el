@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.0
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,9 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-08 (2.0)
+;;    fix bug about word selection, isearch word + add scroll without moving
+;;    cursor
 ;; 2012-05-29 (1.9)
 ;;    add shortcuts for new clearcase integration function
 ;; 2012-05-14 (1.8)
@@ -64,21 +67,24 @@
 ;;(global-set-key "\C-cd"                 'mm-can-insert-separation)
 
 ;; select the whole word at point
-(global-set-key         "\C-\M-z"           'select-word-under)
-(global-set-key         "\C-\M-c"           'occur-word-at-point)
+(global-set-key         "\C-\M-z"               'select-word-under)
+;; search the word at point (cannot bind C-M-x still run 'eval-defun)
+(global-set-key         (kbd "C-M-v")           'isearch-forward-at-point)
+;; search all occurences at point
+(global-set-key         "\C-\M-c"               'occur-word-at-point)
 
 ;; some setting are done after launch (only MS Windows)
-(global-set-key         "\C-cl"             'mystart-up)
+(global-set-key         "\C-cl"                 'mystart-up)
 
 ;; use align regexp for .ptu file (rtrt script)
-(global-set-key         "\C-cpo"            'rtrt-align-init)
-(global-set-key         "\C-cp;"            'rtrt-align-ev)
-(global-set-key         "\C-cp["            'rtrt-align-declaration)
-(global-set-key         "\C-cp="            'rtrt-align-set)
+(global-set-key         "\C-cpo"                'rtrt-align-init)
+(global-set-key         "\C-cp;"                'rtrt-align-ev)
+(global-set-key         "\C-cp["                'rtrt-align-declaration)
+(global-set-key         "\C-cp="                'rtrt-align-set)
 
 ;; format the .ptu file (rtrt script)
-(global-set-key         "\C-crv"            'rtrt-upcase-var-string)
-(global-set-key         "\C-crs"            'rtrt-remove-whitespace-before-colon)
+(global-set-key         "\C-crv"                'rtrt-upcase-var-string)
+(global-set-key         "\C-crs"                'rtrt-remove-whitespace-before-colon)
 
 ;;;; preprocess a C macro for NSF project
 ;;(global-set-key         "\C-cms"            'nsf-c-expand-macro)
@@ -130,6 +136,10 @@
 (global-set-key         (kbd "C-c c i")         'clearcase-checkin-graphical)
 ;; element properties
 (global-set-key         (kbd "C-c c f")         'clearcase-find-checkout-graphical)
+
+;; scroll while keeping cursor position
+(global-set-key         (kbd "<H-down>")        'scroll-down-keep-cursor)
+(global-set-key         (kbd "<H-up>")          'scroll-up-keep-cursor)
 
 ;; improve tab key for hide show mode
 (define-key     hs-minor-mode-map       [tab]   'tab-hs-hide)

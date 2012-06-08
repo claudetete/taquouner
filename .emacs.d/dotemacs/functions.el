@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.0
+;; Version: 4.1
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,9 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-06-08 (4.1)
+;;    add slick copy (copy when not selected) + (un)comment + scroll without
+;;    moving cursor + maximize function + some functions to test
 ;; 2012-06-05 (4.0)
 ;;    start to split + remove dead source code
 ;; 2012-05-29 (3.9)
@@ -216,7 +219,7 @@ current line instead."
   (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
   (setq isearch-string isearch-initial-string)
   (isearch-search-and-update)
-)
+  )
 (defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
   "Interactive search forward for the symbol at point (optional REGEXP-P and NO-RECURSIVE-EDIT)."
   (interactive "P\np")
@@ -880,6 +883,56 @@ clearcase."
     )
   )
 
+;; slick-copy: make copy-past a bit more intelligent
+;; from: http://www.emacswiki.org/emacs/SlickCopy
+(defadvice kill-ring-save (before slick-copy activate compile)
+  "When called interactively with no active region, copy a single
+line instead."
+  (interactive
+    (if mark-active (list (region-beginning) (region-end))
+      (message "Copied line")
+      (list (line-beginning-position)
+               (line-beginning-position 2)))))
+
+(defadvice kill-region (before slick-cut activate compile)
+  "When called interactively with no active region, kill a single
+line instead."
+  (interactive
+    (if mark-active (list (region-beginning) (region-end))
+      (list (line-beginning-position)
+        (line-beginning-position 2)))))
+
+
+;; inspire from slick-copy
+;; (un)comment line if no region is marked
+(defadvice comment-or-uncomment-region (before slick-copy activate compile)
+  "When called interactively with no active region, (un)comment a single
+line instead."
+  (interactive
+    (if mark-active (list (region-beginning) (region-end))
+      (list (line-beginning-position)
+               (line-beginning-position 2)))))
+
+;; Scroll the text one line down while keeping the cursor (by Geotechnical
+;; Software Services)
+(defun scroll-down-keep-cursor ()
+  (interactive)
+  (scroll-down 1))
+
+;; Scroll the text one line up while keeping the cursor (by Geotechnical
+;; Software Services)
+(defun scroll-up-keep-cursor ()
+  (interactive)
+  (scroll-up 1))
+
+;; maximize the current frame (the whole Emacs window) (by Claude TETE)
+(defun frame-maximizer ()
+  "Maximize the current frame"
+  (interactive)
+  (when running-on-ms-windows
+    (w32-send-sys-command 61488))
+  )
+
 ;;
 ;;;
 ;;;; MAGNETI MARELLI
@@ -898,6 +951,23 @@ clearcase."
 
 (setq semantic-c-takeover-hideif t)
 
+;; (by Scott McPeak)
+; ----------------- insertion macros --------------------
+; insert current date/time
+;   %m   month in [01..12]
+;   %-m  month in [1..12]
+;   %d   day in [01..31]
+;   %y   year in [00..99]
+;   %Y   full year
+;   %H   hour in [00..23]
+;   %M   minute in [00..59]
+; see format-time-string for more info on formatting options
+(defun my-time-string ()
+  (format-time-string "%Y-%m-%d %H:%M"))
+(defun insert-time-string ()
+  "Insert time and date at cursor."
+  (interactive)
+  (insert (my-time-string)))
 
 ;;; Copy entire line in kill ring (without Home C-k C-y) (by Claude TETE)
 (defun push-line ()
@@ -907,6 +977,67 @@ clearcase."
     (copy-region-as-kill (re-search-backward "^") (re-search-forward "$"))
   )
 )
+
+
+;; This is what I bind to Alt-[ and Alt-]. (by Scott McPeak)
+(defun find-matching-keyword ()
+  "Find the matching keyword of a balanced pair."
+  (interactive)
+  (cond
+    ; these first two come from lisp/emulation/vi.el
+    ((looking-at "[[({]") (forward-sexp 1) (backward-char 1))
+    ((looking-at "[])}]") (forward-char 1) (backward-sexp 1))
+
+    ; TODO: Should the set of pairs be sensitive to the mode of
+    ; the current file?
+
+    ; Kettle CVC
+    ((looking-at "ASSERT")
+     (find-matching-element 're-search-forward 6 "ASSERT" "RETRACT"))
+    ((looking-at "RETRACT")
+     (find-matching-element 're-search-backward 0 "RETRACT" "ASSERT"))
+
+    ; Kettle CVC
+    ;
+    ; "\\b": word boundary assertion, needed because one delimiter is
+    ; a substring of the other
+    ((looking-at "BLOCK")
+     (find-matching-element 're-search-forward 5 "\\bBLOCK\\b" "ENDBLOCK"))
+    ((looking-at "ENDBLOCK")
+     (find-matching-element 're-search-backward 0 "ENDBLOCK" "\\bBLOCK\\b"))
+
+    ; Simplify
+    ((looking-at "BG_PUSH")
+     (find-matching-element 're-search-forward 7 "BG_PUSH" "BG_POP"))
+    ((looking-at "BG_POP")
+     (find-matching-element 're-search-backward 0 "BG_POP" "BG_PUSH"))
+
+    ; C/C++
+    ((looking-at "#if")
+     (find-matching-element 're-search-forward 3 "#if" "#endif"))
+    ((looking-at "#endif")
+     (find-matching-element 're-search-backward 0 "#endif" "#if"))
+
+    ; ML
+    ;
+    ; this does not quite work because e.g. "struct" is also terminated
+    ; with "end" ..
+    ((looking-at "begin")
+     (find-matching-element 're-search-forward 5 "\\bbegin\\b" "\\bend\\b"))
+    ((looking-at "end")
+     (find-matching-element 're-search-backward 0 "\\bend\\b" "\\bbegin\\b"))
+
+    ;(t (error "Cursor is not on ASSERT nor RETRACT"))
+    (t t)
+  ))
+
+;; Stefan Monnier . It is the opposite of fill-paragraph
+;; Takes a multi-line paragraph and makes it into a single line of text.
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+
 
 ;;; toggle fill-paragraph and "unfill" (by Xah Lee)
 ;; do not work

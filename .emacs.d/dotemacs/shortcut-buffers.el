@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.3
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-08 (1.3)
+;;    add clearcase shortcuts
 ;; 2012-03-30 (1.2)
 ;;    translate comments in English + cleaning
 ;; 2012-03-23 (1.1)
@@ -60,6 +62,13 @@
 ;;;; go to the previous buffer (like new editor which I never like it)
 ;;(global-set-key         [(control backtab)]     'next-user-buffer)
 
+;; only for clearcase mode
+(when section-mode-clearcase
+  ;; ediff with previous (can open a new frame before with C-x 5 2)
+  (global-set-key         (kbd "C-x v `")         'clearcase-ediff-pred-current-buffer)
+  ;; ediff with named version
+  (global-set-key         (kbd "C-x v 1")         'clearcase-ediff-named-version-current-buffer)
+)
 
 (provide 'shortcut-buffers)
 

@@ -49,6 +49,9 @@
 
 (setq profile-shell-file-name "D:/cygwin/bin/bash.exe")
 (setq profile-shell-cygwin "d:/cygwin/bin/zsh.exe")
+(setq profile-ediff-diff-program "d:/cygwin/usr/bin/GnuWin32/bin/diff.exe")
+(setq profile-ediff-diff3-program "d:/cygwin/usr/bin/GnuWin32/bin/diff3.exe")
+(setq profile-ediff-cmp-program "d:/cygwin/usr/bin/GnuWin32/bin/cmp.exe")
 
 (setq profile-backup-directory (concat dotemacs-path "/backup"))
 (setq profile-backup-directory (concat dotemacs-path "/cache"))
@@ -205,11 +208,15 @@
   (setq section-mode-dired-sort t)
   (setq section-mode-org-mode nil)
   (setq section-mode-isearch+ nil)
+  (setq section-mode-psvn nil)
   )
 
 (setq section-languages t)
 (progn
   (setq section-languages-c t)
+  (progn
+    (setq section-languages-c-indent-preprocessor t)
+    )
   (setq section-languages-lisp t)
   (setq section-languages-tabulation t)
   (setq section-languages-rtrt-script nil)

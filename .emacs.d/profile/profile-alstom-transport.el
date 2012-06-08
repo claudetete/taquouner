@@ -121,6 +121,11 @@
 (setq profile-shell-file-name "D:/cygwin/bin/bash.exe")
 (setq profile-shell-cygwin "d:/cygwin/bin/zsh.exe")
 
+;; ediff
+(setq profile-ediff-diff-program "C:/Program Files/GnuWin32/bin/diff.exe")
+(setq profile-ediff-diff3-program "C:/Program Files/GnuWin32/bin/diff3.exe")
+(setq profile-ediff-cmp-program "C:/Program Files/GnuWin32/bin/cmp.exe")
+
 ;; backup directory
 (setq profile-backup-directory (concat dotemacs-path "/backup"))
 (setq profile-autosave-directory (concat dotemacs-path "/cache"))
@@ -226,7 +231,7 @@
      ("m:/e_ctete/a2kc/test/CCN4/test_s/puma/TestU/sharc/"   "PUMA_RTRT")
      ("d:/Documents and Settings/100516805/Application Data" "/home")
      ("m:/"                                                  "/ClearCase")
-     ("t:/"                                                  "/Trash")
+     ("p:/"                                                  "/Trash")
      ("d:/Users/ctete"                                       "/Users")
      ("d:/Users/ctete/tmp"                                   "/tmp")
      )
@@ -243,7 +248,7 @@
 ;; files to be ignored in "ecb source" !! RTFM !!
 (setq profile-ecb-source-file-regexps
      '((".*"
-         ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|err\\|i\\|met\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
+         ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|err\\|i\\|met\\|merge\\|contrib\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
          ("^\\.\\(emacs\\|gnus\\)$"))
         )
   )
@@ -396,9 +401,9 @@
   ;; VC CLEARCASE: vc ClearCase mode
   ;; REQUIREMENT: `profile-clearcase-vtree'
   ;;              `profile-cleartool'
-  (setq section-mode-vc-clearcase t)
+  (setq section-mode-vc-clearcase nil)
   ;; CLEARCASE: ClearCase mode (not used)
-  (setq section-mode-clearcase nil)
+  (setq section-mode-clearcase t)
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq section-mode-autohotkey nil)
   ;; OUTLINE: Outline mode to manually hide/show source code block
@@ -430,6 +435,8 @@
   (setq section-mode-org-mode nil)
   ;; ISEARCH+: add some features to isearch
   (setq section-mode-isearch+ nil)
+  ;; PSVN: add geatures to subversion integration
+  (setq section-mode-psvn t)
   ) ; (progn
 
 
@@ -439,6 +446,10 @@
   ;; C: set indentation style and preprocessing option
   ;; REQUIREMENT: profile-c-indent-offset
   (setq section-languages-c t)
+  (progn
+    ;; INDENT PREPROCESSOR: make a #define be align with C code
+    (setq section-languages-c-indent-preprocessor nil)
+    ) ; (progn
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
   ;; TAB: tab always in space

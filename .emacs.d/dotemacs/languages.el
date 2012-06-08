@@ -20,7 +20,7 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-06-08 (2.1)
+;;    redo remove compile without asking + add section to indent macro
 ;; 2012-06-05 (2.0)
 ;;    remove all profile dependances + use profile values + remove never used c
 ;;    style
@@ -75,6 +77,13 @@
     (c-toggle-hungry-state t)
     ;; new types
     (setq c-font-lock-extra-types (append profile-c-extra-types c-font-lock-extra-types))
+    ;; Compile mode without ask
+    (setq compilation-read-command nil)
+
+    ;;; INDENT PREPROCESSOR
+    ;; make a #define be align with C code
+    (when section-languages-c-indent-preprocessor
+      (c-set-offset 'cpp-macro 0))
     )
 
   ;; set c mode

@@ -46,8 +46,9 @@
 (defvar sweet-bg+2 "#000000") ; black
 (defvar sweet-bg+1 "#191919") ; grey8
 (defvar sweet-bg   "#262626") ; grey15
-(defvar sweet-bg-1 "#363636") ; grey20
-(defvar sweet-bg-2 "#5B5B5B") ; grey35
+(defvar sweet-bg-1 "#282828")
+(defvar sweet-bg-2 "#363636") ; grey20
+(defvar sweet-bg-3 "#5B5B5B") ; grey35
 
 (defvar sweet-red+2 "#6F2716")
 (defvar sweet-red+1 "#BD4C31")
@@ -106,15 +107,15 @@
        (default ((t (:foreground ,sweet-fg))))
        (cursor ((t (:background ,sweet-pink-1))))
        (escape-glyph ((t (:foreground ,sweet-cyan))))
-       (fringe ((t (:background ,sweet-bg-1))))
-       (header-line ((t (:background ,sweet-bg-1 :foreground ,sweet-fg+1))))
-       (highlight ((t (:background ,sweet-bg-2))))
-       (hl-line ((t (:background ,sweet-bg-1))))
+       (fringe ((t (:background ,sweet-bg-2))))
+       (header-line ((t (:background ,sweet-bg-2 :foreground ,sweet-fg+1))))
+       (highlight ((t (:background ,sweet-bg-3))))
+       (hl-line ((t (:background ,sweet-bg-2))))
        (lazy-highlight ((t (:background ,sweet-red+2))))
        (link ((t (:foreground ,sweet-green))))
        (link-visited ((t (:foreground ,sweet-pink+2))))
        (shadow ((t (:foreground ,sweet-orange))))
-       (underline ((t (:background ,sweet-bg-1))))
+       (underline ((t (:background ,sweet-bg-2))))
        (vertical-border ((t (nil))))
        (region ((t (:background ,sweet-bg+2))))
 
@@ -203,6 +204,20 @@
        (diff-index ((t (:foreground ,sweet-pink+1))))
        (diff-file-header ((t (:foreground ,sweet-cyan :background ,sweet-bg+2))))
        (diff-hunk-header ((t (:foreground ,sweet-bg+2 :background ,sweet-cyan))))
+
+       ;; ediff
+       (ediff-even-diff-A ((t (:background ,sweet-bg-1))))
+       (ediff-even-diff-B ((t (:background ,sweet-bg-1))))
+       (ediff-even-diff-C ((t (:background ,sweet-bg-1))))
+       (ediff-current-diff-A ((t (:background ,sweet-red-3))))
+       (ediff-current-diff-B ((t (:background ,sweet-red-3))))
+       (ediff-current-diff-C ((t (:background ,sweet-red-3))))
+       (ediff-fine-diff-A ((t (:foreground ,sweet-fg :background ,sweet-red))))
+       (ediff-fine-diff-B ((t (:foreground ,sweet-fg :background ,sweet-red))))
+       (ediff-fine-diff-C ((t (:foreground ,sweet-fg :background ,sweet-red))))
+       (ediff-odd-diff-A ((t (:background ,sweet-bg-1))))
+       (ediff-odd-diff-B ((t (:background ,sweet-bg-1))))
+       (ediff-odd-diff-C ((t (:background ,sweet-bg-1))))
 
        ;; hide-ifdef
        (hide-ifdef-shadow ((t (:background ,sweet-grey+4 :foreground ,sweet-grey-4 :box nil))))

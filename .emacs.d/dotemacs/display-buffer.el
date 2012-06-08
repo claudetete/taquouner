@@ -56,7 +56,6 @@
 (add-to-list 'same-window-buffer-names "*vc-dir*")
 (add-to-list 'same-window-buffer-names "msg.txt")
 (add-to-list 'same-window-buffer-names "*GTAGS SELECT*")
-(add-to-list 'same-window-buffer-names "*Completions*")
 (add-to-list 'same-window-regexps "\\*GTAGS SELECT\\* ([A-Z])\\sw*")
 (add-to-list 'same-window-regexps "\\*compilation\\*\\(\\|<[0-9]+>\\)")
 (add-to-list 'same-window-regexps "\\*grep\\*\\(\\|<[0-9]+>\\)")

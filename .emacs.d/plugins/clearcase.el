@@ -350,7 +350,7 @@ Unless optional argument INPLACE is non-nil, return a new string."
     (defmacro defgroup (&rest args)
       nil)
     (defmacro defcustom (var value doc &rest args)
-      (` (defvar (, var) (, value) (, doc))))
+      `(defvar ,var ,value ,doc))
     (defmacro defface (face value doc &rest stuff)
       `(make-face ,face))
     (defmacro custom-declare-variable (symbol value doc &rest args)

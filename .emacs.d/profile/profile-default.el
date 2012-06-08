@@ -75,6 +75,11 @@
 (setq profile-shell-file-name "c:/path/to/cygwin/bin/bash.exe")
 (setq profile-shell-cygwin "c:/path/to/cygwin/bin/zsh.exe")
 
+;; ediff
+(setq profile-ediff-diff-program "c:/path/to/GnuWin32/bin/diff.exe")
+(setq profile-ediff-diff3-program "c:/path/to/GnuWin32/bin/diff3.exe")
+(setq profile-ediff-cmp-program "c:/path/to/GnuWin32/bin/cmp.exe")
+
 ;; backup directory
 (setq profile-backup-directory (concat dotemacs-path "/backup"))
 (setq profile-autosave-directory (concat dotemacs-path "/cache"))
@@ -400,6 +405,8 @@
   (setq section-mode-org-mode nil)
   ;; ISEARCH+: add some features to isearch
   (setq section-mode-isearch+ nil)
+  ;; PSVN: add geatures to subversion integration
+  (setq section-mode-psvn nil)
   ) ; (progn
 
 
@@ -409,6 +416,10 @@
   ;; C: set indentation style and preprocessing option
   ;; REQUIREMENT: profile-c-indent-offset
   (setq section-languages-c t)
+  (progn
+    ;; INDENT PREPROCESSOR: make a #define be align with C code
+    (setq section-languages-c-indent-preprocessor nil)
+    ) ; (progn
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
   ;; TAB: tab always in space

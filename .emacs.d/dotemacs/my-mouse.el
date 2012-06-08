@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mouse
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              car     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-06-08 (1.5)
+;;    mouse wheel scrolls window under
 ;; 2012-04-23 (1.4)
 ;;    add section for mouse avoidance
 ;; 2012-02-30 (1.3)
@@ -48,6 +50,9 @@
 ;;; Code:
 ;; enable smooth scroll (from y grandmaitre)
 (setq scroll-step 1)
+
+;; scroll window under mouse
+(setq mouse-wheel-follow-mouse 't)
 
 ;;
 ;;; PASTE CURSOR

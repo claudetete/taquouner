@@ -204,7 +204,7 @@
 ;;    shortcut buffer + selectword + colors ECB
 ;; 2010-08-31 (4.3)
 ;;    utf-8 and function for grep + etags
-;; 2010-08-26 (4.2)
+;; 20s10-08-26 (4.2)
 ;;    add shortcut for grep + etags
 ;; 2010-08-12 (4.1)
 ;;    add ecb (Emacs Code Browser)
@@ -230,6 +230,11 @@
 
 ;; start the emacs server to have only one emacs client
 (if (window-system)
+  (when (string-equal system-type "windows-nt")
+    ;;;; remove error "directory ~/.emacs.d/server is unsafe"
+    ;;;; if you cannot be the owner of this directory.
+    ;;(defun server-ensure-safe-dir (dir) "Noop" t)
+    )
   (server-start))
 
 ;;;; debug this file if error
@@ -280,7 +285,7 @@ before message."
   ;; PROFILE                                                            0.1
   (defvar section-environment-profile t)
   (progn
-    (defvar profile "default")
+    (defvar profile "noprofile")
     ) ; (progn
   ;;
   ;; OS RECOGNITION                                                     0.2
@@ -310,6 +315,9 @@ before message."
   (defvar section-environment-executable t)
   (progn
     (defvar profile-shell-file-name "bash")
+    (defvar profile-ediff-diff-program "diff")
+    (defvar profile-ediff-diff3-program "diff3")
+    (defvar profile-ediff-cmp-program "cmp")
     ) ; (progn
   ;;
   ;; ELPA                                                               0.7
@@ -559,6 +567,10 @@ before message."
   ;; ISEARCH+                                                           2.31
   ;; add some features to isearch
   (defvar section-mode-isearch+ nil)
+  ;;
+  ;; PSVN                                                               2.32
+  ;; add geatures to subversion integration
+  (defvar section-mode-psvn nil)
   ) ; (progn
 
 
@@ -575,6 +587,8 @@ before message."
     (defvar profile-c-extra-types nil)
     (defvar profile-c-macro-preprocessor "cpp -C")
     (defvar profile-c-macro-cppflags "")
+    ;; INDENT PREPROCESSOR
+    (defvar section-languages-c-indent-preprocessor nil)
     ) ; (progn
   ;;
   ;; LISP                                                               3.2
@@ -851,6 +865,14 @@ before message."
 (defvar section-misc t)
 (progn
   ;;
+  (defvar profile-username "noname")
+  (defvar profile-latitude 0.00)
+  (defvar profile-longitude 0.00)
+  (defvar profile-location-name "Neverland")
+  (defvar profile-google-calendar-user      "yourmail@gmail.com")
+  (defvar profile-google-calendar-src       (concat dotemacs-path "/plugins/google"))
+  (defvar profile-google-calendar-directory (concat dotemacs-path "/cache"))
+  (defvar profile-google-calendar-url       "http://www.google.com/calendar/ical/yourmail%40gmail.com/private-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx/basic.ics")
   (defvar profile-backup-directory (concat dotemacs-path "/backup"))
   (defvar profile-autosave-directory (concat dotemacs-path "/cache"))
   (defvar profile-fill-column 78)
@@ -963,7 +985,7 @@ before message."
 ;;; CUSTOMIZE
 (when section-filecustomize (message "12 File custom...")
   ;; customize modification (made by Emacs interface) are put in custom.el
-  (setq custom-file (concat dotemacs-path "/dotemacs/custom.el"))
+  (setq custom-file (concat dotemacs-path "/dotemacs/my-custom.el"))
   (try-require 'my-custom "  ")
   (message "12 File custom... Done"))
 

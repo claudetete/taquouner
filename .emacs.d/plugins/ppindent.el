@@ -82,7 +82,7 @@
   "Indent C preproccessor directives."
   :group 'c)
 
-(defcustom ppindent-increment 1
+(defcustom ppindent-increment 2
   "Number of spaces per indention level.
 
 Used in C pre-processor indent functions ppindent-c and ppindent-h"

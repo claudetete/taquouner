@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.6
+;; Version: 2.7
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-06-06 (2.7)
+;;    add psvn mode + dired settings + clean try
 ;; 2012-06-05 (2.6)
 ;;    remove all profile dependances + use require to nicer messages
 ;; 2012-05-29 (2.5)
@@ -484,6 +486,8 @@
 (when section-mode-dired-sort (message "  2.29 Dired Sort...")
   (try-require 'dired-sort-menu "    ")
   (custom-set-variables
+    '(dired-recursive-copies t)
+    '(dired-recursive-deletes t)
     ;; set a profile of sorting
     '(dired-sort-menu-saved-config
        (quote (
@@ -514,6 +518,15 @@
   (eval-after-load "isearch" '(require 'isearch+))
   (message "  2.31 Isearch+... Done"))
 
+;;
+;;; PSVN
+;; REQUIREMENT: var     `section-mode-psvn'
+;; it add a small round in modeline where color give status of SVN
+;; + show all file status of a directory
+(when section-mode-psvn (message "  2.32 PSvn...")
+  (try-require 'psvn "    ")
+  (message "  2.32 PSvn... Done"))
+
 
 (custom-set-variables
 ;;
@@ -524,18 +537,18 @@
   '(hs-hide-comments-when-hiding-all nil)
   )
 
-;; TRY
+;;
+;;; TRY
 (when nil
-  ;; it add a small round in modeline where color give status of SVN
-  ;; + show all file status of a directory
-  (try-require 'psvn "    ")
-)
+  (try-require 'rfringe "    ")
+
 ;; need to try
 ;(autoload 'ifdef:ifdef-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:ifndef-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:ifdef-else-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:if-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:if-else-region "ifdef" "ifdef your code" t)
+)
 
 
 (provide 'mode)

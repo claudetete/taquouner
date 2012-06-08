@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 2.1
 ;; Created: August 2010
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-06-08 (2.1)
+;;    clean up
 ;; 2012-06-05 (2.0)
 ;;    remove all profile dependances + remove dead source
 ;; 2012-05-29 (1.9)
@@ -64,6 +66,15 @@
 ;; path of ecb
 (add-to-list 'load-path (concat dotemacs-path "/plugins/ecb-snap"))
 
+;; hides the extra compile-window directly after the start of ECB
+;; (do not work...)
+(add-hook 'ecb-activate-hook
+  (lambda ()
+    (let ((compwin-buffer (ecb-get-compile-window-buffer)))
+      (if (not (and compwin-buffer
+                 (ecb-compilation-buffer-p compwin-buffer)))
+        (ecb-toggle-compile-window -1)))))
+
 ;;
 ;;; ECB
 (when (try-require 'ecb "      ")
@@ -71,16 +82,14 @@
   (setq ecb-version-check nil)
 
   ;; load all necessary for ecb
-  (require 'ecb-autoloads)
+  (try-require 'ecb-autoloads "    ")
 
   (custom-set-variables
     '(ecb-auto-activate t)
 
     ;; set version (only for check install)
     '(ecb-options-version "2.40")
-    )
 
-  (custom-set-variables
     ;; set default path in "ecb directories"
     '(ecb-source-path profile-ecb-source-path)
 
@@ -95,109 +104,107 @@
 
     ;; regexp to form group in "ecb history"
     '(ecb-history-make-buckets profile-ecb-history-make-buckets)
-    )
 
-(custom-set-variables
+    ;;;; ask each time I kill a buffer if I want keep it in "ecb history"
+    ;;;; a pain to ask each time...
+    ;;'(ecb-kill-buffer-clears-history (quote ask))
 
-  ;;;; ask each time I kill a buffer if I want keep it in "ecb history"
-  ;;;; a pain to ask each time...
-  ;;'(ecb-kill-buffer-clears-history (quote ask))
+    ;; how to show functions in "ecb methods"
+    '(ecb-show-tags
+       (quote ((default
+                 (include collapsed nil)
+                 (parent collapsed nil)
+                 (type flattened nil)
+                 (variable collapsed access)
+                 (function flattened nil)
+                 (label hidden nil)
+                 (t collapsed nil))
 
-  ;; how to show functions in "ecb methods"
-  '(ecb-show-tags
-     (quote ((default
-               (include collapsed nil)
-               (parent collapsed nil)
-               (type flattened nil)
-               (variable collapsed access)
-               (function flattened nil)
-               (label hidden nil)
-               (t collapsed nil))
+                ;; mode C (collapsed = tree ; flattened = flat
+                ;; nil = no order)
+                (c-mode
+                  (include collapsed nil)
+                  (parent collapsed nil)
+                  (type flattened nil)
+                  (variable collapsed nil)
+                  (function flattened nil)
+                  (function collapsed nil)
+                  (label hidden nil)
+                  (t collapsed nil))
+                )))
 
-              ;; mode C (collapsed = tree ; flattened = flat
-              ;; nil = no order)
-              (c-mode
-                (include collapsed nil)
-                (parent collapsed nil)
-                (type flattened nil)
-                (variable collapsed nil)
-                (function flattened nil)
-                (function collapsed nil)
-                (label hidden nil)
-                (t collapsed nil))
-              )))
+    ;; no idea??
+    '(ecb-type-tag-expansion
+       (quote ((default
+                 "class"
+                 "interface"
+                 "group"
+                 "namespace")
+                (c-mode))
+         ))
 
-  ;; no idea??
-  '(ecb-type-tag-expansion
-     (quote ((default
-               "class"
-               "interface"
-               "group"
-               "namespace")
-              (c-mode))
-       ))
-
-  ;; disable Version Control for ecb
-  '(ecb-vc-enable-support nil)
+    ;; disable Version Control for ecb
+    '(ecb-vc-enable-support nil)
 
   ;;;; show current function inf modeline
   ;;;; see semantic
-  ;;'(which-function-mode t)
+    ;;'(which-function-mode t)
 
-  ;; add all buffers name I want in the compile window of ecb
-  '(ecb-compilation-buffer-names
-     (quote (
-              ;;FIXME working environment default
-              ("*Calculator*")
-              ("*vc*")
-              ("*vc-diff*")
-              ("*Apropos*")
-              ("*Occur*")
-              ("*shell*")
-              ("\\*[cC]ompilation.*\\*" . t)
-              ("\\*i?grep.*\\*" . t)
-              ("*JDEE Compile Server*")
-              ("*Help*")
-              ("*Completions*")
-              ("*Backtrace*")
-              ("*Compile-log*")
-              ("*bsh*")
-              ("*Messages*")
-              ("msg.txt.*" . t)
-              ("*ccm*")
-              ("\\*GTAGS SELECT\\*.*" . t)
-              ("*Bookmark List*")
-              ("*Shell Command Output*")
-              ("*Semantic Context Analyze*")
-              ("*Macroexpansion*")
-              ("\\*Symref .*" . t)
-              ("*ECB Analyse*")
-              )))
+    ;; add all buffers name I want in the compile window of ecb
+    '(ecb-compilation-buffer-names
+       (quote (
+                ;;FIXME working environment default
+                ("*Calculator*")
+                ("*vc*")
+                ("*vc-diff*")
+                ("*Apropos*")
+                ("*Occur*")
+                ("*shell*")
+                ("\\*[cC]ompilation.*\\*" . t)
+                ("\\*i?grep.*\\*" . t)
+                ("*JDEE Compile Server*")
+                ("*Help*")
+                ("*Backtrace*")
+                ("*Compile-log*")
+                ("*bsh*")
+                ("*Messages*")
+                ("msg.txt.*" . t)
+                ("*ccm*")
+                ("\\*GTAGS SELECT\\*.*" . t)
+                ("*Bookmark List*")
+                ("*Shell Command Output*")
+                ("*Semantic Context Analyze*")
+                ("*Macroexpansion*")
+                ("\\*Symref .*" . t)
+                ("*ECB Analyse*")
+                )))
 
-  ;; auto expand tree
-  '(ecb-auto-expand-tag-tree-collapse-other (quote only-if-on-tag))
-  '(ecb-expand-methods-switch-off-auto-expand nil)
+    ;; auto expand tree
+    '(ecb-auto-expand-tag-tree-collapse-other (quote only-if-on-tag))
+    '(ecb-expand-methods-switch-off-auto-expand nil)
 
-  ;; do not prescan the directory for emptiness
-  '(ecb-prescan-directories-for-emptyness nil)
+    ;; do not prescan the directory for emptiness
+    '(ecb-prescan-directories-for-emptyness nil)
 
-  ;; do not process file without semantic
-  '(ecb-process-non-semantic-files nil)
+    ;; do not process file without semantic
+    '(ecb-process-non-semantic-files nil)
 
-  ;; tags file can be modified when a file is opened
-  '(tags-loop-revert-buffers t)
-  ;;
-  ;; color of lines find in *Tag List*
-  '(tags-tag-face (quote match))
-  ) ; (custom-set-variables
+    ;; tags file can be modified when a file is opened
+    '(tags-loop-revert-buffers t)
+    ;;
+    ;; color of lines find in *Tag List*
+    '(tags-tag-face (quote match))
 
-;; let ecb take control of opening of compile window
-(add-hook 'ecb-activate-hook
-  (lambda ()
-    (let ((compwin-buffer (ecb-get-compile-window-buffer)))
-      (if (not (and compwin-buffer
-                 (ecb-compilation-buffer-p compwin-buffer)))
-        (ecb-toggle-compile-window -1)))))
+    '(ecb-other-window-behavior (quote edit-and-compile))
+    ) ; (custom-set-variables
+
+  ;; let ecb take control of opening of compile window
+  (add-hook 'ecb-activate-hook
+    (lambda ()
+      (let ((compwin-buffer (ecb-get-compile-window-buffer)))
+        (if (not (and compwin-buffer
+                   (ecb-compilation-buffer-p compwin-buffer)))
+          (ecb-toggle-compile-window -1)))))
 
 ) ; (when (try-require 'ecb)
 
@@ -206,6 +213,7 @@
 ;; compile-window has been made visible), so <window> in the code below can be
 ;; a destroyed window-object! we have to prevent from this (e.g. by selecting
 ;; the window before by number).
+;;;; I don't know if this do something ??
 (when-ecb-running-emacs
  (defecb-advice master-says around ecb-compatibility-advices
    "Makes the function compatible with ECB."

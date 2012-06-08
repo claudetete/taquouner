@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-06-08 (1.7)
+;;    fix bug about fill column + warning about undo too long
 ;; 2012-05-04 (1.6)
 ;;    remove try about diary, add ignore case during completion, set path of
 ;;    bookmarks + add Dired human size
@@ -68,8 +70,9 @@
 (add-to-list 'backup-directory-alist
   (cons tramp-file-name-regexp nil))
 
-;; fill-xxx is set with a width of 80 character
-(setq fill-column profile-fill-column)
+;; fill-xxx is set with a width of profile-fill-column
+(custom-set-variables
+  '(fill-column profile-fill-column))
 
 ;; keep history between session of emacs (even after close it) for Minibuffer
 (savehist-mode 1)
@@ -85,6 +88,11 @@
 
 ;; change size display in Dired mode
 (setq dired-listing-switches "-alh")
+
+;; remove warning about undo too long
+(custom-set-variables
+  '(warning-suppress-types (quote ((undo discard-info))))
+)
 
 ;;
 ;;; CALENDAR

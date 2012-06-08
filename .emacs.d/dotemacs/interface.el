@@ -20,7 +20,7 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2012-06-08 (1.7)
+;;    change fring size + add ediff settings + add hook after open a new frame
+;;    (maximize)
 ;; 2012-06-05 (1.6)
 ;;    add transparency from display-buffer.el and use profile value
 ;; 2012-05-03 (1.5)
@@ -54,6 +57,25 @@
 ;;
 ;; show shortcut of last command launch with M-x in Minibuffer
 (setq teach-extended-commands-p t)
+
+;; shrink the size of fring bar (bar at left and right of each buffer
+(set-fringe-mode '(8 . 4))
+
+;; always split vertically in ediff mode
+(defun my-ediff-setting()
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-merge-split-window-function 'split-window-horizontally)
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  )
+(add-hook 'ediff-before-setup-hook 'my-ediff-setting)
+
+;; maximize a frame when it is created
+(add-hook 'after-make-frame-functions
+  '(lambda (f)
+     (with-selected-frame f
+       (frame-maximizer)
+       )))
+
 
 ;;
 ;;; DECORATION
