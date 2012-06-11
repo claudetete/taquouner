@@ -178,12 +178,24 @@
   )
 
 ;;
-;; DIRED PLUS
+;;; DIRED PLUS
 ;; REQUIREMENT: var     `section-mode-dired-plus'
 (when section-mode-dired-plus
   ;; open with default associated application
-  (global-set-key (kbd "<H-return>")            'dired-w32-browser)
+  (global-set-key       (kbd "<H-return>")      'dired-w32-browser)
   )
+
+;;
+;;; EDIFF
+(eval-after-load "ediff"
+  '(progn
+     (global-set-key    (kbd "<M-up>")          'ediff-previous-difference)
+     (global-set-key    (kbd "<M-down>")        'ediff-next-difference)
+     (global-set-key    (kbd "<M-right>")       'ediff-copy-A-to-B)
+     (global-set-key    (kbd "<M-left>")        'ediff-copy-B-to-A)
+     )
+  )
+
 
 ;;
 ;;; CUA

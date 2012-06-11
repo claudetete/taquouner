@@ -231,7 +231,6 @@
      ("m:/e_ctete/a2kc/test/CCN4/test_s/puma/TestU/sharc/"   "PUMA_RTRT")
      ("d:/Documents and Settings/100516805/Application Data" "/home")
      ("m:/"                                                  "/ClearCase")
-     ("p:/"                                                  "/Trash")
      ("d:/Users/ctete"                                       "/Users")
      ("d:/Users/ctete/tmp"                                   "/tmp")
      )
