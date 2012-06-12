@@ -20,7 +20,7 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-06-12 (2.2)
+;;    add hook for Hide/Show mode in C mode
 ;; 2012-06-08 (2.1)
 ;;    redo remove compile without asking + add section to indent macro
 ;; 2012-06-05 (2.0)
@@ -88,6 +90,10 @@
 
   ;; set c mode
   (add-hook 'c-mode-common-hook 'clt-c-mode)
+
+  ;; start Hide/Show mode
+  ;; use with TAB or S-MiddleClick
+  (add-hook 'c-mode-common-hook 'hs-minor-mode)
 
   (custom-set-variables
     ;; command to preprocess

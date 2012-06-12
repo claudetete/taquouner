@@ -221,6 +221,7 @@
 ;;    "your-emacs-path/lisp/speedbar.*"
 ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
 (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
+;(setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-bzr/trunk/cedet-devel-load.el"))
 
 ;; ecb
 ;; set default path in "ecb directories"
@@ -299,6 +300,8 @@
 (progn
   ;; load profile from .emacs.d/profile/ directory
   (setq section-environment-profile t)
+  ;; detect system: Emacs version
+  (setq section-environment-version-recognition t)
   ;; detect system: MS Windows or Linux
   (setq section-environment-os-recognition t)
   ;; detect system: terminal or graphical
@@ -414,7 +417,7 @@
   ;;              `profile-google-calendar-src'
   ;;              `profile-google-calendar-directory'
   ;;              `profile-google-calendar-url'
-  (setq section-mode-google-calendar t)
+  (setq section-mode-google-calendar nil)
   ;; FILL COLUMN INDICATOR: show a line at fill-column (set at 80 in
   ;; dotemacs/misc.el be careful enable truncate line
   (setq section-mode-fill-column-indicator nil)
@@ -425,7 +428,7 @@
   ;; CSV: parse/edit/sort CSV file
   (setq section-mode-csv t)
   ;; SUBVERSION: support Subversion 1.7
-  (setq section-mode-subversion t)
+  (setq section-mode-subversion nil)
   ;; DIFF COLOR: add color to diff mode
   (setq section-mode-diff-color t)
   ;; DIRED SORT: more option to sort in Dired mode
@@ -609,6 +612,9 @@
   ;; ALL BACKUP FILE IN DIRECTORY all backup files will be created in a
   ;; directory
   (setq section-annoyances-backup-file-in-directory t)
+  ;; CLASSIC SCROLL: when scroll at start or end screen with arrow, it will
+  ;; always scroll line by line
+  (setq section-annoyances-classic-scroll nil)
   ) ; (progn
 
 

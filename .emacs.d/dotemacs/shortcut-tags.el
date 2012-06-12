@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: September 2010
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2012-06-12 (1.7)
+;;    remove old way to bind keys
 ;; 2012-05-28 (1.6)
 ;;    do not use gtags find with grep with cedet (replaced see
 ;;    shortcut-semantic.el)
@@ -55,14 +57,14 @@
 ;; REQUIREMENT: var     `section-shortcut-tags-exuberant-ctags'
 (when section-shortcut-tags-exuberant-ctags (message "    8.7.1 Etags Shortcuts...")
   ;; completion with tag file (show a list)
-  (global-set-key       [?\C-/]                 'complete-tag)
+  (global-set-key       (kbd "C-/")             'complete-tag)
   ;; search in tag file
   (global-set-key       "\C-c\,"                'tags-search)
   ;; next result for tag search
-  (global-set-key       [\C-,]                  'tags-loop-continue)
+  (global-set-key       (kbd "C-,")             'tags-loop-continue)
 
   ;; previous result for tag search
-  (global-set-key       [\C->]                  'pop-tag-mark)
+  (global-set-key       (kbd "C->")             'pop-tag-mark)
   (message "    8.7.1 Etags Shortcuts... Done"))
 
 ;;

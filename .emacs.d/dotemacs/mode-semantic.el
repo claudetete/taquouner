@@ -20,7 +20,7 @@
 
 ;; Keywords: config, semantic, bovinate, cedet
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: August 2010
 ;; Last-Updated: June 2012
 
@@ -53,6 +53,8 @@
 ;; again.
 
 ;;; Change Log:
+;; 2012-06-12 (1.6)
+;;    clean up
 ;; 2012-06-05 (1.5)
 ;;    use require to load project
 ;; 2012-03-30 (1.4)
@@ -75,8 +77,21 @@
 ;;; CEDET bzr (snapshot)
 (if clt-cedet-bzr
   (progn
-    ;; set option to locate a file
-    ;;(setq ede-locate-setup-options '(ede-locate-global ede-locate-base))
+    ;; additional features for names completion, and displaying of information
+    ;; for tags & classes
+    ;; package.
+    (require 'semantic-ia)
+
+    (custom-set-variables
+      ;; set option to locate a file with GNU Global
+      '(ede-locate-setup-options (quote (ede-locate-global ede-locate-locate)))
+
+      ;; disable highlight local symbol mode
+      '(global-semantic-idle-local-symbol-highlight-mode nil nil (semantic-idle))
+
+      ;; disable completions, I don't use it
+      '(global-semantic-idle-completions-mode nil nil (semantic-idle))
+      )
 
     ;; launch ede to have the file project management
     (global-ede-mode t)
@@ -95,26 +110,8 @@
     ;;;;   decoration mode, and stickyfunc mode (plus regular code helpers)
     ;;(semantic-load-enable-gaudy-code-helpers)
 
-      (semantic-load-enable-excessive-code-helpers)
+    (semantic-load-enable-excessive-code-helpers)
 
-    ;; additional features for names completion, and displaying of information
-    ;; for tags & classes
-    ;; package.
-    (require 'semantic-ia)
-
-    ;; load the different projects
-    (try-require 'project "      ")
-
-    (custom-set-variables
-      ;; set option to locate a file with GNU Global
-      '(ede-locate-setup-options (quote (ede-locate-global ede-locate-locate)))
-
-      ;; disable highlight local symbol mode
-      '(global-semantic-idle-local-symbol-highlight-mode nil nil (semantic-idle))
-
-      ;; disable completions, I don't use it
-      '(global-semantic-idle-completions-mode nil nil (semantic-idle))
-      )
     ) ; (progn
 
 ;;

@@ -30,7 +30,7 @@
 ;; REQUIREMENT: var     `section-filecustomize'
 ;;
 ;; be careful it is the last loaded file, so everything emacs put in will
-;; overwrite your other settings
+;; overwrite your other settings (to be sure I always empty this file.)
 
 ;;; Change Log:
 ;; 2011-03-10 (1.0)

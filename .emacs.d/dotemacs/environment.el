@@ -20,7 +20,7 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.4
+;; Version: 2.5
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,8 @@
 ;;              var     `dotemacs-path'
 
 ;;; Change Log:
+;; 2012-06-12 (2.5)
+;;    add version recognition + condition for packages
 ;; 2012-06-08 (2.4)
 ;;    add ediff path + add environment variable for cygwin error
 ;; 2012-06-05 (2.3)
@@ -76,8 +78,27 @@
   (message "  0.1 Profile...Done"))
 
 ;;
+;;; VERSION RECOGNITION
+(when section-environment-version-recognition (message "  0.2 Version Recognition...")
+  (if (= emacs-major-version 23)
+    ;; Emacs 23.x
+    (progn
+      (defvar running-on-emacs-23 t)
+      (defvar running-on-emacs-24 nil)
+      (message "* Running on Emacs 23")
+      )
+    ;; Emacs 24.x
+    (progn
+      (defvar running-on-emacs-23 nil)
+      (defvar running-on-emacs-24 t)
+      (message "* Running on Emacs 24")
+      )
+    )
+  (message "  0.2 Version Recognition... Done"))
+
+;;
 ;;; OS RECOGNITION
-(when section-environment-os-recognition (message "  0.2 OS Recognition...")
+(when section-environment-os-recognition (message "  0.3 OS Recognition...")
   (if (string-equal system-type "windows-nt")
     ;; OS - Microsoft Windows
     (progn
@@ -92,11 +113,11 @@
       (message "* Running on GNU/Linux")
       )
     )
-  (message "  0.2 OS Recognition... Done"))
+  (message "  0.3 OS Recognition... Done"))
 
 ;;
 ;;; TERMINAL VS GRAPHICS
-(when section-environment-terminal-vs-graphics (message "  0.3 Terminal VS Graphics...")
+(when section-environment-terminal-vs-graphics (message "  0.4 Terminal VS Graphics...")
   ;; or (display-graphic-p) ? it works like this in MS Windows
   (if (window-system)
     (progn
@@ -110,24 +131,24 @@
       (message "* Running in terminal")
       )
     )
-  (message "  0.3 Terminal VS Graphics... Done"))
+  (message "  0.4 Terminal VS Graphics... Done"))
 
 ;;
 ;;; SET PATH
 ;; REQUIREMENT: var     `section-environment-os-recognition'
-(when section-environment-set-path (message "  0.4 Set Path...")
+(when section-environment-set-path (message "  0.5 Set Path...")
   ;; to integrate Cygwin and msys and others executables with emacs
   (setenv "PATH" (concat profile-path (getenv "PATH")))
 
   (setq exec-path profile-exec-path)
   (setenv "LANG" profile-lang)
   (setenv "GTAGSGLOBAL" profile-gnu-global)
-  (message "  0.4 Set Path... Done"))
+  (message "  0.5 Set Path... Done"))
 
 ;;
 ;;; MS WINDOWS PERFORMANCE
 ;; REQUIREMENT: var     `section-environment-os-recognition'
-(when section-environment-ms-windows-performance (message "  0.5 MS Windows: improve performance...")
+(when section-environment-ms-windows-performance (message "  0.6 MS Windows: improve performance...")
   ;; This sets garbage collection to hundred times of the default.  Supposedly
   ;; significantly speeds up startup time. (Seems to work for me, but my
   ;; computer is pretty modern. Disable if you are on anything less than 1
@@ -139,12 +160,12 @@
     (setenv "CYGWIN" "nodosfilewarning")
     (setq w32-get-true-file-attributes nil)
     )
-  (message "  0.5 Windows: improve performance... Done"))
+  (message "  0.6 Windows: improve performance... Done"))
 
 ;;
 ;;; EXECUTABLE
 ;; REQUIREMENT: var     `section-environment-os-recognition'
-(when section-environment-executable (message "  0.6 Executable...")
+(when section-environment-executable (message "  0.7 Executable...")
   (custom-set-variables
     '(shell-file-name profile-shell-file-name)
     '(ediff-diff-program profile-ediff-diff-program)
@@ -152,19 +173,21 @@
     '(ediff-cmp-program profile-ediff-cmp-program)
     )
   (setq explicit-bash-args '("--login" "-i"))
-  (message "  0.6 Executable... Done"))
+  (message "  0.7 Executable... Done"))
 
 ;;
 ;;; ELPA
-(when section-environment-elpa (message "  0.7 ELPA...")
-  ;; add to load path the profile directory
-  (add-to-list 'load-path (concat dotemacs-path "/plugins/elpa"))
-  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/elpa")) load-path))
+(when section-environment-elpa (message "  0.8 ELPA...")
+  (when running-on-emacs-23
+    ;; add to load path the profile directory
+    (add-to-list 'load-path (concat dotemacs-path "/plugins/elpa"))
+    (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/elpa")) load-path))
 
-  ;; This was installed by package-install.el.  This provides support for the
-  ;; package system and interfacing with ELPA, the package archive.  Move this
-  ;; code earlier if you want to reference packages in your .emacs.
-  (when (try-require 'package "    ") (package-initialize))
+    ;; This was installed by package-install.el.  This provides support for the
+    ;; package system and interfacing with ELPA, the package archive.  Move this
+    ;; code earlier if you want to reference packages in your .emacs.
+    (when (try-require 'package "    ") (package-initialize))
+    )
 
   ;; set path where put all packages
   (setq package-user-dir (concat dotemacs-path "/plugins/elpa"))
@@ -179,23 +202,23 @@
        ("melpa"     . "http://melpa.milkbox.net/packages/")
        )
     )
-  (message "  0.7 ELPA... Done"))
+  (message "  0.8 ELPA... Done"))
 
 ;;
 ;;; HYPER
 ;; be careful with this it fully disable menu key when Emacs has focus
-(when section-environment-hyper (message "  0.8 Hyper...")
+(when section-environment-hyper (message "  0.9 Hyper...")
   (when running-on-ms-windows
     (setq
       w32-pass-apps-to-system nil
       w32-apps-modifier 'hyper) ;; Menu key
     )
-  (message "  0.8 Hyper... Done"))
+  (message "  0.9 Hyper... Done"))
 
 ;;
 ;;; SUPER
 ;; be careful with this it fully disable windows key when Emacs has focus
-(when section-environment-super (message "  0.9 Super...")
+(when section-environment-super (message "  0.10 Super...")
   (when running-on-ms-windows
     ;; setting the PC keyboard's various keys to
     ;; Super or Hyper, for emacs running on Windows.
@@ -205,7 +228,7 @@
       w32-lwindow-modifier 'super ;; Left Windows key
       w32-rwindow-modifier 'super) ;; Right Windows key
     )
-  (message "  0.9 Super... Done"))
+  (message "  0.10 Super... Done"))
 
 
 (provide 'environment)
