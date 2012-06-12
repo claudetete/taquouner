@@ -192,10 +192,11 @@
     `(diff-indicator-removed ((,class (:background ,sweet-orange+2))))
     `(diff-added ((,class (:foreground ,sweet-green+1))))
     `(diff-indicator-added ((,class (:background ,sweet-green+1))))
-    `(diff-header ((,class (:foreground ,sweet-cyan+1))))
+    `(diff-header ((,class (:foreground ,sweet-cyan+1 :background ,sweet-bg))))
     `(diff-index ((,class (:foreground ,sweet-pink+1))))
     `(diff-file-header ((,class (:foreground ,sweet-cyan :background ,sweet-bg+2))))
     `(diff-hunk-header ((,class (:foreground ,sweet-bg+2 :background ,sweet-cyan))))
+    `(diff-context ((,class (:foreground ,sweet-fg+1))))
 
     ;; ediff
     `(ediff-even-diff-A ((,class (:background ,sweet-bg-1))))
