@@ -142,7 +142,7 @@
 (global-set-key         (kbd "<H-up>")          'scroll-up-keep-cursor)
 
 ;; improve tab key for hide show mode
-(define-key     hs-minor-mode-map       [tab]   'tab-hs-hide)
+(define-key hs-minor-mode-map (kbd "<tab>")     'tab-hs-hide)
 
 
 (provide 'shortcut-function)

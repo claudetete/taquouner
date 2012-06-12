@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 7.4
+;; Version: 7.5
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -90,13 +90,12 @@
 ;;
 
 ;; TODO
-;;  - replace working-environment by profile + make profile more easily by
-;;  adding a profile.el file with each configuration needed (maybe a
-;;  profile-end.el to add some config without changing other file to have easy
-;;  update)
 ;;
 ;;
 ;; DONE
+;;  - adding a profile.el file with each configuration needed (maybe a
+;;    profile-end.el to add some config without changing other file to have easy
+;;    update)
 ;;  - try browse-kill-ring mode (do not work properly with ECB)
 ;;  - put all comments in English
 ;;  - try rect-mark mode/plug-in (use CUA rectangle mode)
@@ -138,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-06-12 (7.5)
+;;    add new section about version recognition + scroll line by line
 ;; 2012-05-29 (7.4)
 ;;    add condition to change clt-working-environment (profile) + enable server
 ;; 2012-05-25 (7.3)
@@ -226,7 +227,7 @@
 ;;; Code:
 ;;
 ;;;  INIT
-(message "--[ Loading my Emacs 23.4 init file ]--")
+(message "--[ Loading my Emacs init file ]--")
 
 ;; start the emacs server to have only one emacs client
 (if (window-system)
@@ -288,13 +289,17 @@ before message."
     (defvar profile "noprofile")
     ) ; (progn
   ;;
-  ;; OS RECOGNITION                                                     0.2
+  ;; VERSION RECOGNITION                                                0.2
+  ;; detect system: Emacs version
+  (defvar section-environment-version-recognition t)
+  ;;
+  ;; OS RECOGNITION                                                     0.3
   (defvar section-environment-os-recognition t)
   ;;
-  ;; TERMINAL VS GRAPHICS                                               0.3
+  ;; TERMINAL VS GRAPHICS                                               0.4
   (defvar section-environment-terminal-vs-graphics t)
   ;;
-  ;; SET PATH                                                           0.4
+  ;; SET PATH                                                           0.5
   ;; REQUIREMENT:       section-environment-os-recognition
   ;;                    section-environment-terminal-vs-graphics
   (defvar section-environment-set-path t)
@@ -304,12 +309,12 @@ before message."
     (defvar profile-lang "en_US")
     ) ; (progn
   ;;
-  ;; MS WINDOWS PERFORMANCE                                             0.5
+  ;; MS WINDOWS PERFORMANCE                                             0.6
   ;; REQUIREMENT:       section-environment-os-recognition
   ;; improve performance
   (defvar section-environment-ms-windows-performance t)
   ;;
-  ;; EXECUTABLE                                                         0.6
+  ;; EXECUTABLE                                                         0.7
   ;; REQUIREMENT:       section-environment-os-recognition
   ;;                    section-environment-terminal-vs-graphics
   (defvar section-environment-executable t)
@@ -320,15 +325,15 @@ before message."
     (defvar profile-ediff-cmp-program "cmp")
     ) ; (progn
   ;;
-  ;; ELPA                                                               0.7
+  ;; ELPA                                                               0.8
   ;; for multiple repo and up to date
   (defvar section-environment-elpa nil)
   ;;
-  ;; HYPER                                                              0.8
+  ;; HYPER                                                              0.9
   ;; set menu key as hyper key
   (defvar section-environment-hyper t)
   ;;
-  ;; SUPER                                                              0.9
+  ;; SUPER                                                              0.10
   ;; set windows key as super key
   (defvar section-environment-super nil)
   ) ; progn
@@ -854,6 +859,11 @@ before message."
   ;; ALL BACKUP FILE IN DIRECTORY                                       10.4
   ;; all backup files will be created in a directory
   (defvar section-annoyances-backup-file-in-directory t)
+  ;;
+  ;; CLASSIC SCROLL                                                     10.5
+  ;; when scroll at start or end screen with arrow, it will always scroll line
+  ;; by line
+  (defvar section-annoyances-classic-scroll nil)
   ) ; (progn
 
 

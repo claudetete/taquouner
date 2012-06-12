@@ -20,9 +20,9 @@
 
 ;; Keywords: config, annoying
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.7
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-annoyances'
 
 ;;; Change Log:
+;; 2012-06-12 (1.7)
+;;    add section for scroll line by line
 ;; 2012-06-05 (1.6)
 ;;    autosave and backup directory are put in profile files when
 ;;    nothing is set it take the temporary system folder
@@ -156,6 +158,13 @@
     kept-old-versions 2)
   (message "  10.4 All backup files in a directory... Done"))
 
+;;
+;;; CLASSIC SCROLL
+;; REQUIREMENT: var     `section-annoyances-classic-scroll'
+(when section-annoyances-classic-scroll (message "  10.5 Scroll line by line...")
+  ;; set with max value
+  (setq scroll-conservatively most-positive-fixnum)
+  (message "  10.5 Scroll line by line... Done"))
 
 (provide 'annoyances)
 

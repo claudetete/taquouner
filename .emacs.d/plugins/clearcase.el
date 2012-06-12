@@ -549,11 +549,11 @@ recommended to produce unified diffs, when your
 ;; directory-sep-char.
 (defvar clearcase-pname-sep-regexp
   (format "[%s/]"
-          (char-to-string directory-sep-char)))
+          (char-to-string ?/)))
 
 (defvar clearcase-non-pname-sep-regexp
   (format "[^%s/]"
-          (char-to-string directory-sep-char)))
+          (char-to-string ?/)))
 
 ;; Matches any viewtag (without the trailing "/").
 ;;

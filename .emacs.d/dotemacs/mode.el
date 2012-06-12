@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.7
+;; Version: 2.8
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-06-12 (2.8)
+;;    move loading of project from mode-semantic.el to here
 ;; 2012-06-06 (2.7)
 ;;    add psvn mode + dired settings + clean try
 ;; 2012-06-05 (2.6)
@@ -171,6 +173,9 @@
     (when section-mode-cedet-ecb (message "    2.4.2 ECB...")
       (try-require 'mode-ecb "      ")
       (message "    2.4.2 ECB... Done"))
+
+    ;; load the different projects
+    (try-require 'project "      ")
     )
   (message "  2.4 CEDET... Done"))
 

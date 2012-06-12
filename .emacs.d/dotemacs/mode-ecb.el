@@ -20,7 +20,7 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: August 2010
 ;; Last-Updated: June 2012
 
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-06-12 (2.2)
+;;    use a patched ecb snapshot (by Alex Ott) with Emacs 24
 ;; 2012-06-08 (2.1)
 ;;    clean up
 ;; 2012-06-05 (2.0)
@@ -64,7 +66,14 @@
 
 ;;; Code:
 ;; path of ecb
-(add-to-list 'load-path (concat dotemacs-path "/plugins/ecb-snap"))
+(if running-on-emacs-24
+  ;; to avoid error with Emacs 24.1
+  (setq stack-trace-on-error t))
+
+(if nil
+  (add-to-list 'load-path (concat dotemacs-path "/plugins/alexott-ecb-54527e9"))
+  (add-to-list 'load-path (concat dotemacs-path "/plugins/ecb-snap"))
+  )
 
 ;; hides the extra compile-window directly after the start of ECB
 ;; (do not work...)
@@ -80,9 +89,6 @@
 (when (try-require 'ecb "      ")
   ;; to prevent ecb failing to start up
   (setq ecb-version-check nil)
-
-  ;; load all necessary for ecb
-  (try-require 'ecb-autoloads "    ")
 
   (custom-set-variables
     '(ecb-auto-activate t)

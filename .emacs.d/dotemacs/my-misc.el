@@ -20,7 +20,7 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-06-12 (1.8)
+;;    fix indentation in start message
 ;; 2012-06-08 (1.7)
 ;;    fix bug about fill column + warning about undo too long
 ;; 2012-05-04 (1.6)
@@ -112,7 +114,7 @@
     '(calendar-mark-diary-entries-flag t)
     )
 
-  (when section-misc-calendar-french (message "11.1.1 French calendar...")
+  (when section-misc-calendar-french (message "    11.1.1 French calendar...")
     ;; display today mark in calendar
     (setq today-visible-calendar-hook 'calendar-mark-today)
     (setq calendar-today-marker 'highlight)
@@ -129,7 +131,7 @@
     (setq european-calendar-style 't)
 
     ;; load French holidays
-    (when (try-require 'french-holidays)
+    (when (try-require 'french-holidays "      ")
       (setq calendar-holidays holiday-french-holidays))
 
 
@@ -219,7 +221,7 @@
 (when section-misc-dictionary (message "  11.2 Dictionary...")
   (setq ispell-program-name profile-ispell-program)
   (setq ispell-dictionary profile-ispell-dictionary)
-  (try-require 'ispell)
+  (try-require 'ispell "    ")
   (message "  11.2 Dictionary... Done"))
 
 ;;

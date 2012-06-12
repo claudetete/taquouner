@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.1
+;; Version: 4.2
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,9 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-06-12 (4.2)
+;;    change slick copy to more compatibility + add condition to eval some
+;;    functions
 ;; 2012-06-08 (4.1)
 ;;    add slick copy (copy when not selected) + (un)comment + scroll without
 ;;    moving cursor + maximize function + some functions to test
@@ -159,28 +162,17 @@
 ;;
 ;;;
 ;;; COPY/CUT
-;; Change cutting behavior (by Fabrice Niessen):
-;; "Many times you'll do a kill-line command with the only intention of
-;; getting the contents of the line into the killring. Here's an idea stolen
-;; from Slickedit, if you press copy or cut when no region is active, you'll
-;; copy or cut the current line."
-;; <http://www.zafar.se/bkz/Articles/EmacsTips>
-(defadvice kill-ring-save (before slickcopy activate compile)
-  "When called interactively with no active region, copy the
-current line instead."
-  (interactive
-   (if mark-active (list (region-beginning) (region-end))
-     (list (line-beginning-position)
-           (line-beginning-position 2)))))
-
-(defadvice kill-region (before slickcut activate compile)
-  "When called interactively with no active region, kill the
-current line instead."
-  (interactive
-   (if mark-active (list (region-beginning) (region-end))
-     (list (line-beginning-position)
-           (line-beginning-position 2)))))
-
+;; Change cutting behavior (from http://emacswiki.org/emacs/WholeLineOrRegion):
+(put 'kill-ring-save 'interactive-form
+  '(interactive
+     (if (use-region-p)
+       (list (region-beginning) (region-end))
+       (list (line-beginning-position) (line-beginning-position 2)))))
+(put 'kill-region 'interactive-form
+  '(interactive
+     (if (use-region-p)
+       (list (region-beginning) (region-end))
+       (list (line-beginning-position) (line-beginning-position 2)))))
 ;;
 ;;;
 ;;; SEARCH
@@ -256,50 +248,51 @@ current line instead."
 ;;
 ;;;
 ;;;; ECB
-;;; increase/decrease width of ecb window (by Claude TETE)
-(defun ecb-toggle-width ()
-  "Toggle variable ecb-window-width between 10% and 25%."
-  (interactive)
-  (set-variable 'ecb-windows-width (if (= ecb-windows-width 0.1) 0.25 0.1))
-  (ecb-redraw-layout)
-  (message "Ecb width set to %d." ecb-windows-width)
-  )
-;;; open ecb history when ecb window is hide (by Claude TETE)
-(defun ecb-myopen-history ()
-  "Open ecb-history."
-  (interactive)
-  ;;(ecb-show-ecb-windows) ; this is bugged
-  (ecb-goto-window-history)
-  (message "Ecb History.")
-  )
+(when section-mode-cedet-ecb
+  ;;; increase/decrease width of ecb window (by Claude TETE)
+  (defun ecb-toggle-width ()
+    "Toggle variable ecb-window-width between 10% and 25%."
+    (interactive)
+    (set-variable 'ecb-windows-width (if (= ecb-windows-width 0.1) 0.25 0.1))
+    (ecb-redraw-layout)
+    (message "Ecb width set to %d." ecb-windows-width)
+    )
+  ;;; open ecb history when ecb window is hide (by Claude TETE)
+  (defun ecb-myopen-history ()
+    "Open ecb-history."
+    (interactive)
+    ;;(ecb-show-ecb-windows) ; this is bugged
+    (ecb-goto-window-history)
+    (message "Ecb History.")
+    )
 
-;;; open ecb tree directory when ecb window is hide (by Claude TETE)
-(defun ecb-myopen-directories ()
-  "Open ecb-directories."
-  (interactive)
-  ;;(ecb-show-ecb-windows) ; this is bugged
-  (ecb-goto-window-directories)
-  (message "Ecb Directories.")
-  )
+  ;;; open ecb tree directory when ecb window is hide (by Claude TETE)
+  (defun ecb-myopen-directories ()
+    "Open ecb-directories."
+    (interactive)
+    ;;(ecb-show-ecb-windows) ; this is bugged
+    (ecb-goto-window-directories)
+    (message "Ecb Directories.")
+    )
 
-;;; open ecb source list when ecb window is hide (by Claude TETE)
-(defun ecb-myopen-sources ()
-  "Open ecb-sources."
-  (interactive)
-  ;;(ecb-show-ecb-windows) ; this is bugged
-  (ecb-goto-window-sources)
-  (message "Ecb Sources.")
-  )
+  ;;; open ecb source list when ecb window is hide (by Claude TETE)
+  (defun ecb-myopen-sources ()
+    "Open ecb-sources."
+    (interactive)
+    ;;(ecb-show-ecb-windows) ; this is bugged
+    (ecb-goto-window-sources)
+    (message "Ecb Sources.")
+    )
 
-;;; open ecb function list when ecb window is hide (by Claude TETE)
-(defun ecb-myopen-methods ()
-  "Open ecb-methods."
-  (interactive)
-  ;;(ecb-show-ecb-windows) ; this is bugged
-  (ecb-goto-window-methods)
-  (message "Ecb Methods.")
-  )
-
+  ;;; open ecb function list when ecb window is hide (by Claude TETE)
+  (defun ecb-myopen-methods ()
+    "Open ecb-methods."
+    (interactive)
+    ;;(ecb-show-ecb-windows) ; this is bugged
+    (ecb-goto-window-methods)
+    (message "Ecb Methods.")
+    )
+  ) ; (when section-mode-cedet-ecb
 
 ;;
 ;;;
@@ -412,33 +405,6 @@ current line instead."
   (load-file (concat dotemacs-path "/emacs.el"))
   )
 
-;;; attempt to load a feature/library, failing silently (by Fabrice Niessen)
-;; patched by Claude TETE to add string before message
-(defvar missing-packages-list nil
-  "List of packages that `try-require' can't find.")
-
-(defun try-require (feature &optional indent)
-  "Attempt to load a library or module (FEATURE).  Return true if the library \
-given as argument is successfully loaded.  If not, instead of an error, just \
-add the package to a list of missing packages. INDENT contains string to add \
-before message."
-  (let ()
-    (if (eq indent nil) (setq indent ""))
-  (condition-case err
-      ;; protected form
-      (progn
-        (message "%sChecking for library `%s'..." indent feature)
-        (if (stringp feature)
-            (load-library feature)
-          (require feature))
-        (message "%sChecking for library `%s'... Found" indent feature))
-    ;; error handler
-    (file-error  ; condition
-     (progn
-       (message "%sChecking for library `%s'... Missing" indent feature)
-       (add-to-list 'missing-packages-list feature 'append))
-     nil))))
-
 ;;
 ;;;
 ;;;; SEARCH ERROR
@@ -466,62 +432,66 @@ before message."
 ;;
 ;;;
 ;;;; ALIGN RTRT MODE
-;;; align "init" in ptu script for RTRT (by Claude TETE)
-(defun rtrt-align-init (start end)
-  "Align init variable test case (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (align-regexp start end (concat "\\(\\s-*\\)" "\\binit ") 1 1)
-)
+(when section-mode-rtrt-script
+  ;;; align "init" in ptu script for RTRT (by Claude TETE)
+  (defun rtrt-align-init (start end)
+    "Align init variable test case (between START and END)."
+    (interactive "r")
+    (unless (and start end)
+      (error "The mark is not set now, so there is no region"))
+    (align-regexp start end (concat "\\(\\s-*\\)" "\\binit ") 1 1)
+    )
 
-;;; align "expected value" in ptu script for RTRT (by Claude TETE)
-(defun rtrt-align-ev (start end)
-  "Align expected value variable (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (align-regexp start end (concat "\\(\\s-*\\)" "\\bev ") 1 1)
-)
+  ;;; align "expected value" in ptu script for RTRT (by Claude TETE)
+  (defun rtrt-align-ev (start end)
+    "Align expected value variable (between START and END)."
+    (interactive "r")
+    (unless (and start end)
+      (error "The mark is not set now, so there is no region"))
+    (align-regexp start end (concat "\\(\\s-*\\)" "\\bev ") 1 1)
+    )
 
-;;; align "expected value" and "init" in ptu script for rtrt (by Claude TETE)
-(defun rtrt-align-declaration (start end)
-  "Align variable (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (rtrt-align-init start end)
-  (rtrt-align-ev start end) ; sometimes it bugs the last ev is not align or two line after region is align
-)
+  ;;; align "expected value" and "init" in ptu script for rtrt (by Claude TETE)
+  (defun rtrt-align-declaration (start end)
+    "Align variable (between START and END)."
+    (interactive "r")
+    (unless (and start end)
+      (error "The mark is not set now, so there is no region"))
+    (rtrt-align-init start end)
+    (rtrt-align-ev start end) ; sometimes it bugs the last ev is not align or two line after region is align
+    )
 
-;;; align "=" in ptu script for RTRT (by Claude TETE)
-(defun rtrt-align-set (start end)
-  "Align = (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (align-regexp start end (concat "\\(\\s-*\\)" "[-+=]\\{0,1\\}=") 1 1)
-)
+  ;;; align "=" in ptu script for RTRT (by Claude TETE)
+  (defun rtrt-align-set (start end)
+    "Align = (between START and END)."
+    (interactive "r")
+    (unless (and start end)
+      (error "The mark is not set now, so there is no region"))
+    (align-regexp start end (concat "\\(\\s-*\\)" "[-+=]\\{0,1\\}=") 1 1)
+    )
+  ) ; (when section-mode-rtrt-script
 
 ;;
 ;;;
 ;;;; FORMAT RTRT MODE
-;;; remove whitespace before a colon in ptu script for RTRT (by Claude TETE)
-(defun rtrt-remove-whitespace-before-colon (start end)
-  "Remove all space before a colon (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (replace-regexp "\\s-+," "," nil start end)
-)
-;;; upcase "var" in ptu script for RTRT (by Claude TETE)
-(defun rtrt-upcase-var-string (start end)
-  "Upcase the var string (between START and END)."
-  (interactive "r")
-  (unless (and start end)
-    (error "The mark is not set now, so there is no region"))
-  (replace-regexp " [vV]ar " " VAR " nil start end)
-)
+(when section-mode-rtrt-script
+  ;;; remove whitespace before a colon in ptu script for RTRT (by Claude TETE)
+  (defun rtrt-remove-whitespace-before-colon (start end)
+    "Remove all space before a colon (between START and END)."
+    (interactive "r")
+    (unless (and start end)
+      (error "The mark is not set now, so there is no region"))
+    (replace-regexp "\\s-+," "," nil start end)
+    )
+  ;;; upcase "var" in ptu script for RTRT (by Claude TETE)
+  (defun rtrt-upcase-var-string (start end)
+    "Upcase the var string (between START and END)."
+    (interactive "r")
+    (unless (and start end)
+      (error "The mark is not set now, so there is no region"))
+    (replace-regexp " [vV]ar " " VAR " nil start end)
+    )
+  ) ; (when section-mode-rtrt-script
 
 ;;
 ;;;
@@ -623,231 +593,232 @@ frames with exactly two windows."
 ;;
 ;;;
 ;;; CLEARCASE
-;; Checkout file from view in clearcase (by Claude TETE)
-(defun clearcase-checkout-graphical ()
-  "Checkout the current buffer if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase checkout
-          (async-shell-command (concat "cleardlg.exe /window 5061e /windowmsg A065 /checkout \"" my-buffer "\""))
+(when (or section-mode-clearcase section-mode-vc-clearcase)
+  ;; Checkout file from view in clearcase (by Claude TETE)
+  (defun clearcase-checkout-graphical ()
+    "Checkout the current buffer if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase checkout
+            (async-shell-command (concat "cleardlg.exe /window 5061e /windowmsg A065 /checkout \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;;
-;; Graphical diff file with its predecessor (by Claude TETE)
-(defun clearcase-diff-graphical ()
-  "Show diff with the current buffer and its predecessor if it is from
+  ;;
+  ;; Graphical diff file with its predecessor (by Claude TETE)
+  (defun clearcase-diff-graphical ()
+    "Show diff with the current buffer and its predecessor if it is from
 clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase diff
-          (async-shell-command (concat "cleartool.exe diff -graphical -predecessor \"" my-buffer "\""))
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase diff
+            (async-shell-command (concat "cleartool.exe diff -graphical -predecessor \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;;
-;; Graphical history of current file (by Claude TETE)
-(defun clearcase-history-graphical ()
-  "Show history of the current buffer if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase history
-          (async-shell-command (concat "clearhistory.exe \"" my-buffer "\""))
+  ;;
+  ;; Graphical history of current file (by Claude TETE)
+  (defun clearcase-history-graphical ()
+    "Show history of the current buffer if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase history
+            (async-shell-command (concat "clearhistory.exe \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;; Undo Checkout file from view in clearcase (by Claude TETE)
-(defun clearcase-uncheckout-graphical ()
-  "Uncheckout the current buffer if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase uncheckout
-          (async-shell-command (concat "cleardlg.exe /window c04ca /windowmsg A065 /uncheckout \"" my-buffer "\""))
+  ;; Undo Checkout file from view in clearcase (by Claude TETE)
+  (defun clearcase-uncheckout-graphical ()
+    "Uncheckout the current buffer if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase uncheckout
+            (async-shell-command (concat "cleardlg.exe /window c04ca /windowmsg A065 /uncheckout \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;; Version Tree file from view in clearcase (by Claude TETE)
-(defun clearcase-version-tree-graphical ()
-  "Version tree of the current buffer if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase version tree
-          (async-shell-command (concat "clearvtree.exe \"" my-buffer "\""))
+  ;; Version Tree file from view in clearcase (by Claude TETE)
+  (defun clearcase-version-tree-graphical ()
+    "Version tree of the current buffer if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase version tree
+            (async-shell-command (concat "clearvtree.exe \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;; ClearCase explorer of file from view in clearcase (by Claude TETE)
-(defun clearcase-explorer-graphical ()
-  "ClearCase Explorer of the current buffer if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase explorer
-          (async-shell-command (concat "clearexplorer.exe \"" my-buffer "\""))
+  ;; ClearCase explorer of file from view in clearcase (by Claude TETE)
+  (defun clearcase-explorer-graphical ()
+    "ClearCase Explorer of the current buffer if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase explorer
+            (async-shell-command (concat "clearexplorer.exe \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;; Version properties of file from view in clearcase (by Claude TETE)
-(defun clearcase-version-properties-graphical ()
-  "Version properties of the current buffer if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase describe
-          (async-shell-command (concat "cleardescribe.exe \"" my-buffer "\""))
+  ;; Version properties of file from view in clearcase (by Claude TETE)
+  (defun clearcase-version-properties-graphical ()
+    "Version properties of the current buffer if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase describe
+            (async-shell-command (concat "cleardescribe.exe \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;; Properties of file from view in clearcase (by Claude TETE)
-(defun clearcase-properties-graphical ()
-  "Properties of the current buffer if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase describe
-          (async-shell-command (concat "cleardescribe.exe \"" my-buffer "@@\""))
+  ;; Properties of file from view in clearcase (by Claude TETE)
+  (defun clearcase-properties-graphical ()
+    "Properties of the current buffer if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase describe
+            (async-shell-command (concat "cleardescribe.exe \"" my-buffer "@@\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;; Checkin file from view in clearcase (by Claude TETE)
-(defun clearcase-checkin-graphical ()
-  "Checkin the current buffer if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase describe
-          (async-shell-command (concat "cleardlg.exe /window 606f6 /windowmsg A065 /checkin \"" my-buffer "\""))
+  ;; Checkin file from view in clearcase (by Claude TETE)
+  (defun clearcase-checkin-graphical ()
+    "Checkin the current buffer if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase describe
+            (async-shell-command (concat "cleardlg.exe /window 606f6 /windowmsg A065 /checkin \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-;; Find checkout files from view in clearcase (by Claude TETE)
-(defun clearcase-find-checkout-graphical ()
-  "Find checkout for the current directory if it is from clearcase."
-  (interactive)
-  ;; do not show a new window
-  (save-window-excursion
-    ;; get full path of current buffer
-    (let ((my-buffer buffer-file-name))
-      ;; the path is from M: or Z:
-      (if (string-match "^[mzMZ]:" my-buffer)
-        (progn
-          ;; set in windows path
-          (setq my-buffer (replace-regexp-in-string "/[^/]*$" "" my-buffer))
-          (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-          ;; call clearcase describe
-          (async-shell-command (concat "clearfindco.exe \"" my-buffer "\""))
+  ;; Find checkout files from view in clearcase (by Claude TETE)
+  (defun clearcase-find-checkout-graphical ()
+    "Find checkout for the current directory if it is from clearcase."
+    (interactive)
+    ;; do not show a new window
+    (save-window-excursion
+      ;; get full path of current buffer
+      (let ((my-buffer buffer-file-name))
+        ;; the path is from M: or Z:
+        (if (string-match "^[mzMZ]:" my-buffer)
+          (progn
+            ;; set in windows path
+            (setq my-buffer (replace-regexp-in-string "/[^/]*$" "" my-buffer))
+            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
+            ;; call clearcase describe
+            (async-shell-command (concat "clearfindco.exe \"" my-buffer "\""))
+            )
+          ;; the current file is not from clearcase
+          (message (concat "This file is not part of a clearcase view: " my-buffer))
           )
-        ;; the current file is not from clearcase
-        (message (concat "This file is not part of a clearcase view: " my-buffer))
         )
       )
     )
-  )
-
+  ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
 
 ;;
 ;; Switching Between Two Recently Used Buffers (by Mathias Dahl)
@@ -857,51 +828,35 @@ clearcase."
   )
 
 ;;
-;; improve tab key with hs-hide-mode (by Tassilo Horn and Alin Soare
-;; from http://old.nabble.com/suggestion-for-tab-keybinding-in-hideshow-minor-mode.-tp30359556p30359556.html)
-(defun tab-hs-hide ()
-  (interactive)
-  (let ((obj (car (overlays-in
-                    (save-excursion (move-beginning-of-line nil) (point))
-                    (save-excursion (move-end-of-line nil) (point))))))
+;; improve tab key with hs-hide-mode (by A Soare
+;; from http://lists.gnu.org/archive/html/emacs-devel/2011-04/msg00562.html)
+(defun tab-hs-hide (&optional arg)
+  (interactive "P")
+  (let ((sl (save-excursion (move-beginning-of-line nil) (point)))
+         (el (save-excursion (move-end-of-line nil) (point)))
+         obj)
+    (catch 'stop
+      (dotimes (i (- el sl))
+        (mapc
+          (lambda (overlay)
+            (when (eq 'hs (overlay-get overlay 'invisible))
+              (setq obj t)))
+          (overlays-at (+ i sl)))
+        (and obj (throw 'stop 'stop)))
+      )
     (cond
-      ((and (null obj)
-         (eq last-command this-command))
-        (hs-hide-block)
-        )
-      ((and (overlayp obj)
-         (eq 'hs (overlay-get obj 'invisible)))
+      ((and (null obj) (eq last-command this-command))
+        (hs-hide-block))
+      (obj
         (progn
           (move-beginning-of-line nil)
-          (hs-show-block)
-          )
-        )
+          (hs-show-block)))
       (t
-        (funcall (lookup-key (current-global-map) (kbd "^I")))
-        )
+        (save-excursion
+          (funcall (lookup-key (current-global-map) (kbd "^I")) arg)))
       )
     )
   )
-
-;; slick-copy: make copy-past a bit more intelligent
-;; from: http://www.emacswiki.org/emacs/SlickCopy
-(defadvice kill-ring-save (before slick-copy activate compile)
-  "When called interactively with no active region, copy a single
-line instead."
-  (interactive
-    (if mark-active (list (region-beginning) (region-end))
-      (message "Copied line")
-      (list (line-beginning-position)
-               (line-beginning-position 2)))))
-
-(defadvice kill-region (before slick-cut activate compile)
-  "When called interactively with no active region, kill a single
-line instead."
-  (interactive
-    (if mark-active (list (region-beginning) (region-end))
-      (list (line-beginning-position)
-        (line-beginning-position 2)))))
-
 
 ;; inspire from slick-copy
 ;; (un)comment line if no region is marked
@@ -1074,14 +1029,6 @@ When there is a text selection, act on the region."
 
 ;(global-set-key (kbd "<C-S-up>") 'scroll-one-down)
 ;(global-set-key (kbd "<C-S-down>") 'scroll-one-up)
-
-(defun scroll-one-up ()
-        (interactive)
-        (scroll-up 1))
-
-(defun scroll-one-down ()
-        (interactive)
-        (scroll-up -1))
 
 ;; Pour par taper sur 'inser' par erreur
 (put 'overwrite-mode 'disabled t)

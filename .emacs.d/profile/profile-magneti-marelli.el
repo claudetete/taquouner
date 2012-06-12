@@ -142,8 +142,8 @@
 
 (setq section-environment t)
 (progn
-  (setq section-environment-working-message t)
   (setq section-environment-profile nil)
+  (setq section-environment-version-recognition t)
   (setq section-environment-os-recognition t)
   (setq section-environment-terminal-vs-graphics t)
   (setq section-environment-set-path t)
@@ -298,6 +298,7 @@
   (setq section-annoyances-scroll-preserve-cursor-position nil)
   (setq section-annoyances-no-backup-file nil)
   (setq section-annoyances-backup-file-in-directory t)
+  (setq section-annoyances-classic-scroll nil)
   )
 
 (setq section-misc t)

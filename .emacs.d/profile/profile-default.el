@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-06-12 (0.2)
+;;    add new section and option
 ;; 2012-06-04 (0.1)
 ;;    creation from scratch
 
@@ -266,6 +268,8 @@
 (progn
   ;; load profile from .emacs.d/profile/ directory
   (setq section-environment-profile t)
+  ;; detect system: Emacs version
+  (setq section-environment-version-recognition t)
   ;; detect system: MS Windows or Linux
   (setq section-environment-os-recognition t)
   ;; detect system: terminal or graphical
@@ -578,6 +582,9 @@
   ;; ALL BACKUP FILE IN DIRECTORY all backup files will be created in a
   ;; directory
   (setq section-annoyances-backup-file-in-directory t)
+  ;; CLASSIC SCROLL: when scroll at start or end screen with arrow, it will
+  ;; always scroll line by line
+  (setq section-annoyances-classic-scroll t)
   ) ; (progn
 
 
