@@ -22,7 +22,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.1
 ;; Created: April 2012
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;; from the custom color I was manually set, with a lot of polish to have less
@@ -31,6 +31,8 @@
 ;;
 
 ;;; Change Log:
+;; 2012-06-13 (1.1)
+;;    remove box around modeline (for powerline) + add sml modeline
 ;; 2012-06-11 (1.0)
 ;;    from color-theme with Emacs 23.4
 
@@ -87,6 +89,7 @@
        (sweet-grey+3 "#363636") ; grey20
        (sweet-grey+2 "#4F4F4F") ; grey30
        (sweet-grey+1 "#676767") ; grey40
+       (sweet-grey   "#7B7B7B") ; grey50
        (sweet-grey-3 "#C9C9C9") ; grey80
        (sweet-grey-4 "#E1E1E1") ; grey90
        (sweet-grey-5 "#FAFAFA") ; grey100
@@ -126,10 +129,10 @@
     `(font-lock-warning-face ((,class (:bold t :foreground ,sweet-pink))))
 
     ;; mode line
-    `(mode-line ((,class (:background ,sweet-red-3 :foreground ,sweet-grey-3 :box (:line-width -1 :color ,sweet-grey+1 :style nil) :weight light))))
-    `(mode-line-buffer-id ((,class (:foreground ,sweet-cyan-1 :bold t :weight bold))))
-    `(mode-line-emphasis ((,class (:foreground ,sweet-green-1 :bold t :weight bold))))
-    `(mode-line-inactive ((,class (:background ,sweet-grey+2 :foreground ,sweet-grey-3 :box (:line-width -1 :color ,sweet-grey+1 :style nil) :weight light))))
+    `(mode-line ((,class (:background ,sweet-bg+1 :foreground ,sweet-grey-3 :box nil))))
+    `(mode-line-buffer-id ((,class (:foreground ,sweet-cyan-1 :bold t :weight bold :box nil))))
+    `(mode-line-emphasis ((,class (:foreground ,sweet-green-1 :bold t :weight bold :box nil))))
+    `(mode-line-inactive ((,class (:background ,sweet-grey+2 :foreground ,sweet-grey-3 :box nil))))
     `(which-func ((,class (:foreground ,sweet-green-1))))
 
     ;; compilation
@@ -214,6 +217,10 @@
 
     ;; hide-ifdef
     `(hide-ifdef-shadow ((,class (:background ,sweet-grey+4 :foreground ,sweet-grey-4 :box nil))))
+
+    ;; sml-modeline
+    `(sml-modeline-end-face ((,class (:background ,sweet-bg :box (:line-width 1 :color ,sweet-grey)))))
+    `(sml-modeline-vis-face ((,class (:background ,sweet-bg-3 :box (:line-width 1 :color ,sweet-grey)))))
     )
   )
 

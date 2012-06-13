@@ -137,8 +137,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
-;; 2012-06-12 (7.5)
-;;    add new section about version recognition + scroll line by line
+;; 2012-06-13 (7.5)
+;;    add new section about version recognition + scroll line by line +
+;;    powerline + nyan bar + sml bar + diminish in modeline
 ;; 2012-05-29 (7.4)
 ;;    add condition to change clt-working-environment (profile) + enable server
 ;; 2012-05-25 (7.3)
@@ -574,8 +575,25 @@ before message."
   (defvar section-mode-isearch+ nil)
   ;;
   ;; PSVN                                                               2.32
-  ;; add geatures to subversion integration
+  ;; add features to subversion integration
   (defvar section-mode-psvn nil)
+  ;;
+  ;; POWERLINE                                                          2.33
+  ;;
+  (defvar section-mode-powerline nil)
+  ;;
+  ;; NYAN                                                               2.34
+  ;; add a bar in modeline with position in buffer with the nyan cat
+  (defvar section-mode-nyan nil)
+  ;;
+  ;; SML                                                                2.35
+  ;; add a bar in modeline with position in buffer
+  (defvar section-mode-sml nil)
+
+  ;;
+  ;; DIMINISH                                                           2.99
+  ;; shrink major and minor mode name in the modeline
+  (defvar section-mode-diminish nil)
   ) ; (progn
 
 

@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.8
+;; Version: 2.9
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-06-13 (2.9)
+;;    add powerline, sml modeline, diminish and nyan mode
 ;; 2012-06-12 (2.8)
 ;;    move loading of project from mode-semantic.el to here
 ;; 2012-06-06 (2.7)
@@ -316,7 +318,9 @@
       (gtags-mode 1)
       (setq gtags-select-buffer-single t)
       )
+    (gtags-mode t) ; only for diminish mode
     (add-hook 'c-mode-common-hook 'gtags-c-mode)
+    (add-hook 'emacs-lisp-mode-hook 'gtags-c-mode)
     )
   (message "  2.14 GNU/Global... Done"))
 
@@ -532,6 +536,77 @@
   (try-require 'psvn "    ")
   (message "  2.32 PSvn... Done"))
 
+;;
+;;; POWERLINE
+;; REQUIREMENT: var     `section-mode-powerline'
+(when section-mode-powerline (message "  2.33 Powerline...")
+  (try-require 'cl)
+  (when running-on-emacs-23
+    ;; in Emacs 23 it was not define
+    (defun get-scroll-bar-mode () scroll-bar-mode)
+    (defsetf get-scroll-bar-mode set-scroll-bar-mode))
+  (try-require 'powerline "    ")
+  ;; set smallest arrow for modeline
+  (setq powerline-arrow-shape 'arrow10)
+  ;; remove all box around modeline
+  (custom-set-faces
+    '(mode-line ((((class color) (background dark)) (:box nil))))
+    '(mode-line-buffer-id ((((class color) (background dark)) (:box nil))))
+    '(mode-line-emphasis ((((class color) (background dark)) (:box nil))))
+    '(mode-line-inactive ((((class color) (background dark)) (:box nil)))))
+  (message "  2.33 Powerline... Done"))
+
+;;
+;;; NYAN
+;; REQUIREMENT: var     `section-mode-nyan'
+(when section-mode-nyan (message "  2.34 Nyan...")
+  (try-require 'nyan-mode "    ")
+  ;; start nyan mode
+  (nyan-mode t)
+
+  ;; to have wave in rainbow
+  (setq nyan-wavy-trail 1)
+
+  ;; to have animation
+  (nyan-start-animation)
+  (message "  2.34 Nyan... Done"))
+
+;;
+;;; SML
+;; REQUIREMENT: var     `section-mode-sml'
+(when section-mode-sml (message "  2.35 sml modeline...")
+  (try-require 'sml-modeline "    ")
+  (custom-set-variables
+    '(sml-modeline-mode t))
+  (setq sml-modeline-len 24)
+  (setq sml-modeline-numbers 'none)
+  (message "  2.35 sml modeline... Done"))
+
+
+
+;;
+;;; DIMINISH
+;; REQUIREMENT: var     `section-mode-diminish'
+;;              must be load after all other modes
+;; shrink major and minor mode name in the modeline
+(when section-mode-diminish (message "  2.99 Diminish...")
+  (when (try-require 'diminish "    ")
+    (eval-after-load "abbrev"
+      '(diminish 'abbrev-mode " Ab"))
+    (eval-after-load "yasnippet"
+      '(diminish 'yas/minor-mode " Y"))
+    (eval-after-load "gtags"
+      '(diminish 'gtags-mode " G"))
+    (eval-after-load "undo-tree"
+      '(diminish 'undo-tree-mode " Ut"))
+    (eval-after-load "clearcase"
+      '(diminish 'clearcase-mode " Cc"))
+
+    (add-hook 'emacs-lisp-mode-hook
+      (lambda()
+        (setq mode-name "el")))
+    )
+  (message "  2.99 Diminish... Done"))
 
 (custom-set-variables
 ;;

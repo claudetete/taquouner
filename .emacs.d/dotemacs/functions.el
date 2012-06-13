@@ -34,7 +34,7 @@
 ;;; Change Log:
 ;; 2012-06-12 (4.2)
 ;;    change slick copy to more compatibility + add condition to eval some
-;;    functions
+;;    functions + remove hide/show function
 ;; 2012-06-08 (4.1)
 ;;    add slick copy (copy when not selected) + (un)comment + scroll without
 ;;    moving cursor + maximize function + some functions to test
@@ -825,37 +825,6 @@ clearcase."
 (defun switch-to-previous-buffer ()
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1))
-  )
-
-;;
-;; improve tab key with hs-hide-mode (by A Soare
-;; from http://lists.gnu.org/archive/html/emacs-devel/2011-04/msg00562.html)
-(defun tab-hs-hide (&optional arg)
-  (interactive "P")
-  (let ((sl (save-excursion (move-beginning-of-line nil) (point)))
-         (el (save-excursion (move-end-of-line nil) (point)))
-         obj)
-    (catch 'stop
-      (dotimes (i (- el sl))
-        (mapc
-          (lambda (overlay)
-            (when (eq 'hs (overlay-get overlay 'invisible))
-              (setq obj t)))
-          (overlays-at (+ i sl)))
-        (and obj (throw 'stop 'stop)))
-      )
-    (cond
-      ((and (null obj) (eq last-command this-command))
-        (hs-hide-block))
-      (obj
-        (progn
-          (move-beginning-of-line nil)
-          (hs-show-block)))
-      (t
-        (save-excursion
-          (funcall (lookup-key (current-global-map) (kbd "^I")) arg)))
-      )
-    )
   )
 
 ;; inspire from slick-copy

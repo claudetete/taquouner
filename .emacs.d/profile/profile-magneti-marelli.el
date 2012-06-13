@@ -209,6 +209,10 @@
   (setq section-mode-org-mode nil)
   (setq section-mode-isearch+ nil)
   (setq section-mode-psvn nil)
+  (setq section-mode-powerline nil)
+  (setq section-mode-nyan nil)
+  (setq section-mode-sml nil)
+  (setq section-mode-diminish nil)
   )
 
 (setq section-languages t)

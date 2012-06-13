@@ -20,7 +20,7 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: April 2012
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,8 @@
 ;; TODO: put all option like now but with color
 
 ;;; Change Log:
+;; 2012-06-13 (0.3)
+;;    add condition for time in modeline
 ;; 2012-06-05 (0.2)
 ;;    add new example from hollenback
 ;; 2012-04-03 (0.1)
@@ -46,11 +48,19 @@
     ;; show column number in modeline
     (column-number-mode t)
 
-    ;; show time in 24H format (example 23:59)
-    (setq display-time-24hr-format t)
-    ;;
-    ;; show time and date in modeline
-    (setq display-time-day-and-date t)
+    (when (not section-mode-powerline)
+      ;; show time in 24H format (example 23:59)
+      (setq display-time-24hr-format t)
+      ;;
+      ;; show time and date in modeline
+      (setq display-time-day-and-date t)
+      ;;
+      ;; show time in modeline
+      (display-time-mode t)
+
+      ;; display size of file in the modeline
+      (size-indication-mode t)
+      ) ; (when (not section-mode-powerline)
 
     ;; show date in European format (example: jeu. 29 mars)
     (custom-set-variables
@@ -94,12 +104,6 @@
                    (make-mode-line-mouse-map (quote mouse-2) read-mail-command)))
                ""))))
       )
-    ;;
-    ;; show time in modeline
-    (display-time-mode t)
-
-    ;; display size of file in the modeline
-    (size-indication-mode t)
     ) ; progn
 
   ;; else section-interface-modeline-old

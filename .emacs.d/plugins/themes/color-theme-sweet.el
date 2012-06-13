@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs, color, theme
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.2
 ;; Created: April 2012
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;; from the custom color I was manually set, with a lot of polish to have less
@@ -31,6 +31,8 @@
 ;; TODO change Auto Highlight Symbol + finish dired+
 
 ;;; Change Log:
+;; 2012-06-13 (1.2)
+;;    remove box for modeline + add sml modeline
 ;; 2012-05-24 (1.1)
 ;;    change isearch background to see in comments
 ;; 2012-05-04 (1.0)
@@ -87,6 +89,7 @@
 (defvar sweet-grey+3 "#363636") ; grey20
 (defvar sweet-grey+2 "#4F4F4F") ; grey30
 (defvar sweet-grey+1 "#676767") ; grey40
+(defvar sweet-grey   "#7B7B7B") ; gray50
 (defvar sweet-grey-3 "#C9C9C9") ; grey80
 (defvar sweet-grey-4 "#E1E1E1") ; grey90
 (defvar sweet-grey-5 "#FAFAFA") ; grey100
@@ -134,10 +137,10 @@
        (font-lock-warning-face ((t (:bold t :foreground ,sweet-pink))))
 
        ;; mode line
-       (mode-line ((t (:background ,sweet-red-3 :foreground ,sweet-grey-3))))
-       (mode-line-buffer-id ((t (:foreground ,sweet-cyan-1 :bold t :weight bold))))
-       (mode-line-emphasis ((t (:foreground ,sweet-green-1 :bold t :weight bold))))
-       (mode-line-inactive ((t (:background ,sweet-grey+2 :foreground ,sweet-grey-3 :box (:line-width -1 :color ,sweet-grey+1 :style nil) :weight light))))
+       (mode-line ((t (:background ,sweet-bg+1 :foreground ,sweet-grey-3 :box nil))))
+       (mode-line-buffer-id ((t (:foreground ,sweet-cyan-1 :bold t :weight bold :box nil))))
+       (mode-line-emphasis ((t (:foreground ,sweet-green-1 :bold t :weight bold :box nil))))
+       (mode-line-inactive ((t (:background ,sweet-grey+2 :foreground ,sweet-grey-3 :box nil))))
        (which-func ((t (:foreground ,sweet-green-1))))
 
        ;; compilation
@@ -222,6 +225,9 @@
        ;; hide-ifdef
        (hide-ifdef-shadow ((t (:background ,sweet-grey+4 :foreground ,sweet-grey-4 :box nil))))
 
+       ;; sml-modeline
+       (sml-modeline-end-face ((t (:background ,sweet-bg :box (:line-width 1 :color ,sweet-grey)))))
+       (sml-modeline-vis-face ((t (:background ,sweet-bg-3 :box (:line-width 1 :color ,sweet-grey)))))
        )
     )
   )

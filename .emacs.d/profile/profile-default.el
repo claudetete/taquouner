@@ -20,7 +20,7 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.3
 ;; Created: June 2012
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-06-13 (0.3)
+;;    new modes
 ;; 2012-06-12 (0.2)
 ;;    add new section and option
 ;; 2012-06-04 (0.1)
@@ -411,6 +413,14 @@
   (setq section-mode-isearch+ nil)
   ;; PSVN: add geatures to subversion integration
   (setq section-mode-psvn nil)
+  ;; POWERLINE: fancy modeline
+  (setq section-mode-powerline t)
+  ;; NYAN: add bar in modeline given position in buffer
+  (setq section-mode-nyan nil)
+  ;; SML: add bar in modeline given position in buffer
+  (setq section-mode-sml nil)
+  ;; DIMINISH: shrink major and minor mode name in the modeline
+  (setq section-mode-diminish nil)
   ) ; (progn
 
 

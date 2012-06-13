@@ -20,7 +20,7 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-06-13 (2.3)
+;;    remove unknown option
 ;; 2012-06-12 (2.2)
 ;;    add hook for Hide/Show mode in C mode
 ;; 2012-06-08 (2.1)
@@ -104,9 +106,6 @@
     '(c-macro-cppflags profile-c-macro-cppflags)
     ;; resize the height of the window like the size of the expand macro
     '(c-macro-shrink-window-flag t)
-
-    ;; ??
-    '(c-syntactic-indentation t)
     )
 
   (message "  3.1 Languages C... Done"))

@@ -882,8 +882,10 @@ Key definitions:
 Turning on Gtags mode calls the value of the variable `gtags-mode-hook'
 with no args, if that value is non-nil."
   (interactive)
+  (unless (assq 'gtags-mode minor-mode-alist)
+    (push '(gtags-mode " Gtags") minor-mode-alist))
   (or (assq 'gtags-mode minor-mode-alist)
-      (setq minor-mode-alist (cons '(gtags-mode " Gtags") minor-mode-alist)))
+    (setq minor-mode-alist (cons '(gtags-mode " Gtags") minor-mode-alist)))
   (or (assq 'gtags-mode minor-mode-map-alist)
       (setq minor-mode-map-alist
       (cons (cons 'gtags-mode gtags-mode-map) minor-mode-map-alist)))

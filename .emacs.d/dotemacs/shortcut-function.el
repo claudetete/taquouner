@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-12 (2.1)
+;;    remove shortcut with TAB in hide/show mode
 ;; 2012-06-08 (2.0)
 ;;    fix bug about word selection, isearch word + add scroll without moving
 ;;    cursor
@@ -140,9 +142,6 @@
 ;; scroll while keeping cursor position
 (global-set-key         (kbd "<H-down>")        'scroll-down-keep-cursor)
 (global-set-key         (kbd "<H-up>")          'scroll-up-keep-cursor)
-
-;; improve tab key for hide show mode
-(define-key hs-minor-mode-map (kbd "<tab>")     'tab-hs-hide)
 
 
 (provide 'shortcut-function)
