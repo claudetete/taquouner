@@ -1,0 +1,372 @@
+How to install GNU Emacs and this configuration on MS Windows.
+
+
+= GNU Emacs =
+ * Download http://ftp.gnu.org/pub/gnu/emacs/windows/emacs-23.4-bin-i386.zip or http://ftp.gnu.org/pub/gnu/emacs/windows/emacs-24.1-bin-i386.zip
+ * Just unzip where you want install it.
+ * Done :)
+
+I highly recommend installing *Cygwin* http://www.cygwin.com and *MSYS* http://www.mingw.org/wiki/msys
+
+= Font =
+ * [http://www.ms-studio.com/FontSales/AnonymousPro-1.002.zip Anonymous Pro] http://www.ms-studio.com/FontSales/anonymouspro.html
+ * [http://sourceforge.net/projects/dejavu/files/dejavu/2.33/dejavu-sans-ttf-2.33.zip Deja Vu Sans Mono] http://dejavu-fonts.org/wiki/Main_Page
+ * [http://levien.com/type/myfonts/Inconsolata.otf Inconsolata] http://levien.com/type/myfonts/inconsolata.html
+ * [http://www.gringod.com/wp-upload/MONACO.TTF Monaco] http://www.gringod.com/wp-upload/MONACO.TTF
+ * [http://www.tobiasjung.net/download.php?file=ProFontWinTweaked.zip Pro Font] http://www.tobias-jung.de/seekingprofont/
+ * [http://www.proggyfonts.com/download/download_bridge.php?get=ProggyTinySZ.zip Proggy Tiny Slashed Zero] (I currently use this one) http://www.proggyfonts.com/
+Install the font you want to use [http://support.microsoft.com/kb/314960 Install font under MS Windows] (if you do not know, install all).
+
+= Configuration =
+ * Download the last zip configuration http://code.google.com/p/clt-dotemacs/downloads/list (maybe deprecated) OR Checkout the last revision from SVN http://code.google.com/p/clt-dotemacs/source/checkout
+
+
+----
+
+
+= To have default configuration =
+
+=== Set HOME ===
+ * Set Environment Variable %HOME% to a directory of your choice [http://support.microsoft.com/kb/310519 Modify environment variable under MS Windows XP].
+ * Put the _.emacs.d/_ folder and all its content in your HOME directory (you cannot rename a folder which start with a dot with MS Windows)
+ * copy the _.emacs.d/.emacs_ file in your HOME
+ * edit the file and change the path to yours
+{{{
+  (defvar dotemacs-path "c:/path/to/.emacs.d"))
+}}}
+ * With MS Windows you must login again to set HOME for everyone
+
+=== Get Mode ===
+ * unzip _.emacs.d/plugins/*cedet-1.1.tar.gz*_, _.emacs.d/plugins/*ecb_patched_to_work_with_cedet_1_1.tar.gz*_, _.emacs.d/plugins/*yasnippet-0.6.1c.tar.gz*_, _.emacs.d/plugins/*gnu_global_622wb.zip*_ directly in the _.emacs.d/plugins_ directory (you can use 7-Zip to unzip http://www.7-zip.org/)
+
+=== Byte Compile CEDET mode ===
+ * remove/zip folders/files:
+   * c:/path/to/youremacs/emacs-23.4/lisp/cedet/
+   * c:/path/to/youremacs/emacs-23.4/lisp/speedbar.el
+   * c:/path/to/youremacs/emacs-23.4/lisp/emacs-lisp/eieio-base.el
+   * c:/path/to/youremacs/emacs-23.4/lisp/emacs-lisp/eieio-comp.el
+   * c:/path/to/youremacs/emacs-23.4/lisp/emacs-lisp/eieio-custom.el
+   * c:/path/to/youremacs/emacs-23.4/lisp/emacs-lisp/eieio-datadebug.el
+   * c:/path/to/youremacs/emacs-23.4/lisp/emacs-lisp/eieio-opt.el
+   * c:/path/to/youremacs/emacs-23.4/lisp/emacs-lisp/eieio-speedbar.el
+   * c:/path/to/youremacs/emacs-23.4/lisp/emacs-lisp/eieio.el
+   * and same name but with .elc (if present)
+ * edit _.emacs.d/plugins/cedet-1.1/cedet-build.bat_
+ * replace the path of:
+{{{
+"C:\path\to\emacs\bin\runemacs.exe" -Q -l cedet-build.el -f cedet-build
+}}}
+ * run _.emacs.d/plugins/cedet-1.1/cedet-build.bat_ to byte compiled the CEDET mode, type 'y' if it asks something
+ * you can close Emacs when you see:
+{{{
+
+
+Done.
+}}}
+
+
+----
+
+*If you have a configuration revision higher than 91 go to [Installation#After Revision 91].*
+
+
+
+== Before Revision 91 ==
+I recommend to switch to a revision after 91, the installation is *easier* and *faster*.
+
+=== Set Cygwin/MSYS Path ===
+ * edit _.emacs.d/dotemacs/environment.el_ file
+ * search the first occurrence of "*;;FIXME working environment default*"
+ * replace all the path in:
+{{{
+  (setenv "PATH" (concat
+                   "c:/path/to/msys/bin"             ";"
+                   "c:/path/to/cywin/bin"            ";"
+                   "c:/path/to/cygwin/usr/bin"       ";"
+                   "c:/path/to/cygwin/usr/local/bin" ";"
+                   "c:/path/to/version/control/bin"  ";"
+                   "c:/path/to/gnuwin32/bin"         ";"
+                   "c:/WINDOWS"                      ";"
+                   "c:/WINDOWS/System32"             ";"
+                   (getenv "PATH")))
+
+  (setq exec-path
+    '(
+       "c:/path/to/msys/bin"
+       "c:/path/to/cygwin/bin"
+       "c:/path/to/cygwin/usr/bin"
+       "c:/path/to/cygwin/usr/local/bin"
+       "c:/WINDOWS"
+       "c:/WINDOWS/System32"
+       )
+    )
+}}}
+
+ * search the second occurrence of "*;;FIXME working environment default*"
+ * replace the path of
+{{{
+  '(shell-file-name "c:/path/to/cygwin/bin/bash.exe")
+}}}
+ * ~~only rev 51, modify transparency value (too much by default)~~ (new download [http://code.google.com/p/clt-dotemacs/downloads/detail?name=emacs_config-r89.zip rev 89]), put 100 if you don't want transparency
+{{{
+  (setq clt-frame-transparency       96)
+}}}
+
+
+=== Set Font ===
+ * edit _.emacs.d/dotemacs/display-font.el_ file
+ * search the first occurrence of "*;;FIXME working environment default*"
+ * remove the "*;*" front of the line to the font you want to use and must be installed (see previous [Installation#Font]). (; mean comments)
+{{{
+  ;(set-face-font 'default "-raster-ProggyTinySZ-normal-normal-normal-mono-10-*-*-*-c-*-iso8859-1")
+}}}
+
+
+=== Set Name and Path of shell ===
+ * edit _.emacs.d/dotemacs/misc.el_ file
+ * search the first occurrence of "*;;FIXME working environment default*"
+ * replace "*Claude TETE*" with you name or whatever
+{{{
+(setq user-full-name "Claude TETE")
+}}}
+ * search the second occurrence of "*;;FIXME working environment default*"
+ * replace the path of _w32shell-cygwin-bin_ with yours
+{{{
+(setq w32shell-cygwin-bin "c:/path/to/cygwin/bin/bash.exe"))
+}}}
+
+
+=== Set Path of ECB Directory Frame ===
+ * edit _.emacs.d/dotemacs/mode-ecb.el_ file
+ * search the first occurrence of "*;;FIXME working environment default*"
+ * replace "_/path/i/want/to/have/in/ecb/directory/_" with a path you will have access to. (in the top left frame in [Screenshot])
+ * only path with '/' are accepted and with '\' you will get an error ("Non-hex digit used for Unicode escape").
+{{{
+("/path/i/want/to/have/in/ecb/directory/"        "display name")
+("/second/path/i/want/to/have/in/ecb/directory/" "display name2")
+
+}}}
+ * you can put more with the same format.
+
+Jump to [Installation# Set Shortcut in Context Menu for each file in Explorer] to avoid settings after revision 91.
+
+
+
+== After Revision 91 ==
+
+=== Profile ===
+ * copy the _.emacs.d/profile/profile-default.el_ file and rename it (example: _profile-a-name-you-want.el_)
+ * do the same for the _.emacs.d/profile/profile-default-private.el_ file
+ * edit the _.emacs.d/dotemacs/profile.el_ file
+ * replace _default_ by the name of your profile and remove first ";"
+{{{
+  ;(try-require 'profile-default "    ")
+}}}
+ * replace all occurrences of _profile-default_ by _profile-a-name-you-want_
+
+ * all settings are in _.emacs.d/profile/profile-a-name-you-want.el_ file so edit it
+ * section-xxx enable/disable a section of settings, by example (setq section-languages-c-indent-preprocessor t) enable the indentation like C code of C preprocessor (#define, #ifdef, etc)
+
+
+=== Set Cygwin/MSYS Path ===
+ * search "_profile-path_"
+ * replace all the path in:
+{{{
+  (setq profile-path
+    (concat
+      "c:/path/to/msys/bin"             ";"
+      "c:/path/to/cywin/bin"            ";"
+      "c:/path/to/cygwin/usr/bin"       ";"
+      "c:/path/to/cygwin/usr/local/bin" ";"
+      "c:/path/to/version/control/bin"  ";"
+      "c:/path/to/gnuwin32/bin"         ";"
+      "c:/WINDOWS"                      ";"
+      "c:/WINDOWS/System32"             ";"
+      )
+    )
+
+  ;; executables path
+  (setq profile-exec-path
+    '(
+       "c:/path/to/msys/bin"
+       "c:/path/to/cygwin/bin"
+       "c:/path/to/cygwin/usr/bin"
+       "c:/path/to/cygwin/usr/local/bin"
+       "c:/WINDOWS"
+       "c:/WINDOWS/System32"
+       )
+    )
+}}}
+
+
+=== Set Path of shell ===
+ * search "_profile-shell-file-name_"
+ * replace the path of
+{{{
+  ;; shell
+  (setq profile-shell-file-name "c:/path/to/cygwin/bin/bash.exe")
+  (setq profile-shell-cygwin "c:/path/to/cygwin/bin/zsh.exe")
+}}}
+
+
+=== Set Font ===
+ * search "_profile-font_"
+ * remove the "*;;*" front of the line to the font you want to use and must be installed (see previous [Installation#Font]). (; mean comments)
+{{{
+  ;;; Anonymous Pro, 10
+  ;; nice, big (slashed 'zero', 'one' and minus 'L' can be mixed up)
+  (setq profile-font "-outline-Anonymous Pro-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+}}}
+
+
+=== Languages ===
+ * search "_profile-c-indent-offset_"
+ * replace 2 with the number of space you want for indentation in you C code
+{{{
+  ;; indentation offset in C
+  (setq profile-c-indent-offset 2)
+}}}
+
+ * search "_profile-c-extra-types_"
+ * replace "ubyte", "ushort", etc by the custom type you have in you C code (can be useful to have syntax color)
+{{{
+  ;; new type
+  (setq profile-c-extra-types
+    '(
+       "ubyte"
+       "ushort"
+       "ulong"
+       "ulonglong"
+       "sbyte"
+       "sshort"
+       "slong"
+       "slonglong"
+       )
+    )
+}}}
+ * you can put more with the same format.
+
+
+=== Set Path of ECB Directory Frame ===
+ * search "_profile-ede-project_"
+ * add each file of each project like the example _.emacs.d/dotemacs.ede.el_
+{{{
+  (setq profile-ede-project
+    '(
+       ;; project
+       "c:/path/to/project/project.ede.el"
+       "c:/path/to/project/second/project.ede.el"
+       )
+    )
+}}}
+ * you can put more with the same format.
+
+ * search "_profile-ecb-source-path_"
+ * replace "_c:/path/i/want/to/have/in/ecb/directory/_" with a path you would have access to. (in the top left frame in [Screenshot])
+ * only path with '/' are accepted (with '\' you will get an error: "Non-hex digit used for Unicode escape").
+{{{
+  (setq profile-ecb-source-path
+    '(
+       ;; before is put the ede projects (see project.el)
+       ("c:/path/i/want/to/have/in/ecb/directory/"        "display name")
+       ("c:/second/path/i/want/to/have/in/ecb/directory/" "display name2")
+       )
+    )
+}}}
+ * you can put more with the same format.
+
+
+=== Set filter of ECB Directory/Source Frame ===
+ * you can do this step only if you have any knowledge of regex
+ * search "_ecb-excluded-directories-regexps_" and add regex to exclude some directory
+ * search "_ecb-source-file-regexps_" and complete the regex to exclude some file
+ * search "_ecb-sources-exclude-cvsignore_" and add all file from your version control system
+ * search "_ecb-history-make-buckets_" and add regex to group the file in history
+ * I highly recommend to read the manual of ECB to fill this variable
+
+
+=== Transparency ===
+ * search "_profile-transparency_"
+ * replace with the wanted value (0=full transparent, 100=opaque)
+{{{
+  ;; transparency
+  (setq profile-transparency 96)
+}}}
+
+
+=== Private ===
+ * edit _.emacs.d/profile/profile-a-name-you-want-private.el_
+ * replace "*Your beautiful name*" with you name or whatever
+{{{
+  (setq profile-username "Your beautiful name")
+}}}
+ * other settings are useful only if you want calendar and google calendar
+
+
+
+
+== All revision ==
+
+=== Set Shortcut in Context Menu for each file in Explorer ===
+ * edit _.emacs.d/dotemacs/add_shortcut_in_context_menu.reg_ file
+ * replace _&GNU Emacs_ by whatever you want display in the context menu (right click) in the explorer
+{{{
+@="&GNU Emacs"
+}}}
+ * replace the correct path for the line:
+{{{
+@="C:\\path\\to\\emacs-23.4\\bin\\emacsclientw.exe -n --alternate-editor=\"C:\\path\\to\\emacs-23.4\\bin\\runemacs.exe\" \"%1\""
+}}}
+ * save and run the .reg
+
+
+=== Create Shortcut to Run Emacs ===
+ * Create a shortcut of _C:\your\path\install\emacs-23.4\bin\emacsclientw.exe_
+ * edit its properties
+ * add in the target area:
+{{{
+--alternate-editor="C:\path\to\emacs-23.4\bin\runemacs.exe" ""
+}}}
+
+
+=== Run Emacs with the created shortcut ===
+ * ~~Maximize the window of Emacs (it is a bug in MS Windows version, which can not be maximized by settings...)~~
+ * ~~Type *C-c l* to start ECB with correct setting.~~
+ * Now you can work with your Emacs.
+
+
+----
+
+
+= Useful reading =
+ * There is a lot of tutorials on the web, but to start you can read the glossary in the .emacs.d/emacs.el or in [Glossary]:
+
+And read
+ * http://doc.ubuntu-fr.org/emacs#utilisation
+ * or
+ * https://help.ubuntu.com/community/EmacsHowto#A_Quick_Introduction
+ * or
+ * http://www.emacswiki.org/emacs-fr/NouvelUtilisateurEmacsRéférenceSéquencesDeTouches
+
+
+----
+
+
+= Add-On/Plug-in =
+Named *Mode* in GNU Emacs, all you need are already in this configuration.
+== ECB (Emacs Code Browser)==
+It transforms Emacs into a nice modern IDE.
+ * .emacs.d/dotemacs/project.el load some project file for EDE mode (project manager, part of CEDET (which contains semantic...))
+ * I always use the project file for EDE mode with GNU Global (see [GNUGlobal] for more)
+== CEDET ==
+ * CEDET/semantic can analyze each file for tags, etc only if it is a part of a EDE project file and it is loaded.
+ * It uses by ECB mode to have completion and information about each tags.
+
+
+----
+
+
+= For more Help =
+ * http://www.emacswiki.org/
+ * http://xahlee.org/emacs/
+ * ...
