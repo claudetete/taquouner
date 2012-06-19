@@ -68,6 +68,10 @@
 ;; path of ecb
 (if running-on-emacs-24
   ;; to avoid error with Emacs 24.1
+  ;; or replace in ecb.el:1219
+  ;;   "(let ((stack-trace-on-error stack-trace-on-error))"
+  ;; by
+  ;;   "(let ()"
   (setq stack-trace-on-error t))
 
 (if nil
@@ -166,6 +170,7 @@
                 ("*Apropos*")
                 ("*Occur*")
                 ("*shell*")
+                ("*Completions*")
                 ("\\*[cC]ompilation.*\\*" . t)
                 ("\\*i?grep.*\\*" . t)
                 ("*JDEE Compile Server*")

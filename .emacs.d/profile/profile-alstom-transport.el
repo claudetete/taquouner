@@ -178,6 +178,10 @@
 ;;; ProFont, 8
 ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
 ;; "-outline-ProFontWindows-normal-normal-normal-mono-12-*-*-*-c-*-iso8859-1"
+;;
+;;; Courier New
+;; classic but big and large
+;; "-outline-Courier New-normal-normal-normal-mono-*-*-*-*-c-*-iso10646-1"
 (setq profile-font "-raster-ProggyTinySZ-normal-normal-normal-mono-10-*-*-*-c-*-iso8859-1")
 
 ;; indentation offset in C
@@ -279,6 +283,9 @@
 
 ;; transparency of the window. 0=transparent/100=opaque
 (setq profile-transparency 96)
+
+;; height of modeline for powerline mode
+(setq profile-powerline-size "small")
 
 ;; project
 ;; the order is important: display in reverse order (first->last)
@@ -650,6 +657,8 @@
   (setq section-misc-dictionary t)
   ;; BOOKMARK: set default bookmark storage
   (setq section-misc-bookmark t)
+  ;; SCREENSAVER: Set screensaver when idle time higher than 5 minutes
+  (setq section-misc-screensaver nil)
   ) ; (progn
 
 

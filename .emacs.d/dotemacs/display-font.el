@@ -20,7 +20,7 @@
 
 ;; Keywords: config, display, font
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,8 @@
 ;;              var     `section-environment-terminal-vs-graphics'
 
 ;;; Change Log:
+;; 2012-06-18 (1.7)
+;;    add condition about font
 ;; 2012-06-05 (1.6)
 ;;    remove all profile dependances = simplify the config
 ;;    the font is chosen in profile files
@@ -52,7 +54,8 @@
 
 
 ;;; Code:
-(set-face-font 'default profile-font)
+(when profile-font
+  (set-face-font 'default profile-font))
 
 ;;
 ;;; INTERNATIONAL

@@ -20,7 +20,7 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-06-15 (1.9)
+;;    add zone mode (screensaver)
 ;; 2012-06-12 (1.8)
 ;;    fix indentation in start message
 ;; 2012-06-08 (1.7)
@@ -233,6 +235,35 @@
   ;; each command that sets a bookmark will also save your bookmarks
   (setq bookmark-save-flag 1)
   (message "  11.3 Bookmark... Done"))
+
+;;
+;;;; SCREENSAVER
+(when section-misc-screensaver (message "  11.4 Screensaver...")
+  (setq zone-programs
+    [
+      zone-pgm-jitter
+      zone-pgm-putz-with-case
+      ;;zone-pgm-dissolve
+      ;;zone-pgm-explode
+      ;;zone-pgm-whack-chars
+      zone-pgm-rotate
+      zone-pgm-rotate-LR-lockstep
+      zone-pgm-rotate-RL-lockstep
+      zone-pgm-rotate-LR-variable
+      zone-pgm-rotate-RL-variable
+      zone-pgm-drip
+      zone-pgm-drip-fretfully
+      zone-pgm-five-oclock-swan-dive
+      ;;zone-pgm-martini-swan-dive
+      zone-pgm-rat-race
+      zone-pgm-paragraph-spaz
+      ;;zone-pgm-stress
+      ;;zone-pgm-stress-destress
+      zone-pgm-random-life
+      ])
+
+  (run-with-idle-timer 300 t 'zone)
+  (message "  11.4 Screensaver"))
 
 
 (provide 'my-misc)

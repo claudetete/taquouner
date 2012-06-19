@@ -313,6 +313,7 @@
     )
   (setq section-misc-dictionary nil)
   (setq section-misc-bookmark t)
+  (setq section-misc-screensaver nil)
   )
 
 (setq section-filecustomize t)

@@ -842,7 +842,7 @@
     (setq input (read-from-minibuffer prompt nil nil nil gtags-history-list))
     (if (not (equal "" input)) (setq tagname input))
     (gtags-push-context)
-    (setq tagname (concat tagname "[ ]*[-+\*/]?="))
+    (setq tagname (concat tagname "(\\[.*\\])?[ ]*[-+\*/]?="))
     (gtags-goto-tag tagname (if gtags-grep-all-text-files "go" "g"))))
 
 

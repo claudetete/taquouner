@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs, color, theme
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.2
 ;; Created: April 2012
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;
 
 ;;; Change Log:
+;; 2012-06-18 (1.2)
+;;    add foreground color for isearch highlight to more readability
 ;; 2012-06-13 (1.1)
 ;;    remove box around modeline (for powerline) + add sml modeline
 ;; 2012-06-11 (1.0)
@@ -148,7 +150,7 @@
     `(minibuffer-prompt ((,class (:foreground ,sweet-cyan))))
 
     ;; isearch
-    `(isearch ((,class (:background ,sweet-pink+2))))
+    `(isearch ((,class (:foreground ,sweet-fg :background ,sweet-pink+2))))
     `(isearch-fail ((,class (:background ,sweet-red))))
 
     ;; edit

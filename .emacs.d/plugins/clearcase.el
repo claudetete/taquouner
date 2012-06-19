@@ -589,11 +589,12 @@ recommended to produce unified diffs, when your
 (make-variable-buffer-local 'clearcase-mode)
 (put 'clearcase-mode 'permanent-local t)
 
-;; Tell Emacs about this new kind of minor mode
-;;
-(if (not (assoc 'clearcase-mode minor-mode-alist))
-    (setq minor-mode-alist (cons '(clearcase-mode clearcase-mode)
-                                 minor-mode-alist)))
+;; do not put clearcase has minor mode for powerline mode
+;;;; Tell Emacs about this new kind of minor mode
+;;;;
+;;(if (not (assoc 'clearcase-mode minor-mode-alist))
+;;    (setq minor-mode-alist (cons '(clearcase-mode clearcase-mode)
+;;                                 minor-mode-alist)))
 
 ;; For now we override the bindings for VC Minor Mode with ClearCase Minor Mode
 ;; bindings.
@@ -5690,7 +5691,7 @@ Invoke FUNC f ARGS on each subdirectory underneath it."
           ;; Make sure the mode-line gets updated.
           ;;
           (setq clearcase-mode
-                (concat " ClearCase:"
+                (concat " CC:"
                         (clearcase-mode-line-buffer-id file)))
           (force-mode-line-update))))
 
@@ -7382,7 +7383,7 @@ its ClearCase server(s)."
                       ;; 3. Put branch/ver in mode-line
                       ;;
                       (setq clearcase-mode
-                            (concat " ClearCase:"
+                            (concat " CC:"
                                     (clearcase-mode-line-buffer-id filename)))
                       (force-mode-line-update)
 

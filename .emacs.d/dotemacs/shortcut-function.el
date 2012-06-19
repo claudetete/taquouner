@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-14 (2.2)
+;;    clean up
 ;; 2012-06-12 (2.1)
 ;;    remove shortcut with TAB in hide/show mode
 ;; 2012-06-08 (2.0)
@@ -74,6 +76,9 @@
 (global-set-key         (kbd "C-M-v")           'isearch-forward-at-point)
 ;; search all occurences at point
 (global-set-key         "\C-\M-c"               'occur-word-at-point)
+;; occur when incremental search
+(define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
+
 
 ;; some setting are done after launch (only MS Windows)
 (global-set-key         "\C-cl"                 'mystart-up)

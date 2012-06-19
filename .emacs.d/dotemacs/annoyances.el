@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-annoyances'
 
 ;;; Change Log:
+;; 2012-06-14 (1.8)
+;;    clean up
 ;; 2012-06-12 (1.7)
 ;;    add section for scroll line by line
 ;; 2012-06-05 (1.6)
@@ -66,6 +68,7 @@
 ;;
 ;; remove insert shortcut, no more insertion mode
 (global-set-key [insert] 'ignore)
+(put 'overwrite-mode 'disabled t)
 ;;
 ;; disable shortcut C-PageUp & C-PageDown
 (global-set-key (kbd "<C-next>") 'ignore)

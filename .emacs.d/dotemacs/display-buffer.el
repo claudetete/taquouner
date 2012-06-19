@@ -20,7 +20,7 @@
 
 ;; Keywords: config, display, buffer, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-display-windows-buffers'
 
 ;;; Change Log:
+;; 2012-06-14 (1.5)
+;;    remove misunderstanding for same-window-buffer-names option
 ;; 2012-06-05 (1.4)
 ;;    move transparency to interface.el
 ;; 2012-05-04 (1.3)
@@ -45,22 +47,9 @@
 
 
 ;;; Code:
-;; Define buffers that should appear in the same window.
-(add-to-list 'same-window-buffer-names "*Apropos*")
-(add-to-list 'same-window-buffer-names "*ccm*")
+;; Define buffers that should appear in the same window than the window caller.
 (add-to-list 'same-window-buffer-names "*Buffer List*")
 (add-to-list 'same-window-buffer-names "*Colors*")
-(add-to-list 'same-window-buffer-names "*Command History*")
-(add-to-list 'same-window-buffer-names "*Diff*")
-(add-to-list 'same-window-buffer-names "*Proceed*")
-(add-to-list 'same-window-buffer-names "*vc-dir*")
-(add-to-list 'same-window-buffer-names "msg.txt")
-(add-to-list 'same-window-buffer-names "*GTAGS SELECT*")
-(add-to-list 'same-window-regexps "\\*GTAGS SELECT\\* ([A-Z])\\sw*")
-(add-to-list 'same-window-regexps "\\*compilation\\*\\(\\|<[0-9]+>\\)")
-(add-to-list 'same-window-regexps "\\*grep\\*\\(\\|<[0-9]+>\\)")
-(add-to-list 'same-window-regexps "\\*Help\\*\\(\\|<[0-9]+>\\)")
-(add-to-list 'same-window-regexps "\\*Symref .*")
 
 ;; display an arrows or a corner at left to show beginning and ending of a
 ;; file

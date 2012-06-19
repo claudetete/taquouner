@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.0
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-19 (2.0)
+;;    enable shortcuts for ispell with F7
 ;; 2012-06-08 (1.9)
 ;;    add shortcut to (un)comment, and move by parenthesis
 ;; 2012-05-29 (1.8)
@@ -68,11 +70,12 @@
 ;; close current buffer and its window
 (global-set-key         [f4]                    'kill-buffer-and-window)
 
-;;;; run ispell (dictionary) (set language in `section-misc')
-;;;; never used
-;;(global-set-key         [f7]                    'ispell-buffer)
-;;(global-set-key         [S-f7]                  'ispell-word)
-;;(global-set-key         [\M-f7]                 'ispell-region)
+;; run ispell (dictionary) (set language in `section-misc')
+;; never used
+(global-set-key         (kbd "<f7>")            'ispell-buffer)
+(global-set-key         (kbd "<S-f7>")          'ispell-word)
+(global-set-key         (kbd "<M-f7>")          'ispell-region)
+(global-set-key         (kbd "<C-f7>")          'ispell-comments-and-strings)
 
 ;;;; insert printf or ifdef for debug (used in epita kaneton project)
 ;;(global-set-key         [f7]                    'printf-debug-shortcut)

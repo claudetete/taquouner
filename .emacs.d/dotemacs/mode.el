@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.9
+;; Version: 3.0
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-06-19 (3.0)
+;;    add option for powerline
 ;; 2012-06-13 (2.9)
 ;;    add powerline, sml modeline, diminish and nyan mode
 ;; 2012-06-12 (2.8)
@@ -540,14 +542,28 @@
 ;;; POWERLINE
 ;; REQUIREMENT: var     `section-mode-powerline'
 (when section-mode-powerline (message "  2.33 Powerline...")
-  (try-require 'cl)
+  (try-require 'cl "    ")
   (when running-on-emacs-23
     ;; in Emacs 23 it was not define
     (defun get-scroll-bar-mode () scroll-bar-mode)
     (defsetf get-scroll-bar-mode set-scroll-bar-mode))
   (try-require 'powerline "    ")
-  ;; set smallest arrow for modeline
-  (setq powerline-arrow-shape 'arrow10)
+
+  (cond
+    ((string= profile-powerline-size "small")
+      ;; set smallest arrow for modeline
+      (setq powerline-arrow-shape 'arrow10))
+    ((string= profile-powerline-size "medium")
+      ;; set medium arrow for modeline
+      (setq powerline-arrow-shape 'arrow14))
+    ((string= profile-powerline-size "big")
+      ;; set big arrow for modeline
+      (setq powerline-arrow-shape 'arrow18))
+    ((string= profile-powerline-size "")
+      ;; set big arrow for modeline
+      (setq powerline-arrow-shape 'arrow18))
+    ) ; (cond
+
   ;; remove all box around modeline
   (custom-set-faces
     '(mode-line ((((class color) (background dark)) (:box nil))))

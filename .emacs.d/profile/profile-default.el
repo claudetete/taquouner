@@ -226,6 +226,10 @@
 ;; transparency
 (setq profile-transparency 96)
 
+;; height of modeline for powerline mode ("small", "medium" or "big")
+;; if nothing or empty the default is "big"
+(setq profile-powerline-size "big")
+
 ;; project
 ;; will be display in inverse order
 (setq profile-ede-project
@@ -620,6 +624,8 @@
   (setq section-misc-dictionary nil)
   ;; BOOKMARK: set default bookmark storage
   (setq section-misc-bookmark t)
+  ;; SCREENSAVER: Set screensaver when idle time higher than 5 minutes
+  (setq section-misc-screensaver t)
   ) ; (progn
 
 

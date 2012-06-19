@@ -9,9 +9,9 @@
 </slide>
 
 <slide title="Emacs: Features already in Emacs">
- - Presentation of several features which are not always present in other text editor or IDE
+ - Presentation (created with Emacs) of several features which are not always present in other text editor or IDE
  - slide order is not important the first thing is not the most important
- - don't panic about octopus shortcuts you will get used
+ - don't panic about octopus shortcuts you will get used (or use Menu bar or "=Ctrl+Right Click=")
 </slide>
 
 ; interface
@@ -501,19 +501,20 @@
 </slide>
 
 <slide title="Mode: ECB 3/3">
-[[./slide/ecb.png][Example of layout]]
+[[./slide/ecb.png][Example of small layout]]
 </slide>
 
 <slide title="Mode: Gtags">
  - GNU Global mode for tags and to manage project file
- - jump to definition
- - search symbol in all project file (tags with grep)
- - search file in project
+ - jump to definition with "=Ctrl+c t="
+ - search symbol in all project file (tags with grep) with "=Ctrl+c g="
+ - search file in project with "=Ctrl+c P="
  - can be use by CEDET mode
+ - shortcuts are bound only when =(setq gtags-suggested-key-mapping t)=
 </slide>
 
 <slide title="Mode: Which function">
- - minor mode to show in modeline the current function
+ - minor mode to show the current function in modeline (bottom right)
 [[./slide/which_function.png][show function abort() in cyan]]
 </slide>
 
@@ -622,3 +623,16 @@
    - ...
 </slide>
 
+<slide title="">
+ Be curious to explore the tremendous world of Emacs
+ - A lot of configuration are uploaded on the web
+ - on GitHub https://github.com/search?type=Repositories&q=Emacs
+ - on Emacs Wiki http://www.emacswiki.org/emacs/CategoryDotEmacs
+ - etc
+</slide>
+
+; ;
+; ; END
+<slide>
+      **END**
+</slide>

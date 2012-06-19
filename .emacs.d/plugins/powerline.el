@@ -10,6 +10,7 @@
 ;; This package simply provides a minor mode for fancifying the status line.
 
 ;; Modified by: Jonathan Chu
+;; additional arrow + clearcase by: Claude TETE
 
 ;;; Code:
 
@@ -565,6 +566,7 @@ install the memoized function over the original function."
 (defpowerline status      "%s")
 (defpowerline emacsclient mode-line-client)
 (defpowerline vc vc-mode)
+(defpowerline clearcase clearcase-mode)
 
 (defpowerline percent-xpm (propertize "  "
                                       'display
@@ -587,6 +589,7 @@ install the memoized function over the original function."
                              (powerline-minor-modes    'left        powerline-color1  )
                              (powerline-narrow         'left        powerline-color1  powerline-color2  )
                              (powerline-vc             'center                        powerline-color2  )
+                             (powerline-clearcase      'center                        powerline-color2  )
                              (powerline-make-fill                                     powerline-color2  )
                              (powerline-row            'right       powerline-color1  powerline-color2  )
                              (powerline-make-text      ":"          powerline-color1  )

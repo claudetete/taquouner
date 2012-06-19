@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 7.5
+;; Version: 7.6
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -137,6 +137,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-06-19 (7.6)
+;;    fix bug with default font on linux + option for powerline + screensaver
+;;    mode
 ;; 2012-06-13 (7.5)
 ;;    add new section about version recognition + scroll line by line +
 ;;    powerline + nyan bar + sml bar + diminish in modeline
@@ -537,12 +540,12 @@ before message."
   (defvar section-mode-google-calendar nil)
   ;;
   ;; FILL COLUMN INDICATOR                                              2.23
-  ;; show a line at fill-column (set at 80 in dotemacs/misc.el
+  ;; show a line at fill-column (set at 80 in dotemacs/my-misc.el
   ;; be careful enable truncate line
   (defvar section-mode-fill-column-indicator nil)
   ;;
   ;; MUSE                                                               2.24
-  ;; show a line at fill-column (set at 80 in dotemacs/misc.el
+  ;; show a line at fill-column (set at 80 in dotemacs/my-misc.el
   ;; muse mode to have nice doc
   (defvar section-mode-muse nil)
   ;;
@@ -579,8 +582,11 @@ before message."
   (defvar section-mode-psvn nil)
   ;;
   ;; POWERLINE                                                          2.33
-  ;;
+  ;; fancy modeline
   (defvar section-mode-powerline nil)
+  (progn
+    (defvar profile-powerline-size "big")
+    )
   ;;
   ;; NYAN                                                               2.34
   ;; add a bar in modeline with position in buffer with the nyan cat
@@ -675,8 +681,7 @@ before message."
   ;; set font in terminal or in graphic
   (defvar section-display-font t)
   (progn
-    ;;
-    (defvar profile-font "-outline-Courier New-normal-normal-normal-mono-*-*-*-*-c-*-iso10646-1")
+    (defvar profile-font nil)
     ;;
     ;; INTERNATIONAL                                                    5.3.1
     ;; ISO or utf-8 or ...  (not used)
@@ -837,7 +842,7 @@ before message."
 
 ;;
 ;;; MOUSE                                                               9
-;; FILE: dotemacs/mouse.el
+;; FILE: dotemacs/my-mouse.el
 ;; REQUIREMENT: section-environment-terminal-vs-graphics
 ;; smooth wheel + lazy decoration when scroll
 (defvar section-mouse t)
@@ -887,7 +892,7 @@ before message."
 
 ;;
 ;;; MISC                                                                11
-;; FILE: dotemacs/misc.el
+;; FILE: dotemacs/my-misc.el
 ;; remove whitespace at end of line + define name, browser, shell, new
 ;; line at end of file, compression, column 78 alignment
 (defvar section-misc t)
@@ -921,12 +926,16 @@ before message."
   ;; BOOKMARK                                                           11.3
   ;; set default bookmark storage
   (defvar section-misc-bookmark t)
+  ;;
+  ;; SCREENSAVER                                                        11.4
+  ;; set screensaver when idle time higher than 5 minutes
+  (defvar section-misc-screensaver t)
   ) ; (progn
 
 
 ;;
 ;;; CUSTOMIZE                                                           12
-;; FILE: dotemacs/custom.el
+;; FILE: dotemacs/my-custom.el
 ;; all customize settings are put in here when you use interface (customize)
 ;; to change settings
 (defvar section-filecustomize t)

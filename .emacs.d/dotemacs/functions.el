@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.2
+;; Version: 4.3
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-06-14 (4.3)
+;;    clean up
 ;; 2012-06-12 (4.2)
 ;;    change slick copy to more compatibility + add condition to eval some
 ;;    functions + remove hide/show function
@@ -93,7 +95,7 @@
 
 
 ;;; Code:
-;;;  CONST
+;;;;  CONST
 (defconst clt-symbol-regexp "[A-Za-z_][A-Za-z_0-9]*"
   "Regexp matching tag name.")
 
@@ -108,7 +110,6 @@
   (insert "printf(\"\\n\");//DEBUG")
   (indent-according-to-mode) (backward-char 12)
   )
-
 ;;; insert a test of macro for debug (by Kevin Prigent)
 ;;   #ifdef OUR_DEBUG
 ;;     \n
@@ -129,7 +130,6 @@
 (defun clt-match-string (n)
   "Match a string (N)."
   (buffer-substring (match-beginning n) (match-end n)))
-
 ;;; select the word at point (by Claude TETE)
 (defun clt-select-word ()
   "Select the word under cursor."
@@ -144,7 +144,6 @@
   (if (looking-at clt-symbol-regexp)
     (clt-match-string 0) nil)
   )
-
 ;;; interactive select word at point (by Claude TETE)
 (defun select-word-under ()
   "Select the word under cursor."
@@ -161,7 +160,7 @@
 
 ;;
 ;;;
-;;; COPY/CUT
+;;;; COPY/CUT
 ;; Change cutting behavior (from http://emacswiki.org/emacs/WholeLineOrRegion):
 (put 'kill-ring-save 'interactive-form
   '(interactive
@@ -173,9 +172,10 @@
      (if (use-region-p)
        (list (region-beginning) (region-end))
        (list (line-beginning-position) (line-beginning-position 2)))))
+
 ;;
 ;;;
-;;; SEARCH
+;;;; SEARCH
 ;;; search the word at the point for the whole buffer (by Claude TETE
 (defun occur-word-at-point ()
   "Search the word under cursor in the current buffer."
@@ -185,24 +185,20 @@
     (if word
       (setq prompt (concat "List lines matching regexp (default " word "): "))
       (setq prompt "List lines matching regexp: "))
-
     (setq input (completing-read prompt 'try-completion nil nil nil nil))
     (if (not (equal "" input))
       (setq word input))
-
     (occur word)
     )
   )
-
+;;
 ;; occur when incremental search (by Fabrice Niessen)
 (defun isearch-occur ()
   "Invoke `occur' from within isearch."
   (interactive)
   (let ((case-fold-search isearch-case-fold-search))
     (occur (if isearch-regexp isearch-string (regexp-quote isearch-string)))))
-
-(define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
-
+;;
 ;;; incremental search the word at the point (from www.emacswiki.org)
 ;; I-search with initial contents
 (defvar isearch-initial-string nil)
@@ -230,7 +226,7 @@
 
 ;;
 ;;;
-;;; MACRO
+;;;; MACRO
 ;; toggle macro recording on/off (by Fabrice Niessen)
 (defun my-toggle-kbd-macro-recording-on ()
   "Start recording a keyboard macro and toggle functionality of key binding."
@@ -265,7 +261,6 @@
     (ecb-goto-window-history)
     (message "Ecb History.")
     )
-
   ;;; open ecb tree directory when ecb window is hide (by Claude TETE)
   (defun ecb-myopen-directories ()
     "Open ecb-directories."
@@ -274,7 +269,6 @@
     (ecb-goto-window-directories)
     (message "Ecb Directories.")
     )
-
   ;;; open ecb source list when ecb window is hide (by Claude TETE)
   (defun ecb-myopen-sources ()
     "Open ecb-sources."
@@ -283,7 +277,6 @@
     (ecb-goto-window-sources)
     (message "Ecb Sources.")
     )
-
   ;;; open ecb function list when ecb window is hide (by Claude TETE)
   (defun ecb-myopen-methods ()
     "Open ecb-methods."
@@ -299,7 +292,7 @@
 ;;;; SEMANTIC
 (when section-mode-cedet-semantic
  (defvar semantic-tags-location-ring (make-ring 20))
-
+  ;;
   ;;; got to the definition and put it in a memory ring (by Roberto E. Vargas Caballero)
   (defun semantic-goto-definition (point)
     "Goto definition using semantic-ia-fast-jump
@@ -318,7 +311,7 @@
         ;;if not found remove the tag saved in the ring
         (set-marker (ring-remove semantic-tags-location-ring 0) nil nil)
         (signal (car err) (cdr err)))))
-
+  ;;
   ;;; go back with memory ring  (by Roberto E. Vargas Caballero)
   (defun semantic-pop-tag-mark ()
     "popup the tag save by semantic-goto-definition"
@@ -337,7 +330,6 @@
 ;;
 ;;;
 ;;;; BUFFER CYCLE
-
 ;;; browse in buffers without name start with * (by Claude TETE)
 ;; I don't use it
 (defun next-user-buffer ()
@@ -347,7 +339,6 @@
   (let ((i 0))
     (while (and (string-match "\\(^\\*\\|TAGS\\)" (buffer-name)) (< i 50))
       (setq i (1+ i)) (next-buffer) )))
-
 ;;; browse in buffers without name start with * (by Claude TETE)
 ;; I don't use it
 (defun previous-user-buffer ()
@@ -357,6 +348,7 @@
   (let ((i 0))
     (while (and (string-match "\\(^\\*\\|TAGS\\)" (buffer-name)) (< i 50))
       (setq i (1+ i)) (previous-buffer) )))
+
 ;;
 ;;;
 ;;;; START UP
@@ -381,9 +373,13 @@
   (try-require 'muse-mode "    ")     ; load authoring mode
   (try-require 'muse-html "    ")     ; load publishing styles I use
   (try-require 'muse-latex "    ")
+
+  (muse-derive-style "my-slides-pdf" "slides-pdf"
+    :header (concat dotemacs-path "/plugins/themes/muse/header.tex")
+    :footer  (concat dotemacs-path "/plugins/themes/muse/footer.tex")
+    )
 ;  (muse-mode t)
   )
-
 
 ;;
 ;;;
@@ -396,7 +392,6 @@
   ;; deprecated
   (load-file (concat dotemacs-path "/dotemacs/noob.el"))
   )
-
 ;;; load config for me after cfg-noob (by Claude TETE)
 ;; it do not revert all some bug...
 (defun cfg-classic ()
@@ -414,20 +409,15 @@
   (interactive)
   (occur "[\t\v]")
 )
-
-(cond
-  ;; Alstom Transport ----------------------------------------------------------
-  ((string= profile "Alstom Transport")
-    ;;; search a fault size in buffer (by Claude TETE)
-    (defun search-fault-size ()
-      "Search a sizing fault in the current buffer."
-      (interactive)
-      ;; line more than 80 column
-      (occur ".\\{81,\\}")
-      )
-    ) ; Alstom Transport
-
-  ) ; cond ---------------------------------------------------------------------
+;;; search a fault size in buffer (by Claude TETE)
+(when (string= profile "Alstom Transport")
+  (defun search-fault-size ()
+    "Search a sizing fault in the current buffer."
+    (interactive)
+    ;; line more than 80 column
+    (occur ".\\{81,\\}")
+    )
+  ) ; (when (string= profile "Alstom Transport")
 
 ;;
 ;;;
@@ -441,7 +431,6 @@
       (error "The mark is not set now, so there is no region"))
     (align-regexp start end (concat "\\(\\s-*\\)" "\\binit ") 1 1)
     )
-
   ;;; align "expected value" in ptu script for RTRT (by Claude TETE)
   (defun rtrt-align-ev (start end)
     "Align expected value variable (between START and END)."
@@ -450,7 +439,6 @@
       (error "The mark is not set now, so there is no region"))
     (align-regexp start end (concat "\\(\\s-*\\)" "\\bev ") 1 1)
     )
-
   ;;; align "expected value" and "init" in ptu script for rtrt (by Claude TETE)
   (defun rtrt-align-declaration (start end)
     "Align variable (between START and END)."
@@ -460,7 +448,6 @@
     (rtrt-align-init start end)
     (rtrt-align-ev start end) ; sometimes it bugs the last ev is not align or two line after region is align
     )
-
   ;;; align "=" in ptu script for RTRT (by Claude TETE)
   (defun rtrt-align-set (start end)
     "Align = (between START and END)."
@@ -532,7 +519,7 @@
 
 ;;
 ;;;
-;;; SWAP/SPLIT WINDOWS
+;;;; SWAP/SPLIT WINDOWS
 ;; swap 2 windows (by Fabrice Niessen)
 (defun my-swap-windows ()
   "If you have 2 windows, it swaps them."
@@ -554,7 +541,6 @@
       )
     )
   )
-
 ;; toggle between horizontal and vertical split for 2 windows (by Fabrice
 ;; Niessen)
 (defun my-toggle-window-split ()
@@ -592,7 +578,7 @@ frames with exactly two windows."
 
 ;;
 ;;;
-;;; CLEARCASE
+;;;; CLEARCASE
 (when (or section-mode-clearcase section-mode-vc-clearcase)
   ;; Checkout file from view in clearcase (by Claude TETE)
   (defun clearcase-checkout-graphical ()
@@ -821,14 +807,20 @@ clearcase."
   ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
 
 ;;
-;; Switching Between Two Recently Used Buffers (by Mathias Dahl)
+;;;
+;;;; SWITCH BUFFER
+;;; Switching Between Two Recently Used Buffers (by Mathias Dahl)
+;; like Alt+Tab in Windows Managers
 (defun switch-to-previous-buffer ()
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1))
   )
 
+;;
+;;;
+;;;; (UN)COMMENT LINE
+;;; (un)comment line if no region is marked
 ;; inspire from slick-copy
-;; (un)comment line if no region is marked
 (defadvice comment-or-uncomment-region (before slick-copy activate compile)
   "When called interactively with no active region, (un)comment a single
 line instead."
@@ -837,19 +829,24 @@ line instead."
       (list (line-beginning-position)
                (line-beginning-position 2)))))
 
-;; Scroll the text one line down while keeping the cursor (by Geotechnical
-;; Software Services)
+;;
+;;;
+;;;; SCROLL WITH KEEPING CURSOR
+;;; Scroll the text one line down while keeping the cursor (by Geotechnical
+;;; Software Services)
 (defun scroll-down-keep-cursor ()
   (interactive)
   (scroll-down 1))
-
-;; Scroll the text one line up while keeping the cursor (by Geotechnical
-;; Software Services)
+;;; Scroll the text one line up while keeping the cursor (by Geotechnical
+;;; Software Services)
 (defun scroll-up-keep-cursor ()
   (interactive)
   (scroll-up 1))
 
-;; maximize the current frame (the whole Emacs window) (by Claude TETE)
+;;
+;;;
+;;;; MAXIMIZE
+;;; maximize the current frame (the whole Emacs window) (by Claude TETE)
 (defun frame-maximizer ()
   "Maximize the current frame"
   (interactive)
@@ -887,7 +884,7 @@ line instead."
 ;   %M   minute in [00..59]
 ; see format-time-string for more info on formatting options
 (defun my-time-string ()
-  (format-time-string "%Y-%m-%d %H:%M"))
+  (format-time-string "%Y-%m-%d"))
 (defun insert-time-string ()
   "Insert time and date at cursor."
   (interactive)
@@ -992,15 +989,6 @@ When there is a text selection, act on the region."
             (fill-paragraph nil)) ) )
 
       (put this-command 'stateIsCompact-p (if currentStateIsCompact nil t)) ) ) )
-
-
-;;;; from guillaume salagnac
-
-;(global-set-key (kbd "<C-S-up>") 'scroll-one-down)
-;(global-set-key (kbd "<C-S-down>") 'scroll-one-up)
-
-;; Pour par taper sur 'inser' par erreur
-(put 'overwrite-mode 'disabled t)
 
 ;;list-colors-display to display all color
 
