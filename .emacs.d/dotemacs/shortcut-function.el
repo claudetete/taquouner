@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-21 (2.3)
+;;    add shortcut for translate, synonym, conjugate and wikipedia function
 ;; 2012-06-14 (2.2)
 ;;    clean up
 ;; 2012-06-12 (2.1)
@@ -147,6 +149,20 @@
 ;; scroll while keeping cursor position
 (global-set-key         (kbd "<H-down>")        'scroll-down-keep-cursor)
 (global-set-key         (kbd "<H-up>")          'scroll-up-keep-cursor)
+
+;; translate word at point or region
+(global-set-key         (kbd "<f12>")           'translate-enfr)
+(global-set-key         (kbd "<H-f12>")         'translate-fren)
+
+;; synonym
+(global-set-key         (kbd "<S-f12>")         'synonym-fr)
+
+;; grammatical conjugation
+(global-set-key         (kbd "<C-f12>")         'conjugation-fr)
+
+;; wikipedia
+(global-set-key         (kbd "<f11>")           'wikipedia-en)
+(global-set-key         (kbd "<H-f11>")         'wikipedia-fr)
 
 
 (provide 'shortcut-function)

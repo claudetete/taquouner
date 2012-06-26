@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-06-21 (0.3)
+;;    add browser
 ;; 2012-06-13 (0.2)
 ;;    add some mode
 ;; 2012-06-04 (0.1)
@@ -286,6 +288,9 @@
 
 ;; height of modeline for powerline mode
 (setq profile-powerline-size "small")
+
+;; browser to open url
+(setq profile-browser "D:/Users/ctete/tools/OperaPortable/OperaPortable.exe")
 
 ;; project
 ;; the order is important: display in reverse order (first->last)

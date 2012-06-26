@@ -59,7 +59,7 @@
 
   ;; return back after "go to the tag"
   ;; you can use the default shortcut: M-xB, which ask where you want go back
-  (global-set-key         [(control  <)]                  'semantic-pop-tag-mark)
+  (global-set-key       [(control  <)]                  'semantic-pop-tag-mark)
 )
 
 ;;

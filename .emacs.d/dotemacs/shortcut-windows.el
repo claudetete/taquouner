@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.3
 ;; Created: October 2006
-;; Last-Updated: April 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-21 (1.3)
+;;    additional shortcut to split windows in Emacs
 ;; 2012-04-17 (1.2)
 ;;    remove M-s and M-arrow to switch between window
 ;; 2012-03-30 (1.1)
@@ -58,6 +60,12 @@
 ;; horizontal
 (global-set-key         (kbd "<C-S-left>")      'enlarge-window-horizontally)
 (global-set-key         (kbd "<C-S-right>")     'shrink-window-horizontally)
+
+;; new shortcut for split windows
+(global-set-key         (kbd "<M-kp-0>")        'delete-window)
+(global-set-key         (kbd "<M-kp-1>")        'delete-other-windows)
+(global-set-key         (kbd "<M-kp-2>")        'split-window-vertically)
+(global-set-key         (kbd "<M-kp-3>")        'split-window-horizontally)
 
 
 (provide 'shortcut-windows)

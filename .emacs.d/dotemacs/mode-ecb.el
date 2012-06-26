@@ -20,7 +20,7 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: August 2010
 ;; Last-Updated: June 2012
 
@@ -34,8 +34,11 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-06-21 (2.3)
+;;    patch section to hide ecb compile window + unset variable used by custom
+;;    function hook to goto-ecb-window-...
 ;; 2012-06-12 (2.2)
-;;    use a patched ecb snapshot (by Alex Ott) with Emacs 24
+;;    try a patched ecb snapshot (by Alex Ott) with Emacs 24
 ;; 2012-06-08 (2.1)
 ;;    clean up
 ;; 2012-06-05 (2.0)
@@ -80,19 +83,21 @@
   )
 
 ;; hides the extra compile-window directly after the start of ECB
-;; (do not work...)
+;; function from EmacsWiki was not working so I modify it
 (add-hook 'ecb-activate-hook
   (lambda ()
-    (let ((compwin-buffer (ecb-get-compile-window-buffer)))
-      (if (not (and compwin-buffer
-                 (ecb-compilation-buffer-p compwin-buffer)))
-        (ecb-toggle-compile-window -1)))))
+    (when (equal 'visible (ecb-compile-window-state))
+      (ecb-toggle-compile-window -1))))
 
 ;;
 ;;; ECB
 (when (try-require 'ecb "      ")
   ;; to prevent ecb failing to start up
   (setq ecb-version-check nil)
+
+  ;; unset hide before show when the ecb window is hidden and after a redraw
+  (add-hook 'ecb-hide-ecb-windows-after-hook '(lambda () (setq ecb-hidden-before nil)))
+  (add-hook 'ecb-redraw-layout-after-hook '(lambda () (setq ecb-hidden-before nil)))
 
   (custom-set-variables
     '(ecb-auto-activate t)

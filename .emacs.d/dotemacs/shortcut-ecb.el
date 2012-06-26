@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: August 2010
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-ecb'
 
 ;;; Change Log:
+;; 2012-06-20 (1.6)
+;;    add smart shortcuts in ecb window
 ;; 2012-05-10 (1.5)
 ;;    add go back with M-*
 ;; 2012-04-17 (1.4)
@@ -52,36 +54,71 @@
 (when section-mode-cedet-ecb
   ;; hide/show ecb window
   ;;;; already used for quake-like terminal
-  ;;(global-set-key         [f1]                    'ecb-toggle-ecb-windows)
-  (global-set-key         "\C-c\\"                'ecb-toggle-ecb-windows)
+  ;;(global-set-key       [f1]                    'ecb-toggle-ecb-windows)
+  (global-set-key       (kbd "M-1")             'ecb-toggle-ecb-windows)
 
   ;;
   ;; hide/show ecb compile window
-  (global-set-key         [f2]                    'ecb-toggle-compile-window)
-  (global-set-key         (kbd "<mouse-5>")       'ecb-toggle-compile-window)
+  (global-set-key       [f2]                    'ecb-toggle-compile)
+  (global-set-key       (kbd "<mouse-5>")       'ecb-toggle-compile-window)
 
   ;;
   ;; increase/decrease width of ecb window
-  (global-set-key         "\C-cw"                 'ecb-toggle-width)
+  (global-set-key       "\C-cw"                 'ecb-toggle-width)
 
   ;;
   ;; got to the ecb directory window
-;;  (global-set-key         "\C-cq"                 'ecb-myopen-directories)
-  (global-set-key         "\M-q"                  'ecb-myopen-directories)
+  (global-set-key       "\M-q"                  'ecb-open-directories)
   ;;
   ;; got to the ecb source window
-  ;;(global-set-key         "\C-ca"                 'ecb-myopen-sources)
-  (global-set-key         "\M-a"                  'ecb-myopen-sources)
+  (global-set-key       "\M-a"                  'ecb-open-sources)
   ;;
   ;; got to the ecb method window (function/variable...)
-  ;;(global-set-key         "\C-cz"                 'ecb-myopen-methods)
-  (global-set-key         "\M-\\"                 'ecb-myopen-methods)
+  (global-set-key       "\M-\\"                 'ecb-open-methods)
   ;;
   ;; got to the ecb history window (all opened file, not all buffers)
-  (global-set-key         "\M-z"                  'ecb-goto-window-history)
+  (global-set-key       "\M-z"                  'ecb-open-history)
 
   ;; go back thanks to ecb
-  (global-set-key         (kbd "<M-kp-multiply>") 'ecb-nav-goto-previous)
+  (global-set-key       (kbd "<M-kp-multiply>") 'ecb-nav-goto-previous)
+
+  ;; after create directories buffer
+  (add-hook 'ecb-directories-buffer-after-create-hook
+    '(lambda ()
+       ;; remap enter only in ecb directories buffer
+       (local-set-key   (kbd "<return>")        'ecb-directories-select)
+       (local-set-key   (kbd "<escape>")        'ecb-cancel)
+       (local-set-key   (kbd "M-q")             'ecb-toggle-maximize)
+       ))
+
+  ;; after create sources buffer
+  (add-hook 'ecb-sources-buffer-after-create-hook
+    '(lambda ()
+       ;; remap enter only in ecb sources buffer
+       (local-set-key   (kbd "<return>")        'ecb-select)
+       (local-set-key   (kbd "<M-return>")      'ecb-sources-select)
+       (local-set-key   (kbd "<escape>")        'ecb-cancel)
+       (local-set-key   (kbd "M-a")             'ecb-toggle-maximize)
+       ))
+
+  ;; after create methods buffer
+  (add-hook 'ecb-methods-buffer-after-create-hook
+    '(lambda ()
+       ;; remap enter only in ecb methods buffer
+       (local-set-key   (kbd "<return>")        'ecb-select)
+       (local-set-key   (kbd "<escape>")        'ecb-cancel)
+       (local-set-key   (kbd "M-\\")            'ecb-toggle-maximize)
+       ))
+
+  ;; after create history buffer
+  (add-hook 'ecb-history-buffer-after-create-hook
+    '(lambda ()
+       ;; remap enter only in ecb history buffer
+       (local-set-key   (kbd "<return>")        'ecb-select)
+       (local-set-key   (kbd "<escape>")        'ecb-cancel)
+       (local-set-key   (kbd "M-z")             'ecb-toggle-maximize)
+       ))
+
 ) ; when section-mode-cedet-ecb
 
 

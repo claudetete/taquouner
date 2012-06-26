@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-06-21 (2.0)
+;;    add generic browser
 ;; 2012-06-15 (1.9)
 ;;    add zone mode (screensaver)
 ;; 2012-06-12 (1.8)
@@ -97,6 +99,10 @@
 (custom-set-variables
   '(warning-suppress-types (quote ((undo discard-info))))
 )
+
+;; set browser to open url
+(setq browse-url-generic-program profile-browser)
+(setq browse-url-browser-function 'browse-url-generic)
 
 ;;
 ;;; CALENDAR

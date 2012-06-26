@@ -1,4 +1,4 @@
-;;; function.el --- a config file to add some function
+;;; functions.el --- a config file to add some function
 
 ;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
 ;;
@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.3
+;; Version: 4.4
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,9 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-06-21 (4.4)
+;;    add function to open web browser with text selected in Emacs + insert date
+;;    + split ecb and clearcase function in new file +
 ;; 2012-06-14 (4.3)
 ;;    clean up
 ;; 2012-06-12 (4.2)
@@ -125,7 +128,7 @@
 
 ;;
 ;;;
-;;;; SELECT WORD
+;;;; SELECT WORD/REGION
 ;;; match a string (by Claude TETE)
 (defun clt-match-string (n)
   "Match a string (N)."
@@ -155,6 +158,16 @@
     (setq pt (point))
     (skip-chars-forward "-_A-Za-z0-9")
     (set-mark pt)
+    )
+  )
+;;; get the string from word at point or region
+(defun clt-get-string (beg end)
+  (let (string)
+    (if (use-region-p)
+      (setq string (buffer-substring beg end))
+      (setq string (clt-select-word))
+      )
+    string
     )
   )
 
@@ -240,52 +253,6 @@
   (global-set-key (kbd "<S-f8>") 'my-toggle-kbd-macro-recording-on)
   (end-kbd-macro))
 ;; shortcuts are put in shortcut-function.el
-
-;;
-;;;
-;;;; ECB
-(when section-mode-cedet-ecb
-  ;;; increase/decrease width of ecb window (by Claude TETE)
-  (defun ecb-toggle-width ()
-    "Toggle variable ecb-window-width between 10% and 25%."
-    (interactive)
-    (set-variable 'ecb-windows-width (if (= ecb-windows-width 0.1) 0.25 0.1))
-    (ecb-redraw-layout)
-    (message "Ecb width set to %d." ecb-windows-width)
-    )
-  ;;; open ecb history when ecb window is hide (by Claude TETE)
-  (defun ecb-myopen-history ()
-    "Open ecb-history."
-    (interactive)
-    ;;(ecb-show-ecb-windows) ; this is bugged
-    (ecb-goto-window-history)
-    (message "Ecb History.")
-    )
-  ;;; open ecb tree directory when ecb window is hide (by Claude TETE)
-  (defun ecb-myopen-directories ()
-    "Open ecb-directories."
-    (interactive)
-    ;;(ecb-show-ecb-windows) ; this is bugged
-    (ecb-goto-window-directories)
-    (message "Ecb Directories.")
-    )
-  ;;; open ecb source list when ecb window is hide (by Claude TETE)
-  (defun ecb-myopen-sources ()
-    "Open ecb-sources."
-    (interactive)
-    ;;(ecb-show-ecb-windows) ; this is bugged
-    (ecb-goto-window-sources)
-    (message "Ecb Sources.")
-    )
-  ;;; open ecb function list when ecb window is hide (by Claude TETE)
-  (defun ecb-myopen-methods ()
-    "Open ecb-methods."
-    (interactive)
-    ;;(ecb-show-ecb-windows) ; this is bugged
-    (ecb-goto-window-methods)
-    (message "Ecb Methods.")
-    )
-  ) ; (when section-mode-cedet-ecb
 
 ;;
 ;;;
@@ -578,236 +545,6 @@ frames with exactly two windows."
 
 ;;
 ;;;
-;;;; CLEARCASE
-(when (or section-mode-clearcase section-mode-vc-clearcase)
-  ;; Checkout file from view in clearcase (by Claude TETE)
-  (defun clearcase-checkout-graphical ()
-    "Checkout the current buffer if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase checkout
-            (async-shell-command (concat "cleardlg.exe /window 5061e /windowmsg A065 /checkout \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;;
-  ;; Graphical diff file with its predecessor (by Claude TETE)
-  (defun clearcase-diff-graphical ()
-    "Show diff with the current buffer and its predecessor if it is from
-clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase diff
-            (async-shell-command (concat "cleartool.exe diff -graphical -predecessor \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;;
-  ;; Graphical history of current file (by Claude TETE)
-  (defun clearcase-history-graphical ()
-    "Show history of the current buffer if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase history
-            (async-shell-command (concat "clearhistory.exe \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;; Undo Checkout file from view in clearcase (by Claude TETE)
-  (defun clearcase-uncheckout-graphical ()
-    "Uncheckout the current buffer if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase uncheckout
-            (async-shell-command (concat "cleardlg.exe /window c04ca /windowmsg A065 /uncheckout \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;; Version Tree file from view in clearcase (by Claude TETE)
-  (defun clearcase-version-tree-graphical ()
-    "Version tree of the current buffer if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase version tree
-            (async-shell-command (concat "clearvtree.exe \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;; ClearCase explorer of file from view in clearcase (by Claude TETE)
-  (defun clearcase-explorer-graphical ()
-    "ClearCase Explorer of the current buffer if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase explorer
-            (async-shell-command (concat "clearexplorer.exe \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;; Version properties of file from view in clearcase (by Claude TETE)
-  (defun clearcase-version-properties-graphical ()
-    "Version properties of the current buffer if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase describe
-            (async-shell-command (concat "cleardescribe.exe \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;; Properties of file from view in clearcase (by Claude TETE)
-  (defun clearcase-properties-graphical ()
-    "Properties of the current buffer if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase describe
-            (async-shell-command (concat "cleardescribe.exe \"" my-buffer "@@\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;; Checkin file from view in clearcase (by Claude TETE)
-  (defun clearcase-checkin-graphical ()
-    "Checkin the current buffer if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase describe
-            (async-shell-command (concat "cleardlg.exe /window 606f6 /windowmsg A065 /checkin \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ;; Find checkout files from view in clearcase (by Claude TETE)
-  (defun clearcase-find-checkout-graphical ()
-    "Find checkout for the current directory if it is from clearcase."
-    (interactive)
-    ;; do not show a new window
-    (save-window-excursion
-      ;; get full path of current buffer
-      (let ((my-buffer buffer-file-name))
-        ;; the path is from M: or Z:
-        (if (string-match "^[mzMZ]:" my-buffer)
-          (progn
-            ;; set in windows path
-            (setq my-buffer (replace-regexp-in-string "/[^/]*$" "" my-buffer))
-            (setq my-buffer (replace-regexp-in-string "/" "\\\\" my-buffer))
-            ;; call clearcase describe
-            (async-shell-command (concat "clearfindco.exe \"" my-buffer "\""))
-            )
-          ;; the current file is not from clearcase
-          (message (concat "This file is not part of a clearcase view: " my-buffer))
-          )
-        )
-      )
-    )
-  ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
-
-;;
-;;;
 ;;;; SWITCH BUFFER
 ;;; Switching Between Two Recently Used Buffers (by Mathias Dahl)
 ;; like Alt+Tab in Windows Managers
@@ -856,23 +593,8 @@ line instead."
 
 ;;
 ;;;
-;;;; MAGNETI MARELLI
-(when section-external-function-mm (message "    1.2.1 Functions Magneti Marelli...")
-  (try-require 'function-mm "    ")
-  (message "    1.2.1 Functions Magneti Marelli... Done"))
-
-;;
-;;;
-;;;; TEST (all after is for testing
-(defun clt-test ()
-  "Plein de test."
-  (interactive)
-  (insert (concat "toto=" shell-file-name "$"))
-)
-
-(setq semantic-c-takeover-hideif t)
-
-;; (by Scott McPeak)
+;;;; TIME/DATE
+;;; insert current date/time (by Scott McPeak)
 ; ----------------- insertion macros --------------------
 ; insert current date/time
 ;   %m   month in [01..12]
@@ -883,12 +605,130 @@ line instead."
 ;   %H   hour in [00..23]
 ;   %M   minute in [00..59]
 ; see format-time-string for more info on formatting options
-(defun my-time-string ()
+(defun my-date-string ()
   (format-time-string "%Y-%m-%d"))
-(defun insert-time-string ()
+(defun insert-date ()
   "Insert time and date at cursor."
   (interactive)
-  (insert (my-time-string)))
+  (insert (my-date-string)))
+
+;;
+;;;
+;;;; TRANSLATE
+;;; translate from French to English in generic browser
+(defun translate-fren (beg end)
+  "Translate the word at point using WordReference or Google Translate when a region is selected."
+  (interactive "r")
+  (let ((string (clt-get-string beg end)))
+    (if (use-region-p)
+      (browse-url-generic
+        (concat "http://translate.google.fr/?hl=&ie=UTF-8&text=&sl=fr&tl=en#fr|en|"
+          string))
+      (browse-url-generic
+        (concat "http://www.wordreference.com/fren/"
+          string))
+      )
+    )
+  )
+;;; translate from English to French in generic browser
+(defun translate-enfr (beg end)
+  "Translate the word at point using WordReference or Google Translate when a region is selected."
+  (interactive "r")
+  (let ((string (clt-get-string beg end)))
+    (if (use-region-p)
+      (browse-url-generic
+        (concat "http://translate.google.fr/?hl=&ie=UTF-8&text=&sl=en&tl=fr#en|fr|"
+          string))
+      (browse-url-generic
+        (concat "http://www.wordreference.com/enfr/"
+          string))
+      )
+    )
+  )
+
+;;; search in French Wikipedia
+(defun wikipedia-fr (beg end)
+  "Search the word at point or selected region using Wikipedia."
+  (interactive "r")
+  (let ((string (clt-get-string beg end)))
+    (browse-url-generic
+      (concat "http://fr.wikipedia.org/wiki/Special:Search?search=" string))
+    )
+  )
+;;; search in English Wikipedia
+(defun wikipedia-en (beg end)
+  "Search the word at point or selected region using Wikipedia."
+  (interactive "r")
+  (let ((string (clt-get-string beg end)))
+    (browse-url-generic
+      (concat "http://en.wikipedia.org/wiki/Special:Search?search=" string))
+    )
+  )
+
+;;; search synonym in French
+(defun synonym-fr (beg end)
+  "Search the word at point or selected region using Synonymes.com."
+  (interactive "r")
+  (let ((string (clt-get-string beg end)))
+    (browse-url-generic
+      (concat "http://www.synonymes.com/synonyme.php?mot=" string "&x=0&y=0"))
+    )
+  )
+
+;;; search grammatical conjugation in French
+(defun conjugation-fr (beg end)
+  "Search the word at point or selected region using leconjugueur.com."
+  (interactive "r")
+  (let ((string (clt-get-string beg end)))
+    (browse-url-generic
+      (concat "http://www.leconjugueur.com/php5/index.php?v=" string))
+    )
+  )
+
+
+;;
+;;;
+;;;; MAGNETI MARELLI
+(when section-external-function-mm (message "    1.2.1 Functions Magneti Marelli...")
+  (try-require 'function-mm "    ")
+  (message "    1.2.1 Functions Magneti Marelli... Done"))
+
+;;
+;;;
+;;;; ECB
+(when section-mode-cedet-ecb
+  (try-require 'function-ecb "    ")
+  ) ; (when section-mode-cedet-ecb
+
+;;
+;;;
+;;;; CLEARCASE
+(when (or section-mode-clearcase section-mode-vc-clearcase)
+  (try-require 'function-clearcase "    ")
+  ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
+
+;;
+;;;
+;;;; TEST (all after is for testing
+(defun clt-test ()
+  "Plein de test."
+  (interactive)
+  (message (thing-at-point 'word))
+)
+
+(setq semantic-c-takeover-hideif t)
+
+
+;; start browser at url (by antonj from github)
+(defun google-region (beg end)
+  "Google the selected region."
+  (interactive "r")
+  (browse-url-generic (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q=" (buffer-substring beg end))))
+(defun translate ()
+  "Translate the word at point using WordReference."
+  (interactive)
+  (browse-url (concat "http://www.wordreference.com/fren/"
+                (thing-at-point 'word))))
 
 ;;; Copy entire line in kill ring (without Home C-k C-y) (by Claude TETE)
 (defun push-line ()

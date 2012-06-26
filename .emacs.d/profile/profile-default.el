@@ -230,6 +230,9 @@
 ;; if nothing or empty the default is "big"
 (setq profile-powerline-size "big")
 
+;; browser to open url
+(setq profile-browser "c:/path/to/your/internet/browser/mybrowser.exe")
+
 ;; project
 ;; will be display in inverse order
 (setq profile-ede-project

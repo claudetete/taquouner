@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,9 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-21 (2.1)
+;;    join-line without space and with next line + quick calc + add condition to
+;;    open with in dired mode + comments about ediff + alias for replace-regexp
 ;; 2012-06-19 (2.0)
 ;;    enable shortcuts for ispell with F7
 ;; 2012-06-08 (1.9)
@@ -113,6 +116,14 @@
 (global-set-key         "\C-j"                  'push-line)
 ;; add a new line whitout jump on it
 (global-set-key         (kbd "<S-return>")      'open-line)
+;; join next line with the current and remove space between except one
+(global-set-key         (kbd "<H-return>")      '(lambda ()
+                                                   (interactive)
+                                                   (move-end-of-line nil)
+                                                   (next-line)
+                                                   (join-line)
+                                                   (just-one-space)
+                                                   ))
 
 ;; align a region following regexp
 (global-set-key         "\C-cpp"                'align)
@@ -149,6 +160,9 @@
 (global-set-key         (kbd "<H-right>")        'forward-sexp)
 (global-set-key         (kbd "<H-left>")         'backward-sexp)
 
+;; run calc quick
+(global-set-key         (kbd "<M-kp-subtract>") 'quick-calc)
+
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol
 ;; completion command to `M-TAB' which is a reserved hot key under Windows.
@@ -184,20 +198,33 @@
 ;;; DIRED PLUS
 ;; REQUIREMENT: var     `section-mode-dired-plus'
 (when section-mode-dired-plus
-  ;; open with default associated application
-  (global-set-key       (kbd "<H-return>")      'dired-w32-browser)
+  (eval-after-load "dired"
+    '(progn
+       ;; open with default associated application
+       (define-key dired-mode-map (kbd "<H-return>") 'dired-w32-browser)
+       )
+    )
   )
 
 ;;
 ;;; EDIFF
 (eval-after-load "ediff"
   '(progn
-     (global-set-key    (kbd "<M-up>")          'ediff-previous-difference)
-     (global-set-key    (kbd "<M-down>")        'ediff-next-difference)
-     (global-set-key    (kbd "<M-right>")       'ediff-copy-A-to-B)
-     (global-set-key    (kbd "<M-left>")        'ediff-copy-B-to-A)
+     ;; previous diff
+     (local-set-key    (kbd "<M-up>")          'ediff-previous-difference)
+     ;; next diff
+     (local-set-key    (kbd "<M-down>")        'ediff-next-difference)
+     ;; get modification from left
+     (local-set-key    (kbd "<M-right>")       'ediff-copy-A-to-B)
+     ;; get modification from right
+     (local-set-key    (kbd "<M-left>")        'ediff-copy-B-to-A)
      )
   )
+
+;;
+;;; ALIAS
+;; replace with regex
+(defalias 'rr 'replace-regexp)
 
 
 ;;

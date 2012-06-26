@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 7.6
+;; Version: 7.7
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-06-21 (7.7)
+;;    add web browser
 ;; 2012-06-19 (7.6)
 ;;    fix bug with default font on linux + option for powerline + screensaver
 ;;    mode
@@ -911,6 +913,7 @@ before message."
   (defvar profile-fill-column 78)
   (defvar profile-ispell-program "aspell")
   (defvar profile-ispell-dictionary "english")
+  (defvar profile-browser "firefox")
   ;;
   ;; CALENDAR                                                           11.1
   ;; set latitude/longitude + location + holidays + custom date in Modeline

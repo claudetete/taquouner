@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-21 (1.4)
+;;    remove old shortcut to switch between buffers
 ;; 2012-06-08 (1.3)
 ;;    add clearcase shortcuts
 ;; 2012-03-30 (1.2)
@@ -46,9 +48,6 @@
 ;;; Code:
 ;; close the current buffer
 (global-set-key         (kbd "M-`")            'kill-this-buffer)
-;;
-;; f11 to switch between buffers (not used)
-(global-set-key         [f11]                   'switch-to-buffer)
 ;;
 ;; show a list of buffers in a new window
 (global-set-key         (kbd "C-x C-b")         'electric-buffer-list)
