@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.4
+;; Version: 4.5
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-06-26 (4.5)
+;;    fix bug with mark about web search + add google
 ;; 2012-06-21 (4.4)
 ;;    add function to open web browser with text selected in Emacs + insert date
 ;;    + split ecb and clearcase function in new file +
@@ -161,13 +163,12 @@
     )
   )
 ;;; get the string from word at point or region
-(defun clt-get-string (beg end)
-  (let (string)
+(defun clt-get-string-position ()
+  (let ()
     (if (use-region-p)
-      (setq string (buffer-substring beg end))
-      (setq string (clt-select-word))
+      (list (region-beginning) (region-end))
+      (list (car (bounds-of-thing-at-point 'word)) (cdr (bounds-of-thing-at-point 'word)))
       )
-    string
     )
   )
 
@@ -614,34 +615,39 @@ line instead."
 
 ;;
 ;;;
-;;;; TRANSLATE
+;;;; WEB SEARCH
 ;;; translate from French to English in generic browser
 (defun translate-fren (beg end)
   "Translate the word at point using WordReference or Google Translate when a region is selected."
-  (interactive "r")
-  (let ((string (clt-get-string beg end)))
-    (if (use-region-p)
-      (browse-url-generic
-        (concat "http://translate.google.fr/?hl=&ie=UTF-8&text=&sl=fr&tl=en#fr|en|"
-          string))
-      (browse-url-generic
-        (concat "http://www.wordreference.com/fren/"
-          string))
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (if (use-region-p)
+        (browse-url-generic
+          (concat "http://translate.google.fr/?hl=&ie=UTF-8&text=&sl=fr&tl=en#fr|en|"
+            string))
+        (browse-url-generic
+          (concat "http://www.wordreference.com/fren/"
+            string))
+        )
       )
     )
   )
 ;;; translate from English to French in generic browser
 (defun translate-enfr (beg end)
   "Translate the word at point using WordReference or Google Translate when a region is selected."
-  (interactive "r")
-  (let ((string (clt-get-string beg end)))
-    (if (use-region-p)
-      (browse-url-generic
-        (concat "http://translate.google.fr/?hl=&ie=UTF-8&text=&sl=en&tl=fr#en|fr|"
-          string))
-      (browse-url-generic
-        (concat "http://www.wordreference.com/enfr/"
-          string))
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (if (use-region-p)
+        (browse-url-generic
+          (concat "http://translate.google.fr/?hl=&ie=UTF-8&text=&sl=en&tl=fr#en|fr|"
+            string))
+        (browse-url-generic
+          (concat "http://www.wordreference.com/enfr/"
+            string))
+        )
+      (message "No word at point or no mark set")
       )
     )
   )
@@ -649,39 +655,77 @@ line instead."
 ;;; search in French Wikipedia
 (defun wikipedia-fr (beg end)
   "Search the word at point or selected region using Wikipedia."
-  (interactive "r")
-  (let ((string (clt-get-string beg end)))
-    (browse-url-generic
-      (concat "http://fr.wikipedia.org/wiki/Special:Search?search=" string))
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "http://fr.wikipedia.org/wiki/Special:Search?search=" string))
+      (message "No word at point or no mark set")
+      )
     )
   )
 ;;; search in English Wikipedia
 (defun wikipedia-en (beg end)
   "Search the word at point or selected region using Wikipedia."
-  (interactive "r")
-  (let ((string (clt-get-string beg end)))
-    (browse-url-generic
-      (concat "http://en.wikipedia.org/wiki/Special:Search?search=" string))
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "http://en.wikipedia.org/wiki/Special:Search?search=" string))
+      (message "No word at point or no mark set")
+      )
     )
   )
 
 ;;; search synonym in French
 (defun synonym-fr (beg end)
   "Search the word at point or selected region using Synonymes.com."
-  (interactive "r")
-  (let ((string (clt-get-string beg end)))
-    (browse-url-generic
-      (concat "http://www.synonymes.com/synonyme.php?mot=" string "&x=0&y=0"))
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "http://www.synonymes.com/synonyme.php?mot=" string "&x=0&y=0"))
+	  )
     )
   )
 
 ;;; search grammatical conjugation in French
 (defun conjugation-fr (beg end)
   "Search the word at point or selected region using leconjugueur.com."
-  (interactive "r")
-  (let ((string (clt-get-string beg end)))
-    (browse-url-generic
-      (concat "http://www.leconjugueur.com/php5/index.php?v=" string))
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "http://www.leconjugueur.com/php5/index.php?v=" string))
+      (message "No word at point or no mark set")
+      )
+    )
+  )
+
+;;; search in French Google
+(defun google-fr (beg end)
+  "Search the word at point or selected region using google.fr."
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "http://www.google.fr/search?hl=fr&client=opera&hs=0HH&q=" string
+          "&btnG=Rechercher&meta=&num=100&as_qdr=a&as_occt=any"))
+      (message "No word at point or no mark set")
+      )
+    )
+  )
+;;; search in English Google
+(defun google-en (beg end)
+  "Search the word at point or selected region using google.fr."
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "http://www.google.fr/search?hl=en&client=opera&hs=0HH&q=" string
+          "&btnG=Rechercher&meta=&num=100&as_qdr=a&as_occt=any"))
+      (message "No word at point or no mark set")
+      )
     )
   )
 

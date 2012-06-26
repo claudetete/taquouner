@@ -20,9 +20,9 @@
 
 ;; Keywords: config, completion
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-completion'
 
 ;;; Change Log:
+;; 2012-06-26 (1.4)
+;;    try again hippie
 ;; 2012-05-10 (1.3)
 ;;    fix bug with CUA rectangle selection by disable dynamic completion +
 ;;    remove hippie do not work properly
@@ -52,6 +54,24 @@
 ;;;; from grandm_y
 ;;;; Interfere with CUA selection mode (insert only null character)
 ;;(dynamic-completion-mode)
+
+;; try
+(setq hippie-expand-try-functions-list
+  '(yas/hippie-try-expand
+     try-expand-dabbrev
+     try-expand-dabbrev-visible
+     try-expand-dabbrev-all-buffers
+     ;; try-expand-dabbrev-from-kill
+     ;; try-complete-file-name
+     ;; try-complete-file-name-partially
+     ;; try-complete-lisp-symbol
+     ;; try-complete-lisp-symbol-partially
+     ;; try-expand-line
+     ;; try-expand-line-all-buffers
+     ;; try-expand-list
+     ;; try-expand-list-all-buffers
+     ;; try-expand-whole-kill
+     ))
 
 
 (provide 'completion)

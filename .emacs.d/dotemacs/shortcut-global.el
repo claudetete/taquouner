@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-26 (2.2)
+;;    new line from anywhere on the line + folder up in dired
 ;; 2012-06-21 (2.1)
 ;;    join-line without space and with next line + quick calc + add condition to
 ;;    open with in dired mode + comments about ediff + alias for replace-regexp
@@ -124,6 +126,12 @@
                                                    (join-line)
                                                    (just-one-space)
                                                    ))
+;; new line but from anywhere on the previous line
+(global-set-key         (kbd "<M-return>")      '(lambda ()
+                                                   (interactive)
+                                                   (end-of-line)
+                                                   (newline)
+                                                   ))
 
 ;; align a region following regexp
 (global-set-key         "\C-cpp"                'align)
@@ -202,6 +210,7 @@
     '(progn
        ;; open with default associated application
        (define-key dired-mode-map (kbd "<H-return>") 'dired-w32-browser)
+       (define-key dired-mode-map (kbd "[")          'dired-up-directory)
        )
     )
   )

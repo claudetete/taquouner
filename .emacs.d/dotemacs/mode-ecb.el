@@ -20,7 +20,7 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: August 2010
 ;; Last-Updated: June 2012
 
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-06-26 (2.4)
+;;    try new small branch of ecb
 ;; 2012-06-21 (2.3)
 ;;    patch section to hide ecb compile window + unset variable used by custom
 ;;    function hook to goto-ecb-window-...
@@ -78,7 +80,7 @@
   (setq stack-trace-on-error t))
 
 (if nil
-  (add-to-list 'load-path (concat dotemacs-path "/plugins/alexott-ecb-54527e9"))
+  (add-to-list 'load-path (concat dotemacs-path "/plugins/ecb-alexott"))
   (add-to-list 'load-path (concat dotemacs-path "/plugins/ecb-snap"))
   )
 

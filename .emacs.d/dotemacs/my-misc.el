@@ -20,7 +20,7 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.1
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-06-26 (2.1)
+;;    no scratch message + size of tab + backspace on tab remove one space
 ;; 2012-06-21 (2.0)
 ;;    add generic browser
 ;; 2012-06-15 (1.9)
@@ -103,6 +105,27 @@
 ;; set browser to open url
 (setq browse-url-generic-program profile-browser)
 (setq browse-url-browser-function 'browse-url-generic)
+
+;; don't insert instructions into the *scratch* buffer
+(setq initial-scratch-message nil)
+
+;; tab = x spaces
+(setq-default default-tab-width 8)
+(setq-default tab-width 8)
+
+;; set tab stops based on default-tab-width
+(setq-default tab-stop-list (loop for i
+                                  from default-tab-width to 120
+                                  by default-tab-width
+                                  collect i))
+
+;; backspace on whitespace turns to spaces and removes one
+(setq backward-delete-char-untabify-method 'untabify)
+
+;;;; Annoying arrows mode: ring bell when toooo much same arrow move and suggest
+;;;; new command to move
+;;(require 'annoying-arrows-mode)
+;;(global-annoying-arrows-mode)
 
 ;;
 ;;; CALENDAR

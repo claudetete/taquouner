@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-06-26 (2.4)
+;;    add shortcut for google search
 ;; 2012-06-21 (2.3)
 ;;    add shortcut for translate, synonym, conjugate and wikipedia function
 ;; 2012-06-14 (2.2)
@@ -163,6 +165,10 @@
 ;; wikipedia
 (global-set-key         (kbd "<f11>")           'wikipedia-en)
 (global-set-key         (kbd "<H-f11>")         'wikipedia-fr)
+
+;; google
+(global-set-key         (kbd "<S-f11>")         'google-fr)
+(global-set-key         (kbd "<C-f11>")         'google-en)
 
 
 (provide 'shortcut-function)
