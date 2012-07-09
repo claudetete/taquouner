@@ -20,18 +20,18 @@
 
 ;; Keywords: config, display, font
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
 ;; Last-Updated: June 2012
 
 ;;; Commentary:
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/display.el'
 ;; REQUIREMENT: var     `section-display-font'
-;;              var     `section-environment-os-recognition'
-;;              var     `section-environment-terminal-vs-graphics'
 
 ;;; Change Log:
+;; 2012-06-26 (1.8)
+;;    simplify settings
 ;; 2012-06-18 (1.7)
 ;;    add condition about font
 ;; 2012-06-05 (1.6)
@@ -55,7 +55,7 @@
 
 ;;; Code:
 (when profile-font
-  (set-face-font 'default profile-font))
+  (set-default-font profile-font))
 
 ;;
 ;;; INTERNATIONAL

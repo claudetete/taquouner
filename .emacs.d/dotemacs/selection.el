@@ -20,9 +20,9 @@
 
 ;; Keywords: config, selection, text
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: May 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-selection'
 
 ;;; Change Log:
+;; 2012-07-09 (1.6)
+;;    clean up
 ;; 2012-05-10 (1.5)
 ;;    add comment for bug with CUA
 ;; 2012-04-03 (1.4)
@@ -95,19 +97,6 @@
 ;; [M-C-up] and [M-C-down] scrolls the lines INSIDE the rectangle up
 ;; and down; lines scrolled outside the top or bottom of the rectangle
 ;; are lost, but can be recovered using [C-z].
-
-
-9
-8
-7
-6
-5
-4
-3
-2
-1
-
-
 
 ;;
 ;;; SHIFT SELECTION

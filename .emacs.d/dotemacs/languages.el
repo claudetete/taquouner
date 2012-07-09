@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-07-09 (2.4)
+;;    electric pair for parenthesis, bracket, quote, etc
 ;; 2012-06-13 (2.3)
 ;;    remove unknown option
 ;; 2012-06-12 (2.2)
@@ -83,6 +85,8 @@
     (setq c-font-lock-extra-types (append profile-c-extra-types c-font-lock-extra-types))
     ;; Compile mode without ask
     (setq compilation-read-command nil)
+    ;; pair of parenthesis, bracket, etc
+    (electric-pair-mode t)
 
     ;;; INDENT PREPROCESSOR
     ;; make a #define be align with C code
@@ -115,6 +119,8 @@
 (when section-languages-lisp (message "  3.2 Languages Lisp...")
   ;; set indent size
   (setq lisp-indent-offset profile-lisp-indent-offset)
+  ;; pair of parenthesis, bracket, etc
+  (electric-pair-mode t)
   (message "  3.2 Languages Lisp... Done"))
 
 ;;

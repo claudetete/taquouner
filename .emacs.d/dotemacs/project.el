@@ -20,17 +20,24 @@
 
 ;; Keywords: config, ede, cedet, project, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: July 2011
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
-;; load by `mode-semantic.el' (all requirements are defined in `emacs.el')
-;; REQUIREMENT: var     `section-mode-cedet-semantic'
-;;              var     `section-mode-cedet'
+;; load by `mode.el' (all requirements are defined in `emacs.el')
+;; REQUIREMENT: var     `section-mode-cedet'
+;;              and cedet has been successfully loaded
+;;
+;; to had new project you can see `.emacs.d/myproject.ede.el' as example
+;; and feed each new ede file project into the variable `profile-ede-project'
+;; from `.emacs.d/profile/profile-yourprofile.el'
+;; (see `.emacs.d/profile/profile-default.el' as example)
 
 ;;; Change Log:
+;; 2012-07-09 (1.5)
+;     add new comments
 ;; 2012-06-05 (1.4)
 ;;    remove project and use a list of it in profile file
 ;; 2012-05-07 (1.3)

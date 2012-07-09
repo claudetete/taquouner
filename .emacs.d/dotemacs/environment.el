@@ -20,9 +20,9 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.5
+;; Version: 2.6
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `dotemacs-path'
 
 ;;; Change Log:
+;; 2012-07-09 (2.6)
+;;    add robustness
 ;; 2012-06-12 (2.5)
 ;;    add version recognition + condition for packages
 ;; 2012-06-08 (2.4)
@@ -156,10 +158,12 @@
   (setq gc-cons-threshold 50000000)
   ;;
   ;; try to improve slow performance on windows.
-  (if running-on-ms-windows
+  (when (and section-environment-os-recognition running-on-ms-windows)
     (setenv "CYGWIN" "nodosfilewarning")
     (setq w32-get-true-file-attributes nil)
     )
+  ;;;; do not wait fully redisplay before take in keyboard/mouse event
+  ;;(setq redisplay-dont-pause nil)
   (message "  0.6 Windows: improve performance... Done"))
 
 ;;
@@ -178,7 +182,7 @@
 ;;
 ;;; ELPA
 (when section-environment-elpa (message "  0.8 ELPA...")
-  (when running-on-emacs-23
+  (when (and section-environment-version-recognition running-on-emacs-23)
     ;; add to load path the profile directory
     (add-to-list 'load-path (concat dotemacs-path "/plugins/elpa"))
     (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/elpa")) load-path))
@@ -208,7 +212,7 @@
 ;;; HYPER
 ;; be careful with this it fully disable menu key when Emacs has focus
 (when section-environment-hyper (message "  0.9 Hyper...")
-  (when running-on-ms-windows
+  (when (and section-environment-os-recognition running-on-ms-windows)
     (setq
       w32-pass-apps-to-system nil
       w32-apps-modifier 'hyper) ;; Menu key
@@ -219,7 +223,7 @@
 ;;; SUPER
 ;; be careful with this it fully disable windows key when Emacs has focus
 (when section-environment-super (message "  0.10 Super...")
-  (when running-on-ms-windows
+  (when (and section-environment-os-recognition running-on-ms-windows)
     ;; setting the PC keyboard's various keys to
     ;; Super or Hyper, for emacs running on Windows.
     (setq

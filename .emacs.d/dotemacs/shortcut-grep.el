@@ -26,7 +26,7 @@
 
 ;;; Commentary:
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/shortcut.el'
 ;; REQUIREMENT: var     `section-shortcut-grep'
 ;;              var     `section-shortcut'
 

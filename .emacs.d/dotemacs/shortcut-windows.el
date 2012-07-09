@@ -20,17 +20,19 @@
 
 ;; Keywords: config, shortcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/shortcut.el'
 ;; REQUIREMENT: var     `section-shortcut-windows'
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-07-09 (1.4)
+;;    add shortcut to split windows more easily
 ;; 2012-06-21 (1.3)
 ;;    additional shortcut to split windows in Emacs
 ;; 2012-04-17 (1.2)
@@ -62,10 +64,18 @@
 (global-set-key         (kbd "<C-S-right>")     'shrink-window-horizontally)
 
 ;; new shortcut for split windows
-(global-set-key         (kbd "<M-kp-0>")        'delete-window)
-(global-set-key         (kbd "<M-kp-1>")        'delete-other-windows)
-(global-set-key         (kbd "<M-kp-2>")        'split-window-vertically)
-(global-set-key         (kbd "<M-kp-3>")        'split-window-horizontally)
+(global-set-key         (kbd "<M-kp-decimal>")  'delete-window)
+(global-set-key         (kbd "<M-kp-0>")        'delete-other-windows)
+(global-set-key         (kbd "<M-kp-2>")        '(lambda ()
+                                                   (interactive)
+                                                   (split-window-below)
+                                                   (windmove-down 0)))
+(global-set-key         (kbd "<M-kp-6>")        '(lambda ()
+                                                   (interactive)
+                                                   (split-window-right)
+                                                   (windmove-right 0)))
+(global-set-key         (kbd "<M-kp-5>")        'make-frame-command)
+(global-set-key         (kbd "<M-kp-enter>")    'delete-frame)
 
 
 (provide 'shortcut-windows)

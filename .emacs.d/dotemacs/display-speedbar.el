@@ -28,7 +28,7 @@
 ;;
 ;; it's a pain because it open a new window but not integrated
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/display.el' (where all requirements are defined)
 ;; REQUIREMENT: var     `section-display-speedbar'
 
 ;;; Change Log:

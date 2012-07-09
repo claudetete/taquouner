@@ -20,18 +20,20 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.5
+;; Version: 4.6
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
 ;; load by `emacs.el' (where all requirements are defined)
-;; REQUIREMENT: var     `section-external-functions'
+;; REQUIREMENT: var     `section-functions'
 ;;
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-07-09 (4.6)
+;;    fix wait for fullscreen and add linux support + some test
 ;; 2012-06-26 (4.5)
 ;;    fix bug with mark about web search + add google
 ;; 2012-06-21 (4.4)
@@ -589,7 +591,13 @@ line instead."
   "Maximize the current frame"
   (interactive)
   (when running-on-ms-windows
-    (w32-send-sys-command 61488))
+    (w32-send-sys-command 61488)
+    (sit-for 0)
+    )
+  (when running-on-gnu-linux
+    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+    )
   )
 
 ;;
@@ -729,19 +737,31 @@ line instead."
     )
   )
 
-
 ;;
 ;;;
 ;;;; MAGNETI MARELLI
-(when section-external-function-mm (message "    1.2.1 Functions Magneti Marelli...")
+(when section-function-mm (message "    1.2.1 Functions Magneti Marelli...")
   (try-require 'function-mm "    ")
   (message "    1.2.1 Functions Magneti Marelli... Done"))
 
 ;;
 ;;;
 ;;;; ECB
-(when section-mode-cedet-ecb
+(if section-mode-cedet-ecb
   (try-require 'function-ecb "    ")
+  (progn
+    (defun my-display-completions (buf)
+      "put the *completions* buffer in the right spot"
+      (let ((windows (delete (minibuffer-window) (window-list))))
+        (if (eq 1 (length windows))
+          (progn
+            (select-window (car windows))
+            (split-window-vertically)))
+        (let ((target-window (window-at 0 (- (frame-height) 2)))
+               (pop-up-windows t))
+          (set-window-buffer target-window buf)
+          target-window)))
+    )
   ) ; (when section-mode-cedet-ecb
 
 ;;
@@ -768,11 +788,6 @@ line instead."
   "Google the selected region."
   (interactive "r")
   (browse-url-generic (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q=" (buffer-substring beg end))))
-(defun translate ()
-  "Translate the word at point using WordReference."
-  (interactive)
-  (browse-url (concat "http://www.wordreference.com/fren/"
-                (thing-at-point 'word))))
 
 ;;; Copy entire line in kill ring (without Home C-k C-y) (by Claude TETE)
 (defun push-line ()
@@ -782,6 +797,85 @@ line instead."
     (copy-region-as-kill (re-search-backward "^") (re-search-forward "$"))
   )
 )
+
+
+(defun tinymy-buffer-file-chmod ()
+  "Toggle current buffer's Read-Write permission permanently on disk. VERB.
+Does nothing if buffer is not visiting a file or file is not owned by us."
+  (interactive)
+  (let* ((file  (buffer-file-name))
+          stat)
+    (when (and file (file-modes file))  ;File modes is nil in Ange-ftp
+      (setq stat (ti::file-chmod-w-toggle file))
+      (when verb
+        (cond
+          ((eq stat 'w+)
+            (message "TinyMy: chmod w+")
+            (setq buffer-read-only nil))
+          ((eq stat 'w-)
+            (message "TinyMy: chmod w-")
+            (setq buffer-read-only t))
+          (t
+          (message "TinyMy: couldn't chmod")))
+        (ti::compat-modeline-update)))))
+
+
+;;
+;;; RESIZE WINDOW
+;; by Sergey Ovechkin (pomeo)
+(defun win-resize-top-or-bot ()
+  "Figure out if the current window is on top, bottom or in the
+middle"
+  (let* ((win-edges (window-edges))
+          (this-window-y-min (nth 1 win-edges))
+          (this-window-y-max (nth 3 win-edges))
+          (fr-height (frame-height)))
+    (cond
+      ((eq 0 this-window-y-min) "top")
+      ((eq (- fr-height 1) this-window-y-max) "bot")
+      (t "mid"))))
+;;
+(defun win-resize-left-or-right ()
+  "Figure out if the current window is to the left, right or in the
+middle"
+  (let* ((win-edges (window-edges))
+          (this-window-x-min (nth 0 win-edges))
+          (this-window-x-max (nth 2 win-edges))
+          (fr-width (frame-width)))
+    (cond
+      ((eq 0 this-window-x-min) "left")
+      ((eq (+ fr-width 4) this-window-x-max) "right")
+      (t "mid"))))
+;;
+(defun win-resize-enlarge-horiz ()
+  (interactive)
+  (cond
+    ((equal "top" (win-resize-top-or-bot)) (enlarge-window -1))
+    ((equal "bot" (win-resize-top-or-bot)) (enlarge-window 1))
+    ((equal "mid" (win-resize-top-or-bot)) (enlarge-window -1))
+    (t (message "nil"))))
+;;
+(defun win-resize-minimize-horiz ()
+  (interactive)
+  (cond
+    ((equal "top" (win-resize-top-or-bot)) (enlarge-window 1))
+    ((equal "bot" (win-resize-top-or-bot)) (enlarge-window -1))
+    ((equal "mid" (win-resize-top-or-bot)) (enlarge-window 1))
+    (t (message "nil"))))
+;;
+(defun win-resize-enlarge-vert ()
+  (interactive)
+  (cond
+    ((equal "left" (win-resize-left-or-right)) (enlarge-window-horizontally -1))
+    ((equal "right" (win-resize-left-or-right)) (enlarge-window-horizontally 1))
+    ((equal "mid" (win-resize-left-or-right)) (enlarge-window-horizontally -1))))
+;;
+(defun win-resize-minimize-vert ()
+  (interactive)
+  (cond
+    ((equal "left" (win-resize-left-or-right)) (enlarge-window-horizontally 1))
+    ((equal "right" (win-resize-left-or-right)) (enlarge-window-horizontally -1))
+    ((equal "mid" (win-resize-left-or-right)) (enlarge-window-horizontally 1))))
 
 
 ;; This is what I bind to Alt-[ and Alt-]. (by Scott McPeak)

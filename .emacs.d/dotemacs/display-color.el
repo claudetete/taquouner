@@ -20,19 +20,21 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/display.el'
 ;; REQUIREMENT: var     `section-display-color'
 ;;              mode    `color-theme'
 ;;              var     `section-environment-terminal-vs-graphics'
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2012-07-09 (2.2)
+;;    robustness + try disable highlight line when marked region
 ;; 2012-06-12 (2.1)
 ;;    separate color theme (Emacs 23) and themes (Emacs 24)
 ;; 2012-06-05 (2.0)
@@ -68,6 +70,14 @@
 
 ;; highlight current line in the buffer
 (global-hl-line-mode t)
+;;;; disable it when selection is ongoing
+;; do not work properly
+;;(defadvice push-mark (before push-mark-hl-line activate)
+;;  (global-hl-line-mode -1))
+;;(defadvice keyboard-quit (before keyboard-quit-hl-line activate)
+;;  (global-hl-line-mode t))
+;;(defadvice pop-global-mark (after pop-global-mark-hl-line activate)
+;;  (global-hl-line-mode t))
 
 ;; syntax color
 (global-font-lock-mode t)
@@ -112,7 +122,7 @@
 ;;; COLOR-THEME
   (progn
     (message "    5.4.4 Color Theme...")
-    (if running-on-emacs-24
+    (if (and section-environment-version-recognition running-on-emacs-24)
       (progn
         ;; add path of theme
         (add-to-list 'custom-theme-load-path (concat dotemacs-path "/plugins/themes"))
@@ -298,7 +308,7 @@
     ;; REQUIREMENT:     var     `section-display-color-misc'
     (when section-display-color-misc (message "    5.4.4 Color Misc...")
       ;; put all colors only when run graphical
-      (when running-in-graphical
+      (when (and section-environment-terminal-vs-graphics running-in-graphical)
         (set-face-background 'default "black")
         (set-face-foreground 'default "white")
         (custom-set-faces

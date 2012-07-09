@@ -20,7 +20,7 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: June 2012
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-06-26 (0.4)
+;;    simplify font settings
 ;; 2012-06-13 (0.3)
 ;;    new modes
 ;; 2012-06-12 (0.2)
@@ -95,48 +97,80 @@
 ;; choice between:
 ;;; Terminal
 ;; nice, very tiny, only ascii (too tiny ?)
-;; (setq profile-font "-raster-Terminal-normal-normal-normal-mono-8-*-*-*-c-*-ms-oemlatin")
+;; (setq profile-font "Terminal-6")
 ;;
 ;;; Anonymous Pro, 10
 ;; nice, big (slashed 'zero', 'one' and minus 'L' can be mixed up)
-(setq profile-font "-outline-Anonymous Pro-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+(setq profile-font "Anonymous Pro-10")
 ;;; Anonymous Pro, 8
 ;; nice, small (slashed 'zero', 'one' and minus 'L' can be mixed up, parentheses and curly bracket can be mixed up)
-;; (setq profile-font "-outline-Anonymous Pro-normal-normal-normal-mono-11-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "Anonymous Pro-8")
 ;;
-;;; Proggy Tiny Z, 8
+;;; Proggy Tiny Z, 6
 ;; good, very tiny (slashed 'zero', dot and comma can be mixed)
-;; (setq profile-font "-raster-ProggyTinySZ-normal-normal-normal-mono-10-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "ProggyTinySZ-6")
 ;;
 ;;; DejaVu Sans Mono, 10
 ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
-;; (setq profile-font "-outline-DejaVu Sans Mono-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "DejaVu Sans Mono-10")
+;;; DejaVu Sans Mono, 8
+;; (setq profile-font "DejaVu Sans Mono-8")
 ;;
-;;; Inconsolata, 9
+;;; Inconsolata, 10
 ;; not so good with ms window (slashed 'zero', capitalized 'i' and minus 'L' can be mixed up)
-;; (setq profile-font "-outline-Inconsolata-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "Inconsolata-10")
 ;;
 ;;; Lucida Console, 10
 ;; nice, big, large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-;; (setq profile-font "-outline-Lucida Console-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "Lucida Console-10")
 ;;; Lucida Console, 8
 ;; nice, small large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-;; (setq profile-font "-outline-Lucida Console-normal-normal-normal-mono-11-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "Lucida Console-8")
 ;;
 ;;; Monaco, 10
 ;; nice, very big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-;; (setq profile-font "-outline-Monaco-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "Monaco-10")
 ;;; Monaco, 8
 ;; nice, big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-;; (setq profile-font "-outline-Monaco-normal-normal-normal-mono-11-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "Monaco-8")
 ;;
 ;;; ProFont, 8
 ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
-;; (setq profile-font "-outline-ProFontWindows-normal-normal-normal-mono-12-*-*-*-c-*-iso8859-1")
+;; (setq profile-font "ProFontWindows-8")
 ;;
-;;; Courier New
+;;; Courier New 10
 ;; classic but big and large
-;; (setq profile-font "-outline-Courier New-normal-normal-normal-mono-*-*-*-*-c-*-iso10646-1"
+;; (setq profile-font "Courier New-10")
+;;; Courier New 8
+;; classic but big and large
+;; (setq profile-font "Courier New-8")
+;;
+;;; Ubuntu Mono, 10
+;; (setq profile-font "Ubuntu Mono-10")
+;;; Ubuntu Mono, 8
+;; (setq profile-font "Ubuntu Mono-8")
+;;
+;;; Terminus, 10
+;; (setq profile-font "Terminus-10")
+;;; Terminus, 8
+;; (setq profile-font "Terminus-8")
+;;
+;;; Monospace, 8
+;; (setq profile-font "Monospace-8")
+;;
+;;; Liberation Mono, 8
+;; (setq profile-font "Liberation Mono-8")
+;;
+;;; Inconsolata, 10
+;; (setq profile-font "Inconsolata-10")
+;;; Inconsolata, 8
+;; (setq profile-font "Inconsolata-8")
+;;
+;;; Droid Sans Mono, 10
+;; (setq profile-font "Droid Sans Mono-10")
+;;; Droid Sans Mono, 8
+;; (setq profile-font "Droid Sans Mono-8")
+
 
 ;; indentation offset in C
 (setq profile-c-indent-offset 2)
@@ -305,27 +339,23 @@
   ) ; progn
 
 
-;;; EXTERN FILES: load extern files which are not modes
-(setq section-external t)
+;;; FUNCTIONS: new functions
+(setq section-functions t)
 (progn
-  ;; add "plugins/" to load path
-  (setq section-external-directory t)
-  ;; load custom function
-  (setq section-external-functions t)
-  (progn
-    ;; MAGNETI MARELLI: load custom function for MM profile
-    (setq section-external-function-mm nil)
-    ) ; (progn
-  ;; VECTRA: man and doc in emacs (never used)
-  (setq section-external-vectra nil)
-  ;; HOME/END: add some useful function to home and end keys
-  (setq section-external-home-end t)
+  ;; MAGNETI MARELLI: load custom function for MM profile
+  (setq section-function-mm nil)
   ) ; (progn
 
 
 ;;; MODE: load extern files which are modes in plugins/
 (setq section-mode t)
 (progn
+  ;; DIRECTORY: add "plugins/" to load path
+  (setq section-mode-directory t)
+  ;; VECTRA: man and doc in emacs (never used)
+  (setq section-mode-vectra nil)
+  ;; HOME/END: add some useful function to home and end keys
+  (setq section-mode-home-end t)
   ;; DOXYMACS: emacs interface for doxygen comments
   (setq section-mode-doxymacs nil)
   ;; IDO: yet another switch buffer
@@ -426,6 +456,12 @@
   (setq section-mode-nyan nil)
   ;; SML: add bar in modeline given position in buffer
   (setq section-mode-sml nil)
+  ;; DIRED: change option to command ls for dired mode
+  (setq section-mode-dired t)
+  ;; ISEARCH: scroll is possible when incremental search
+  (setq section-mode-isearch t)
+  ;; RAINBOW DELIMITERS: scroll is possible when incremental search
+  (setq section-mode-rainbow-delimiters nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (progn

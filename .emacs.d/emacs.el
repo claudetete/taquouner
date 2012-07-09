@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 7.7
+;; Version: 7.8
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-07-09 (7.8)
+;;    remove extern files put in mode + functions alone + add rainbow delimiters
 ;; 2012-06-21 (7.7)
 ;;    add web browser
 ;; 2012-06-19 (7.6)
@@ -346,36 +348,16 @@ before message."
 
 
 ;;
-;;; EXTERN FILES                                                        1
-;; FILE: dotemacs/externfiles.el
-(defvar section-external t)
-;; load extern files which are not modes
+;; FUNCTIONS                                                            1
+;; FILE: dotemacs/functions.el
+;; REQUIREMENT:       section-environment-os-recognition
+;; load custom function
+(defvar section-functions t)
 (progn
-  ;; DIRECTORY                                                          1.1
-  ;; add "plugins/" to load path
-  (defvar section-external-directory t)
-  ;;
-  ;; FUNCTIONS                                                          1.2
-  ;; FILE: dotemacs/functions.el
-  ;; REQUIREMENT:       section-environment-os-recognition
-  ;; load custom function
-  (defvar section-external-functions t)
-  (progn
-    ;; MAGNETI MARELLI                                                  1.2.1
-    ;; FILE: dotemacs/function-mm.el
-    ;; load custom function for MM profile
-    (defvar section-external-function-mm nil)
-    ) ; (progn
-  ;;
-  ;; VECTRA                                                             1.3
-  ;; FILE: plugins/vectra.el
-  ;; man and doc in emacs (never used)
-  (defvar section-external-vectra nil)
-  ;;
-  ;; HOME/END                                                           1.4
-  ;; FILE: plugins/pc-keys.elc
-  ;; add some useful function to home and end keys
-  (defvar section-external-home-end t)
+  ;; MAGNETI MARELLI                                                    1.1
+  ;; FILE: dotemacs/function-mm.el
+  ;; load custom function for MM profile
+  (defvar section-function-mm nil)
   ) ; (progn
 
 
@@ -383,21 +365,36 @@ before message."
 ;;; MODE                                                                2
 ;; FILE: dotemacs/mode.el
 (defvar section-mode t)
-;; load extern files which are modes in plugins/
+;; load modes in plugins/
 (progn
-  ;; DOXYMACS                                                           2.1
+  ;; DIRECTORY                                                          2.1
+  ;; add "plugins/" to load path
+  ;; needed for all `section-mode-*'
+  (defvar section-mode-directory t)
+  ;;
+  ;; VECTRA                                                             2.2
+  ;; FILE: plugins/vectra.el
+  ;; man and doc in emacs (never used)
+  (defvar section-mode-vectra nil)
+  ;;
+  ;; HOME/END                                                           2.3
+  ;; FILE: plugins/pc-keys.elc
+  ;; add some useful function to home and end keys
+  (defvar section-mode-home-end t)
+  ;;
+  ;; DOXYMACS                                                           2.4
   ;; emacs interface for doxygen comments
   (defvar section-mode-doxymacs nil)
   ;;
-  ;; IDO                                                                2.2
+  ;; IDO                                                                2.5
   ;; yet another switch buffer
   (defvar section-mode-ido nil)
   ;;
-  ;; UNIQUIFY                                                           2.3
+  ;; UNIQUIFY                                                           2.6
   ;; create unique buffer name
   (defvar section-mode-uniquify t)
   ;;
-  ;; CEDET                                                              2.4
+  ;; CEDET                                                              2.7
   ;; "Collection of Emacs Development Environment Tools"
   (defvar section-mode-cedet t)
   ;; if you want to use emacs included CEDET set to nil
@@ -410,7 +407,7 @@ before message."
     (defvar profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
     (defvar profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe"))
 
-    ;; SEMANTIC                                                         2.4.1
+    ;; SEMANTIC                                                         2.7.1
     ;; FILE: dotemacs/mode-semantic.el
     ;; can do tag, list of function/variable..., preproc, etc
     (defvar section-mode-cedet-semantic t)
@@ -418,7 +415,7 @@ before message."
       (defvar profile-ede-project nil)
       ) ; (progn
     ;;
-    ;; ECB                                                              2.4.2
+    ;; ECB                                                              2.7.2
     ;; FILE: dotemacs/mode-ecb.el
     ;; "Emacs Code Browser"
     ;; can display other windows or speedbar to view folder tree, source
@@ -434,86 +431,86 @@ before message."
     ) ; (progn
 
   ;;
-  ;; BATCH                                                              2.5
+  ;; BATCH                                                              2.8
   ;; mode for .bat script in MS Windows
   (defvar section-mode-batch t)
   ;;
-  ;; VISUAL BASIC                                                       2.6
+  ;; VISUAL BASIC                                                       2.9
   ;; mode for VisualBasic and VisualBasicAdvance
   (defvar section-mode-vb t)
   ;;
-  ;; WINDOW NUMBERING                                                   2.7
+  ;; WINDOW NUMBERING                                                   2.10
   ;; give a number of each window to easily jump in it
   (defvar section-mode-window-numbering nil)
   ;;
-  ;; C                                                                  2.8
+  ;; C                                                                  2.11
   ;; define new type in C
   (defvar section-mode-c t)
   (progn
-    ;; CWARN                                                            2.8.1
+    ;; CWARN                                                            2.11.1
     ;; display small error in source code (forget semi-colon, etc)
     (defvar section-mode-c-cwarn nil)
     ;;
-    ;; DATA DEBUG                                                       2.8.3
+    ;; DATA DEBUG                                                       2.11.3
     ;; ??  (not used)
     (defvar section-mode-c-data-debug nil)
     ) ; (progn
 
   ;;
-  ;; ICOMPLETION                                                        2.9
+  ;; ICOMPLETION                                                        2.12
   ;; more completion in Minibuffer
   (defvar section-mode-icompletion nil)
 
   ;;
-  ;; YASNIPPET                                                          2.10
+  ;; YASNIPPET                                                          2.13
   ;; snippet mode (not used)
   (defvar section-mode-yasnippet t)
 
   ;;
-  ;; BROWSE KILL RING                                                   2.11
+  ;; BROWSE KILL RING                                                   2.14
   ;; mode to browse the kill ring memory
   ;; yank only on the first left top window...
   (defvar section-mode-browse-kill-ring nil)
 
   ;;
-  ;; MAGNETI MARELLI                                                    2.12
+  ;; MAGNETI MARELLI                                                    2.15
   (defvar section-mode-mm nil)
   (progn
-    ;; EOL                                                              2.12.1
+    ;; EOL                                                              2.15.1
     ;; light syntax color for End Of Line file
     (defvar section-mode-mm-eol t)
     ;;
-    ;; CAN DBC                                                          2.12.3
+    ;; CAN DBC                                                          2.15.3
     ;; light syntax color for Database CAN file
     (defvar section-mode-mm-dbc t)
     ;;
-    ;; CCM DIFF                                                         2.12.3
+    ;; CCM DIFF                                                         2.15.3
     ;; light syntax color for synergy diff file
     (defvar section-mode-mm-diff t)
     ) ; (progn
 
   ;;
-  ;; DIRED+                                                             2.13
+  ;; DIRED+                                                             2.16
   ;; improve Dired mode, color, open with, etc
   (defvar section-mode-dired-plus t)
 
   ;;
-  ;; GNU/GLOBAL                                                         2.14
+  ;; GNU/GLOBAL                                                         2.17
   ;; Tag management mode
   ;; use modified gtags.el:
   ;; see function to add from function.el and put the absolute path of
   ;; global executable
   (defvar section-mode-gnu-global t)
   ;;
-  ;; EPROJECT (grischka)                                                2.15
+  ;; EPROJECT (grischka)                                                2.18
   ;; project management mode (never used)
   (defvar section-mode-eproject nil)
   ;;
-  ;; RTRT SCRIPT                                                        2.16
+  ;; RTRT SCRIPT                                                        2.19
   ;; rtrt script mode (syntax coloration)
   (defvar section-mode-rtrt-script nil)
   ;;
-  ;; VC CLEARCASE                                                       2.17
+  ;; VC CLEARCASE                                                       2.20
   ;; vc ClearCase mode
   (defvar section-mode-vc-clearcase nil)
   (progn
@@ -521,83 +518,94 @@ before message."
     (defvar profile-cleartool "cleartool")
     ) ; (progn
   ;;
-  ;; CLEARCASE                                                          2.18
+  ;; CLEARCASE                                                          2.21
   ;; ClearCase mode
   (defvar section-mode-clearcase nil)
   ;;
-  ;; AUTOHOTKEY                                                         2.19
+  ;; AUTOHOTKEY                                                         2.22
   ;; AutoHotKey mode
   (defvar section-mode-autohotkey nil)
   ;;
-  ;; OUTLINE                                                            2.20
+  ;; OUTLINE                                                            2.23
   ;; Outline mode to manually hide/show source code block
   (defvar section-mode-outline t)
   ;;
-  ;; AUTO HIGHLIGHT SYMBOL                                              2.21
+  ;; AUTO HIGHLIGHT SYMBOL                                              2.24
   ;; to automatically highlight symbol at point
   (defvar section-mode-auto-highlight-symbol t)
   ;;
-  ;; GOOGLE CALENDAR                                                    2.22
+  ;; GOOGLE CALENDAR                                                    2.25
   ;; to import Google calendar
   (defvar section-mode-google-calendar nil)
   ;;
-  ;; FILL COLUMN INDICATOR                                              2.23
+  ;; FILL COLUMN INDICATOR                                              2.26
   ;; show a line at fill-column (set at 80 in dotemacs/my-misc.el
   ;; be careful enable truncate line
   (defvar section-mode-fill-column-indicator nil)
   ;;
-  ;; MUSE                                                               2.24
+  ;; MUSE                                                               2.27
   ;; show a line at fill-column (set at 80 in dotemacs/my-misc.el
   ;; muse mode to have nice doc
   (defvar section-mode-muse nil)
   ;;
-  ;; UNDO TREE                                                          2.25
+  ;; UNDO TREE                                                          2.28
   ;; replace the undo built in function
   (defvar section-mode-undo-tree t)
   ;;
-  ;; CSV                                                                2.26
+  ;; CSV                                                                2.29
   ;; parse/edit/sort CSV file
   (defvar section-mode-csv t)
   ;;
-  ;; SUBVERSION                                                         2.27
+  ;; SUBVERSION                                                         2.30
   ;; support Subversion 1.7
   (defvar section-mode-subversion t)
   ;;
-  ;; DIFF COLOR                                                         2.28
+  ;; DIFF COLOR                                                         2.31
   ;; add color to diff mode
   (defvar section-mode-diff-color t)
   ;;
-  ;; DIRED SORT                                                         2.29
+  ;; DIRED SORT                                                         2.32
   ;; more option to sort in Dired mode
   (defvar section-mode-dired-sort t)
   ;;
-  ;; ORG MODE                                                           2.30
+  ;; ORG MODE                                                           2.33
   ;; to organize everything (also use on Android)
   (defvar section-mode-org-mode nil)
   ;;
-  ;; ISEARCH+                                                           2.31
+  ;; ISEARCH+                                                           2.34
   ;; add some features to isearch
   (defvar section-mode-isearch+ nil)
   ;;
-  ;; PSVN                                                               2.32
+  ;; PSVN                                                               2.35
   ;; add features to subversion integration
   (defvar section-mode-psvn nil)
   ;;
-  ;; POWERLINE                                                          2.33
+  ;; POWERLINE                                                          2.36
   ;; fancy modeline
   (defvar section-mode-powerline nil)
   (progn
     (defvar profile-powerline-size "big")
     )
   ;;
-  ;; NYAN                                                               2.34
+  ;; NYAN                                                               2.37
   ;; add a bar in modeline with position in buffer with the nyan cat
   (defvar section-mode-nyan nil)
   ;;
-  ;; SML                                                                2.35
+  ;; SML                                                                2.38
   ;; add a bar in modeline with position in buffer
   (defvar section-mode-sml nil)
-
+  ;;
+  ;; DIRED                                                              2.39
+  ;; change option to command ls for dired mode
+  (defvar section-mode-dired t)
+  ;;
+  ;; ISEARCH                                                            2.40
+  ;; scroll is possible when incremental search
+  (defvar section-mode-isearch t)
+  ;;
+  ;; RAINBOW DELIMITERS                                                 2.41
+  ;; scroll is possible when incremental search
+  (defvar section-mode-rainbow-delimiters nil)
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
@@ -955,10 +963,10 @@ before message."
   (message "0 Environment... Done"))
 
 ;;
-;;; EXTERN FILES
-(when section-external (message "1 External files...")
-  (try-require 'externfiles "  ")
-  (message "1 External files... Done"))
+;;; FUNCTIONS
+(when section-functions (message "1 Functions...")
+  (try-require 'functions "  ")
+  (message "1 Functions... Done"))
 
 ;;
 ;;; MODE

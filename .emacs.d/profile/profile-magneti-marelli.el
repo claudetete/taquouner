@@ -59,7 +59,7 @@
 (when section-display-color-theme
   (setq profile-color-theme "clt"))
 
-(setq profile-font "-raster-Terminal-normal-normal-normal-mono-8-*-*-*-c-*-ms-oemlatin")
+(setq profile-font "Terminal-6")
 
 (setq profile-c-indent-offset 2)
 (setq profile-c-extra-types
@@ -154,16 +154,16 @@
   (setq section-environment-super nil)
   )
 
-(setq section-external t)
+(setq section-functions t)
 (progn
-  (setq section-external-directory t)
-  (setq section-external-functions t)
-  (setq section-external-vectra nil)
-  (setq section-external-home-end t)
+  (setq section-function-mm t)
   )
 
 (setq section-mode t)
 (progn
+  (setq section-mode-directory t)
+  (setq section-mode-vectra nil)
+  (setq section-mode-home-end t)
   (setq section-mode-doxymacs nil)
   (setq section-mode-ido nil)
   (setq section-mode-uniquify t)
@@ -212,6 +212,8 @@
   (setq section-mode-powerline nil)
   (setq section-mode-nyan nil)
   (setq section-mode-sml nil)
+  (setq section-mode-dired t)
+  (setq section-mode-isearch t)
   (setq section-mode-diminish nil)
   )
 

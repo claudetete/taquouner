@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,9 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-07-09 (2.2)
+;;    clean up + tabs stop = width of tab + do not kill scratch buffer + more
+;;    setting for ispell
 ;; 2012-06-26 (2.1)
 ;;    no scratch message + size of tab + backspace on tab remove one space
 ;; 2012-06-21 (2.0)
@@ -61,66 +64,71 @@
 
 
 ;;; Code:
-;; remove useless space at the end of line
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
-
 ;; define user name
-;;FIXME working environment default
 (setq user-full-name profile-username)
 
 ;; use compression
 (auto-compression-mode t)
 
-;; be sure that a new line is at the end of a file when it's saved
-(setq require-final-newline t)
-;;
-;; to do not have bug `backup-directory-alist' for TRAMP files
-(add-to-list 'backup-directory-alist
-  (cons tramp-file-name-regexp nil))
-
-;; fill-xxx is set with a width of profile-fill-column
-(custom-set-variables
-  '(fill-column profile-fill-column))
-
 ;; keep history between session of emacs (even after close it) for Minibuffer
 (savehist-mode 1)
-
-;; ignore case when reading a file name completion
-(setq read-file-name-completion-ignore-case t)
-
-;; ignore case when reading a buffer name
-(setq read-buffer-completion-ignore-case t)
 
 ;; check all variables and non-interactive functions with apropos
 (setq apropos-do-all t)
 
-;; change size display in Dired mode
-(setq dired-listing-switches "-alh")
-
-;; remove warning about undo too long
-(custom-set-variables
-  '(warning-suppress-types (quote ((undo discard-info))))
-)
-
-;; set browser to open url
-(setq browse-url-generic-program profile-browser)
-(setq browse-url-browser-function 'browse-url-generic)
-
-;; don't insert instructions into the *scratch* buffer
-(setq initial-scratch-message nil)
-
+;;
+;;; SPACE
+;; remove useless space at the end of line
+(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+;; be sure that a new line is at the end of a file when it's saved
+(setq require-final-newline t)
 ;; tab = x spaces
 (setq-default default-tab-width 8)
 (setq-default tab-width 8)
-
 ;; set tab stops based on default-tab-width
 (setq-default tab-stop-list (loop for i
                                   from default-tab-width to 120
                                   by default-tab-width
                                   collect i))
-
 ;; backspace on whitespace turns to spaces and removes one
 (setq backward-delete-char-untabify-method 'untabify)
+;; fill-xxx is set with a width of profile-fill-column
+(custom-set-variables '(fill-column profile-fill-column))
+
+;;
+;;; COMPLETION
+;; ignore case when reading a file name completion
+(setq read-file-name-completion-ignore-case t)
+;; ignore case when reading a buffer name
+(setq read-buffer-completion-ignore-case t)
+
+;;
+;;; SCRATCH BUFFER
+;; don't insert instructions into the *scratch* buffer
+(setq initial-scratch-message nil)
+;;; Unkillable scratch buffer, thanks to TN
+(add-hook 'kill-buffer-query-functions
+  '(lambda ()
+     (if (equal (buffer-name (current-buffer)) "*scratch*")
+       (progn
+         (delete-region (point-min) (point-max))
+         nil)
+       t)))
+
+;; FIX BUG
+;; remove warning about undo too long
+(custom-set-variables
+  '(warning-suppress-types (quote ((undo discard-info))))
+)
+;; to do not have bug `backup-directory-alist' for TRAMP files
+(add-to-list 'backup-directory-alist
+  (cons tramp-file-name-regexp nil))
+
+;;
+;;; WEB
+;; set browser to open url
+(setq browse-url-generic-program profile-browser)
+(setq browse-url-browser-function 'browse-url-generic)
 
 ;;;; Annoying arrows mode: ring bell when toooo much same arrow move and suggest
 ;;;; new command to move
@@ -250,8 +258,14 @@
 ;;
 ;;;; DICTIONARY language
 (when section-misc-dictionary (message "  11.2 Dictionary...")
+  ;; set program to be use with ispell
   (setq ispell-program-name profile-ispell-program)
   (setq ispell-dictionary profile-ispell-dictionary)
+  ;; save the personal dictionary without confirmation
+  (setq ispell-silently-savep t)
+  ;; to speed up aspell but less accurate
+  (setq ispell-extra-args '("--sug-mode=ultra"))
+
   (try-require 'ispell "    ")
   (message "  11.2 Dictionary... Done"))
 

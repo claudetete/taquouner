@@ -20,9 +20,9 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2012-07-09 (1.8)
+;;    simplify font setting + generic fullscreen
 ;; 2012-06-08 (1.7)
 ;;    change fring size + add ediff settings + add hook after open a new frame
 ;;    (maximize)
@@ -73,6 +75,8 @@
 (add-hook 'after-make-frame-functions
   '(lambda (f)
      (with-selected-frame f
+       (when profile-font
+         (set-frame-parameter frame 'font profile-font))
        (frame-maximizer)
        )))
 
@@ -120,14 +124,8 @@
 (when section-interface-fullscreen (message "  6.4 FullScreen...")
   ;; start in fullscreen (only MS Windows)
   ;; need to put fullscreen after font settings
-  (when running-on-ms-windows
-    ;; send command FullScreen to the window of Emacs
-    (w32-send-sys-command 61488)
-
-    ;; annoying but needed to wait true fullscreen
-    ;; wait 1 second
-    (sit-for 1)
-
+  (when section-environment-os-recognition
+    (frame-maximizer)
     )
   (message "  6.4 FullScreen... Done"))
 

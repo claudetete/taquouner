@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.4
+;; Version: 2.5
 ;; Created: August 2010
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-07-09 (2.5)
+;;    robustness
 ;; 2012-06-26 (2.4)
 ;;    try new small branch of ecb
 ;; 2012-06-21 (2.3)
@@ -71,7 +73,7 @@
 
 ;;; Code:
 ;; path of ecb
-(if running-on-emacs-24
+(if (and section-environment-os-recognition running-on-emacs-24)
   ;; to avoid error with Emacs 24.1
   ;; or replace in ecb.el:1219
   ;;   "(let ((stack-trace-on-error stack-trace-on-error))"

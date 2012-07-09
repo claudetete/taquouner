@@ -20,9 +20,9 @@
 
 ;; Keywords: config, annoying
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-annoyances'
 
 ;;; Change Log:
+;; 2012-07-09 (1.9)
+;;    scroll horizontally when no truncate line
 ;; 2012-06-14 (1.8)
 ;;    clean up
 ;; 2012-06-12 (1.7)
@@ -111,6 +113,10 @@
   ;; a displayed row is a line but can be hidden outside window (need to
   ;; scroll horizontally)
   (setq-default truncate-lines nil)
+
+  ;; do scroll horizontally when at edge of screen
+  (setq auto-hscroll-mode t)
+  (setq hscroll-margin 0)
   (message "  10.1 Truncate Line... Done"))
 
 ;;

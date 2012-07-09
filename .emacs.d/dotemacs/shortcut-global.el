@@ -20,17 +20,20 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/shortcut.el'
 ;; REQUIREMENT: var     `section-shortcut-global'
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-07-09 (2.3)
+;;    new line from anywhere + hippie expand + rss reader + browse kill ring +
+;;    new aliases
 ;; 2012-06-26 (2.2)
 ;;    new line from anywhere on the line + folder up in dired
 ;; 2012-06-21 (2.1)
@@ -133,6 +136,13 @@
                                                    (newline)
                                                    ))
 
+;; new line but from anywhere on the next line
+(global-set-key         (kbd "<C-M-return>")    '(lambda ()
+                                                   (interactive)
+                                                   (move-beginning-of-line nil)
+                                                   (open-line 1)
+                                                   ))
+
 ;; align a region following regexp
 (global-set-key         "\C-cpp"                'align)
 (global-set-key         "\C-cpl"                'align-regexp)
@@ -165,11 +175,17 @@
 (global-set-key         (kbd "H-/")             'comment-or-uncomment-region)
 
 ;; move to the matched parenthesis
-(global-set-key         (kbd "<H-right>")        'forward-sexp)
-(global-set-key         (kbd "<H-left>")         'backward-sexp)
+(global-set-key         (kbd "<H-right>")       'forward-sexp)
+(global-set-key         (kbd "<H-left>")        'backward-sexp)
 
 ;; run calc quick
 (global-set-key         (kbd "<M-kp-subtract>") 'quick-calc)
+
+;; run hippie expand
+(global-set-key         (kbd "M-?")             'hippie-expand)
+
+;; run rss reader
+(global-set-key         (kbd "H-r")             'newsticker-show-news)
 
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol
@@ -186,7 +202,7 @@
 ;;
 ;;; HOME/END
 ;; REQUIREMENT: var     `section-external-home-end'
-(when section-external-home-end
+(when section-mode-home-end
   ;; bind home with new features
   (global-set-key       (kbd "<home>")          'pc-keys-home)
   ;;
@@ -231,9 +247,25 @@
   )
 
 ;;
+;;; BROWSE KILL RING
+(when section-mode-browse-kill-ring
+  (eval-after-load "browse-kill-ring"
+    '(progn
+       ;; move next and previous with arrow
+       (define-key browse-kill-ring-mode-map (kbd "<up>")   'browse-kill-ring-previous)
+       (define-key browse-kill-ring-mode-map (kbd "<down>") 'browse-kill-ring-forward)
+       )
+    )
+  )
+
+;;
 ;;; ALIAS
 ;; replace with regex
 (defalias 'rr 'replace-regexp)
+;; eval elisp buffer
+(defalias 'eb 'eval-buffer)
+;; eval elisp region
+(defalias 'er 'eval-region)
 
 
 ;;

@@ -20,17 +20,19 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/shortcut.el'
 ;; REQUIREMENT: var     `section-shortcut-buffers'
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-07-09 (1.5)
+;;    add shortcut to quit diff mode
 ;; 2012-06-21 (1.4)
 ;;    remove old shortcut to switch between buffers
 ;; 2012-06-08 (1.3)
@@ -64,10 +66,23 @@
 ;; only for clearcase mode
 (when section-mode-clearcase
   ;; ediff with previous (can open a new frame before with C-x 5 2)
-  (global-set-key         (kbd "C-x v `")         'clearcase-ediff-pred-current-buffer)
+  (global-set-key       (kbd "C-x v `")         'clearcase-ediff-pred-current-buffer)
   ;; ediff with named version
-  (global-set-key         (kbd "C-x v 1")         'clearcase-ediff-named-version-current-buffer)
-)
+  (global-set-key       (kbd "C-x v 1")         'clearcase-ediff-named-version-current-buffer)
+  )
+
+;; only for subversion mode
+(when section-mode-subversion
+  ;; make 'q' quit buffer and close window
+  ;; in diff mode
+  (add-hook 'svn-status-diff-mode-hook
+    (lambda () (define-key svn-status-diff-mode-map "q" 'delete-window)))
+  ;; in log mode
+  (add-hook 'svn-log-view-mode-hook
+    (lambda () (define-key svn-log-view-mode-map "q" 'delete-window)))
+
+  )
+
 
 (provide 'shortcut-buffers)
 

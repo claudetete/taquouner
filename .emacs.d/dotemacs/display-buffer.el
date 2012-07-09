@@ -20,16 +20,18 @@
 
 ;; Keywords: config, display, buffer, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/display.el'
 ;; REQUIREMENT: var     `section-display-windows-buffers'
 
 ;;; Change Log:
+;; 2012-07-09 (1.6)
+;;    try new handler for completion buffer
 ;; 2012-06-14 (1.5)
 ;;    remove misunderstanding for same-window-buffer-names option
 ;; 2012-06-05 (1.4)
@@ -62,6 +64,8 @@
 ;;; do not work as expected
 ;;; (custom-set-faces
 ;;;   '(default ((t (:stipple "d:/wallpaper.png")))))
+
+;;(add-to-list 'special-display-buffer-names '("*Completions*" my-display-completions))
 
 
 (provide 'display-buffer)

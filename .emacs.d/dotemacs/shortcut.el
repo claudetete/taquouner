@@ -27,8 +27,7 @@
 ;;; Commentary:
 ;;
 ;; load by `emacs.el' (where all requirements are defined)
-;; REQUIREMENT: var     `section-shortcut-global'
-;;              var     `section-shortcut'
+;; REQUIREMENT: var     `section-shortcut'
 
 ;;; Change Log:
 ;; 2012-06-05 (1.0)

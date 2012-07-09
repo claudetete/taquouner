@@ -20,17 +20,19 @@
 
 ;; Keywords: config, mouse
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
 ;; load by `emacs.el' (where all requirements are defined)
 ;; REQUIREMENT: var     `section-mouse'
-;;              car     `section-environment-os-recognition'
+;;              car     `section-environment-terminal-vs-graphics'
 
 ;;; Change Log:
+;; 2012-07-09 (1.6)
+;;    robustness
 ;; 2012-06-08 (1.5)
 ;;    mouse wheel scrolls window under
 ;; 2012-04-23 (1.4)
@@ -68,7 +70,7 @@
 ;;              var     `section-environment-terminal-vs-graphics'
 (when section-mouse-avoidance (message "  9.2 Mouse Avoidance...")
   ;; move mouse cursor at top right of the buffer to not bother me
-  (when running-in-graphical
+  (when (and section-environment-terminal-vs-graphics running-in-graphical)
     (when (and (display-mouse-p) (require 'avoid nil t))
       (mouse-avoidance-mode 'banish)
       )
