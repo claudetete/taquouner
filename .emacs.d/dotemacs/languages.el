@@ -20,7 +20,7 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.4
+;; Version: 2.6
 ;; Created: October 2006
 ;; Last-Updated: July 2012
 
@@ -30,6 +30,10 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-07-18 (2.6)
+;;    add hide show mode + use hook with lisp
+;; 2012-07-11 (2.5)
+;;    fix bug with emacs 23.x with electric pair
 ;; 2012-07-09 (2.4)
 ;;    electric pair for parenthesis, bracket, quote, etc
 ;; 2012-06-13 (2.3)
@@ -88,6 +92,9 @@
     ;; pair of parenthesis, bracket, etc
     (electric-pair-mode t)
 
+    ;; hide show minor mode
+    (hs-minor-mode)
+
     ;;; INDENT PREPROCESSOR
     ;; make a #define be align with C code
     (when section-languages-c-indent-preprocessor
@@ -117,10 +124,18 @@
 ;;
 ;;; LISP
 (when section-languages-lisp (message "  3.2 Languages Lisp...")
-  ;; set indent size
-  (setq lisp-indent-offset profile-lisp-indent-offset)
-  ;; pair of parenthesis, bracket, etc
-  (electric-pair-mode t)
+  (add-hook 'lisp-interaction-mode-hook
+    '(lambda ()
+       ;; set indent size
+       (setq lisp-indent-offset profile-lisp-indent-offset)
+       (when (and section-environment-version-recognition running-on-emacs-24)
+         ;; pair of parenthesis, bracket, etc
+         (electric-pair-mode t))
+
+       ;; hide show minor mode
+       (hs-minor-mode)
+       )
+    )
   (message "  3.2 Languages Lisp... Done"))
 
 ;;

@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: September 2010
 ;; Last-Updated: June 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2012-07-19 (1.8)
+;;    hide ecb compile window after select a tag + condition when ecb is enable
 ;; 2012-06-12 (1.7)
 ;;    remove old way to bind keys
 ;; 2012-05-28 (1.6)
@@ -74,21 +76,35 @@
 ;;              var     `section-mode-cedet-semantic'
 (when section-mode-gnu-global
   (when section-shortcut-tags-gnu-global (message "    8.7.2 Gtags Shortcuts...")
-    (if section-mode-cedet-semantic nil
-      ;; cycles to next result
-      ;; After doing gtags-find-(tag|rtag|symbol|with-grep)
-      (global-set-key   (kbd "M-,")             'ww-next-gtag)
+    (if section-mode-cedet-ecb
+      (progn
+        (define-key gtags-select-mode-map (kbd "<return>") '(lambda ()
+                                                              (interactive)
+                                                              (gtags-select-tag)
+                                                              (ecb-toggle-compile)
+                                                              ))
+        (define-key gtags-select-mode-map (kbd "<kp-enter>") '(lambda ()
+                                                                (interactive)
+                                                                (gtags-select-tag)
+                                                                (ecb-toggle-compile)
+                                                                ))
+        )
+      (progn
+        ;; cycles to next result
+        ;; After doing gtags-find-(tag|rtag|symbol|with-grep)
+        (global-set-key   (kbd "M-,")             'ww-next-gtag)
 
-      ;; find tag
-      (global-set-key   "\M-."                  'gtags-find-tag)
+        ;; find tag
+        (global-set-key   "\M-."                  'gtags-find-tag)
 
-      ;; go back after find tag
-      (global-set-key   "\M-*"                  'gtags-pop-stack)
-      (global-set-key   (kbd "M-<kp-multiply>") 'gtags-pop-stack)
+        ;; go back after find tag
+        (global-set-key   "\M-*"                  'gtags-pop-stack)
+        (global-set-key   (kbd "M-<kp-multiply>") 'gtags-pop-stack)
 
-      ;; find all references (regexp)
-      (global-set-key   (kbd "C-M-.")           'gtags-find-with-grep)
-      ) ; if section-mode-cedet-semantic nil
+        ;; find all references (regexp)
+        (global-set-key   (kbd "C-M-.")           'gtags-find-with-grep)
+        ) ; (progn
+      ) ; (if section-mode-cedet-ecb
 
     ;; find file in the gnu global project (regexp) (need new function of gtags see function.el)
     (global-set-key     "\C-cf"                 'gtags-find-file)

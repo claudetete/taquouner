@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: October 2006
 ;; Last-Updated: July 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-07-19 (2.4)
+;;    new shortcut for browse kill ring + add fold dwim
 ;; 2012-07-09 (2.3)
 ;;    new line from anywhere + hippie expand + rss reader + browse kill ring +
 ;;    new aliases
@@ -179,7 +181,7 @@
 (global-set-key         (kbd "<H-left>")        'backward-sexp)
 
 ;; run calc quick
-(global-set-key         (kbd "<M-kp-subtract>") 'quick-calc)
+(global-set-key         (kbd "<M-kp-multiply>") 'quick-calc)
 
 ;; run hippie expand
 (global-set-key         (kbd "M-?")             'hippie-expand)
@@ -254,8 +256,18 @@
        ;; move next and previous with arrow
        (define-key browse-kill-ring-mode-map (kbd "<up>")   'browse-kill-ring-previous)
        (define-key browse-kill-ring-mode-map (kbd "<down>") 'browse-kill-ring-forward)
+       ;; quit not only with q but also with C-g
+       (define-key browse-kill-ring-mode-map (kbd "C-g")    'browse-kill-ring-quit)
        )
     )
+  )
+
+;;
+;;; FOLD DWIM
+(when section-mode-fold-dwim
+  (global-set-key       (kbd "<M-kp-subtract>") 'fold-dwim-toggle)
+  (global-set-key       (kbd "<M-kp-divide>")   'fold-dwim-hide-all)
+  (global-set-key       (kbd "<M-kp-add>")      'fold-dwim-show-all)
   )
 
 ;;

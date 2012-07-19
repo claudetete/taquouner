@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 7.8
+;; Version: 7.9
 ;; Created: October 2006
 ;; Last-Updated: July 2012
 
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-07-19 (7.9)
+;;    add fold dwim mode
 ;; 2012-07-09 (7.8)
 ;;    remove extern files put in mode + functions alone + add rainbow delimiters
 ;; 2012-06-21 (7.7)
@@ -606,6 +608,10 @@ before message."
   ;; RAINBOW DELIMITERS                                                 2.41
   ;; scroll is possible when incremental search
   (defvar section-mode-rainbow-delimiters nil)
+  ;;
+  ;; FOLD DWIM                                                          2.45
+  ;; show hide code source block
+  (defvar section-mode-fold-dwim nil)
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline

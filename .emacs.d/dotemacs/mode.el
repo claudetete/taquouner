@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.1
+;; Version: 3.3
 ;; Created: October 2006
 ;; Last-Updated: July 2012
 
@@ -31,6 +31,10 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-07-19 (3.3)
+;;    add fold dwim mode
+;; 2012-07-11 (3.2)
+;;    add calfw (calendar) + dired details + smart tab
 ;; 2012-07-09 (3.1)
 ;;    move extern file in mode + setting of browse kill ring + new autohotkey
 ;;    mode + dired and isearch setting + rainbow delimiters
@@ -662,6 +666,14 @@
     )
   (message "  2.41 Rainbow Delimiters... Done"))
 
+
+;;
+;;; FOLD DWIM
+;; REQUIREMENT: var     `section-mode-fold-dwim'
+;; show hide code source block
+(when section-mode-fold-dwim (message "  2.45 Folding DWIM...")
+  (try-require 'fold-dwim "    ")
+  (message "  2.45 Folding DWIM... Done"))
 
 ;;
 ;;; DIMINISH
