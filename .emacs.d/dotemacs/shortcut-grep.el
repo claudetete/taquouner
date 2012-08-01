@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2006
-;; Last-Updated: March 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-08-01 (1.4)
+;;    use f3 for all next/previous, move search bind from other shortcut file
 ;; 2012-03-30 (1.3)
 ;;    translate comments in English
 ;; 2012-03-22 (1.2)
@@ -44,40 +46,42 @@
 
 
 ;;; Code:
-(cond
-;; Magneti Marelli -------------------------------------------------------------
-  ((string= profile "Magneti Marelli")
-    ;; custom grep for NBNF LL project
-    (global-set-key     "\C-cnn"                'nll-grep-find)
-    ;;
-    ;; custom grep for NBNF HL project
-    (global-set-key     "\C-cnh"                'nhl-grep-find)
-    ;;
-    ;; custom grep for NSF project
-    (global-set-key     "\C-cns"                'nsf-grep-find)
-    ;;
-    ;; custom grep for ENSF project
-    (global-set-key     "\C-cne"                'ecar-grep-find)
-    ) ; Magneti Marelli
-  ) ; cond ---------------------------------------------------------------------
+(when section-function-mm
+  ;; custom grep for NBNF LL project
+  (global-set-key       "\C-cnn"                'nll-grep-find)
+  ;; custom grep for NBNF HL project
+  (global-set-key       "\C-cnh"                'nhl-grep-find)
+  ;; custom grep for NSF project
+  (global-set-key       "\C-cns"                'nsf-grep-find)
+  ;; custom grep for ENSF project
+  (global-set-key       "\C-cne"                'ecar-grep-find)
+  ) ; (when section-function-mm
 
 ;; next occurrence of grep
-(global-set-key         [f3]                    'next-match)
+(global-set-key         (kbd "<f3>")            'next-match)
 ;;
 ;; previous occurrence of grep
-(global-set-key         [f5]                    'previous-error)
+(global-set-key         (kbd "<S-f3>")          'previous-error)
 ;;
-;; next occurrence
-(global-set-key         [f6]                    'occur-next-error)
-;;
-;; previous occurrence
-(global-set-key         [f7]                    'compilation-previous-error)
-
 ;; to compile
-(global-set-key         [f10]                   'compile)
-;;
-;;;; next error
-;;(global-set-key         [f12]                   'next-error)
+(global-set-key         (kbd "<f10>")           'compile)
+
+;; search all occurrences in the current buffer
+;; (more like modern graphical editor)
+(global-set-key         (kbd "C-c e")            'occur)
+
+;; search a file in a directory (recursively) to open it
+(global-set-key         (kbd "M-f")             'find-name-dired)
+
+;; search the word at point (cannot bind C-M-x still run 'eval-defun)
+(global-set-key         (kbd "C-M-v")           'isearch-forward-at-point)
+;; search all occurences at point
+(global-set-key         (kbd "C-M-c")           'occur-word-at-point)
+;; occur when incremental search
+(define-key isearch-mode-map (kbd "C-o")        'isearch-occur)
+
+;; highlight all occurrences (regexp)
+(global-set-key         (kbd "C-c x")            'highlight-regexp)
 
 
 (provide 'shortcut-grep)

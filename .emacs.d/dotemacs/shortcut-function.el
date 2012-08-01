@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.4
+;; Version: 2.5
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,9 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-08-01 (2.5)
+;;    clean up + move shortcuts + shortcut for macro + some conditions + case
+;;    shortcut
 ;; 2012-06-26 (2.4)
 ;;    add shortcut for google search
 ;; 2012-06-21 (2.3)
@@ -67,108 +70,123 @@
 
 
 ;;; Code:
-;;;; insert something in CAN changelog.txt (Magneti Marelli not used...)
-;;(global-set-key "\C-cr"                 'mm-can-insert-del-signal)
-;;(global-set-key "\C-cf"                 'mm-can-insert-add-signal)
-;;(global-set-key "\C-ct"                 'mm-can-insert-del-message)
-;;(global-set-key "\C-cg"                 'mm-can-insert-add-message)
-;;(global-set-key "\C-cd"                 'mm-can-insert-separation)
-
+;;
 ;; select the whole word at point
 (global-set-key         "\C-\M-z"               'select-word-under)
-;; search the word at point (cannot bind C-M-x still run 'eval-defun)
-(global-set-key         (kbd "C-M-v")           'isearch-forward-at-point)
-;; search all occurences at point
-(global-set-key         "\C-\M-c"               'occur-word-at-point)
-;; occur when incremental search
-(define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
 
+;;
+;;; RTRT SCRIPT
+(when section-mode-rtrt-script
+  ;; use align regexp for .ptu file (rtrt script)
+  (global-set-key       "\C-cpo"                'rtrt-align-init)
+  (global-set-key       "\C-cp;"                'rtrt-align-ev)
+  (global-set-key       "\C-cp["                'rtrt-align-declaration)
+  (global-set-key       "\C-cp="                'rtrt-align-set)
+  ;;
+  ;; format the .ptu file (rtrt script)
+  (global-set-key       "\C-crv"                'rtrt-upcase-var-string)
+  (global-set-key       "\C-crs"                'rtrt-remove-whitespace-before-colon)
+  ) ; (when section-mode-rtrt-script
 
-;; some setting are done after launch (only MS Windows)
-(global-set-key         "\C-cl"                 'mystart-up)
+;;
+;;; PREPROC MM
+(when section-function-mm
+  ;; preprocess a C macro for NSF project
+  (global-set-key       "\C-cms"            'nsf-c-expand-macro)
+  ;; preprocess a C macro for NBNF HL project
+  (global-set-key       "\C-cmh"            'nhl-c-expand-macro)
+  ;; preprocess a C macro for NBNF LL project
+  (global-set-key       "\C-cmn"            'nll-c-expand-macro)
+  ;; preprocess a C macro for ENSF project
+  (global-set-key       "\C-cme"            'ecar-c-expand-macro)
+  ;; preprocess a C macro for XL1 project
+  (global-set-key       "\C-cmx"            'xl1-c-expand-macro)
+  ) ; (when section-function-mm
 
-;; use align regexp for .ptu file (rtrt script)
-(global-set-key         "\C-cpo"                'rtrt-align-init)
-(global-set-key         "\C-cp;"                'rtrt-align-ev)
-(global-set-key         "\C-cp["                'rtrt-align-declaration)
-(global-set-key         "\C-cp="                'rtrt-align-set)
-
-;; format the .ptu file (rtrt script)
-(global-set-key         "\C-crv"                'rtrt-upcase-var-string)
-(global-set-key         "\C-crs"                'rtrt-remove-whitespace-before-colon)
-
-;;;; preprocess a C macro for NSF project
-;;(global-set-key         "\C-cms"            'nsf-c-expand-macro)
-;;;; preprocess a C macro for NBNF HL project
-;;(global-set-key         "\C-cmh"            'nhl-c-expand-macro)
-;;;; preprocess a C macro for NBNF LL project
-;;(global-set-key         "\C-cmn"            'nll-c-expand-macro)
-;;;; preprocess a C macro for ENSF project
-;;(global-set-key         "\C-cme"            'ecar-c-expand-macro)
-;;;; preprocess a C macro for XL1 project
-;;(global-set-key         "\C-cmx"            'xl1-c-expand-macro)
-
+;;
+;;; MACRO
 ;; macro (by Fabrice Niessen)
 ;; start/stop recording a keyboard macro (if you change it you also must change
 ;; it in functions.el)
 (global-set-key         (kbd "<S-f8>")          'my-toggle-kbd-macro-recording-on)
-;;
-;; execute the most recent keyboard macro
-(global-set-key         (kbd "<f8>")            'call-last-kbd-macro)
-;;
+;; execute the most recent keyboard macro or on each line if a region is
+;; selected
+(global-set-key         (kbd "<f8>")            'call-last-kd-macro-region)
 ;; assign a name to the last keyboard macro defined
 (global-set-key         (kbd "<C-f8>")          'name-last-kbd-macro)
+;; edit the last keyboard macro defined
+(global-set-key         (kbd "<M-f8>")          'edit-last-kbd-macro)
+;; select previous macro
+(global-set-key         (kbd "<H-f8>")          'kmacro-cycle-ring-previous)
+;; select next macro
+(global-set-key         (kbd "<H-S-f8>")        'kmacro-cycle-ring-next)
 
 ;;
+;;; WINDOWS
 ;; swap 2 windows
 (global-set-key         (kbd "C-c ~")           'my-swap-windows)
 ;; toggle the split (horizontal or vertical)
 (global-set-key         (kbd "C-c |")           'my-toggle-window-split)
 
 ;;
-;;; clearcase bind
-;; checkout
-(global-set-key         (kbd "C-c c c")         'clearcase-checkout-graphical)
-;; diff
-(global-set-key         (kbd "C-c c =")         'clearcase-diff-graphical)
-;; history
-(global-set-key         (kbd "C-c c l")         'clearcase-history-graphical)
-;; uncheckout
-(global-set-key         (kbd "C-c c u")         'clearcase-uncheckout-graphical)
-;; version tree
-(global-set-key         (kbd "C-c c L")         'clearcase-version-tree-graphical)
-;; clearcase explorer
-(global-set-key         (kbd "C-c c e")         'clearcase-explorer-graphical)
-;; version properties
-(global-set-key         (kbd "C-c c v")         'clearcase-version-properties-graphical)
-;; element properties
-(global-set-key         (kbd "C-c c p")         'clearcase-properties-graphical)
-;; element properties
-(global-set-key         (kbd "C-c c i")         'clearcase-checkin-graphical)
-;; element properties
-(global-set-key         (kbd "C-c c f")         'clearcase-find-checkout-graphical)
+;;; CLEARCASE
+(when (or section-mode-clearcase section-mode-vc-clearcase)
+  ;; checkout
+  (global-set-key       (kbd "C-c c c")         'clearcase-checkout-graphical)
+  ;; diff
+  (global-set-key       (kbd "C-c c =")         'clearcase-diff-graphical)
+  ;; history
+  (global-set-key       (kbd "C-c c l")         'clearcase-history-graphical)
+  ;; uncheckout
+  (global-set-key       (kbd "C-c c u")         'clearcase-uncheckout-graphical)
+  ;; version tree
+  (global-set-key       (kbd "C-c c L")         'clearcase-version-tree-graphical)
+  ;; clearcase explorer
+  (global-set-key       (kbd "C-c c e")         'clearcase-explorer-graphical)
+  ;; version properties
+  (global-set-key       (kbd "C-c c v")         'clearcase-version-properties-graphical)
+  ;; element properties
+  (global-set-key       (kbd "C-c c p")         'clearcase-properties-graphical)
+  ;; element properties
+  (global-set-key       (kbd "C-c c i")         'clearcase-checkin-graphical)
+  ;; element properties
+  (global-set-key       (kbd "C-c c f")         'clearcase-find-checkout-graphical)
+  ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
 
+;;
+;;; SCROLL
 ;; scroll while keeping cursor position
 (global-set-key         (kbd "<H-down>")        'scroll-down-keep-cursor)
 (global-set-key         (kbd "<H-up>")          'scroll-up-keep-cursor)
 
+;;
+;;; WEB SEARCH
 ;; translate word at point or region
 (global-set-key         (kbd "<f12>")           'translate-enfr)
 (global-set-key         (kbd "<H-f12>")         'translate-fren)
-
+;;
 ;; synonym
 (global-set-key         (kbd "<S-f12>")         'synonym-fr)
-
+;;
 ;; grammatical conjugation
 (global-set-key         (kbd "<C-f12>")         'conjugation-fr)
-
+;;
 ;; wikipedia
 (global-set-key         (kbd "<f11>")           'wikipedia-en)
 (global-set-key         (kbd "<H-f11>")         'wikipedia-fr)
-
+;;
 ;; google
 (global-set-key         (kbd "<S-f11>")         'google-fr)
 (global-set-key         (kbd "<C-f11>")         'google-en)
+
+;;
+;;; CASE
+;; upper case word or region
+(global-set-key         (kbd "M-u")             'case-up)
+;; down case word or region
+(global-set-key         (kbd "M-l")             'case-down)
+;; capitalize case word or region
+(global-set-key         (kbd "M-c")             'case-capitalize)
 
 
 (provide 'shortcut-function)

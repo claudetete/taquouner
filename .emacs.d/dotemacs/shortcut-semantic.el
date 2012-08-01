@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: October 2010
-;; Last-Updated: March 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,9 @@
 ;;              var     `section-mode-cedet-semantic'
 
 ;;; Change Log:
+;; 2012-08-01 (1.4)
+;;    fix bug with Shift+Click, Back on mouse work with semantic, right click
+;;    display a menu like ecb method
 ;; 2012-05-28 (1.3)
 ;;    add new  shortcut to 'grep' in project all occurences
 ;; 2012-03-28 (1.2)
@@ -48,8 +51,10 @@
 (when section-mode-cedet-semantic
   ;; go to the tag with shift + left click
   (global-set-key       (kbd "<S-down-mouse-1>")        'ignore)
-  (global-set-key       (kbd "<S-mouse-1>")             'semantic-goto-definition)
-
+  (global-set-key       (kbd "<S-mouse-1>")             '(lambda (event)
+                                                           (interactive "e") ; the function get a event parameter (from mouse click)
+                                                           (mouse-set-point event) ; set the point at the mouse position
+                                                           (semantic-goto-definition (point))))
   ;; go to the tag
   (global-set-key       (kbd "M-.")                     'semantic-goto-definition)
   (global-set-key       [(control  >)]                  'semantic-goto-definition)
@@ -60,6 +65,11 @@
   ;; return back after "go to the tag"
   ;; you can use the default shortcut: M-xB, which ask where you want go back
   (global-set-key       [(control  <)]                  'semantic-pop-tag-mark)
+  (global-set-key       (kbd "<mouse-4>")               'semantic-pop-tag-mark)
+
+  ;; right click will open menu with list of variable/function/include
+  (global-set-key       (kbd "<mouse-3>")               'imenu)
+
 )
 
 ;;
@@ -69,7 +79,7 @@
 (when section-mode-gnu-global
   (when section-shortcut-tags-gnu-global
     ;; ignore mouse button 'next' and put go back to button 'previous'
-    (global-set-key (kbd "<mouse-3>") 'ignore)
+    ;;(global-set-key (kbd "<mouse-5>") 'ignore)
     ;;(global-set-key (kbd "<mouse-4>") 'gtags-pop-stack)
     )
   )

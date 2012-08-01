@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
 ;; Last-Updated: July 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-08-01 (1.5)
+;;    use smart resize from functions.el
 ;; 2012-07-09 (1.4)
 ;;    add shortcut to split windows more easily
 ;; 2012-06-21 (1.3)
@@ -57,11 +59,11 @@
 
 ;; resize window more easily (before `C-x {'...)
 ;; vertical
-(global-set-key         (kbd "<C-S-up>")        'enlarge-window)
-(global-set-key         (kbd "<C-S-down>")      'shrink-window)
+(global-set-key         (kbd "<C-S-up>")        'win-resize-top)
+(global-set-key         (kbd "<C-S-down>")      'win-resize-bottom)
 ;; horizontal
-(global-set-key         (kbd "<C-S-left>")      'enlarge-window-horizontally)
-(global-set-key         (kbd "<C-S-right>")     'shrink-window-horizontally)
+(global-set-key         (kbd "<C-S-left>")      'win-resize-left)
+(global-set-key         (kbd "<C-S-right>")     'win-resize-right)
 
 ;; new shortcut for split windows
 (global-set-key         (kbd "<M-kp-decimal>")  'delete-window)

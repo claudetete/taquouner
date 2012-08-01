@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.4
+;; Version: 2.5
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-08-01 (2.5)
+;;    add shortcut to change dictionnary with ispell + move shortcut
 ;; 2012-07-19 (2.4)
 ;;    new shortcut for browse kill ring + add fold dwim
 ;; 2012-07-09 (2.3)
@@ -86,6 +88,7 @@
 (global-set-key         (kbd "<S-f7>")          'ispell-word)
 (global-set-key         (kbd "<M-f7>")          'ispell-region)
 (global-set-key         (kbd "<C-f7>")          'ispell-comments-and-strings)
+(global-set-key         (kbd "<C-M-f7>")        'ispell-change-dictionary)
 
 ;;;; insert printf or ifdef for debug (used in epita kaneton project)
 ;;(global-set-key         [f7]                    'printf-debug-shortcut)
@@ -93,12 +96,6 @@
 
 ;;;; run apropos for the word at point
 ;;(global-set-key [f1]                            'vectra-apropos-on-word)
-
-;; execute the most recent keyboard macro
-(global-set-key         [f8]                    'call-last-kbd-macro)
-
-;; search a file in a directory (recursively) to open it
-(global-set-key         "\M-f"                  'find-name-dired)
 
 ;;;; search a file in the current folder (recursively)
 ;;(global-set-key         "\M-g"                  'find-grep-dired)

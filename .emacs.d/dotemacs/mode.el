@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.3
+;; Version: 3.4
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-08-01 (3.4)
+;;    modify settings for csv mode
 ;; 2012-07-19 (3.3)
 ;;    add fold dwim mode
 ;; 2012-07-11 (3.2)
@@ -512,9 +514,11 @@
 ;;; CSV
 ;; REQUIREMENT: var     `section-mode-csv'
 (when section-mode-csv (message "  2.29 CSV...")
-  (when (try-require 'csv-mode "    ")
-    ;; field separators: a list of *single-character* strings
-    (setq csv-separators '("," ";")))
+  (add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
+  (autoload 'csv-mode "csv-mode"
+    "Major mode for editing comma-separated value files." t)
+  (custom-set-variables
+    '(csv-separators (quote (";"))))
   (message "  2.29 CSV... Done"))
 
 ;;
@@ -689,9 +693,7 @@
     (eval-after-load "gtags"
       '(diminish 'gtags-mode " G"))
     (eval-after-load "undo-tree"
-      '(diminish 'undo-tree-mode " Ut"))
-    (eval-after-load "clearcase"
-      '(diminish 'clearcase-mode " Cc"))
+      '(diminish 'undo-tree-mode " UTree"))
 
     (add-hook 'emacs-lisp-mode-hook
       (lambda()

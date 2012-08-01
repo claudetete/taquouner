@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.6
+;; Version: 4.8
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,12 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-08-01 (4.8)
+;;    add function to apply macro on region with same shortcut + add smart
+;;    window resize + add change case on region with same shortcut + clean up
+;; 2012-07-11 (4.7)
+;;    add get line or region for interactive + split rtrt function file + try to
+;;    fix annoying random behavior of completions buffer + fill region
 ;; 2012-07-09 (4.6)
 ;;    fix wait for fullscreen and add linux support + some test
 ;; 2012-06-26 (4.5)
@@ -188,6 +194,14 @@
      (if (use-region-p)
        (list (region-beginning) (region-end))
        (list (line-beginning-position) (line-beginning-position 2)))))
+;;; Copy entire line in kill ring (without Home C-k C-y) (by Claude TETE)
+(defun push-line ()
+  "Select current line, push onto kill ring."
+  (interactive)
+  (save-excursion
+    (copy-region-as-kill (re-search-backward "^") (re-search-forward "$"))
+    )
+  )
 
 ;;
 ;;;
@@ -244,17 +258,26 @@
 ;;;
 ;;;; MACRO
 ;; toggle macro recording on/off (by Fabrice Niessen)
-(defun my-toggle-kbd-macro-recording-on ()
+(defun toggle-kbd-macro-recording-on ()
   "Start recording a keyboard macro and toggle functionality of key binding."
   (interactive)
-  (global-set-key (kbd "<S-f8>") 'my-toggle-kbd-macro-recording-off)
+  (global-set-key (kbd "<S-f8>") 'toggle-kbd-macro-recording-off)
   (start-kbd-macro nil))
 ;; toggle macro recording on/off (by Fabrice Niessen)
-(defun my-toggle-kbd-macro-recording-off ()
+(defun toggle-kbd-macro-recording-off ()
   "Stop recording a keyboard macro and toggle functionality of key binding."
   (interactive)
-  (global-set-key (kbd "<S-f8>") 'my-toggle-kbd-macro-recording-on)
+  (global-set-key (kbd "<S-f8>") 'toggle-kbd-macro-recording-on)
   (end-kbd-macro))
+;; when region is selected call last macro on region else call last macro (by
+;; Claude TETE)
+(defun call-last-kd-macro-region ()
+  (interactive)
+  (if (use-region-p)
+    (apply-macro-to-region-lines (region-beginning) (region-end))
+    (call-last-kbd-macro)
+    )
+  )
 ;; shortcuts are put in shortcut-function.el
 
 ;;
@@ -343,7 +366,7 @@
   (try-require 'muse-mode "    ")     ; load authoring mode
   (try-require 'muse-html "    ")     ; load publishing styles I use
   (try-require 'muse-latex "    ")
-
+  ;;
   (muse-derive-style "my-slides-pdf" "slides-pdf"
     :header (concat dotemacs-path "/plugins/themes/muse/header.tex")
     :footer  (concat dotemacs-path "/plugins/themes/muse/footer.tex")
@@ -547,6 +570,77 @@ frames with exactly two windows."
   )
 
 ;;
+;;; RESIZE WINDOW
+;; where is the window vertically by Sergey Ovechkin (pomeo)
+(defun win-resize-top-or-bot ()
+  "Figure out if the current window is on top, bottom or in the
+middle"
+  (let* ((win-edges (window-edges))
+          (this-window-y-min (nth 1 win-edges))
+          (this-window-y-max (nth 3 win-edges))
+          (fr-height (frame-height)))
+    (cond
+      ((eq 0 this-window-y-min) "top")
+      ((eq (- fr-height 1) this-window-y-max) "bot")
+      (t "mid"))))
+;; where is the window horizontally by Sergey Ovechkin (pomeo)
+(defun win-resize-left-or-right ()
+  "Figure out if the current window is to the left, right or in the
+middle"
+  (let* ((win-edges (window-edges))
+          (this-window-x-min (nth 0 win-edges))
+          (this-window-x-max (nth 2 win-edges))
+          (fr-width (frame-width)))
+    (cond
+      ((eq 0 this-window-x-min) "left")
+      ((eq (+ fr-width 2) this-window-x-max) "right") ; why 4 ? 2 works for me
+      (t "mid"))))
+;; what to do when I want to push split line to the top (by Claude TETE)
+(defun win-resize-top ()
+  (interactive)
+  (let ((win-pos (win-resize-left-or-right)))
+    (cond
+      ((equal "top" win-pos) (shrink-window 1))
+      ((equal "mid" win-pos) (shrink-window 1))
+      ((equal "bot" win-pos) (enlarge-window 1))
+      )
+    )
+  )
+;; what to do when I want to push split line to the bottom  (by Claude TETE)
+(defun win-resize-bottom ()
+  (interactive)
+  (let ((win-pos (win-resize-left-or-right)))
+    (cond
+      ((equal "top" win-pos) (enlarge-window 1))
+      ((equal "mid" win-pos) (enlarge-window 1))
+      ((equal "bot" win-pos) (shrink-window 1))
+      )
+    )
+  )
+;; what to do when I want to push split line to the left (by Claude TETE)
+(defun win-resize-left ()
+  (interactive)
+  (let ((win-pos (win-resize-left-or-right)))
+    (cond
+      ((equal "left"  win-pos) (shrink-window-horizontally 1))
+      ((equal "mid"   win-pos) (shrink-window-horizontally 1))
+      ((equal "right" win-pos) (enlarge-window-horizontally 1))
+      )
+    )
+  )
+;; what to do when I want to push split line to the right (by Claude TETE)
+(defun win-resize-right ()
+  (interactive)
+  (let ((win-pos (win-resize-left-or-right)))
+    (cond
+      ((equal "left"  win-pos) (enlarge-window-horizontally 1))
+      ((equal "mid"   win-pos) (enlarge-window-horizontally 1))
+      ((equal "right" win-pos) (shrink-window-horizontally 1))
+      )
+    )
+  )
+
+;;
 ;;;
 ;;;; SWITCH BUFFER
 ;;; Switching Between Two Recently Used Buffers (by Mathias Dahl)
@@ -659,7 +753,6 @@ line instead."
       )
     )
   )
-
 ;;; search in French Wikipedia
 (defun wikipedia-fr (beg end)
   "Search the word at point or selected region using Wikipedia."
@@ -672,6 +765,7 @@ line instead."
       )
     )
   )
+;;
 ;;; search in English Wikipedia
 (defun wikipedia-en (beg end)
   "Search the word at point or selected region using Wikipedia."
@@ -684,7 +778,7 @@ line instead."
       )
     )
   )
-
+;;
 ;;; search synonym in French
 (defun synonym-fr (beg end)
   "Search the word at point or selected region using Synonymes.com."
@@ -696,7 +790,7 @@ line instead."
 	  )
     )
   )
-
+;;
 ;;; search grammatical conjugation in French
 (defun conjugation-fr (beg end)
   "Search the word at point or selected region using leconjugueur.com."
@@ -709,7 +803,7 @@ line instead."
       )
     )
   )
-
+;;
 ;;; search in French Google
 (defun google-fr (beg end)
   "Search the word at point or selected region using google.fr."
@@ -738,6 +832,34 @@ line instead."
   )
 
 ;;
+;;; CASE
+;; uppercase the region or the following word
+(defun case-up ()
+  (interactive)
+  (if (use-region-p)
+    (upcase-region (region-beginning) (region-end))
+    (upcase-word 1)
+    )
+  )
+;; downcase the region or the following word
+(defun case-down ()
+  (interactive)
+  (if (use-region-p)
+    (downcase-region (region-beginning) (region-end))
+    (downcase-word 1)
+    )
+  )
+;; uppercase the first character and down the rest of the region or the following word
+(defun case-capitalize ()
+  (interactive)
+  (if (use-region-p)
+    (capitalize-region (region-beginning) (region-end))
+    (capitalize-word 1)
+    )
+  )
+
+
+;;
 ;;;
 ;;;; MAGNETI MARELLI
 (when section-function-mm (message "    1.2.1 Functions Magneti Marelli...")
@@ -747,21 +869,8 @@ line instead."
 ;;
 ;;;
 ;;;; ECB
-(if section-mode-cedet-ecb
+(when section-mode-cedet-ecb
   (try-require 'function-ecb "    ")
-  (progn
-    (defun my-display-completions (buf)
-      "put the *completions* buffer in the right spot"
-      (let ((windows (delete (minibuffer-window) (window-list))))
-        (if (eq 1 (length windows))
-          (progn
-            (select-window (car windows))
-            (split-window-vertically)))
-        (let ((target-window (window-at 0 (- (frame-height) 2)))
-               (pop-up-windows t))
-          (set-window-buffer target-window buf)
-          target-window)))
-    )
   ) ; (when section-mode-cedet-ecb
 
 ;;
@@ -789,14 +898,6 @@ line instead."
   (interactive "r")
   (browse-url-generic (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q=" (buffer-substring beg end))))
 
-;;; Copy entire line in kill ring (without Home C-k C-y) (by Claude TETE)
-(defun push-line ()
-  "Select current line, push onto kill ring."
-  (interactive)
-  (save-excursion
-    (copy-region-as-kill (re-search-backward "^") (re-search-forward "$"))
-  )
-)
 
 
 (defun tinymy-buffer-file-chmod ()
@@ -818,64 +919,6 @@ Does nothing if buffer is not visiting a file or file is not owned by us."
           (t
           (message "TinyMy: couldn't chmod")))
         (ti::compat-modeline-update)))))
-
-
-;;
-;;; RESIZE WINDOW
-;; by Sergey Ovechkin (pomeo)
-(defun win-resize-top-or-bot ()
-  "Figure out if the current window is on top, bottom or in the
-middle"
-  (let* ((win-edges (window-edges))
-          (this-window-y-min (nth 1 win-edges))
-          (this-window-y-max (nth 3 win-edges))
-          (fr-height (frame-height)))
-    (cond
-      ((eq 0 this-window-y-min) "top")
-      ((eq (- fr-height 1) this-window-y-max) "bot")
-      (t "mid"))))
-;;
-(defun win-resize-left-or-right ()
-  "Figure out if the current window is to the left, right or in the
-middle"
-  (let* ((win-edges (window-edges))
-          (this-window-x-min (nth 0 win-edges))
-          (this-window-x-max (nth 2 win-edges))
-          (fr-width (frame-width)))
-    (cond
-      ((eq 0 this-window-x-min) "left")
-      ((eq (+ fr-width 4) this-window-x-max) "right")
-      (t "mid"))))
-;;
-(defun win-resize-enlarge-horiz ()
-  (interactive)
-  (cond
-    ((equal "top" (win-resize-top-or-bot)) (enlarge-window -1))
-    ((equal "bot" (win-resize-top-or-bot)) (enlarge-window 1))
-    ((equal "mid" (win-resize-top-or-bot)) (enlarge-window -1))
-    (t (message "nil"))))
-;;
-(defun win-resize-minimize-horiz ()
-  (interactive)
-  (cond
-    ((equal "top" (win-resize-top-or-bot)) (enlarge-window 1))
-    ((equal "bot" (win-resize-top-or-bot)) (enlarge-window -1))
-    ((equal "mid" (win-resize-top-or-bot)) (enlarge-window 1))
-    (t (message "nil"))))
-;;
-(defun win-resize-enlarge-vert ()
-  (interactive)
-  (cond
-    ((equal "left" (win-resize-left-or-right)) (enlarge-window-horizontally -1))
-    ((equal "right" (win-resize-left-or-right)) (enlarge-window-horizontally 1))
-    ((equal "mid" (win-resize-left-or-right)) (enlarge-window-horizontally -1))))
-;;
-(defun win-resize-minimize-vert ()
-  (interactive)
-  (cond
-    ((equal "left" (win-resize-left-or-right)) (enlarge-window-horizontally 1))
-    ((equal "right" (win-resize-left-or-right)) (enlarge-window-horizontally -1))
-    ((equal "mid" (win-resize-left-or-right)) (enlarge-window-horizontally 1))))
 
 
 ;; This is what I bind to Alt-[ and Alt-]. (by Scott McPeak)

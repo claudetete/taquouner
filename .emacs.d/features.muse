@@ -86,6 +86,14 @@
 [[./slide/select_region.png][A region is selected]]
 </slide>
 
+<slide title="Emacs: Selection with Mouse">
+ - select by character with drag after left click
+ - select a word with a double left
+ - select by word with drag after double left click
+ - select a line with triple left click
+ - select by line with drag after triple left click
+</slide>
+
 <slide title="Emacs: Delete by word/block">
  - remove all empty line except one "=Ctrl+x Ctrl+o="
  - remove all space except one "=Alt+SPACE="
@@ -608,6 +616,9 @@
  - toggle width of ECB mode window (change layout)
  - search TAB character
  - integration with graphical clearcase (checkout, history, compare)
+ - copy without selection = copy the whole line
+ - open web browser to search word or selected region
+ - ...
 </slide>
 
 <slide title="Customize: example 2/2">
@@ -620,7 +631,7 @@
    - do not show compiled file
    - group C file, Lisp file,
    - group file from an include folder
-   - ...
+ - ...
 </slide>
 
 <slide title="">

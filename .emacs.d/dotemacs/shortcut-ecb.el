@@ -59,7 +59,7 @@
 
   ;;
   ;; hide/show ecb compile window
-  (global-set-key       [f2]                    'ecb-toggle-compile)
+  (global-set-key       (kbd "<f2>")            'ecb-toggle-compile)
   (global-set-key       (kbd "<mouse-5>")       'ecb-toggle-compile-window)
 
   ;;

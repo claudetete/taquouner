@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: September 2010
-;; Last-Updated: June 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2012-08-01 (1.9)
+;;    move some shortcuts
 ;; 2012-07-19 (1.8)
 ;;    hide ecb compile window after select a tag + condition when ecb is enable
 ;; 2012-06-12 (1.7)
@@ -115,13 +117,6 @@
     (message "    8.7.2 Gtags Shortcuts... Done")
     ) ; when section-shortcut-tags-gnu-global
   ) ; when section-mode-gnu-global
-
-;; highlight all occurrences (regexp)
-(global-set-key         "\C-cx"                 'highlight-regexp)
-
-;; search all occurrences in the current buffer
-;; (more like modern graphical editor)
-(global-set-key         "\C-ce"                 'occur)
 
 ;;
 ;;; DATA DEBUG

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.4
+;; Version: 0.5
 ;; Created: June 2012
-;; Last-Updated: June 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-08-01 (0.5)
+;;    fix setting errors
 ;; 2012-06-26 (0.4)
 ;;    simplify font settings
 ;; 2012-06-13 (0.3)
@@ -501,10 +503,15 @@
 ;;; DISPLAY:
 (setq section-display t)
 (progn
-;; WINDOWS/BUFFERS: buffers with *buffername* should be displayed in the same
-;; window first column in window will display buffer limit, next page will leave
-;; 5 shared line
+  ;; WINDOWS/BUFFERS: buffers with *buffername* should be displayed in the same
+  ;; window first column in window will display buffer limit, next page will leave
+  ;; 5 shared line
   (setq section-display-windows-buffers t)
+  (progn
+    ;;; VISUAL LINE: word wrap, truncate line without cut word
+    ;; END and HOME will go to the end/start of screen line not logical line
+    (setq section-display-windows-buffers-visual-line nil)
+    ) ; (progn
   ;; SPEEDBAR: set size and display of speedbar (see GLOSSARY) (no used)
   (setq section-display-speedbar nil)
   ;; FONT: set font
@@ -553,7 +560,8 @@
   (setq section-interface-modeline t)
   ;; TRANSPARENCY: the whole emacs will be transparent
   ;; REQUIREMENT: `profile-transparency'
-  (setq section-display-windows-buffers-transparency t)
+  ;;              `section-environment-terminal-vs-graphics'
+  (setq section-interface-transparency t)
   ;; FULLSCREEN:
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'

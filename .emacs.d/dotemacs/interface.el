@@ -20,9 +20,9 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2012-08-01 (1.9)
+;;    add condition to have transparency and maximizer
 ;; 2012-07-09 (1.8)
 ;;    simplify font setting + generic fullscreen
 ;; 2012-06-08 (1.7)
@@ -113,18 +115,22 @@
 ;;
 ;;;; TRANSPARENCY
 ;; REQUIREMENT: var     `section-interface-transparency'
+;;              var     `section-environment-terminal-vs-graphics'
 (when section-interface-transparency (message "    6.3 Transparency...")
-  (set-frame-parameter (selected-frame) 'alpha profile-transparency)
+  (when running-in-graphical
+    (set-frame-parameter (selected-frame) 'alpha profile-transparency)
+    )
   (message "    6.3 Transparency... Done"))
 
 ;;
 ;;; FULLSCREEN
 ;; REQUIREMENT: var     `section-interface-fullscreen'
+;;              var     `section-environment-terminal-vs-graphics'
 ;;              var     `section-environment-os-recognition'
 (when section-interface-fullscreen (message "  6.4 FullScreen...")
   ;; start in fullscreen (only MS Windows)
   ;; need to put fullscreen after font settings
-  (when section-environment-os-recognition
+  (when (and running-in-graphical section-environment-os-recognition)
     (frame-maximizer)
     )
   (message "  6.4 FullScreen... Done"))

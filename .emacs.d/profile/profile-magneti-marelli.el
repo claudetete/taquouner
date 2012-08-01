@@ -238,7 +238,7 @@
 (progn
   (setq section-display-windows-buffers t)
   (progn
-    (setq section-display-windows-buffers-transparency t)
+    (setq section-display-windows-buffers-visual-line nil)
     )
   (setq section-display-speedbar nil)
   (setq section-display-font t)
@@ -264,6 +264,7 @@
 (progn
   (setq section-interface-decoration t)
   (setq section-interface-modeline t)
+  (setq section-interface-transparency t)
   (setq section-interface-fullscreen t)
   (setq section-interface-ecb t)
   (progn

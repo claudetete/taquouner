@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, buffer, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-display-windows-buffers'
 
 ;;; Change Log:
+;; 2012-08-01 (1.7)
+;;    add visual line mode
 ;; 2012-07-09 (1.6)
 ;;    try new handler for completion buffer
 ;; 2012-06-14 (1.5)
@@ -60,6 +62,17 @@
 ;; after a PageUp or Down, it will display 5 shared lines
 (custom-set-variables
   '(next-screen-context-lines 5))
+
+;;
+;;; VISUAL LINE
+;; word wrap, truncate line without cut word
+;; END and HOME will go to the end/start of screen line not logical line
+(when section-display-windows-buffers-visual-line (message "    5.1.1 Visual Line...")
+  ;; enable visual line
+  (global-visual-line-mode t)
+  ;; show fringe indicators for wrapped line
+  (setq visual-line-fringe-indicators t)
+  (message "    5.1.1 Visual Line...Done"))
 
 ;;; do not work as expected
 ;;; (custom-set-faces

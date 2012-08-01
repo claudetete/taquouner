@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 7.9
+;; Version: 8.0
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-08-01 (8.0)
+;;    add visual line mode
 ;; 2012-07-19 (7.9)
 ;;    add fold dwim mode
 ;; 2012-07-09 (7.8)
@@ -682,6 +684,12 @@ before message."
   ;; first column in window will display buffer limit
   ;; next page will leave 5 shared line
   (defvar section-display-windows-buffers t)
+  (progn
+    ;;; VISUAL LINE                                                     5.1.1
+    ;; word wrap, truncate line without cut word
+    ;; END and HOME will go to the end/start of screen line not logical line
+    (defvar section-display-windows-buffers-visual-line nil)
+    ) ; (progn
 
   ;;
   ;; SPEEDBAR                                                           5.2

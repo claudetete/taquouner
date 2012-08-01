@@ -477,7 +477,7 @@
   ;; RAINBOW DELIMITERS: scroll is possible when incremental search
   (setq section-mode-rainbow-delimiters nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
-  (setq section-mode-diminish nil)
+  (setq section-mode-diminish t)
   ) ; (progn
 
 
@@ -515,14 +515,14 @@
 ;;; DISPLAY:
 (setq section-display t)
 (progn
-;; WINDOWS/BUFFERS: buffers with *buffername* should be displayed in the same
-;; window first column in window will display buffer limit, next page will leave
-;; 5 shared line
+  ;; WINDOWS/BUFFERS: buffers with *buffername* should be displayed in the same
+  ;; window first column in window will display buffer limit, next page will leave
+  ;; 5 shared line
   (setq section-display-windows-buffers t)
   (progn
-    ;; TRANSPARENCY: the whole emacs will be transparent
-    ;; REQUIREMENT: `profile-transparency'
-    (setq section-display-windows-buffers-transparency t)
+    ;;; VISUAL LINE: word wrap, truncate line without cut word
+    ;; END and HOME will go to the end/start of screen line not logical line
+    (setq section-display-windows-buffers-visual-line nil)
     ) ; (progn
   ;; SPEEDBAR: set size and display of speedbar (see GLOSSARY) (no used)
   (setq section-display-speedbar nil)
@@ -570,6 +570,10 @@
   ;; MODELINE: set some option to add in the grey line at the bottom of each
   ;; buffer
   (setq section-interface-modeline t)
+  ;; TRANSPARENCY: the whole emacs will be transparent
+  ;; REQUIREMENT: `profile-transparency'
+  ;;              `section-environment-terminal-vs-graphics'
+  (setq section-interface-transparency t)
   ;; FULLSCREEN:
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'

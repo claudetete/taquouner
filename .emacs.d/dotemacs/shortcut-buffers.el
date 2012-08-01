@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: August 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-08-01 (1.6)
+;;    add hide ecb compile window with quiting diff and log
 ;; 2012-07-09 (1.5)
 ;;    add shortcut to quit diff mode
 ;; 2012-06-21 (1.4)
@@ -49,7 +51,7 @@
 
 ;;; Code:
 ;; close the current buffer
-(global-set-key         (kbd "M-`")            'kill-this-buffer)
+(global-set-key         (kbd "M-`")             'kill-this-buffer)
 ;;
 ;; show a list of buffers in a new window
 (global-set-key         (kbd "C-x C-b")         'electric-buffer-list)
@@ -69,19 +71,41 @@
   (global-set-key       (kbd "C-x v `")         'clearcase-ediff-pred-current-buffer)
   ;; ediff with named version
   (global-set-key       (kbd "C-x v 1")         'clearcase-ediff-named-version-current-buffer)
-  )
+  ) ; (when section-mode-clearcase
 
 ;; only for subversion mode
 (when section-mode-subversion
-  ;; make 'q' quit buffer and close window
-  ;; in diff mode
-  (add-hook 'svn-status-diff-mode-hook
-    (lambda () (define-key svn-status-diff-mode-map "q" 'delete-window)))
-  ;; in log mode
-  (add-hook 'svn-log-view-mode-hook
-    (lambda () (define-key svn-log-view-mode-map "q" 'delete-window)))
-
-  )
+  (if section-mode-cedet-ecb
+    (progn
+      ;; make 'q' quit buffer and close window
+      ;; in diff mode
+      (add-hook 'svn-status-diff-mode-hook
+        (lambda ()
+          (define-key svn-status-diff-mode-map      "q"     '(lambda ()
+                                                               (interactive)
+                                                               (delete-window)
+                                                               (ecb-toggle-compile)))))
+      ;; in log mode
+      (add-hook 'svn-log-view-mode-hook
+        (lambda ()
+          (define-key svn-log-view-mode-map         "q"     '(lambda ()
+                                                               (interactive)
+                                                               (delete-window)
+                                                               (ecb-toggle-compile)))))
+      ) ; (progn
+    (progn
+      ;; make 'q' quit buffer and close window
+      ;; in diff mode
+      (add-hook 'svn-status-diff-mode-hook
+        (lambda ()
+          (define-key svn-status-diff-mode-map      "q"     'delete-window)))
+      ;; in log mode
+      (add-hook 'svn-log-view-mode-hook
+        (lambda ()
+          (define-key svn-log-view-mode-map         "q"     'delete-window)))
+      ) ; (progn
+    ) ; (if section-mode-cedet-ecb
+  ) ; (when section-mode-subversion
 
 
 (provide 'shortcut-buffers)
