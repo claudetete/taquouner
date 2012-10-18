@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.4
+;; Version: 3.5
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,9 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-10-18 (3.5)
+;;    fix bug without clearcase mode and with powerline + add dired lis and
+;;    nxhtml mode
 ;; 2012-08-01 (3.4)
 ;;    modify settings for csv mode
 ;; 2012-07-19 (3.3)
@@ -403,9 +406,10 @@
 ;;
 ;;; CLEARCASE
 ;; REQUIREMENT: var     `section-mode-clearcase'
-(when section-mode-clearcase (message "  2.21 ClearCase...")
+(if section-mode-clearcase (progn (message "  2.21 ClearCase...")
   (try-require 'clearcase "    ")
   (message "  2.21 ClearCase... Done"))
+  (setq clearcase-mode nil))
 
 ;;
 ;;; AUTOHOTKEY
@@ -678,6 +682,22 @@
 (when section-mode-fold-dwim (message "  2.45 Folding DWIM...")
   (try-require 'fold-dwim "    ")
   (message "  2.45 Folding DWIM... Done"))
+
+;;
+;;; DIRED LETTER ISEARCH
+;; REQUIREMENT: var     `section-mode-dired-lis'
+;; activate by default isearch in dired mode
+(when section-mode-dired-lis (message "  2.46 Dired Letter ISearch...")
+  (try-require 'dired-lis "    ")
+  (message "  2.46 Dired Letter ISearch... Done"))
+
+;;
+;;; NXHTML
+;; REQUIREMENT: var     `section-mode-nxhtml'
+;;
+(when section-mode-nxhtml (message "  2.47 nXhtml...")
+  (load (concat dotemacs-path "/plugins/nxhtml/autostart.el"))
+  (message "  2.47 nXhtml... Done"))
 
 ;;
 ;;; DIMINISH

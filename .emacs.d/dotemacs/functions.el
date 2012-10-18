@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.8
+;; Version: 4.9
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-10-18 (4.9)
+;;    fix bug with resize window + try fix copy/kill with clipboard system
 ;; 2012-08-01 (4.8)
 ;;    add function to apply macro on region with same shortcut + add smart
 ;;    window resize + add change case on region with same shortcut + clean up
@@ -598,7 +600,7 @@ middle"
 ;; what to do when I want to push split line to the top (by Claude TETE)
 (defun win-resize-top ()
   (interactive)
-  (let ((win-pos (win-resize-left-or-right)))
+  (let ((win-pos (win-resize-top-or-bot)))
     (cond
       ((equal "top" win-pos) (shrink-window 1))
       ((equal "mid" win-pos) (shrink-window 1))
@@ -609,7 +611,7 @@ middle"
 ;; what to do when I want to push split line to the bottom  (by Claude TETE)
 (defun win-resize-bottom ()
   (interactive)
-  (let ((win-pos (win-resize-left-or-right)))
+  (let ((win-pos (win-resize-top-or-bot)))
     (cond
       ((equal "top" win-pos) (enlarge-window 1))
       ((equal "mid" win-pos) (enlarge-window 1))
@@ -1010,6 +1012,14 @@ When there is a text selection, act on the region."
             (fill-paragraph nil)) ) )
 
       (put this-command 'stateIsCompact-p (if currentStateIsCompact nil t)) ) ) )
+
+;; From http://stackoverflow.com/questions/848936/how-to-preserve-clipboard-content-in-emacs-on-windows
+(defadvice kill-new (before kill-new-push-xselection-on-kill-ring activate)
+  "Before putting new kill onto the kill-ring, add the clipboard/external selection to the kill ring"
+  (let ((have-paste (and interprogram-paste-function
+                         (funcall interprogram-paste-function))))
+    (when have-paste (push have-paste kill-ring))))
+
 
 ;;list-colors-display to display all color
 

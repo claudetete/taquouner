@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-10-18 (1.5)
+;;    add open/close compil window with ecb when try to compile
 ;; 2012-08-01 (1.4)
 ;;    use f3 for all next/previous, move search bind from other shortcut file
 ;; 2012-03-30 (1.3)
@@ -64,7 +66,15 @@
 (global-set-key         (kbd "<S-f3>")          'previous-error)
 ;;
 ;; to compile
-(global-set-key         (kbd "<f10>")           'compile)
+(if section-mode-cedet-ecb
+  (global-set-key       (kbd "<f10>")           '(lambda ()
+                                                   (interactive)
+                                                   (compile compile-command)
+                                                   (ecb-goto-window-compilation)
+                                                   (end-of-buffer)
+                                                   ))
+  (global-set-key       (kbd "<f10>")           'compile)
+  ) ; (if section-mode-cedet-ecb
 
 ;; search all occurrences in the current buffer
 ;; (more like modern graphical editor)

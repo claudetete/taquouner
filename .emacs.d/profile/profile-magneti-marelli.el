@@ -214,6 +214,8 @@
   (setq section-mode-sml nil)
   (setq section-mode-dired t)
   (setq section-mode-isearch t)
+  (setq section-mode-smart-tab nil)
+  (setq section-mode-dired-lis nil)
   (setq section-mode-diminish nil)
   )
 

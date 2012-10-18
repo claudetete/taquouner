@@ -54,6 +54,7 @@
        (sweet-bg-2 "#363636") ; grey20
        (sweet-bg-3 "#5B5B5B") ; grey35
 
+       (sweet-red+3 "#6F0000")
        (sweet-red+2 "#6F2716")
        (sweet-red+1 "#BD4C31")
        (sweet-red   "#FF3100")
@@ -204,18 +205,18 @@
     `(diff-context ((,class (:foreground ,sweet-fg+1))))
 
     ;; ediff
-    `(ediff-even-diff-A ((,class (:background ,sweet-bg-1))))
-    `(ediff-even-diff-B ((,class (:background ,sweet-bg-1))))
-    `(ediff-even-diff-C ((,class (:background ,sweet-bg-1))))
-    `(ediff-current-diff-A ((,class (:background ,sweet-red-3))))
-    `(ediff-current-diff-B ((,class (:background ,sweet-red-3))))
-    `(ediff-current-diff-C ((,class (:background ,sweet-red-3))))
-    `(ediff-fine-diff-A ((,class (:foreground ,sweet-fg :background ,sweet-red))))
-    `(ediff-fine-diff-B ((,class (:foreground ,sweet-fg :background ,sweet-red))))
-    `(ediff-fine-diff-C ((,class (:foreground ,sweet-fg :background ,sweet-red))))
-    `(ediff-odd-diff-A ((,class (:background ,sweet-bg-1))))
-    `(ediff-odd-diff-B ((,class (:background ,sweet-bg-1))))
-    `(ediff-odd-diff-C ((,class (:background ,sweet-bg-1))))
+    `(ediff-even-diff-A ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-even-diff-B ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-even-diff-C ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-current-diff-A ((,class (:foreground ,sweet-bg+1 :background ,sweet-red-2))))
+    `(ediff-current-diff-B ((,class (:foreground ,sweet-bg+1 :background ,sweet-red-2))))
+    `(ediff-current-diff-C ((,class (:foreground ,sweet-bg+1 :background ,sweet-red-2))))
+    `(ediff-fine-diff-A ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
+    `(ediff-fine-diff-B ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
+    `(ediff-fine-diff-C ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
+    `(ediff-odd-diff-A ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-odd-diff-B ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-odd-diff-C ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
 
     ;; hide-ifdef
     `(hide-ifdef-shadow ((,class (:background ,sweet-grey+4 :foreground ,sweet-grey-4 :box nil))))

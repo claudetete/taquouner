@@ -234,14 +234,15 @@
 ;;; EDIFF
 (eval-after-load "ediff"
   '(progn
+     ;; I think it does not not work
      ;; previous diff
-     (local-set-key    (kbd "<M-up>")          'ediff-previous-difference)
+     (local-set-key     (kbd "<M-up>")          'ediff-previous-difference)
      ;; next diff
-     (local-set-key    (kbd "<M-down>")        'ediff-next-difference)
+     (local-set-key     (kbd "<M-down>")        'ediff-next-difference)
      ;; get modification from left
-     (local-set-key    (kbd "<M-right>")       'ediff-copy-A-to-B)
+     (local-set-key     (kbd "<M-right>")       'ediff-copy-A-to-B)
      ;; get modification from right
-     (local-set-key    (kbd "<M-left>")        'ediff-copy-B-to-A)
+     (local-set-key     (kbd "<M-left>")        'ediff-copy-B-to-A)
      )
   )
 

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.0
+;; Version: 8.1
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-10-18 (8.1)
+;;    fix bug with server + add mode dired lis, nxhtml and config for C++ Qt
 ;; 2012-08-01 (8.0)
 ;;    add visual line mode
 ;; 2012-07-19 (7.9)
@@ -242,13 +244,14 @@
 (message "--[ Loading my Emacs init file ]--")
 
 ;; start the emacs server to have only one emacs client
-(if (window-system)
+(when (window-system)
   (when (string-equal system-type "windows-nt")
     ;;;; remove error "directory ~/.emacs.d/server is unsafe"
     ;;;; if you cannot be the owner of this directory.
     ;;(defun server-ensure-safe-dir (dir) "Noop" t)
     )
-  (server-start))
+  (server-start)
+  (message "* Running with server"))
 
 ;;;; debug this file if error
 ;;;; do not always work and can be opened in use
@@ -615,6 +618,14 @@ before message."
   ;; show hide code source block
   (defvar section-mode-fold-dwim nil)
   ;;
+  ;; DIRED LETTER ISEARCH                                               2.46
+  ;; activate by default iserach in dired mode
+  (defvar section-mode-dired-lis nil)
+  ;;
+  ;; NXHTML                                                             2.47
+  ;;
+  (defvar section-mode-nxhtml nil)
+  ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
   (defvar section-mode-diminish nil)
@@ -659,6 +670,10 @@ before message."
   (progn
     (defvar profile-perl-indent-offset 4)
     ) ; (progn
+  ;;
+  ;; C++ QT                                                             3.6
+  ;; set include for Qt 4.8
+  (defvar section-languages-c++-qt t)
   ) ; (progn
 
 

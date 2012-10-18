@@ -464,6 +464,8 @@
   (setq section-mode-isearch t)
   ;; RAINBOW DELIMITERS: scroll is possible when incremental search
   (setq section-mode-rainbow-delimiters nil)
+  ;; DIRED LETTER ISEARCH: activate by default isearch in dired mode
+  (setq section-mode-dired-lis nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (progn

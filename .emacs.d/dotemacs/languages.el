@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.6
+;; Version: 2.7
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-10-18 (2.7)
+;;    add config for C++ with Qt
 ;; 2012-07-18 (2.6)
 ;;    add hide show mode + use hook with lisp
 ;; 2012-07-11 (2.5)
@@ -166,6 +168,24 @@
   (message "  3.5 Languages Perl... Done"))
 
 
+;;
+;;; C++ QT
+(when section-languages-c++-qt (message "  3.6 Languages C++ Qt...")
+  (when section-mode-cedet-semantic
+    (setq qt4-base-dir "C:/QtSDK/Desktop/Qt/4.8.1/mingw/include")
+    (setq qt4-gui-dir (concat qt4-base-dir "/QtGui"))
+    (setq qt4-core-dir (concat qt4-base-dir "/QtCore"))
+    (setq qt4-network-dir (concat qt4-base-dir "/QtNetwork"))
+    (semantic-add-system-include qt4-base-dir 'c++-mode)
+    (semantic-add-system-include qt4-gui-dir 'c++-mode)
+    (semantic-add-system-include qt4-core-dir 'c++-mode)
+    (semantic-add-system-include qt4-network-dir 'c++-mode)
+    (add-to-list 'auto-mode-alist (cons qt4-base-dir 'c++-mode))
+    (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
+    (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-large.h"))
+    (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
+    ) ; (when section-mode-cedet-semantic
+  (message "  3.6 Laguages C++ Qt...Done"))
 (provide 'languages)
 
 ;;; languages.el ends here
