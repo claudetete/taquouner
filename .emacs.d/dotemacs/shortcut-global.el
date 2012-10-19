@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.5
+;; Version: 2.6
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-10-19 (2.6)
+;;    remove home/end old shortcuts
 ;; 2012-08-01 (2.5)
 ;;    add shortcut to change dictionnary with ispell + move shortcut
 ;; 2012-07-19 (2.4)
@@ -72,10 +74,6 @@
 
 
 ;;; Code:
-;; home and end keys
-(global-set-key         "\e[7~"                 'beginning-of-line)
-(global-set-key         "\e[8~"                 'end-of-line)
-
 ;;;; if C-h do not do backspaces
 ;;(normal-erase-is-backspace-mode)
 

@@ -902,6 +902,9 @@ line instead."
 
 
 
+
+;; cannot use:
+;; setq: Symbol's function definition is void: ti::file-chmod-w-toggle
 (defun tinymy-buffer-file-chmod ()
   "Toggle current buffer's Read-Write permission permanently on disk. VERB.
 Does nothing if buffer is not visiting a file or file is not owned by us."
@@ -923,6 +926,42 @@ Does nothing if buffer is not visiting a file or file is not owned by us."
         (ti::compat-modeline-update)))))
 
 
+; ---------------- matching word pairs ------------------
+; The idea here is that while emacs has built-in support for matching
+; things like parentheses, I work with a variety of syntaxes that use
+; balanced keyword pairs, such as "begin" and "end", or "#if" and
+; "#endif".  So this mechanism searches for the balanced element
+; of such ad-hoc constructions. (by Scott McPeak)
+;
+; TODO: Currently, there is no support for skipping things that are
+; in string literals, comments, etc.  I think that would be possible
+; just by having appropriate regexs for them and skipping them when
+; they occur, but I haven't tried yet.
+(defun find-matching-element (search-func offset open-regex close-regex)
+  "Search forwards or backwards (depending on `search-func') to find
+   the matching pair identified by `open-regex' and `close-regex'."
+  (let ((nesting 1)                ; number of pairs we are inside
+        (orig-point (point))       ; original cursor loc
+        (orig-case-fold-search case-fold-search))
+    (setq case-fold-search nil)        ; case-sensitive search
+    (goto-char (+ (point) offset))     ; skip the `open-regex' at cursor
+    (while (and (> nesting 0)
+                (funcall search-func
+                  (concat "\\(" open-regex "\\)\\|\\(" close-regex "\\)") nil t))
+      (if (string-match open-regex (match-string 0))
+        (setq nesting (+ nesting 1))
+        (setq nesting (- nesting 1))
+      ))
+    (setq case-fold-search orig-case-fold-search)
+    (if (eq nesting 0)
+      ; found the matching word, move cursor to the beginning of the match
+      (goto-char (match-beginning 0))
+      ; did not find the matching word, report the nesting depth at EOF
+      (progn
+        (goto-char orig-point)
+        (error (format "Did not find match; nesting at file end is %d" nesting))
+      )
+    )))
 ;; This is what I bind to Alt-[ and Alt-]. (by Scott McPeak)
 (defun find-matching-keyword ()
   "Find the matching keyword of a balanced pair."
@@ -974,6 +1013,9 @@ Does nothing if buffer is not visiting a file or file is not owned by us."
     ;(t (error "Cursor is not on ASSERT nor RETRACT"))
     (t t)
   ))
+(global-set-key (kbd "M-[") 'find-matching-keyword)
+(global-set-key (kbd "M-]") 'find-matching-keyword)
+
 
 ;; Stefan Monnier . It is the opposite of fill-paragraph
 ;; Takes a multi-line paragraph and makes it into a single line of text.
