@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.0
+;; Version: 5.1
 ;; Created: October 2006
 ;; Last-Updated: October 2012
 
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-10-31 (5.1)
+;;    try to use new navigate function (inconvenient)
 ;; 2012-10-26 (5.0)
 ;;    add double copy/kill (bind) will put in a register
 ;; 2012-10-18 (4.9)
@@ -274,6 +276,96 @@
         )
       )
     )
+  )
+; ---------------- matching word pairs ------------------
+; The idea here is that while emacs has built-in support for matching
+; things like parentheses, I work with a variety of syntaxes that use
+; balanced keyword pairs, such as "begin" and "end", or "#if" and
+; "#endif".  So this mechanism searches for the balanced element
+; of such ad-hoc constructions. (by Scott McPeak)
+;
+; TODO: Currently, there is no support for skipping things that are
+; in string literals, comments, etc.  I think that would be possible
+; just by having appropriate regexs for them and skipping them when
+; they occur, but I haven't tried yet.
+(defun find-matching-element (search-func offset open-regex close-regex)
+  "Search forwards or backwards (depending on `search-func') to find
+   the matching pair identified by `open-regex' and `close-regex'."
+  (let ((nesting 1)                ; number of pairs we are inside
+        (orig-point (point))       ; original cursor loc
+        (orig-case-fold-search case-fold-search))
+    (setq case-fold-search nil)        ; case-sensitive search
+    (goto-char (+ (point) offset))     ; skip the `open-regex' at cursor
+    (while (and (> nesting 0)
+                (funcall search-func
+                  (concat "\\(" open-regex "\\)\\|\\(" close-regex "\\)") nil t))
+      (if (string-match open-regex (match-string 0))
+        (setq nesting (+ nesting 1))
+        (setq nesting (- nesting 1))
+      ))
+    (setq case-fold-search orig-case-fold-search)
+    (if (eq nesting 0)
+      ; found the matching word, move cursor to the beginning of the match
+      (goto-char (match-beginning 0))
+      ; did not find the matching word, report the nesting depth at EOF
+      (progn
+        (goto-char orig-point)
+        (error (format "Did not find match; nesting at file end is %d" nesting))
+      )
+    )))
+;; find the matching word/character /* it's a pain to point the word begining */
+;; This is what I bind to Alt-[ and Alt-]. (inspired by Scott McPeak)
+(defun find-matching-keyword ()
+  "Find the matching keyword of a balanced pair."
+  (interactive)
+  (cond
+    ;; these first two come from lisp/emulation/vi.el
+    ((looking-at "[[({]") (forward-sexp 1) (backward-char 1))
+    ((looking-at "[])}]") (forward-char 1) (backward-sexp 1))
+    ;;
+    ;; rtp file from RTRT
+    ((looking-at "<unit_testing>")
+      (when (eq major-mode 'nxml-mode)
+        (find-matching-element 're-search-forward 14 "<unit_testing>" "</unit_testing>")))
+    ((looking-at "</unit_testing>")
+      (when (eq major-mode 'nxml-mode)
+        (find-matching-element 're-search-backward 0 "</unit_testing>" "<unit_testing>")))
+    ;;
+    ;; RTRT script .ptu
+    ;; "\\b": word boundary assertion, needed because one delimiter is
+    ;; a substring of the other
+    ;; ELEMENT
+    ((looking-at "SERVICE")
+      (when (eq major-mode 'rtrt-script-mode)
+        (find-matching-element 're-search-forward 7 "\\bSERVICE\\b" "END SERVICE")))
+    ((looking-at "END SERVICE")
+      (when (eq major-mode 'rtrt-script-mode)
+        (find-matching-element 're-search-backward 0 "END SERVICE" "\\bSERVICE\\b")))
+    ;; TEST
+    ((looking-at "TEST")
+      (when (eq major-mode 'rtrt-script-mode)
+        (find-matching-element 're-search-forward 5 "\\bTEST\\b" "END TEST")))
+    ((looking-at "END TEST")
+      (when (eq major-mode 'rtrt-script-mode)
+        (find-matching-element 're-search-backward 0 "END TEST" "\\bTEST\\b")))
+    ;; ELEMENT
+    ((looking-at "ELEMENT")
+      (when (eq major-mode 'rtrt-script-mode)
+        (find-matching-element 're-search-forward 7 "\\bELEMENT\\b" "END ELEMENT")))
+    ((looking-at "END ELEMENT")
+      (when (eq major-mode 'rtrt-script-mode)
+        (find-matching-element 're-search-backward 0 "END ELEMENT" "\\bELEMENT\\b")))
+    ;;
+    ;; C/C++
+    ((looking-at "#if")
+      (when (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+        (find-matching-element 're-search-forward 3 "#if" "#endif")))
+    ((looking-at "#endif")
+      (when (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+        (find-matching-element 're-search-backward 0 "#endif" "#if")))
+    ;;
+    ;;(t (error "Cursor is not on ASSERT nor RETRACT"))
+    (t t))
   )
 
 ;;
@@ -944,97 +1036,6 @@ Does nothing if buffer is not visiting a file or file is not owned by us."
           (t
           (message "TinyMy: couldn't chmod")))
         (ti::compat-modeline-update)))))
-
-
-; ---------------- matching word pairs ------------------
-; The idea here is that while emacs has built-in support for matching
-; things like parentheses, I work with a variety of syntaxes that use
-; balanced keyword pairs, such as "begin" and "end", or "#if" and
-; "#endif".  So this mechanism searches for the balanced element
-; of such ad-hoc constructions. (by Scott McPeak)
-;
-; TODO: Currently, there is no support for skipping things that are
-; in string literals, comments, etc.  I think that would be possible
-; just by having appropriate regexs for them and skipping them when
-; they occur, but I haven't tried yet.
-(defun find-matching-element (search-func offset open-regex close-regex)
-  "Search forwards or backwards (depending on `search-func') to find
-   the matching pair identified by `open-regex' and `close-regex'."
-  (let ((nesting 1)                ; number of pairs we are inside
-        (orig-point (point))       ; original cursor loc
-        (orig-case-fold-search case-fold-search))
-    (setq case-fold-search nil)        ; case-sensitive search
-    (goto-char (+ (point) offset))     ; skip the `open-regex' at cursor
-    (while (and (> nesting 0)
-                (funcall search-func
-                  (concat "\\(" open-regex "\\)\\|\\(" close-regex "\\)") nil t))
-      (if (string-match open-regex (match-string 0))
-        (setq nesting (+ nesting 1))
-        (setq nesting (- nesting 1))
-      ))
-    (setq case-fold-search orig-case-fold-search)
-    (if (eq nesting 0)
-      ; found the matching word, move cursor to the beginning of the match
-      (goto-char (match-beginning 0))
-      ; did not find the matching word, report the nesting depth at EOF
-      (progn
-        (goto-char orig-point)
-        (error (format "Did not find match; nesting at file end is %d" nesting))
-      )
-    )))
-;; This is what I bind to Alt-[ and Alt-]. (by Scott McPeak)
-(defun find-matching-keyword ()
-  "Find the matching keyword of a balanced pair."
-  (interactive)
-  (cond
-    ; these first two come from lisp/emulation/vi.el
-    ((looking-at "[[({]") (forward-sexp 1) (backward-char 1))
-    ((looking-at "[])}]") (forward-char 1) (backward-sexp 1))
-
-    ; TODO: Should the set of pairs be sensitive to the mode of
-    ; the current file?
-
-    ; Kettle CVC
-    ((looking-at "ASSERT")
-     (find-matching-element 're-search-forward 6 "ASSERT" "RETRACT"))
-    ((looking-at "RETRACT")
-     (find-matching-element 're-search-backward 0 "RETRACT" "ASSERT"))
-
-    ; Kettle CVC
-    ;
-    ; "\\b": word boundary assertion, needed because one delimiter is
-    ; a substring of the other
-    ((looking-at "BLOCK")
-     (find-matching-element 're-search-forward 5 "\\bBLOCK\\b" "ENDBLOCK"))
-    ((looking-at "ENDBLOCK")
-     (find-matching-element 're-search-backward 0 "ENDBLOCK" "\\bBLOCK\\b"))
-
-    ; Simplify
-    ((looking-at "BG_PUSH")
-     (find-matching-element 're-search-forward 7 "BG_PUSH" "BG_POP"))
-    ((looking-at "BG_POP")
-     (find-matching-element 're-search-backward 0 "BG_POP" "BG_PUSH"))
-
-    ; C/C++
-    ((looking-at "#if")
-     (find-matching-element 're-search-forward 3 "#if" "#endif"))
-    ((looking-at "#endif")
-     (find-matching-element 're-search-backward 0 "#endif" "#if"))
-
-    ; ML
-    ;
-    ; this does not quite work because e.g. "struct" is also terminated
-    ; with "end" ..
-    ((looking-at "begin")
-     (find-matching-element 're-search-forward 5 "\\bbegin\\b" "\\bend\\b"))
-    ((looking-at "end")
-     (find-matching-element 're-search-backward 0 "\\bend\\b" "\\bbegin\\b"))
-
-    ;(t (error "Cursor is not on ASSERT nor RETRACT"))
-    (t t)
-  ))
-(global-set-key (kbd "M-[") 'find-matching-keyword)
-(global-set-key (kbd "M-]") 'find-matching-keyword)
 
 
 ;; Stefan Monnier . It is the opposite of fill-paragraph

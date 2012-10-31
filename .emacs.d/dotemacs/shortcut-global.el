@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.7
+;; Version: 2.8
 ;; Created: October 2006
 ;; Last-Updated: October 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-10-31 (2.8)
+;;    have logical shortcuts with backspace and delete
 ;; 2012-10-26 (2.7)
 ;;    add shortcut for insert register, fold or hide show + alias insert date
 ;; 2012-10-19 (2.6)
@@ -188,6 +190,15 @@
 
 ;; insert register
 (global-set-key         (kbd "C-c i")           'insert-register)
+
+;; kill forward a word (like M-d)
+(global-set-key         (kbd "<M-delete>")      'kill-word)
+;; kill forward a line (like C-k)
+(global-set-key         (kbd "<C-delete>")      'kill-line)
+;; kill backward a line (like C-u C-k)
+(global-set-key         (kbd "<C-backspace>")   '(lambda ()
+                                                   (interactive)
+                                                   (kill-line -1)))
 
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol

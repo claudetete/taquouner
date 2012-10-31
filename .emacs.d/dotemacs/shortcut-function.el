@@ -1,6 +1,6 @@
 ;;; shortcut-function.el --- a config file for function shortcut
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.5
+;; Version: 2.6
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-10-31 (2.6)
+;;    add new functions to navigate through rtrt files
 ;; 2012-08-01 (2.5)
 ;;    clean up + move shortcuts + shortcut for macro + some conditions + case
 ;;    shortcut
@@ -86,6 +88,19 @@
   ;; format the .ptu file (rtrt script)
   (global-set-key       "\C-crv"                'rtrt-upcase-var-string)
   (global-set-key       "\C-crs"                'rtrt-remove-whitespace-before-colon)
+  ;;
+  ;; move
+  (add-hook 'rtrt-script-mode-hook
+    '(lambda ()
+       (local-set-key   (kbd "<M-left>")        'rtrt-up-test-header)
+       (local-set-key   (kbd "<M-right>")       'rtrt-down-test-header)
+       (local-set-key   (kbd "<M-up>")          'rtrt-up-heading)
+       (local-set-key   (kbd "<M-down>")        'rtrt-down-heading)))
+  (add-hook 'nxml-mode-hook
+    '(lambda ()
+       (when (string-match "\\.rtp$" (buffer-name))
+         (local-set-key   (kbd "<M-left>")        'rtrt-rtp-up-heading)
+         (local-set-key   (kbd "<M-right>")       'rtrt-rtp-down-heading))))
   ) ; (when section-mode-rtrt-script
 
 ;;
@@ -187,6 +202,12 @@
 (global-set-key         (kbd "M-l")             'case-down)
 ;; capitalize case word or region
 (global-set-key         (kbd "M-c")             'case-capitalize)
+
+;;
+;;; SEARCH
+;; navigate to start/end of balance expressions
+(global-set-key (kbd "M-[") 'find-matching-keyword)
+(global-set-key (kbd "M-]") 'find-matching-keyword)
 
 
 (provide 'shortcut-function)

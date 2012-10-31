@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function, rtrt
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.0
+;; Version: 1.1
 ;; Created: March 2012
-;; Last-Updated: July 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-mode-rtrt-script'
 
 ;;; Change Log:
+;; 2012-10-31 (1.1)
+;;    add new function to move in rtrt files
 ;; 2012-07-11 (1.0)
 ;;    split from functions.el
 
@@ -93,8 +95,53 @@
     (replace-regexp " [vV]ar " " VAR " nil start end)
     )
 
-  ) ; (when section-mode-rtrt-script
+;;
+;;;
+;;;; MOVE
+  ;;; move to the previous up heading (by Claude TETE)
+  (defun rtrt-up-heading ()
+    "Go up in script SERVICE->TEST->ELEMENT"
+    (interactive)
+    (find-matching-element 're-search-backward 0 "  END \\(\\b\\(ELEMENT\\|TEST\\|SERVICE\\)\\b\\)" "\\(  ELEMENT\\|  TEST\\|^SERVICE\\)\\b")
+    (when (looking-at "[ ]") (forward-char 2)))
+  ;;; move to the previous up heading (by Claude TETE)
+  (defun rtrt-down-heading ()
+    "Go down in script SERVICE"
+    (interactive)
+    (re-search-forward "^END SERVICE\\b")
+    (next-line))
+  ;;; move to the previous TEST header (by Claude TETE)
+  (defun rtrt-up-test-header ()
+    "Go up in script from TEST to TEST"
+    (interactive)
+    (re-search-backward "  TEST\\b")
+    (forward-char 2))
+  ;;; move to the next TEST footer (by Claude TETE)
+  (defun rtrt-down-test-header ()
+    "Go down in script from END TEST to END TEST"
+    (interactive)
+    (re-search-forward "  END TEST\\b")
+    (move-beginning-of-line nil)
+    (next-line))
 
+;;
+;;;
+;;;; RTP
+  ;;; move to previous unit testing (by Claude TETE)
+  (defun rtrt-rtp-up-heading ()
+    "Go up to unit testing"
+    (interactive)
+    (re-search-backward "<unit_testing>")
+    (move-beginning-of-line nil))
+  ;;; move to next unit testing (by Claude TETE)
+  (defun rtrt-rtp-down-heading ()
+    "Go down to unit testing"
+    (interactive)
+    (re-search-forward "</unit_testing>")
+    (move-end-of-line nil)
+    (forward-char 1))
+
+  ) ; (when section-mode-rtrt-script
 
 
 (provide 'function-rtrt)
