@@ -1,6 +1,6 @@
 ;;; mode.el --- a config file for all mode settings
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.5
+;; Version: 3.6
 ;; Created: October 2006
 ;; Last-Updated: October 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-10-26 (3.6)
+;;    add FastNav and MRU Yank mode
 ;; 2012-10-18 (3.5)
 ;;    fix bug without clearcase mode and with powerline + add dired lis and
 ;;    nxhtml mode
@@ -694,10 +696,45 @@
 ;;
 ;;; NXHTML
 ;; REQUIREMENT: var     `section-mode-nxhtml'
-;;
+;; enhance html mode
 (when section-mode-nxhtml (message "  2.47 nXhtml...")
   (load (concat dotemacs-path "/plugins/nxhtml/autostart.el"))
   (message "  2.47 nXhtml... Done"))
+
+;;
+;;; FASTNAV
+;; REQUIREMENT: var     `section-mode-fastnav'
+;; fast navigation
+(when section-mode-fastnav (message "  2.48 FastNav...")
+  (try-require 'fastnav "    ")
+  ;;(global-set-key "\M-z" 'fastnav-zap-up-to-char-forward)
+  ;;(global-set-key "\M-Z" 'fastnav-zap-up-to-char-backward)
+  (global-set-key "\M-s" 'fastnav-jump-to-char-forward)
+  ;;(global-set-key "\M-S" 'fastnav-jump-to-char-backward)
+  ;;(global-set-key "\M-r" 'fastnav-replace-char-forward)
+  ;;(global-set-key "\M-R" 'fastnav-replace-char-backward)
+  ;;(global-set-key "\M-i" 'fastnav-insert-at-char-forward)
+  ;;(global-set-key "\M-I" 'fastnav-insert-at-char-backward)
+  ;;(global-set-key "\M-j" 'fastnav-execute-at-char-forward)
+  ;;(global-set-key "\M-J" 'fastnav-execute-at-char-backward)
+  ;;(global-set-key "\M-k" 'fastnav-delete-char-forward)
+  ;;(global-set-key "\M-K" 'fastnav-delete-char-backward)
+  ;;(global-set-key "\M-m" 'fastnav-mark-to-char-forward)
+  ;;(global-set-key "\M-M" 'fastnav-mark-to-char-backward)
+  ;;(global-set-key "\M-p" 'fastnav-sprint-forward)
+  ;;(global-set-key "\M-P" 'fastnav-sprint-backward)
+  (message "  2.48 FastNav... Done"))
+
+;;
+;;; MRU YANK
+;; REQUIREMENT: var     `section-mode-mru-yank'
+;; MRU (Most Recently Used) in kill-ring
+(when section-mode-mru-yank (message "  2.49 MRU Yank...")
+  (try-require 'MRU-yank "    ")
+  (setq MRU-yank-mode t)
+  (message "  2.49 MRU Yank... Done"))
+
+
 
 ;;
 ;;; DIMINISH

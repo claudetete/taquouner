@@ -1,6 +1,6 @@
 ;;; functions.el --- a config file to add some function
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,7 +20,7 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.9
+;; Version: 5.0
 ;; Created: October 2006
 ;; Last-Updated: October 2012
 
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-10-26 (5.0)
+;;    add double copy/kill (bind) will put in a register
 ;; 2012-10-18 (4.9)
 ;;    fix bug with resize window + try fix copy/kill with clipboard system
 ;; 2012-08-01 (4.8)
@@ -204,6 +206,24 @@
     (copy-region-as-kill (re-search-backward "^") (re-search-forward "$"))
     )
   )
+;;; from http://www.emacswiki.org/emacs/UnifyKillringAndRegister
+;;;; [2006/02/10] kill-ring / register
+(defun kill-ring-save-x (s e)
+  (interactive "r")
+  (if (eq last-command 'kill-ring-save-x)
+      (call-interactively 'copy-to-register)
+    (call-interactively 'kill-ring-save)))
+(define-key esc-map "w" 'kill-ring-save-x)
+;;;; [2006/02/25] kill-region / register
+;;(defun kill-region-x (s e)
+;; (interactive "r")
+;;  (if (eq last-command 'kill-region)    ;kill-region-x ?
+;;      (call-interactively 'my-kill-ring-to-register)
+;;    (call-interactively 'kill-region)))
+;;(defun my-kill-ring-to-register (register)
+;;  (interactive "cCopy to register: ")
+;;  (set-register register (car kill-ring)))
+;;(define-key global-map "\C-w" 'kill-region-x)
 
 ;;
 ;;;

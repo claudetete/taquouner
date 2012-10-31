@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.5
+;; Version: 0.6
 ;; Created: June 2012
-;; Last-Updated: August 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-10-26 (0.6)
+;;    some clean up + add new mode and setting
 ;; 2012-08-01 (0.5)
 ;;    fix setting errors
 ;; 2012-06-26 (0.4)
@@ -283,61 +285,39 @@
 ;;; SECTION
 ;; (setq section-xxx X) where 'xxx' means a section of .emacs and 'X' take
 ;; 'nil' or 't' value (false or true)
-;;      (if (window-system)
-;;        (progn
-;;          (message "    * default")
-;;          )
-;;        (progn
-;;          ;; MODE
-;;          (setq section-mode-cedet           nil)
-;;          (setq section-mode-cedet-semantic  nil)
-;;          (setq section-mode-cedet-ecb       nil)
-;;
-;;          ;; DISPLAY
-;;          (setq section-display-windows-buffers-transparency nil)
-;;          (setq section-display-color                        t)
-;;
-;;          ;; INTERFACE
-;;          (setq section-interface-fullscreen  nil)
-;;          (setq section-interface-ecb         nil)
-;;
-;;          ;; MOUSE
-;;          (setq section-mouse-paste-to-point-not-mouse-cursor t)
-;;          (message "    * default terminal")
-;;          )
-;;        )
-;;      ) ; default
 
 ;;; ENVIRONMENT
 (setq section-environment t)
 (progn
-  ;; load profile from .emacs.d/profile/ directory
+  ;; PROFILE: load profile from .emacs.d/profile/ directory
   (setq section-environment-profile t)
-  ;; detect system: Emacs version
+  ;; VERSION RECOGNITION: detect system: Emacs version
   (setq section-environment-version-recognition t)
-  ;; detect system: MS Windows or Linux
+  ;; OS RECOGNITION: detect system: MS Windows or Linux
   (setq section-environment-os-recognition t)
-  ;; detect system: terminal or graphical
+  ;; TERMINAL VS GRAPHICS: detect system: terminal or graphical
   (setq section-environment-terminal-vs-graphics t)
-  ;; path for all executables
+  ;; SET PATH: path for all executables
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'
   (setq section-environment-set-path t)
-  ;; increase performance on MS Windows
+  ;; MS WINDOWS PERFORMANCE: increase performance on MS Windows
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-ms-windows-performance t)
-  ;; set some executable like shell or diff
+  ;; EXECUTABLE: set some executable like shell or diff
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'
   (setq section-environment-executable t)
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa nil)
-  ;; menu key become hyper key (modifier key)
+  ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-hyper t)
-  ;; windows key become super key (modifier key)
+  ;; SUPER: windows key become super key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-super nil)
+  ;; SERVER : start a server for emacs client (and have only one instance)
+  (setq section-environment-server nil)
   ) ; progn
 
 
@@ -464,8 +444,16 @@
   (setq section-mode-isearch t)
   ;; RAINBOW DELIMITERS: scroll is possible when incremental search
   (setq section-mode-rainbow-delimiters nil)
+  ;; FOLD DWIM: show hide code source block
+  (setq section-mode-fold-dwim t)
   ;; DIRED LETTER ISEARCH: activate by default isearch in dired mode
   (setq section-mode-dired-lis nil)
+  ;; NXHTML: enhance html mode
+  (setq section-mode-nxhtml nil)
+  ;; FASTNAV: fast navigation like with zap-to-char but only to move
+  (setq section-mode-fastnav t)
+  ;; MRU YANK: MRU (Most Recently Used) in kill-ring
+  (setq section-mode-mru-yank t)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (progn
@@ -480,6 +468,10 @@
   (progn
     ;; INDENT PREPROCESSOR: make a #define be align with C code
     (setq section-languages-c-indent-preprocessor nil)
+    (setq section-languages-c-hide-show t)
+    (progn
+      (setq section-languages-c-hide-show-hide-all-at-start nil)
+      ) ; (progn
     ) ; (progn
   ;; LISP: set indentation style
   (setq section-languages-lisp t)

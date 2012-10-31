@@ -1,6 +1,6 @@
 ;;; emacs.el --- config file for Emacs
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.1
+;; Version: 8.2
 ;; Created: October 2006
 ;; Last-Updated: October 2012
 
@@ -137,6 +137,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-10-31 (8.2)
+;;    put server in environment file + add fastnav and mru yank mode + C
+;;    language setting
 ;; 2012-10-18 (8.1)
 ;;    fix bug with server + add mode dired lis, nxhtml and config for C++ Qt
 ;; 2012-08-01 (8.0)
@@ -243,15 +246,11 @@
 ;;;  INIT
 (message "--[ Loading my Emacs init file ]--")
 
-;; start the emacs server to have only one emacs client
-(when (window-system)
-  (when (string-equal system-type "windows-nt")
-    ;;;; remove error "directory ~/.emacs.d/server is unsafe"
-    ;;;; if you cannot be the owner of this directory.
-    ;;(defun server-ensure-safe-dir (dir) "Noop" t)
-    )
-  (server-start)
-  (message "* Running with server"))
+(when (string-equal system-type "windows-nt")
+  ;;;; remove error "directory ~/.emacs.d/server is unsafe"
+  ;;;; if you cannot be the owner of this directory.
+  ;;(defun server-ensure-safe-dir (dir) "Noop" t)
+  )
 
 ;;;; debug this file if error
 ;;;; do not always work and can be opened in use
@@ -351,6 +350,10 @@ before message."
   ;; SUPER                                                              0.10
   ;; set windows key as super key
   (defvar section-environment-super nil)
+  ;;
+  ;; SERVER                                                              0.11
+  ;; start a server for emacs client (and have only one instance)
+  (defvar section-environment-server nil)
   ) ; progn
 
 
@@ -626,6 +629,14 @@ before message."
   ;;
   (defvar section-mode-nxhtml nil)
   ;;
+  ;; FASTNAV                                                            2.48
+  ;; fast navigation like with zap-to-char but only to move
+  (defvar section-mode-fastnav t)
+  ;;
+  ;; MRU YANK                                                           2.49
+  ;; MRU (Most Recently Used) in kill-ring
+  (defvar section-mode-mru-yank t)
+  ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
   (defvar section-mode-diminish nil)
@@ -647,6 +658,10 @@ before message."
     (defvar profile-c-macro-cppflags "")
     ;; INDENT PREPROCESSOR
     (defvar section-languages-c-indent-preprocessor nil)
+    (defvar section-languages-c-hide-show t)
+    (progn
+      (defvar section-languages-c-hide-show-hide-all-at-start nil)
+      ) ; (progn
     ) ; (progn
   ;;
   ;; LISP                                                               3.2

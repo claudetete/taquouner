@@ -1,6 +1,6 @@
 ;;; shortcut-global.el --- a config file for global Emacs shortcut
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.6
+;; Version: 2.7
 ;; Created: October 2006
 ;; Last-Updated: October 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-10-26 (2.7)
+;;    add shortcut for insert register, fold or hide show + alias insert date
 ;; 2012-10-19 (2.6)
 ;;    remove home/end old shortcuts
 ;; 2012-08-01 (2.5)
@@ -184,6 +186,9 @@
 ;; run rss reader
 (global-set-key         (kbd "H-r")             'newsticker-show-news)
 
+;; insert register
+(global-set-key         (kbd "C-c i")           'insert-register)
+
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol
 ;; completion command to `M-TAB' which is a reserved hot key under Windows.
@@ -261,9 +266,41 @@
 ;;
 ;;; FOLD DWIM
 (when section-mode-fold-dwim
-  (global-set-key       (kbd "<M-kp-subtract>") 'fold-dwim-toggle)
-  (global-set-key       (kbd "<M-kp-divide>")   'fold-dwim-hide-all)
-  (global-set-key       (kbd "<M-kp-add>")      'fold-dwim-show-all)
+  ;; show/hide block
+  (global-set-key       (kbd "<M-left>")        '(lambda ()
+                                                   (interactive)
+                                                   (outline-up-heading 1)
+                                                   (fold-dwim-toggle)))
+  (global-set-key       (kbd "<M-right>")       '(lambda ()
+                                                   (interactive)
+                                                   (outline-up-heading 1)
+                                                   (fold-dwim-toggle)))
+  ;; hide all
+  (global-set-key       (kbd "<M-up>")          'fold-dwim-hide-all)
+  ;; show all
+  (global-set-key       (kbd "<M-down>")        'fold-dwim-show-all)
+  )
+
+;;
+;;; HIDE SHOW
+(when section-languages-c-hide-show
+  (add-hook 'outline-minor-mode-hook
+    '(lambda ()
+       ;; hide all
+       (local-set-key   (kbd "C-,")             '(lambda ()
+                                                   (interactive)
+                                                   (hide-sublevels 1)))
+       ;; show all
+       (local-set-key   (kbd "C-.")             'show-all)
+       ;; hide current block
+       (local-set-key   (kbd "<M-left>")        '(lambda ()
+                                                   (interactive)
+                                                   (outline-up-heading 1)
+                                                   (hide-subtree)))
+       ;; show block
+       (local-set-key   (kbd "<M-right>")       'show-subtree)
+       )
+    )
   )
 
 ;;
@@ -274,6 +311,8 @@
 (defalias 'eb 'eval-buffer)
 ;; eval elisp region
 (defalias 'er 'eval-region)
+;; insert date (format YYYY-MM-DD)
+(defalias 'id 'insert-date)
 
 
 ;;

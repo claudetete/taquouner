@@ -325,33 +325,35 @@
 ;;; ENVIRONMENT
 (setq section-environment t)
 (progn
-  ;; load profile from .emacs.d/profile/ directory
+  ;; PROFILE: load profile from .emacs.d/profile/ directory
   (setq section-environment-profile t)
-  ;; detect system: Emacs version
+  ;; VERSION RECOGNITION: detect system: Emacs version
   (setq section-environment-version-recognition t)
-  ;; detect system: MS Windows or Linux
+  ;; OS RECOGNITION: detect system: MS Windows or Linux
   (setq section-environment-os-recognition t)
-  ;; detect system: terminal or graphical
+  ;; TERMINAL VS GRAPHICS: detect system: terminal or graphical
   (setq section-environment-terminal-vs-graphics t)
-  ;; path for all executables
+  ;; SET PATH: path for all executables
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'
   (setq section-environment-set-path t)
-  ;; increase performance on MS Windows
+  ;; MS WINDOWS PERFORMANCE: increase performance on MS Windows
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-ms-windows-performance t)
-  ;; set some executable like shell or diff
+  ;; EXECUTABLE: set some executable like shell or diff
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'
   (setq section-environment-executable t)
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa t)
-  ;; menu key become hyper key (modifier key)
+  ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-hyper t)
-  ;; windows key become super key (modifier key)
+  ;; SUPER: windows key become super key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-super nil)
+  ;; SERVER : start a server for emacs client (and have only one instance)
+  (setq section-environment-server nil)
   ) ; progn
 
 
@@ -478,8 +480,12 @@
   (setq section-mode-isearch t)
   ;; RAINBOW DELIMITERS: scroll is possible when incremental search
   (setq section-mode-rainbow-delimiters nil)
+  ;; FOLD DWIM: show hide code source block
+  (setq section-mode-fold-dwim t)
   ;; DIRED LETTER ISEARCH: activate by default isearch in dired mode
   (setq section-mode-dired-lis t)
+  ;; NXHTML: enhance html mode
+  (setq section-mode-nxhtml nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (progn

@@ -1,6 +1,6 @@
 ;;; languages.el --- a config file for programing languages
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,7 +20,7 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.7
+;; Version: 2.8
 ;; Created: October 2006
 ;; Last-Updated: October 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-10-26 (2.8)
+;;    add outline minor mode for C
 ;; 2012-10-18 (2.7)
 ;;    add config for C++ with Qt
 ;; 2012-07-18 (2.6)
@@ -101,6 +103,15 @@
     ;; make a #define be align with C code
     (when section-languages-c-indent-preprocessor
       (c-set-offset 'cpp-macro 0))
+
+    ;;; HIDE SHOW
+    (when section-languages-c-hide-show
+      (outline-minor-mode t)
+      ;;; HIDE ALL AT START
+      ;; hide all when opening file
+      (when section-languages-c-hide-show-hide-all-at-start
+        (hide-sublevels 1))
+      )
     )
 
   ;; set c mode

@@ -1,6 +1,6 @@
 ;;; environment.el --- a config file for environment settings
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.6
+;; Version: 2.7
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `dotemacs-path'
 
 ;;; Change Log:
+;; 2012-10-26 (2.7)
+;;    put start client server with configuration
 ;; 2012-07-09 (2.6)
 ;;    add robustness
 ;; 2012-06-12 (2.5)
@@ -233,6 +235,16 @@
       w32-rwindow-modifier 'super) ;; Right Windows key
     )
   (message "  0.10 Super... Done"))
+
+;;
+;;; SERVER
+;; start the emacs server to have only one emacs client
+(when section-environment-server (message "  0.11 Server...")
+  (when (and section-environment-terminal-vs-graphics running-in-graphical)
+    (server-start)
+    (message "* Running with server")
+    )
+  (message "  0.11 Server... Done"))
 
 
 (provide 'environment)

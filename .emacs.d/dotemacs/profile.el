@@ -20,16 +20,18 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: June 2012
-;; Last-Updated: July 2012
+;; Last-Updated: October 2012
 
 ;;; Commentary:
 ;;
-;; load by `emacs.el' (where all requirements are defined)
+;; load by `dotemacs/environment.el'
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-10-24 (0.4)
+;;    add portable profile
 ;; 2012-07-09 (0.3)
 ;;    add new condition for AT + comments
 ;; 2012-06-05 (0.2)
@@ -48,28 +50,35 @@
 ;; the right profile can be determined by name and system
 ;; you can see the value of system-name or system-configuration with M-:
 
-;; ALSTOM TRANSPORT
-(if (and
-      (string= system-name "CWVBN16EWJ")
-      (string= system-configuration "i386-mingw-nt5.1.2600")
-      (string= user-login-name "e_ctete"))
+;; EMACS_PORTABLE
+(if (string= (getenv "PORTABLE_VERSION") "TRUE")
+  (try-require 'profile-emacs-portable "    ")
   (progn
-    (try-require 'profile-alstom-transport "    ")
-    ))
+    ;; ALSTOM TRANSPORT
+    (if (and
+          (string= system-name "CWVBN16EWJ")
+          (string= system-configuration "i386-mingw-nt5.1.2600")
+          (string= user-login-name "e_ctete"))
+      (progn
+        (try-require 'profile-alstom-transport "    ")
+        ))
+    )
 
-;;
-;;; PERSONAL
-;; see .emacs.d/profile/profile-default.el like an example to create one
-;; add your profile "profile-my-profile.el" in the ".emacs.d/profile" folder and
-;; load like this (put it just under this comment):
-;; (try-require 'profile-my-profile "    ")
-;;;;;;;;;;;;;;;;;;;
-;; Between here ...
+  ;;
+  ;;; PERSONAL
+  ;; see .emacs.d/profile/profile-default.el like an example to create one
+  ;; add your profile "profile-my-profile.el" in the ".emacs.d/profile" folder and
+  ;; load like this (put it just under this comment):
+  ;; (try-require 'profile-my-profile "    ")
+  ;;;;;;;;;;;;;;;;;;;
+  ;; Between here ...
 
-;(try-require 'profile-default "    ")
+  ;;(try-require 'profile-default "    ")
 
-;; ... and here
-;;;;;;;;;;;;;;;;;;;
+  ;; ... and here
+  ;;;;;;;;;;;;;;;;;;;
+
+  ) ; (if (string= (getenv "PORTABLE_VERSION") "TRUE")
 
 ;; show name of profile
 (message (concat "* Profile: " profile))
