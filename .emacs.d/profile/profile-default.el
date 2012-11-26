@@ -454,6 +454,13 @@
   (setq section-mode-fastnav t)
   ;; MRU YANK: MRU (Most Recently Used) in kill-ring
   (setq section-mode-mru-yank t)
+  ;; ACK: search with ack (no more grep) (need perl interpreter)
+  (setq section-mode-ack t)
+  (progn
+    (setq section-mode-ack-full nil)
+    (setq section-mode-ack-and-half nil)
+    (setq section-mode-ack-emacs t)
+    ) ; (progn
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (progn

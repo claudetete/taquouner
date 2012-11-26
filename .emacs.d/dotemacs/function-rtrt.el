@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function, rtrt
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.2
 ;; Created: March 2012
-;; Last-Updated: October 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-mode-rtrt-script'
 
 ;;; Change Log:
+;; 2012-11-26 (1.2)
+;;    fix behaviour with align functions
 ;; 2012-10-31 (1.1)
 ;;    add new function to move in rtrt files
 ;; 2012-07-11 (1.0)
@@ -47,7 +49,7 @@
     (interactive (clt-get-line-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "\\binit ") 1 1)
+    (align-regexp start end (concat "\\(\\s-*\\)" "\\binit[ ]*[=if]") 1 1)
     )
   ;;; align "expected value" in ptu script for RTRT (by Claude TETE)
   (defun rtrt-align-ev (start end)
@@ -55,7 +57,7 @@
     (interactive (clt-get-line-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "\\bev ") 1 1)
+    (align-regexp start end (concat "\\(\\s-*\\)" "\\bev[ ]*[=i(]") 1 1)
     )
   ;;; align "expected value" and "init" in ptu script for rtrt (by Claude TETE)
   (defun rtrt-align-declaration (start end)
@@ -64,7 +66,7 @@
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
     (rtrt-align-init start end)
-    (rtrt-align-ev start end) ; sometimes it bugs the last ev is not align or two line after region is align
+    (rtrt-align-ev start end) ; sometimes it bugs the last ev is not align ??
     )
   ;;; align "=" in ptu script for RTRT (by Claude TETE)
   (defun rtrt-align-set (start end)
@@ -72,7 +74,7 @@
     (interactive (clt-get-line-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "[-+=]\\{0,1\\}=") 1 1)
+    (align-regexp start end (concat "\\(\\s-*\\)" "[-+=]?=") 1 1)
     )
 
 ;;

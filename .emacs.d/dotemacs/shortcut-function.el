@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.6
+;; Version: 2.7
 ;; Created: October 2006
-;; Last-Updated: October 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-11-26 (2.7)
+;;    logical shortcut for web search
 ;; 2012-10-31 (2.6)
 ;;    add new functions to navigate through rtrt files
 ;; 2012-08-01 (2.5)
@@ -178,7 +180,7 @@
 ;;; WEB SEARCH
 ;; translate word at point or region
 (global-set-key         (kbd "<f12>")           'translate-enfr)
-(global-set-key         (kbd "<H-f12>")         'translate-fren)
+(global-set-key         (kbd "<M-f12>")         'translate-fren)
 ;;
 ;; synonym
 (global-set-key         (kbd "<S-f12>")         'synonym-fr)
@@ -188,10 +190,10 @@
 ;;
 ;; wikipedia
 (global-set-key         (kbd "<f11>")           'wikipedia-en)
-(global-set-key         (kbd "<H-f11>")         'wikipedia-fr)
+(global-set-key         (kbd "<M-f11>")         'wikipedia-fr)
 ;;
 ;; google
-(global-set-key         (kbd "<S-f11>")         'google-fr)
+(global-set-key         (kbd "<C-M-f11>")       'google-fr)
 (global-set-key         (kbd "<C-f11>")         'google-en)
 
 ;;

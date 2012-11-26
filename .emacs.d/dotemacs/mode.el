@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.6
+;; Version: 3.7
 ;; Created: October 2006
-;; Last-Updated: October 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-11-26 (3.7)
+;;    add ack mode, 3 modes exist and do not work immediately, need to patch
+;;    ack-standalone (put in .emacs.d/plugins/) and try to patch/complete
+;;    ack-emacs mode (the simplest)
 ;; 2012-10-26 (3.6)
 ;;    add FastNav and MRU Yank mode
 ;; 2012-10-18 (3.5)
@@ -734,6 +738,37 @@
   (setq MRU-yank-mode t)
   (message "  2.49 MRU Yank... Done"))
 
+;;
+;;; ACK
+;; REQUIREMENT: var     `section-mode-ack'
+;; search with ack (no more grep)
+;; need a patched ack (patch from https://github.com/blixtor/ack/commit/e9ee7ff0e32da86011418dcb9d52c25b1b6d8bdb by blixtor)
+;; the ack-standalone present in .emacs.d/plugins/ folder is already patched
+(when section-mode-ack (message "  2.50 ACK...")
+  (when section-mode-ack-full
+    (autoload 'ack-same "full-ack" nil t)
+    (autoload 'ack "full-ack" nil t)
+    (autoload 'ack-find-same-file "full-ack" nil t)
+    (autoload 'ack-find-file "full-ack" nil t)
+
+    (setq ack-executable (concat "perl " dotemacs-path "/plugins/ack-standalone"))
+    (setq ack-prompt-for-directory t)
+    )
+  (when section-mode-ack-and-half
+    (autoload 'ack-and-a-half-same "ack-and-a-half" nil t)
+    (autoload 'ack-and-a-half "ack-and-a-half" nil t)
+    (autoload 'ack-and-a-half-find-file-same "ack-and-a-half" nil t)
+    (autoload 'ack-and-a-half-find-file "ack-and-a-half" nil t)
+    (defalias 'ack 'ack-and-a-half)
+    (defalias 'ack-same 'ack-and-a-half-same)
+    (defalias 'ack-find-file 'ack-and-a-half-find-file)
+    (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
+    )
+  (when section-mode-ack-emacs
+    (try-require 'ack-emacs "    ")
+    (setq ack-command (concat dotemacs-path "/plugins/ack-standalone"))
+    )
+  (message "  2.50 ACK... Done"))
 
 
 ;;

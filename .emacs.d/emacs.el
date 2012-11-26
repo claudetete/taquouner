@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.2
+;; Version: 8.3
 ;; Created: October 2006
-;; Last-Updated: October 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-11-26 (8.3)
+;;    add ack mode
 ;; 2012-10-31 (8.2)
 ;;    put server in environment file + add fastnav and mru yank mode + C
 ;;    language setting
@@ -636,6 +638,15 @@ before message."
   ;; MRU YANK                                                           2.49
   ;; MRU (Most Recently Used) in kill-ring
   (defvar section-mode-mru-yank t)
+  ;;
+  ;; ACK                                                                2.50
+  ;; search with ack (no more grep)
+  (defvar section-mode-ack t)
+  (progn
+    (defvar section-mode-ack-full nil)
+    (defvar section-mode-ack-and-half nil)
+    (defvar section-mode-ack-emacs t)
+    )
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: October 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-11-26 (1.6)
+;;    add ack mode shortcut
 ;; 2012-10-18 (1.5)
 ;;    add open/close compil window with ecb when try to compile
 ;; 2012-08-01 (1.4)
@@ -78,7 +80,7 @@
 
 ;; search all occurrences in the current buffer
 ;; (more like modern graphical editor)
-(global-set-key         (kbd "C-c e")            'occur)
+(global-set-key         (kbd "C-c e")           'occur)
 
 ;; search a file in a directory (recursively) to open it
 (global-set-key         (kbd "M-f")             'find-name-dired)
@@ -91,7 +93,18 @@
 (define-key isearch-mode-map (kbd "C-o")        'isearch-occur)
 
 ;; highlight all occurrences (regexp)
-(global-set-key         (kbd "C-c x")            'highlight-regexp)
+(global-set-key         (kbd "C-c x")           'highlight-regexp)
+
+;;
+;;; ACK (replace grep)
+(when section-mode-ack-emacs
+  ;; run ack with thing at point
+  (global-set-key       (kbd "<C-f3>")          'ack)
+  ;; run ack with thing at point but only with same file type
+  (global-set-key       (kbd "<M-f3>")          'ack-same)
+  ;; alias to replace grep
+  (defalias             'grep                   'ack)
+  )
 
 
 (provide 'shortcut-grep)

@@ -22,7 +22,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: June 2012
-;; Last-Updated: June 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-11-26 (0.4)
+;;    add new mode and clean up
 ;; 2012-06-21 (0.3)
 ;;    add browser
 ;; 2012-06-13 (0.2)
@@ -486,6 +488,17 @@
   (setq section-mode-dired-lis t)
   ;; NXHTML: enhance html mode
   (setq section-mode-nxhtml nil)
+  ;; FASTNAV: fast navigation
+  (setq section-mode-fastnav t)
+  ;; MRU YANK: (Most Recently Used) in kill-ring
+  (setq section-mode-mru-yank t)
+  ;; ACK: search with ack (no more grep) (need perl interpreter)
+  (setq section-mode-ack t)
+  (progn
+    (setq section-mode-ack-full nil)
+    (setq section-mode-ack-and-half nil)
+    (setq section-mode-ack-emacs t)
+    ) ; (progn
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (progn
@@ -500,6 +513,10 @@
   (progn
     ;; INDENT PREPROCESSOR: make a #define be align with C code
     (setq section-languages-c-indent-preprocessor nil)
+    (setq section-languages-c-hide-show t)
+    (progn
+      (setq section-languages-c-hide-show-hide-all-at-start nil)
+      ) ; (progn
     ) ; (progn
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -701,182 +718,6 @@
 ;;; CUSTOMIZE: all customize settings are put in here when you use interface
 ;; (customize) to change settings
 (setq section-filecustomize t)
-
-(when (getenv "EDIFF-PROFILE")
-  (setq section-environment t)
-  (progn
-    (setq section-environment-profile t)
-    (setq section-environment-version-recognition t)
-    (setq section-environment-os-recognition t)
-    (setq section-environment-terminal-vs-graphics t)
-    (setq section-environment-set-path t)
-    (setq section-environment-ms-windows-performance t)
-    (setq section-environment-executable t)
-    (setq section-environment-elpa nil)
-    (setq section-environment-hyper t)
-    (setq section-environment-super nil)
-    ) ; progn
-  (setq section-functions t)
-  (progn
-    (setq section-function-mm nil)
-    ) ; (progn
-  (setq section-mode t)
-  (progn
-    (setq section-mode-directory t)
-    (setq section-mode-vectra nil)
-    (setq section-mode-home-end t)
-    (setq section-mode-doxymacs nil)
-    (setq section-mode-ido nil)
-    (setq section-mode-uniquify t)
-    (setq section-mode-cedet nil)
-    (progn
-      (setq section-mode-cedet-semantic nil)
-      (setq section-mode-cedet-ecb nil)
-      ) ; (progn
-    (setq section-mode-batch t)
-    (setq section-mode-vb t)
-    (setq section-mode-window-numbering nil)
-    (setq section-mode-c t)
-    (progn
-      (setq section-mode-c-cwarn nil)
-      (setq section-mode-c-data-debug nil)
-      ) ; (progn
-    (setq section-mode-icompletion nil)
-    (setq section-mode-yasnippet nil)
-    (setq section-mode-browse-kill-ring nil)
-    (setq section-mode-mm nil)
-    (progn
-      (setq section-mode-mm-eol nil)
-      (setq section-mode-mm-dbc nil)
-      (setq section-mode-mm-diff nil)
-      ) ; (progn
-    (setq section-mode-dired-plus t)
-    (setq section-mode-gnu-global nil)
-    (setq section-mode-eproject nil)
-    (setq section-mode-rtrt-script t)
-    (setq section-mode-vc-clearcase nil)
-    (setq section-mode-clearcase nil)
-    (setq section-mode-autohotkey t)
-    (setq section-mode-outline nil)
-    (setq section-mode-auto-highlight-symbol t)
-    (setq section-mode-google-calendar nil)
-    (setq section-mode-fill-column-indicator nil)
-    (setq section-mode-muse nil)
-    (setq section-mode-undo-tree nil)
-    (setq section-mode-csv nil)
-    (setq section-mode-subversion nil)
-    (setq section-mode-diff-color t)
-    (setq section-mode-dired-sort nil)
-    (setq section-mode-org-mode nil)
-    (setq section-mode-isearch+ nil)
-    (setq section-mode-psvn nil)
-    (setq section-mode-powerline t)
-    (setq section-mode-nyan nil)
-    (setq section-mode-sml nil)
-    (setq section-mode-dired nil)
-    (setq section-mode-isearch t)
-    (setq section-mode-rainbow-delimiters nil)
-    (setq section-mode-calfw nil)
-    (setq section-mode-dired-details nil)
-    (setq section-mode-smart-tab nil)
-    (setq section-mode-dired-lis nil)
-    (setq section-mode-diminish nil)
-    ) ; (progn
-  (setq section-languages t)
-  (progn
-    (setq section-languages-c t)
-    (progn
-      (setq section-languages-c-indent-preprocessor nil)
-      ) ; (progn
-    (setq section-languages-lisp t)
-    (setq section-languages-tabulation t)
-    (setq section-languages-rtrt-script t)
-    (setq section-languages-perl t)
-    ) ; (progn
-  (setq section-selection t)
-  (progn
-    (setq section-selection-with-shift nil)
-    ) ; (progn
-  (setq section-display t)
-  (progn
-    (setq section-display-windows-buffers t)
-    (progn
-      (setq section-display-windows-buffers-visual-line nil)
-      ) ; (progn
-    (setq section-display-speedbar nil)
-    (setq section-display-font t)
-    (progn
-      (setq section-display-font-international t)
-      ) ; (progn
-    (setq section-display-color t)
-    (progn
-      (setq section-display-color-parentheses-mode t)
-      (setq section-display-color-parentheses-visible t)
-      (setq section-display-color-parentheses-highlight nil)
-      (setq section-display-color-theme t)
-      (progn
-        (setq section-display-color-misc t)
-        (setq section-display-color-mode t)
-        (setq section-display-color-grep t)
-        (setq section-display-color-ecb t)
-        ) ; (progn
-      ) ; (progn
-    ) ; (progn
-  (setq section-interface t)
-  (progn
-    (setq section-interface-decoration t)
-    (setq section-interface-modeline t)
-    (setq section-interface-transparency t)
-    (setq section-interface-fullscreen t)
-    (setq section-interface-ecb nil)
-    (progn
-      (setq section-interface-ecb-ascii-tree nil)
-      )
-    ) ; (progn
-  (setq section-completion t)
-  (setq section-shortcut t)
-  (progn
-    (setq section-shortcut-global t)
-    (progn
-      (setq section-shortcut-global-cua nil)
-      ) ; (progn
-    (setq section-shortcut-windows t)
-    (setq section-shortcut-buffers t)
-    (setq section-shortcut-ecb t)
-    (setq section-shortcut-grep t)
-    (setq section-shortcut-function t)
-    (setq section-shortcut-tags t)
-    (progn
-      (setq section-shortcut-tags-exuberant-ctags nil)
-      (setq section-shortcut-tags-gnu-global t)
-      ) ; (progn
-    (setq section-shortcut-semantic t)
-    ) ; (progn
-  (setq section-mouse t)
-  (progn
-    (setq section-mouse-paste-to-point-not-mouse-cursor t)
-    (setq section-mouse-avoidance t)
-    ) ; (progn
-  (setq section-annoyances t)
-  (progn
-    (setq section-annoyances-truncate-line nil)
-    (setq section-annoyances-scroll-preserve-cursor-position nil)
-    (setq section-annoyances-no-backup-file nil)
-    (setq section-annoyances-backup-file-in-directory t)
-    (setq section-annoyances-classic-scroll nil)
-    ) ; (progn
-  (setq section-misc t)
-  (progn
-    (setq section-misc-calendar nil)
-    (progn
-      (setq section-misc-calendar-french nil)
-      ) ; (progn
-    (setq section-misc-dictionary t)
-    (setq section-misc-bookmark t)
-    (setq section-misc-screensaver nil)
-    ) ; (progn
-  (setq section-filecustomize nil)
-  ) ; (when ediff-profile
 
 
 (provide 'profile-alstom-transport)
