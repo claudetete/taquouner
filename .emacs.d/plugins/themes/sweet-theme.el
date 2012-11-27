@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs, color, theme
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.3
 ;; Created: April 2012
-;; Last-Updated: June 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;; from the custom color I was manually set, with a lot of polish to have less
@@ -31,6 +31,8 @@
 ;;
 
 ;;; Change Log:
+;; 2012-11-27 (1.3)
+;;    change compile color
 ;; 2012-06-18 (1.2)
 ;;    add foreground color for isearch highlight to more readability
 ;; 2012-06-13 (1.1)
@@ -140,11 +142,11 @@
 
     ;; compilation
     `(compilation-column-number ((,class (:foreground ,sweet-pink-3))))
-    `(compilation-error ((,class (:foreground ,sweet-orange-1))))
-    `(compilation-info ((,class (:foreground ,sweet-pink+1))))
+    `(compilation-error ((,class (:foreground ,sweet-pink+1))))
+    `(compilation-info ((,class (:foreground ,sweet-pink-1))))
     `(compilation-line-number ((,class (:foreground ,sweet-green))))
     `(compilation-warning ((,class (:bold t :foreground ,sweet-orange :weight bold))))
-    `(match ((,class (:background ,sweet-red :foreground ,sweet-fg))))
+    `(match ((,class (:background ,sweet-red+2 :foreground ,sweet-fg))))
     `(next-error ((,class (:background ,sweet-cyan+2))))
 
     ;; minibuffer

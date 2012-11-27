@@ -31,7 +31,7 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
-;; 2012-11-26 (1.6)
+;; 2012-11-27 (1.6)
 ;;    add ack mode shortcut
 ;; 2012-10-18 (1.5)
 ;;    add open/close compil window with ecb when try to compile
@@ -102,8 +102,6 @@
   (global-set-key       (kbd "<C-f3>")          'ack)
   ;; run ack with thing at point but only with same file type
   (global-set-key       (kbd "<M-f3>")          'ack-same)
-  ;; alias to replace grep
-  (defalias             'grep                   'ack)
   )
 
 
