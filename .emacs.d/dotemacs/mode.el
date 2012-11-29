@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.7
+;; Version: 3.8
 ;; Created: October 2006
 ;; Last-Updated: November 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-11-29 (3.8)
+;;    add ace jump mode
 ;; 2012-11-26 (3.7)
 ;;    add ack mode, 3 modes exist and do not work immediately, need to patch
 ;;    ack-standalone (put in .emacs.d/plugins/) and try to patch/complete
@@ -770,6 +772,18 @@
     )
   (message "  2.50 ACK... Done"))
 
+;;
+;;; ACE JUMP
+;; REQUIREMENT: var     `section-mode-ace-jump'
+;; move quickly and easily with ace jump see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
+(when section-mode-ace-jump (message "  2.51 ACE Jump...")
+  (autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
+  ;; to enable jump back
+  (autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back:-)" t)
+  (eval-after-load "ace-jump-mode" '(ace-jump-mode-enable-mark-sync))
+  ;; to enable only in the current window
+  (eval-after-load "ace-jump-mode" '(setq ace-jump-mode-scope 'window))
+  (message "  2.51 ACE Jump... Done"))
 
 ;;
 ;;; DIMINISH

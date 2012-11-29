@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.8
+;; Version: 2.9
 ;; Created: October 2006
-;; Last-Updated: October 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-11-29 (2.9)
+;;    wrong shortcut for copy rectangle in cua rectangle mode
 ;; 2012-10-31 (2.8)
 ;;    have logical shortcuts with backspace and delete
 ;; 2012-10-26 (2.7)
@@ -199,6 +201,9 @@
 (global-set-key         (kbd "<C-backspace>")   '(lambda ()
                                                    (interactive)
                                                    (kill-line -1)))
+
+;; cua rectangle
+(define-key cua--rectangle-keymap [remap kill-ring-save-x] 'cua-copy-rectangle)
 
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol

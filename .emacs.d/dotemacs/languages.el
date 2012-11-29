@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.8
+;; Version: 2.9
 ;; Created: October 2006
-;; Last-Updated: October 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-11-29 (2.9)
+;;    add flymake mode
 ;; 2012-10-26 (2.8)
 ;;    add outline minor mode for C
 ;; 2012-10-18 (2.7)
@@ -121,6 +123,14 @@
   ;; use with TAB or S-MiddleClick
   (add-hook 'c-mode-common-hook 'hs-minor-mode)
 
+  ;;; FLYMAKE
+  (when section-languages-c-flymake
+    ;; auto syntax check
+    (try-require 'flymake "    ")
+    (try-require 'flymake-clang-c "    ")
+    (add-hook 'c-mode-hook 'flymake-clang-c-load)
+    )
+
   (custom-set-variables
     ;; command to preprocess
     '(c-macro-preprocessor profile-c-macro-preprocessor)
@@ -196,6 +206,11 @@
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-large.h"))
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
     ) ; (when section-mode-cedet-semantic
+
+  ;; auto syntax check
+  (require 'flymake-clang-c++)
+  (add-hook 'c++-mode-hook 'flymake-clang-c++-load)
+
   (message "  3.6 Laguages C++ Qt...Done"))
 (provide 'languages)
 

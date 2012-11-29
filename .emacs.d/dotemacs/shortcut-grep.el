@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
 ;; Last-Updated: November 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-11-29 (1.7)
+;;    add ace jump shortcut
 ;; 2012-11-27 (1.6)
 ;;    add ack mode shortcut
 ;; 2012-10-18 (1.5)
@@ -104,6 +106,16 @@
   (global-set-key       (kbd "<M-f3>")          'ack-same)
   )
 
+;;
+;;; ACE JUMP
+(when section-mode-ace-jump
+  (global-set-key       (kbd "<f9>")            'ace-jump-mode)
+  ;; can also use <C-u f9>
+  (global-set-key       (kbd "<M-f9>")          'ace-jump-char-mode)
+  ;; can also use <C-u C-u f9>
+  (global-set-key       (kbd "<C-f9>")          'ace-jump-line-mode)
+  (global-set-key       (kbd "<S-f9>")          'ace-jump-mode-pop-mark)
+  )
 
 (provide 'shortcut-grep)
 

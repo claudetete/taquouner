@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.3
+;; Version: 8.4
 ;; Created: October 2006
 ;; Last-Updated: November 2012
 
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-11-29 (8.4)
+;;    add ace jump + flymake mode
 ;; 2012-11-26 (8.3)
 ;;    add ack mode
 ;; 2012-10-31 (8.2)
@@ -648,6 +650,11 @@ before message."
     (defvar section-mode-ack-emacs t)
     )
   ;;
+  ;; ACE JUMP                                                           2.51
+  ;; move quickly and easily with ace jump
+  ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
+  (defvar section-mode-ace-jump t)
+  ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
   (defvar section-mode-diminish nil)
@@ -669,10 +676,13 @@ before message."
     (defvar profile-c-macro-cppflags "")
     ;; INDENT PREPROCESSOR
     (defvar section-languages-c-indent-preprocessor nil)
+    ;; HIDE SHOW
     (defvar section-languages-c-hide-show t)
     (progn
       (defvar section-languages-c-hide-show-hide-all-at-start nil)
       ) ; (progn
+    ;; FLYMAKE
+    (defvar section-languages-c-flymake nil)
     ) ; (progn
   ;;
   ;; LISP                                                               3.2

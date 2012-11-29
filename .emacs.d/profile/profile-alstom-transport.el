@@ -311,6 +311,8 @@
   '(
      ;; SeanceManager
      "d:/Users/ctete/projects/SeanceManager/SeanceManager.ede.el"
+     ;; PUMA local
+     "d:/Users/ctete/PUMA/src/AC3_V1.4.2/PUMA_V1.4.2.ede.el"
      ;; PUMA
      "z:/a2kc/soft/ccn4/ccn4_puma/PUMA.ede.el"
      ;; PM4S
