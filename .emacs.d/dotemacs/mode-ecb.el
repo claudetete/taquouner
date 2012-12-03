@@ -22,7 +22,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.6
 ;; Created: August 2010
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -34,7 +34,7 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
-;; 2012-11-26 (2.6)
+;; 2012-12-03 (2.6)
 ;;    add ack buffer to the compile window
 ;; 2012-07-09 (2.5)
 ;;    robustness
@@ -199,7 +199,7 @@
                 ("*Macroexpansion*")
                 ("\\*Symref .*" . t)
                 ("*ECB Analyse*")
-                ("*ack*")
+                ("\\*[Aa]ck.*\\*" . t)
                 )))
 
     ;; auto expand tree

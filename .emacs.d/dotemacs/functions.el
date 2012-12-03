@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.1
+;; Version: 5.2
 ;; Created: October 2006
-;; Last-Updated: October 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-11-30 (5.2)
+;;    add switch to special buffer function
 ;; 2012-10-31 (5.1)
 ;;    try to use new navigate function (inconvenient)
 ;; 2012-10-26 (5.0)
@@ -189,7 +191,7 @@
 ;;
 ;;;
 ;;;; COPY/CUT
-;; Change cutting behavior (from http://emacswiki.org/emacs/WholeLineOrRegion):
+;;; Change cutting behavior (from http://emacswiki.org/emacs/WholeLineOrRegion):
 (put 'kill-ring-save 'interactive-form
   '(interactive
      (if (use-region-p)
@@ -209,7 +211,7 @@
     )
   )
 ;;; from http://www.emacswiki.org/emacs/UnifyKillringAndRegister
-;;;; [2006/02/10] kill-ring / register
+;; [2006/02/10] kill-ring / register
 (defun kill-ring-save-x (s e)
   (interactive "r")
   (if (eq last-command 'kill-ring-save-x)
@@ -246,7 +248,7 @@
     )
   )
 ;;
-;; occur when incremental search (by Fabrice Niessen)
+;;; occur when incremental search (by Fabrice Niessen)
 (defun isearch-occur ()
   "Invoke `occur' from within isearch."
   (interactive)
@@ -277,17 +279,17 @@
       )
     )
   )
-; ---------------- matching word pairs ------------------
-; The idea here is that while emacs has built-in support for matching
-; things like parentheses, I work with a variety of syntaxes that use
-; balanced keyword pairs, such as "begin" and "end", or "#if" and
-; "#endif".  So this mechanism searches for the balanced element
-; of such ad-hoc constructions. (by Scott McPeak)
-;
-; TODO: Currently, there is no support for skipping things that are
-; in string literals, comments, etc.  I think that would be possible
-; just by having appropriate regexs for them and skipping them when
-; they occur, but I haven't tried yet.
+;; ---------------- matching word pairs ------------------
+;; The idea here is that while emacs has built-in support for matching
+;; things like parentheses, I work with a variety of syntaxes that use
+;; balanced keyword pairs, such as "begin" and "end", or "#if" and
+;; "#endif".  So this mechanism searches for the balanced element
+;; of such ad-hoc constructions. (by Scott McPeak)
+;;
+;; TODO: Currently, there is no support for skipping things that are
+;; in string literals, comments, etc.  I think that would be possible
+;; just by having appropriate regexs for them and skipping them when
+;; they occur, but I haven't tried yet.
 (defun find-matching-element (search-func offset open-regex close-regex)
   "Search forwards or backwards (depending on `search-func') to find
    the matching pair identified by `open-regex' and `close-regex'."
@@ -313,8 +315,8 @@
         (error (format "Did not find match; nesting at file end is %d" nesting))
       )
     )))
-;; find the matching word/character /* it's a pain to point the word begining */
-;; This is what I bind to Alt-[ and Alt-]. (inspired by Scott McPeak)
+;;; find the matching word/character /* it's a pain to point the word begining */
+;; This is what I bind to C-left and C-right with some mode. (inspired by Scott McPeak)
 (defun find-matching-keyword ()
   "Find the matching keyword of a balanced pair."
   (interactive)
@@ -371,20 +373,20 @@
 ;;
 ;;;
 ;;;; MACRO
-;; toggle macro recording on/off (by Fabrice Niessen)
+;;; toggle macro recording on/off (by Fabrice Niessen)
 (defun toggle-kbd-macro-recording-on ()
   "Start recording a keyboard macro and toggle functionality of key binding."
   (interactive)
   (global-set-key (kbd "<S-f8>") 'toggle-kbd-macro-recording-off)
   (start-kbd-macro nil))
-;; toggle macro recording on/off (by Fabrice Niessen)
+;;; toggle macro recording on/off (by Fabrice Niessen)
 (defun toggle-kbd-macro-recording-off ()
   "Stop recording a keyboard macro and toggle functionality of key binding."
   (interactive)
   (global-set-key (kbd "<S-f8>") 'toggle-kbd-macro-recording-on)
   (end-kbd-macro))
-;; when region is selected call last macro on region else call last macro (by
-;; Claude TETE)
+;;; when region is selected call last macro on region else call last macro (by
+;;; Claude TETE)
 (defun call-last-kd-macro-region ()
   (interactive)
   (if (use-region-p)
@@ -590,7 +592,7 @@
 ;;
 ;;;
 ;;;; END OF LINE
-;;; convert MS-DOS format \r\n to Unix format \n (by Claude TETE)
+;;; convert MS-DOS format \r\n to Unix format \n (by ??)
 (defun dos2unix ()
   "Transform a DOS file to a Unix file."
   (interactive)
@@ -599,7 +601,7 @@
     (replace-match "")
   )
 )
-;;; convert Unix format \n to MS-DOS format \r\n (by Claude TETE)
+;;; convert Unix format \n to MS-DOS format \r\n (by ??)
 (defun unix2dos ()
   "Transform a Unix file to a DOS file."
   (interactive)
@@ -627,7 +629,7 @@
 ;;
 ;;;
 ;;;; SWAP/SPLIT WINDOWS
-;; swap 2 windows (by Fabrice Niessen)
+;;; swap 2 windows (by Fabrice Niessen)
 (defun my-swap-windows ()
   "If you have 2 windows, it swaps them."
   (interactive)
@@ -648,8 +650,8 @@
       )
     )
   )
-;; toggle between horizontal and vertical split for 2 windows (by Fabrice
-;; Niessen)
+;;; toggle between horizontal and vertical split for 2 windows (by Fabrice
+;;; Niessen)
 (defun my-toggle-window-split ()
   "Vertical split shows more of each line, horizontal split shows
 more lines. This code toggles between them. It only works for
@@ -684,8 +686,9 @@ frames with exactly two windows."
   )
 
 ;;
-;;; RESIZE WINDOW
-;; where is the window vertically by Sergey Ovechkin (pomeo)
+;;;
+;;;; RESIZE WINDOW
+;;; where is the window vertically by Sergey Ovechkin (pomeo)
 (defun win-resize-top-or-bot ()
   "Figure out if the current window is on top, bottom or in the
 middle"
@@ -697,7 +700,7 @@ middle"
       ((eq 0 this-window-y-min) "top")
       ((eq (- fr-height 1) this-window-y-max) "bot")
       (t "mid"))))
-;; where is the window horizontally by Sergey Ovechkin (pomeo)
+;;; where is the window horizontally by Sergey Ovechkin (pomeo)
 (defun win-resize-left-or-right ()
   "Figure out if the current window is to the left, right or in the
 middle"
@@ -709,7 +712,7 @@ middle"
       ((eq 0 this-window-x-min) "left")
       ((eq (+ fr-width 2) this-window-x-max) "right") ; why 4 ? 2 works for me
       (t "mid"))))
-;; what to do when I want to push split line to the top (by Claude TETE)
+;;; what to do when I want to push split line to the top (by Claude TETE)
 (defun win-resize-top ()
   (interactive)
   (let ((win-pos (win-resize-top-or-bot)))
@@ -720,7 +723,7 @@ middle"
       )
     )
   )
-;; what to do when I want to push split line to the bottom  (by Claude TETE)
+;;; what to do when I want to push split line to the bottom  (by Claude TETE)
 (defun win-resize-bottom ()
   (interactive)
   (let ((win-pos (win-resize-top-or-bot)))
@@ -731,7 +734,7 @@ middle"
       )
     )
   )
-;; what to do when I want to push split line to the left (by Claude TETE)
+;;; what to do when I want to push split line to the left (by Claude TETE)
 (defun win-resize-left ()
   (interactive)
   (let ((win-pos (win-resize-left-or-right)))
@@ -742,7 +745,7 @@ middle"
       )
     )
   )
-;; what to do when I want to push split line to the right (by Claude TETE)
+;;; what to do when I want to push split line to the right (by Claude TETE)
 (defun win-resize-right ()
   (interactive)
   (let ((win-pos (win-resize-left-or-right)))
@@ -812,16 +815,16 @@ line instead."
 ;;;
 ;;;; TIME/DATE
 ;;; insert current date/time (by Scott McPeak)
-; ----------------- insertion macros --------------------
-; insert current date/time
-;   %m   month in [01..12]
-;   %-m  month in [1..12]
-;   %d   day in [01..31]
-;   %y   year in [00..99]
-;   %Y   full year
-;   %H   hour in [00..23]
-;   %M   minute in [00..59]
-; see format-time-string for more info on formatting options
+;; ----------------- insertion macros --------------------
+;; insert current date/time
+;;   %m   month in [01..12]
+;;   %-m  month in [1..12]
+;;   %d   day in [01..31]
+;;   %y   year in [00..99]
+;;   %Y   full year
+;;   %H   hour in [00..23]
+;;   %M   minute in [00..59]
+;; see format-time-string for more info on formatting options
 (defun my-date-string ()
   (format-time-string "%Y-%m-%d"))
 (defun insert-date ()
@@ -925,7 +928,7 @@ line instead."
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
-        (concat "http://www.google.fr/search?hl=fr&client=opera&hs=0HH&q=" string
+        (concat "http://www.google.fr/search?hl=fr&hs=0HH&q=" string
           "&btnG=Rechercher&meta=&num=100&as_qdr=a&as_occt=any"))
       (message "No word at point or no mark set")
       )
@@ -938,7 +941,7 @@ line instead."
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
-        (concat "http://www.google.fr/search?hl=en&client=opera&hs=0HH&q=" string
+        (concat "http://www.google.fr/search?hl=en&hs=0HH&q=" string
           "&btnG=Rechercher&meta=&num=100&as_qdr=a&as_occt=any"))
       (message "No word at point or no mark set")
       )
@@ -946,8 +949,9 @@ line instead."
   )
 
 ;;
-;;; CASE
-;; uppercase the region or the following word
+;;;
+;;;; CASE
+;;; uppercase the region or the following word
 (defun case-up ()
   (interactive)
   (if (use-region-p)
@@ -955,7 +959,7 @@ line instead."
     (upcase-word 1)
     )
   )
-;; downcase the region or the following word
+;;; downcase the region or the following word
 (defun case-down ()
   (interactive)
   (if (use-region-p)
@@ -963,7 +967,7 @@ line instead."
     (downcase-word 1)
     )
   )
-;; uppercase the first character and down the rest of the region or the following word
+;;; uppercase the first character and down the rest of the region or the following word
 (defun case-capitalize ()
   (interactive)
   (if (use-region-p)
@@ -972,6 +976,65 @@ line instead."
     )
   )
 
+;;
+;;;
+;;;; SWITCH BUFFER
+(defun switch-to-special-buffer (buffer)
+  "Switch to BUFFER in a special window like ecb compile window."
+  (let ((buf (buffer-name)))
+    ;; when the buffer is the same as the current buffer
+    (if (string= buf buffer)
+      ;; when ecb is active toggle the compile window
+      (if section-mode-cedet-ecb
+        (ecb-toggle-compile)
+        ;; else go the previous buffer
+        (switch-to-prev-buffer))
+      (if (get-buffer buffer)
+        (progn
+          ;; when ecb is used display in compile window
+          (when section-mode-cedet-ecb
+            (ecb-goto-window-compilation))
+          (switch-to-buffer buffer))
+        (message (concat "Do not switch, " buffer " does not exist.")))
+      )
+    )
+  )
+;;; go to the grep or ack buffer in special window
+(defun switch-to-grep-ack-buffer ()
+  "Switch to the grep or ack buffer."
+  (interactive)
+  ;; when ack mode and buffer exist
+  (if (and section-mode-ack-emacs (get-buffer "*ack*"))
+    (switch-to-special-buffer "*ack*")
+    (switch-to-special-buffer "*grep*"))
+  )
+;;; go to the compilation buffer in special window
+(defun switch-to-compilation-buffer ()
+  "Switch to the compilation buffer."
+  (interactive)
+  (switch-to-special-buffer "*compilation*")
+  )
+;;; go to the vc or vc diff buffer in special window
+(defun switch-to-vc-buffer ()
+  "Switch to the vc or vc diff buffer."
+  (interactive)
+  ;; when vc diff buffer already exist
+  (if (get-buffer "*vc-diff*")
+    (switch-to-special-buffer "*vc-diff*")
+    (switch-to-special-buffer "*vc*"))
+  )
+;;; go to the occur buffer in special window
+(defun switch-to-occur-buffer ()
+  "Switch to the occur buffer."
+  (interactive)
+  (switch-to-special-buffer "*Occur*")
+  )
+;;; go to the help buffer in special window
+(defun switch-to-help-buffer ()
+  "Switch to the help buffer."
+  (interactive)
+  (switch-to-special-buffer "*Help*")
+  )
 
 ;;
 ;;;

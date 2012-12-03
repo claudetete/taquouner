@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: November 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-11-30 (1.7)
+;;    add shortcut for special buffer like grep or vc-diff
 ;; 2012-08-01 (1.6)
 ;;    add hide ecb compile window with quiting diff and log
 ;; 2012-07-09 (1.5)
@@ -64,6 +66,31 @@
 ;;;;
 ;;;; go to the previous buffer (like new editor which I never like it)
 ;;(global-set-key         [(control backtab)]     'next-user-buffer)
+
+;; switch to grep or ack buffer
+(global-set-key         (kbd "M-2")             'switch-to-grep-ack-buffer)
+;; switch to compile buffer
+(global-set-key         (kbd "M-3")             'switch-to-compilation-buffer)
+;; switch to vc buffer
+(global-set-key         (kbd "M-4")             'switch-to-vc-buffer)
+;; switch to occur buffer
+(global-set-key         (kbd "M-5")             'switch-to-occur-buffer)
+;; switch to help buffer
+(global-set-key         (kbd "M-6")             'switch-to-help-buffer)
+;; the previous global-set-key are unset in diff mode ???
+(add-hook 'diff-mode-hook
+  (lambda ()
+    ;; switch to grep or ack buffer
+    (local-set-key      (kbd "M-2")             'switch-to-grep-ack-buffer)
+    ;; switch to compile buffer
+    (local-set-key      (kbd "M-3")             'switch-to-compilation-buffer)
+    ;; switch to vc buffer
+    (local-set-key      (kbd "M-4")             'switch-to-vc-buffer)
+    ;; switch to occur buffer
+    (local-set-key      (kbd "M-5")             'switch-to-occur-buffer)
+    ;; switch to help buffer
+    (local-set-key      (kbd "M-6")             'switch-to-help-buffer)
+    ))
 
 ;; only for clearcase mode
 (when section-mode-clearcase
