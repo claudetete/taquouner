@@ -177,33 +177,33 @@
       ;; need to remove `your-emacs-path/lisp/cedet'
       ;;                `your-emacs-path/lisp/speedbar.*'
       ;;                `your-emacs-path/lisp/emacs-lisp/eieio*'
-      (defvar clt-cedet-bzr t)
+      (defvar section-mode-cedet-bzr t)
       )
     (progn
       (message "  2.7 emacs included CEDET...")
-      (defvar clt-cedet-bzr nil)
+      (defvar section-mode-cedet-bzr nil)
       )
     )
   ;; init the state of the loading of cedet
-  (defvar clt-cedet-loaded nil)
-  (if clt-cedet-bzr
+  (defvar section-mode-cedet-loaded nil)
+  (if section-mode-cedet-bzr
     ;; load from the path clt-cedet-path
     (progn
       (if (load-file profile-cedet-path)
-        (setq clt-cedet-loaded t)
+        (setq section-mode-cedet-loaded t)
         (message "    cedet was not loaded. Have you removed your-emacs-path/lisp/cedet/ your-emacs-path/lisp/speedbar.* and your-emacs-path/lisp/emacs-lisp/eieio* ?")
         )
       )
     ;; load from Emacs built-in cedet
     (progn
       (if (try-require 'cedet "    ")
-        (setq clt-cedet-loaded t)
+        (setq section-mode-cedet-loaded t)
         (message "    cedet was not loaded. Have you GNU/Emacs 23.4 or 24.1 ?")
         )
       )
     )
   ;; only if cedet can be loaded
-  (when clt-cedet-loaded
+  (when section-mode-cedet-loaded
     ;; bin path of gnu global for cedet
     (setq cedet-global-command profile-gnu-global)
     (setq cedet-global-gtags-command profile-gnu-global-gtags)

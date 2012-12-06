@@ -196,7 +196,7 @@
 ;;
 ;;; C++ QT
 (when section-languages-c++-qt (message "  3.6 Languages C++ Qt...")
-  (when section-mode-cedet-semantic
+  (when (and section-mode-cedet-bzr section-mode-cedet-loaded)
     (setq qt4-base-dir "C:/QtSDK/Desktop/Qt/4.8.1/mingw/include")
     (setq qt4-gui-dir (concat qt4-base-dir "/QtGui"))
     (setq qt4-core-dir (concat qt4-base-dir "/QtCore"))
@@ -209,7 +209,7 @@
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-large.h"))
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
-    ) ; (when section-mode-cedet-semantic
+    ) ; (when (and section-mode-cedet-bzr section-mode-cedet-loaded)
 
   ;; auto syntax check
   (require 'flymake-clang-c++)

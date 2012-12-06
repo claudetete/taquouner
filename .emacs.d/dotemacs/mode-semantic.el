@@ -75,7 +75,7 @@
 ;;; Code:
 ;;
 ;;; CEDET bzr (snapshot)
-(if clt-cedet-bzr
+(if section-mode-cedet-bzr
   (progn
     ;; additional features for names completion, and displaying of information
     ;; for tags & classes
@@ -116,7 +116,7 @@
 
 ;;
 ;;; CEDET included in emacs (built-in CEDET)
-;; only tested with Emacs 23.4
+;; works under Emacs 24.2 (start without error/warning with ecb)
   (progn
     ;; launch semantic mode
     (semantic-mode t)
@@ -174,7 +174,7 @@
     ;; Minor mode for displaying parser cache state in the modeline.
     (setq semantic-show-parser-state-mode t)
     ) ; (progn
-  ) ; (if clt-cedet-bzr
+  ) ; (if section-mode-cedet-bzr
 
 
 (provide 'mode-semantic)
