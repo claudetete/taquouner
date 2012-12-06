@@ -53,9 +53,7 @@
 (when section-external-directory (message "  1.1 Directory .emacs.d...")
   ;; path to load mode
   (add-to-list 'load-path dotemacs-path)
-  (setq load-path (cons (expand-file-name dotemacs-path) load-path))
   (add-to-list 'load-path  (concat dotemacs-path "/plugins"))
-  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins")) load-path))
   (message "  1.1 Directory .emacs.d ... Done"))
 
 ;;

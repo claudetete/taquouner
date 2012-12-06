@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-12-04 (1.8)
+;;    remove compile shortcut
 ;; 2012-11-29 (1.7)
 ;;    add ace jump shortcut
 ;; 2012-11-27 (1.6)
@@ -68,17 +70,6 @@
 ;;
 ;; previous occurrence of grep
 (global-set-key         (kbd "<S-f3>")          'previous-error)
-;;
-;; to compile
-(if section-mode-cedet-ecb
-  (global-set-key       (kbd "<f10>")           '(lambda ()
-                                                   (interactive)
-                                                   (compile compile-command)
-                                                   (ecb-goto-window-compilation)
-                                                   (end-of-buffer)
-                                                   ))
-  (global-set-key       (kbd "<f10>")           'compile)
-  ) ; (if section-mode-cedet-ecb
 
 ;; search all occurrences in the current buffer
 ;; (more like modern graphical editor)

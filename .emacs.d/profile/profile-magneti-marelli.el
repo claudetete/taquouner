@@ -28,127 +28,46 @@
 ;; load private variable
 (try-require 'profile-magneti-marelli-private "    ")
 
+;; Enable/disable section:
+;; (setq section-xxx X) where 'xxx' means a section of .emacs and 'X' take
+;; 'nil' (disable) or 't' (enable) value
+;;
+;; Settings:
+;; (setq profile-xxx X)
 
-(setq profile "Magneti Marelli")
-
-(setq profile-path
-  (concat
-    "d:/cygwin/bin" ";"
-    "d:/cygwin/usr/bin/gnuwin32/bin" ";"
-    )
-  )
-
-(setq profile-exec-path
-  '(
-     "d:/cygwin/bin"
-     "d:/cygwin/usr/bin/gnuwin32/bin"
-     )
-  )
-
-(setq profile-lang "en_US") ; for subversion and Dired
-
-(setq profile-shell-file-name "D:/cygwin/bin/bash.exe")
-(setq profile-shell-cygwin "d:/cygwin/bin/zsh.exe")
-(setq profile-ediff-diff-program "d:/cygwin/usr/bin/GnuWin32/bin/diff.exe")
-(setq profile-ediff-diff3-program "d:/cygwin/usr/bin/GnuWin32/bin/diff3.exe")
-(setq profile-ediff-cmp-program "d:/cygwin/usr/bin/GnuWin32/bin/cmp.exe")
-
-(setq profile-backup-directory (concat dotemacs-path "/backup"))
-(setq profile-backup-directory (concat dotemacs-path "/cache"))
-
-(when section-display-color-theme
-  (setq profile-color-theme "clt"))
-
-(setq profile-font "Terminal-6")
-
-(setq profile-c-indent-offset 2)
-(setq profile-c-extra-types
-  '(
-     "ubyte"
-     "ushort"
-     "ulong"
-     "ulonglong"
-     "sbyte"
-     "sshort"
-     "slong"
-     "slonglong"
-     )
-  )
-
-(setq profile-c-macro-preprocessor "cpp -C")
-(setq profile-c-macro-cppflags "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__")
-
-(setq profile-lisp-indent-offset 2)
-
-(setq profile-perl-indent-offset 2)
-
-(setq profile-fill-column 78)
-
-(setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
-(setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe"))
-(setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
-
-(setq profile-ecb-source-path
-  '(
-     ("c:/Documents and Settings/tete"                     "/tete")
-     ("h:/"                                                "/home")
-     ("d:/cygwin/usr/bin"                                  "/bin")
-     ("d:/cygwin/usr/bin/.emacs.d"                         "/emacs.d")
-     ("c:/Documents and Settings/tete/Local Settings/Temp" "/temp")
-     )
-  )
-(setq profile-ecb-excluded-directories-regexps
-  '(
-     "^\\(CVS\\|\\.[^xX]*\\)$"
-     "^\\(Doc\\|Dev\\|.*_root\\|Application\\|Base\\|Control\\|System\\|Presentation\\|TechnicalNote\\|HTML\\)$"
-     "\\(01_ProjectPlan\\|02_ProjectMonitoringAndControl\\|03_RequirementManagement\\|04_SupplierAgreementManagement\\|05_ProcessAndProductQualityAssurance\\|06_ConfigurationManagement\\|07_RequirementDevelopment\\|08_TechnicalSolution\\|10_Verification\\|11_Validation\\)$"
-     "\\(01_SystemIntegrationAndValidationPlan\\|02_SystemIntegrationTestCases\\|03_SystemIntegrationTestReport\\|05_DeliveryToCustomer\\|06_DeliveryToInternal\\|88_VerificationReportsAndChecklists\\|99_OtherPI\\)$"
-     )
-  )
-(setq profile-ecb-source-file-regexps
-     '((".*"
-         ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\)$\\)\\)")
-         ("^\\.\\(emacs\\|gnus\\)$"))))
-(setq profile-ecb-sources-exclude-cvsignore
-  '(
-     "_ccmwaid.inf"
-     )
-  )
-(setq profile-ecb-history-make-buckets
-  '(
-     "|ECAR"
-     "|NBNF_LL"
-     "|NBNF_HL"
-     "|NSF"
-     "|XL1"
-     "|PQ35GPHL"
-     "\\.el$"
-     )
-  )
-
-(setq profile-transparency 90)
-
-(setq profile-ede-project
-  '(
-     "d:/ccm_wa/XL1/XL1.ede.el"
-     "d:/ccm_wa/NSF/NSF/NSF_CLIENT.ede.el"
-     "d:/ccm_wa/NBNF/NBNF_LL/NBNFLL.ede.el"
-     "d:/ccm_wa/NBNF/NBNF_HL/NBNF_HL.ede.el"
-     "d:/ccm_wa/ECAR/ENSF.ede.el"
-     "d:/ccm_wa/PQ36/PQ36_HL/PQ35GPHL.ede.el"
-     )
-  )
-
-
 (setq section-environment t)
 (progn
   (setq section-environment-profile nil)
+  (progn
+    (setq profile "Magneti Marelli")
+    )
   (setq section-environment-version-recognition t)
   (setq section-environment-os-recognition t)
   (setq section-environment-terminal-vs-graphics t)
   (setq section-environment-set-path t)
+  (progn
+    (setq profile-path
+      (concat
+        "d:/cygwin/bin" ";"
+        "d:/cygwin/usr/bin/gnuwin32/bin" ";"
+        )
+      )
+    (setq profile-exec-path
+      '(
+         "d:/cygwin/bin"
+         "d:/cygwin/usr/bin/gnuwin32/bin"
+         )
+      )
+    (setq profile-lang "en_US")
+    )
   (setq section-environment-ms-windows-performance t)
   (setq section-environment-executable t)
+  (progn
+    (setq profile-shell-file-name "D:/cygwin/bin/bash.exe")
+    (setq profile-ediff-diff-program "d:/cygwin/usr/bin/GnuWin32/bin/diff.exe")
+    (setq profile-ediff-diff3-program "d:/cygwin/usr/bin/GnuWin32/bin/diff3.exe")
+    (setq profile-ediff-cmp-program "d:/cygwin/usr/bin/GnuWin32/bin/cmp.exe")
+    )
   (setq section-environment-elpa nil)
   (setq section-environment-hyper t)
   (setq section-environment-super nil)
@@ -169,8 +88,64 @@
   (setq section-mode-uniquify t)
   (setq section-mode-cedet t)
   (progn
+    (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
+    (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
+    (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe"))
     (setq section-mode-cedet-semantic t)
+    (progn
+      (setq profile-ede-project
+        '(
+           "d:/ccm_wa/XL1/XL1.ede.el"
+           "d:/ccm_wa/NSF/NSF/NSF_CLIENT.ede.el"
+           "d:/ccm_wa/NBNF/NBNF_LL/NBNFLL.ede.el"
+           "d:/ccm_wa/NBNF/NBNF_HL/NBNF_HL.ede.el"
+           "d:/ccm_wa/ECAR/ENSF.ede.el"
+           "d:/ccm_wa/PQ36/PQ36_HL/PQ35GPHL.ede.el"
+           )
+        )
+      )
     (setq section-mode-cedet-ecb t)
+    (progn
+      (setq profile-ecb-source-path
+        '(
+           ("c:/Documents and Settings/tete"                     "/tete")
+           ("h:/"                                                "/home")
+           ("d:/cygwin/usr/bin"                                  "/bin")
+           ("d:/cygwin/usr/bin/.emacs.d"                         "/emacs.d")
+           ("c:/Documents and Settings/tete/Local Settings/Temp" "/temp")
+           )
+        )
+      (setq profile-ecb-excluded-directories-regexps
+        '(
+           "^\\(CVS\\|\\.[^xX]*\\)$"
+           "^\\(Doc\\|Dev\\|.*_root\\|Application\\|Base\\|Control\\|System\\|Presentation\\|TechnicalNote\\|HTML\\)$"
+           "\\(01_ProjectPlan\\|02_ProjectMonitoringAndControl\\|03_RequirementManagement\\|04_SupplierAgreementManagement\\|05_ProcessAndProductQualityAssurance\\|06_ConfigurationManagement\\|07_RequirementDevelopment\\|08_TechnicalSolution\\|10_Verification\\|11_Validation\\)$"
+           "\\(01_SystemIntegrationAndValidationPlan\\|02_SystemIntegrationTestCases\\|03_SystemIntegrationTestReport\\|05_DeliveryToCustomer\\|06_DeliveryToInternal\\|88_VerificationReportsAndChecklists\\|99_OtherPI\\)$"
+           )
+        )
+      (setq profile-ecb-source-file-regexps
+        '((".*"
+            ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\)$\\)\\)")
+            ("^\\.\\(emacs\\|gnus\\)$"))
+          )
+        )
+      (setq profile-ecb-sources-exclude-cvsignore
+        '(
+           "_ccmwaid.inf"
+           )
+        )
+      (setq profile-ecb-history-make-buckets
+        '(
+           "|ECAR"
+           "|NBNF_LL"
+           "|NBNF_HL"
+           "|NSF"
+           "|XL1"
+           "|PQ35GPHL"
+           "\\.el$"
+           )
+        )
+      )
     )
   (setq section-mode-batch t)
   (setq section-mode-vb t)
@@ -194,6 +169,10 @@
   (setq section-mode-eproject nil)
   (setq section-mode-rtrt-script nil)
   (setq section-mode-vc-clearcase nil)
+  (progn
+    (setq profile-clearcase-vtree "c:/path/to/ClearCase/bin/clearvtree.exe")
+    (setq profile-cleartool "c:/path/to/ClearCase/bin/cleartool.exe")
+    )
   (setq section-mode-clearcase nil)
   (setq section-mode-autohotkey nil)
   (setq section-mode-outline t)
@@ -210,12 +189,28 @@
   (setq section-mode-isearch+ nil)
   (setq section-mode-psvn nil)
   (setq section-mode-powerline nil)
+  (progn
+    (setq profile-powerline-size "big")
+    )
   (setq section-mode-nyan nil)
   (setq section-mode-sml nil)
   (setq section-mode-dired t)
   (setq section-mode-isearch t)
+  (setq section-mode-rainbow-delimiters nil)
+  (setq section-mode-calfw nil)
+  (setq section-mode-dired-details nil)
   (setq section-mode-smart-tab nil)
+  (setq section-mode-fold-dwim t)
   (setq section-mode-dired-lis nil)
+  (setq section-mode-nxhtml nil)
+  (setq section-mode-fastnav nil)
+  (setq section-mode-mru-yank t)
+  (setq section-mode-ack t)
+  (progn
+    (setq section-mode-ack-full nil)
+    (setq section-mode-ack-and-half nil)
+    (setq section-mode-ack-emacs t)
+    )
   (setq section-mode-diminish nil)
   )
 
@@ -223,12 +218,38 @@
 (progn
   (setq section-languages-c t)
   (progn
+    (setq profile-c-indent-offset 2)
+    (setq profile-c-extra-types
+      '(
+         "ubyte"
+         "ushort"
+         "ulong"
+         "ulonglong"
+         "sbyte"
+         "sshort"
+         "slong"
+         "slonglong"
+         )
+      )
+    (setq profile-c-macro-preprocessor "cpp -C")
+    (setq profile-c-macro-cppflags "-D__ALONE_MICRO__ -D__CLIENT_EOL_LINK__ -D__EOL_ENABLE__ -D__RTOS__")
+    (setq profile-c-ask-before-compile t)
     (setq section-languages-c-indent-preprocessor t)
+    (setq section-languages-c-hide-show t)
+    (progn
+      (setq section-languages-c-hide-show-hide-all-at-start nil)
+      )
     )
   (setq section-languages-lisp t)
+  (progn
+    (setq profile-lisp-indent-offset 2)
+    )
   (setq section-languages-tabulation t)
   (setq section-languages-rtrt-script nil)
   (setq section-languages-perl t)
+  (progn
+    (setq profile-perl-indent-offset 2)
+    )
   )
 
 (setq section-selection t)
@@ -245,6 +266,7 @@
   (setq section-display-speedbar nil)
   (setq section-display-font t)
   (progn
+    (setq profile-font "Terminal-6")
     (setq section-display-font-international t)
     )
   (setq section-display-color t)
@@ -254,10 +276,11 @@
     (setq section-display-color-parentheses-highlight nil)
     (setq section-display-color-theme t)
     (progn
-      (setq section-display-color-misc t)
-      (setq section-display-color-mode t)
-      (setq section-display-color-grep t)
-      (setq section-display-color-ecb t)
+      (setq profile-color-theme "sweet")
+      (setq section-display-color-misc nil)
+      (setq section-display-color-mode nil)
+      (setq section-display-color-grep nil)
+      (setq section-display-color-ecb nil)
       )
     )
   )
@@ -267,6 +290,9 @@
   (setq section-interface-decoration t)
   (setq section-interface-modeline t)
   (setq section-interface-transparency t)
+  (progn
+    (setq profile-transparency 90)
+    )
   (setq section-interface-fullscreen t)
   (setq section-interface-ecb t)
   (progn
@@ -312,11 +338,19 @@
 
 (setq section-misc t)
 (progn
+  (setq profile-backup-directory (concat dotemacs-path "/backup"))
+  (setq profile-backup-directory (concat dotemacs-path "/cache"))
+  (setq profile-fill-column 78)
+  (setq profile-browser "d:/cygwin/usr/bin/OperaPortable/Opera.exe")
   (setq section-misc-calendar nil)
   (progn
     (setq section-misc-calendar-french nil)
     )
   (setq section-misc-dictionary nil)
+  (progn
+    (setq profile-ispell-program "aspell")
+    (setq profile-ispell-dictionary "english")
+    )
   (setq section-misc-bookmark t)
   (setq section-misc-screensaver nil)
   )

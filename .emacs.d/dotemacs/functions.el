@@ -187,6 +187,15 @@
       )
     )
   )
+;;; get the string from line at point or region
+(defun clt-get-line-position ()
+  (let ()
+    (if (use-region-p)
+      (list (region-beginning) (region-end))
+      (list (line-beginning-position) (line-beginning-position 2))
+      )
+    )
+  )
 
 ;;
 ;;;
@@ -228,6 +237,16 @@
 ;;  (interactive "cCopy to register: ")
 ;;  (set-register register (car kill-ring)))
 ;;(define-key global-map "\C-w" 'kill-region-x)
+
+;;
+;;;
+;;;; FILL
+;; Change filling behavior
+(put 'fill-region 'interactive-form
+  '(interactive
+     (if (use-region-p)
+       (list (region-beginning) (region-end))
+       (list (line-beginning-position) (line-beginning-position 2)))))
 
 ;;
 ;;;
@@ -478,7 +497,6 @@
   "Start muse mode."
   (interactive)
   (add-to-list 'load-path  (concat dotemacs-path "/plugins/muse-3.20/bin"))
-  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/muse-3.20/bin")) load-path))
   (try-require 'muse-mode "    ")     ; load authoring mode
   (try-require 'muse-html "    ")     ; load publishing styles I use
   (try-require 'muse-latex "    ")
@@ -527,67 +545,6 @@
     (occur ".\\{81,\\}")
     )
   ) ; (when (string= profile "Alstom Transport")
-
-;;
-;;;
-;;;; ALIGN RTRT MODE
-(when section-mode-rtrt-script
-  ;;; align "init" in ptu script for RTRT (by Claude TETE)
-  (defun rtrt-align-init (start end)
-    "Align init variable test case (between START and END)."
-    (interactive "r")
-    (unless (and start end)
-      (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "\\binit ") 1 1)
-    )
-  ;;; align "expected value" in ptu script for RTRT (by Claude TETE)
-  (defun rtrt-align-ev (start end)
-    "Align expected value variable (between START and END)."
-    (interactive "r")
-    (unless (and start end)
-      (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "\\bev ") 1 1)
-    )
-  ;;; align "expected value" and "init" in ptu script for rtrt (by Claude TETE)
-  (defun rtrt-align-declaration (start end)
-    "Align variable (between START and END)."
-    (interactive "r")
-    (unless (and start end)
-      (error "The mark is not set now, so there is no region"))
-    (rtrt-align-init start end)
-    (rtrt-align-ev start end) ; sometimes it bugs the last ev is not align or two line after region is align
-    )
-  ;;; align "=" in ptu script for RTRT (by Claude TETE)
-  (defun rtrt-align-set (start end)
-    "Align = (between START and END)."
-    (interactive "r")
-    (unless (and start end)
-      (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "[-+=]\\{0,1\\}=") 1 1)
-    )
-  ) ; (when section-mode-rtrt-script
-
-;;
-;;;
-;;;; FORMAT RTRT MODE
-(when section-mode-rtrt-script
-  ;;; remove whitespace before a colon in ptu script for RTRT (by Claude TETE)
-  (defun rtrt-remove-whitespace-before-colon (start end)
-    "Remove all space before a colon (between START and END)."
-    (interactive "r")
-    (unless (and start end)
-      (error "The mark is not set now, so there is no region"))
-    (replace-regexp "\\s-+," "," nil start end)
-    )
-  ;;; upcase "var" in ptu script for RTRT (by Claude TETE)
-  (defun rtrt-upcase-var-string (start end)
-    "Upcase the var string (between START and END)."
-    (interactive "r")
-    (unless (and start end)
-      (error "The mark is not set now, so there is no region"))
-    (replace-regexp " [vV]ar " " VAR " nil start end)
-    )
-  ) ; (when section-mode-rtrt-script
 
 ;;
 ;;;
@@ -1059,6 +1016,13 @@ line instead."
 
 ;;
 ;;;
+;;;; RTRT SCRIPT
+(when section-mode-rtrt-script
+  (try-require 'function-rtrt "    ")
+  ) ; (when (section-mode-rtrt-script)
+
+;;
+;;;
 ;;;; TEST (all after is for testing
 (defun clt-test ()
   "Plein de test."
@@ -1148,6 +1112,9 @@ When there is a text selection, act on the region."
 
 
 ;;list-colors-display to display all color
+
+;; in elisp call function like interactive with this:
+;; (call-interactively 'function)
 
 
 (provide 'functions)

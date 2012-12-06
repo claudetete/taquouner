@@ -20,9 +20,9 @@
 
 ;; Keywords: config, completion
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: July 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-completion'
 
 ;;; Change Log:
+;; 2012-07-11 (1.5)
+;;    setting of hippie expand by reading the manual...
 ;; 2012-06-26 (1.4)
 ;;    try again hippie
 ;; 2012-05-10 (1.3)
@@ -56,23 +58,22 @@
 ;;(dynamic-completion-mode)
 
 ;; try
+;; coupled with modified smart-tab mode to have:
+;; Tab key once will indent like always
+;; Tab key twice will try to expand the current 'expression'
 (setq hippie-expand-try-functions-list
-  '(yas/hippie-try-expand
+  '(
+     try-complete-file-name-partially
+     try-complete-file-name
+     try-expand-all-abbrevs
+     try-expand-list
+;;     try-expand-line
      try-expand-dabbrev
-     try-expand-dabbrev-visible
      try-expand-dabbrev-all-buffers
-     ;; try-expand-dabbrev-from-kill
-     ;; try-complete-file-name
-     ;; try-complete-file-name-partially
-     ;; try-complete-lisp-symbol
-     ;; try-complete-lisp-symbol-partially
-     ;; try-expand-line
-     ;; try-expand-line-all-buffers
-     ;; try-expand-list
-     ;; try-expand-list-all-buffers
-     ;; try-expand-whole-kill
+     try-expand-dabbrev-from-kill
+     try-complete-lisp-symbol-partially
+     try-complete-lisp-symbol
      ))
-
 
 (provide 'completion)
 

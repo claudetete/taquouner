@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-12-06 (2.3)
+;;    remove cygwin shell variable (only EmacsW32)
 ;; 2012-07-09 (2.2)
 ;;    clean up + tabs stop = width of tab + do not kill scratch buffer + more
 ;;    setting for ispell
@@ -248,12 +250,6 @@
 ;  (diary)
 
   (message "  11.1 Calendar... Done"))
-
-;;
-;; set Cygwin shell
-;; on MS Windows it works bad
-(when running-on-ms-windows
-  (setq w32shell-cygwin-bin profile-shell-cygwin))
 
 ;;
 ;;;; DICTIONARY language

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ede, cedet, project, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: July 2011
-;; Last-Updated: July 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -36,6 +36,8 @@
 ;; (see `.emacs.d/profile/profile-default.el' as example)
 
 ;;; Change Log:
+;; 2012-12-06 (1.6)
+;;    error not in message but in warning buffer
 ;; 2012-07-09 (1.5)
 ;     add new comments
 ;; 2012-06-05 (1.4)
@@ -58,7 +60,7 @@
     (setq file (pop profile-ede-project))
     (if (file-exists-p file)
       (load-file file)
-      (message "** file not found: %s" file)
+      (display-warning 'profile-ede-project (format "file not found: %s" file) :warning)
       )
     )
   )

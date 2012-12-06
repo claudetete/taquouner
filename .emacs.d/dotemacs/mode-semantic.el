@@ -116,6 +116,7 @@
 
 ;;
 ;;; CEDET included in emacs (built-in CEDET)
+;; only tested with Emacs 23.4
   (progn
     ;; launch semantic mode
     (semantic-mode t)

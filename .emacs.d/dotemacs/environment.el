@@ -187,7 +187,6 @@
   (when (and section-environment-version-recognition running-on-emacs-23)
     ;; add to load path the profile directory
     (add-to-list 'load-path (concat dotemacs-path "/plugins/elpa"))
-    (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/elpa")) load-path))
 
     ;; This was installed by package-install.el.  This provides support for the
     ;; package system and interfacing with ELPA, the package archive.  Move this

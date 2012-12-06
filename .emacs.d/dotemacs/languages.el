@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.9
+;; Version: 3.0
 ;; Created: October 2006
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-12-04 (3.0)
+;;    compile command confirmation defined by profile
 ;; 2012-11-29 (2.9)
 ;;    add flymake mode
 ;; 2012-10-26 (2.8)
@@ -94,9 +96,11 @@
     ;; new types
     (setq c-font-lock-extra-types (append profile-c-extra-types c-font-lock-extra-types))
     ;; Compile mode without ask
-    (setq compilation-read-command nil)
-    ;; pair of parenthesis, bracket, etc
-    (electric-pair-mode t)
+    (setq compilation-read-command profile-c-ask-before-compile)
+
+    (when (and section-environment-version-recognition running-on-emacs-24)
+      ;; pair of parenthesis, bracket, etc
+      (electric-pair-mode t))
 
     ;; hide show minor mode
     (hs-minor-mode)

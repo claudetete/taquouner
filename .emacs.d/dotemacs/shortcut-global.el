@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.9
+;; Version: 3.0
 ;; Created: October 2006
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-12-04 (3.0)
+;;    add compile shortcut (from shortcut-grep.el)
 ;; 2012-11-29 (2.9)
 ;;    wrong shortcut for copy rectangle in cua rectangle mode
 ;; 2012-10-31 (2.8)
@@ -163,9 +165,6 @@
 ;; switch between others header/source files
 (global-set-key         [\C-f4]                 'ff-find-other-file)
 
-;; incremental search at point
-(global-set-key         (kbd "C-M-x")           'isearch-forward-at-point)
-
 ;; fill paragraph at point
 (global-set-key         (kbd "C-c ]")           'fill-paragraph)
 ;; fill region
@@ -204,6 +203,15 @@
 
 ;; cua rectangle
 (define-key cua--rectangle-keymap [remap kill-ring-save-x] 'cua-copy-rectangle)
+
+;;
+;; to compile
+(when section-mode-cedet-ecb
+  (add-hook 'compilation-filter-hook '(lambda ()
+                                      (ecb-goto-window-compilation)
+                                      (end-of-buffer)))
+  ) ; (when section-mode-cedet-ecb
+(global-set-key       (kbd "<f10>")           'compile)
 
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol

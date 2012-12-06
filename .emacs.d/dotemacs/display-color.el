@@ -167,7 +167,6 @@
 
         ;; add to load path the profile directory
         (add-to-list 'load-path (concat dotemacs-path "/plugins/themes"))
-        (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/themes")) load-path))
 
         ;; choose theme
         (cond

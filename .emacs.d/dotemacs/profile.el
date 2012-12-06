@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.4
+;; Version: 0.5
 ;; Created: June 2012
-;; Last-Updated: October 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-12-05 (0.5)
+;;    change for the simplest way to do
 ;; 2012-10-24 (0.4)
 ;;    add portable profile
 ;; 2012-07-09 (0.3)
@@ -43,45 +45,22 @@
 ;;; Code:
 ;; add to load path the profile directory
 (add-to-list 'load-path (concat dotemacs-path "/profile"))
-(setq load-path (cons (expand-file-name (concat dotemacs-path "/profile")) load-path))
 
 ;;
 ;;; LOAD
-;; the right profile can be determined by name and system
-;; you can see the value of system-name or system-configuration with M-:
-
-;; EMACS_PORTABLE
-(if (string= (getenv "PORTABLE_VERSION") "TRUE")
-  (try-require 'profile-emacs-portable "    ")
-  (progn
-    ;; ALSTOM TRANSPORT
-    (if (and
-          (string= system-name "CWVBN16EWJ")
-          (string= system-configuration "i386-mingw-nt5.1.2600")
-          (string= user-login-name "e_ctete"))
-      (progn
-        (try-require 'profile-alstom-transport "    ")
-        ))
-    )
-
-  ;;
-  ;;; PERSONAL
-  ;; see .emacs.d/profile/profile-default.el like an example to create one
-  ;; add your profile "profile-my-profile.el" in the ".emacs.d/profile" folder and
-  ;; load like this (put it just under this comment):
-  ;; (try-require 'profile-my-profile "    ")
-  ;;;;;;;;;;;;;;;;;;;
-  ;; Between here ...
-
-  ;;(try-require 'profile-default "    ")
-
-  ;; ... and here
-  ;;;;;;;;;;;;;;;;;;;
-
-  ) ; (if (string= (getenv "PORTABLE_VERSION") "TRUE")
+(let ((profile-file (concat dotemacs-path "/profile/profile-" profile-name ".el")))
+  ;; load only if the file exists
+  (if (file-exists-p profile-file)
+    (load profile-file)
+    (progn
+      (display-warning 'profile-name (concat profile-name " profile do not exist") :warning)
+      (display-warning 'profile-name (concat "file not found: " profile-file) :warning)
+      ) ; (progn
+    ) ; (if (file-exists-p profile-file)
+  )
 
 ;; show name of profile
-(message (concat "* Profile: " profile))
+(message (concat "* Profile: " profile-name))
 
 
 (provide 'profile)

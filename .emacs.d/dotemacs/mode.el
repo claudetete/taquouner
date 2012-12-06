@@ -106,9 +106,7 @@
 (when section-mode-directory (message "  2.1 Load Directory...")
   ;; path to load mode
   (add-to-list 'load-path dotemacs-path)
-  (setq load-path (cons (expand-file-name dotemacs-path) load-path))
   (add-to-list 'load-path  (concat dotemacs-path "/plugins"))
-  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins")) load-path))
   (message "  2.1 Load Directory... Done"))
 
 ;;
@@ -401,7 +399,6 @@
 ;; REQUIREMENT: var     `section-mode-vc-clearcase'
 (when section-mode-vc-clearcase (message "  2.20 VC ClearCase...")
   (add-to-list 'load-path  (concat dotemacs-path "/plugins/vc-clearcase-3.6"))
-  (setq load-path (append load-path '(concat dotemacs-path "/plugins/vc-clearcase-3.6")))
   (try-require 'vc-clearcase-auto "    ")
   (custom-set-variables
     '(clearcase-checkout-comment-type (quote normal))
@@ -490,7 +487,6 @@
 ;; REQUIREMENT: var     `section-mode-muse'
 (when section-mode-muse (message "  2.27 Muse...")
   (add-to-list 'load-path  (concat dotemacs-path "/plugins/muse-3.20/bin"))
-  (setq load-path (cons (expand-file-name (concat dotemacs-path "/plugins/muse-3.20/bin")) load-path))
 
   (try-require 'muse-mode "    ")     ; load authoring mode
 
@@ -682,6 +678,52 @@
     )
   (message "  2.41 Rainbow Delimiters... Done"))
 
+;;
+;;; CALFW
+;; REQUIREMENT: var     `section-mode-calfw'
+;; a more graphical calendar
+;;;; need to clarify openssl.exe with google.com
+(when section-mode-calfw (message "  2.42 Calfw...")
+  (when (try-require 'calfw-ical "    ")
+    ;; Month
+    (setq calendar-month-name-array
+      ["January" "February" "March"     "April"   "May"      "June"
+        "July"    "August"   "September" "October" "November" "December"])
+
+    ;; Week days
+    (setq calendar-day-name-array
+      ["Sunday" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday"])
+
+    ;; First day of the week
+    (setq calendar-week-start-day 0) ; 0:Sunday, 1:Monday
+
+    (cfw:open-ical-calendar profile-google-calendar-url)
+    ) ; (when (try-require 'calfw-ical "    ")
+  (message "  2.42 Calfw... Done"))
+
+;;
+;;; DIRED DETAILS
+;; REQUIREMENT: var     `section-mode-dired-details'
+;; show hide details in dired mode
+(when section-mode-calfw (message "  2.43 Dired Details...")
+  (try-require 'dired-details+ "    ")
+  (message "  2.43 Dired Details... Done"))
+
+;;
+;;; SMART TAB
+;; REQUIREMENT: var     `section-mode-smart-tab'
+;; expand or indent at the point with tab
+(when section-mode-smart-tab (message "  2.44 Smart Tab...")
+  ;; smart-tab mode has been patch to not change habits about tab key
+  ;; Tab key once will indent like always
+  ;; Tab key twice will try to expand the current 'expression'
+  (when (try-require 'smart-tab "    ")
+    ;; use hippie expand see `.emacs.d/dotemacs/completion.el'
+    (setq smart-tab-using-hippie-expand t)
+    ;; enable smart-tab mode everywhere
+    (global-smart-tab-mode 1)
+    )
+  (message "  2.44 Smart Tab... Done"))
 
 ;;
 ;;; FOLD DWIM

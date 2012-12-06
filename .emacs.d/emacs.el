@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.4
+;; Version: 8.5
 ;; Created: October 2006
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2012-12-05 (8.5)
+;;    add compile command confirmation + show warning + clean up
 ;; 2012-11-29 (8.4)
 ;;    add ace jump + flymake mode
 ;; 2012-11-26 (8.3)
@@ -304,7 +306,7 @@ before message."
   ;; PROFILE                                                            0.1
   (defvar section-environment-profile t)
   (progn
-    (defvar profile "noprofile")
+    (defvar profile-name "default")
     ) ; (progn
   ;;
   ;; VERSION RECOGNITION                                                0.2
@@ -621,6 +623,18 @@ before message."
   ;; scroll is possible when incremental search
   (defvar section-mode-rainbow-delimiters nil)
   ;;
+  ;; CALFW                                                              2.42
+  ;; a more graphical calendar (like google agenda)
+  (defvar section-mode-calfw nil)
+  ;;
+  ;; DIRED DETAILS                                                      2.43
+  ;; show hide details in dired mode
+  (defvar section-mode-dired-details t)
+  ;;
+  ;; SMART TAB                                                          2.44
+  ;; expand or indent at the point with tab
+  (defvar section-mode-smart-tab nil)
+  ;;
   ;; FOLD DWIM                                                          2.45
   ;; show hide code source block
   (defvar section-mode-fold-dwim nil)
@@ -674,6 +688,7 @@ before message."
     (defvar profile-c-extra-types nil)
     (defvar profile-c-macro-preprocessor "cpp -C")
     (defvar profile-c-macro-cppflags "")
+    (defvar profile-c-ask-before-compile t)
     ;; INDENT PREPROCESSOR
     (defvar section-languages-c-indent-preprocessor nil)
     ;; HIDE SHOW
@@ -984,8 +999,6 @@ before message."
   (defvar profile-backup-directory (concat dotemacs-path "/backup"))
   (defvar profile-autosave-directory (concat dotemacs-path "/cache"))
   (defvar profile-fill-column 78)
-  (defvar profile-ispell-program "aspell")
-  (defvar profile-ispell-dictionary "english")
   (defvar profile-browser "firefox")
   ;;
   ;; CALENDAR                                                           11.1
@@ -998,6 +1011,10 @@ before message."
   ;; DICTIONARY                                                         11.2
   ;; set default dictionary, etc
   (defvar section-misc-dictionary nil)
+  (progn
+    (defvar profile-ispell-program "aspell")
+    (defvar profile-ispell-dictionary "english")
+    ) ; (progn
   ;;
   ;; BOOKMARK                                                           11.3
   ;; set default bookmark storage
@@ -1101,5 +1118,11 @@ before message."
   (setq custom-file (concat dotemacs-path "/dotemacs/my-custom.el"))
   (try-require 'my-custom "  ")
   (message "12 File custom... Done"))
+
+;;
+;;; WARNINGS
+;; show warning buffer if exist
+(when (get-buffer "*Warnings*")
+  (switch-to-buffer "*Warnings*"))
 
 ;;; emacs.el ends here

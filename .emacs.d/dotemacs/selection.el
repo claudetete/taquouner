@@ -57,7 +57,7 @@
 
 ;; to have rectangle mode
 (cua-selection-mode t)
-;; bug with enabled dynamic completion it insert 0x00
+;; bug with enabled dynamic completion, it insert 0x00
 
 ;; read under
 
