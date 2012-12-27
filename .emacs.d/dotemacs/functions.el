@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.2
+;; Version: 5.3
 ;; Created: October 2006
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2012-12-27 (5.3)
+;;    update dot emacs path + add bookmark in special buffer
 ;; 2012-11-30 (5.2)
 ;;    add switch to special buffer function
 ;; 2012-10-31 (5.1)
@@ -496,14 +498,14 @@
 (defun mymuse-mode ()
   "Start muse mode."
   (interactive)
-  (add-to-list 'load-path  (concat dotemacs-path "/plugins/muse-3.20/bin"))
+  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins/muse-3.20/bin"))
   (try-require 'muse-mode "    ")     ; load authoring mode
   (try-require 'muse-html "    ")     ; load publishing styles I use
   (try-require 'muse-latex "    ")
   ;;
   (muse-derive-style "my-slides-pdf" "slides-pdf"
-    :header (concat dotemacs-path "/plugins/themes/muse/header.tex")
-    :footer  (concat dotemacs-path "/plugins/themes/muse/footer.tex")
+    :header (concat (file-name-as-directory dotemacs-path) "plugins/themes/muse/header.tex")
+    :footer  (concat (file-name-as-directory dotemacs-path) "plugins/themes/muse/footer.tex")
     )
 ;  (muse-mode t)
   )
@@ -517,14 +519,14 @@
   "Configure GNU/Emacs for whose seem to want work."
   (interactive)
   ;; deprecated
-  (load-file (concat dotemacs-path "/dotemacs/noob.el"))
+  (load-file (concat (file-name-as-directory dotemacs-path) "dotemacs/noob.el"))
   )
 ;;; load config for me after cfg-noob (by Claude TETE)
 ;; it do not revert all some bug...
 (defun cfg-classic ()
   "Configure GNU/Emacs for whose want work."
   (interactive)
-  (load-file (concat dotemacs-path "/emacs.el"))
+  (load-file (concat (file-name-as-directory dotemacs-path) "emacs.el"))
   )
 
 ;;
@@ -991,6 +993,14 @@ line instead."
   "Switch to the help buffer."
   (interactive)
   (switch-to-special-buffer "*Help*")
+  )
+;;; go to the help buffer in special window
+(defun switch-to-bookmark-buffer ()
+  "Switch to the bookmark buffer."
+  (interactive)
+  (if (get-buffer "*Bookmark List*")
+    (switch-to-special-buffer "*Bookmark List*")
+    (bookmark-bmenu-list))
   )
 
 ;;

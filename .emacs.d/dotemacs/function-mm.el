@@ -1,6 +1,6 @@
 ;;; function-mm.el --- add some function for Magneti Marelli profile
 
-;; Copyright (c) 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2010-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function, magneti marelli
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.3
 ;; Created: June 2010
-;; Last-Updated: May 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-external-functions-mm'
 
 ;;; Change Log:
+;; 2012-12-27 (0.3)
+;;    update dot emacs path
 ;; 2012-06-05 (0.2)
 ;;    split from function.el
 ;; 2010-06-10 (0.1)
@@ -148,7 +150,7 @@
   "Configure GNU/Emacs for whose seem to want work."
   (interactive)
   ;; deprecated
-  (load-file (concat dotemacs-path "/dotemacs/noob.el"))
+  (load-file (concat (file-name-as-directory dotemacs-path) "dotemacs/noob.el"))
   )
 
 ;;; load config for me after cfg-noob (by Claude TETE)
@@ -156,7 +158,7 @@
 (defun cfg-classic ()
   "Configure GNU/Emacs for whose want work."
   (interactive)
-  (load-file (concat dotemacs-path "/emacs.el"))
+  (load-file (concat (file-name-as-directory dotemacs-path) "emacs.el"))
   )
 
 ;;

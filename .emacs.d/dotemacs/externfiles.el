@@ -1,6 +1,6 @@
 ;;; externfiles.el --- a config file for load file (not mode)
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, file, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-external'
 
 ;;; Change Log:
+;; 2012-12-27 (1.5)
+;;    update dot emacs path
 ;; 2012-06-05 (1.4)
 ;;    change load to require to have nicer *Messages* + remove
 ;;    deprecated code
@@ -52,8 +54,8 @@
 ;; REQUIREMENT: var     `section-external-directory'
 (when section-external-directory (message "  1.1 Directory .emacs.d...")
   ;; path to load mode
-  (add-to-list 'load-path dotemacs-path)
-  (add-to-list 'load-path  (concat dotemacs-path "/plugins"))
+  (add-to-list 'load-path (file-name-as-directory dotemacs-path))
+  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins"))
   (message "  1.1 Directory .emacs.d ... Done"))
 
 ;;

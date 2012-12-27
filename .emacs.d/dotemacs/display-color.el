@@ -1,6 +1,6 @@
 ;;; display-color.el --- a config file for color displayed setting
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2012-12-27 (2.3)
+;;    add/update hash for theme + add solarized + add setting color for powerline + update dot emacs path
 ;; 2012-07-09 (2.2)
 ;;    robustness + try disable highlight line when marked region
 ;; 2012-06-12 (2.1)
@@ -125,15 +127,16 @@
     (if (and section-environment-version-recognition running-on-emacs-24)
       (progn
         ;; add path of theme
-        (add-to-list 'custom-theme-load-path (concat dotemacs-path "/plugins/themes"))
+        (add-to-list 'custom-theme-load-path (concat (file-name-as-directory dotemacs-path) "plugins/themes"))
         (custom-set-variables
           ;; add secure hash
           '(custom-safe-themes
              (quote
                (
                  ;; SHA-1 hash
-                 "09a924c975a814409aba2dd0fa6a5dc0bda94ea290b5a0a3bb1406eab583a296" ; sweet
-                 "83f4486ffa415fde1bd52402727bca1c4b1d06b1a63d1e943c36ef6d4a74b2c9" ; zenburn
+                 "9e82ddb6aec1178072266e7824fabe2e2cfbcef5ce62a09f98ad74e76adce201" ; sweet
+                 "7606cceeaa8251c5997f9ab71bf3b701a7ac4050db3ac232dc8feb9d338fa1de" ; zenburn
+                 "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" ; solarized-light
                  default
                  ))))
         (cond
@@ -153,7 +156,8 @@
           ((string= profile-color-theme "wombat")      (load-theme 'wombat      t))
           ;; custom
           ((string= profile-color-theme "sweet") (load-theme 'sweet t))
-          ((string= profile-color-theme "zenburn") (load-theme 'zenburn))
+          ((string= profile-color-theme "zenburn") (load-theme 'zenburn t))
+          ((string= profile-color-theme "solarized-light") (load-theme 'solarized-light t))
           ) ; (cond
         )
       ;; else running-on-emacs-23
@@ -166,7 +170,7 @@
         (setq color-theme-load-all-themes t)
 
         ;; add to load path the profile directory
-        (add-to-list 'load-path (concat dotemacs-path "/plugins/themes"))
+        (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/themes"))
 
         ;; choose theme
         (cond
@@ -298,6 +302,9 @@
         ;; Choose what theme you want with "Global Menu"->"Tools"->"Color Theme"
         ) ; when try-require color-theme
       )
+    (when section-mode-powerline
+      (setq powerline-color1 (face-foreground 'default))
+      (setq powerline-color2 (face-foreground 'shadow)))
     (message "    5.4.4 Color Theme... Done")
     ) ; if section-display-color-theme
 
@@ -312,8 +319,8 @@
         (set-face-foreground 'default "white")
         (custom-set-faces
           ;; no 3d style in state bar (mode-line)
-          '(mode-line ((((class color) (min-colors 88)) (:background "#5E4545" :foreground "grey78"))))
-          '(mode-line-highlight ((((class color) (min-colors 88)) nil))))
+          '(mode-line ((((class color) (min-colors 88)) (:box nil))))
+          '(mode-line-highlight ((((class color) (min-colors 88)) (:box nil)))))
         )
 
       (custom-set-faces
@@ -395,7 +402,7 @@
       ;;
       (custom-set-faces
       ;; color of links 'grep name et path of file'
-        '(link
+       '(link
            ((((class color)
                (min-colors 88)
                (background dark)) (:foreground "chartreuse3"))))

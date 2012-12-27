@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.8
+;; Version: 3.9
 ;; Created: October 2006
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,9 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2012-12-27 (3.9)
+;;    update dot emacs path + update color setting for powerline + fix bug with
+;;    dired-details + add diredful and ps2pdf mode
 ;; 2012-11-29 (3.8)
 ;;    add ace jump mode
 ;; 2012-11-26 (3.7)
@@ -105,8 +108,8 @@
 ;; REQUIREMENT: var     `section-mode-directory'
 (when section-mode-directory (message "  2.1 Load Directory...")
   ;; path to load mode
-  (add-to-list 'load-path dotemacs-path)
-  (add-to-list 'load-path  (concat dotemacs-path "/plugins"))
+  (add-to-list 'load-path (file-name-as-directory dotemacs-path))
+  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins"))
   (message "  2.1 Load Directory... Done"))
 
 ;;
@@ -297,9 +300,9 @@
 ;; REQUIREMENT: var     `section-mode-yasnippet'
 (when section-mode-yasnippet (message "  2.13 Yasnippet...")
 ;; enable snippet (see `../emacs.el' for definition)
-  (add-to-list 'load-path (concat dotemacs-path "/plugins/yasnippet-0.6.1c"))
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/yasnippet-0.6.1c"))
   (when (try-require 'yasnippet "    ") ; not yasnippet-bundle
-    (setq yas/root-directory (concat dotemacs-path "/plugins/yasnippet-0.6.1c/snippets"))
+    (setq yas/root-directory (concat (file-name-as-directory dotemacs-path) "plugins/yasnippet-0.6.1c/snippets"))
     (yas/load-directory yas/root-directory))
   (yas/global-mode)
   (message "  2.13 Yasnippet... Done"))
@@ -398,7 +401,7 @@
 ;;; VC CLEARCASE
 ;; REQUIREMENT: var     `section-mode-vc-clearcase'
 (when section-mode-vc-clearcase (message "  2.20 VC ClearCase...")
-  (add-to-list 'load-path  (concat dotemacs-path "/plugins/vc-clearcase-3.6"))
+  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins/vc-clearcase-3.6"))
   (try-require 'vc-clearcase-auto "    ")
   (custom-set-variables
     '(clearcase-checkout-comment-type (quote normal))
@@ -486,7 +489,7 @@
 ;;; MUSE
 ;; REQUIREMENT: var     `section-mode-muse'
 (when section-mode-muse (message "  2.27 Muse...")
-  (add-to-list 'load-path  (concat dotemacs-path "/plugins/muse-3.20/bin"))
+  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins/muse-3.20/bin"))
 
   (try-require 'muse-mode "    ")     ; load authoring mode
 
@@ -494,13 +497,13 @@
   (try-require 'muse-latex "    ")
 
   (muse-derive-style "my-slides-pdf" "slides-pdf"
-    :header (concat dotemacs-path "/plugins/themes/muse/header.tex")
-    :footer  (concat dotemacs-path "/plugins/themes/muse/footer.tex")
+    :header (concat (file-name-as-directory dotemacs-path) "plugins/themes/muse/header.tex")
+    :footer  (concat (file-name-as-directory dotemacs-path) "plugins/themes/muse/footer.tex")
     )
 
   (muse-derive-style "my-slides" "slides"
-    :header (concat dotemacs-path "/plugins/themes/muse/header.tex")
-    :footer  (concat dotemacs-path "/plugins/themes/muse/footer.tex")
+    :header (concat (file-name-as-directory dotemacs-path) "plugins/themes/muse/header.tex")
+    :footer  (concat (file-name-as-directory dotemacs-path) "plugins/themes/muse/footer.tex")
     )
 
   (try-require 'muse-project "    ")  ; publish files in projects
@@ -615,13 +618,6 @@
       ;; set big arrow for modeline
       (setq powerline-arrow-shape 'arrow18))
     ) ; (cond
-
-  ;; remove all box around modeline
-  (custom-set-faces
-    '(mode-line ((((class color) (background dark)) (:box nil))))
-    '(mode-line-buffer-id ((((class color) (background dark)) (:box nil))))
-    '(mode-line-emphasis ((((class color) (background dark)) (:box nil))))
-    '(mode-line-inactive ((((class color) (background dark)) (:box nil)))))
   (message "  2.36 Powerline... Done"))
 
 ;;
@@ -705,7 +701,7 @@
 ;;; DIRED DETAILS
 ;; REQUIREMENT: var     `section-mode-dired-details'
 ;; show hide details in dired mode
-(when section-mode-calfw (message "  2.43 Dired Details...")
+(when section-mode-dired-details (message "  2.43 Dired Details...")
   (try-require 'dired-details+ "    ")
   (message "  2.43 Dired Details... Done"))
 
@@ -746,7 +742,7 @@
 ;; REQUIREMENT: var     `section-mode-nxhtml'
 ;; enhance html mode
 (when section-mode-nxhtml (message "  2.47 nXhtml...")
-  (load (concat dotemacs-path "/plugins/nxhtml/autostart.el"))
+  (load (concat (file-name-as-directory dotemacs-path) "plugins/nxhtml/autostart.el"))
   (message "  2.47 nXhtml... Done"))
 
 ;;
@@ -795,7 +791,7 @@
     (autoload 'ack-find-same-file "full-ack" nil t)
     (autoload 'ack-find-file "full-ack" nil t)
 
-    (setq ack-executable (concat "perl " dotemacs-path "/plugins/ack-standalone"))
+    (setq ack-executable (concat "perl " (file-name-as-directory dotemacs-path) "plugins/ack-standalone"))
     (setq ack-prompt-for-directory t)
     )
   (when section-mode-ack-and-half
@@ -810,7 +806,7 @@
     )
   (when section-mode-ack-emacs
     (try-require 'ack-emacs "    ")
-    (setq ack-command (concat dotemacs-path "/plugins/ack-standalone"))
+    (setq ack-command (concat (file-name-as-directory dotemacs-path) "plugins/ack-standalone"))
     )
   (message "  2.50 ACK... Done"))
 
@@ -826,6 +822,26 @@
   ;; to enable only in the current window
   (eval-after-load "ace-jump-mode" '(setq ace-jump-mode-scope 'window))
   (message "  2.51 ACE Jump... Done"))
+
+;;
+;;; DIREDFUL
+;; REQUIREMENT: var     `section-mode-diredful'
+;; add color to dired
+(when section-mode-diredful (message "  2.52 Diredful...")
+  ;; set file conf path must be set before load diredful
+  (custom-set-variables
+    '(diredful-init-file (concat (file-name-as-directory dotemacs-path) "dotemacs/diredful-conf.el")))
+  (try-require 'diredful "    ")
+  (message "  2.52 Diredful... Done"))
+
+;;
+;;; PS2PDF
+;; REQUIREMENT: var     `section-mode-ps2pdf'
+;; print buffer/region in pdf (the pdf background is inevitably white so dark
+;; theme don't render good)
+(when section-mode-ps2pdf (message "  2.53 PS2PDF...")
+  (try-require 'ps2pdf "    ")
+  (message "  2.53 PS2PDF... Done"))
 
 ;;
 ;;; DIMINISH

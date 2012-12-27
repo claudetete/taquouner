@@ -20,7 +20,7 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.0
+;; Version: 3.1
 ;; Created: October 2006
 ;; Last-Updated: December 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2012-12-27 (3.1)
+;;    flymake not by default in c++ mode
 ;; 2012-12-04 (3.0)
 ;;    compile command confirmation defined by profile
 ;; 2012-11-29 (2.9)
@@ -210,10 +212,6 @@
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-large.h"))
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
     ) ; (when (and section-mode-cedet-bzr section-mode-cedet-loaded)
-
-  ;; auto syntax check
-  (require 'flymake-clang-c++)
-  (add-hook 'c++-mode-hook 'flymake-clang-c++-load)
 
   (message "  3.6 Laguages C++ Qt...Done"))
 (provide 'languages)

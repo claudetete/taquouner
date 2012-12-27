@@ -1,6 +1,6 @@
 ;;; my-misc.el --- a config file for misc settings
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,7 +20,7 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: October 2006
 ;; Last-Updated: December 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2012-12-27 (2.4)
+;;    update dot emacs path + do not sort bookmark
 ;; 2012-12-06 (2.3)
 ;;    remove cygwin shell variable (only EmacsW32)
 ;; 2012-07-09 (2.2)
@@ -223,7 +225,7 @@
   ;; TRY
   ;; Diary (by Marc Tommasi)
 ;;  (setq view-diary-entries-initially t
-;;    diary-file (concat dotemacs-path "/diary")
+;;    diary-file (concat (file-name-as-directory dotemacs-path) "diary")
 ;;    mark-diary-entries-in-calendar t
 ;;    number-of-diary-entries 7)
 ;;
@@ -269,10 +271,12 @@
 ;;;; BOOKMARK
 (when section-misc-bookmark (message "  11.3 Bookmarks...")
   ;; where to save the bookmarks
-  (setq bookmark-default-file (concat dotemacs-path "/bookmarks"))
+  (setq bookmark-default-file (concat (file-name-as-directory dotemacs-path) "bookmarks"))
   ;;
   ;; each command that sets a bookmark will also save your bookmarks
   (setq bookmark-save-flag 1)
+  ;; do not sort bookmark (keep sort in bookmark file)
+  (setq bookmark-sort-flag nil)
   (message "  11.3 Bookmark... Done"))
 
 ;;

@@ -1,6 +1,6 @@
 ;;; mode-ecb.el --- a config file for ecb mode settings
 
-;; Copyright (c) 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2010-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,7 +20,7 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.6
+;; Version: 2.7
 ;; Created: August 2010
 ;; Last-Updated: December 2012
 
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2012-12-27 (2.7)
+;;    update dot emacs path
 ;; 2012-12-03 (2.6)
 ;;    add ack buffer to the compile window
 ;; 2012-07-09 (2.5)
@@ -84,8 +86,8 @@
   (setq stack-trace-on-error t))
 
 (if nil
-  (add-to-list 'load-path (concat dotemacs-path "/plugins/ecb-alexott"))
-  (add-to-list 'load-path (concat dotemacs-path "/plugins/ecb-snap"))
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/ecb-alexott"))
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/ecb-snap"))
   )
 
 ;; hides the extra compile-window directly after the start of ECB

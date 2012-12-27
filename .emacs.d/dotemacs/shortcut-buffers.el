@@ -1,6 +1,6 @@
 ;;; shortcut-buffers.el --- a config file for buffer shortcut
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,9 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-12-27 (1.8)
+;;    switch shortcut for special buffer + toggle compile window when bookmark
+;;    jump
 ;; 2012-11-30 (1.7)
 ;;    add shortcut for special buffer like grep or vc-diff
 ;; 2012-08-01 (1.6)
@@ -70,11 +73,11 @@
 ;; switch to grep or ack buffer
 (global-set-key         (kbd "M-2")             'switch-to-grep-ack-buffer)
 ;; switch to compile buffer
-(global-set-key         (kbd "M-3")             'switch-to-compilation-buffer)
-;; switch to vc buffer
-(global-set-key         (kbd "M-4")             'switch-to-vc-buffer)
+(global-set-key         (kbd "M-3")             'switch-to-bookmark-buffer)
 ;; switch to occur buffer
-(global-set-key         (kbd "M-5")             'switch-to-occur-buffer)
+(global-set-key         (kbd "M-4")             'switch-to-compilation-buffer)
+;; switch to vc buffer
+(global-set-key         (kbd "M-5")             'switch-to-vc-buffer)
 ;; switch to help buffer
 (global-set-key         (kbd "M-6")             'switch-to-help-buffer)
 ;; the previous global-set-key are unset in diff mode ???
@@ -83,11 +86,11 @@
     ;; switch to grep or ack buffer
     (local-set-key      (kbd "M-2")             'switch-to-grep-ack-buffer)
     ;; switch to compile buffer
-    (local-set-key      (kbd "M-3")             'switch-to-compilation-buffer)
-    ;; switch to vc buffer
-    (local-set-key      (kbd "M-4")             'switch-to-vc-buffer)
+    (local-set-key      (kbd "M-3")             'switch-to-bookmark-buffer)
     ;; switch to occur buffer
-    (local-set-key      (kbd "M-5")             'switch-to-occur-buffer)
+    (local-set-key      (kbd "M-4")             'switch-to-compilation-buffer)
+    ;; switch to vc buffer
+    (local-set-key      (kbd "M-5")             'switch-to-vc-buffer)
     ;; switch to help buffer
     (local-set-key      (kbd "M-6")             'switch-to-help-buffer)
     ))
@@ -133,6 +136,9 @@
       ) ; (progn
     ) ; (if section-mode-cedet-ecb
   ) ; (when section-mode-subversion
+
+(when section-mode-cedet-ecb
+  (add-hook 'bookmark-after-jump-hook 'ecb-toggle-compile))
 
 
 (provide 'shortcut-buffers)

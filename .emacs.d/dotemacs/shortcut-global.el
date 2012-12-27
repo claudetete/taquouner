@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.0
+;; Version: 3.1
 ;; Created: October 2006
 ;; Last-Updated: December 2012
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-12-27 (3.1)
+;;    add alias for ps2pdf to print with color
 ;; 2012-12-04 (3.0)
 ;;    add compile shortcut (from shortcut-grep.el)
 ;; 2012-11-29 (2.9)
@@ -337,7 +339,10 @@
 (defalias 'er 'eval-region)
 ;; insert date (format YYYY-MM-DD)
 (defalias 'id 'insert-date)
-
+(when section-mode-cedet-ecb
+  (defalias 'prr 'ps2pdf-from-region)
+  (defalias 'prb 'ps2pdf-from-buffer)
+  )
 
 ;;
 ;;; CUA

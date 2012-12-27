@@ -128,12 +128,13 @@
     `(mode-line
        ((,class (:foreground ,zenburn-green+1
                   :background ,zenburn-bg-1
-                  :box (:line-width -1 :style released-button)))))
-    `(mode-line-buffer-id ((,class (:foreground ,zenburn-yellow :weight bold))))
+                  :box nil))))
+    `(mode-line-buffer-id ((,class (:foreground ,zenburn-yellow :weight bold :box nil))))
     `(mode-line-inactive
        ((,class (:foreground ,zenburn-green-1
                   :background ,zenburn-bg-05
-                  :box (:line-width -1 :style released-button)))))
+                  :box nil))))
+    `(mode-line-emphasis ((,class (:box nil))))
     `(region ((,class (:background ,zenburn-bg-1))))
     `(secondary-selection ((,class (:background ,zenburn-bg+2))))
     `(trailing-whitespace ((,class (:background ,zenburn-red))))

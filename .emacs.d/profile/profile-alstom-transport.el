@@ -146,6 +146,9 @@
     ;; languages
     (setq profile-lang "en_US") ; for subversion and Dired
     ) ; (progn
+
+  (setenv "PYTHONIOENCODING" "iso8859_15")
+
   ;; MS WINDOWS PERFORMANCE: increase performance on MS Windows
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-ms-windows-performance t)
@@ -566,6 +569,8 @@
            ;; with terminal)
       ;; theme to be used
       (setq profile-color-theme "sweet")
+;      (setq profile-color-theme "zenburn")
+;      (setq profile-color-theme "solarized-light")
       ;;
       ;; MISC: current line highlight + full syntax coloration
       (setq section-display-color-misc t)
@@ -729,6 +734,51 @@
 ;;; CUSTOMIZE: all customize settings are put in here when you use interface
 ;; (customize) to change settings
 (setq section-filecustomize t)
+
+;;; AFTER LOADING CONF
+;; this function will be call at the end after all configuration, it can be use
+;; to override some settings or add settings without modify the configuration
+(defun function-to-call-after-loading-conf ()
+  (when section-mode-powerline
+    (setq powerline-color1 (face-background 'highlight))
+;    (setq powerline-color2 (face-foreground 'shadow))
+    (setq powerline-color2 (face-foreground 'font-lock-preprocessor-face))
+    )
+  ) ; (defun function-to-call-after-loading-conf ()
+
+
+;; switch to solarized theme for use ps2dpf
+(defalias 'll '(lambda ()
+                 (interactive)
+                 (disable-theme 'sweet)
+                 (load-theme 'solarized-light)
+                 (setq powerline-color1 (face-foreground 'default))
+                 (setq powerline-color2 (face-foreground 'shadow))
+                 (ecb-toggle-compile-window -1)))
+;; switch back
+(defalias 'lk '(lambda ()
+                 (interactive)
+                 (disable-theme 'solarized-light)
+                 (load-theme 'sweet)
+                 (setq powerline-color1 (face-background 'highlight))
+                 (setq powerline-color2 (face-foreground 'font-lock-preprocessor-face))
+                 (ecb-toggle-compile-window -1)))
+;; switch to solarized theme for use ps2dpf
+(defalias 'lz '(lambda ()
+                 (interactive)
+                 (disable-theme 'sweet)
+                 (load-theme 'zenburn)
+                 (setq powerline-color1 (face-background 'highlight))
+                 (setq powerline-color2 (face-foreground 'shadow))
+                 (ecb-toggle-compile-window -1)))
+;; switch back
+(defalias 'lb '(lambda ()
+                 (interactive)
+                 (disable-theme 'zenburn)
+                 (load-theme 'sweet)
+                 (setq powerline-color1 (face-background 'highlight))
+                 (setq powerline-color2 (face-foreground 'font-lock-preprocessor-face))
+                 (ecb-toggle-compile-window -1)))
 
 
 (provide 'profile-alstom-transport)

@@ -8,6 +8,18 @@
 ;;; Commentary:
 
 ;; This package simply provides a minor mode for fancifying the status line.
+;;
+;; To have nice color you can add this after loading of color theme and
+;; powerline in your .emacs:
+;;   For a light theme:
+;;    (setq powerline-color1 (face-foreground 'default)) ; middle
+;;    (setq powerline-color2 (face-foreground 'shadow))  ; center
+;;   For a dark theme:
+;;    (setq powerline-color1 (face-background 'highlight)) ; middle
+;;    (setq powerline-color2 (face-foreground 'shadow))    ; center
+;; Or set the color you want
+;;
+;; Your color theme must set to nil attribute 'box' for all mode-line* face
 
 ;; Modified by: Jonathan Chu
 ;; additional arrow + clearcase by: Claude TETE
@@ -19,12 +31,6 @@
 
 (setq powerline-color1 "grey22")
 (setq powerline-color2 "grey40")
-
-(set-face-attribute 'mode-line nil
-                    :background "black"
-                    :box nil)
-(set-face-attribute 'mode-line-inactive nil
-                    :box nil)
 
 (scroll-bar-mode -1)
 

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.7
+;; Version: 2.8
 ;; Created: October 2006
-;; Last-Updated: November 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2012-12-27 (2.8)
+;;    modify clearcase shortcuts to make coherent shortcuts
 ;; 2012-11-26 (2.7)
 ;;    logical shortcut for web search
 ;; 2012-10-31 (2.6)
@@ -153,11 +155,11 @@
   ;; diff
   (global-set-key       (kbd "C-c c =")         'clearcase-diff-graphical)
   ;; history
-  (global-set-key       (kbd "C-c c l")         'clearcase-history-graphical)
+  (global-set-key       (kbd "C-c c h")         'clearcase-history-graphical)
   ;; uncheckout
   (global-set-key       (kbd "C-c c u")         'clearcase-uncheckout-graphical)
   ;; version tree
-  (global-set-key       (kbd "C-c c L")         'clearcase-version-tree-graphical)
+  (global-set-key       (kbd "C-c c t")         'clearcase-version-tree-graphical)
   ;; clearcase explorer
   (global-set-key       (kbd "C-c c e")         'clearcase-explorer-graphical)
   ;; version properties

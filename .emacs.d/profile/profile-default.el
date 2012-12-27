@@ -20,7 +20,7 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.7
+;; Version: 0.8
 ;; Created: June 2012
 ;; Last-Updated: December 2012
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2012-12-27 (0.8)
+;;    function to add settings after all this configuration
 ;; 2012-12-05 (0.7)
 ;;    reorganize the file (like emacs.el)
 ;; 2012-10-26 (0.6)
@@ -694,6 +696,12 @@
 ;;; CUSTOMIZE: all customize settings are put in here when you use interface
 ;; (customize) to change settings
 (setq section-filecustomize t)
+
+;;; AFTER LOADING CONF
+;; this function will be call at the end after all configuration, it can be use
+;; to override some settings or add settings without modify the configuration
+(defun function-to-call-after-loading-conf ()
+  ) ; (defun function-to-call-after-loading-conf ()
 
 
 (provide 'profile-default)

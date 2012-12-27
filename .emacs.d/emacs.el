@@ -419,9 +419,9 @@ before message."
   ;;    "your-emacs-path/lisp/speedbar.*"
   ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
   (progn
-    (defvar profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
-    (defvar profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
-    (defvar profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe"))
+    (defvar profile-cedet-path (concat (file-name-as-directory dotemacs-path) "/plugins/cedet-1.1/common/cedet.elc"))
+    (defvar profile-gnu-global (concat (file-name-as-directory dotemacs-path) "/plugins/gnu_global_622wb/bin/global.exe"))
+    (defvar profile-gnu-global-gtags (concat (file-name-as-directory dotemacs-path) "/plugins/gnu_global_622wb/bin/gtags.exe"))
 
     ;; SEMANTIC                                                         2.7.1
     ;; FILE: dotemacs/mode-semantic.el
@@ -668,6 +668,14 @@ before message."
   ;; move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
   (defvar section-mode-ace-jump t)
+  ;;
+  ;; DIREDFUL                                                           2.52
+  ;; color dired buffer
+  (defvar section-mode-diredful t)
+  ;;
+  ;; PS2PDF                                                             2.53
+  ;; print buffer/region in pdf
+  (defvar section-mode-ps2pdf t)
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
@@ -993,11 +1001,11 @@ before message."
   (defvar profile-longitude 0.00)
   (defvar profile-location-name "Neverland")
   (defvar profile-google-calendar-user      "yourmail@gmail.com")
-  (defvar profile-google-calendar-src       (concat dotemacs-path "/plugins/google"))
-  (defvar profile-google-calendar-directory (concat dotemacs-path "/cache"))
+  (defvar profile-google-calendar-src       (concat (file-name-as-directory dotemacs-path) "/plugins/google"))
+  (defvar profile-google-calendar-directory (concat (file-name-as-directory dotemacs-path) "/cache"))
   (defvar profile-google-calendar-url       "http://www.google.com/calendar/ical/yourmail%40gmail.com/private-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx/basic.ics")
-  (defvar profile-backup-directory (concat dotemacs-path "/backup"))
-  (defvar profile-autosave-directory (concat dotemacs-path "/cache"))
+  (defvar profile-backup-directory (concat (file-name-as-directory dotemacs-path) "/backup"))
+  (defvar profile-autosave-directory (concat (file-name-as-directory dotemacs-path) "/cache"))
   (defvar profile-fill-column 78)
   (defvar profile-browser "firefox")
   ;;
@@ -1034,9 +1042,16 @@ before message."
 (defvar section-filecustomize t)
 
 
+;;
+;;; AFTER LOADING CONF
+;; this function will be call at the end after all configuration, it can be use
+;; to override some settings or add settings without modify the configuration
+(defun function-to-call-after-loading-conf ())
+
+
 ;; add to load path the dotemacs directory
-(add-to-list 'load-path (concat dotemacs-path "/dotemacs"))
-(setq load-path (cons (expand-file-name (concat dotemacs-path "/dotemacs")) load-path))
+(add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "/dotemacs"))
+(setq load-path (cons (expand-file-name (concat (file-name-as-directory dotemacs-path) "/dotemacs")) load-path))
 
 ;;
 ;;; ENVIRONMENT
@@ -1115,9 +1130,13 @@ before message."
 ;;; CUSTOMIZE
 (when section-filecustomize (message "12 File custom...")
   ;; customize modification (made by Emacs interface) are put in custom.el
-  (setq custom-file (concat dotemacs-path "/dotemacs/my-custom.el"))
+  (setq custom-file (concat (file-name-as-directory dotemacs-path) "/dotemacs/my-custom.el"))
   (try-require 'my-custom "  ")
   (message "12 File custom... Done"))
+
+;;
+;;; AFTER LOADING CONF
+(function-to-call-after-loading-conf)
 
 ;;
 ;;; WARNINGS

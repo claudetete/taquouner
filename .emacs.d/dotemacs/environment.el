@@ -20,9 +20,9 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.7
+;; Version: 2.8
 ;; Created: October 2006
-;; Last-Updated: October 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `dotemacs-path'
 
 ;;; Change Log:
+;; 2012-12-27 (2.8)
+;;    update dot emacs path
 ;; 2012-10-26 (2.7)
 ;;    put start client server with configuration
 ;; 2012-07-09 (2.6)
@@ -186,7 +188,7 @@
 (when section-environment-elpa (message "  0.8 ELPA...")
   (when (and section-environment-version-recognition running-on-emacs-23)
     ;; add to load path the profile directory
-    (add-to-list 'load-path (concat dotemacs-path "/plugins/elpa"))
+    (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/elpa"))
 
     ;; This was installed by package-install.el.  This provides support for the
     ;; package system and interfacing with ELPA, the package archive.  Move this
@@ -195,7 +197,7 @@
     )
 
   ;; set path where put all packages
-  (setq package-user-dir (concat dotemacs-path "/plugins/elpa"))
+  (setq package-user-dir (concat (file-name-as-directory dotemacs-path) "plugins/elpa"))
 
   ;;;; set package server
   ;;; only with Emacs 24 ?

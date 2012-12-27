@@ -1,6 +1,6 @@
 ;;; mode-semantic.el --- a config file for semantic mode settings
 
-;; Copyright (c) 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2010-2012 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: August 2010
-;; Last-Updated: June 2012
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;
@@ -53,6 +53,8 @@
 ;; again.
 
 ;;; Change Log:
+;; 2012-12-27 (1.7)
+;;    update dot emacs path
 ;; 2012-06-12 (1.6)
 ;;    clean up
 ;; 2012-06-05 (1.5)
@@ -155,7 +157,7 @@
       '(semantic-format-use-images-flag nil)
 
       ;; set the path of the database
-      '(semanticdb-default-save-directory (concat dotemacs-path "/semanticdb"))
+      '(semanticdb-default-save-directory (concat (file-name-as-directory dotemacs-path) "semanticdb"))
 
       '(global-semanticdb-minor-mode t)
 
