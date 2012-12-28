@@ -211,6 +211,9 @@
     (setq section-mode-ack-and-half nil)
     (setq section-mode-ack-emacs t)
     )
+  (setq section-mode-ace-jump t)
+  (setq section-mode-diredful t)
+  (setq section-mode-ps2pdf t)
   (setq section-mode-diminish nil)
   )
 
@@ -287,7 +290,7 @@
 
 (setq section-interface t)
 (progn
-  (setq section-interface-decoration t)
+  (setq section-interface-remove-decoration t)
   (setq section-interface-modeline t)
   (setq section-interface-transparency t)
   (progn

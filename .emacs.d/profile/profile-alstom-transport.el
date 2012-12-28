@@ -410,6 +410,13 @@
     (setq section-mode-ack-and-half nil)
     (setq section-mode-ack-emacs t)
     ) ; (progn
+  ;; ACE JUMP: move quickly and easily with ace jump
+  ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
+  (setq section-mode-ace-jump t)
+  ;; DIREDFUL: color dired buffer
+  (setq section-mode-diredful t)
+  ;; PS2PDF: print buffer/region in pdf
+  (setq section-mode-ps2pdf t)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (progn
@@ -591,7 +598,7 @@
 (setq section-interface t)
 (progn
   ;; DECORATION: remove all mouse interface (toolbar, menubar, scrollbar)
-  (setq section-interface-decoration t)
+  (setq section-interface-remove-decoration t)
   ;; MODELINE: set some option to add in the grey line at the bottom of each
   ;; buffer
   (setq section-interface-modeline t)

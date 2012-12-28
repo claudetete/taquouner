@@ -86,7 +86,7 @@
 ;;
 ;;; DECORATION
 ;; REQUIREMENT: var     `section-interface-decoration'
-(when section-interface-decoration (message "  6.1 Decoration...")
+(when section-interface-remove-decoration (message "  6.1 Remove Decoration...")
   ;; no more menu bar (to open it Ctrl + right click)
   (and (fboundp 'menu-bar-mode)   (menu-bar-mode   -1))
   ;;
@@ -98,7 +98,7 @@
   ;;
   ;; no more tooltips (delay of 9999 seconds before displayed)
   (setq tooltip-delay 9999)
-  (message "  6.1 Decoration... Done"))
+  (message "  6.1 Remove Decoration... Done"))
 
 ;;
 ;;; MODELINE

@@ -841,7 +841,7 @@ before message."
 (progn
   ;; DECORATION                                                         6.1
   ;; remove all mouse interface (toolbar, menubar, scrollbar)
-  (defvar section-interface-decoration nil)
+  (defvar section-interface-remove-decoration nil)
   ;;
   ;; MODELINE                                                           6.2
   ;; FILE: dotemacs/interface-modeline.el

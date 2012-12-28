@@ -348,6 +348,13 @@
     (setq section-mode-ack-and-half nil)
     (setq section-mode-ack-emacs t)
     ) ; (progn
+  ;; ACE JUMP: move quickly and easily with ace jump
+  ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
+  (setq section-mode-ace-jump t)
+  ;; DIREDFUL: color dired buffer
+  (setq section-mode-diredful t)
+  ;; PS2PDF: print buffer/region in pdf
+  (setq section-mode-ps2pdf t)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (progn
@@ -533,6 +540,8 @@
            ;; with terminal)
       ;; theme to be used
       (setq profile-color-theme "zenburn")
+      ) ; (progn
+    (progn ; if section-display-color-theme nil
       ;;
       ;; MISC: current line highlight + full syntax coloration
       (setq section-display-color-misc nil)
@@ -553,7 +562,7 @@
 (setq section-interface t)
 (progn
   ;; DECORATION: remove all mouse interface (toolbar, menubar, scrollbar)
-  (setq section-interface-decoration nil)
+  (setq section-interface-remove-decoration nil)
   ;; MODELINE: set some option to add in the grey line at the bottom of each
   ;; buffer
   (setq section-interface-modeline t)
@@ -701,6 +710,9 @@
 ;; this function will be call at the end after all configuration, it can be use
 ;; to override some settings or add settings without modify the configuration
 (defun function-to-call-after-loading-conf ()
+  ;; to have nice color for powerline with zenburn not nice with solarized light
+  ;; or other light theme
+  (setq powerline-color1 (face-background 'highlight))
   ) ; (defun function-to-call-after-loading-conf ()
 
 
