@@ -7304,7 +7304,10 @@ its ClearCase servers. Used for a non-LT system."
     ;;
     (sit-for 0.01); Fix by AJM to prevent kill-buffer claiming process still running
     (if result
-        (kill-buffer buf))
+	(progn
+	  (when (get-buffer-process buf)
+	    (set-process-query-on-exit-flag (get-buffer-process buf) nil)) ; Fix by Claude TETE to prevent kill-buffer claiming process still running
+	  (kill-buffer buf)))
     result))
 
 ;; We could have an LT system, which lacks ct+lsregion, but has ct+lssite.
@@ -7344,7 +7347,10 @@ its ClearCase servers. Used for LT system."
     ;;
     (sit-for 0.01); Fix by AJM to prevent kill-buffer claiming process still running
     (if result
-        (kill-buffer buf))
+	(progn
+	  (when (get-buffer-process buf)
+	    (set-process-query-on-exit-flag (get-buffer-process buf) nil)) ; Fix by Claude TETE to prevent kill-buffer claiming process still running
+	  (kill-buffer buf)))
     result))
 
 ;; Find out if the ClearCase registry server is accessible.

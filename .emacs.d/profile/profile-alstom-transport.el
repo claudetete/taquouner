@@ -1,6 +1,6 @@
 ;;; profile-alstom-transport.el --- a config file for profile
 
-;; Copyright (c) 2012 Claude Tete
+;; Copyright (c) 2012-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.5
+;; Version: 0.6
 ;; Created: June 2012
-;; Last-Updated: December 2012
+;; Last-Updated: February 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2013-02-05 (0.6)
+;;    add ghostscript in path for ps2pdf and auctex + change powerline color
 ;; 2012-12-05 (0.5)
 ;;    reorganize the file (like emacs.el)
 ;; 2012-11-26 (0.4)
@@ -84,7 +86,7 @@
         "d:/cygwin/usr/bin"                                                     ";"
         "d:/cygwin/usr/local/bin"                                               ";"
         "C:/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
-        "d:/Users/ctete/tools/gnuwin32/bin"                                     ";"
+        "C:/Program Files/gs/gs9.06/bin"                                        ";"
         "D:/Users/ctete/tools/MikTex/miktex/bin"                                ";"
         "d:/cygwin/bin"                                                         ";"
         "c:/WINDOWS"                                                            ";"
@@ -128,7 +130,7 @@
          "d:/cygwin/bin"
          "d:/cygwin/usr/bin"
          "d:/cygwin/usr/local/bin"
-         "d:/Users/ctete/tools/gnuwin32/bin"
+         "C:/Program Files/gs/gs9.06/bin"
          "D:/Users/ctete/tools/MikTex/miktex/bin"
          "c:/WINDOWS"
          "c:/WINDOWS/System32"
@@ -173,7 +175,7 @@
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-super nil)
   ;; SERVER : start a server for emacs client (and have only one instance)
-  (setq section-environment-server nil)
+  (setq section-environment-server t)
   ) ; progn
 
 
@@ -242,12 +244,11 @@
       (setq profile-ecb-source-path
         '(
            ;; before is put the EDE projects (see project.el)
-           ("m:/e_ctete/a2kc/test/CCN4/test_s/pm4s/RTRT/"          "PM4S_RTRT")
-           ("m:/e_ctete/a2kc/test/CCN4/test_s/puma/TestU/sharc/"   "PUMA_RTRT")
+           ("z:/a2kc/test/CCN4/test_s/pm4s/RTRT/"                  "PM4S_RTRT")
+           ("z:/a2kc/test/CCN4/test_s/puma/TestU/sharc/"           "PUMA_RTRT")
            ("d:/Documents and Settings/100516805/Application Data" "/home")
            ("m:/"                                                  "/ClearCase")
            ("d:/Users/ctete"                                       "/Users")
-           ("d:/Users/ctete/tmp"                                   "/tmp")
            )
         )
       ;; regexp of folder to exclude in "ecb directories"
@@ -417,6 +418,8 @@
   (setq section-mode-diredful t)
   ;; PS2PDF: print buffer/region in pdf
   (setq section-mode-ps2pdf t)
+  ;; AUCTEX: latex mode
+  (setq section-mode-auctex t)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (progn
@@ -747,14 +750,13 @@
 ;; to override some settings or add settings without modify the configuration
 (defun function-to-call-after-loading-conf ()
   (when section-mode-powerline
-    (setq powerline-color1 (face-background 'highlight))
-;    (setq powerline-color2 (face-foreground 'shadow))
-    (setq powerline-color2 (face-foreground 'font-lock-preprocessor-face))
+    (setq powerline-color1 "grey30") ; = sweet-grey+2
+    (setq powerline-color2 "grey50") ; = sweet-grey
     )
   ) ; (defun function-to-call-after-loading-conf ()
 
 
-;; switch to solarized theme for use ps2dpf
+;; switch to solarized theme to use with ps2dpf
 (defalias 'll '(lambda ()
                  (interactive)
                  (disable-theme 'sweet)
@@ -767,8 +769,8 @@
                  (interactive)
                  (disable-theme 'solarized-light)
                  (load-theme 'sweet)
-                 (setq powerline-color1 (face-background 'highlight))
-                 (setq powerline-color2 (face-foreground 'font-lock-preprocessor-face))
+                 (setq powerline-color1 "grey30") ; = sweet-grey+2
+                 (setq powerline-color2 "grey50") ; = sweet-grey
                  (ecb-toggle-compile-window -1)))
 ;; switch to solarized theme for use ps2dpf
 (defalias 'lz '(lambda ()
@@ -783,8 +785,8 @@
                  (interactive)
                  (disable-theme 'zenburn)
                  (load-theme 'sweet)
-                 (setq powerline-color1 (face-background 'highlight))
-                 (setq powerline-color2 (face-foreground 'font-lock-preprocessor-face))
+                 (setq powerline-color1 "grey30") ; = sweet-grey+2
+                 (setq powerline-color2 "grey50") ; = sweet-grey
                  (ecb-toggle-compile-window -1)))
 
 

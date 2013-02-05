@@ -1,6 +1,6 @@
 ;;; mode.el --- a config file for all mode settings
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.9
+;; Version: 4.0
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: February 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2013-02-05 (4.0)
+;;    add auctex mode
 ;; 2012-12-27 (3.9)
 ;;    update dot emacs path + update color setting for powerline + fix bug with
 ;;    dired-details + add diredful and ps2pdf mode
@@ -414,9 +416,10 @@
 ;;
 ;;; CLEARCASE
 ;; REQUIREMENT: var     `section-mode-clearcase'
-(if section-mode-clearcase (progn (message "  2.21 ClearCase...")
-  (try-require 'clearcase "    ")
-  (message "  2.21 ClearCase... Done"))
+(if section-mode-clearcase
+  (progn (message "  2.21 ClearCase...")
+    (try-require 'clearcase "    ")
+    (message "  2.21 ClearCase... Done"))
   (setq clearcase-mode nil))
 
 ;;
@@ -841,7 +844,16 @@
 ;; theme don't render good)
 (when section-mode-ps2pdf (message "  2.53 PS2PDF...")
   (try-require 'ps2pdf "    ")
+;  (try-require 'w32-winprint)
   (message "  2.53 PS2PDF... Done"))
+
+;;
+;;; AUCTEX
+;; REQUIREMENT: var     `section-mode-auctex'
+;; LaTeX editor
+(when section-mode-auctex (message "  2.54 AUCTEX...")
+  (try-require 'mode-auctex "      ")
+  (message "  2.54 AUCTEX... Done"))
 
 ;;
 ;;; DIMINISH

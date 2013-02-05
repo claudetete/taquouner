@@ -1,6 +1,6 @@
 ;;; shortcut-buffers.el --- a config file for buffer shortcut
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: February 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-02-05 (1.9)
+;;    add shortcut for auctex mode
 ;; 2012-12-27 (1.8)
 ;;    switch shortcut for special buffer + toggle compile window when bookmark
 ;;    jump
@@ -137,8 +139,13 @@
     ) ; (if section-mode-cedet-ecb
   ) ; (when section-mode-subversion
 
-(when section-mode-cedet-ecb
-  (add-hook 'bookmark-after-jump-hook 'ecb-toggle-compile))
+
+;;
+(when section-mode-auctex
+  (add-hook 'LaTeX-mode-hook '
+    (lambda ()
+      (local-set-key    (kbd "<f10>")           'auctex-save-compile-and-view)
+      )))
 
 
 (provide 'shortcut-buffers)

@@ -1,6 +1,6 @@
 ;;; shortcut-ecb.el --- a config file for shortcut of ecb mode
 
-;; Copyright (c) 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2010-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: August 2010
-;; Last-Updated: June 2012
+;; Last-Updated: January 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-ecb'
 
 ;;; Change Log:
+;; 2013-01-18 (1.7)
+;;    new shortcut to open in dired from dir window
 ;; 2012-06-20 (1.6)
 ;;    add smart shortcuts in ecb window
 ;; 2012-05-10 (1.5)
@@ -87,6 +89,7 @@
     '(lambda ()
        ;; remap enter only in ecb directories buffer
        (local-set-key   (kbd "<return>")        'ecb-directories-select)
+       (local-set-key   (kbd "<M-return>")      'ecb-dired-directory)
        (local-set-key   (kbd "<escape>")        'ecb-cancel)
        (local-set-key   (kbd "M-q")             'ecb-toggle-maximize)
        ))

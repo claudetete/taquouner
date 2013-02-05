@@ -1,6 +1,6 @@
 ;;; function-rtrt.el --- a config file to add some function for rtrt script
 
-;; Copyright (c) 2012 Claude Tete
+;; Copyright (c) 2012-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function, rtrt
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.2
+;; Version: 1.3
 ;; Created: March 2012
-;; Last-Updated: November 2012
+;; Last-Updated: January 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,10 @@
 ;; REQUIREMENT: var     `section-mode-rtrt-script'
 
 ;;; Change Log:
+;; 2013-01-18 (1.3)
+;;    fix bug with replace or align the region moves...
+;;    thanks to http://ergoemacs.org/emacs/elisp_beware_of_region_boundary_change.html
+;;    + fix align init + fix align set
 ;; 2012-11-26 (1.2)
 ;;    fix behaviour with align functions
 ;; 2012-10-31 (1.1)
@@ -40,6 +44,7 @@
 
 ;;; Code:
 (when section-mode-rtrt-script
+
 ;;
 ;;;
 ;;;; ALIGN RTRT MODE
@@ -49,7 +54,7 @@
     (interactive (clt-get-line-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "\\binit[ ]*[=if]") 1 1)
+    (align-regexp start end (concat "\\(\\s-*\\)" "\\binit\\(\\s-*=\\|\\s-+in\\b\\|\\s-+from\\b\\)") 1 1)
     )
   ;;; align "expected value" in ptu script for RTRT (by Claude TETE)
   (defun rtrt-align-ev (start end)
@@ -62,16 +67,21 @@
   ;;; align "expected value" and "init" in ptu script for rtrt (by Claude TETE)
   (defun rtrt-align-declaration (start end)
     "Align variable (between START and END)."
-    (interactive (clt-get-line-position))
+    (interactive (clt-get-paragraph-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (rtrt-align-init start end)
-    (rtrt-align-ev start end) ; sometimes it bugs the last ev is not align ??
+    (save-excursion
+      (save-restriction
+        (narrow-to-region start end)
+        (rtrt-align-init (point-min) (point-max))
+        (rtrt-align-ev (point-min) (point-max))
+        )
+      )
     )
   ;;; align "=" in ptu script for RTRT (by Claude TETE)
   (defun rtrt-align-set (start end)
     "Align = (between START and END)."
-    (interactive (clt-get-line-position))
+    (interactive (clt-get-paragraph-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
     (align-regexp start end (concat "\\(\\s-*\\)" "[-+=]?=") 1 1)
@@ -86,7 +96,15 @@
     (interactive (clt-get-line-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (replace-regexp "\\s-+," "," nil start end)
+    (save-excursion
+      (save-restriction
+        (narrow-to-region start end)
+        (replace-regexp "\\s-+," "," nil (point-min) (point-max))
+        (replace-regexp ",\\(\\sw\\)" ", \\1" nil (point-min) (point-max))
+        (replace-regexp "\\([a-zA-Z0-9]\\)=" "\\1 =" nil (point-min) (point-max))
+        (replace-regexp "=\\([-a-zA-Z0-9&({]\\)" "= \\1" nil (point-min) (point-max))
+        )
+      )
     )
   ;;; upcase "var" in ptu script for RTRT (by Claude TETE)
   (defun rtrt-upcase-var-string (start end)

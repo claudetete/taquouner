@@ -355,6 +355,8 @@
   (setq section-mode-diredful t)
   ;; PS2PDF: print buffer/region in pdf
   (setq section-mode-ps2pdf t)
+  ;; AUCTEX: latex mode
+  (setq section-mode-auctex nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (progn

@@ -1,6 +1,6 @@
 ;;; shortcut-function.el --- a config file for function shortcut
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.8
+;; Version: 2.9
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: February 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-02-05 (2.9)
+;;    local bind for rtrt + change functino name to match clearcase.el
 ;; 2012-12-27 (2.8)
 ;;    modify clearcase shortcuts to make coherent shortcuts
 ;; 2012-11-26 (2.7)
@@ -83,23 +85,23 @@
 ;;
 ;;; RTRT SCRIPT
 (when section-mode-rtrt-script
-  ;; use align regexp for .ptu file (rtrt script)
-  (global-set-key       "\C-cpo"                'rtrt-align-init)
-  (global-set-key       "\C-cp;"                'rtrt-align-ev)
-  (global-set-key       "\C-cp["                'rtrt-align-declaration)
-  (global-set-key       "\C-cp="                'rtrt-align-set)
   ;;
-  ;; format the .ptu file (rtrt script)
-  (global-set-key       "\C-crv"                'rtrt-upcase-var-string)
-  (global-set-key       "\C-crs"                'rtrt-remove-whitespace-before-colon)
-  ;;
-  ;; move
   (add-hook 'rtrt-script-mode-hook
     '(lambda ()
+       ;; move
        (local-set-key   (kbd "<M-left>")        'rtrt-up-test-header)
        (local-set-key   (kbd "<M-right>")       'rtrt-down-test-header)
        (local-set-key   (kbd "<M-up>")          'rtrt-up-heading)
-       (local-set-key   (kbd "<M-down>")        'rtrt-down-heading)))
+       (local-set-key   (kbd "<M-down>")        'rtrt-down-heading)
+       ;; use align regexp for .ptu file (rtrt script)
+       (local-set-key   "\C-cpo"                'rtrt-align-init)
+       (local-set-key   "\C-cp;"                'rtrt-align-ev)
+       (local-set-key   "\C-cp["                'rtrt-align-declaration)
+       (local-set-key   "\C-cp="                'rtrt-align-set)
+       ;; format the .ptu file (rtrt script)
+       (local-set-key   "\C-crv"                'rtrt-upcase-var-string)
+       (local-set-key   "\C-crs"                'rtrt-remove-whitespace-before-colon)
+       ))
   (add-hook 'nxml-mode-hook
     '(lambda ()
        (when (string-match "\\.rtp$" (buffer-name))
@@ -151,25 +153,25 @@
 ;;; CLEARCASE
 (when (or section-mode-clearcase section-mode-vc-clearcase)
   ;; checkout
-  (global-set-key       (kbd "C-c c c")         'clearcase-checkout-graphical)
+  (global-set-key       (kbd "C-c c c")         'clearcase-gui-checkout)
   ;; diff
-  (global-set-key       (kbd "C-c c =")         'clearcase-diff-graphical)
+  (global-set-key       (kbd "C-c c =")         'clearcase-gui-diff-prev)
   ;; history
-  (global-set-key       (kbd "C-c c h")         'clearcase-history-graphical)
+  (global-set-key       (kbd "C-c c h")         'clearcase-gui-history)
   ;; uncheckout
-  (global-set-key       (kbd "C-c c u")         'clearcase-uncheckout-graphical)
+  (global-set-key       (kbd "C-c c u")         'clearcase-gui-uncheckout)
   ;; version tree
-  (global-set-key       (kbd "C-c c t")         'clearcase-version-tree-graphical)
+  (global-set-key       (kbd "C-c c t")         'clearcase-gui-version-tree)
   ;; clearcase explorer
-  (global-set-key       (kbd "C-c c e")         'clearcase-explorer-graphical)
+  (global-set-key       (kbd "C-c c e")         'clearcase-gui-explorer)
   ;; version properties
-  (global-set-key       (kbd "C-c c v")         'clearcase-version-properties-graphical)
+  (global-set-key       (kbd "C-c c v")         'clearcase-gui-version-properties)
   ;; element properties
-  (global-set-key       (kbd "C-c c p")         'clearcase-properties-graphical)
+  (global-set-key       (kbd "C-c c p")         'clearcase-gui-properties)
   ;; element properties
-  (global-set-key       (kbd "C-c c i")         'clearcase-checkin-graphical)
+  (global-set-key       (kbd "C-c c i")         'clearcase-gui-checkin)
   ;; element properties
-  (global-set-key       (kbd "C-c c f")         'clearcase-find-checkout-graphical)
+  (global-set-key       (kbd "C-c c f")         'clearcase-gui-find-checkout)
   ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
 
 ;;

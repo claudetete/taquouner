@@ -1,6 +1,6 @@
 ;;; functions.el --- a config file to add some function
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.3
+;; Version: 5.4
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: February 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2013-02-05 (5.4)
+;;    add function to get region or paragraph
 ;; 2012-12-27 (5.3)
 ;;    update dot emacs path + add bookmark in special buffer
 ;; 2012-11-30 (5.2)
@@ -195,6 +197,16 @@
     (if (use-region-p)
       (list (region-beginning) (region-end))
       (list (line-beginning-position) (line-beginning-position 2))
+      )
+    )
+  )
+;;; get the string from line at point or region
+(defun clt-get-paragraph-position ()
+  (let ()
+    (if (use-region-p)
+      (list (region-beginning) (region-end))
+      (let ((bds (bounds-of-thing-at-point 'paragraph)) )
+        (list (car bds) (cdr bds)))
       )
     )
   )
@@ -1005,10 +1017,72 @@ line instead."
 
 ;;
 ;;;
+;;;; AUCTEX
+(when section-mode-auctex
+  ;;; save the current buffer/document and compile it in auctex
+  (defun auctex-save-and-compile ()
+    (interactive)
+    (save-buffer)
+    (TeX-save-document "")
+    (TeX-command "LaTeX" 'TeX-active-master 0))
+  )
+
+;;
+;;;
+;;;; FILE
+;;; rename the current file
+(defun rename-current-buffer-file ()
+  "Renames current buffer and file it is visiting."
+  (interactive)
+  (let ((name (buffer-name))
+         (filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+      (error "Buffer '%s' is not visiting a file!" name)
+      (let ((new-name (read-file-name "New name: " filename)))
+        (if (get-buffer new-name)
+          (error "A buffer named '%s' already exists!" new-name)
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil)
+          (message "File '%s' successfully renamed to '%s'"
+            name (file-name-nondirectory new-name)))))))
+;;; delete the current file
+(defun delete-current-buffer-file ()
+  "Removes file connected to current buffer and kills buffer."
+  (interactive)
+  (let ((filename (buffer-file-name))
+         (buffer (current-buffer))
+         (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+      (ido-kill-buffer)
+      (when (yes-or-no-p "Are you sure you want to remove this file? ")
+        (delete-file filename)
+        (kill-buffer buffer)
+        (message "File '%s' successfully removed" filename)))))
+
+;;; replace tab with space + replace '+- non unicode
+(defun clean-at ()
+  "Clean files from AT."
+  (interactive)
+  (save-excursion
+    (untabify (point-min) (point-max))
+    (goto-char (point-min))
+    (while (search-forward "’" nil t)
+      (replace-match "'"))
+    (while (search-forward "•" nil t)
+      (replace-match "+"))
+    (while (search-forward "–" nil t)
+      (replace-match "-"))
+    )
+  )
+
+;;
+;;;
 ;;;; MAGNETI MARELLI
-(when section-function-mm (message "    1.2.1 Functions Magneti Marelli...")
+(when section-function-mm
   (try-require 'function-mm "    ")
-  (message "    1.2.1 Functions Magneti Marelli... Done"))
+  ) ; (when section-function-mm
 
 ;;
 ;;;
@@ -1029,7 +1103,7 @@ line instead."
 ;;;; RTRT SCRIPT
 (when section-mode-rtrt-script
   (try-require 'function-rtrt "    ")
-  ) ; (when (section-mode-rtrt-script)
+  ) ; (when section-mode-rtrt-script
 
 ;;
 ;;;
@@ -1119,7 +1193,6 @@ When there is a text selection, act on the region."
   (let ((have-paste (and interprogram-paste-function
                          (funcall interprogram-paste-function))))
     (when have-paste (push have-paste kill-ring))))
-
 
 ;;list-colors-display to display all color
 

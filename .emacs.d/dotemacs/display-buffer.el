@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, buffer, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: February 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-display-windows-buffers'
 
 ;;; Change Log:
+;; 2013-02-05 (1.8)
+;;    toggle compile ecb window when bookmark jump
 ;; 2012-08-01 (1.7)
 ;;    add visual line mode
 ;; 2012-07-09 (1.6)
@@ -62,6 +64,10 @@
 ;; after a PageUp or Down, it will display 5 shared lines
 (custom-set-variables
   '(next-screen-context-lines 5))
+
+;; hide compile window when jump to a bookmark
+(when section-mode-cedet-ecb
+  (add-hook 'bookmark-after-jump-hook 'ecb-toggle-compile))
 
 ;;
 ;;; VISUAL LINE

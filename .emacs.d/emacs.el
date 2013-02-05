@@ -1,6 +1,6 @@
 ;;; emacs.el --- config file for Emacs
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.5
+;; Version: 8.6
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: December 2013
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2013-02-05 (8.6)
+;;    add auctex mode
 ;; 2012-12-05 (8.5)
 ;;    add compile command confirmation + show warning + clean up
 ;; 2012-11-29 (8.4)
@@ -254,7 +256,7 @@
 
 (when (string-equal system-type "windows-nt")
   ;;;; remove error "directory ~/.emacs.d/server is unsafe"
-  ;;;; if you cannot be the owner of this directory.
+  ;;;; but if you cannot be the owner of this directory.
   ;;(defun server-ensure-safe-dir (dir) "Noop" t)
   )
 
@@ -676,6 +678,10 @@ before message."
   ;; PS2PDF                                                             2.53
   ;; print buffer/region in pdf
   (defvar section-mode-ps2pdf t)
+  ;;
+  ;; AUCTEX                                                             2.54
+  ;; latex mode
+  (defvar section-mode-auctex nil)
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
