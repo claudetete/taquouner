@@ -77,56 +77,39 @@
     ;; path
     (setq profile-path
       (concat
-        "c:/OpenSSL-Win32/bin"                                                  ";"
-        "d:/User/ctete/tools/MinGW/msys/1.0/bin"                                ";"
-        "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"           ";"
-        "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"                ";"
-        "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"                   ";"
-        "d:/cygwin/bin"                                                         ";"
-        "d:/cygwin/usr/bin"                                                     ";"
-        "d:/cygwin/usr/local/bin"                                               ";"
-        "C:/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
-        "C:/Program Files/gs/gs9.06/bin"                                        ";"
-        "D:/Users/ctete/tools/MikTex/miktex/bin"                                ";"
-        "d:/cygwin/bin"                                                         ";"
-        "c:/WINDOWS"                                                            ";"
-        "c:/WINDOWS/System32"                                                   ";"
-        "d:/cygwin/bin"                                                         ";"
-        "c:/WINDOWS"                                                            ";"
-        "c:/WINDOWS/System32"                                                   ";"
-        "/usr/local/bin"                                                        ";"
-        "/usr/bin;/bin"                                                         ";"
-        "c:/Program Files/IBM/RationalSDLC/common"                              ";"
-        "c:/Program Files/PRQA/PDFReports/texmf/miktex/bin"                     ";"
-        "c:/Program Files/Analog Devices/VisualDSP"                             ";"
-        "c:/Program Files/Analog Devices/VisualDSP/System"                      ";"
-        "c:/WINDOWS/system32"                                                   ";"
-        "c:/WINDOWS"                                                            ";"
-        "c:/WINDOWS/System32/Wbem"                                              ";"
-        "c:/Program Files/QuickTime/QTSystem"                                   ";"
-        "c:/Program Files/Fichiers communs/Aladdin Shared/eToken/PKIClient/x32" ";"
-        "d:/system/Notes"                                                       ";"
-        "c:/Program Files/Symantec/pcAnywhere"                                  ";"
-        "c:/Program Files/UltraEdit"                                            ";"
-        "c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils"                 ";"
-        "c:/Program Files/Rational/TestRealTime/bin/intel/win32"                ";"
-        "c:/Program Files/Rational/common"                                      ";"
-        "c:/Program Files/Lotus/Notes"                                          ";"
-        "c:/Program Files/IBM/RationalSDLC/ClearCase/bin"                       ";"
-        "d:/Users/ctete/tools/gnuwin32/bin"                                     ";"
-        "C:/Program Files/Aspell/bin/"                                          ";"
-        "C:/Python27"                                                           ";"
-        "d:/Users/ctete/tools/.emacs.d/plugins/gnu_global_622wb/bin"            ";"
+        "c:/MinGW/msys/1.0/bin"                                      ";"
+        "c:/perl/perl/site/bin"                                      ";"
+        "c:/perl/perl/bin"                                           ";"
+        "c:/perl/c/bin"                                              ";"
+        "d:/cygwin/bin"                                              ";"
+        "d:/cygwin/usr/bin"                                          ";"
+        "d:/cygwin/usr/local/bin"                                    ";"
+        "C:/Program Files/IBM/RationalSDLC/ClearCase/bin"            ";"
+        "C:/Program Files/gs/gs9.06/bin"                             ";"
+        "D:/Users/ctete/tools/MikTex/miktex/bin"                     ";"
+        "c:/WINDOWS"                                                 ";"
+        "c:/WINDOWS/System32"                                        ";"
+        "c:/Program Files/IBM/RationalSDLC/common"                   ";"
+        "c:/Program Files/PRQA/PDFReports/texmf/miktex/bin"          ";"
+        "c:/Program Files/Analog Devices/VisualDSP"                  ";"
+        "c:/Program Files/Analog Devices/VisualDSP/System"           ";"
+        "c:/Program Files/IBM/RationalSDLC/ClearCase/etc/utils"      ";"
+        "c:/Program Files/Rational/TestRealTime/bin/intel/win32"     ";"
+        "c:/Program Files/Rational/common"                           ";"
+        "c:/Program Files/IBM/RationalSDLC/ClearCase/bin"            ";"
+        "d:/Users/ctete/tools/GnuWin32/bin"                          ";"
+        "C:/Program Files/Aspell/bin/"                               ";"
+        "C:/Python27"                                                ";"
+        "d:/Users/ctete/tools/.emacs.d/plugins/gnu_global_628wb/bin" ";"
         )
       )
     ;; executables path
     (setq profile-exec-path
       '(
-         "c:/OpenSSL-Win32/bin"
-         "d:/User/ctete/tools/MinGW/msys/1.0/bin"
-         "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/site/bin"
-         "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/perl/bin"
-         "d:/Users/ctete/tools/strawberry-perl-5.14.2.1/c/bin"
+         "c://MinGW/msys/1.0/bin"
+         "c:/perl/perl/site/bin"
+         "c:/perl/perl/bin"
+         "c:/perl/c/bin"
          "d:/cygwin/bin"
          "d:/cygwin/usr/bin"
          "d:/cygwin/usr/local/bin"
@@ -142,14 +125,14 @@
          "c:/Program Files/Rational/common"
          "c:/Program Files/Analog Devices/VisualDSP"
          "c:/Program Files/Analog Devices/VisualDSP/System"
-         "d:/Users/ctete/tools/.emacs.d/plugins/gnu_global_622wb/bin"
+         "d:/Users/ctete/tools/.emacs.d/plugins/gnu_global_628wb/bin"
          )
       )
     ;; languages
     (setq profile-lang "en_US") ; for subversion and Dired
-    ) ; (progn
 
-  (setenv "PYTHONIOENCODING" "iso8859_15")
+    (setenv "PYTHONIOENCODING" "iso8859_15")
+    ) ; (progn
 
   ;; MS WINDOWS PERFORMANCE: increase performance on MS Windows
   ;; REQUIREMENT: `section-environment-os-recognition'
@@ -175,7 +158,7 @@
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-super nil)
   ;; SERVER : start a server for emacs client (and have only one instance)
-  (setq section-environment-server t)
+  (setq section-environment-server nil)
   ) ; progn
 
 
@@ -212,9 +195,9 @@
     ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
     (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
     ;; path of gnu global executable
-    (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
+    (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_628wb/bin/global.exe"))
     ;; path of gnu global executable
-    (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe"))
+    (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_628wb/bin/gtags.exe"))
     ;;
     ;; SEMANTIC: can do tag, list of function/variable..., preproc, etc
     (setq section-mode-cedet-semantic t)
@@ -226,8 +209,8 @@
            "d:/Users/ctete/projects/SeanceManager/SeanceManager.ede.el"
            ;; ParPUMA
            "z:/a2kc/test/CCN4/test_s/puma/config/ParPUMA/sources/ParPUMA.ede.el"
-           ;; PUMA local
-           "d:/Users/ctete/PUMA/src/AC3_V1.4.2/PUMA_V1.4.2.ede.el"
+           ;; TCMSLIB
+           "Z:/tcmslibc/soft/embedded/TCMSLIB.ede.el"
            ;; PUMA
            "z:/a2kc/soft/ccn4/ccn4_puma/PUMA.ede.el"
            ;; PM4S
@@ -246,6 +229,7 @@
            ;; before is put the EDE projects (see project.el)
            ("z:/a2kc/test/CCN4/test_s/pm4s/RTRT/"                  "PM4S_RTRT")
            ("z:/a2kc/test/CCN4/test_s/puma/TestU/sharc/"           "PUMA_RTRT")
+           ("z:/tcmslibc/test"                                     "TCMSLIB_RTRT")
            ("d:/Documents and Settings/100516805/Application Data" "/home")
            ("m:/"                                                  "/ClearCase")
            ("d:/Users/ctete"                                       "/Users")
@@ -373,11 +357,6 @@
   (setq section-mode-psvn nil)
   ;; POWERLINE: fancy modeline
   (setq section-mode-powerline t)
-  (progn
-    ;; height of modeline for powerline mode ("small", "medium" or "big")
-    ;; if nothing or empty the default is "big"
-    (setq profile-powerline-size "small")
-    ) ; (progn
   ;; NYAN: add bar in modeline given position in buffer
   (setq section-mode-nyan nil)
   ;; SML: add bar in modeline given position in buffer
@@ -512,14 +491,14 @@
     ;; choice between (it's just some nice font, you can use another font):
     ;;; Terminal
     ;; nice, very tiny, only ascii (too tiny ?)
-    ;; (setq profile-font "Terminal-6")
+    ;;(setq profile-font "Terminal-6")
     ;;
     ;;; Anonymous Pro, 10
     ;; nice, big (slashed 'zero', 'one' and minus 'L' can be mixed up)
-    ;; (setq profile-font "Anonymous Pro-10")
+    ;;(setq profile-font "Anonymous Pro-10")
     ;;; Anonymous Pro, 8
     ;; nice, small (slashed 'zero', 'one' and minus 'L' can be mixed up, parentheses and curly bracket can be mixed up)
-    ;; (setq profile-font "Anonymous Pro-8")
+    ;;(setq profile-font "Anonymous Pro-8")
     ;;
     ;;; Proggy Tiny Z, 6
     ;; good, very tiny (slashed 'zero', dot and comma can be mixed)
@@ -527,38 +506,38 @@
     ;;
     ;;; DejaVu Sans Mono, 10
     ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
-    ;; (setq profile-font "DejaVu Sans Mono-10")
+    ;;(setq profile-font "DejaVu Sans Mono-10")
     ;;; DejaVu Sans Mono, 8
-    ;; (setq profile-font "DejaVu Sans Mono-8")
+    ;;(setq profile-font "DejaVu Sans Mono-8")
     ;;
     ;;; Inconsolata, 10
     ;; not so good with ms window (slashed 'zero', capitalized 'i' and minus 'L' can be mixed up)
-    ;; (setq profile-font "Inconsolata-10")
+    ;;(setq profile-font "Inconsolata-10")
     ;;
     ;;; Lucida Console, 10
     ;; nice, big, large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-    ;; (setq profile-font "Lucida Console-10")
+    ;;(setq profile-font "Lucida Console-10")
     ;;; Lucida Console, 8
     ;; nice, small large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-    ;; (setq profile-font "Lucida Console-8")
+    ;;(setq profile-font "Lucida Console-8")
     ;;
     ;;; Monaco, 10
     ;; nice, very big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;; (setq profile-font "Monaco-10")
+    ;;(setq profile-font "Monaco-10")
     ;;; Monaco, 8
     ;; nice, big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;; (setq profile-font "Monaco-8")
+    ;;(setq profile-font "Monaco-8")
     ;;
     ;;; ProFont, 8
     ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
-    ;; (setq profile-font "ProFontWindows-8")
+    ;;(setq profile-font "ProFontWindows-8")
     ;;
     ;;; Courier New 10
     ;; classic but big and large
-    ;; (setq profile-font "Courier New-10")
+    ;;(setq profile-font "Courier New-10")
     ;;; Courier New 8
     ;; classic but big and large
-    ;; (setq profile-font "Courier New-8")
+    ;;(setq profile-font "Courier New-8")
     ;;
     ;; INTERNATIONAL: ISO or utf-8 or ...  (not used)
     (setq section-display-font-international t)
@@ -581,6 +560,8 @@
       (setq profile-color-theme "sweet")
 ;      (setq profile-color-theme "zenburn")
 ;      (setq profile-color-theme "solarized-light")
+      ) ; (progn
+    (progn ; if section-display-color-theme nil
       ;;
       ;; MISC: current line highlight + full syntax coloration
       (setq section-display-color-misc t)
@@ -707,8 +688,8 @@
 (setq section-misc t)
 (progn
   ;; backup directory
-  (setq profile-backup-directory (concat dotemacs-path "/backup"))
-  (setq profile-autosave-directory (concat dotemacs-path "/cache"))
+  (setq profile-backup-directory nil)
+  (setq profile-autosave-directory nil)
   ;; use by fill-xxx or fill column indicator mode
   (setq profile-fill-column 80)
   ;; browser to open url

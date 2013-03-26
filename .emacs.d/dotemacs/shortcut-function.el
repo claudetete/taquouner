@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.9
+;; Version: 3.0
 ;; Created: October 2006
-;; Last-Updated: February 2013
+;; Last-Updated: March 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-03-26 (3.0)
+;;    add a shortcut for function to align stub in rtrt scripts
 ;; 2013-02-05 (2.9)
 ;;    local bind for rtrt + change functino name to match clearcase.el
 ;; 2012-12-27 (2.8)
@@ -98,6 +100,7 @@
        (local-set-key   "\C-cp;"                'rtrt-align-ev)
        (local-set-key   "\C-cp["                'rtrt-align-declaration)
        (local-set-key   "\C-cp="                'rtrt-align-set)
+       (local-set-key   "\C-cps"                'rtrt-align-stub)
        ;; format the .ptu file (rtrt script)
        (local-set-key   "\C-crv"                'rtrt-upcase-var-string)
        (local-set-key   "\C-crs"                'rtrt-remove-whitespace-before-colon)

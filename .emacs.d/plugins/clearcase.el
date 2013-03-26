@@ -7291,6 +7291,7 @@ its ClearCase servers. Used for a non-LT system."
         (while (and (null result)
                     (not timeout-occurred)
                     (< (buffer-size) (length "Tag: ")))
+
           (if (null (accept-process-output process 10))
               (setq timeout-occurred t))
           (goto-char (point-min))
@@ -7299,6 +7300,7 @@ its ClearCase servers. Used for a non-LT system."
         (condition-case nil
             (kill-process process)
           (error nil))))
+
     ;; If servers are apparently not online, keep the
     ;; buffer around so we can see what lsregion reported.
     ;;
@@ -7308,7 +7310,8 @@ its ClearCase servers. Used for a non-LT system."
 	  (when (get-buffer-process buf)
 	    (set-process-query-on-exit-flag (get-buffer-process buf) nil)) ; Fix by Claude TETE to prevent kill-buffer claiming process still running
 	  (kill-buffer buf)))
-    result))
+    result)
+)
 
 ;; We could have an LT system, which lacks ct+lsregion, but has ct+lssite.
 ;;
@@ -7966,6 +7969,7 @@ This is enabled/disabled by clearcase-integrate/clearcase-unintegrate."
     (message "ClearCase apparently not online. ClearCase/Emacs integration not installed."))
 
 ;;}}}
+
 
 (provide 'clearcase)
 

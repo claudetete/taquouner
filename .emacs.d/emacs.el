@@ -22,7 +22,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 8.6
 ;; Created: October 2006
-;; Last-Updated: December 2013
+;; Last-Updated: December 2012
 
 ;;; Commentary:
 ;;

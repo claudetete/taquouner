@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function, rtrt
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: March 2012
-;; Last-Updated: January 2013
+;; Last-Updated: March 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-mode-rtrt-script'
 
 ;;; Change Log:
+;; 2013-03-26 (1.4)
+;;    fix bug with regex to align + add function to align stub (not all...)
 ;; 2013-01-18 (1.3)
 ;;    fix bug with replace or align the region moves...
 ;;    thanks to http://ergoemacs.org/emacs/elisp_beware_of_region_boundary_change.html
@@ -54,7 +56,7 @@
     (interactive (clt-get-line-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "\\binit\\(\\s-*=\\|\\s-+in\\b\\|\\s-+from\\b\\)") 1 1)
+    (align-regexp start end (concat "\\(\\s-*\\)" "\\binit\\(\\s-*[=(]\\|\\s-+in\\b\\|\\s-+from\\b\\)") 1 1)
     )
   ;;; align "expected value" in ptu script for RTRT (by Claude TETE)
   (defun rtrt-align-ev (start end)
@@ -62,7 +64,7 @@
     (interactive (clt-get-line-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "\\bev[ ]*[=i(]") 1 1)
+    (align-regexp start end (concat "\\(\\s-*\\)" "\\bev\\(\\s-*[=(]\\|\\s-+in\\b\\)") 1 1)
     )
   ;;; align "expected value" and "init" in ptu script for rtrt (by Claude TETE)
   (defun rtrt-align-declaration (start end)
@@ -84,7 +86,15 @@
     (interactive (clt-get-paragraph-position))
     (unless (and start end)
       (error "The mark is not set now, so there is no region"))
-    (align-regexp start end (concat "\\(\\s-*\\)" "[-+=]?=") 1 1)
+    (align-regexp start end (concat "\\(\\s-*\\)" "[-\\*/&|+=]?=") 1 1)
+    )
+  ;;; align stub call "digit =>" in ptu script for RTRT (by Claude TETE)
+  (defun rtrt-align-stub (start end)
+    "Align => (between START and END)."
+    (interactive (clt-get-paragraph-position))
+    (unless (and start end)
+      (error "The mark is not set now, so there is no region"))
+    (align-regexp start end (concat "\\(\\s-*\\)" "[0-9]+\\(\\.\\.[0-9]\\)?\\s-*=>") 1 1)
     )
 
 ;;

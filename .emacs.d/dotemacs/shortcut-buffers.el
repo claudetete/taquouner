@@ -144,7 +144,7 @@
 (when section-mode-auctex
   (add-hook 'LaTeX-mode-hook '
     (lambda ()
-      (local-set-key    (kbd "<f10>")           'auctex-save-compile-and-view)
+      (local-set-key    (kbd "<f10>")           'auctex-save-and-compile)
       )))
 
 

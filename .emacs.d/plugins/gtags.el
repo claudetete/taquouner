@@ -24,9 +24,8 @@
 
 ;; GLOBAL home page is at: http://www.gnu.org/software/global/
 ;; Author: Tama Communications Corporation
-;; Version: 3.4
+;; Version: 3.7
 ;; Keywords: tools
-;; Required version: GLOBAL 5.9.7 or later.
 
 ;; Gtags-mode is implemented as a minor mode so that it can work with any
 ;; other major modes. Gtags-select mode is implemented as a major mode.
@@ -77,6 +76,7 @@
 ;; TODO add optional parameter to function already present to add my
 ;; customization
 
+
 ;;; Code
 
 (defvar gtags-mode nil
@@ -96,6 +96,13 @@
   :type '(choice (const :tag "Relative from the root of the current project" root)
                  (const :tag "Relative from the current directory" relative)
                  (const :tag "Absolute" absolute))
+  :group 'gtags)
+
+(defcustom gtags-ignore-case 'follow-case-fold-search
+  "*Controls whether or not ignore case in each search."
+  :type '(choice (const :tag "Follows case-fold-search variable" follow-case-fold-search)
+                 (const :tag "Ignore case" t)
+                 (const :tag "Distinguish case" nil))
   :group 'gtags)
 
 (defcustom gtags-read-only nil
@@ -137,6 +144,11 @@
   "*If non-nil, it is used for the prefix key of gtags-xxx command."
   :group 'gtags
   :type 'string)
+
+(defcustom gtags-auto-update nil
+  "*If non-nil, tag files are updated whenever a file is saved."
+  :type 'boolean
+  :group 'gtags)
 
 ;; Variables
 (defvar gtags-current-buffer nil
@@ -188,8 +200,12 @@
       (define-key gtags-mode-map "\e." 'gtags-find-tag)
       (define-key gtags-mode-map "\C-x4." 'gtags-find-tag-other-window)
       (if gtags-disable-pushy-mouse-mapping nil
-        (define-key gtags-mode-map [mouse-3] 'gtags-pop-stack)
-        (define-key gtags-mode-map [mouse-2] 'gtags-find-tag-by-event)))
+        (if gtags-running-xemacs nil
+          (define-key gtags-mode-map [mouse-3] 'gtags-pop-stack)
+          (define-key gtags-mode-map [mouse-2] 'gtags-find-tag-by-event))
+        (if (not gtags-running-xemacs) nil
+          (define-key gtags-mode-map 'button3 'gtags-pop-stack)
+          (define-key gtags-mode-map 'button2 'gtags-find-tag-by-event))))
 )
 ;; Key mapping of old gtags-mode (obsoleted)
 (if (and gtags-suggested-key-mapping gtags-use-old-key-map)
@@ -211,8 +227,12 @@
       (define-key gtags-mode-map "\e." 'gtags-find-tag)
       (define-key gtags-mode-map "\C-x4." 'gtags-find-tag-other-window)
       (if gtags-disable-pushy-mouse-mapping nil
-        (define-key gtags-mode-map [mouse-3] 'gtags-pop-stack)
-        (define-key gtags-mode-map [mouse-2] 'gtags-find-tag-by-event)))
+        (if gtags-running-xemacs nil
+          (define-key gtags-mode-map [mouse-3] 'gtags-pop-stack)
+          (define-key gtags-mode-map [mouse-2] 'gtags-find-tag-by-event))
+        (if (not gtags-running-xemacs) nil
+          (define-key gtags-mode-map 'button3 'gtags-pop-stack)
+          (define-key gtags-mode-map 'button2 'gtags-find-tag-by-event))))
 )
 
 ;; Key mapping of gtags-select-mode.
@@ -235,8 +255,12 @@
       (define-key gtags-select-mode-map "\C-o" 'gtags-select-tag-other-window)
       (define-key gtags-select-mode-map "\e." 'gtags-select-tag)
       (if gtags-disable-pushy-mouse-mapping nil
-        (define-key gtags-select-mode-map [mouse-3] 'gtags-pop-stack)
-        (define-key gtags-select-mode-map [mouse-2] 'gtags-select-tag-by-event)))
+        (if gtags-running-xemacs nil
+          (define-key gtags-select-mode-map [mouse-3] 'gtags-pop-stack)
+          (define-key gtags-select-mode-map [mouse-2] 'gtags-select-tag-by-event))
+        (if (not gtags-running-xemacs) nil
+          (define-key gtags-select-mode-map 'button3 'gtags-pop-stack)
+          (define-key gtags-select-mode-map 'button2 'gtags-select-tag-by-event))))
 )
 
 ;;
@@ -263,7 +287,6 @@
           (match-string 3 buffer-file-name)
           buffer-file-name)
       nil))
-
 (defun gtags-push-tramp-environment ()
     (let ((tramp-path default-directory))
       (if (string-match gtags-tramp-path-regexp tramp-path)
@@ -320,8 +343,28 @@
 ;; End of TRAMP support
 
 ;;
+;; Invoked on saving a file.
+;;
+(defun gtags-auto-update ()
+    (if (and gtags-mode gtags-auto-update buffer-file-name)
+        (progn
+          (gtags-push-tramp-environment)
+          (call-process gtags-global-command nil nil nil "-u" (concat "--single-update=" (gtags-buffer-file-name)))
+          (gtags-pop-tramp-environment))))
+;;
 ;; utility
 ;;
+;; Ignore case or not.
+(defun gtags-ignore-casep ()
+    (if (equal gtags-ignore-case 'follow-case-fold-search)
+	case-fold-search
+        gtags-ignore-case))
+
+(eval-and-compile
+  (if (not (fboundp 'replace-in-string))
+      (defun replace-in-string (which from-str to-str)
+        (replace-regexp-in-string from-str to-str which))))
+
 (defun gtags-match-string (n)
   (buffer-substring (match-beginning n) (match-end n)))
 
@@ -369,7 +412,7 @@
           1
         (count-lines (point-min) (point))))))
 
-;; completsion function for completing-read.
+;; completion function for completing-read.
 (defun gtags-completing-gtags (string predicate code)
   (gtags-completing 'gtags string predicate code))
 (defun gtags-completing-grtags (string predicate code)
@@ -392,7 +435,7 @@
                       (t                  "-c")))
         (complete-list (make-vector 63 0))
         (prev-buffer (current-buffer)))
-    (if case-fold-search
+    (if (gtags-ignore-casep)
         (setq option (concat option "i")))
     ; build completion list
     (set-buffer (generate-new-buffer "*Completions*"))
@@ -426,8 +469,7 @@
     (save-excursion
       (setq buffer (generate-new-buffer (generate-new-buffer-name "*rootdir*")))
       (set-buffer buffer)
-      (setq n (call-process gtags-global-command nil t nil "-pr"))
-      (if (= n 0)
+      (if (= (call-process gtags-global-command nil t nil "-pr") 0)
         (setq path (file-name-as-directory (buffer-substring (point-min)(1- (point-max))))))
       (kill-buffer buffer))
     path))
@@ -440,7 +482,7 @@
     (while (setq start (string-match "%\\([0-9a-f][0-9a-f]\\)" path))
       (setq result (concat result
                      (substring path 0 start)
-                     (format "%c" (string-to-int (substring path (match-beginning 1) (match-end 1)) 16))))
+                     (format "%c" (string-to-number (substring path (match-beginning 1) (match-end 1)) 16))))
       (setq path (substring path (match-end 1))))
     (concat result path)))
 ;;
@@ -449,7 +491,7 @@
 (defun gtags-visit-rootdir ()
   "Tell tags commands the root directory of source tree."
   (interactive)
-  (let (path input n)
+  (let (path input)
     (setq path gtags-rootdir)
     (if (not path)
         (setq path (gtags-get-rootpath)))
@@ -564,12 +606,14 @@
         (message "Please specify an existing source file.")
        (setq tagname input)
        (gtags-push-context)
+       ; expand the file name (~->$HOME))
+       (setq tagname (expand-file-name tagname))
        (gtags-goto-tag tagname "f"))))
 
 (defun gtags-find-tag-from-here ()
   "Get the expression as a tagname around here and move there."
   (interactive)
-  (let (tagname flag)
+  (let (tagname)
     (setq tagname (gtags-current-token))
     (if (not tagname)
         nil
@@ -585,8 +629,7 @@
       (message "This is a null file.")
       (if (not buffer-file-name)
           (message "This buffer doesn't have the file name.")
-          ;;FIXME working environment default
-          (call-process "d:/cygwin/usr/local/bin/gozilla.exe"  nil nil nil (concat "+" (number-to-string (gtags-current-lineno))) (gtags-buffer-file-name)))))
+          (call-process "gozilla"  nil nil nil (concat "+" (number-to-string (gtags-current-lineno))) (gtags-buffer-file-name)))))
 
 ; Private event-point
 ; (If there is no event-point then we use this version.
@@ -638,7 +681,7 @@
 (defun gtags-pop-stack ()
   "Move to previous point on the stack."
   (interactive)
-  (let (delete context buffer)
+  (let (delete context)
     (if (and (not (equal gtags-current-buffer nil))
              (not (equal gtags-current-buffer (current-buffer))))
          (switch-to-buffer gtags-current-buffer)
@@ -666,12 +709,15 @@
   (let (option context save prefix buffer lines flag-char)
     (setq save (current-buffer))
     (setq flag-char (string-to-char flag))
+    (if (equal flag-char nil)
+        (setq flag-char (string-to-char " ")))
     ; Use always ctags-x format.
     (setq option "-x")
-    (if case-fold-search
+    (if (gtags-ignore-casep)
         (setq option (concat option "i")))
     (if (char-equal flag-char ?C)
-        (setq context (concat "--from-here=" (number-to-string (gtags-current-lineno)) ":" (gtags-buffer-file-name)))
+	; replaces the Windows path delimiter (\\) by / which is understood by global.
+        (setq context (concat "--from-here=" (number-to-string (gtags-current-lineno)) ":" (replace-in-string (gtags-buffer-file-name) "\\\\" "/")))
         (setq option (concat option flag)))
     (cond
      ((char-equal flag-char ?C)
@@ -845,7 +891,6 @@
     (setq tagname (concat tagname "(\\[.*\\])?[ ]*[-+\*/]?="))
     (gtags-goto-tag tagname (if gtags-grep-all-text-files "go" "g"))))
 
-
 ;;;###autoload
 (defun gtags-mode (&optional forces)
   "Toggle Gtags mode, a minor mode for browsing source code using GLOBAL.
@@ -883,15 +928,18 @@ Turning on Gtags mode calls the value of the variable `gtags-mode-hook'
 with no args, if that value is non-nil."
   (interactive)
   (unless (assq 'gtags-mode minor-mode-alist)
-    (push '(gtags-mode " Gtags") minor-mode-alist))
+      (push '(gtags-mode " Gtags") minor-mode-alist))
   (or (assq 'gtags-mode minor-mode-alist)
-    (setq minor-mode-alist (cons '(gtags-mode " Gtags") minor-mode-alist)))
+      (setq minor-mode-alist (cons '(gtags-mode " Gtags") minor-mode-alist)))
   (or (assq 'gtags-mode minor-mode-map-alist)
       (setq minor-mode-map-alist
       (cons (cons 'gtags-mode gtags-mode-map) minor-mode-map-alist)))
   (setq gtags-mode
       (if (null forces) (not gtags-mode)
         (> (prefix-numeric-value forces) 0)))
+  (if gtags-mode
+      (add-hook 'after-save-hook 'gtags-auto-update)
+      (remove-hook 'after-save-hook 'gtags-auto-update))
   (run-hooks 'gtags-mode-hook)
 )
 

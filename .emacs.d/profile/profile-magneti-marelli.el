@@ -89,8 +89,8 @@
   (setq section-mode-cedet t)
   (progn
     (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
-    (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
-    (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe"))
+    (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_628wb/bin/global.exe"))
+    (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_628wb/bin/gtags.exe"))
     (setq section-mode-cedet-semantic t)
     (progn
       (setq profile-ede-project
@@ -189,9 +189,6 @@
   (setq section-mode-isearch+ nil)
   (setq section-mode-psvn nil)
   (setq section-mode-powerline nil)
-  (progn
-    (setq profile-powerline-size "big")
-    )
   (setq section-mode-nyan nil)
   (setq section-mode-sml nil)
   (setq section-mode-dired t)

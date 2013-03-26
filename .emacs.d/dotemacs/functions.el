@@ -1079,6 +1079,13 @@ line instead."
 
 ;;
 ;;;
+;;;; DELETE
+(defun just-one-space-or-line ()
+  (interactive)
+  )
+
+;;
+;;;
 ;;;; MAGNETI MARELLI
 (when section-function-mm
   (try-require 'function-mm "    ")

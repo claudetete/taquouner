@@ -166,9 +166,9 @@
     ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
     (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
     ;; path of gnu global executable
-    (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_622wb/bin/global.exe"))
+    (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_628wb/bin/global.exe"))
     ;; path of gnu global executable
-    (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_622wb/bin/gtags.exe"))
+    (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_628wb/bin/gtags.exe"))
     ;;
     ;; SEMANTIC: can do tag, list of function/variable..., preproc, etc
     (setq section-mode-cedet-semantic t)
@@ -310,11 +310,6 @@
   (setq section-mode-psvn nil)
   ;; POWERLINE: fancy modeline
   (setq section-mode-powerline t)
-  (progn
-    ;; height of modeline for powerline mode ("small", "medium" or "big")
-    ;; if nothing or empty the default is "big"
-    (setq profile-powerline-size "big")
-    ) ; (progn
   ;; NYAN: add bar in modeline given position in buffer
   (setq section-mode-nyan nil)
   ;; SML: add bar in modeline given position in buffer
@@ -670,8 +665,8 @@
 (setq section-misc t)
 (progn
   ;; backup directory
-  (setq profile-backup-directory (concat dotemacs-path "/backup"))
-  (setq profile-autosave-directory (concat dotemacs-path "/cache"))
+  (setq profile-backup-directory nil)
+  (setq profile-autosave-directory nil)
   ;; use by fill-xxx or fill column indicator mode
   (setq profile-fill-column 80)
   ;; browser to open url

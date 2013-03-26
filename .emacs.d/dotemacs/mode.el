@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.0
+;; Version: 4.1
 ;; Created: October 2006
-;; Last-Updated: February 2013
+;; Last-Updated: March 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2013-03-26 (4.1)
+;;    update powerline mode
 ;; 2013-02-05 (4.0)
 ;;    add auctex mode
 ;; 2012-12-27 (3.9)
@@ -600,27 +602,11 @@
 ;;; POWERLINE
 ;; REQUIREMENT: var     `section-mode-powerline'
 (when section-mode-powerline (message "  2.36 Powerline...")
-  (try-require 'cl "    ")
   (when running-on-emacs-23
     ;; in Emacs 23 it was not define
     (defun get-scroll-bar-mode () scroll-bar-mode)
     (defsetf get-scroll-bar-mode set-scroll-bar-mode))
   (try-require 'powerline "    ")
-
-  (cond
-    ((string= profile-powerline-size "small")
-      ;; set smallest arrow for modeline
-      (setq powerline-arrow-shape 'arrow10))
-    ((string= profile-powerline-size "medium")
-      ;; set medium arrow for modeline
-      (setq powerline-arrow-shape 'arrow14))
-    ((string= profile-powerline-size "big")
-      ;; set big arrow for modeline
-      (setq powerline-arrow-shape 'arrow18))
-    ((string= profile-powerline-size "")
-      ;; set big arrow for modeline
-      (setq powerline-arrow-shape 'arrow18))
-    ) ; (cond
   (message "  2.36 Powerline... Done"))
 
 ;;
