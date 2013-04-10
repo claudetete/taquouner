@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.4
+;; Version: 5.5
 ;; Created: October 2006
-;; Last-Updated: February 2013
+;; Last-Updated: March 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,9 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2013-03-29 (5.5)
+;;    use url-hexify-string for web string + new function to indent function +
+;;    add mixtab
 ;; 2013-02-05 (5.4)
 ;;    add function to get region or paragraph
 ;; 2012-12-27 (5.3)
@@ -210,6 +213,17 @@
       )
     )
   )
+
+;;
+;;;
+;;;; INDENT
+;;; indent the whole function (thanks to http://emacsredux.com/blog/2013/03/28/indent-defun/)
+(defun indent-defun ()
+  "Indent the current defun."
+  (interactive)
+  (save-excursion
+    (mark-defun)
+    (indent-region (region-beginning) (region-end))))
 
 ;;
 ;;;
@@ -595,7 +609,7 @@
         100)
     (set-frame-parameter nil 'alpha '(100 100))
     (set-frame-parameter nil 'alpha '(85 50))))
-(global-set-key (kbd "C-c t") 'toggle-transparency)
+;;(global-set-key (kbd "C-c t") 'toggle-transparency)
 
 ;;
 ;;;
@@ -815,10 +829,10 @@ line instead."
       (if (use-region-p)
         (browse-url-generic
           (concat "http://translate.google.fr/?hl=&ie=UTF-8&text=&sl=fr&tl=en#fr|en|"
-            string))
+            (url-hexify-string string)))
         (browse-url-generic
           (concat "http://www.wordreference.com/fren/"
-            string))
+            (url-hexify-string string)))
         )
       )
     )
@@ -832,10 +846,10 @@ line instead."
       (if (use-region-p)
         (browse-url-generic
           (concat "http://translate.google.fr/?hl=&ie=UTF-8&text=&sl=en&tl=fr#en|fr|"
-            string))
+            (url-hexify-string string)))
         (browse-url-generic
           (concat "http://www.wordreference.com/enfr/"
-            string))
+            (url-hexify-string string)))
         )
       (message "No word at point or no mark set")
       )
@@ -848,7 +862,7 @@ line instead."
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
-        (concat "http://fr.wikipedia.org/wiki/Special:Search?search=" string))
+        (concat "http://fr.wikipedia.org/wiki/Special:Search?search=" (url-hexify-string string)))
       (message "No word at point or no mark set")
       )
     )
@@ -861,7 +875,7 @@ line instead."
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
-        (concat "http://en.wikipedia.org/wiki/Special:Search?search=" string))
+        (concat "http://en.wikipedia.org/wiki/Special:Search?search=" (url-hexify-string string)))
       (message "No word at point or no mark set")
       )
     )
@@ -874,7 +888,7 @@ line instead."
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
-        (concat "http://www.synonymes.com/synonyme.php?mot=" string "&x=0&y=0"))
+        (concat "http://www.synonymes.com/synonyme.php?mot=" (url-hexify-string string) "&x=0&y=0"))
 	  )
     )
   )
@@ -886,7 +900,7 @@ line instead."
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
-        (concat "http://www.leconjugueur.com/php5/index.php?v=" string))
+        (concat "http://www.leconjugueur.com/php5/index.php?v=" (url-hexify-string string)))
       (message "No word at point or no mark set")
       )
     )
@@ -899,7 +913,7 @@ line instead."
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
-        (concat "http://www.google.fr/search?hl=fr&hs=0HH&q=" string
+        (concat "http://www.google.fr/search?hl=fr&hs=0HH&q=" (url-hexify-string string)
           "&btnG=Rechercher&meta=&num=100&as_qdr=a&as_occt=any"))
       (message "No word at point or no mark set")
       )
@@ -912,7 +926,7 @@ line instead."
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
-        (concat "http://www.google.fr/search?hl=en&hs=0HH&q=" string
+        (concat "http://www.google.fr/search?hl=en&hs=0HH&q=" (url-hexify-string string)
           "&btnG=Rechercher&meta=&num=100&as_qdr=a&as_occt=any"))
       (message "No word at point or no mark set")
       )
@@ -1026,6 +1040,36 @@ line instead."
     (TeX-save-document "")
     (TeX-command "LaTeX" 'TeX-active-master 0))
   )
+
+;;
+;;;
+;;;; MIXTAB
+;; mix between smart tab and tabkey2 to have tab key OK and double tab key to
+;; fold (some code from smart-tab.el and pc-keys.el)
+(when section-mode-fold-dwim
+  (defun mixtab-indent ()
+    "Indent region if mark is active, or current line otherwise."
+    (interactive)
+    (if smart-tab-debug
+      (message "default"))
+    (if (use-region-p)
+      (indent-region (region-beginning)
+        (region-end))
+      (indent-for-tab-command)))
+  ;; bind to tab key
+  (defun mixtab ()
+    "First hitting key indent even if selection, second in a row fold the source
+at the point."
+    (interactive)
+    (let* ((keys (recent-keys))
+            (len (length keys))
+            (key1 (if (> len 0) (elt keys (- len 1)) nil))
+            (key2 (if (> len 1) (elt keys (- len 2)) nil))
+            (key-equal-1 (equal key1 key2)))
+      (if (and section-mode-fold-dwim key-equal-1)
+        (fold-dwim-toggle)
+        (tab-indent))))
+  ) ; (when section-mode-fold-dwim
 
 ;;
 ;;;

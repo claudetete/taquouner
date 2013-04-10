@@ -1,6 +1,6 @@
 ;;; shortcut-windows.el --- a config file for windows shortcut
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-04-10 (1.6)
+;;    bind myself windmove to add ignore error
 ;; 2012-08-01 (1.5)
 ;;    use smart resize from functions.el
 ;; 2012-07-09 (1.4)
@@ -48,14 +50,21 @@
 
 
 ;;; Code:
-;;;; switch between window (like 'C-x o' but can be easily repeat
-;;;; use S-arrow to navigate between windows
-;;(global-set-key         "\M-s"                  'other-window)
-
 ;; use default binding to move between window
-;; S-arrow
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
+;; S-arrow (add ignore-error from `windmove-default-keybindings')
+(global-set-key         (kbd "<S-left>")        '(lambda ()
+                                                   (interactive)
+                                                   (ignore-errors (windmove-left))))
+(global-set-key         (kbd "<S-right>")       '(lambda ()
+                                                   (interactive)
+                                                   (ignore-errors (windmove-right))))
+(global-set-key         (kbd "<S-up>")          '(lambda ()
+                                                   (interactive)
+                                                   (ignore-errors (windmove-up))))
+(global-set-key         (kbd "<S-down>")        '(lambda ()
+                                                   (interactive)
+                                                   (ignore-errors (windmove-down))))
+
 
 ;; resize window more easily (before `C-x {'...)
 ;; vertical

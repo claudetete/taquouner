@@ -1,6 +1,6 @@
 ;;; mode-ecb.el --- a config file for ecb mode settings
 
-;; Copyright (c) 2010-2012 Claude Tete
+;; Copyright (c) 2010-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.7
+;; Version: 2.8
 ;; Created: August 2010
-;; Last-Updated: December 2012
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2013-04-10 (2.8)
+;;    add browse kill ring + undo tree + helm mode in compile window
 ;; 2012-12-27 (2.7)
 ;;    update dot emacs path
 ;; 2012-12-03 (2.6)
@@ -202,6 +204,9 @@
                 ("\\*Symref .*" . t)
                 ("*ECB Analyse*")
                 ("\\*[Aa]ck.*\\*" . t)
+                ("*Kill Ring*")
+                ("\\s-*\\*undo-tree\\*" . t)
+                ("\\*.*helm.*\\*" . t)
                 )))
 
     ;; auto expand tree

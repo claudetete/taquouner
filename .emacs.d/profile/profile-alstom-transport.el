@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.6
+;; Version: 0.7
 ;; Created: June 2012
-;; Last-Updated: February 2013
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2013-04-10 (0.7)
+;;    add helm mode and disable some mode to speed up emacs
 ;; 2013-02-05 (0.6)
 ;;    add ghostscript in path for ps2pdf and auctex + change powerline color
 ;; 2012-12-05 (0.5)
@@ -321,11 +323,11 @@
     (setq profile-cleartool "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/cleartool.exe")
     ) ; (progn
   ;; CLEARCASE: ClearCase mode (not used)
-  (setq section-mode-clearcase t)
+  (setq section-mode-clearcase nil)
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq section-mode-autohotkey t)
   ;; OUTLINE: Outline mode to manually hide/show source code block
-  (setq section-mode-outline t)
+  (setq section-mode-outline nil)
   ;; AUTO HIGHLIGHT SYMBOL: to automatically highlight symbol at point
   (setq section-mode-auto-highlight-symbol t)
   ;; GOOGLE CALENDAR: to import Google calendar
@@ -372,11 +374,11 @@
   ;; DIRED DETAILS: show hide details in dired mode
   (setq section-mode-dired-details t)
   ;; SMART TAB: expand or indent at the point with tab
-  (setq section-mode-smart-tab t)
+  (setq section-mode-smart-tab nil)
   ;; FOLD DWIM: show hide code source block
   (setq section-mode-fold-dwim t)
   ;; DIRED LETTER ISEARCH: activate by default isearch in dired mode
-  (setq section-mode-dired-lis t)
+  (setq section-mode-dired-lis nil)
   ;; NXHTML: enhance html mode
   (setq section-mode-nxhtml nil)
   ;; FASTNAV: fast navigation like with zap-to-char but only to move
@@ -399,6 +401,26 @@
   (setq section-mode-ps2pdf t)
   ;; AUCTEX: latex mode
   (setq section-mode-auctex t)
+  ;; HELM: helm mode (fork of anything mode)
+  (setq section-mode-helm t)
+  (progn
+    ;; replace bookmark list
+    (setq section-mode-helm-bookmark t)
+    ;; replace electric buffer list
+    (setq section-mode-helm-buffers-list t)
+    ;; replace browse kill ring
+    (setq section-mode-helm-kill-ring t)
+    ;; replace M-x
+    (setq section-mode-helm-M-x nil)
+    ;; replace occur
+    (setq section-mode-helm-occur t)
+    ;; replace find files C-x C-f
+    (setq section-mode-helm-find-files t)
+    ;; replace recentf
+    (setq section-mode-helm-recentf t)
+    ;; add imenu bind
+    (setq section-mode-helm-imenu t)
+    ) ; (progn
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (progn

@@ -55,6 +55,7 @@
 ;;; Code:
 
 (require 'easy-mmode)
+(require 'fold-dwim)
 
 (eval-when-compile
   ;; Forward declaration, does not define variable
@@ -160,11 +161,7 @@ active)."
          (key2 (if (> len 1) (elt keys (- len 2)) nil))
          (key-equal-1 (equal key1 key2)))
     (if key-equal-1
-;;;; END HERE
-      (if (smart-tab-must-expand prefix)
-        (smart-tab-call-completion-function)
-        (smart-tab-default))
-;;;; START HERE
+      (fold-dwim-toggle)
       (smart-tab-default)))
 ;;;; END HERE
   )

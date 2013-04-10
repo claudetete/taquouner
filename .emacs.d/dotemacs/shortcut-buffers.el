@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.0
 ;; Created: October 2006
-;; Last-Updated: February 2013
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-04-10 (2.0)
+;;    add shortcut for helm mode + clean up
 ;; 2013-02-05 (1.9)
 ;;    add shortcut for auctex mode
 ;; 2012-12-27 (1.8)
@@ -61,10 +63,15 @@
 (global-set-key         (kbd "M-`")             'kill-this-buffer)
 ;;
 ;; show a list of buffers in a new window
-(global-set-key         (kbd "C-x C-b")         'electric-buffer-list)
+;; to replace electric buffers list with helm buffers list
+(if section-mode-helm-buffers-list
+  (global-set-key       (kbd "C-x C-b")         'helm-buffers-list)
+  (global-set-key       (kbd "C-x C-b")         'electric-buffer-list))
 ;;
 ;; show the window of bookmark
-(global-set-key         "\C-cb"                 'bookmark-bmenu-list)
+(if section-mode-helm-bookmark
+  (global-set-key       (kbd "C-c b")           'helm-bookmarks)
+  (global-set-key       (kbd "C-c b")           'bookmark-bmenu-list))
 
 ;;;; go to the next buffer (like new editor which I never like it)
 ;;(global-set-key         [(control tab)]         'previous-user-buffer)
@@ -74,9 +81,9 @@
 
 ;; switch to grep or ack buffer
 (global-set-key         (kbd "M-2")             'switch-to-grep-ack-buffer)
-;; switch to compile buffer
+;; switch to bookmark buffer
 (global-set-key         (kbd "M-3")             'switch-to-bookmark-buffer)
-;; switch to occur buffer
+;; switch to compile buffer
 (global-set-key         (kbd "M-4")             'switch-to-compilation-buffer)
 ;; switch to vc buffer
 (global-set-key         (kbd "M-5")             'switch-to-vc-buffer)
@@ -87,9 +94,9 @@
   (lambda ()
     ;; switch to grep or ack buffer
     (local-set-key      (kbd "M-2")             'switch-to-grep-ack-buffer)
-    ;; switch to compile buffer
+    ;; switch to bookmark buffer
     (local-set-key      (kbd "M-3")             'switch-to-bookmark-buffer)
-    ;; switch to occur buffer
+    ;; switch to compile buffer
     (local-set-key      (kbd "M-4")             'switch-to-compilation-buffer)
     ;; switch to vc buffer
     (local-set-key      (kbd "M-5")             'switch-to-vc-buffer)
@@ -139,8 +146,7 @@
     ) ; (if section-mode-cedet-ecb
   ) ; (when section-mode-subversion
 
-
-;;
+;; only in auctex mode, f10 can save compile LaTeX source
 (when section-mode-auctex
   (add-hook 'LaTeX-mode-hook '
     (lambda ()

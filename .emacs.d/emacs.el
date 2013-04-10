@@ -22,7 +22,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 8.6
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: February 2013
 
 ;;; Commentary:
 ;;
@@ -682,6 +682,28 @@ before message."
   ;; AUCTEX                                                             2.54
   ;; latex mode
   (defvar section-mode-auctex nil)
+  ;;
+  ;; HELM                                                               2.55
+  ;; helm mode (fork of anything mode)
+  (defvar section-mode-helm nil)
+  (progn
+    ;; replace bookmark list
+    (defvar section-mode-helm-bookmark t)
+    ;; replace electric buffer list
+    (defvar section-mode-helm-buffers-list t)
+    ;; replace browse kill ring
+    (defvar section-mode-helm-kill-ring t)
+    ;; replace M-x
+    (defvar section-mode-helm-M-x nil)
+    ;; replace occur
+    (defvar section-mode-helm-occur t)
+    ;; replace find files C-x C-f
+    (defvar section-mode-helm-find-files t)
+    ;; replace recentf
+    (defvar section-mode-helm-recentf t)
+    ;; add imenu bind
+    (defvar section-mode-helm-imenu t)
+    ) ; (progn
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.0
+;; Version: 3.1
 ;; Created: October 2006
-;; Last-Updated: March 2013
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-04-08 (3.1)
+;;    shortcut for 'indent function' function
 ;; 2013-03-26 (3.0)
 ;;    add a shortcut for function to align stub in rtrt scripts
 ;; 2013-02-05 (2.9)
@@ -215,8 +217,13 @@
 ;;
 ;;; SEARCH
 ;; navigate to start/end of balance expressions
-(global-set-key (kbd "M-[") 'find-matching-keyword)
-(global-set-key (kbd "M-]") 'find-matching-keyword)
+(global-set-key         (kbd "M-[")             'find-matching-keyword)
+(global-set-key         (kbd "M-]")             'find-matching-keyword)
+
+;;
+;;; INDENT
+;; indent the whole function
+(global-set-key         (kbd "C-M-|")           'indent-defun)
 
 
 (provide 'shortcut-function)

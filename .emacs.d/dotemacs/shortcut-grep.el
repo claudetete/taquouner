@@ -1,6 +1,6 @@
 ;;; shortcut-grep.el --- a config file for grep shortcut
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-04-10 (1.9)
+;;    add helm mode shortcut
 ;; 2012-12-04 (1.8)
 ;;    remove compile shortcut
 ;; 2012-11-29 (1.7)
@@ -73,10 +75,21 @@
 
 ;; search all occurrences in the current buffer
 ;; (more like modern graphical editor)
-(global-set-key         (kbd "C-c e")           'occur)
+(if section-mode-helm-occur
+  (global-set-key       (kbd "C-c e")           'helm-occur)
+  (global-set-key       (kbd "C-c e")           'occur))
 
 ;; search a file in a directory (recursively) to open it
 (global-set-key         (kbd "M-f")             'find-name-dired)
+
+;;
+;;; HELM
+;; to replace find file by helm find file
+(when section-mode-helm-find-files
+  (global-set-key       (kbd "C-x C-f")         'helm-find-files))
+;;
+(when section-mode-helm-recentf
+  (global-set-key       (kbd "C-c f")           'helm-recentf))
 
 ;; search the word at point (cannot bind C-M-x still run 'eval-defun)
 (global-set-key         (kbd "C-M-v")           'isearch-forward-at-point)

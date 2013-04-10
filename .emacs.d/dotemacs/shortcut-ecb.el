@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: August 2010
-;; Last-Updated: March 2013
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-ecb'
 
 ;;; Change Log:
+;; 2013-04-10 (1.9)
+;;    add shortcut to update ecb directory window
 ;; 2013-03-26 (1.8)
 ;;    fix bug with ecb directories window and f2 shortcut
 ;; 2013-01-18 (1.7)
@@ -94,6 +96,7 @@
        (local-set-key   (kbd "<M-return>")      'ecb-dired-directory)
        (local-set-key   (kbd "<escape>")        'ecb-cancel)
        (local-set-key   (kbd "M-q")             'ecb-toggle-maximize)
+       (local-set-key   (kbd "M-r")             'ecb-update-directories-buffer)
        ;; hide/show ecb compile window
        (local-set-key   (kbd "<f2>")            'ecb-toggle-compile)
        ))

@@ -1,7 +1,6 @@
 ;; mail.el --- a config file for mail mode
 
 ;; Copyright (c) 2012-2013 Claude Tete
-
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;

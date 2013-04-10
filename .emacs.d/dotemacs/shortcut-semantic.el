@@ -1,6 +1,6 @@
 ;;; shortcut-semantic.el --- a config file for semantic mode shortcut
 
-;; Copyright (c) 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2010-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: October 2010
-;; Last-Updated: August 2012
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-semantic'
 
 ;;; Change Log:
+;; 2013-04-10 (1.5)
+;;    add helm imenu shortcut
 ;; 2012-08-01 (1.4)
 ;;    fix bug with Shift+Click, Back on mouse work with semantic, right click
 ;;    display a menu like ecb method
@@ -69,6 +71,9 @@
 
   ;; right click will open menu with list of variable/function/include
   (global-set-key       (kbd "<mouse-3>")               'imenu)
+  ;; add helm menu shortcut
+  (when section-mode-helm-imenu
+    (global-set-key     (kbd "C-c C-f")                 'helm-imenu))
 
 )
 

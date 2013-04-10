@@ -1,6 +1,6 @@
 ;;; profile-default.el --- a config file for profile
 
-;; Copyright (c) 2012 Claude Tete
+;; Copyright (c) 2012-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.8
+;; Version: 0.9
 ;; Created: June 2012
-;; Last-Updated: December 2012
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2013-04-10 (0.9)
+;;    add helm mode
 ;; 2012-12-27 (0.8)
 ;;    function to add settings after all this configuration
 ;; 2012-12-05 (0.7)
@@ -352,6 +354,26 @@
   (setq section-mode-ps2pdf t)
   ;; AUCTEX: latex mode
   (setq section-mode-auctex nil)
+  ;; HELM: helm mode (fork of anything mode)
+  (setq section-mode-helm nil)
+  (progn
+    ;; replace bookmark list
+    (setq section-mode-helm-bookmark t)
+    ;; replace electric buffer list
+    (setq section-mode-helm-buffers-list t)
+    ;; replace browse kill ring
+    (setq section-mode-helm-kill-ring t)
+    ;; replace M-x
+    (setq section-mode-helm-M-x nil)
+    ;; replace occur
+    (setq section-mode-helm-occur t)
+    ;; replace find files C-x C-f
+    (setq section-mode-helm-find-files t)
+    ;; replace recentf
+    (setq section-mode-helm-recentf t)
+    ;; add imenu bind
+    (setq section-mode-helm-imenu t)
+    ) ; (progn
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (progn

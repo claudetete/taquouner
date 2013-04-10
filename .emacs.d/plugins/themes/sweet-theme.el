@@ -1,6 +1,6 @@
 ;;; sweet-theme.el --- A sweet theme with a lot of color
 
-;; Copyright (c) 2012 Claude Tete
+;; Copyright (c) 2012-2013 Claude Tete
 
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs, color, theme
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: April 2012
-;; Last-Updated: November 2012
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;; from the custom color I was manually set, with a lot of polish to have less
@@ -31,6 +31,8 @@
 ;;
 
 ;;; Change Log:
+;; 2013-04-10 (1.4)
+;;    add helm mode
 ;; 2012-11-27 (1.3)
 ;;    change compile color
 ;; 2012-06-18 (1.2)
@@ -104,121 +106,131 @@
     'sweet
 
     ;; basic
-    `(default ((,class (:foreground ,sweet-fg :background ,sweet-bg))))
-    `(cursor ((,class (:background ,sweet-pink-1))))
-    `(escape-glyph ((,class (:foreground ,sweet-cyan))))
-    `(fringe ((,class (:background ,sweet-bg-2))))
-    `(header-line ((,class (:background ,sweet-bg-2 :foreground ,sweet-fg+1))))
-    `(highlight ((,class (:background ,sweet-bg-3))))
-    `(hl-line ((,class (:background ,sweet-bg-2))))
-    `(lazy-highlight ((,class (:background ,sweet-red+2))))
-    `(link ((,class (:foreground ,sweet-green))))
-    `(link-visited ((,class (:foreground ,sweet-pink+2))))
-    `(shadow ((,class (:foreground ,sweet-orange))))
-    `(underline ((,class (:background ,sweet-bg-2))))
+    `(default         ((,class (:foreground ,sweet-fg :background ,sweet-bg))))
+    `(cursor          ((,class (:background ,sweet-pink-1))))
+    `(escape-glyph    ((,class (:foreground ,sweet-cyan))))
+    `(fringe          ((,class (:background ,sweet-bg-2))))
+    `(header-line     ((,class (:background ,sweet-bg-2 :foreground ,sweet-fg+1))))
+    `(highlight       ((,class (:background ,sweet-bg-3))))
+    `(hl-line         ((,class (:background ,sweet-bg-2))))
+    `(lazy-highlight  ((,class (:background ,sweet-red+2))))
+    `(link            ((,class (:foreground ,sweet-green))))
+    `(link-visited    ((,class (:foreground ,sweet-pink+2))))
+    `(shadow          ((,class (:foreground ,sweet-orange))))
+    `(underline       ((,class (:background ,sweet-bg-2))))
     `(vertical-border ((,class (nil))))
-    `(region ((,class (:background ,sweet-bg+2))))
+    `(region          ((,class (:background ,sweet-bg+2))))
 
     ;; font lock
-    `(font-lock-builtin-face ((,class (:foreground ,sweet-cyan))))
+    `(font-lock-builtin-face           ((,class (:foreground ,sweet-cyan))))
     `(font-lock-comment-delimiter-face ((,class (:foreground ,sweet-red+1))))
-    `(font-lock-comment-face ((,class (:foreground ,sweet-red+1))))
-    `(font-lock-constant-face ((,class (:foreground ,sweet-cyan-2))))
-    `(font-lock-doc-face ((,class (:foreground ,sweet-green))))
-    `(font-lock-function-name-face ((,class (:foreground ,sweet-green-1))))
-    `(font-lock-keyword-face ((,class (:foreground ,sweet-cyan-1))))
-    `(font-lock-preprocessor-face ((,class (:foreground ,sweet-grey-3))))
-    `(font-lock-string-face ((,class (:foreground ,sweet-green))))
-    `(font-lock-type-face ((,class (:foreground ,sweet-pink-1))))
-    `(font-lock-variable-name-face ((,class (:foreground ,sweet-orange-2))))
-    `(font-lock-warning-face ((,class (:bold t :foreground ,sweet-pink))))
+    `(font-lock-comment-face           ((,class (:foreground ,sweet-red+1))))
+    `(font-lock-constant-face          ((,class (:foreground ,sweet-cyan-2))))
+    `(font-lock-doc-face               ((,class (:foreground ,sweet-green))))
+    `(font-lock-function-name-face     ((,class (:foreground ,sweet-green-1))))
+    `(font-lock-keyword-face           ((,class (:foreground ,sweet-cyan-1))))
+    `(font-lock-preprocessor-face      ((,class (:foreground ,sweet-grey-3))))
+    `(font-lock-string-face            ((,class (:foreground ,sweet-green))))
+    `(font-lock-type-face              ((,class (:foreground ,sweet-pink-1))))
+    `(font-lock-variable-name-face     ((,class (:foreground ,sweet-orange-2))))
+    `(font-lock-warning-face           ((,class (:bold t :foreground ,sweet-pink))))
 
     ;; mode line
-    `(mode-line ((,class (:background ,sweet-bg+1 :foreground ,sweet-grey-3 :box nil))))
+    `(mode-line           ((,class (:background ,sweet-bg+1 :foreground ,sweet-grey-3 :box nil))))
     `(mode-line-buffer-id ((,class (:foreground ,sweet-cyan-1 :bold t :weight bold :box nil))))
-    `(mode-line-emphasis ((,class (:foreground ,sweet-green-1 :bold t :weight bold :box nil))))
-    `(mode-line-inactive ((,class (:background ,sweet-grey+2 :foreground ,sweet-grey-3 :box nil))))
-    `(which-func ((,class (:foreground ,sweet-green-1))))
+    `(mode-line-emphasis  ((,class (:foreground ,sweet-green-1 :bold t :weight bold :box nil))))
+    `(mode-line-inactive  ((,class (:background ,sweet-grey+2 :foreground ,sweet-grey-3 :box nil))))
+    `(which-func          ((,class (:foreground ,sweet-green-1))))
 
     ;; compilation
     `(compilation-column-number ((,class (:foreground ,sweet-pink-3))))
-    `(compilation-error ((,class (:foreground ,sweet-pink+1))))
-    `(compilation-info ((,class (:foreground ,sweet-pink-1))))
-    `(compilation-line-number ((,class (:foreground ,sweet-green))))
-    `(compilation-warning ((,class (:bold t :foreground ,sweet-orange :weight bold))))
-    `(match ((,class (:background ,sweet-red+2 :foreground ,sweet-fg))))
-    `(next-error ((,class (:background ,sweet-cyan+2))))
+    `(compilation-error         ((,class (:foreground ,sweet-pink+1))))
+    `(compilation-info          ((,class (:foreground ,sweet-pink-1))))
+    `(compilation-line-number   ((,class (:foreground ,sweet-green))))
+    `(compilation-warning       ((,class (:bold t :foreground ,sweet-orange :weight bold))))
+    `(match                     ((,class (:background ,sweet-red+2 :foreground ,sweet-fg))))
+    `(next-error                ((,class (:background ,sweet-cyan+2))))
 
     ;; minibuffer
     `(minibuffer-prompt ((,class (:foreground ,sweet-cyan))))
 
     ;; isearch
-    `(isearch ((,class (:foreground ,sweet-fg :background ,sweet-pink+2))))
+    `(isearch      ((,class (:foreground ,sweet-fg :background ,sweet-pink+2))))
     `(isearch-fail ((,class (:background ,sweet-red))))
 
     ;; edit
-    `(show-paren-match ((,class (:background ,sweet-cyan))))
+    `(show-paren-match    ((,class (:background ,sweet-cyan))))
     `(show-paren-mismatch ((,class (:background ,sweet-pink+2))))
     `(trailing-whitespace ((,class (:background ,sweet-red-1))))
 
     ;; Auto Highligh Symbol
-    `(ahs-definition-face ((,class (:background "CadetBlue" :foreground "moccasin" :underline t))))
-    `(ahs-edit-mode-face ((,class (:background "Coral3" :foreground "White"))))
-    `(ahs-face ((,class (:background "LightYellow4" :foreground "GhostWhite"))))
-    `(ahs-plugin-bod-face ((,class (:background "DodgerBlue" :foreground "Black"))))
-    `(ahs-plugin-defalt-face ((,class (:background "Orange1" :foreground "Black"))))
+    `(ahs-definition-face          ((,class (:background "CadetBlue" :foreground "moccasin" :underline t))))
+    `(ahs-edit-mode-face           ((,class (:background "Coral3" :foreground "White"))))
+    `(ahs-face                     ((,class (:background "LightYellow4" :foreground "GhostWhite"))))
+    `(ahs-plugin-bod-face          ((,class (:background "DodgerBlue" :foreground "Black"))))
+    `(ahs-plugin-defalt-face       ((,class (:background "Orange1" :foreground "Black"))))
     `(ahs-plugin-whole-buffer-face ((,class (:background "GreenYellow" :foreground "Black"))))
-    `(ahs-warning-face ((,class (:bold t :foreground "Red" :weight bold))))
+    `(ahs-warning-face             ((,class (:bold t :foreground "Red" :weight bold))))
 
     ;; ECB
-    `(ecb-analyse-face ((,class (:background ,sweet-grey+3))))
-    `(ecb-default-highlight-face ((,class (:background ,sweet-pink-2))))
-    `(ecb-directory-face ((,class (:inherit ecb-default-highlight-face))))
-    `(ecb-history-face ((,class (:inherit ecb-default-highlight-face))))
-    `(ecb-method-face ((,class (:inherit ecb-default-highlight-face))))
-    `(ecb-method-non-semantic-face ((,class (:inherit font-lock-function-name-face))))
-    `(ecb-methods-general-face ((,class (:inherit font-lock-function-name-face))))
-    `(ecb-source-face ((,class (:inherit ecb-default-highlight-face))))
-    `(ecb-source-read-only-face ((,class (:background ,sweet-grey+3 :foreground ,sweet-fg+1 :height 1.0))))
-    `(ecb-tag-header-face ((,class (:background ,sweet-cyan+1))))
+    `(ecb-analyse-face                            ((,class (:background ,sweet-grey+3))))
+    `(ecb-default-highlight-face                  ((,class (:background ,sweet-pink-2))))
+    `(ecb-directory-face                          ((,class (:inherit ecb-default-highlight-face))))
+    `(ecb-history-face                            ((,class (:inherit ecb-default-highlight-face))))
+    `(ecb-method-face                             ((,class (:inherit ecb-default-highlight-face))))
+    `(ecb-method-non-semantic-face                ((,class (:inherit font-lock-function-name-face))))
+    `(ecb-methods-general-face                    ((,class (:inherit font-lock-function-name-face))))
+    `(ecb-source-face                             ((,class (:inherit ecb-default-highlight-face))))
+    `(ecb-source-read-only-face                   ((,class (:background ,sweet-grey+3 :foreground ,sweet-fg+1 :height 1.0))))
+    `(ecb-tag-header-face                         ((,class (:background ,sweet-cyan+1))))
     `(ecb-history-bucket-node-dir-soure-path-face ((,class (:inherit dired-header))))
 
     ;; dired+
-    `(diredp-file-name ((,class (:foreground ,sweet-orange-2))))
-    `(diredp-file-suffix ((,class (:foreground ,sweet-green-1))))
-    `(diredp-dir-priv ((,class (:foreground ,sweet-cyan))))
-    `(diredp-dir-heading ((,class (:foreground ,sweet-orange-2))))
-    `(diredp-number ((,class (:foreground ,sweet-cyan-2))))
-    `(diredp-read-priv ((,class (:foreground ,sweet-orange-2))))
-    `(diredp-write-priv ((,class (:foreground ,sweet-green))))
-    `(diredp-exec-priv ((,class (:foreground ,sweet-red+1))))
+    `(diredp-file-name         ((,class (:foreground ,sweet-orange-2))))
+    `(diredp-file-suffix       ((,class (:foreground ,sweet-green-1))))
+    `(diredp-dir-priv          ((,class (:foreground ,sweet-cyan))))
+    `(diredp-dir-heading       ((,class (:foreground ,sweet-orange-2))))
+    `(diredp-number            ((,class (:foreground ,sweet-cyan-2))))
+    `(diredp-read-priv         ((,class (:foreground ,sweet-orange-2))))
+    `(diredp-write-priv        ((,class (:foreground ,sweet-green))))
+    `(diredp-exec-priv         ((,class (:foreground ,sweet-red+1))))
     `(diredp-ignored-file-name ((,class (:foreground ,sweet-red-3))))
-    `(diredp-date-time ((,class (:foreground ,sweet-pink+1))))
+    `(diredp-date-time         ((,class (:foreground ,sweet-pink+1))))
 
     ;; diff
-    `(diff-removed ((,class (:foreground ,sweet-orange+2))))
+    `(diff-removed           ((,class (:foreground ,sweet-orange+2))))
     `(diff-indicator-removed ((,class (:background ,sweet-orange+2))))
-    `(diff-added ((,class (:foreground ,sweet-green+1))))
-    `(diff-indicator-added ((,class (:background ,sweet-green+1))))
-    `(diff-header ((,class (:foreground ,sweet-cyan+1 :background ,sweet-bg))))
-    `(diff-index ((,class (:foreground ,sweet-pink+1))))
-    `(diff-file-header ((,class (:foreground ,sweet-cyan :background ,sweet-bg+2))))
-    `(diff-hunk-header ((,class (:foreground ,sweet-bg+2 :background ,sweet-cyan))))
-    `(diff-context ((,class (:foreground ,sweet-fg+1))))
+    `(diff-added             ((,class (:foreground ,sweet-green+1))))
+    `(diff-indicator-added   ((,class (:background ,sweet-green+1))))
+    `(diff-header            ((,class (:foreground ,sweet-cyan+1 :background ,sweet-bg))))
+    `(diff-index             ((,class (:foreground ,sweet-pink+1))))
+    `(diff-file-header       ((,class (:foreground ,sweet-cyan :background ,sweet-bg+2))))
+    `(diff-hunk-header       ((,class (:foreground ,sweet-bg+2 :background ,sweet-cyan))))
+    `(diff-context           ((,class (:foreground ,sweet-fg+1))))
 
     ;; ediff
-    `(ediff-even-diff-A ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
-    `(ediff-even-diff-B ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
-    `(ediff-even-diff-C ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-even-diff-A    ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-even-diff-B    ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-even-diff-C    ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
     `(ediff-current-diff-A ((,class (:foreground ,sweet-bg+1 :background ,sweet-red-2))))
     `(ediff-current-diff-B ((,class (:foreground ,sweet-bg+1 :background ,sweet-red-2))))
     `(ediff-current-diff-C ((,class (:foreground ,sweet-bg+1 :background ,sweet-red-2))))
-    `(ediff-fine-diff-A ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
-    `(ediff-fine-diff-B ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
-    `(ediff-fine-diff-C ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
-    `(ediff-odd-diff-A ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
-    `(ediff-odd-diff-B ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
-    `(ediff-odd-diff-C ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-fine-diff-A    ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
+    `(ediff-fine-diff-B    ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
+    `(ediff-fine-diff-C    ((,class (:foreground ,sweet-fg :background ,sweet-red+3))))
+    `(ediff-odd-diff-A     ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-odd-diff-B     ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+    `(ediff-odd-diff-C     ((,class (:foreground ,sweet-fg+1 :background ,sweet-red-3))))
+
+    ;; helm
+    `(helm-header           ((,class (:foreground ,sweet-fg+1 :background ,sweet-bg+2))))
+    `(helm-selection        ((,class (:background ,sweet-bg-2 :underline nil))))
+    `(helm-separator        ((,class (:foreground ,sweet-pink+2 :background sweet-fg))))
+    `(helm-selection-line   ((,class (:foreground ,sweet-bg-2))))
+    `(helm-candidate-number ((,class (:foreground ,sweet-orange-1 :background ,sweet-bg+2))))
+    `(helm-ff-directory     ((,class (:foreground ,sweet-cyan-2 :background ,sweet-bg-2))))
+    `(helm-ff-executable    ((,class (:foreground ,sweet-red-2))))
+    `(helm-ff-file          ((,class (:foreground ,sweet-fg))))
 
     ;; hide-ifdef
     `(hide-ifdef-shadow ((,class (:background ,sweet-grey+4 :foreground ,sweet-grey-4 :box nil))))

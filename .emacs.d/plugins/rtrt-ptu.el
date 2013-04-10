@@ -1,4 +1,4 @@
-;;; rtrt-ptu.el ---
+;;; rtrt-ptu.el --- major mode for script ptu rtrt -*- coding: utf-8 -*-
 ;;to: someone@somecompany.com
 ;;subject: el pour rtrt, ne pas oublier de mettre à jour le .emacs pour le charger.
 ;; utilisation de:
@@ -265,6 +265,15 @@
   (set-syntax-table rtrt-script-mode-syntax-table)
   )
 
+;; outline support (by Claude TETE)
+(defvar rtrt-script-outline-regexp "\\([ \t]*\\(SERVICE\\|DEFINE STUB\\)\\)")
+
+(defun rtrt-script-outline-level ()
+  (let (buffer-invisibility-spec)
+    (save-excursion
+      (skip-chars-forward "\t ")
+      (current-column))))
+
 ;; ------------------------------------------------------------------------------
 ;; Définition du mode.
 ;; ------------------------------------------------------------------------------
@@ -279,6 +288,10 @@
   (make-local-variable 'font-lock-defaults)
   (setq font-lock-defaults
         '(rtrt-script-font-lock-keyword nil t))
+
+  ;; outline
+  (set (make-local-variable 'outline-regexp) rtrt-script-outline-regexp)
+  (set (make-local-variable 'outline-level) 'rtrt-script-outline-level)
 
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'rtrt-script-indent-line)

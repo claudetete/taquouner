@@ -1,6 +1,6 @@
 ;;; shortcut-global.el --- a config file for global Emacs shortcut
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.1
+;; Version: 3.2
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-04-08 (3.2)
+;;    add shortcut for zap to char function (default bind is used by ECB bind) +
+;;    helm mode + fix bug with ediff + more comfort for browse kill ring and
+;;    undo tree + fold dwim depend of major mode
 ;; 2012-12-27 (3.1)
 ;;    add alias for ps2pdf to print with color
 ;; 2012-12-04 (3.0)
@@ -207,6 +211,27 @@
 (define-key cua--rectangle-keymap [remap kill-ring-save-x] 'cua-copy-rectangle)
 
 ;;
+;;; HELM
+(eval-after-load 'helm
+  '(progn
+     (when section-mode-cedet-ecb
+       ;; to exit helm when close ecb window compile
+       (define-key helm-map     (kbd "<f2>")    '(lambda ()
+                                                   (interactive)
+                                                   (helm-exit-minibuffer)
+                                                   (ecb-toggle-compile))
+         ))))
+
+;; to replace yank-pop by helm-kill-ring
+(when section-mode-helm-kill-ring
+  (global-set-key       (kbd "M-y")             'helm-show-kill-ring))
+;; to replace M-x by helm
+(when section-mode-helm-M-x
+  (global-set-key       (kbd "M-x")             'helm-M-x))
+
+
+
+;;
 ;; to compile
 (when section-mode-cedet-ecb
   (add-hook 'compilation-filter-hook '(lambda ()
@@ -226,6 +251,9 @@
      (call-interactively (key-binding (kbd "M-TAB")))
      )
   )
+
+;; bind zap-to-char because I use M-z with ECB
+(global-set-key         (kbd "H-z")             'zap-to-char)
 
 ;;
 ;;; HOME/END
@@ -265,46 +293,55 @@
   '(progn
      ;; I think it does not not work
      ;; previous diff
-     (local-set-key     (kbd "<M-up>")          'ediff-previous-difference)
+     (define-key ediff-mode-map         (kbd "<M-up>")          'ediff-previous-difference)
      ;; next diff
-     (local-set-key     (kbd "<M-down>")        'ediff-next-difference)
+     (define-key ediff-mode-map         (kbd "<M-down>")        'ediff-next-difference)
      ;; get modification from left
-     (local-set-key     (kbd "<M-right>")       'ediff-copy-A-to-B)
+     (define-key ediff-mode-map         (kbd "<M-right>")       'ediff-copy-A-to-B)
      ;; get modification from right
-     (local-set-key     (kbd "<M-left>")        'ediff-copy-B-to-A)
+     (define-key ediff-mode-map         (kbd "<M-left>")        'ediff-copy-B-to-A)
      )
   )
 
 ;;
 ;;; BROWSE KILL RING
 (when section-mode-browse-kill-ring
-  (eval-after-load "browse-kill-ring"
-    '(progn
+  (add-hook 'browse-kill-ring-hook
+    '(lambda ()
        ;; move next and previous with arrow
-       (define-key browse-kill-ring-mode-map (kbd "<up>")   'browse-kill-ring-previous)
-       (define-key browse-kill-ring-mode-map (kbd "<down>") 'browse-kill-ring-forward)
-       ;; quit not only with q but also with C-g
-       (define-key browse-kill-ring-mode-map (kbd "C-g")    'browse-kill-ring-quit)
-       )
-    )
-  )
+       (local-set-key   (kbd "<up>")            'browse-kill-ring-previous)
+       (local-set-key   (kbd "<down>")          'browse-kill-ring-forward)
+       ;; quit not only with q but also with C-g or F2 with ecb
+       (local-set-key   (kbd "C-g")             'browse-kill-ring-quit)
+       (when section-mode-cedet-ecb
+         (local-set-key (kbd "<f2>")            'browse-kill-ring-quit))
+       (local-set-key   (kbd "<escape>")        'browse-kill-ring-quit)
+       (local-set-key   (kbd "<return>")        'browse-kill-ring-insert-move-and-quit)
+       )))
 
 ;;
 ;;; FOLD DWIM
 (when section-mode-fold-dwim
-  ;; show/hide block
-  (global-set-key       (kbd "<M-left>")        '(lambda ()
-                                                   (interactive)
-                                                   (outline-up-heading 1)
-                                                   (fold-dwim-toggle)))
-  (global-set-key       (kbd "<M-right>")       '(lambda ()
-                                                   (interactive)
-                                                   (outline-up-heading 1)
-                                                   (fold-dwim-toggle)))
-  ;; hide all
-  (global-set-key       (kbd "<M-up>")          'fold-dwim-hide-all)
-  ;; show all
-  (global-set-key       (kbd "<M-down>")        'fold-dwim-show-all)
+  (add-hook 'c-mode-hook
+    '(lambda ()
+       ;; show/hide block
+       (local-set-key   (kbd "<M-left>")        'fold-dwim-toggle)
+       (local-set-key   (kbd "<M-right>")       'fold-dwim-toggle)
+       (local-set-key   (kbd "<tab>")           'mixtab)
+       ;; hide all
+       (local-set-key   (kbd "<M-up>")          'fold-dwim-hide-all)
+       ;; show all
+       (local-set-key   (kbd "<M-down>")        'fold-dwim-show-all)
+       ))
+  (add-hook 'rtrt-script-mode-hook
+    '(lambda ()
+       ;; show/hide block with tab key
+       (local-set-key   (kbd "<tab>")           'mixtab)
+       ;; hide all
+       (local-set-key   (kbd "<H-prior>")       'fold-dwim-hide-all)
+       ;; show all
+       (local-set-key   (kbd "<H-next>")        'fold-dwim-show-all)
+       ))
   )
 
 ;;
@@ -319,15 +356,49 @@
        ;; show all
        (local-set-key   (kbd "C-.")             'show-all)
        ;; hide current block
-       (local-set-key   (kbd "<M-left>")        '(lambda ()
+;;       (local-set-key   (kbd "<M-left>")        '(lambda ()
+;;                                                   (interactive)
+;;                                                   (outline-up-heading 1)
+;;                                                   (hide-subtree)))
+;;       ;; show block
+;;       (local-set-key   (kbd "<M-right>")       'show-subtree)
+       )))
+
+;;
+;;; UNDO TREE
+(when section-mode-undo-tree
+  (add-hook 'undo-tree-visualizer-mode-hook
+    (lambda ()
+      ;; enter and 'q' key will quit undo tree
+      (local-set-key    (kbd "<return>")        '(lambda ()
                                                    (interactive)
-                                                   (outline-up-heading 1)
-                                                   (hide-subtree)))
-       ;; show block
-       (local-set-key   (kbd "<M-right>")       'show-subtree)
-       )
-    )
-  )
+                                                   (undo-tree-visualizer-quit)
+                                                   (when section-mode-cedet-ecb
+                                                     (ecb-toggle-compile))
+                                                   ))
+      (local-set-key    (kbd "q")               '(lambda ()
+                                                   (interactive)
+                                                   (undo-tree-visualizer-quit)
+                                                   (when section-mode-cedet-ecb
+                                                     (ecb-toggle-compile))
+                                                   ))
+      ;; page up/down will undo/redo 10 times
+      (local-set-key    (kbd "<prior>")         '(lambda ()
+                                                   (interactive)
+                                                   (cl-loop repeat 10 do
+                                                     (undo-tree-visualize-undo))))
+      (local-set-key    (kbd "<next>")          '(lambda ()
+                                                   (interactive)
+                                                   (cl-loop repeat 10 do
+                                                     (undo-tree-visualize-redo))))
+      ;; inverse C-up/down
+      (local-set-key    (kbd "<C-up>")          'undo-tree-visualize-undo-to-x)
+      (local-set-key    (kbd "<C-down>")        'undo-tree-visualize-redo-to-x)
+      )))
+
+(global-set-key "\C-cy" '(lambda ()
+                           (interactive)
+                           (popup-menu 'yank-menu)))
 
 ;;
 ;;; ALIAS

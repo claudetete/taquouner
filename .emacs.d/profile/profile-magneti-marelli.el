@@ -211,6 +211,18 @@
   (setq section-mode-ace-jump t)
   (setq section-mode-diredful t)
   (setq section-mode-ps2pdf t)
+  (setq section-mode-auctex nil)
+  (setq section-mode-helm nil)
+  (progn
+    (setq section-mode-helm-bookmark t)
+    (setq section-mode-helm-buffers-list t)
+    (setq section-mode-helm-kill-ring t)
+    (setq section-mode-helm-M-x nil)
+    (setq section-mode-helm-occur t)
+    (setq section-mode-helm-find-files t)
+    (setq section-mode-helm-recentf t)
+    (setq section-mode-helm-imenu t)
+    )
   (setq section-mode-diminish nil)
   )
 
