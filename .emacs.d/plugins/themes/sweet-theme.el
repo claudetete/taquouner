@@ -225,7 +225,7 @@
     ;; helm
     `(helm-header           ((,class (:foreground ,sweet-fg+1 :background ,sweet-bg+2))))
     `(helm-selection        ((,class (:background ,sweet-bg-2 :underline nil))))
-    `(helm-separator        ((,class (:foreground ,sweet-pink+2 :background sweet-fg))))
+    `(helm-separator        ((,class (:foreground ,sweet-pink+2 :background ,sweet-fg))))
     `(helm-selection-line   ((,class (:foreground ,sweet-bg-2))))
     `(helm-candidate-number ((,class (:foreground ,sweet-orange-1 :background ,sweet-bg+2))))
     `(helm-ff-directory     ((,class (:foreground ,sweet-cyan-2 :background ,sweet-bg-2))))
