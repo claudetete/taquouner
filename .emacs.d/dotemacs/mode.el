@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.2
+;; Version: 4.3
 ;; Created: October 2006
 ;; Last-Updated: April 2013
 
@@ -31,6 +31,9 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2013-04-12 (4.3)
+;;    fix bug helm with browse kill ring + use autoload when it's possible +
+;;    clean up clearcase mode
 ;; 2013-04-10 (4.2)
 ;;    dired buffer is reused + outline in rtrt + helm mode + clean up
 ;; 2013-03-26 (4.1)
@@ -300,15 +303,16 @@
 ;;
 ;;; BROWSE KILL RING
 (when section-mode-browse-kill-ring (message "  2.14 Browse Kill-Ring...")
-  (when (try-require 'browse-kill-ring "    ")
+  (when (try-require 'autoload-browse-kill-ring "    ")
     ;; all settings from Fabrice Niessen
     ;; string separating entries in the `separated' style
     (setq browse-kill-ring-separator
       "\n--separator------------------------------")
     ;; temporarily highlight the inserted `kill-ring' entry
     (setq browse-kill-ring-highlight-inserted-item t)
-    ;; use `M-y' to invoke `browse-kill-ring'
-    (browse-kill-ring-default-keybindings)
+    (when (not section-mode-helm-kill-ring)
+      ;; use `M-y' to invoke `browse-kill-ring'
+      (browse-kill-ring-default-keybindings))
     ;; do not show duplicate in list
     (setq browse-kill-ring-display-duplicates nil)
     ;; do not add duplicate in kill ring
@@ -336,7 +340,7 @@
 ;;
 ;;; DIRED+
 (when section-mode-dired-plus (message "  2.16 Dired+...")
-  (when (try-require 'dired+ "    ")
+  (when (try-require 'autoload-dired+ "    ")
     ;; to have only one dired buffer by dired instance
     (toggle-diredp-find-file-reuse-dir t))
   (message "  2.16 Dired+... Done"))
@@ -344,7 +348,7 @@
 ;;
 ;;; GNU/GLOBAL
 (when section-mode-gnu-global (message "  2.17 GNU/Global...")
-  (when (try-require 'gtags "    ")
+  (when (try-require 'autoload-gtags "    ")
     (autoload 'gtags-mode "gtags" "" t)
     (defun gtags-c-mode ()
       (gtags-mode 1)
@@ -386,11 +390,11 @@
 
 ;;
 ;;; CLEARCASE
-(if section-mode-clearcase
-  (progn (message "  2.21 ClearCase...")
-    (try-require 'clearcase "    ")
-    (message "  2.21 ClearCase... Done"))
-  (setq clearcase-mode nil))
+(when section-mode-clearcase (message "  2.21 ClearCase...")
+  (setq clearcase-mode nil)
+  (when section-mode-clearcase-el
+    (try-require 'clearcase "    "))
+  (message "  2.21 ClearCase... Done"))
 
 ;;
 ;;; AUTOHOTKEY
@@ -410,14 +414,15 @@
 ;;; AUTO HIGHLIGHT SYMBOL
 (when section-mode-auto-highlight-symbol (message "  2.24 Auto highlight symbol minor mode...")
   ;; after some idle time the symbol at point will be highlighted in display area
-  (try-require 'auto-highlight-symbol "    ")
-  ;; active the mode
-  (global-auto-highlight-symbol-mode t)
-  (custom-set-variables
-    ;; do not ignore case
-    '(ahs-case-fold-search nil)
-    ;; increase idle time to display highlight
-    '(ahs-idle-interval 2.2)
+  (when (try-require 'autoload-auto-highlight-symbol "    ")
+    ;; active the mode
+    (global-auto-highlight-symbol-mode t)
+    (custom-set-variables
+      ;; do not ignore case
+      '(ahs-case-fold-search nil)
+      ;; increase idle time to display highlight
+      '(ahs-idle-interval 2.2)
+      )
     )
   (message "  2.24 Auto highlight symbol minor mode... Done"))
 
@@ -479,7 +484,7 @@
 ;;
 ;;; UNDO TREE
 (when section-mode-undo-tree (message "  2.28 Undo Tree...")
-  (when (try-require 'undo-tree "    ")
+  (when (try-require 'autoload-undo-tree "    ")
     ;; If you want to replace the standard Emacs' undo system with the
     ;; `undo-tree-mode' system in all buffers, you can enable it globally by
     ;; adding:
@@ -506,25 +511,26 @@
 ;;
 ;;; DIFF COLOR
 (when section-mode-diff-color (message "  2.31 Diff Color...")
-  (try-require 'diff-mode- "    ")
+  (try-require 'autoload-diff-mode- "    ")
   (message "  2.31 Diff Color... Done"))
 
 ;;
 ;;; DIRED SORT
 (when section-mode-dired-sort (message "  2.32 Dired Sort...")
-  (try-require 'dired-sort-menu "    ")
-  (custom-set-variables
-    '(dired-recursive-copies t)
-    '(dired-recursive-deletes t)
-    ;; set a profile of sorting
-    '(dired-sort-menu-saved-config
-       (quote (
-                (dired-actual-switches . "-alh")
-                (ls-lisp-ignore-case . t)
-                (ls-lisp-dirs-first . t))))
-    ;; set this profile by default
-    '(ls-lisp-dirs-first t)
-    '(ls-lisp-ignore-case t)
+  (when (try-require 'autoload-dired-sort-menu "    ")
+    (custom-set-variables
+      '(dired-recursive-copies t)
+      '(dired-recursive-deletes t)
+      ;; set a profile of sorting
+      '(dired-sort-menu-saved-config
+         (quote (
+                  (dired-actual-switches . "-alh")
+                  (ls-lisp-ignore-case . t)
+                  (ls-lisp-dirs-first . t))))
+      ;; set this profile by default
+      '(ls-lisp-dirs-first t)
+      '(ls-lisp-ignore-case t)
+      )
     )
   (message "  2.32 Dired Sort... Done"))
 
@@ -541,7 +547,7 @@
 ;;
 ;;; ISEARCH+
 (when section-mode-isearch+ (message "  2.34 Isearch+...")
-  (eval-after-load "isearch" '(require 'isearch+))
+  (eval-after-load "isearch" '(try-require 'autoload-isearch+))
   (message "  2.34 Isearch+... Done"))
 
 ;;
@@ -549,7 +555,7 @@
 ;; it add a small round in modeline where color give status of SVN
 ;; + show all file status of a directory
 (when section-mode-psvn (message "  2.35 PSvn...")
-  (try-require 'psvn "    ")
+  (try-require 'autoload-psvn "    ")
   (message "  2.35 PSvn... Done"))
 
 ;;
@@ -565,25 +571,27 @@
 ;;
 ;;; NYAN
 (when section-mode-nyan (message "  2.37 Nyan...")
-  (try-require 'nyan-mode "    ")
-  ;; start nyan mode
-  (nyan-mode t)
+  (when (try-require 'autoload-nyan-mode "    ")
+    ;; start nyan mode
+    (nyan-mode t)
 
-  ;; to have wave in rainbow
-  (setq nyan-wavy-trail 1)
+    ;; to have wave in rainbow
+    (setq nyan-wavy-trail 1)
 
-  ;; to have animation
-  (nyan-start-animation)
+    ;; to have animation
+    (nyan-start-animation)
+    )
   (message "  2.37 Nyan... Done"))
 
 ;;
 ;;; SML
 (when section-mode-sml (message "  2.38 sml modeline...")
-  (try-require 'sml-modeline "    ")
-  (custom-set-variables
-    '(sml-modeline-mode t))
-  (setq sml-modeline-len 24)
-  (setq sml-modeline-numbers 'none)
+  (when (try-require 'autoload-sml-modeline "    ")
+    (custom-set-variables
+      '(sml-modeline-mode t))
+    (setq sml-modeline-len 24)
+    (setq sml-modeline-numbers 'none)
+    )
   (message "  2.38 sml modeline... Done"))
 
 ;;
@@ -602,7 +610,7 @@
 ;;
 ;;; RAINBOW DELIMITERS
 (when section-mode-rainbow-delimiters (message "  2.41 Rainbow Delimiters...")
-  (when (try-require 'rainbow-delimiters "    ")
+  (when (try-require 'autoload-rainbow-delimiters "    ")
     ;; set dark background
     (setq-default frame-background-mode 'dark)
     (when (and section-environment-version-recognition running-on-emacs-24)
@@ -637,7 +645,7 @@
 ;;; DIRED DETAILS
 ;; show hide details in dired mode
 (when section-mode-dired-details (message "  2.43 Dired Details...")
-  (try-require 'dired-details+ "    ")
+  (try-require 'autoload-dired-details+ "    ")
   (message "  2.43 Dired Details... Done"))
 
 ;;
@@ -647,7 +655,7 @@
   ;; smart-tab mode has been patch to not change habits about tab key
   ;; Tab key once will indent like always
   ;; Tab key twice will try to expand the current 'expression'
-  (when (try-require 'smart-tab "    ")
+  (when (try-require 'autoload-smart-tab "    ")
     ;; use hippie expand see `.emacs.d/dotemacs/completion.el'
     (setq smart-tab-using-hippie-expand t)
     ;; enable smart-tab mode everywhere
@@ -666,7 +674,7 @@
 ;;; DIRED LETTER ISEARCH
 ;; activate by default isearch in dired mode (not found ??)
 (when section-mode-dired-lis (message "  2.46 Dired Letter ISearch...")
-  (when (try-require 'dired-lis "    ")
+  (when (try-require 'autoload-dired-lis "    ")
     (global-dired-lis-mode))
   (message "  2.46 Dired Letter ISearch... Done"))
 
@@ -681,23 +689,24 @@
 ;;; FASTNAV
 ;; fast navigation
 (when section-mode-fastnav (message "  2.48 FastNav...")
-  (try-require 'fastnav "    ")
-  ;;(global-set-key "\M-z" 'fastnav-zap-up-to-char-forward)
-  ;;(global-set-key "\M-Z" 'fastnav-zap-up-to-char-backward)
-  (global-set-key "\M-s" 'fastnav-jump-to-char-forward)
-  ;;(global-set-key "\M-S" 'fastnav-jump-to-char-backward)
-  ;;(global-set-key "\M-r" 'fastnav-replace-char-forward)
-  ;;(global-set-key "\M-R" 'fastnav-replace-char-backward)
-  ;;(global-set-key "\M-i" 'fastnav-insert-at-char-forward)
-  ;;(global-set-key "\M-I" 'fastnav-insert-at-char-backward)
-  ;;(global-set-key "\M-j" 'fastnav-execute-at-char-forward)
-  ;;(global-set-key "\M-J" 'fastnav-execute-at-char-backward)
-  ;;(global-set-key "\M-k" 'fastnav-delete-char-forward)
-  ;;(global-set-key "\M-K" 'fastnav-delete-char-backward)
-  ;;(global-set-key "\M-m" 'fastnav-mark-to-char-forward)
-  ;;(global-set-key "\M-M" 'fastnav-mark-to-char-backward)
-  ;;(global-set-key "\M-p" 'fastnav-sprint-forward)
-  ;;(global-set-key "\M-P" 'fastnav-sprint-backward)
+  (when (try-require 'autoload-fastnav "    ")
+    ;;(global-set-key "\M-z" 'fastnav-zap-up-to-char-forward)
+    ;;(global-set-key "\M-Z" 'fastnav-zap-up-to-char-backward)
+    (global-set-key "\M-s" 'fastnav-jump-to-char-forward)
+    ;;(global-set-key "\M-S" 'fastnav-jump-to-char-backward)
+    ;;(global-set-key "\M-r" 'fastnav-replace-char-forward)
+    ;;(global-set-key "\M-R" 'fastnav-replace-char-backward)
+    ;;(global-set-key "\M-i" 'fastnav-insert-at-char-forward)
+    ;;(global-set-key "\M-I" 'fastnav-insert-at-char-backward)
+    ;;(global-set-key "\M-j" 'fastnav-execute-at-char-forward)
+    ;;(global-set-key "\M-J" 'fastnav-execute-at-char-backward)
+    ;;(global-set-key "\M-k" 'fastnav-delete-char-forward)
+    ;;(global-set-key "\M-K" 'fastnav-delete-char-backward)
+    ;;(global-set-key "\M-m" 'fastnav-mark-to-char-forward)
+    ;;(global-set-key "\M-M" 'fastnav-mark-to-char-backward)
+    ;;(global-set-key "\M-p" 'fastnav-sprint-forward)
+    ;;(global-set-key "\M-P" 'fastnav-sprint-backward)
+    )
   (message "  2.48 FastNav... Done"))
 
 ;;

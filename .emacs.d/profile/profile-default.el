@@ -277,6 +277,9 @@
     ) ; (progn
   ;; CLEARCASE: ClearCase mode (not used)
   (setq section-mode-clearcase nil)
+  (progn
+    (setq section-mode-clearcase-el nil)
+    ) ; (progn
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq section-mode-autohotkey nil)
   ;; OUTLINE: Outline mode to manually hide/show source code block

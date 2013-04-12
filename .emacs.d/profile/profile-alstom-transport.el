@@ -108,7 +108,7 @@
     ;; executables path
     (setq profile-exec-path
       '(
-         "c://MinGW/msys/1.0/bin"
+         "c:/MinGW/msys/1.0/bin"
          "c:/perl/perl/site/bin"
          "c:/perl/perl/bin"
          "c:/perl/c/bin"
@@ -322,8 +322,11 @@
     ;; path to cleartool executable
     (setq profile-cleartool "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/cleartool.exe")
     ) ; (progn
-  ;; CLEARCASE: ClearCase mode (not used)
-  (setq section-mode-clearcase nil)
+  ;; CLEARCASE: ClearCase mode
+  (setq section-mode-clearcase t)
+  (progn
+    (setq section-mode-clearcase-el nil)
+    ) ; (progn
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq section-mode-autohotkey t)
   ;; OUTLINE: Outline mode to manually hide/show source code block
@@ -396,7 +399,7 @@
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
   (setq section-mode-ace-jump t)
   ;; DIREDFUL: color dired buffer
-  (setq section-mode-diredful t)
+  (setq section-mode-diredful nil)
   ;; PS2PDF: print buffer/region in pdf
   (setq section-mode-ps2pdf t)
   ;; AUCTEX: latex mode
@@ -756,6 +759,8 @@
     (setq powerline-color1 "grey30") ; = sweet-grey+2
     (setq powerline-color2 "grey50") ; = sweet-grey
     )
+  ;; to disable all version control
+  ;(setq vc-handled-backends nil)
   ) ; (defun function-to-call-after-loading-conf ()
 
 

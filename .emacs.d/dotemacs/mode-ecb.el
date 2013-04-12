@@ -34,8 +34,9 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
-;; 2013-04-10 (2.8)
-;;    add browse kill ring + undo tree + helm mode in compile window
+;; 2013-04-12 (2.8)
+;;    add browse kill ring + undo tree + helm mode + config spec mode + elp mode
+;;    in compile window
 ;; 2012-12-27 (2.7)
 ;;    update dot emacs path
 ;; 2012-12-03 (2.6)
@@ -207,6 +208,8 @@
                 ("*Kill Ring*")
                 ("\\s-*\\*undo-tree\\*" . t)
                 ("\\*.*helm.*\\*" . t)
+                ("*clearcase-config-spec*")
+                ("*ELP Profiling Results*")
                 )))
 
     ;; auto expand tree

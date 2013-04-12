@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.5
+;; Version: 5.6
 ;; Created: October 2006
-;; Last-Updated: March 2013
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2013-04-11 (5.6)
+;;    add just-one-space-or-line function
 ;; 2013-03-29 (5.5)
 ;;    use url-hexify-string for web string + new function to indent function +
 ;;    add mixtab
@@ -761,7 +763,8 @@ middle"
   "When called interactively with no active region, (un)comment a single
 line instead."
   (interactive
-    (if mark-active (list (region-beginning) (region-end))
+    (if mark-active
+      (list (region-beginning) (region-end))
       (list (line-beginning-position)
                (line-beginning-position 2)))))
 
@@ -1125,8 +1128,31 @@ at the point."
 ;;;
 ;;;; DELETE
 (defun just-one-space-or-line ()
+  "Delete spaces exept one if there is a print character on the line otherwise
+delete blank lines"
   (interactive)
-  )
+  (save-excursion
+    (let ((start (point))
+           (end)
+           (line-start (line-beginning-position))
+           (line-end (line-beginning-position 2)))
+      ;; get end of line or start of next word
+      (skip-chars-forward " \t")
+      (when (looking-at "\r")
+        (forward-char))
+      (when (looking-at "\n")
+        (forward-char))
+      (setq end (point))
+      ;; go back
+      (goto-char start)
+      ;; get start of line or end of previous word
+      (skip-chars-backward " \t")
+      (setq start (point))
+      (if (and (eq start line-start) (eq end line-end))
+        (progn
+          (just-one-space 0)
+          (delete-blank-lines))
+        (just-one-space)))))
 
 ;;
 ;;;

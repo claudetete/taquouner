@@ -212,7 +212,7 @@
   (message "  0.8 ELPA... Done"))
 
 ;;
-;;; HYPER
+;;; HYPER (shortcut with "H-")
 ;; be careful with this it fully disable menu key when Emacs has focus
 (when section-environment-hyper (message "  0.9 Hyper...")
   (when (and section-environment-os-recognition running-on-ms-windows)
@@ -223,7 +223,7 @@
   (message "  0.9 Hyper... Done"))
 
 ;;
-;;; SUPER
+;;; SUPER (shortcut with "s-")
 ;; be careful with this it fully disable windows key when Emacs has focus
 (when section-environment-super (message "  0.10 Super...")
   (when (and section-environment-os-recognition running-on-ms-windows)

@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.2
+;; Version: 3.3
 ;; Created: October 2006
 ;; Last-Updated: April 2013
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-04-11 (3.3)
+;;    shorcut for just-one-space-or-line + C-y M-y will not call helm-kill-ring
 ;; 2013-04-08 (3.2)
 ;;    add shortcut for zap to char function (default bind is used by ECB bind) +
 ;;    helm mode + fix bug with ediff + more comfort for browse kill ring and
@@ -138,7 +140,7 @@
                                                    (move-end-of-line nil)
                                                    (next-line)
                                                    (join-line)
-                                                   (just-one-space)
+                                                   (just-one-space 0)
                                                    ))
 ;; new line but from anywhere on the previous line
 (global-set-key         (kbd "<M-return>")      '(lambda ()
@@ -224,12 +226,16 @@
 
 ;; to replace yank-pop by helm-kill-ring
 (when section-mode-helm-kill-ring
-  (global-set-key       (kbd "M-y")             'helm-show-kill-ring))
+  (global-set-key       (kbd "M-y")             '(lambda ()
+                                                   (interactive)
+                                                   (if (eq last-command 'yank)
+                                                     (progn
+                                                       (setq last-command 'yank)
+                                                       (yank-pop))
+                                                     (helm-show-kill-ring)))))
 ;; to replace M-x by helm
 (when section-mode-helm-M-x
   (global-set-key       (kbd "M-x")             'helm-M-x))
-
-
 
 ;;
 ;; to compile
@@ -254,6 +260,9 @@
 
 ;; bind zap-to-char because I use M-z with ECB
 (global-set-key         (kbd "H-z")             'zap-to-char)
+
+;; delete all blank character or line except one
+(global-set-key         (kbd "<M-SPC>")       'just-one-space-or-line)
 
 ;;
 ;;; HOME/END
@@ -396,6 +405,7 @@
       (local-set-key    (kbd "<C-down>")        'undo-tree-visualize-redo-to-x)
       )))
 
+;; yank menu in popup
 (global-set-key "\C-cy" '(lambda ()
                            (interactive)
                            (popup-menu 'yank-menu)))

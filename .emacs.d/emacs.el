@@ -539,6 +539,9 @@ before message."
   ;; CLEARCASE                                                          2.21
   ;; ClearCase mode
   (defvar section-mode-clearcase nil)
+  (progn
+    (defvar section-mode-clearcase-el nil)
+    ) ; (progn
   ;;
   ;; AUTOHOTKEY                                                         2.22
   ;; AutoHotKey mode
@@ -601,9 +604,6 @@ before message."
   ;; POWERLINE                                                          2.36
   ;; fancy modeline
   (defvar section-mode-powerline nil)
-  (progn
-    (defvar profile-powerline-size "big")
-    )
   ;;
   ;; NYAN                                                               2.37
   ;; add a bar in modeline with position in buffer with the nyan cat

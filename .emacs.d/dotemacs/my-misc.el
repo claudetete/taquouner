@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.4
+;; Version: 2.5
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2013-04-12 (2.5)
+;;    no require, use autoload for ispell (it takes 7s to search aspell.exe ...)
 ;; 2012-12-27 (2.4)
 ;;    update dot emacs path + do not sort bookmark
 ;; 2012-12-06 (2.3)
@@ -264,7 +266,22 @@
   ;; to speed up aspell but less accurate
   (setq ispell-extra-args '("--sug-mode=ultra"))
 
-  (try-require 'ispell "    ")
+  ;; autoload to load aspell only when needed
+  ;; if load/require it search aspell executable in 7 seconds !
+  (autoload 'ispell-word "ispell"
+    "Check the spelling of word in buffer." t)
+  (autoload 'ispell-region "ispell"
+    "Check the spelling of region." t)
+  (autoload 'ispell-buffer "ispell"
+    "Check the spelling of buffer." t)
+  (autoload 'ispell-complete-word "ispell"
+    "Look up current word in dictionary and try to complete it." t)
+  (autoload 'ispell-change-dictionary "ispell"
+    "Change ispell dictionary." t)
+  (autoload 'ispell-message "ispell"
+    "Check spelling of mail message or news post.")
+  (autoload 'ispell-minor-mode "ispell"
+    "Toggle mode to automatically spell check words as they are typed in.")
   (message "  11.2 Dictionary... Done"))
 
 ;;

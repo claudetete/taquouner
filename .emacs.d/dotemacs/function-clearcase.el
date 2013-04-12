@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function, clearcase
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: June 2012
-;; Last-Updated: January 2013
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -54,9 +54,14 @@
 ;;   (global-set-key    (kbd "C-c c i")         'clearcase-gui-checkin)
 ;;   ;; element properties
 ;;   (global-set-key    (kbd "C-c c f")         'clearcase-gui-find-checkout)
+;;   ;; edit config spec
+;;   (global-set-key    (kbd "C-c c s")         'clearcase-config-spec-edit)
 
 
 ;;; Change Log:
+;; 2013-04-12 (1.4)
+;;    edit of config spec (inspired by clearcase.el) + config spec mode for
+;;    color syntax
 ;; 2013-01-31 (1.3)
 ;;    change test clearcase file + remove async empty buffer + function name
 ;;    match clearcase.el
@@ -69,6 +74,8 @@
 
 
 ;;; Code:
+(require 'font-lock)     ;; for syntax color
+
 ;;
 ;;;
 ;;;; FUNCTION (interactive)
@@ -162,6 +169,114 @@
     ;; call clearcase describe
     (clearcase-run-async-command my-buffer "cleardescribe")))
 
+(defun clearcase-config-spec-edit ()
+  "Edit the config spec of the current view."
+  (interactive)
+  (setq clearcase-buffer-file-name buffer-file-name)
+  (let ((cs-buffer-name (concat "*" clearcase-config-spec-file "*"))
+         (config-spec (clearcase-config-spec-get)))
+    (when config-spec
+      (setq clearcase-parent-buffer (current-buffer))
+      (kill-buffer (get-buffer-create cs-buffer-name))
+      (pop-to-buffer (get-buffer-create cs-buffer-name))
+      (auto-save-mode auto-save-default)
+      (erase-buffer)
+      (insert (clearcase-config-spec-get))
+      (goto-char (point-min))
+      (re-search-forward "^[^#\n]" nil 'end)
+      (beginning-of-line)
+      (clearcase-config-spec-mode)
+)))
+
+;;
+;;;
+;;;; CONFIG SPEC MODE
+(defvar clearcase-config-spec-file "clearcase-config-spec"
+  "Name of the file.")
+
+(defvar clearcase-buffer-file-name nil
+  "Name of the current buffer.")
+
+(defvar clearcase-config-spec-mode-hook nil
+  "Run after loading clearcase-config-spec-mode.")
+
+(defvar clearcase-config-spec-map nil
+  "Bind map for config spec mode.")
+(if clearcase-config-spec-map
+  nil
+  (progn
+    (setq clearcase-config-spec-map (make-sparse-keymap))
+    (define-key clearcase-config-spec-map (kbd "C-c C-c") 'clearcase-config-spec-save-and-quit)
+    (define-key clearcase-config-spec-map (kbd "C-x C-s") 'clearcase-config-spec-save)))
+
+(defconst clearcase-config-spec-font-lock-keyword
+  (list
+    ;; standard rules
+    ;; element -file /toto/.../* TOTO -time 02-27-12
+    '("^[ \t]*\\(\\<element\\>\\)[ \t]+\\(\\<-dir\\|-directory\\|-file\\|-eltype\\>\\).*[ \t]+\\([^ ]+\\)[ \t]+\\(\\<-mkbranch\\|-nocheckout\\|-time\\>\\)"
+       (1 font-lock-keyword-face nil t) (2 font-lock-keyword-face nil t)
+       (3 font-lock-variable-name-face nil t) (4 font-lock-keyword-face nil t))
+    ;; element -file /toto/.../* TOTO
+    '("^[ \t]*\\(\\<element\\>\\)[ \t]+\\(\\<-dir\\|-directory\\|-file\\|-eltype\\>\\).*[ \t]+\\([^ \t\n]+\\)"
+       (1 font-lock-keyword-face nil t) (2 font-lock-keyword-face nil t)
+       (3 font-lock-variable-name-face nil t))
+    ;; element * TOTO -time 02-27-12
+    '("^[ \t]*\\(\\<element\\>\\).*[ \t]+\\([^ ]+\\)[ \t]+\\(\\<-mkbranch\\|-nocheckout\\|-time\\>\\)"
+       (1 font-lock-keyword-face nil t) (2 font-lock-variable-name-face nil t)
+       (3 font-lock-keyword-face nil t))
+    ;; element * TOTO
+    '("^[ \t]*\\(\\<element\\>\\).*[ \t]+\\([^ \t\n]*\\)"
+       (1 font-lock-keyword-face nil t) (2 font-lock-variable-name-face nil t))
+    ;; mkbranch
+    '("^[ \t]*\\(\\<end\\>\\)?[ \t]+\\<mkbranch\\>" . font-lock-keyword-face)
+    ;; time
+    '("^[ \t]*\\(\\<end\\>\\)?[ \t]+\\<time\\>" . font-lock-keyword-face)
+    ;; include
+    '("^[ \t]*\\<include\\>" . font-lock-keyword-face)
+    )
+  "Keyword for clearcase-config-spec-mode.")
+
+(setq auto-mode-alist
+  (append
+    '(("\\.cs\\'" . clearcase-config-spec-mode))
+    auto-mode-alist))
+
+(defvar clearcase-config-spec-syntax-table nil
+  "Syntax table for clearcase-config-spec-mode.")
+
+(defun clearcase-config-spec-create-syntax-table ()
+  (if clearcase-config-spec-syntax-table
+    ()
+    (setq clearcase-config-spec-syntax-table (make-syntax-table))
+    ;; This is added so entity names with underscores can be more easily parsed
+    (modify-syntax-entry ?_ "w" clearcase-config-spec-syntax-table)
+    ; comment start with # and end with \n
+    (modify-syntax-entry ?# "< b" clearcase-config-spec-syntax-table)
+    (modify-syntax-entry ?\n "> b" clearcase-config-spec-syntax-table))
+  (set-syntax-table clearcase-config-spec-syntax-table)
+  )
+
+(defun clearcase-config-spec-mode ()
+  "Edit config spec mode."
+  (interactive)
+  (kill-all-local-variables)
+
+  ;; syntax
+;;  (setq comment-start "#")
+  (clearcase-config-spec-create-syntax-table)
+
+  ;; Set up font-lock
+  (make-local-variable 'font-lock-defaults)
+  (setq font-lock-defaults
+        '(clearcase-config-spec-font-lock-keyword nil t))
+
+  (use-local-map clearcase-config-spec-map)
+  (setq major-mode 'clearcase-config-spec-mode)
+  (setq mode-name "config-spec")
+  (make-variable-buffer-local 'clearcase-parent-buffer)
+  (set-buffer-modified-p nil)
+  (run-hooks 'text-mode-hook 'clearcase-config-spec-mode-hook))
+
 ;;
 ;;;
 ;;;; FUNCTION (elisp)
@@ -228,6 +343,52 @@ nil."
         (message (concat "This file is a view private object: " path)))
       (setq ret path))
     ret))
+
+(defun clearcase-config-spec-get ()
+  "Return the config spec of the current view when in a clearcase view otherwise
+nil."
+  ;; get the default directory
+  (let* (ret (path (file-name-directory clearcase-buffer-file-name)))
+    ;; the path is from a mounted view
+    (if (clearcase-in-a-clearcase-view path)
+      (progn
+        (setq default-directory path)
+        ;; get the config spec
+        (setq ret (shell-command-to-string "cleartool catcs")))
+      (progn
+        (setq ret nil)
+        (message (concat "This directory is not part of a clearcase view: " path))))
+    ret))
+
+(defun clearcase-config-spec-save ()
+  "Apply the config spec and save it."
+  (interactive)
+  (if (not (buffer-modified-p))
+    (message "Config spec has not changed since last saved")
+    (progn
+      (message "Setting config spec...")
+      ;; write config spec in a file
+      (write-region (point-min) (point-max) clearcase-config-spec-file 0)
+      ;; set config spec
+      (shell-command-to-string (concat "cleartool setcs " clearcase-config-spec-file))
+      (set-buffer-modified-p nil)
+      (message "Setting config spec...done")
+      )
+    )
+  )
+
+(defun clearcase-config-spec-save-and-quit ()
+  "Apply the config spec and kill the buffer."
+  (interactive)
+  (let ((my-buffer (current-buffer)))
+    ;; set config spec
+    (clearcase-config-spec-save)
+    (if (file-exists-p clearcase-config-spec-file)
+      ;; delete temp file
+      (delete-file clearcase-config-spec-file))
+    (bury-buffer nil)
+    (kill-buffer my-buffer)))
+
 
 ;;; run an asynchronous command to call clearcase command
 (defun clearcase-run-async-command (path command)

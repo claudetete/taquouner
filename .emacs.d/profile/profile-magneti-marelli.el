@@ -174,6 +174,9 @@
     (setq profile-cleartool "c:/path/to/ClearCase/bin/cleartool.exe")
     )
   (setq section-mode-clearcase nil)
+  (progn
+    (setq section-mode-clearcase-el nil)
+    )
   (setq section-mode-autohotkey nil)
   (setq section-mode-outline t)
   (setq section-mode-auto-highlight-symbol t)

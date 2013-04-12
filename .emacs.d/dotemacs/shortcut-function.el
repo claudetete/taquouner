@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.1
+;; Version: 3.2
 ;; Created: October 2006
 ;; Last-Updated: April 2013
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-04-12 (3.2)
+;;    new shortcut for clearcase function to not use clearcase.el (too slow)
 ;; 2013-04-08 (3.1)
 ;;    shortcut for 'indent function' function
 ;; 2013-03-26 (3.0)
@@ -177,6 +179,17 @@
   (global-set-key       (kbd "C-c c i")         'clearcase-gui-checkin)
   ;; element properties
   (global-set-key       (kbd "C-c c f")         'clearcase-gui-find-checkout)
+  ;; edit config spec
+  (global-set-key       (kbd "C-c c s")         'clearcase-config-spec-edit)
+
+  ;; close ecb compile window when quit edit of ocnfig spec
+  (add-hook 'clearcase-config-spec-mode-hook
+    (lambda ()
+      (when section-mode-cedet-ecb
+        (local-set-key  (kbd "C-c C-c")         '(lambda ()
+                                                   (interactive)
+                                                   (clearcase-config-spec-save-and-quit)
+                                                   (ecb-toggle-compile))))))
   ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
 
 ;;
