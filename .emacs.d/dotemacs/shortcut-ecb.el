@@ -59,8 +59,6 @@
 ;;; Code:
 (when section-mode-cedet-ecb
   ;; hide/show ecb window
-  ;;;; already used for quake-like terminal
-  ;;(global-set-key       [f1]                    'ecb-toggle-ecb-windows)
   (global-set-key       (kbd "M-1")             'ecb-toggle-ecb-windows)
 
   ;;

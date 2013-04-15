@@ -262,7 +262,7 @@
 (global-set-key         (kbd "H-z")             'zap-to-char)
 
 ;; delete all blank character or line except one
-(global-set-key         (kbd "<M-SPC>")       'just-one-space-or-line)
+(global-set-key         (kbd "<M-SPC>")         'just-one-space-or-line)
 
 ;;
 ;;; HOME/END
@@ -406,9 +406,9 @@
       )))
 
 ;; yank menu in popup
-(global-set-key "\C-cy" '(lambda ()
-                           (interactive)
-                           (popup-menu 'yank-menu)))
+(global-set-key         (kbd "C-M-y")           '(lambda ()
+                                                   (interactive)
+                                                   (popup-menu 'yank-menu)))
 
 ;;
 ;;; ALIAS
