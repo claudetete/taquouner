@@ -436,7 +436,7 @@
   (end-kbd-macro))
 ;;; when region is selected call last macro on region else call last macro (by
 ;;; Claude TETE)
-(defun call-last-kd-macro-region ()
+(defun call-last-kbd-macro-region ()
   (interactive)
   (if (use-region-p)
     (apply-macro-to-region-lines (region-beginning) (region-end))
@@ -1153,6 +1153,30 @@ delete blank lines"
           (just-one-space 0)
           (delete-blank-lines))
         (just-one-space)))))
+
+;; google code wiki to tex
+(defun wiki2tex ()
+  (interactive)
+  (save-excursion
+    (let ((start (point-min)) (end (point-max)))
+      ;; table to item
+      (replace-regexp "^||\\s-+" "\\\\cm{" nil start end)
+      (replace-regexp "\\s-+|| " "}{" nil start end)
+      (replace-regexp "\\s-+||$" "}" nil start end)
+      ;; chapter to section
+      (replace-regexp "^= " "\\\\section{" nil start end)
+      (replace-regexp " =$" "}" nil start end)
+      ;; title to section
+      (replace-regexp "^=== " "\\\\subsection{" nil start end)
+      (replace-regexp " ===$" "}" nil start end)
+      ;; subtitle to subsection
+      (replace-regexp "^===== " "\\\\subsubsection{" nil start end)
+      (replace-regexp " =====$" "}" nil start end)
+      ;; remove separator line
+      (replace-regexp "^\\s-*----\\s-*$" "" nil start end)
+      ))
+  )
+
 
 ;;
 ;;;

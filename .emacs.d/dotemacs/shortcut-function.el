@@ -136,10 +136,10 @@
 ;; macro (by Fabrice Niessen)
 ;; start/stop recording a keyboard macro (if you change it you also must change
 ;; it in functions.el)
-(global-set-key         (kbd "<S-f8>")          'my-toggle-kbd-macro-recording-on)
+(global-set-key         (kbd "<S-f8>")          'toggle-kbd-macro-recording-on)
 ;; execute the most recent keyboard macro or on each line if a region is
 ;; selected
-(global-set-key         (kbd "<f8>")            'call-last-kd-macro-region)
+(global-set-key         (kbd "<f8>")            'call-last-kbd-macro-region)
 ;; assign a name to the last keyboard macro defined
 (global-set-key         (kbd "<C-f8>")          'name-last-kbd-macro)
 ;; edit the last keyboard macro defined
