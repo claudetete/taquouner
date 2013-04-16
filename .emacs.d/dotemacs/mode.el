@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.3
+;; Version: 4.4
 ;; Created: October 2006
 ;; Last-Updated: April 2013
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2013-04-16 (4.4)
+;;    fix bug with powerline and clearcase not used
 ;; 2013-04-12 (4.3)
 ;;    fix bug helm with browse kill ring + use autoload when it's possible +
 ;;    clean up clearcase mode
@@ -390,8 +392,8 @@
 
 ;;
 ;;; CLEARCASE
+(setq clearcase-mode nil)
 (when section-mode-clearcase (message "  2.21 ClearCase...")
-  (setq clearcase-mode nil)
   (when section-mode-clearcase-el
     (try-require 'clearcase "    "))
   (message "  2.21 ClearCase... Done"))

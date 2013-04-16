@@ -105,7 +105,7 @@
     ))
 
 ;; only for clearcase mode
-(when section-mode-clearcase
+(when section-mode-clearcase-el
   ;; ediff with previous (can open a new frame before with C-x 5 2)
   (global-set-key       (kbd "C-x v `")         'clearcase-ediff-pred-current-buffer)
   ;; ediff with named version
