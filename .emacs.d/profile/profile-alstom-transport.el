@@ -79,10 +79,10 @@
     ;; path
     (setq profile-path
       (concat
-        "c:/MinGW/msys/1.0/bin"                                      ";"
         "c:/perl/perl/site/bin"                                      ";"
         "c:/perl/perl/bin"                                           ";"
         "c:/perl/c/bin"                                              ";"
+        "c:/MinGW/msys/1.0/bin"                                      ";"
         "d:/cygwin/bin"                                              ";"
         "d:/cygwin/usr/bin"                                          ";"
         "d:/cygwin/usr/local/bin"                                    ";"
@@ -108,10 +108,10 @@
     ;; executables path
     (setq profile-exec-path
       '(
-         "c:/MinGW/msys/1.0/bin"
          "c:/perl/perl/site/bin"
          "c:/perl/perl/bin"
          "c:/perl/c/bin"
+         "c:/MinGW/msys/1.0/bin"
          "d:/cygwin/bin"
          "d:/cygwin/usr/bin"
          "d:/cygwin/usr/local/bin"
@@ -418,7 +418,7 @@
     ;; replace occur
     (setq section-mode-helm-occur t)
     ;; replace find files C-x C-f
-    (setq section-mode-helm-find-files t)
+    (setq section-mode-helm-find-files nil)
     ;; replace recentf
     (setq section-mode-helm-recentf t)
     ;; add imenu bind

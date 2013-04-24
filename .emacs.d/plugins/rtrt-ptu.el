@@ -1,4 +1,5 @@
 ;;; rtrt-ptu.el --- major mode for script ptu rtrt -*- coding: utf-8 -*-
+;; source http://www.emacswiki.org/emacs/rtrt-script
 ;;to: someone@somecompany.com
 ;;subject: el pour rtrt, ne pas oublier de mettre à jour le .emacs pour le charger.
 ;; utilisation de:

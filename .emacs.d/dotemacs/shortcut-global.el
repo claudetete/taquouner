@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.3
+;; Version: 3.4
 ;; Created: October 2006
 ;; Last-Updated: April 2013
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-04-24 (3.4)
+;;    do not use tabmix with rtrt (disable indentation in rtrt mode)
 ;; 2013-04-11 (3.3)
 ;;    shorcut for just-one-space-or-line + C-y M-y will not call helm-kill-ring
 ;; 2013-04-08 (3.2)
@@ -342,15 +344,15 @@
        ;; show all
        (local-set-key   (kbd "<M-down>")        'fold-dwim-show-all)
        ))
-  (add-hook 'rtrt-script-mode-hook
-    '(lambda ()
-       ;; show/hide block with tab key
-       (local-set-key   (kbd "<tab>")           'mixtab)
-       ;; hide all
-       (local-set-key   (kbd "<H-prior>")       'fold-dwim-hide-all)
-       ;; show all
-       (local-set-key   (kbd "<H-next>")        'fold-dwim-show-all)
-       ))
+  ;; only when rtrt is used
+  (when section-mode-rtrt-script
+    (add-hook 'rtrt-script-mode-hook
+      '(lambda ()
+         ;; hide all
+         (local-set-key         (kbd "<H-prior>")       'fold-dwim-hide-all)
+         ;; show all
+         (local-set-key         (kbd "<H-next>")        'fold-dwim-show-all)
+         )))
   )
 
 ;;
