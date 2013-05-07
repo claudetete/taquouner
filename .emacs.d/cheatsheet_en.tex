@@ -1,0 +1,552 @@
+%% template from http://wiki.deimos.fr/Template_pour_créer_des_Cheat_Sheet_en_LaTeX
+\documentclass[10pt,landscape]{article}
+\usepackage[utf8x]{inputenc}  %Windows
+
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+
+% PDF informations
+\pdfinfo{
+  /Title (cheatsheet_emacs.pdf)
+  /Creator (LaTeX)
+  /Author (Claude TETE)
+  /Subject (Cheatsheet of GNU/Emacs)
+  /Keywords (pdflatex, latex,pdftex,tex)}
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+% Set vertical view instead of horizontal (set to 0 to let it choose)
+\setcounter{unbalance}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+
+% Dot lines between command and description
+\def\cm#1#2{{\tt#1}\dotfill#2\par}
+
+\begin{document}
+\raggedright
+\footnotesize
+% Set number of columns
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Cheatsheet GNU/Emacs}} \\
+\end{center}
+
+
+\section{Introduction}
+These are shortcuts from this configuration.
+All shortcut are case sensitive. Some shortcut overrides default shortcut...
+All shortcuts are thought for QWERTY !
+se 3/4 of them, the others are here to keep on hand.
+
+!!! Emacs 24 !!! the shortcuts to paste in incremental search has been change since Emacs 24: C-y to paste and M-y to navigate
+
+\section{Explication}
+C-a means ``Control + a''\\
+C-a C-c means ``Control + a'' and ``Control + c''\\
+C-a c means ``Control + a'' and ``c''\\
+C-M-a means ``Control + Alt + a''\\
+C is Control\\
+M is Alt (Meta)\\
+S is Shift\\
+H is Menu (Hyper) next to right control\\
+s is Window key (Super)\\
+
+
+
+
+
+
+\section{Basics}
+\cm{C-x C-c}{Quit Emacs}
+\cm{C-x z}{repeat last command (continue repeat with 'z')}
+\cm{M-x}{Open minibuffer to call a function}
+\cm{C-TAB}{bound to M-TAB (which is already bind to switch windows from window manager)}
+
+
+\subsection{Move}
+\cm{C-M-HOME}{begining function}
+\cm{C-M-a}{begining function}
+\cm{C-M-END}{ending function}
+\cm{C-M-e}{ending function}
+\cm{C-M-u}{begining block}
+\cm{C-M-d}{begining of subblock}
+\cm{C-M-f}{move forward accross one balanced expression}
+\cm{C-M-b}{move backward accross one balanced expression}
+\cm{M-e}{move forward to next end of sentence}
+\cm{C-c C-u}{move backward to begining of preproc}
+\cm{M-m}{move begining of indentation}
+\cm{C-c C-w}{enable navigation from subword to subword (C mode)}
+\cm{H-LEFT}{move to the matched parenthesis}
+\cm{H-RIGHT}{move to the matched parenthesis}
+\cm{END}{move to end of line}
+\cm{END END}{move to end of screen}
+\cm{END END END}{move to end of buffer}
+\cm{HOME}{move to begining of line}
+\cm{HOME HOME}{move to begining of screen}
+\cm{HOME HOME HOME}{move to begining of buffer}
+\cm{M-g}{move to line number}
+
+\subsubsection{minor Column Mode}
+\cm{C-x C-n}{set a column to be the cursor place every time you move on an other line}
+\cm{C-u C-x C-n}{unset the column to be the cursor place ...}
+
+\subsubsection{Ace Jump}
+\cm{F9}{move by ace jump word mode}
+\cm{M-F9}{move by ace jump character mode}
+\cm{C-F9}{move by ace jump line mode}
+\cm{S-F9}{move back by ace jump mode}
+
+\subsection{Select}
+\cm{M-h}{select the whole block/paragraph}
+\cm{C-M-h}{select the whole function}
+\cm{C-M-\@}{select the whole block of source code}
+\cm{C-M-z}{select word under pointer}
+\cm{C-ENTER}{select rectangle with CUA rectangle}
+
+\subsubsection{Mouse}
+\cm{Left Click}{text selection}
+\cm{Right Click}{extend selection or popup a context menu}
+\cm{Middle Click}{paste or select and go}
+
+\subsection{Edit}
+\cm{M-w}{Copy region or whole line}
+\cm{C-w}{Cut (kill) region or whole line}
+\cm{C-y}{Paste (yank)}
+\cm{M-y}{browse in kill ring memory (after a yank) or helm kill ring}
+\cm{C-M-y}{browse kill ring in a popup}
+\cm{C-NUMBER M-w}{Copy in a NUMBER register}
+\cm{C-NUMBER C-y}{Paste from a NUMBER register}
+\cm{C-S-SPACE}{insert at this point (global mark) each copy will be insert at this point and each non move keys}
+\cm{TAB}{indent correctly current line}
+\cm{TAB TAB}{indent and hide/show block}
+\cm{C-o}{insert a new line without moving the cursor}
+\cm{C-M-o}{insert a new line + align with the cursor}
+\cm{M-/}{completion}
+\cm{M-?}{more completion}
+\cm{M-(}{add parentheses to the region}
+\cm{S-ENTER}{insert a line without moving the point on it}
+\cm{H-ENTER}{join with next line and remove all indent}
+\cm{M-ENTER}{insert a new next empty line from anywhere on the current line}
+\cm{C-M-ENTER}{insert a new previous empty line from anywhere on the current line}
+\cm{C-c h}{show/hide block}
+\cm{C-M-l}{indent the whole function}
+\cm{C-j}{insert a new line whitout moving}
+
+\subsubsection{Replace}
+\cm{M-r}{replace string in buffer or region}
+\cm{M-x flush-lines}{remove all lines matching a regexp}
+\cm{M-x keep-lines}{keep all lines matching a regexp}
+
+\subsubsection{Case}
+\cm{M-u}{uppercase the word or region}
+\cm{M-l}{downcase the word or region}
+\cm{M-c}{capitalize the word or region}
+\cm{M-- SHORTCUT}{used with previous shortcuts to apply on the previous word and not following}
+\cm{C-x C-l}{downcase the selected region}
+\cm{C-x C-u}{uppercase the selected region}
+
+\subsubsection{Fill}
+\cm{C-c ]}{justify the paragraph}
+\cm{C-c [}{justify the region or line}
+
+\subsubsection{Rectangle}
+\cm{C-x r r}{copy region/rectangle in a named register}
+\cm{C-x r i}{insert a named register like a rectangle}
+\cm{C-x r t}{replace a region/rectangle by a string}
+\cm{C-x r o}{insert whitespace rectangle}
+\cm{C-x r d}{delete region/rectangle}
+\cm{C-ENTER}{start rectangle selection}
+
+\subsubsection{Switch}
+\cm{M-t}{switch current word with next}
+\cm{C-M-t}{swith current word with next (\_ not in word)}
+\cm{C-x C-t}{switch current line with previous}
+\cm{C-t}{switch current character with previous}
+
+\subsubsection{Delete}
+\cm{C-x C-o}{remove all empty line except one}
+\cm{M-SPACE}{remove all space except one (or empty line)}
+\cm{C-k}{delete the rest line (put in kill ring)}
+\cm{C-S-BACKSPACE}{delete the whole line (put in kill ring)}
+\cm{M-d}{delete forward word}
+\cm{C-z}{delete backward word}
+\cm{C-(}{delete parenthese with balanced expression}
+\cm{H-/}{comment or uncomment region or line}
+\cm{M-DEL}{delete the forward word}
+\cm{C-DEL}{delete the forward line}
+\cm{C-BACKSPACE}{delete the backward line}
+\cm{M-z}{delete to a specified character}
+
+\subsection{Undo}
+\cm{M-\_}{infinite undo}
+\cm{C-/}{undo (undo tree mode)}
+\cm{C-?}{redo (undo tree mode)}
+\cm{C-x u}{show undo tree}
+\cm{UP/DOWN}{move in the tree (undo tree mode)}
+\cm{t}{show/hide timestamp (undo tree mode)}
+\cm{q}{quit (undo tree mode)}
+\cm{ENTER}{quit (undo tree mode) and toggle ecb compile window}
+\cm{PAGEUP/PAGEDOWN}{move in the tree by ten undo/redo}
+\cm{C-UP}{go to the previous node (undo tree mode)}
+\cm{C-DOWN}{go to the next node (undo tree mode)}
+
+\subsection{File}
+\cm{C-x C-f}{open file (with helm if used)}
+\cm{C-x C-q}{toggle read only/read and write}
+\cm{C-x ENTER f dos ENTER}{save the current buffer with CRLF line endings (\textbackslash r\textbackslash n)}
+\cm{C-x ENTER f unix ENTER}{save the current buffer with LF line endings (\textbackslash n)}
+\cm{C-x ENTER r dos ENTER}{reread the current buffer with CRLF line endings (\textbackslash r\textbackslash n)}
+\cm{C-x ENTER r unix ENTER}{reread the current buffer with LF line endings (\textbackslash n)}
+\cm{C-c F}{find file in project (regexp with gtags)}
+\cm{M-f}{find file by name with grep and show list in dired}
+\cm{M-p}{reread file (revert-buffer)}
+\cm{C-`}{switch between header/source file}
+\cm{C-F4}{switch between header/source file}
+
+\subsubsection{Bookmarks}
+\cm{C-x r m}{set the current bookmark}
+\cm{C-x r l}{show list of bookmarked files}
+\cm{d}{mark to delete bookmark}
+\cm{e}{edit annotations}
+\cm{a}{show annotations}
+\cm{x}{apply all changes}
+
+\subsection{Buffer}
+\cm{C-x n n}{invoke narrow (show only the region and do not interact with the rest)}
+\cm{C-x n w}{quit narrow}
+\cm{F4}{kill current buffer and window}
+\cm{M-`}{kill current buffer}
+\cm{C-x C-b}{show a list of buffers (with helm if used)}
+\cm{H-UP}{scroll up screen}
+\cm{H-DOWN}{scroll down screen}
+\cm{C-c f}{open recent file (with helm if used)}
+
+\subsubsection{Special buffers}
+\cm{M-2}{switch to grep or ack buffer}
+\cm{M-3}{switch to compilation buffer}
+\cm{M-4}{switch to vc or vc-diff buffer}
+\cm{M-5}{switch to occur buffer}
+\cm{M-6}{switch to help buffer}
+
+\subsection{Window}
+\cm{C-l}{recenter the screen at cursor position}
+\cm{C-l C-l}{recenter the screen at the top}
+\cm{C-l C-l C-l}{recenter the screen at the bottom}
+\cm{C-x r f}{store window configuration in a register}
+\cm{C-x r j}{restore window configuration from a register}
+\cm{C-x +}{balance windows}
+\cm{C-x C-+}{increase font size for the current window}
+\cm{C-x C--}{decrease font size for the current window}
+\cm{S-UP/DOWN/LEFT/RIGHT}{move to the direction window}
+
+\subsubsection{Split}
+\cm{C-x 2}{split horizontally the current window}
+\cm{C-x 3}{split vertically the current window}
+\cm{C-x 1}{show only the current window (close others)}
+\cm{C-x 0}{close the current window}
+\cm{C-x 5 2}{show an external window of the current window}
+\cm{C-x 5 0}{to quit the external window}
+\cm{M-NumpadDot}{delete window}
+\cm{M-Numpad0}{delete all window except one}
+\cm{M-Numpad2}{split horizontally window and go to the bottom}
+\cm{M-Numpad6}{split vertically window and go to the right}
+\cm{M-Numpad5}{create a new frame and maximize it}
+\cm{M-NumpadENTER}{delete frame}
+
+\subsubsection{Size}
+\cm{C-S-UP}{enlarge vertically window}
+\cm{C-S-DOWN}{shrink vertically window}
+\cm{C-S-LEFT}{enlarge horizontally window}
+\cm{C-S-RIGHT}{shrink horizontally window}
+
+\subsection{Search}
+
+\subsubsection{Isearch}
+\cm{C-s}{incremental search forward}
+\cm{C-s C-s}{incremental search forward with last search}
+\cm{C-r}{incremental search backward}
+\cm{C-r C-r}{incremental search backward with last search}
+\cm{C-M-s}{incremental regexp search forward}
+\cm{C-M-s C-M-s}{incremental regexp search forward with last search}
+\cm{C-M-r}{incremental regexp search backward}
+\cm{C-M-r C-M-r}{incremental regexp search backward with last search}
+\cm{M-s w}{incremental search a word (not subword)}
+\cm{C-u C-SPACE}{after incremental search go back to the start}
+\cm{M-\%}{start query replace (during a incremental search)}
+\cm{C-M-v}{incremental search of word at point}
+\cm{C-o}{list all occurrences in buffer (during incremental search)}
+
+\subsubsection{Occur}
+\cm{M-s o}{show each occurences in this buffer (can be rebind with at point)}
+\cm{C-c e}{list all occurrences in buffer (with helm if used)}
+\cm{C-M-c}{list all occurrences in buffer (default word at point)}
+
+\subsubsection{Grep/Ack}
+\cm{C-F3}{search word with ack}
+\cm{M-F3}{search in same type of file with ack}
+\cm{F3}{next match/error}
+\cm{S-F3}{previous match/error}
+
+\subsubsection{Minibuffer}
+\cm{M-s}{Move to an earlier item in the minibuffer history that matches a regexp you enter.}
+\cm{M-r}{Move to a later item in the minibuffer history that matches a regexp you enter.}
+
+\subsection{Register}
+\cm{C-c i}{insert a register}
+\cm{C-x r SPACE}{register/bookmark a point in a buffer}
+\cm{C-x r j}{jump/go to a register/bookmark (by name)}
+\cm{C-x r s}{save region in a register}
+\cm{C-x r i}{insert text from a register}
+\cm{M-x append-to-register}{add region to end of a register}
+\cm{M-x prepend-to-register}{add region to start of a register}
+
+\subsection{Macro}
+\cm{C-x (}{start record macro}
+\cm{C-x )}{end record macro}
+\cm{C-x C-k r}{run macro on region}
+\cm{C-x e}{run macro}
+\cm{C-x q}{put a break with asking during a record macro}
+\cm{F8}{start last recorded macro}
+\cm{S-F8}{start/end macro record}
+\cm{C-F8}{name last recorded macro}
+\cm{M-F8}{edit last recorded macro}
+\cm{H-F8}{select previous recorded macro}
+\cm{H-S-F8}{select next recorded macro}
+
+\subsection{Highlight}
+\cm{C-x w r}{unhighlight regexp}
+
+\subsection{Info}
+\cm{M-=}{information about region}
+\cm{C-x =}{information about character}
+\cm{C-u C-x =}{information about text (face/color/style...)}
+\cm{M-L}{get number of line}
+\cm{C-h e}{show ``*Messages*''}
+\cm{M-x list-color-display}{show a list of named color}
+
+\subsubsection{Help}
+\cm{C-h a}{regexp search in help}
+\cm{C-h k}{give help about shortcut}
+\cm{C-h w}{give shortcut about function}
+\cm{C-h v}{give help about a variable}
+\cm{C-h f}{give help about a function}
+\cm{C-c C-b}{previous topic}
+\cm{C-c C-f}{next topic}
+\cm{s}{search}
+\cm{t}{top topic}
+\cm{l}{back}
+
+
+\section{Mode}
+
+
+\subsection{ECB}
+\cm{M-1}{show/hide ecb window}
+\cm{F2 (or next mouse button)}{show/hide compile window}
+\cm{C-c w}{toggle between two width of ecb window}
+\cm{M-q}{go to the ecb directory window}
+\cm{M-q M-q}{go to the ecb directory window and maximize it}
+\cm{M-a}{go to the ecb source window}
+\cm{M-a M-a}{go to the ecb source window and maximize it}
+\cm{M-z}{go to the ecb history window}
+\cm{M-z M-z}{go to the ecb history window and maximize it}
+\cm{M-\textbackslash}{go to the ecb method window}
+\cm{M-\textbackslash M-\textbackslash}{go to the ecb method window and maximize it}
+\cm{ENTER}{go to ecb source when in directory window}
+\cm{M-ENTER}{go to ecb methods when in source window, open in dired when in directory window}
+\cm{ESCAPE}{go back in edit window (outside ecb)}
+
+\subsection{Languages}
+\cm{C-M-\textbackslash}{indent region}
+\cm{M-;}{insert a comment in the right place}
+\cm{C-c C-w}{toogle subword mode (in c-mode)}
+\cm{C-c @ C-d}{hide block of preproc}
+\cm{C-c @ C-s}{show block of preproc}
+\cm{F10}{invoke compiler}
+
+\subsubsection{C mode}
+\cm{M-LEFT}{show/hide block (folding)}
+\cm{M-RIGHT}{show/hide block (folding)}
+\cm{M-UP}{hide all block}
+\cm{M-DOWN}{show all block}
+
+\subsection{CEDET/Semantic}
+\cm{C-c , ,}{Parse current buffer}
+\cm{C-c , j}{jump to symbol (see M-. in custom)}
+\cm{C-c , u}{go to the current included file}
+\cm{C-c , g}{find all references of symbol at point}
+\cm{C-c , G}{find all call of the current function}
+
+\subsection{Tag (GNU Global, Semantic, Etags) }
+\cm{M-.}{go to the definition of word at point (semantic)}
+\cm{C->}{go to the definition of word at point (semantic)}
+\cm{S-LEFT\_CLICK}{go to the definition of word at cursor (semantic)}
+\cm{C-<}{go back from definition (semantic)}
+\cm{BACK\_CLICK}{go back from definition (semantic)}
+\cm{C-M-.}{find tags with grep (gtags or semantic)}
+\cm{RIGHT\_CLICK}{show a menu of lists of functions/variable/include}
+\cm{C-x C-SPACE}{go back after using tags search}
+\cm{C-c C-f}{show a menu of lists of functions/variable/include with helm}
+
+\subsection{RTRT}
+\cm{C-c p o}{align init for RTRT}
+\cm{C-c p ;}{align ev for RTRT}
+\cm{C-c p [}{align init and ev for RTRT}
+\cm{C-c p s}{align stub}
+\cm{C-c r s}{remove all space before colon}
+\cm{M-LEFT}{go previous between test}
+\cm{M-RIGHT}{go next between test}
+\cm{M-UP}{go up to SERVICE}
+\cm{M-DOWN}{go down to END SERVICE}
+\cm{M-PAGEUP}{hide all block}
+\cm{M-PAGEDOWN}{show all block}
+
+\subsection{AUCTeX}
+\cm{F10}{Save and compile the buffer (useful when used for pdf preview)}
+
+\subsection{Spell}
+\cm{F7}{check spelling in the buffer}
+\cm{S-F7}{check word spelling at point}
+\cm{M-F7}{check region spelling}
+\cm{C-F7}{check comment and string spelling in buffer}
+\cm{C-M-F7}{change dictionnary}
+\cm{C-c \$}{change dictionnary}
+
+\subsection{Browse Kill Ring}
+\cm{UP}{previous}
+\cm{DOWN}{next}
+\cm{C-g}{quit}
+\cm{ESCAPE}{quit}
+\cm{F2}{quit (when ecb is used)}
+\cm{y}{insert}
+\cm{i}{insert}
+\cm{ENTER}{insert, move and quit}
+\cm{u}{insert, move and quit}
+\cm{o}{insert and move}
+\cm{q}{quit}
+\cm{d}{delete current killed text}
+\cm{s}{search forward}
+\cm{r}{search backward}
+\cm{e}{edit}
+\cm{n}{forward}
+\cm{p}{previous}
+\cm{g}{update}
+\cm{l}{occur}
+\cm{h}{help}
+\cm{MIDDLE CLICK}{insert}
+
+\subsection{Align}
+\cm{C-c p p}{align region with rules of current mode}
+\cm{C-c p l}{align region with regexp}
+\cm{C-c p =}{align =, ==, +=, *= etc}
+
+\subsection{Version Control}
+\cm{C-x v v}{do the next logical action on the file}
+\cm{C-x v =}{diff}
+\cm{C-x v l}{show history}
+\cm{C-x v i}{add a new file}
+\cm{C-x v +}{update}
+\cm{C-x v u}{undo checkout}
+\cm{C-x v ~}{look at other version}
+\cm{C-x v d}{show all files which are not up to date in a directory}
+\cm{C-x v g}{show track each line who added/edited it}
+\cm{C-x v C-h}{show all command for Version Control}
+
+\subsubsection{Subversion}
+\cm{q}{in diff or log view will quit and delete window (toggle ecb compile window)}
+
+\subsubsection{Clearcase}
+\cm{C-c c c}{gui checkout}
+\cm{C-c c =}{gui diff with previous version}
+\cm{C-c c l}{gui history}
+\cm{C-c c u}{gui uncheckout}
+\cm{C-c c L}{gui version tree}
+\cm{C-c c e}{gui explorer}
+\cm{C-c c v}{gui version properties}
+\cm{C-c c p}{gui element properties}
+\cm{C-c c i}{gui checkin}
+\cm{C-c c f}{gui find checkout}
+\cm{C-c c s}{edit config spec}
+\cm{C-c C-c}{save and quit config spec (toggle ecb compile window)}
+
+\subsection{Calc}
+\cm{M-Numpad*}{invoke quick calc in minibuffer}
+\cm{C-x * c}{invoke calc in a new buffer}
+\cm{C-x * *}{invoke calc with last used mmode}
+\cm{C-x * q}{invoke quick calc in minibuffer}
+\cm{C-x * r}{grab region/rectangle into calc}
+\cm{C-x * :}{grab region/rectangle and sum the columns}
+\cm{C-x * \_}{grab region/rectangle and sum the rows}
+\cm{C-x * x}{quit calc}
+\cm{C-x * e}{grab region, compute and yank the result}
+\cm{y}{yank in buffer}
+\cm{\$}{last result}
+\cm{16\#}{prefix for hexadecimal}
+\cm{8\#}{prefix for octal}
+\cm{2\#}{prefix for binary}
+\cm{d r}{show in the selected base}
+
+\subsection{Calendar}
+\cm{C-c c}{invoke calendar (custom)}
+\cm{d}{show diary of selected day}
+\cm{S}{give sunrise and sunset time}
+\cm{M}{give moon phase}
+
+\subsection{Dired}
+\cm{C-x C-q}{edit name or rights of file (in dired mode)}
+\cm{C-c C-c}{apply modification from previous shortcut (in dired mode)}
+\cm{\% R}{rename files with regex}
+\cm{H-ENTER}{open with default application in MS Windows}
+\cm{[}{go to parent folder (same key as \^ on azerty)}
+
+\subsection{Web}
+This command will invoke web browser.\\
+\cm{F12}{translate word or region english-french (wordreference.com}
+\cm{M-F12}{translate word or region french-english (wordreference.com)}
+\cm{C-F12}{conjugate word or region (leconjugueur.com)}
+\cm{S-F12}{find french synonym of word or region (synonymes.com)}
+\cm{F11}{search word or region (en.wikipedia.org)}
+\cm{M-F11}{search word or region (fr.wikipedia.org)}
+\cm{C-F11}{search word or region (google.com)}
+\cm{C-M-F11}{search word or region (google.fr)}
+
+
+
+
+\end{multicols}
+
+\end{document}

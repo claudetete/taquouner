@@ -1,0 +1,666 @@
+%% template from http://wiki.deimos.fr/Template_pour_créer_des_Cheat_Sheet_en_LaTeX
+\documentclass[10pt,landscape]{article}
+\usepackage[utf8x]{inputenc}  %Windows
+
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+
+% PDF informations
+\pdfinfo{
+  /Title (cheatsheet_emacs.pdf)
+  /Creator (LaTeX)
+  /Author (Claude TETE)
+  /Subject (Cheatsheet of GNU/Emacs)
+  /Keywords (pdflatex, latex,pdftex,tex)}
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+%%% Redefine section commands to use less space
+%%\makeatletter
+%%\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+%%                                {-1ex plus -.5ex minus -.2ex}%
+%%                                {0.5ex plus .2ex}%x
+%%                                {\normalfont\large\bfseries}}
+%%\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+%%                                {-1explus -.5ex minus -.2ex}%
+%%                                {0.5ex plus .2ex}%
+%%                                {\normalfont\normalsize\bfseries}}
+%%\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+%%                                {-1ex plus -.5ex minus -.2ex}%
+%%                                {1ex plus .2ex}%
+%%                                {\normalfont\small\bfseries}}
+%%\makeatother
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+% Set vertical view instead of horizontal (set to 0 to let it choose)
+\setcounter{unbalance}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+
+% Dot lines between command and description
+\def\cm#1#2{{\tt#1}\dotfill#2\par}
+
+\begin{document}
+\raggedright
+\footnotesize
+% Set number of columns
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Cheatsheet GNU/Emacs}} \\
+\end{center}
+
+
+\section{Introduction}
+Ces raccourcis sont pour cette configuration.
+Tous les raccourcis sont sensibles à la casse. Quelques uns remplacent ceux par défaut...
+Les raccourcis sont tous pensés pour le QWERTY !
+J'utilise au moins les trois quarts d'entre eux, le reste est là comme pense-bête.
+
+!!! Emacs 24 !!! les raccourcis pour coller dans la recherche incrémentale ont changé depuis Emacs 24 : C-y pour coller et M-y pour naviguer
+
+\section{Explication}
+C-a signifie ``Control + a''\\
+C-a C-c signifie ``Control + a'' et ``Control + c''\\
+C-a c signifie ``Control + a'' et ``c''\\
+C-M-a signifie ``Control + Alt + a''\\
+C est Control\\
+M est Alt (Meta)\\
+S est Shift\\
+H est Menu (Hyper) next to right control\\
+s est la touche Window (Super)\\
+
+
+
+
+
+
+\section{Essentiel}
+\cm{C-x C-c}{Quitter Emacs}
+\cm{C-x z}{répète la dernière commande (continuer de répéter avec 'z')}
+\cm{M-x}{Ouvre le minibuffer pour appeler une fonction}
+\cm{C-TAB}{associé à M-TAB (qui est déjà utilisé par le window manager)}
+
+
+
+
+
+\subsection{Déplacement}
+\cm{C-M-HOME}{début de la fonction}
+\cm{C-M-a}{début de la fonction}
+\cm{C-M-END}{fin de la fonction}
+\cm{C-M-e}{fin de la fonction}
+\cm{C-M-u}{début du bloc}
+\cm{C-M-d}{déplace dans un sous niveau de parenthèses}
+\cm{C-M-f}{déplace d'un caractère ouvrant au caractère fermant}
+\cm{C-M-b}{déplace d'un caractère ouvrant au caractère fermant}
+\cm{M-e}{déplace à la fin d'une phrase}
+\cm{C-c C-u}{déplace au début d'un bloc de preprocessing}
+\cm{M-m}{déplace au début de la ligne avec l'indentation}
+\cm{C-c C-w}{active la navigation de sous mot en sous mot dans le mode C (CommeCetExemple)}
+\cm{H-LEFT}{aller à la parenthèse correspondante}
+\cm{H-RIGHT}{aller à la parenthèse correspondante}
+\cm{END}{aller à la fin de la ligne}
+\cm{END END}{aller à la fin de l'écran}
+\cm{END END END}{aller à la fin du buffer}
+\cm{HOME}{aller au début de la ligne}
+\cm{HOME HOME}{aller au début de l'écran}
+\cm{HOME HOME HOME}{aller au début du buffer}
+\cm{M-g}{aller à la ligne numero X}
+
+\subsubsection{mineur Mode Colonne}
+\cm{C-x C-n}{marque la colonne actuelle où le curseur se place quand il change de ligne}
+\cm{C-u C-x C-n}{désactive le mode précédent}
+
+\subsubsection{Ace Jump}
+\cm{F9}{bouger le curseur par mot avec ace jump mode}
+\cm{M-F9}{bouger le curseur par caractères avec ace jump mode}
+\cm{C-F9}{bouger le curseur par ligne avec ace jump mode}
+\cm{S-F9}{revenir à la position d'origine avec ace jump mode}
+
+
+
+
+
+\subsection{Sélection}
+\cm{M-h}{sélectionne tout le paragraphe courant}
+\cm{C-M-h}{sélectionne toute la fonction courante}
+\cm{C-M-@}{sélectionne tout le bloc de code source}
+\cm{C-M-z}{sélectionner le mot sous le curseur}
+\cm{C-ENTER}{sélectionner un rectangle avec CUA rectangle}
+
+\subsubsection{Souris}
+\cm{Left Click}{selection de texte}
+\cm{Right Click}{agrandit une selection ou ouvre le menu contextuel}
+\cm{Middle Click}{coller ou selectionner et ouvrir}
+
+
+
+
+
+\subsection{Edition}
+\cm{M-w}{copier la ligne ou la région}
+\cm{C-w}{couper (kill) la ligne ou la région}
+\cm{C-y}{Coller (yank)}
+\cm{M-y}{Navigue dans la kill ring (après un yank) ou avec helm}
+\cm{C-NUMBER M-w}{Copier dans un registre NUMBER}
+\cm{C-NUMBER C-y}{Coller depuis un registre NUMBER}
+\cm{C-S-SPACE}{insérer à ce point (global mark), chaque insertion de caractère et de copie sera inseré à ce point}
+\cm{TAB}{indente correctement la ligne}
+\cm{TAB TAB}{indente et cache/affiche un bloc}
+\cm{C-o}{insère une nouvelle ligne sans bouger le curseur}
+\cm{C-M-o}{insère une nouvelle ligne et l'aligne avec le curseur}
+\cm{M-/}{complétion}
+\cm{M-?}{plus de complétion}
+\cm{M-(}{entoure la région de parenthèses}
+\cm{S-ENTER}{insérer une ligne sans bouger le curseur}
+\cm{H-ENTER}{joindre la ligne avec la suivante sans l'indentation}
+\cm{M-ENTER}{insérer une nouvelle ligne suivante vide depuis n'importe où sur la ligne actuelle}
+\cm{C-M-ENTER}{insérer une nouvelle ligne précédente vide depuis n'importe où sur la ligne actuelle}
+\cm{C-c h}{afficher/cacher un bloc}
+\cm{C-M-l}{indente la fonction}
+\cm{C-j}{insère une nouvelle ligne sans bouger}
+
+\subsubsection{Remplacer}
+\cm{M-r}{remplacer la string dans le buffer ou la région}
+\cm{M-x flush-lines}{supprime toutes les lignes correspondantes à une expression rationnelle}
+\cm{M-x keep-lines}{garde seulement les lignes correspondantes à une expression rationnelle}
+
+\subsubsection{Casse}
+\cm{M-u}{passe en majuscule la suite du mot ou région}
+\cm{M-l}{passe en minuscule la suite du mot ou région}
+\cm{M-c}{passe en majuscule le premier caractère et en minuscule les autres pour mot ou région}
+\cm{M-- SHORTCUT}{utilisé avec les précédents raccourcis pour appliquer au précédent mot et non au suivant}
+\cm{C-x C-l}{passe en minuscule la région sélectionnée}
+\cm{C-x C-u}{passe en majuscule la région sélectionnée}
+
+
+\subsubsection{Fill}
+\cm{C-c ]}{justifier le paragraphe}
+\cm{C-c [}{justifier la région ou la ligne}
+
+\subsubsection{Rectangle}
+\cm{C-x r r}{copier une région/rectangle dans un registre}
+\cm{C-x r i}{insérer un registre comme un rectangle}
+\cm{C-x r t}{remplacer une région/rectangle par une chaîne de caractère}
+\cm{C-x r o}{insérer un rectangle d'espace}
+\cm{C-x r d}{supprime la région/rectangle}
+\cm{C-ENTER}{sélectionner un rectangle}
+
+\subsubsection{Échanger}
+\cm{M-t}{échange le mot courant avec le suivant}
+\cm{C-M-t}{échange le mot courant avec le suivant (\_ est considéré comme un séparateur)}
+\cm{C-x C-t}{échange la ligne courante avec la précédente}
+\cm{C-t}{échange le caractère courant avec le précédent}
+
+\subsubsection{Supprimer}
+\cm{C-x C-o}{supprime toutes les lignes vides et en laisse une seule}
+\cm{M-SPACE}{supprime tous les espaces et en laisse un}
+\cm{C-k}{supprime le reste de la ligne}
+\cm{C-S-BACKSPACE}{supprime toute la ligne}
+\cm{M-d}{supprimer mot en avant (doit être au début)}
+\cm{C-z}{supprimer mot en arrière (doit être à la fin)}
+\cm{C-(}{supprimer parenthèses qui correspondent}
+\cm{H-/}{commenter or décommenter la région ou la ligne}
+\cm{M-DEL}{supprime le mot suivant}
+\cm{C-DEL}{supprime la fin de la ligne}
+\cm{C-BACKSPACE}{supprime le debut de la ligne}
+\cm{M-z}{supprime jusqu'à un caractère spécifié}
+
+
+
+\subsection{Annuler}
+\cm{M-\_}{annuler infini}
+\cm{C-/}{annuler (undo tree mode)}
+\cm{C-?}{refaire (undo tree mode)}
+\cm{C-x u}{afficher arbre d'annuler}
+\cm{UP/DOWN}{se déplacer dans l'arbre d'annuler et voir les changement dans le buffer (undo tree mode)}
+\cm{t}{afficher ou cacher l'heure (undo tree mode)}
+\cm{q}{quitter (undo tree mode)}
+\cm{ENTER}{quitter (undo tree mode)}
+\cm{PAGEUP/PAGEDOWN}{deplace le curseur de 10 annuler/refaire (undo tree mode)}
+\cm{C-UP}{va au précédant noeud (undo tree mode)}
+\cm{C-DOWN}{va au noeud suivant (undo tree mode)}
+
+
+
+
+
+\subsection{Fichiers}
+\cm{C-x C-f}{ouvrir un fichier (avec helm si utilisé)}
+\cm{C-x C-q}{passe de lecture seule à lecture et écriture (et inversement)}
+\cm{C-x ENTER f dos ENTER}{sauvegarde le buffer actuel avec des CRLF comme saut de ligne (\textbackslash n)}
+\cm{C-x ENTER f unix ENTER}{sauvegarde le buffer actuel avec des LF comme saut de ligne (\textbackslash n)}
+\cm{C-x ENTER r dos ENTER}{relis le buffer actuel avec des CRLF comme saut de ligne (\textbackslash r\textbackslash n)}
+\cm{C-x ENTER r unix ENTER}{relis le buffer actuel avec des LF comme saut de ligne (\textbackslash n)}
+\cm{C-c f}{trouver un fichier dans le projet avec regex (gtags)}
+\cm{M-f}{trouver un fichier par son nom avec grep et affiche la liste dans dired}
+\cm{M-p}{lit de nouveau le fichier (revert-buffer)}
+\cm{C-`}{passer de fichier header à source et inversement}
+\cm{C-F4}{passer de fichier header à source et inversement}
+
+\subsubsection{Bookmarks}
+\cm{C-x r m}{ajoute en bookmark le buffer actuel}
+\cm{C-x r l}{affiche une liste des bookmarks}
+\cm{d}{marqué comme à supprimer (dans la liste des bookmarks)}
+\cm{e}{édite les notes (dans la liste des bookmarks)}
+\cm{a}{affiche les notes (dans la liste des bookmarks)}
+\cm{x}{applique tous les changements (dans la liste des bookmarks)}
+\cm{C-c b}{afficher une liste de bookmarks}
+\cm{C-c v}{ajoute le buffer actuel dans les bookmarks}
+
+
+
+\subsection{Buffer}
+\cm{C-x n n}{n'affiche que la région sélectionnée (on ne peut plus interagir avec le reste du buffer)}
+\cm{C-x n w}{sortir du mode précédent (narrow)}
+\cm{F4}{fermer le buffer et la window actuelle}
+\cm{M-`}{fermer le buffer actuel}
+\cm{C-x C-b}{afficher une liste de buffers}
+\cm{H-UP}{scroll up l'affichage}
+\cm{H-DOWN}{scroll down l'affichage}
+\cm{C-c f}{ouvrir un fichier recent (avec helm si utilisé)}
+
+\subsubsection{Special}
+\cm{M-2}{aller au buffer de grep ou de ack}
+\cm{M-3}{aller au buffer de compilation}
+\cm{M-4}{aller au buffer de vc ou vc-diff}
+\cm{M-5}{aller au buffer de occur}
+\cm{M-6}{aller au buffer de aide}
+
+
+
+
+
+\subsection{Windows}
+\cm{C-l}{recentrer le buffer dans la window au niveau du curseur}
+\cm{C-l C-l}{recentrer buffer dans la window avec le curseur en haut}
+\cm{C-l C-l C-l}{recentrer buffer dans la window avec le curseur en bas}
+\cm{C-x r f}{garde en mémoire (registre) la configuration actuelle des windows}
+\cm{C-x r j}{restaure une configuration de windows depuis un registre}
+\cm{C-x +}{équilibre la taille des windows}
+\cm{S-UP/DOWN/LEFT/RIGHT}{va dans la fenêtre donnée par la direction}
+
+\subsubsection{Division}
+\cm{C-x 2}{divise horizontalement en deux la window actuelle}
+\cm{C-x 3}{divise verticalement en deux la window actuelle}
+\cm{C-x 1}{n'affiche que la window actuelle}
+\cm{C-x 0}{ferme la window actuelle}
+\cm{C-x 5 2}{affiche la window actuelle dans une fenêtre externe}
+\cm{C-x 5 0}{ferme la fenêtre externe}
+\cm{M-NumpadPoint}{supprime la window}
+\cm{M-Numpad0}{supprime toutes les window exceptée une}
+\cm{M-Numpad2}{divise horizontalement en deux la window actuelle et va dans celle du dessous}
+\cm{M-Numpad6}{divise verticalement en deux la window actuelle et va dans celle de droite}
+\cm{M-Numpad5}{affiche la window actuelle dans une fenêtre externe et la maximise}
+\cm{M-NumpadENTER}{ferme la fenêtre externe}
+
+\subsubsection{Taille}
+\cm{C-S-UP}{agrandir verticalement la window actuelle}
+\cm{C-S-DOWN}{réduire verticalement la window actuelle}
+\cm{C-S-LEFT}{agrandir horizontalement la window actuelle}
+\cm{C-S-RIGHT}{réduire horizontalement la window actuelle}
+
+
+
+
+
+\subsection{Recherche}
+
+\subsubsection{Incrémentale}
+\cm{C-s}{recherche incrémentale en avant}
+\cm{C-s C-s}{recherche incrémentale en avant avec dernière recherche}
+\cm{C-r}{recherche incrémentale en arrière}
+\cm{C-r C-r}{recherche incrémentale en arrière avec dernière recherche}
+\cm{C-M-s}{recherche incrémentale en avant avec regex}
+\cm{C-M-s C-M-s}{recherche incrémentale en avant avec regex et dernière recherche}
+\cm{C-M-r}{recherche incrémentale en arrière avec regex}
+\cm{C-M-r C-M-r}{recherche incrémentale en arrière avec regex et dernière recherche}
+\cm{M-s w}{recherche incrémentale du mot suivant}
+\cm{C-u C-SPACE}{après une recherche incrémentale, revenir au début}
+\cm{M-\%}{pendant une recherche incrémentale démarre un remplacement}
+\cm{C-M-v}{recherche incrémentale du mot sous le curseur}
+\cm{C-o}{lister toutes les occurrences dans le buffer actuel lorsqu'on est dans une recherche incrémentale}
+
+\subsubsection{Occur}
+\cm{M-s o}{affiche toutes les occurrences dans le buffer courant}
+\cm{C-c e}{lister toutes les occurrences dans le buffer actuel}
+\cm{C-M-c}{lister toutes les occurrences du mot dans le buffer actuel}
+
+\subsubsection{Grep/Ack}
+\cm{C-F3}{recherche un mot avec ack}
+\cm{M-F3}{recherche dans les même type de fichiers avec ack}
+\cm{F3}{match/erreur suivante}
+\cm{S-F3}{match/erreur précédente}
+
+\subsubsection{Minibuffer}
+\cm{M-s}{Recherche avec regex dans l'historique des commandes depuis la première commande}
+\cm{M-r}{Recherche avec regex dans l'historique des commandes depuis la dernière commande}
+
+
+
+
+
+\subsection{Register}
+\cm{C-c i}{insère le texte d'un registre}
+\cm{C-x r SPACE}{marque dans un registre ou bookmark un emplacement dans un buffer (doit être nommé)}
+\cm{C-x r j}{va à l'emplacement marqué dans un registre ou bookmark (par nom)}
+\cm{C-x r s}{sauve une région selectionnée dans un registre}
+\cm{C-x r i}{insère le texte d'un registre}
+\cm{M-x append-to-register}{insère la région selectionnée à la fin d'un registre}
+\cm{M-x prepend-to-register}{insère la région selectionnée au début d'un registre}
+
+
+
+
+
+\subsection{Macro}
+\cm{C-x (}{enregistrer une macro}
+\cm{C-x )}{arrêter l'enregistrement d'une macro}
+\cm{C-x C-k r}{lance une macro sur une région}
+\cm{C-x e}{lance une macro}
+\cm{C-x q}{ajoute une pause pour demander a l'utilisateur de continuer (pendant l'enregistrement d'une macro)}
+\cm{F8}{lancer la dernière macro}
+\cm{S-F8}{enregister/arrêter l'enregistrment d'une macro}
+\cm{C-F8}{nommer la dernière macro}
+\cm{M-F8}{editer la dernière macro}
+\cm{H-F8}{sélectionner la macro précédente}
+\cm{H-S-F8}{sélectionner la macro suivante}
+
+
+
+
+
+\subsection{Highlight}
+\cm{C-x w r}{désactiver un surlignement avec regex}
+
+
+
+
+
+\subsection{Info}
+\cm{M-=}{information à propos de la région sélectionnée}
+\cm{C-x =}{information à propos d'un caractère}
+\cm{C-u C-x =}{information à propos du texte (face/couleur/style...)}
+\cm{M-L}{numéro de ligne}
+\cm{C-h e}{affiche ``*Messages*''}
+\cm{M-x list-color-display}{afficher une liste des couleurs}
+
+\subsubsection{Aide}
+\cm{C-h a}{rechercher dans l'aide avec regex}
+\cm{C-h k}{donner l'aide à propos d'un raccourci}
+\cm{C-h w}{donner l'aide à propos d'une fonction}
+\cm{C-h v}{donner l'aide à propos d'une variable}
+\cm{C-h f}{donner l'aide à propos d'une fonction}
+\cm{C-c C-b}{sujet précédent}
+\cm{C-c C-f}{sujet suivant}
+\cm{s}{recherche}
+\cm{t}{sujet parent}
+\cm{l}{précédent}
+
+
+
+
+
+
+\section{Mode}
+
+\subsection{ECB}
+\cm{M-1}{afficher ou cacher la window d'ECB}
+\cm{F2 (ou bouton suivant)}{afficher ou cacher la window de compilation d'ECB}
+\cm{C-c w}{alterner entre deux taille de la window d'ECB}
+\cm{M-q}{aller à la window ECB des dossiers}
+\cm{M-q M-q}{aller à la window ECB des dossiers et la maximise}
+\cm{M-a}{aller à la window ECB des sources}
+\cm{M-a M-a}{aller à la window ECB des sources et la maximise}
+\cm{M-z}{aller à la window ECB historique}
+\cm{M-z M-z}{aller à la window ECB historique et la maximise}
+\cm{M-\textbackslash}{aller à la window ECB fonctions}
+\cm{M-\textbackslash M-\textbackslash}{aller à la window ECB fonctions et la maximise}
+\cm{ENTER}{aller à la window ECB source quand on est dans la windows ECB dossiers}
+\cm{M-ENTER}{aller à la window ECB fonctions quand on est dans la window ECB sources}
+\cm{ESCAPE}{retourne aux windows d'édition (en dehors d'ECB)}
+
+
+
+
+
+\subsection{Langages}
+\cm{C-M-\textbackslash}{indenter une sélection}
+\cm{M-;}{insérer un commentaire à la bonne place}
+\cm{C-c C-w}{alterner entre activer et désactiver le mode sous mot ( dans le mode C)}
+\cm{C-c @ C-d}{cacher un bloc de preprocessing}
+\cm{C-c @ C-s}{afficher un bloc caché de préprocessing}
+\cm{F10}{appeler la compilation}
+
+\subsubsection{C}
+\cm{M-LEFT}{cache/affiche un bloc (folding)}
+\cm{M-RIGHT}{cache/affiche un bloc (folding)}
+\cm{M-UP}{cache tous les blocs}
+\cm{M-DOWN}{affiche tous les blocs}
+
+
+
+
+
+\subsection{CEDET/Semantic}
+\cm{C-c , ,}{Parser le buffer actuel}
+\cm{C-c , j}{va au symbole sous le curseur (voir M-. dans custom)}
+\cm{C-c , u}{va au fichier inclus}
+\cm{C-c , g}{trouve toutes les références du symbole sous le curseur}
+\cm{C-c , G}{trouve tous les appels à la fonction actuelle}
+
+
+
+
+
+\subsection{Tags (GNU Global, Semantic, Etags)}
+\cm{M-.}{aller à la définition (semantic)}
+\cm{C-\textgreater}{aller à la définition (semantic)}
+\cm{S-CLICK\_GAUCHE}{aller à la définition (semantic)}
+\cm{C-\textless}{revenir de la définition (semantic)}
+\cm{CLICK\_BACK}{revenir de la définition (semantic)}
+\cm{C-M-.}{rechercher avec grep dans les tags (gtags)}
+\cm{RIGHT\_CLICK}{affiche un menu avec la listes des fonctions, variables et include}
+\cm{C-x C-SPACE}{revenir en arrière après avoir utilisé une recherche de tags}
+\cm{C-c C-f}{affiche un menu avec la listes des fonctions, variables et include avec helm}
+
+
+
+
+
+\subsection{RTRT script}
+\cm{C-c p o}{aligner 'init' pour RTRT}
+\cm{C-c p ;}{aligner 'ev' pour RTRT}
+\cm{C-c p [}{aligner 'init' et 'ev' pour RTRT}
+\cm{C-c p s}{aligner les stub}
+\cm{C-c r s}{supprime tous les espaces avant une virgule}
+\cm{M-LEFT}{aller vers le précédent test}
+\cm{M-RIGHT}{aller vers le test suivant}
+\cm{M-UP}{aller vers le haut vers SERVICE}
+\cm{M-DOWN}{aller vers le bas vers END SERVICE}
+\cm{M-PAGEUP}{cache tous les blocs}
+\cm{M-PAGEDOWN}{affiche tous les blocs}
+
+
+
+
+
+\subsection{AUCTeX}
+\cm{F10}{Sauve er compile le buffer (utile pour la preview pdf)}
+
+
+
+
+
+\subsection{Orthographe}
+\cm{F7}{correction orthographique sur le buffer}
+\cm{S-F7}{correction orthographique sur le mot sous le curseur}
+\cm{M-F7}{correction orthographique sur la région sélectionnée}
+\cm{C-F7}{correction orthographique sur les commentaires et string dans le buffer}
+\cm{C-M-F7}{changer le dictionnaire}
+\cm{C-c \$}{changer le dictionnaire}
+
+
+
+
+
+\subsection{Browse Kill Ring}
+\cm{UP}{précédent}
+\cm{DOWN}{suivant}
+\cm{C-g}{quitter}
+\cm{ESCAPE}{quitter}
+\cm{F2}{quitter (si ecb est utilisé)}
+\cm{y}{insérer}
+\cm{i}{insérer}
+\cm{ENTER}{insérer et quitter le mode}
+\cm{u}{insérer, bouger et quitter}
+\cm{o}{insérer et bouger}
+\cm{q}{quitter}
+\cm{d}{supprimer le texte killé actuel}
+\cm{s}{recherche en avant}
+\cm{r}{recherche en arrière}
+\cm{e}{éditer}
+\cm{n}{suivant}
+\cm{p}{précédent}
+\cm{g}{mettre à jour}
+\cm{l}{recherche avec occur}
+\cm{h}{aide}
+\cm{MIDDLE CLICK}{insérer}
+
+
+
+
+
+\subsection{Alignement}
+\cm{C-c p p}{aligner une sélection avec les règles du mode actuel}
+\cm{C-c p l}{aligner une sélection avec regex}
+\cm{C-c p =}{aligner =, ==, +=, *= etc}
+
+
+
+
+
+\subsection{Version Control}
+\cm{C-x v v}{faire la prochaine action logique sur le fichier}
+\cm{C-x v =}{diff}
+\cm{C-x v l}{afficher l'historique}
+\cm{C-x v i}{ajoute comme nouveau fichier}
+\cm{C-x v +}{mettre à jour}
+\cm{C-x v u}{annuler un checkout}
+\cm{C-x v ~}{afficher d'autres version}
+\cm{C-x v d}{afficher tous les fichier qui ne sont à jour}
+\cm{C-x v g}{retracer les éditions et ajout pour chaque ligne}
+\cm{C-x v C-h}{aide sur les commandes du gestionnaire de version}
+
+\subsubsection{Subversion}
+\cm{q}{quitter et supprime la window de diff ou de log}
+
+\subsubsection{ClearCase}
+\cm{C-c c c}{gui checkout}
+\cm{C-c c =}{gui diff with previous version}
+\cm{C-c c l}{gui history}
+\cm{C-c c u}{gui uncheckout}
+\cm{C-c c L}{gui version tree}
+\cm{C-c c e}{gui explorer}
+\cm{C-c c v}{gui version properties}
+\cm{C-c c p}{gui element properties}
+\cm{C-c c i}{gui checkin}
+\cm{C-c c f}{gui find checkout}
+\cm{C-c c s}{editer le config spec}
+\cm{C-c C-c}{sauve et quitte l'édition de config spec}
+
+
+
+
+
+\subsection{Calculatrice}
+\cm{M-Numpad*}{afficher la calculatrice rapide dans le minibuffer}
+\cm{C-x * c}{afficher la calculatrice (notation polonaise)}
+\cm{C-x * *}{afficher la calculatrice avec le dernier mode utilisé}
+\cm{C-x * q}{afficher la calculatrice rapide dans le minibuffer}
+\cm{C-x * r}{ajoute une région/rectangle dans la calculatrice}
+\cm{C-x * :}{ajoute une région/rectangle et somme les colonnes}
+\cm{C-x * \_}{ajoute une région/rectangle et somme les lignes}
+\cm{C-x * x}{quitter la calculatrice}
+\cm{C-x * e}{ajouter une région, calculer et coller le résultat}
+\cm{y}{coller dans le buffer}
+\cm{\$}{dernier résultat}
+\cm{16\#}{préfixe pour l'hexadécimale}
+\cm{8\#}{préfixe pour l'octale}
+\cm{2\#}{préfixe pour le binaire}
+\cm{d r}{change l'affichage dans la base voulu}
+
+
+
+
+
+\subsection{Calendrier}
+\cm{M-x calendar}{afficher le calendrier}
+\cm{d}{afficher l'agenda pour la date sélectionnée}
+\cm{S}{donner les heures de lever et couché de soleil}
+\cm{M}{donner les phases de la lune}
+
+
+
+
+
+\subsection{Dired}
+\cm{C-x C-q}{éditer nom ou droits de fichiers}
+\cm{C-c C-c}{appliquer les modifications du mode précédent}
+\cm{\% R}{renommer des fichiers avec les expression rationnelles}
+\cm{H-ENTER}{ouvrir avec l'application par défaut dans MS Windows}
+\cm{[}{dossier parent (même touche que \^ sur de l'azerty)}
+
+
+
+
+
+\subsection{Web}
+Chaque raccourci ouvre le navigateur web.\\
+\cm{F12}{traduire mot ou région anglais-français (wordreference.com)}
+\cm{M-F12}{traduire mot ou région français-anglais (wordreference.com)}
+\cm{C-F12}{conjuguer mot ou région (leconjugueur.com)}
+\cm{S-F12}{trouver synonymes français du mot ou région (synonymes.com)}
+\cm{F11}{rechercher mot ou région (en.wikipedia.org)}
+\cm{M-F11}{rechercher mot ou région (fr.wikipedia.org)}
+\cm{C-F11}{rechercher mot ou région (google.com}
+\cm{C-M-F11}{rechercher mot ou région (google.fr)}
+
+
+
+
+\end{multicols}
+
+\end{document}
