@@ -80,13 +80,14 @@
 
 ;;; Code:
 ;; path of ecb
-(if (and section-environment-os-recognition running-on-emacs-24)
-  ;; to avoid error with Emacs 24.1
-  ;; or replace in ecb.el:1219
-  ;;   "(let ((stack-trace-on-error stack-trace-on-error))"
-  ;; by
-  ;;   "(let ()"
-  (setq stack-trace-on-error t))
+(when (and section-environment-os-recognition running-on-emacs-24)
+  ;;;; to avoid error with Emacs 24.x
+  ;;;; or replace in ecb.el:1219
+  ;;;;   "(let ((stack-trace-on-error stack-trace-on-error))"
+  ;;;; by
+  ;;;;   "(let ()"
+  ;;(setq stack-trace-on-error t)
+  )
 
 (if nil
   (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/ecb-alexott"))
@@ -186,7 +187,7 @@
                 ("*Apropos*")
                 ("*Occur*")
                 ("*shell*")
-                ("*Completions*")
+                ("\s-*\\*Completions*\s-*" . t)
                 ("\\*[cC]ompilation.*\\*" . t)
                 ("\\*i?grep.*\\*" . t)
                 ("*JDEE Compile Server*")

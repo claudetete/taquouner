@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs, color, theme
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: April 2012
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;; from the custom color I was manually set, with a lot of polish to have less
@@ -31,6 +31,8 @@
 ;;
 
 ;;; Change Log:
+;; 2013-05-07 (1.5)
+;;    add powerline  and yascroll mode
 ;; 2013-04-10 (1.4)
 ;;    add helm mode
 ;; 2012-11-27 (1.3)
@@ -235,9 +237,23 @@
     ;; hide-ifdef
     `(hide-ifdef-shadow ((,class (:background ,sweet-grey+4 :foreground ,sweet-grey-4 :box nil))))
 
+    ;; powerline
+    ;; active between
+    `(powerline-active1 ((,class (:background ,sweet-grey+2))))
+    ;; inactive betwwen
+    `(powerline-inactive1 ((,class (:background ,sweet-grey+2))))
+    ;; active middle
+    `(powerline-active2 ((,class (:background ,sweet-grey))))
+    ;; inactive middle
+    `(powerline-inactive2 ((,class (:background ,sweet-grey))))
+
     ;; sml-modeline
     `(sml-modeline-end-face ((,class (:background ,sweet-bg :box (:line-width 1 :color ,sweet-grey)))))
     `(sml-modeline-vis-face ((,class (:background ,sweet-bg-3 :box (:line-width 1 :color ,sweet-grey)))))
+
+    ;; yascroll
+    `(yascroll:thumb-text-area ((,class (:background ,sweet-bg+2))))
+    `(yascroll:thumb-fringe    ((,class (:foreground ,sweet-bg+2 :background ,sweet-bg+2))))
     )
   )
 

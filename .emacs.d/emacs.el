@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.6
+;; Version: 8.7
 ;; Created: October 2006
-;; Last-Updated: February 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2013-05-07 (8.7)
+;;    add yascroll and smart forward mode + antialias for font + some minor
+;;    options
 ;; 2013-02-05 (8.6)
 ;;    add auctex mode
 ;; 2012-12-05 (8.5)
@@ -705,6 +708,17 @@ before message."
     (defvar section-mode-helm-imenu t)
     ) ; (progn
   ;;
+  ;; YASCROLL                                                           2.56
+  ;; add a small visual scroll-bar (can not be used with mouse click)
+  (defvar section-mode-yascroll nil)
+  (progn
+    ;; time before hide scroll-bar (nil to always show)
+    (defvar profile-yascroll-delay-to-hide nil)
+    ) ; (progn
+  ;;
+  ;; SMART-FORWARD                                                      2.57
+  (defvar section-mode-smart-forward nil)
+  ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
   (defvar section-mode-diminish nil)
@@ -750,6 +764,9 @@ before message."
   ;; RTRT SCRIPT PTU                                                    3.4
   ;; set indentation style
   (defvar section-languages-rtrt-script nil)
+  (progn
+    (defvar profile-rtrt-indent-offset 4)
+    ) ; (progn
   ;;
   ;; PERL                                                               3.5
   ;; set indentation style
@@ -807,9 +824,12 @@ before message."
   ;; set font in terminal or in graphic
   (defvar section-display-font t)
   (progn
+    ;; ANTIALIAS
+    ;; set antialiasing on font rendering
+    (defvar section-display-font-antialias t)
     (defvar profile-font nil)
     ;;
-    ;; INTERNATIONAL                                                    5.3.1
+    ;; INTERNATIONAL                                                    5.3.2
     ;; ISO or utf-8 or ...  (not used)
     (defvar section-display-font-international t)
     ) ; (progn
@@ -1023,6 +1043,9 @@ before message."
 ;; line at end of file, compression, column 78 alignment
 (defvar section-misc t)
 (progn
+  ;; SPACE
+  (defvar profile-remove-useless-ending-space t)
+  (defvar profile-always-new-line-at-end t)
   ;;
   (defvar profile-username "noname")
   (defvar profile-latitude 0.00)
@@ -1055,6 +1078,9 @@ before message."
   ;; BOOKMARK                                                           11.3
   ;; set default bookmark storage
   (defvar section-misc-bookmark t)
+  (progn
+    (defvar profile-bookmark-sort nil)
+    ) ; (progn
   ;;
   ;; SCREENSAVER                                                        11.4
   ;; set screensaver when idle time higher than 5 minutes
@@ -1079,7 +1105,6 @@ before message."
 
 ;; add to load path the dotemacs directory
 (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "/dotemacs"))
-(setq load-path (cons (expand-file-name (concat (file-name-as-directory dotemacs-path) "/dotemacs")) load-path))
 
 ;;
 ;;; ENVIRONMENT

@@ -1,6 +1,6 @@
 ;;; my-misc.el --- a config file for misc settings
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.5
+;; Version: 2.6
 ;; Created: October 2006
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2013-05-07 (2.6)
+;;    add condition for some minor options
 ;; 2013-04-12 (2.5)
 ;;    no require, use autoload for ispell (it takes 7s to search aspell.exe ...)
 ;; 2012-12-27 (2.4)
@@ -85,9 +87,11 @@
 ;;
 ;;; SPACE
 ;; remove useless space at the end of line
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+(when profile-remove-useless-ending-space
+  (add-hook 'write-file-hooks 'delete-trailing-whitespace))
 ;; be sure that a new line is at the end of a file when it's saved
-(setq require-final-newline t)
+(when profile-always-new-line-at-end
+  (setq require-final-newline t))
 ;; tab = x spaces
 (setq-default default-tab-width 8)
 (setq-default tab-width 8)
@@ -293,7 +297,7 @@
   ;; each command that sets a bookmark will also save your bookmarks
   (setq bookmark-save-flag 1)
   ;; do not sort bookmark (keep sort in bookmark file)
-  (setq bookmark-sort-flag nil)
+  (setq bookmark-sort-flag profile-bookmark-sort)
   (message "  11.3 Bookmark... Done"))
 
 ;;

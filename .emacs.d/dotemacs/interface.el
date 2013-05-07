@@ -1,6 +1,6 @@
 ;;; interface.el --- a config file for Emacs interface
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.0
 ;; Created: October 2006
-;; Last-Updated: August 2012
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2013-05-07 (2.0)
+;;    remove condition about os for maximize
 ;; 2012-08-01 (1.9)
 ;;    add condition to have transparency and maximizer
 ;; 2012-07-09 (1.8)
@@ -128,11 +130,9 @@
 ;;              var     `section-environment-terminal-vs-graphics'
 ;;              var     `section-environment-os-recognition'
 (when section-interface-fullscreen (message "  6.4 FullScreen...")
-  ;; start in fullscreen (only MS Windows)
-  ;; need to put fullscreen after font settings
-  (when (and running-in-graphical section-environment-os-recognition)
-    (frame-maximizer)
-    )
+  ;; start in fullscreen
+  ;; need to put fullscreen after font settings !
+  (frame-maximizer)
   (message "  6.4 FullScreen... Done"))
 
 ;;

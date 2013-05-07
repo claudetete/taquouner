@@ -1,15 +1,15 @@
 ;;; ack-emacs.el --- a ack mode to replace grep
 
-;; Copyright (C) 2012 Claude Tete <claude.tete@gmail.com>
-;; for ack-same() (inspired by ack-and-a-half)
-;; and face from grep-mode
+;; Copyright (C) 2008 Kim van Wyk and Johan Kohler
+;; for original mode
+;; With credit to w32-find-dired.el
 
 ;; Copyright (C) 2009-2011 Nikolaj Schumacher
 ;; for type-alist
 
-;; Copyright (C) 2008 Kim van Wyk and Johan Kohler
-;; for original mode
-;; With credit to w32-find-dired.el
+;; Copyright (C) 2012 Claude Tete <claude.tete@gmail.com>
+;; for ack-same() (inspired by ack-and-a-half)
+;; and face from grep-mode
 
 ;; This file is not currently part of GNU Emacs.
 
@@ -27,9 +27,9 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;; Keywords: ack, grep, mode
-;; Author: Claude Tete  <claude.tete@gmail.com>
+;; Author: Kim van Wyk and Johan Kohler
 ;;         Nikolaj Schumacher
-;;         Kim van Wyk and Johan Kohler
+;;         Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.1
 ;; Created: 2008
 ;; Last-Updated: December 2012

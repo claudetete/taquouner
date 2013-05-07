@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function, rtrt
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: March 2012
-;; Last-Updated: March 2013
+;; Last-Updated: April 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-mode-rtrt-script'
 
 ;;; Change Log:
+;; 2013-04-30 (1.5)
+;;    simplify move function
 ;; 2013-03-26 (1.4)
 ;;    fix bug with regex to align + add function to align stub (not all...)
 ;; 2013-01-18 (1.3)
@@ -130,27 +132,27 @@
 ;;;; MOVE
   ;;; move to the previous up heading (by Claude TETE)
   (defun rtrt-up-heading ()
-    "Go up in script SERVICE->TEST->ELEMENT"
+    "Go up in script SERVICE"
     (interactive)
-    (find-matching-element 're-search-backward 0 "  END \\(\\b\\(ELEMENT\\|TEST\\|SERVICE\\)\\b\\)" "\\(  ELEMENT\\|  TEST\\|^SERVICE\\)\\b")
+    (re-search-backward "^\\s-*SERVICE\\b")
     (when (looking-at "[ ]") (forward-char 2)))
   ;;; move to the previous up heading (by Claude TETE)
   (defun rtrt-down-heading ()
     "Go down in script SERVICE"
     (interactive)
-    (re-search-forward "^END SERVICE\\b")
+    (re-search-forward "^\\s-*END SERVICE\\b")
     (next-line))
   ;;; move to the previous TEST header (by Claude TETE)
   (defun rtrt-up-test-header ()
     "Go up in script from TEST to TEST"
     (interactive)
-    (re-search-backward "  TEST\\b")
+    (re-search-backward "^\\s-*TEST\\b")
     (forward-char 2))
   ;;; move to the next TEST footer (by Claude TETE)
   (defun rtrt-down-test-header ()
     "Go down in script from END TEST to END TEST"
     (interactive)
-    (re-search-forward "  END TEST\\b")
+    (re-search-forward "^\\s-*END TEST\\b")
     (move-beginning-of-line nil)
     (next-line))
 

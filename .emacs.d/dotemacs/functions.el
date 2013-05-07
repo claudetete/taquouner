@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.6
+;; Version: 5.7
 ;; Created: October 2006
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2013-05-07 (5.7)
+;;    condition on os detection for maximize function + do not run code for test
 ;; 2013-04-11 (5.6)
 ;;    add just-one-space-or-line function
 ;; 2013-03-29 (5.5)
@@ -789,13 +791,15 @@ line instead."
 (defun frame-maximizer ()
   "Maximize the current frame"
   (interactive)
-  (when running-on-ms-windows
-    (w32-send-sys-command 61488)
-    (sit-for 0)
-    )
-  (when running-on-gnu-linux
-    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
-    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+  (when (and running-in-graphical section-environment-os-recognition)
+    (when running-on-ms-windows
+      (w32-send-sys-command 61488)
+      (sit-for 0)
+      )
+    (when running-on-gnu-linux
+      (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+      (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+      )
     )
   )
 
@@ -1209,6 +1213,7 @@ delete blank lines"
 ;;
 ;;;
 ;;;; TEST (all after is for testing
+(when nil
 (defun clt-test ()
   "Plein de test."
   (interactive)
@@ -1299,6 +1304,7 @@ When there is a text selection, act on the region."
 
 ;; in elisp call function like interactive with this:
 ;; (call-interactively 'function)
+) ; (when nil
 
 
 (provide 'functions)

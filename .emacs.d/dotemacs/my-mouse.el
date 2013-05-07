@@ -1,6 +1,6 @@
 ;;; my-mouse.el --- a config file for mouse settings
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mouse
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              car     `section-environment-terminal-vs-graphics'
 
 ;;; Change Log:
+;; 2013-05-07 (1.7)
+;;    change smooth scroll (to avoid all jump with cursor)
 ;; 2012-07-09 (1.6)
 ;;    robustness
 ;; 2012-06-08 (1.5)
@@ -50,8 +52,9 @@
 
 
 ;;; Code:
-;; enable smooth scroll (from y grandmaitre)
-(setq scroll-step 1)
+;; to avoid jump from (http://www.emacswiki.org/cgi-bin/wiki/SmoothScrolling)
+(setq scroll-conservatively 10000)
+;(setq auto-window-vscroll nil)
 
 ;; scroll window under mouse
 (setq mouse-wheel-follow-mouse 't)

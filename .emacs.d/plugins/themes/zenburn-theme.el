@@ -447,6 +447,12 @@
     `(outline-2 ((,class (:inherit outline-3 :height 1.0))))
     `(outline-1 ((,class (:inherit outline-2 :height 1.0))))
 
+    ;; powerline
+    `(powerline-active1 ((,class (:background ,zenburn-bg-1))))
+    `(powerline-inactive1 ((,class (:background ,zenburn-bg-1))))
+    `(powerline-active2 ((,class (:background ,zenburn-bg+3))))
+    `(powerline-inactive2 ((,class (:background ,zenburn-bg+3))))
+
     ;; rainbow-delimiters
     `(rainbow-delimiters-depth-1-face ((,class (:foreground ,zenburn-cyan))))
     `(rainbow-delimiters-depth-2-face ((,class (:foreground ,zenburn-yellow))))
@@ -486,6 +492,10 @@
 
     ;; SLIME
     `(slime-repl-inputed-output-face ((,class (:foreground ,zenburn-red))))
+
+    ;; yascroll
+    `(yascroll:thumb-text-area ((,class (:background ,zenburn-fg))))
+    `(yascroll:thumb-fringe    ((,class (:foreground ,zenburn-fg :background ,zenburn-fg))))
 
     ;; whitespace-mode
     `(whitespace-space ((,class (:background ,zenburn-bg :foreground ,zenburn-bg+1))))

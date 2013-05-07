@@ -1,6 +1,6 @@
 ;;; languages.el --- a config file for programing languages
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.1
+;; Version: 3.2
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2013-05-07 (3.2)
+;;    fix indent options from profile
 ;; 2012-12-27 (3.1)
 ;;    flymake not by default in c++ mode
 ;; 2012-12-04 (3.0)
@@ -183,7 +185,7 @@
 (when section-languages-rtrt-script (message "  3.4 RTRT script ptu...")
   (custom-set-variables
     ;; set number of space for indentation in rtrt script .ptu
-    '(rtrt-script-indent 4)
+    '(rtrt-script-indent profile-rtrt-indent-offset)
    )
   (message "  3.4 RTRT script ptu... Done"))
 
@@ -191,7 +193,7 @@
 ;;; PERL
 (when section-languages-perl (message "  3.5 Languages Perl...")
   ;; set indent size
-  (setq perl-indent-level 2)
+  (setq perl-indent-level profile-perl-indent-offset)
   (message "  3.5 Languages Perl... Done"))
 
 
@@ -214,6 +216,8 @@
     ) ; (when (and section-mode-cedet-bzr section-mode-cedet-loaded)
 
   (message "  3.6 Laguages C++ Qt...Done"))
+
+
 (provide 'languages)
 
 ;;; languages.el ends here

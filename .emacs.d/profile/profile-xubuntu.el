@@ -356,6 +356,12 @@
     ;; add imenu bind
     (setq section-mode-helm-imenu t)
     ) ; (progn
+  ;; YASCROLL : add a small visual scroll-bar (can not be used with mouse click)
+  (setq section-mode-yascroll t)
+  (progn
+    ;; time before hide scroll-bar (nil to always show)
+    (setq profile-yascroll-delay-to-hide nil)
+    ) ; (progn
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (progn
@@ -445,6 +451,9 @@
   ;; REQUIREMENT: `profile-font'
   (setq section-display-font t)
   (progn
+    ;; ANTIALIAS
+    ;; set antialiasing on font rendering
+    (setq section-display-font-antialias nil)
     ;; choice between (it's just some nice font, you can use another font):
     ;;; Terminal
     ;; nice, very tiny, only ascii (too tiny ?)
@@ -666,6 +675,9 @@
 ;;              `profile-column'
 (setq section-misc t)
 (progn
+  ;; SPACE
+  (setq profile-remove-useless-ending-space t)
+  (setq profile-always-new-line-at-end t)
   ;; backup directory
   (setq profile-backup-directory (concat dotemacs-path "/backup"))
   (setq profile-autosave-directory (concat dotemacs-path "/cache"))
@@ -696,6 +708,10 @@
     ) ; (progn
   ;; BOOKMARK: set default bookmark storage
   (setq section-misc-bookmark t)
+  (progn
+    ;; sort bookmark
+    (setq profile-bookmark-sort nil)
+    ) ; (progn
   ;; SCREENSAVER: Set screensaver when idle time higher than 5 minutes
   (setq section-misc-screensaver t)
   ) ; (progn

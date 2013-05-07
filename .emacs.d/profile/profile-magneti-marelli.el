@@ -226,6 +226,10 @@
     (setq section-mode-helm-recentf t)
     (setq section-mode-helm-imenu t)
     )
+  (setq section-mode-yascroll nil)
+  (progn
+    (setq profile-yascroll-delay-to-hide nil)
+    )
   (setq section-mode-diminish nil)
   )
 
@@ -281,6 +285,7 @@
   (setq section-display-speedbar nil)
   (setq section-display-font t)
   (progn
+    (setq section-display-font-antialias nil)
     (setq profile-font "Terminal-6")
     (setq section-display-font-international t)
     )
@@ -353,6 +358,8 @@
 
 (setq section-misc t)
 (progn
+  (setq profile-remove-useless-ending-space t)
+  (setq profile-always-new-line-at-end t)
   (setq profile-backup-directory (concat dotemacs-path "/backup"))
   (setq profile-backup-directory (concat dotemacs-path "/cache"))
   (setq profile-fill-column 78)
@@ -367,6 +374,9 @@
     (setq profile-ispell-dictionary "english")
     )
   (setq section-misc-bookmark t)
+  (progn
+    (setq profile-bookmark-sort nil)
+    )
   (setq section-misc-screensaver nil)
   )
 

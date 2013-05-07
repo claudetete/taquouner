@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.4
+;; Version: 4.5
 ;; Created: October 2006
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2013-05-07 (4.5)
+;;    close compile window when quit clearcase config spec mode + use fork of
+;;    powerline mode + close compile window when quit helm + add yascroll and
+;;    smart-forward mode
 ;; 2013-04-16 (4.4)
 ;;    fix bug with powerline and clearcase not used
 ;; 2013-04-12 (4.3)
@@ -206,7 +210,7 @@
     (progn
       (if (try-require 'cedet "    ")
         (setq section-mode-cedet-loaded t)
-        (message "    cedet was not loaded. Have you GNU/Emacs 23.4 or 24.1 ?")
+        (message "    cedet was not loaded. Have you GNU/Emacs 23.4 or 24.x ?")
         )
       )
     )
@@ -394,6 +398,9 @@
 ;;; CLEARCASE
 (setq clearcase-mode nil)
 (when section-mode-clearcase (message "  2.21 ClearCase...")
+  ;; toggle compile window when quit config spec mode
+  (when section-mode-cedet-ecb
+    (add-hook 'clearcase-config-spec-quit-hook 'ecb-toggle-compile))
   (when section-mode-clearcase-el
     (try-require 'clearcase "    "))
   (message "  2.21 ClearCase... Done"))
@@ -567,7 +574,102 @@
     ;; in Emacs 23 it was not define
     (defun get-scroll-bar-mode () scroll-bar-mode)
     (defsetf get-scroll-bar-mode set-scroll-bar-mode))
-  (try-require 'powerline "    ")
+  ;; use new powerline mode
+  ;; see
+  (when (try-require 'powerline "    ")
+    (defun powerline-my-theme ()
+      "Setup a mode-line."
+      (interactive)
+      (setq-default mode-line-format
+        '("%e"
+           (:eval
+             (let* ((active (powerline-selected-window-active))
+                     ;; face for right and left
+                     (mode-line (if active 'mode-line 'mode-line-inactive))
+                     ;; face for between right and left and middle
+                     (face-between (if active 'powerline-active1
+                                     'powerline-inactive1))
+                     ;; face for middle
+                     (face-middle (if active 'powerline-active2
+                                    'powerline-inactive2))
+                     ;; face for highlight
+                     (face-warning 'font-lock-warning-face)
+                     (separator-left
+                       (intern (format "powerline-%s-%s"
+                                 powerline-default-separator
+                                 (car powerline-default-separator-dir))))
+                     (separator-right
+                       (intern (format "powerline-%s-%s"
+                                 powerline-default-separator
+                                 (cdr powerline-default-separator-dir))))
+                     (lhs (list
+                            ;;
+                            ;; LEFT
+                            (when buffer-read-only
+                              (powerline-raw "[RO]" face-warning))
+                            ;; encoding and eol indicator
+                            (powerline-raw mode-line-mule-info nil 'l)
+                            ;; buffername
+                            (powerline-buffer-id nil 'l)
+                            (when (buffer-modified-p)
+                              (powerline-raw "*" face-warning 'l))
+
+                            ;; first separator
+                            (powerline-raw " ")
+                            (funcall separator-left mode-line face-between)
+
+                            ;;
+                            ;; LEFT MIDDLE
+                            ;; major mode
+                            (powerline-major-mode face-between 'l)
+                            ;; process
+                            (powerline-process face-between)
+                            ;; minor mode
+                            (powerline-minor-modes face-between 'l)
+                            ;; narrow mode
+                            (powerline-narrow face-between 'l)
+
+                            ;; second separator
+                            (powerline-raw " " face-between)
+                            (funcall separator-left face-between face-middle)
+
+                            ;;
+                            ;; MIDDLE
+                            ;; version control
+                            (powerline-vc face-middle 'r)))
+                     (rhs (list
+
+                            ;; third separator
+                            (powerline-raw global-mode-string face-middle 'r)
+                            (funcall separator-right face-middle face-between)
+
+                            ;;
+                            ;; RIGHT MIDDLE
+                            ;; line number
+                            (powerline-raw "%2l" face-between 'l)
+                            ;; :
+                            (powerline-raw ":" face-between 'l)
+                            ;; column number
+                            (powerline-raw "%2c" face-between 'r)
+
+                            ;; fourth separator
+                            (funcall separator-right face-between mode-line)
+                            (powerline-raw " ")
+
+                            ;;
+                            ;; RIGHT
+                            ;; position indicator
+                            (powerline-raw "%6p" nil 'r)
+                            )))
+               ;;(message "%s %s" separator-left (funcall 'powerline-wave-left mode-line face1))
+               (concat
+                 (powerline-render lhs)
+                 (powerline-fill face-middle (powerline-width rhs))
+                 (powerline-render rhs)))))))
+    ;; set arrow fade as separator
+    (setq powerline-default-separator 'arrow-fade)
+    (powerline-my-theme)
+    )
   (message "  2.36 Powerline... Done"))
 
 ;;
@@ -774,7 +876,7 @@
 
 ;;
 ;;; PS2PDF
-;; print buffer/region in pdf (the pdf background is inevitably white so dark
+;; print buffer/region in pdf (the pdf background is unavoidably white so dark
 ;; theme don't render good)
 (when section-mode-ps2pdf (message "  2.53 PS2PDF...")
   (try-require 'ps2pdf "    ")
@@ -790,13 +892,41 @@
 
 ;;
 ;;; HELM (fork ANYTHING)
-;; LaTeX editor
+;; choose anything with the same nice interface
 (when section-mode-helm (message "  2.55 Helm...")
   (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins/helm-master"))
   (when (try-require 'helm-config "    ")
     (setq helm-candidate-separator
-      "--separator------------------------------"))
+      "--separator------------------------------")
+    (when section-mode-cedet-ecb
+      ;; hide compile window when quit helm
+      (add-hook 'helm-cleanup-hook 'ecb-toggle-compile)
+      ;; quit helm when hide compile window
+      (add-hook 'ecb-toggle-compile-hide-hook 'helm-keyboard-quit))
+    (when section-mode-helm-buffers-list
+      ;; to avoid error with helm-buffers-list
+      (setq ido-use-virtual-buffers nil))
+    )
   (message "  2.55 Helm... Done"))
+
+;;
+;;; YASCROLL
+;; add a small visual scroll-bar (can not be used with mouse click)
+;; see https://github.com/m2ym/yascroll-el for screenshot
+(when section-mode-yascroll (message "  2.56 Yascroll...")
+  (when (try-require 'yascroll "    ")
+    (global-yascroll-bar-mode t)
+    ;; to always show scroll bar
+    (setq yascroll:delay-to-hide profile-yascroll-delay-to-hide))
+  (message "  2.56 Yascroll... Done"))
+
+;;
+;;; SMART-FORWARD
+(when section-mode-smart-forward (message "  2.57 Smart-forward...")
+  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins/expand-region"))
+  (when (try-require 'expand-region "    ")
+    (try-require 'smart-forward "    "))
+  (message "  2.57 Smart-forward... Done"))
 
 ;;
 ;;; DIMINISH
@@ -830,8 +960,6 @@
 
 ;;
 ;;; TRY
-(when nil
-  (try-require 'rfringe "    ")
 
 ;; need to try
 ;(autoload 'ifdef:ifdef-region "ifdef" "ifdef your code" t)
@@ -839,7 +967,6 @@
 ;(autoload 'ifdef:ifdef-else-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:if-region "ifdef" "ifdef your code" t)
 ;(autoload 'ifdef:if-else-region "ifdef" "ifdef your code" t)
-)
 
 
 (provide 'mode)

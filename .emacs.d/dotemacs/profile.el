@@ -1,6 +1,6 @@
 ;;; profile.el --- a config file for profile
 
-;; Copyright (c) 2012 Claude Tete
+;; Copyright (c) 2012-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.6
+;; Version: 0.7
 ;; Created: June 2012
-;; Last-Updated: December 2012
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2013-05-07 (0.7)
+;;    split path and name of profile
 ;; 2012-12-27 (0.6)
 ;;    update dot emacs path
 ;; 2012-12-05 (0.5)
@@ -50,10 +52,11 @@
 
 ;;
 ;;; LOAD
-(let ((profile-file (concat (file-name-as-directory dotemacs-path) "profile/profile-" profile-name ".el")))
+(let ((profile-path (concat (file-name-as-directory dotemacs-path) "profile/profile-" profile-name ".el"))
+       (profile-file (concat "profile-" profile-name ".el")))
   ;; load only if the file exists
-  (if (file-exists-p profile-file)
-    (load profile-file)
+  (if (file-exists-p profile-path)
+    (try-require profile-file "      ")
     (progn
       (display-warning 'profile-name (concat profile-name " profile do not exist") :warning)
       (display-warning 'profile-name (concat "file not found: " profile-file) :warning)

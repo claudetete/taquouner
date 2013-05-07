@@ -1,6 +1,6 @@
 ;;; function-ecb.el --- add some function to ecb mode
 
-;; Copyright (c) 2012 Claude Tete
+;; Copyright (c) 2012-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: June 2012
-;; Last-Updated: July 2012
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-external-function-ecb'
 
 ;;; Change Log:
+;; 2013-05-07 (1.4)
+;;    add an hook after toogle compile window
 ;; 2012-07-11 (1.3)
 ;;    try to fix annoying random behavior of completions buffer
 ;; 2012-07-09 (1.2)
@@ -42,6 +44,10 @@
 
 ;;; Code:
 
+(defvar ecb-toggle-compile-hide-hook nil
+  "Run after hide compile window.")
+
+;; internal variables
 (defvar ecb-hidden-before nil)
 (defvar ecb-maximized-compile-window-state nil)
 
@@ -264,12 +270,11 @@
       ;; show
       (ecb-toggle-compile-window 1)
       ;; go to
-      (ecb-goto-window-compilation)
-      )
-    ;; hide
-    (ecb-toggle-compile-window -1)
-    )
-  )
+      (ecb-goto-window-compilation))
+    (progn
+      ;; hide
+      (ecb-toggle-compile-window -1)
+      (run-hooks 'ecb-toggle-compile-hide-hook))))
 
 ;;;;; Show/Hide compile window for completions in minibuffer
 ;;(defun my-display-completions (buf)

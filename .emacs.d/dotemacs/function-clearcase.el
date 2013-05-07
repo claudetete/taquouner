@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function, clearcase
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.4
+;; Version: 1.5
 ;; Created: June 2012
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -56,9 +56,13 @@
 ;;   (global-set-key    (kbd "C-c c f")         'clearcase-gui-find-checkout)
 ;;   ;; edit config spec
 ;;   (global-set-key    (kbd "C-c c s")         'clearcase-config-spec-edit)
+;;   ;; open dired for file version
+;;   (global-set-key    (kbd "C-c c o")         'clearcase-dired-file-version)
 
 
 ;;; Change Log:
+;; 2013-05-07 (1.5)
+;;    add hook when quit config spec mode
 ;; 2013-04-12 (1.4)
 ;;    edit of config spec (inspired by clearcase.el) + config spec mode for
 ;;    color syntax
@@ -169,6 +173,15 @@
     ;; call clearcase describe
     (clearcase-run-async-command my-buffer "cleardescribe")))
 
+;;; open version file
+(defun clearcase-dired-file-version ()
+  "Version file of the current buffer."
+  (interactive)
+  ;; get full path of current buffer
+  (let ((my-buffer (concat (clearcase-get-buffer-file-name) "@@/main")))
+    ;; call clearcase describe
+    (dired my-buffer)))
+
 (defun clearcase-config-spec-edit ()
   "Edit the config spec of the current view."
   (interactive)
@@ -199,6 +212,9 @@
 
 (defvar clearcase-config-spec-mode-hook nil
   "Run after loading clearcase-config-spec-mode.")
+
+(defvar clearcase-config-spec-quit-hook nil
+  "Run after quit clearcase-config-spec-mode.")
 
 (defvar clearcase-config-spec-map nil
   "Bind map for config spec mode.")
@@ -387,7 +403,8 @@ nil."
       ;; delete temp file
       (delete-file clearcase-config-spec-file))
     (bury-buffer nil)
-    (kill-buffer my-buffer)))
+    (kill-buffer my-buffer))
+  (run-hooks 'clearcase-config-spec-quit-hook))
 
 
 ;;; run an asynchronous command to call clearcase command

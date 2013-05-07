@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.4
+;; Version: 3.5
 ;; Created: October 2006
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-05-07 (3.5)
+;;    remove helm shortcut to close compile window
 ;; 2013-04-24 (3.4)
 ;;    do not use tabmix with rtrt (disable indentation in rtrt mode)
 ;; 2013-04-11 (3.3)
@@ -216,16 +218,6 @@
 
 ;;
 ;;; HELM
-(eval-after-load 'helm
-  '(progn
-     (when section-mode-cedet-ecb
-       ;; to exit helm when close ecb window compile
-       (define-key helm-map     (kbd "<f2>")    '(lambda ()
-                                                   (interactive)
-                                                   (helm-exit-minibuffer)
-                                                   (ecb-toggle-compile))
-         ))))
-
 ;; to replace yank-pop by helm-kill-ring
 (when section-mode-helm-kill-ring
   (global-set-key       (kbd "M-y")             '(lambda ()

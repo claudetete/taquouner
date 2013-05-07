@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.5
+;; Version: 1.6
 ;; Created: October 2010
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-semantic'
 
 ;;; Change Log:
+;; 2013-05-07 (1.6)
+;;    add shortcut for smart-forward mode
 ;; 2013-04-10 (1.5)
 ;;    add helm imenu shortcut
 ;; 2012-08-01 (1.4)
@@ -88,6 +90,33 @@
     ;;(global-set-key (kbd "<mouse-4>") 'gtags-pop-stack)
     )
   )
+
+(when section-mode-smart-forward
+  ;; c mode
+  (add-hook 'c-mode-common-hook
+    '(lambda ()
+       ;; set smart-forward mode shortcut
+       (local-set-key   (kbd "<M-up>")                  'smart-up)
+       (local-set-key   (kbd "<M-down>")                'smart-down)
+       (local-set-key   (kbd "<M-left>")                'smart-backward)
+       (local-set-key   (kbd "<M-right>>")              'smart-forward)))
+  ;; perl mode
+  (add-hook 'cperl-mode-hook
+    '(lambda ()
+       ;; set smart-forward mode shortcut
+       (local-set-key   (kbd "<M-up>")                  'smart-up)
+       (local-set-key   (kbd "<M-down>")                'smart-down)
+       (local-set-key   (kbd "<M-left>")                'smart-backward)
+       (local-set-key   (kbd "<M-right>>")              'smart-forward)))
+  ;; python mode
+  (add-hook 'python-mode-hook
+    '(lambda ()
+       ;; set smart-forward mode shortcut
+       (local-set-key   (kbd "<M-up>")                  'smart-up)
+       (local-set-key   (kbd "<M-down>")                'smart-down)
+       (local-set-key   (kbd "<M-left>")                'smart-backward)
+       (local-set-key   (kbd "<M-right>>")              'smart-forward)))
+  ) ; (when section-mode-smart-forward
 
 
 (provide 'shortcut-semantic)

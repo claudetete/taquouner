@@ -20,9 +20,9 @@
 
 ;; Keywords: config, autoload, generated, load
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: April 2013
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;  emacs -Q -l autoloads.el -f autoloads
 
 ;;; Change Log:
+;; 2013-05-07 (0.2)
+;;    fix error with diff mode
 ;; 2013-04-12 (0.1)
 ;;    creation from scratch
 
@@ -60,7 +62,7 @@
   ;; UNDO TREE
   (update-file-autoloads "undo-tree.el"              t (concat autoloads-location "autoload-undo-tree.el"))
   ;; DIFF COLOR
-  (update-file-autoloads "diff-mode-.el"             t (concat autoloads-location "autoload-dired-mode-.el"))
+  (update-file-autoloads "diff-mode-.el"             t (concat autoloads-location "autoload-diff-mode-.el"))
   ;; DIRED SORT
   (update-file-autoloads "dired-sort-menu.el"        t (concat autoloads-location "autoload-dired-sort-menu.el"))
   ;; ISEARCH+

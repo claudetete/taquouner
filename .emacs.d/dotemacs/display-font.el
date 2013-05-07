@@ -1,6 +1,6 @@
 ;;; display-font.el --- a config file for font setting
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, font
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: June 2012
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-display-font'
 
 ;;; Change Log:
+;; 2013-05-07 (1.9)
+;;    add antialias option for font
 ;; 2012-06-26 (1.8)
 ;;    simplify settings
 ;; 2012-06-18 (1.7)
@@ -55,14 +57,21 @@
 
 ;;; Code:
 (when profile-font
+  (if section-display-font-antialias
+    (progn (message "    5.3.1 Font Antialias...")
+      (setq profile-font (concat profile-font ":antialias=subpixel"))
+      (message "    5.3.1 Font Antialias...Done"))
+    (progn
+      (setq profile-font (concat profile-font ":antialias=none"))
+      ))
   (set-default-font profile-font))
 
 ;;
 ;;; INTERNATIONAL
 ;; REQUIREMENT: var     `section-display-font-international'
-(when section-display-font-international (message "    5.3.1 International...")
+(when section-display-font-international (message "    5.3.2 International...")
   ;; no more setting to have Unicode
-  (message "    5.3.1 International... Done"))
+  (message "    5.3.2 International... Done"))
 
 ;;
 ;; all other characters will be displayed like this: ^@

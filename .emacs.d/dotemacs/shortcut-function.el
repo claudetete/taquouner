@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.2
+;; Version: 3.3
 ;; Created: October 2006
-;; Last-Updated: April 2013
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-05-07 (3.3)
+;;    remove shortcut to close clearcase config spec mode
 ;; 2013-04-12 (3.2)
 ;;    new shortcut for clearcase function to not use clearcase.el (too slow)
 ;; 2013-04-08 (3.1)
@@ -181,15 +183,6 @@
   (global-set-key       (kbd "C-c c f")         'clearcase-gui-find-checkout)
   ;; edit config spec
   (global-set-key       (kbd "C-c c s")         'clearcase-config-spec-edit)
-
-  ;; close ecb compile window when quit edit of ocnfig spec
-  (add-hook 'clearcase-config-spec-mode-hook
-    (lambda ()
-      (when section-mode-cedet-ecb
-        (local-set-key  (kbd "C-c C-c")         '(lambda ()
-                                                   (interactive)
-                                                   (clearcase-config-spec-save-and-quit)
-                                                   (ecb-toggle-compile))))))
   ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
 
 ;;
