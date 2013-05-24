@@ -20,7 +20,7 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.2
+;; Version: 3.3
 ;; Created: October 2006
 ;; Last-Updated: May 2013
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2013-05-23 (3.3)
+;;    add condition to set semantic option for c++
 ;; 2013-05-07 (3.2)
 ;;    fix indent options from profile
 ;; 2012-12-27 (3.1)
@@ -200,7 +202,7 @@
 ;;
 ;;; C++ QT
 (when section-languages-c++-qt (message "  3.6 Languages C++ Qt...")
-  (when (and section-mode-cedet-bzr section-mode-cedet-loaded)
+  (when (and section-mode-cedet (and section-mode-cedet-bzr section-mode-cedet-loaded))
     (setq qt4-base-dir "C:/QtSDK/Desktop/Qt/4.8.1/mingw/include")
     (setq qt4-gui-dir (concat qt4-base-dir "/QtGui"))
     (setq qt4-core-dir (concat qt4-base-dir "/QtCore"))
@@ -213,7 +215,7 @@
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-large.h"))
     (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
-    ) ; (when (and section-mode-cedet-bzr section-mode-cedet-loaded)
+    ) ; (when (and section-mode-cedet (and section-mode-cedet-bzr section-mode-cedet-loaded))
 
   (message "  3.6 Laguages C++ Qt...Done"))
 

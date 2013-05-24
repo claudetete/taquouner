@@ -448,8 +448,8 @@
     `(outline-1 ((,class (:inherit outline-2 :height 1.0))))
 
     ;; powerline
-    `(powerline-active1 ((,class (:background ,zenburn-bg-1))))
-    `(powerline-inactive1 ((,class (:background ,zenburn-bg-1))))
+    `(powerline-active1 ((,class (:background ,zenburn-bg-05))))
+    `(powerline-inactive1 ((,class (:background ,zenburn-bg-05))))
     `(powerline-active2 ((,class (:background ,zenburn-bg+3))))
     `(powerline-inactive2 ((,class (:background ,zenburn-bg+3))))
 

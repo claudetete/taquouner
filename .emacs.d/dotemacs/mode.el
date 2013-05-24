@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.5
+;; Version: 4.6
 ;; Created: October 2006
 ;; Last-Updated: May 2013
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2013-05-23 (4.6)
+;;    add condition for powerline modeline + add rainbow mode
 ;; 2013-05-07 (4.5)
 ;;    close compile window when quit clearcase config spec mode + use fork of
 ;;    powerline mode + close compile window when quit helm + add yascroll and
@@ -605,13 +607,15 @@
                      (lhs (list
                             ;;
                             ;; LEFT
-                            (when buffer-read-only
+                            ;; display [RO] when visited a read-only file
+                            (when (and buffer-read-only buffer-file-name)
                               (powerline-raw "[RO]" face-warning))
                             ;; encoding and eol indicator
                             (powerline-raw mode-line-mule-info nil 'l)
                             ;; buffername
                             (powerline-buffer-id nil 'l)
-                            (when (buffer-modified-p)
+                            ;; display * at end of buffer name when buffer was modified
+                            (when (and (buffer-modified-p) buffer-file-name)
                               (powerline-raw "*" face-warning 'l))
 
                             ;; first separator
@@ -927,6 +931,12 @@
   (when (try-require 'expand-region "    ")
     (try-require 'smart-forward "    "))
   (message "  2.57 Smart-forward... Done"))
+
+;;
+;;; RAINBOW MODE
+(when section-mode-rainbow (message "  2.58 Rainbow...")
+  (try-require 'autoload-rainbow-mode "    ")
+  (message "  2.58 Rainbow... Done"))
 
 ;;
 ;;; DIMINISH

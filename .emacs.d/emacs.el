@@ -20,7 +20,7 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.7
+;; Version: 8.8
 ;; Created: October 2006
 ;; Last-Updated: May 2013
 
@@ -137,6 +137,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2013-05-17 (8.8)
+;;    add rainbow mode + window title by profile + smooth scroll mode + clean
+;;    section to load nothing when profile is empty
 ;; 2013-05-07 (8.7)
 ;;    add yascroll and smart forward mode + antialias for font + some minor
 ;;    options
@@ -316,18 +319,18 @@ before message."
   ;;
   ;; VERSION RECOGNITION                                                0.2
   ;; detect system: Emacs version
-  (defvar section-environment-version-recognition t)
+  (defvar section-environment-version-recognition nil)
   ;;
   ;; OS RECOGNITION                                                     0.3
-  (defvar section-environment-os-recognition t)
+  (defvar section-environment-os-recognition nil)
   ;;
   ;; TERMINAL VS GRAPHICS                                               0.4
-  (defvar section-environment-terminal-vs-graphics t)
+  (defvar section-environment-terminal-vs-graphics nil)
   ;;
   ;; SET PATH                                                           0.5
   ;; REQUIREMENT:       section-environment-os-recognition
   ;;                    section-environment-terminal-vs-graphics
-  (defvar section-environment-set-path t)
+  (defvar section-environment-set-path nil)
   (progn
     (defvar profile-path nil)
     (defvar profile-exec-path nil)
@@ -337,12 +340,12 @@ before message."
   ;; MS WINDOWS PERFORMANCE                                             0.6
   ;; REQUIREMENT:       section-environment-os-recognition
   ;; improve performance
-  (defvar section-environment-ms-windows-performance t)
+  (defvar section-environment-ms-windows-performance nil)
   ;;
   ;; EXECUTABLE                                                         0.7
   ;; REQUIREMENT:       section-environment-os-recognition
   ;;                    section-environment-terminal-vs-graphics
-  (defvar section-environment-executable t)
+  (defvar section-environment-executable nil)
   (progn
     (defvar profile-shell-file-name "bash")
     (defvar profile-ediff-diff-program "diff")
@@ -356,7 +359,7 @@ before message."
   ;;
   ;; HYPER                                                              0.9
   ;; set menu key as hyper key
-  (defvar section-environment-hyper t)
+  (defvar section-environment-hyper nil)
   ;;
   ;; SUPER                                                              0.10
   ;; set windows key as super key
@@ -373,7 +376,7 @@ before message."
 ;; FILE: dotemacs/functions.el
 ;; REQUIREMENT:       section-environment-os-recognition
 ;; load custom function
-(defvar section-functions t)
+(defvar section-functions nil)
 (progn
   ;; MAGNETI MARELLI                                                    1.1
   ;; FILE: dotemacs/function-mm.el
@@ -385,13 +388,13 @@ before message."
 ;;
 ;;; MODE                                                                2
 ;; FILE: dotemacs/mode.el
-(defvar section-mode t)
+(defvar section-mode nil)
 ;; load modes in plugins/
 (progn
   ;; DIRECTORY                                                          2.1
   ;; add "plugins/" to load path
   ;; needed for all `section-mode-*'
-  (defvar section-mode-directory t)
+  (defvar section-mode-directory nil)
   ;;
   ;; VECTRA                                                             2.2
   ;; FILE: plugins/vectra.el
@@ -401,7 +404,7 @@ before message."
   ;; HOME/END                                                           2.3
   ;; FILE: plugins/pc-keys.elc
   ;; add some useful function to home and end keys
-  (defvar section-mode-home-end t)
+  (defvar section-mode-home-end nil)
   ;;
   ;; DOXYMACS                                                           2.4
   ;; emacs interface for doxygen comments
@@ -413,25 +416,25 @@ before message."
   ;;
   ;; UNIQUIFY                                                           2.6
   ;; create unique buffer name
-  (defvar section-mode-uniquify t)
+  (defvar section-mode-uniquify nil)
   ;;
   ;; CEDET                                                              2.7
   ;; "Collection of Emacs Development Environment Tools"
-  (defvar section-mode-cedet t)
+  (defvar section-mode-cedet nil)
   ;; if you want to use emacs included CEDET set to nil
   ;; otherwise set the path of cedet.el and you need to remove:
   ;;    "your-emacs-path/lisp/cedet"
   ;;    "your-emacs-path/lisp/speedbar.*"
   ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
   (progn
-    (defvar profile-cedet-path (concat (file-name-as-directory dotemacs-path) "/plugins/cedet-1.1/common/cedet.elc"))
-    (defvar profile-gnu-global (concat (file-name-as-directory dotemacs-path) "/plugins/gnu_global_622wb/bin/global.exe"))
-    (defvar profile-gnu-global-gtags (concat (file-name-as-directory dotemacs-path) "/plugins/gnu_global_622wb/bin/gtags.exe"))
+    (defvar profile-cedet-path (concat (file-name-as-directory dotemacs-path) "plugins/cedet-1.1/common/cedet.elc"))
+    (defvar profile-gnu-global (concat (file-name-as-directory dotemacs-path) "global"))
+    (defvar profile-gnu-global-gtags (concat (file-name-as-directory dotemacs-path) "gtags"))
 
     ;; SEMANTIC                                                         2.7.1
     ;; FILE: dotemacs/mode-semantic.el
     ;; can do tag, list of function/variable..., preproc, etc
-    (defvar section-mode-cedet-semantic t)
+    (defvar section-mode-cedet-semantic nil)
     (progn
       (defvar profile-ede-project nil)
       ) ; (progn
@@ -441,7 +444,7 @@ before message."
     ;; "Emacs Code Browser"
     ;; can display other windows or speedbar to view folder tree, source
     ;; list, variable/function list, buffer history, etc
-    (defvar section-mode-cedet-ecb t)
+    (defvar section-mode-cedet-ecb nil)
     (progn
       (defvar profile-ecb-source-path nil)
       (defvar profile-ecb-excluded-directories-regexps nil)
@@ -454,11 +457,11 @@ before message."
   ;;
   ;; BATCH                                                              2.8
   ;; mode for .bat script in MS Windows
-  (defvar section-mode-batch t)
+  (defvar section-mode-batch nil)
   ;;
   ;; VISUAL BASIC                                                       2.9
   ;; mode for VisualBasic and VisualBasicAdvance
-  (defvar section-mode-vb t)
+  (defvar section-mode-vb nil)
   ;;
   ;; WINDOW NUMBERING                                                   2.10
   ;; give a number of each window to easily jump in it
@@ -466,7 +469,7 @@ before message."
   ;;
   ;; C                                                                  2.11
   ;; define new type in C
-  (defvar section-mode-c t)
+  (defvar section-mode-c nil)
   (progn
     ;; CWARN                                                            2.11.1
     ;; display small error in source code (forget semi-colon, etc)
@@ -485,7 +488,7 @@ before message."
   ;;
   ;; YASNIPPET                                                          2.13
   ;; snippet mode (not used)
-  (defvar section-mode-yasnippet t)
+  (defvar section-mode-yasnippet nil)
 
   ;;
   ;; BROWSE KILL RING                                                   2.14
@@ -499,21 +502,21 @@ before message."
   (progn
     ;; EOL                                                              2.15.1
     ;; light syntax color for End Of Line file
-    (defvar section-mode-mm-eol t)
+    (defvar section-mode-mm-eol nil)
     ;;
     ;; CAN DBC                                                          2.15.3
     ;; light syntax color for Database CAN file
-    (defvar section-mode-mm-dbc t)
+    (defvar section-mode-mm-dbc nil)
     ;;
     ;; CCM DIFF                                                         2.15.3
     ;; light syntax color for synergy diff file
-    (defvar section-mode-mm-diff t)
+    (defvar section-mode-mm-diff nil)
     ) ; (progn
 
   ;;
   ;; DIRED+                                                             2.16
   ;; improve Dired mode, color, open with, etc
-  (defvar section-mode-dired-plus t)
+  (defvar section-mode-dired-plus nil)
 
   ;;
   ;; GNU/GLOBAL                                                         2.17
@@ -521,7 +524,7 @@ before message."
   ;; use modified gtags.el:
   ;; see function to add from function.el and put the absolute path of
   ;; global executable
-  (defvar section-mode-gnu-global t)
+  (defvar section-mode-gnu-global nil)
   ;;
   ;; EPROJECT (grischka)                                                2.18
   ;; project management mode (never used)
@@ -552,11 +555,11 @@ before message."
   ;;
   ;; OUTLINE                                                            2.23
   ;; Outline mode to manually hide/show source code block
-  (defvar section-mode-outline t)
+  (defvar section-mode-outline nil)
   ;;
   ;; AUTO HIGHLIGHT SYMBOL                                              2.24
   ;; to automatically highlight symbol at point
-  (defvar section-mode-auto-highlight-symbol t)
+  (defvar section-mode-auto-highlight-symbol nil)
   ;;
   ;; GOOGLE CALENDAR                                                    2.25
   ;; to import Google calendar
@@ -574,23 +577,23 @@ before message."
   ;;
   ;; UNDO TREE                                                          2.28
   ;; replace the undo built in function
-  (defvar section-mode-undo-tree t)
+  (defvar section-mode-undo-tree nil)
   ;;
   ;; CSV                                                                2.29
   ;; parse/edit/sort CSV file
-  (defvar section-mode-csv t)
+  (defvar section-mode-csv nil)
   ;;
   ;; SUBVERSION                                                         2.30
   ;; support Subversion 1.7
-  (defvar section-mode-subversion t)
+  (defvar section-mode-subversion nil)
   ;;
   ;; DIFF COLOR                                                         2.31
   ;; add color to diff mode
-  (defvar section-mode-diff-color t)
+  (defvar section-mode-diff-color nil)
   ;;
   ;; DIRED SORT                                                         2.32
   ;; more option to sort in Dired mode
-  (defvar section-mode-dired-sort t)
+  (defvar section-mode-dired-sort nil)
   ;;
   ;; ORG MODE                                                           2.33
   ;; to organize everything (also use on Android)
@@ -618,11 +621,11 @@ before message."
   ;;
   ;; DIRED                                                              2.39
   ;; change option to command ls for dired mode
-  (defvar section-mode-dired t)
+  (defvar section-mode-dired nil)
   ;;
   ;; ISEARCH                                                            2.40
   ;; scroll is possible when incremental search
-  (defvar section-mode-isearch t)
+  (defvar section-mode-isearch nil)
   ;;
   ;; RAINBOW DELIMITERS                                                 2.41
   ;; scroll is possible when incremental search
@@ -634,7 +637,7 @@ before message."
   ;;
   ;; DIRED DETAILS                                                      2.43
   ;; show hide details in dired mode
-  (defvar section-mode-dired-details t)
+  (defvar section-mode-dired-details nil)
   ;;
   ;; SMART TAB                                                          2.44
   ;; expand or indent at the point with tab
@@ -654,33 +657,33 @@ before message."
   ;;
   ;; FASTNAV                                                            2.48
   ;; fast navigation like with zap-to-char but only to move
-  (defvar section-mode-fastnav t)
+  (defvar section-mode-fastnav nil)
   ;;
   ;; MRU YANK                                                           2.49
   ;; MRU (Most Recently Used) in kill-ring
-  (defvar section-mode-mru-yank t)
+  (defvar section-mode-mru-yank nil)
   ;;
   ;; ACK                                                                2.50
   ;; search with ack (no more grep)
-  (defvar section-mode-ack t)
+  (defvar section-mode-ack nil)
   (progn
     (defvar section-mode-ack-full nil)
     (defvar section-mode-ack-and-half nil)
-    (defvar section-mode-ack-emacs t)
+    (defvar section-mode-ack-emacs nil)
     )
   ;;
   ;; ACE JUMP                                                           2.51
   ;; move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
-  (defvar section-mode-ace-jump t)
+  (defvar section-mode-ace-jump nil)
   ;;
   ;; DIREDFUL                                                           2.52
   ;; color dired buffer
-  (defvar section-mode-diredful t)
+  (defvar section-mode-diredful nil)
   ;;
   ;; PS2PDF                                                             2.53
   ;; print buffer/region in pdf
-  (defvar section-mode-ps2pdf t)
+  (defvar section-mode-ps2pdf nil)
   ;;
   ;; AUCTEX                                                             2.54
   ;; latex mode
@@ -691,21 +694,21 @@ before message."
   (defvar section-mode-helm nil)
   (progn
     ;; replace bookmark list
-    (defvar section-mode-helm-bookmark t)
+    (defvar section-mode-helm-bookmark nil)
     ;; replace electric buffer list
-    (defvar section-mode-helm-buffers-list t)
+    (defvar section-mode-helm-buffers-list nil)
     ;; replace browse kill ring
-    (defvar section-mode-helm-kill-ring t)
+    (defvar section-mode-helm-kill-ring nil)
     ;; replace M-x
     (defvar section-mode-helm-M-x nil)
     ;; replace occur
-    (defvar section-mode-helm-occur t)
+    (defvar section-mode-helm-occur nil)
     ;; replace find files C-x C-f
-    (defvar section-mode-helm-find-files t)
+    (defvar section-mode-helm-find-files nil)
     ;; replace recentf
-    (defvar section-mode-helm-recentf t)
+    (defvar section-mode-helm-recentf nil)
     ;; add imenu bind
-    (defvar section-mode-helm-imenu t)
+    (defvar section-mode-helm-imenu nil)
     ) ; (progn
   ;;
   ;; YASCROLL                                                           2.56
@@ -717,7 +720,12 @@ before message."
     ) ; (progn
   ;;
   ;; SMART-FORWARD                                                      2.57
+  ;; move in code with semantic see example in plugins/smart-forward.el
   (defvar section-mode-smart-forward nil)
+  ;;
+  ;; RAINBOW MODE                                                       2.58
+  ;; show string color in color
+  (defvar section-mode-rainbow nil)
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
@@ -728,21 +736,21 @@ before message."
 ;;
 ;;; LANGUAGES                                                           3
 ;; FILE: dotemacs/languages.el
-(defvar section-languages t)
+(defvar section-languages nil)
 (progn
   ;; C                                                                  3.1
   ;; set indentation style and preprocessing option
-  (defvar section-languages-c t)
+  (defvar section-languages-c nil)
   (progn
     (defvar profile-c-indent-offset 4)
     (defvar profile-c-extra-types nil)
     (defvar profile-c-macro-preprocessor "cpp -C")
     (defvar profile-c-macro-cppflags "")
-    (defvar profile-c-ask-before-compile t)
+    (defvar profile-c-ask-before-compile nil)
     ;; INDENT PREPROCESSOR
     (defvar section-languages-c-indent-preprocessor nil)
     ;; HIDE SHOW
-    (defvar section-languages-c-hide-show t)
+    (defvar section-languages-c-hide-show nil)
     (progn
       (defvar section-languages-c-hide-show-hide-all-at-start nil)
       ) ; (progn
@@ -752,14 +760,14 @@ before message."
   ;;
   ;; LISP                                                               3.2
   ;; set indentation style
-  (defvar section-languages-lisp t)
+  (defvar section-languages-lisp nil)
   (progn
     (defvar profile-lisp-indent-offset 4)
     ) ; (progn
   ;;
   ;; TAB                                                                3.3
   ;; tab always in space
-  (defvar section-languages-tabulation t)
+  (defvar section-languages-tabulation nil)
   ;;
   ;; RTRT SCRIPT PTU                                                    3.4
   ;; set indentation style
@@ -770,14 +778,14 @@ before message."
   ;;
   ;; PERL                                                               3.5
   ;; set indentation style
-  (defvar section-languages-perl t)
+  (defvar section-languages-perl nil)
   (progn
     (defvar profile-perl-indent-offset 4)
     ) ; (progn
   ;;
   ;; C++ QT                                                             3.6
   ;; set include for Qt 4.8
-  (defvar section-languages-c++-qt t)
+  (defvar section-languages-c++-qt nil)
   ) ; (progn
 
 
@@ -785,24 +793,24 @@ before message."
 ;;; SELECTION                                                           4
 ;; FILE: dotemacs/selection.el
 ;; selection can be kill + selection is highlight + kill->copy in read only
-(defvar section-selection t)
+(defvar section-selection nil)
 (progn
   ;; SHIFT SELECTION                                                    4.1
   ;; selection can be done with shit and arrow keys (default setting since 23.3)
-  (defvar section-selection-with-shift t)
+  (defvar section-selection-with-shift nil)
   ) ; (progn
 
 
 ;;
 ;;; DISPLAY                                                             5
-(defvar section-display t)
+(defvar section-display nil)
 (progn
   ;; WINDOWS/BUFFERS                                                    5.1
   ;; FILE: dotemacs/display-buffer.el
   ;; buffers with *buffername* should be displayed in the same window
   ;; first column in window will display buffer limit
   ;; next page will leave 5 shared line
-  (defvar section-display-windows-buffers t)
+  (defvar section-display-windows-buffers nil)
   (progn
     ;;; VISUAL LINE                                                     5.1.1
     ;; word wrap, truncate line without cut word
@@ -822,38 +830,38 @@ before message."
   ;; REQUIREMENT:       section-environment-os-recognition
   ;;                    section-environment-terminal-vs-graphics
   ;; set font in terminal or in graphic
-  (defvar section-display-font t)
+  (defvar section-display-font nil)
   (progn
     ;; ANTIALIAS
     ;; set antialiasing on font rendering
-    (defvar section-display-font-antialias t)
+    (defvar section-display-font-antialias nil)
     (defvar profile-font nil)
     ;;
     ;; INTERNATIONAL                                                    5.3.2
     ;; ISO or utf-8 or ...  (not used)
-    (defvar section-display-font-international t)
+    (defvar section-display-font-international nil)
     ) ; (progn
 
   ;;
   ;; COLOR                                                              5.4
   ;; FILE: dotemacs/display-color.el
   ;; set manual color
-  (defvar section-display-color t)
+  (defvar section-display-color nil)
   (progn
     ;; PARENTHESES MODE                                                 5.4.1
     ;; matched parentheses are highlight
-    (defvar section-display-color-parentheses-mode t)
+    (defvar section-display-color-parentheses-mode nil)
     ;; PARENTHESES MINIBUFFER                                           5.4.2
     ;; matched parentheses are highlight and if not visible show it in the
     ;; Minibuffer
-    (defvar section-display-color-parentheses-visible t)
+    (defvar section-display-color-parentheses-visible nil)
     ;; PARENTHESES HIGHLIGHT                                            5.4.3
     ;; matched parentheses are highlight in rainbow color
     (defvar section-display-color-parentheses-highlight nil)
 
     ;; COLOR THEME                                                      5.4.4
     ;; set color by color-theme mode
-    (defvar section-display-color-theme t)
+    (defvar section-display-color-theme nil)
     (progn
       (defvar profile-color-theme "zenburn")
       ) ; (progn
@@ -885,7 +893,7 @@ before message."
 ;;; INTERFACE                                                           6
 ;; FILE: dotemacs/interface.el
 ;; display buffer name in titlebar (example "<[ foobar.c ]>")
-(defvar section-interface t)
+(defvar section-interface nil)
 (progn
   ;; DECORATION                                                         6.1
   ;; remove all mouse interface (toolbar, menubar, scrollbar)
@@ -894,23 +902,28 @@ before message."
   ;; MODELINE                                                           6.2
   ;; FILE: dotemacs/interface-modeline.el
   ;; set some option to add in the grey line at the bottom of each buffer
-  (defvar section-interface-modeline t)
+  (defvar section-interface-modeline nil)
+  ;; WINDOW TITLE
+  ;; %b buffername ; %F frame name ; %l line number ; %c column number
+  ;; %p percent of buffer above top ; %m mode name ; %n Narrow mode
+  ;; %z coding systems ; %Z %z + end-of-line format ; %- infinitely dashes
+  (defvar profile-window-title "<[ %b ]>")
   ;; TRANSPARENCY                                                       6.3
   ;; the whole emacs will be transparent
-  (defvar section-interface-transparency t)
+  (defvar section-interface-transparency nil)
   (progn
     (defvar profile-transparency 100)
     ) ; (progn
   ;;
   ;; FULLSCREEN                                                         6.4
   ;; REQUIREMENT:       section-environment-os-recognition
-  (defvar section-interface-fullscreen t)
+  (defvar section-interface-fullscreen nil)
   ;;
   ;; ECB                                                                6.5
   ;; FILE: dotemacs/interface-ecb.el
   ;; REQUIREMENT:       section-mode-cedet-ecb
   ;; set size, display, refresh and remove opening tips
-  (defvar section-interface-ecb t)
+  (defvar section-interface-ecb nil)
   (progn
     ;; ECB ASCII TREE
     ;; display ascii guides instead of image for arborescence tree      6.4.1
@@ -923,17 +936,17 @@ before message."
 ;;; COMPLETION                                                          7
 ;; FILE: dotemacs/completion.el
 ;; active letter case completion + dynamic completion
-(defvar section-completion t)
+(defvar section-completion nil)
 
 
 ;;
 ;;; SHORTCUT                                                            8
-(defvar section-shortcut t)
+(defvar section-shortcut nil)
 (progn
   ;; GLOBAL                                                             8.1
   ;; FILE: dotemacs/shortcut-global.el
   ;; add global shortcut
-  (defvar section-shortcut-global t)
+  (defvar section-shortcut-global nil)
   (progn
     ;; CUA                                                              8.1.1
     (defvar section-shortcut-global-cua nil)
@@ -942,47 +955,47 @@ before message."
   ;; WINDOWS                                                            8.2
   ;; FILE: dotemacs/shortcut-windows.el
   ;; add shortcut to manage windows
-  (defvar section-shortcut-windows t)
+  (defvar section-shortcut-windows nil)
   ;;
   ;; BUFFERS                                                            8.3
   ;; FILE: dotemacs/shortcut-buffers.el
   ;; add shortcut to manage buffers
-  (defvar section-shortcut-buffers t)
+  (defvar section-shortcut-buffers nil)
 
   ;; ECB                                                                8.4
   ;; FILE: dotemacs/shortcut-ecb.el
   ;; REQUIREMENT:       section-mode-cedet-ecb
   ;; add shortcut to manage ecb windows
-  (defvar section-shortcut-ecb t)
+  (defvar section-shortcut-ecb nil)
 
   ;; GREP                                                               8.5
   ;; FILE: dotemacs/shortcut-grep.el
   ;; add shortcut to manage grep
-  (defvar section-shortcut-grep t)
+  (defvar section-shortcut-grep nil)
 
   ;; FUNCTION                                                           8.6
   ;; FILE: dotemacs/shortcut-function.el
   ;; add shortcut to manage ecb windows
-  (defvar section-shortcut-function t)
+  (defvar section-shortcut-function nil)
 
   ;; TAGS                                                               8.7
   ;; FILE: dotemacs/shortcut-tags.el
   ;; add shortcut to manage gtags or etags
-  (defvar section-shortcut-tags t)
+  (defvar section-shortcut-tags nil)
   (progn
     ;; ETAGS                                                            8.7.1
     (defvar section-shortcut-tags-exuberant-ctags nil)
     ;;
     ;; GTAGS                                                            8.7.2
     ;; REQUIREMENT:       section-mode-gnu-global
-    (defvar section-shortcut-tags-gnu-global t)
+    (defvar section-shortcut-tags-gnu-global nil)
     ) ; (progn
 
   ;; SEMANTIC                                                           8.8
   ;; FILE: dotemacs/shortcut-semantic.el
   ;; REQUIREMENT:       section-mode-cedet-semantic
   ;; add shortcut to move in source code with semantic
-  (defvar section-shortcut-semantic t)
+  (defvar section-shortcut-semantic nil)
   ) ; (progn
 
 
@@ -991,7 +1004,7 @@ before message."
 ;; FILE: dotemacs/my-mouse.el
 ;; REQUIREMENT: section-environment-terminal-vs-graphics
 ;; smooth wheel + lazy decoration when scroll
-(defvar section-mouse t)
+(defvar section-mouse nil)
 (progn
   ;;
   ;; PASTE CURSOR                                                       9.1
@@ -1001,6 +1014,9 @@ before message."
   ;; AVOIDANCE                                                          9.2
   ;; mouse cursor avoid the keyboard cursor when typing
   (defvar section-mouse-avoidance nil)
+  ;;
+  ;; SMOOTH SCROLL                                                      9.3
+  (defvar section-mouse-smooth-scroll nil)
 ) ; (progn
 
 
@@ -1010,16 +1026,16 @@ before message."
 ;; no welcome message + yes->y + do not query to refresh buffer + remove insert
 ;; key + remove C-Pup & C-Dwn + wheel click do nothing + no dialog box + no
 ;; tooltips
-(defvar section-annoyances t)
+(defvar section-annoyances nil)
 (progn
   ;;
   ;; TRUNCATE LINE                                                      10.1
   ;; whole line not visible (need to scroll right)
-  (defvar section-annoyances-truncate-line t)
+  (defvar section-annoyances-truncate-line nil)
   ;;
   ;; SCROLL PRESERVE CURSOR POSITION                                    10.2
   ;; when wheel scroll the cursor do not move
-  (defvar section-annoyances-scroll-preserve-cursor-position t)
+  (defvar section-annoyances-scroll-preserve-cursor-position nil)
   ;;
   ;; NO BACKUP FILE                                                     10.3
   ;; no backup file will be created
@@ -1027,7 +1043,7 @@ before message."
   ;;
   ;; ALL BACKUP FILE IN DIRECTORY                                       10.4
   ;; all backup files will be created in a directory
-  (defvar section-annoyances-backup-file-in-directory t)
+  (defvar section-annoyances-backup-file-in-directory nil)
   ;;
   ;; CLASSIC SCROLL                                                     10.5
   ;; when scroll at start or end screen with arrow, it will always scroll line
@@ -1041,22 +1057,22 @@ before message."
 ;; FILE: dotemacs/my-misc.el
 ;; remove whitespace at end of line + define name, browser, shell, new
 ;; line at end of file, compression, column 78 alignment
-(defvar section-misc t)
+(defvar section-misc nil)
 (progn
   ;; SPACE
-  (defvar profile-remove-useless-ending-space t)
-  (defvar profile-always-new-line-at-end t)
+  (defvar profile-remove-useless-ending-space nil)
+  (defvar profile-always-new-line-at-end nil)
   ;;
   (defvar profile-username "noname")
   (defvar profile-latitude 0.00)
   (defvar profile-longitude 0.00)
   (defvar profile-location-name "Neverland")
   (defvar profile-google-calendar-user      "yourmail@gmail.com")
-  (defvar profile-google-calendar-src       (concat (file-name-as-directory dotemacs-path) "/plugins/google"))
-  (defvar profile-google-calendar-directory (concat (file-name-as-directory dotemacs-path) "/cache"))
+  (defvar profile-google-calendar-src       (concat (file-name-as-directory dotemacs-path) "plugins/google"))
+  (defvar profile-google-calendar-directory (concat (file-name-as-directory dotemacs-path) "cache"))
   (defvar profile-google-calendar-url       "http://www.google.com/calendar/ical/yourmail%40gmail.com/private-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx/basic.ics")
-  (defvar profile-backup-directory (concat (file-name-as-directory dotemacs-path) "/backup"))
-  (defvar profile-autosave-directory (concat (file-name-as-directory dotemacs-path) "/cache"))
+  (defvar profile-backup-directory (concat (file-name-as-directory dotemacs-path) "backup"))
+  (defvar profile-autosave-directory (concat (file-name-as-directory dotemacs-path) "cache"))
   (defvar profile-fill-column 78)
   (defvar profile-browser "firefox")
   ;;
@@ -1077,14 +1093,14 @@ before message."
   ;;
   ;; BOOKMARK                                                           11.3
   ;; set default bookmark storage
-  (defvar section-misc-bookmark t)
+  (defvar section-misc-bookmark nil)
   (progn
     (defvar profile-bookmark-sort nil)
     ) ; (progn
   ;;
   ;; SCREENSAVER                                                        11.4
   ;; set screensaver when idle time higher than 5 minutes
-  (defvar section-misc-screensaver t)
+  (defvar section-misc-screensaver nil)
   ) ; (progn
 
 
@@ -1093,7 +1109,7 @@ before message."
 ;; FILE: dotemacs/my-custom.el
 ;; all customize settings are put in here when you use interface (customize)
 ;; to change settings
-(defvar section-filecustomize t)
+(defvar section-filecustomize nil)
 
 
 ;;
@@ -1104,7 +1120,7 @@ before message."
 
 
 ;; add to load path the dotemacs directory
-(add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "/dotemacs"))
+(add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "dotemacs"))
 
 ;;
 ;;; ENVIRONMENT
@@ -1183,7 +1199,7 @@ before message."
 ;;; CUSTOMIZE
 (when section-filecustomize (message "12 File custom...")
   ;; customize modification (made by Emacs interface) are put in custom.el
-  (setq custom-file (concat (file-name-as-directory dotemacs-path) "/dotemacs/my-custom.el"))
+  (setq custom-file (concat (file-name-as-directory dotemacs-path) "dotemacs/my-custom.el"))
   (try-require 'my-custom "  ")
   (message "12 File custom... Done"))
 

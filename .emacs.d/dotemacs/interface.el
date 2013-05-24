@@ -20,7 +20,7 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: October 2006
 ;; Last-Updated: May 2013
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2013-05-23 (2.1)
+;;    add window title from profile
 ;; 2013-05-07 (2.0)
 ;;    remove condition about os for maximize
 ;; 2012-08-01 (1.9)
@@ -111,8 +113,10 @@
 
 ;;
 ;; buffer name in title bar (example "<[ foobar.c ]>") (from grandm_y)
-(setq frame-title-format "<[ %b ]>")
-
+(if profile-window-title
+  (setq frame-title-format profile-window-title)
+  (setq frame-title-format "<[ %b ]>")
+  ) ; (if profile-window-title
 
 ;;
 ;;;; TRANSPARENCY

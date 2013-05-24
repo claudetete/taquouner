@@ -20,7 +20,7 @@
 
 ;; Keywords: config, autoload, generated, load
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: April 2013
 ;; Last-Updated: May 2013
 
@@ -30,6 +30,8 @@
 ;;  emacs -Q -l autoloads.el -f autoloads
 
 ;;; Change Log:
+;; 2013-05-17 (0.3)
+;;    add rainbow mode
 ;; 2013-05-07 (0.2)
 ;;    fix error with diff mode
 ;; 2013-04-12 (0.1)
@@ -85,6 +87,8 @@
   (update-file-autoloads "fastnav.el"                t (concat autoloads-location "autoload-fastnav.el"))
   ;; ACE JUMP
   (update-file-autoloads "ace-jump-mode.el"          t (concat autoloads-location "autoload-ace-jump-mode.el"))
+  ;; RAINBOW MODE
+  (update-file-autoloads "rainbow-mode.el"           t (concat autoloads-location "autoload-rainbow-mode.el"))
 
   ;; quit emacs
   (kill-emacs)

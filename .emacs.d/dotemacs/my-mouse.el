@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mouse
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
 ;; Last-Updated: May 2013
 
@@ -31,6 +31,8 @@
 ;;              car     `section-environment-terminal-vs-graphics'
 
 ;;; Change Log:
+;; 2013-05-23 (1.8)
+;;    add option from profile for smooth scroll (with arrows)
 ;; 2013-05-07 (1.7)
 ;;    change smooth scroll (to avoid all jump with cursor)
 ;; 2012-07-09 (1.6)
@@ -52,12 +54,13 @@
 
 
 ;;; Code:
-;; to avoid jump from (http://www.emacswiki.org/cgi-bin/wiki/SmoothScrolling)
-(setq scroll-conservatively 10000)
-;(setq auto-window-vscroll nil)
-
 ;; scroll window under mouse
 (setq mouse-wheel-follow-mouse 't)
+
+
+;; Setting this to t makes scrolling faster, but may momentarily present
+;; unfontified areas when you scroll into them.
+(setq lazy-lock-defer-on-scrolling t)
 
 ;;
 ;;; PASTE CURSOR
@@ -80,9 +83,19 @@
     )
   (message "  9.2 Mouse Avoidance... Done"))
 
-;; Setting this to t makes scrolling faster, but may momentarily present
-;; unfontified areas when you scroll into them.
-(setq lazy-lock-defer-on-scrolling t)
+;;
+;;; SMOOTH SCROLL
+;; scroll with margin and without jump
+(when section-mouse-smooth-scroll (message "  9.3 Smooth Scroll...")
+  ;; to avoid jump from (http://www.emacswiki.org/cgi-bin/wiki/SmoothScrolling)
+  (setq scroll-conservatively 10000)
+  ;;(setq auto-window-vscroll nil)
+
+  ;; do not work under ms window and small font (100 lines by window)
+  ;;(when (try-require 'smooth-scrolling)
+  ;;  ;; set margin (where cursor cannot go)
+  ;;  (setq smooth-scroll-margin 2))
+  (message "  9.3 Smooth Scroll... Done"))
 
 
 (provide 'my-mouse)

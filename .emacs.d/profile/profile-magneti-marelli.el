@@ -1,6 +1,6 @@
 ;;; profile-magneti-marelli.el --- a config file for profile
 
-;; Copyright (c) 2012 Claude Tete
+;; Copyright (c) 2012-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -36,16 +36,16 @@
 ;; (setq profile-xxx X)
 
 (setq section-environment t)
-(progn
+(when section-environment
   (setq section-environment-profile nil)
-  (progn
+  (when section-environment-profile
     (setq profile "Magneti Marelli")
     )
   (setq section-environment-version-recognition t)
   (setq section-environment-os-recognition t)
   (setq section-environment-terminal-vs-graphics t)
   (setq section-environment-set-path t)
-  (progn
+  (when section-environment-set-path
     (setq profile-path
       (concat
         "d:/cygwin/bin" ";"
@@ -62,7 +62,7 @@
     )
   (setq section-environment-ms-windows-performance t)
   (setq section-environment-executable t)
-  (progn
+  (when section-environment-executable
     (setq profile-shell-file-name "D:/cygwin/bin/bash.exe")
     (setq profile-ediff-diff-program "d:/cygwin/usr/bin/GnuWin32/bin/diff.exe")
     (setq profile-ediff-diff3-program "d:/cygwin/usr/bin/GnuWin32/bin/diff3.exe")
@@ -74,12 +74,12 @@
   )
 
 (setq section-functions t)
-(progn
+(when section-functions
   (setq section-function-mm t)
   )
 
 (setq section-mode t)
-(progn
+(when section-mode
   (setq section-mode-directory t)
   (setq section-mode-vectra nil)
   (setq section-mode-home-end t)
@@ -87,12 +87,12 @@
   (setq section-mode-ido nil)
   (setq section-mode-uniquify t)
   (setq section-mode-cedet t)
-  (progn
+  (when section-mode-cedet
     (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
     (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_628wb/bin/global.exe"))
     (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_628wb/bin/gtags.exe"))
     (setq section-mode-cedet-semantic t)
-    (progn
+    (when section-mode-cedet-semantic
       (setq profile-ede-project
         '(
            "d:/ccm_wa/XL1/XL1.ede.el"
@@ -105,7 +105,7 @@
         )
       )
     (setq section-mode-cedet-ecb t)
-    (progn
+    (when section-mode-cedet-ecb
       (setq profile-ecb-source-path
         '(
            ("c:/Documents and Settings/tete"                     "/tete")
@@ -151,7 +151,7 @@
   (setq section-mode-vb t)
   (setq section-mode-window-numbering nil)
   (setq section-mode-c t)
-  (progn
+  (when section-mode-c
     (setq section-mode-c-cwarn nil)
     (setq section-mode-c-data-debug nil)
     )
@@ -159,7 +159,7 @@
   (setq section-mode-yasnippet nil)
   (setq section-mode-browse-kill-ring t)
   (setq section-mode-mm t)
-  (progn
+  (when section-mode-mm
     (setq section-mode-mm-eol t)
     (setq section-mode-mm-dbc t)
     (setq section-mode-mm-diff t)
@@ -169,12 +169,12 @@
   (setq section-mode-eproject nil)
   (setq section-mode-rtrt-script nil)
   (setq section-mode-vc-clearcase nil)
-  (progn
+  (when section-mode-vc-clearcase
     (setq profile-clearcase-vtree "c:/path/to/ClearCase/bin/clearvtree.exe")
     (setq profile-cleartool "c:/path/to/ClearCase/bin/cleartool.exe")
     )
   (setq section-mode-clearcase nil)
-  (progn
+  (when section-mode-clearcase
     (setq section-mode-clearcase-el nil)
     )
   (setq section-mode-autohotkey nil)
@@ -206,7 +206,7 @@
   (setq section-mode-fastnav nil)
   (setq section-mode-mru-yank t)
   (setq section-mode-ack t)
-  (progn
+  (when section-mode-ack
     (setq section-mode-ack-full nil)
     (setq section-mode-ack-and-half nil)
     (setq section-mode-ack-emacs t)
@@ -216,7 +216,7 @@
   (setq section-mode-ps2pdf t)
   (setq section-mode-auctex nil)
   (setq section-mode-helm nil)
-  (progn
+  (when section-mode-helm
     (setq section-mode-helm-bookmark t)
     (setq section-mode-helm-buffers-list t)
     (setq section-mode-helm-kill-ring t)
@@ -227,16 +227,16 @@
     (setq section-mode-helm-imenu t)
     )
   (setq section-mode-yascroll nil)
-  (progn
+  (when section-mode-yascroll
     (setq profile-yascroll-delay-to-hide nil)
     )
   (setq section-mode-diminish nil)
   )
 
 (setq section-languages t)
-(progn
+(when section-languages
   (setq section-languages-c t)
-  (progn
+  (when section-languages-c
     (setq profile-c-indent-offset 2)
     (setq profile-c-extra-types
       '(
@@ -255,47 +255,47 @@
     (setq profile-c-ask-before-compile t)
     (setq section-languages-c-indent-preprocessor t)
     (setq section-languages-c-hide-show t)
-    (progn
+    (when section-languages-c-hide-show
       (setq section-languages-c-hide-show-hide-all-at-start nil)
       )
     )
   (setq section-languages-lisp t)
-  (progn
+  (when section-languages-lisp
     (setq profile-lisp-indent-offset 2)
     )
   (setq section-languages-tabulation t)
   (setq section-languages-rtrt-script nil)
   (setq section-languages-perl t)
-  (progn
+  (when section-languages-perl
     (setq profile-perl-indent-offset 2)
     )
   )
 
 (setq section-selection t)
-(progn
+(when section-selection
   (setq section-selection-with-shift nil)
   )
 
 (setq section-display t)
-(progn
+(when section-display
   (setq section-display-windows-buffers t)
-  (progn
+  (when section-display-windows-buffers
     (setq section-display-windows-buffers-visual-line nil)
     )
   (setq section-display-speedbar nil)
   (setq section-display-font t)
-  (progn
+  (when section-display-font
     (setq section-display-font-antialias nil)
     (setq profile-font "Terminal-6")
     (setq section-display-font-international t)
     )
   (setq section-display-color t)
-  (progn
+  (when section-display-color
     (setq section-display-color-parentheses-mode t)
     (setq section-display-color-parentheses-visible t)
     (setq section-display-color-parentheses-highlight nil)
     (setq section-display-color-theme t)
-    (progn
+    (when section-display-color-theme
       (setq profile-color-theme "sweet")
       (setq section-display-color-misc nil)
       (setq section-display-color-mode nil)
@@ -306,16 +306,17 @@
   )
 
 (setq section-interface t)
-(progn
+(when section-interface
   (setq section-interface-remove-decoration t)
   (setq section-interface-modeline t)
+  (setq profile-window-title "<[ %b ]>")
   (setq section-interface-transparency t)
-  (progn
+  (when section-interface-transparency
     (setq profile-transparency 90)
     )
   (setq section-interface-fullscreen t)
   (setq section-interface-ecb t)
-  (progn
+  (when section-interface-ecb
     (setq section-interface-ecb-ascii-tree t)
     )
   )
@@ -323,9 +324,9 @@
 (setq section-completion t)
 
 (setq section-shortcut t)
-(progn
+(when section-shortcut
   (setq section-shortcut-global t)
-  (progn
+  (when section-shortcut-global
     (setq section-shortcut-global-cua nil)
     )
   (setq section-shortcut-windows t)
@@ -334,7 +335,7 @@
   (setq section-shortcut-grep t)
   (setq section-shortcut-function t)
   (setq section-shortcut-tags t)
-  (progn
+  (when section-shortcut-tags
     (setq section-shortcut-tags-exuberant-ctags nil)
     (setq section-shortcut-tags-gnu-global t)
     )
@@ -342,13 +343,13 @@
   )
 
 (setq section-mouse t)
-(progn
+(when section-mouse
   (setq section-mouse-paste-to-point-not-mouse-cursor t)
   (setq section-mouse-avoidance t)
 )
 
 (setq section-annoyances t)
-(progn
+(when section-annoyances
   (setq section-annoyances-truncate-line nil)
   (setq section-annoyances-scroll-preserve-cursor-position nil)
   (setq section-annoyances-no-backup-file nil)
@@ -357,7 +358,7 @@
   )
 
 (setq section-misc t)
-(progn
+(when section-misc
   (setq profile-remove-useless-ending-space t)
   (setq profile-always-new-line-at-end t)
   (setq profile-backup-directory (concat dotemacs-path "/backup"))
@@ -365,16 +366,16 @@
   (setq profile-fill-column 78)
   (setq profile-browser "d:/cygwin/usr/bin/OperaPortable/Opera.exe")
   (setq section-misc-calendar nil)
-  (progn
+  (when section-misc-calendar
     (setq section-misc-calendar-french nil)
     )
   (setq section-misc-dictionary nil)
-  (progn
+  (when section-misc-dictionary
     (setq profile-ispell-program "aspell")
     (setq profile-ispell-dictionary "english")
     )
   (setq section-misc-bookmark t)
-  (progn
+  (when section-misc-bookmark
     (setq profile-bookmark-sort nil)
     )
   (setq section-misc-screensaver nil)

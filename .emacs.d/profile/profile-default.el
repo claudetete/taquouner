@@ -63,12 +63,12 @@
 
 ;;; ENVIRONMENT
 (setq section-environment t)
-(progn
+(when section-environment
   ;; PROFILE: load profile from .emacs.d/profile/ directory
   (setq section-environment-profile t)
-  (progn
+  (when section-environment-profile
     (setq profile "default")
-    ) ; (progn
+    ) ; (when section-environment-profile
   ;; VERSION RECOGNITION: detect system: Emacs version
   (setq section-environment-version-recognition t)
   ;; OS RECOGNITION: detect system: MS Windows or Linux
@@ -79,7 +79,7 @@
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'
   (setq section-environment-set-path t)
-  (progn
+  (when section-environment-set-path
     ;; path
     (setq profile-path
       (concat
@@ -106,7 +106,7 @@
       )
     ;; languages
     (setq profile-lang "en_US") ; for subversion and Dired
-    ) ; (progn
+    ) ; (when section-environment-set-path
   ;; MS WINDOWS PERFORMANCE: increase performance on MS Windows
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-ms-windows-performance t)
@@ -114,14 +114,14 @@
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'
   (setq section-environment-executable t)
-  (progn
+  (when section-environment-executable
     ;; shell
     (setq profile-shell-file-name "c:/path/to/cygwin/bin/bash.exe")
     ;; ediff
     (setq profile-ediff-diff-program "c:/path/to/GnuWin32/bin/diff.exe")
     (setq profile-ediff-diff3-program "c:/path/to/GnuWin32/bin/diff3.exe")
     (setq profile-ediff-cmp-program "c:/path/to/GnuWin32/bin/cmp.exe")
-    ) ; (progn
+    ) ; (when section-environment-executable
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa nil)
   ;; HYPER: menu key become hyper key (modifier key)
@@ -132,20 +132,20 @@
   (setq section-environment-super nil)
   ;; SERVER : start a server for emacs client (and have only one instance)
   (setq section-environment-server nil)
-  ) ; progn
+  ) ; (when section-environment
 
 
 ;;; FUNCTIONS: new functions
 (setq section-functions t)
-(progn
+(when section-functions
   ;; MAGNETI MARELLI: load custom function for MM profile
   (setq section-function-mm nil)
-  ) ; (progn
+  ) ; (when section-functions
 
 
 ;;; MODE: load extern files which are modes in plugins/
 (setq section-mode t)
-(progn
+(when section-mode
   ;; DIRECTORY: add "plugins/" to load path
   (setq section-mode-directory t)
   ;; VECTRA: man and doc in emacs (never used)
@@ -160,7 +160,7 @@
   (setq section-mode-uniquify t)
   ;; CEDET: "Collection of Emacs Development Environment Tools"
   (setq section-mode-cedet t)
-  (progn
+  (when section-mode-cedet
     ;; if you want to use emacs included CEDET set to nil
     ;; otherwise set the path of cedet.el and you need to remove:
     ;;    "your-emacs-path/lisp/cedet"
@@ -174,7 +174,7 @@
     ;;
     ;; SEMANTIC: can do tag, list of function/variable..., preproc, etc
     (setq section-mode-cedet-semantic t)
-    (progn
+    (when section-mode-cedet-semantic
       ;; project : the order is important: display in reverse order (first->last)
       (setq profile-ede-project
         '(
@@ -182,12 +182,12 @@
            "c:/path/to/project/project.ede.el"
            )
         )
-      ) ; (progn
+      ) ; (when section-mode-cedet-semantic
     ;; ECB: "Emacs Code Browser"
     ;; can display other windows or speedbar to view folder tree, source list,
     ;; variable/function list, buffer history, etc
     (setq section-mode-cedet-ecb t)
-    (progn
+    (when section-mode-cedet-ecb
       ;; set default path in "ecb directories"
       (setq profile-ecb-source-path
         '(
@@ -224,8 +224,8 @@
            "\\.el$" ; all elisp files
            )
         )
-      ) ; (progn
-    ) ; (progn
+      ) ; (when section-mode-cedet-ecb
+    ) ; (when section-mode-cedet
   ;; BATCH: mode for .bat script in MS Windows
   (setq section-mode-batch t)
   ;; VISUAL BASIC: mode for VisualBasic and VisualBasicAdvance
@@ -234,12 +234,12 @@
   (setq section-mode-window-numbering nil)
   ;; C: define new type in C
   (setq section-mode-c t)
-  (progn
+  (when section-mode-c
     ;; CWARN: display small error in source code (forget semi-colon, etc)
     (setq section-mode-c-cwarn nil)
     ;; DATA DEBUG: ??  (not used)
     (setq section-mode-c-data-debug nil)
-    ) ; (progn
+    ) ; (when section-mode-c
   ;; ICOMPLETION: more completion in Minibuffer
   (setq section-mode-icompletion nil)
   ;; YASNIPPET: snippet mode
@@ -249,14 +249,14 @@
   (setq section-mode-browse-kill-ring nil)
   ;; MAGNETI MARELLI:
   (setq section-mode-mm nil)
-  (progn
+  (when section-mode-mm
     ;; EOL: syntax color for End Of Line file
     (setq section-mode-mm-eol nil)
     ;; CAN DBC: light syntax color for Database CAN file
     (setq section-mode-mm-dbc nil)
     ;; CCM DIFF: light syntax color for synergy diff file
     (setq section-mode-mm-diff nil)
-    ) ; (progn
+    ) ; (when section-mode-mm
   ;; DIRED+: improve Dired mode, color, open with, etc
   (setq section-mode-dired-plus t)
   ;; GNU/GLOBAL: Tag management mode (use modified gtags.el)
@@ -269,17 +269,17 @@
   ;; REQUIREMENT: `profile-clearcase-vtree'
   ;;              `profile-cleartool'
   (setq section-mode-vc-clearcase nil)
-  (progn
+  (when section-mode-vc-clearcase
     ;; path to version tree executable
     (setq profile-clearcase-vtree "c:/path/to/ClearCase/bin/clearvtree.exe")
     ;; path to cleartool executable
     (setq profile-cleartool "c:/path/to/ClearCase/bin/cleartool.exe")
-    ) ; (progn
+    ) ; (when section-mode-vc-clearcase
   ;; CLEARCASE: ClearCase mode (not used)
   (setq section-mode-clearcase nil)
-  (progn
+  (when section-mode-clearcase
     (setq section-mode-clearcase-el nil)
-    ) ; (progn
+    ) ; (when section-mode-clearcase
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq section-mode-autohotkey nil)
   ;; OUTLINE: Outline mode to manually hide/show source code block
@@ -343,11 +343,11 @@
   (setq section-mode-mru-yank t)
   ;; ACK: search with ack (no more grep) (need perl interpreter)
   (setq section-mode-ack t)
-  (progn
+  (when section-mode-ack
     (setq section-mode-ack-full nil)
     (setq section-mode-ack-and-half nil)
     (setq section-mode-ack-emacs t)
-    ) ; (progn
+    ) ; (when section-mode-ack
   ;; ACE JUMP: move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
   (setq section-mode-ace-jump t)
@@ -359,7 +359,7 @@
   (setq section-mode-auctex nil)
   ;; HELM: helm mode (fork of anything mode)
   (setq section-mode-helm nil)
-  (progn
+  (when section-mode-helm
     ;; replace bookmark list
     (setq section-mode-helm-bookmark t)
     ;; replace electric buffer list
@@ -376,25 +376,25 @@
     (setq section-mode-helm-recentf t)
     ;; add imenu bind
     (setq section-mode-helm-imenu t)
-    ) ; (progn
+    ) ; (when section-mode-helm
   ;; YASCROLL : add a small visual scroll-bar (can not be used with mouse click)
   (setq section-mode-yascroll t)
-  (progn
+  (when section-mode-yascroll
     ;; time before hide scroll-bar (nil to always show)
     (setq profile-yascroll-delay-to-hide nil)
-    ) ; (progn
+    ) ; (when section-mode-yascroll
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
-  ) ; (progn
+  ) ; (when section-mode
 
 
 ;;; LANGUAGES:
 (setq section-languages t)
-(progn
+(when section-languages
   ;; C: set indentation style and preprocessing option
   ;; REQUIREMENT: profile-c-indent-offset
   (setq section-languages-c t)
-  (progn
+  (when section-languages-c
     ;; all profile-c-* variables could be set in ede project
     ;; number of space for indentation in C
     (setq profile-c-indent-offset 2)
@@ -421,57 +421,57 @@
     ;; INDENT PREPROCESSOR: make a #define be align with C code
     (setq section-languages-c-indent-preprocessor nil)
     (setq section-languages-c-hide-show t)
-    (progn
+    (when section-languages-c-hide-show
       (setq section-languages-c-hide-show-hide-all-at-start nil)
-      ) ; (progn
-    ) ; (progn
+      ) ; (when section-languages-c-hide-show
+    ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
-  (progn
+  (when section-languages-lisp
     ;; number of space for indentation in lisp
     (setq profile-lisp-indent-offset 2)
-    ) ; (progn
+    ) ; (when section-languages-lisp
   ;; TAB: tab always in space
   (setq section-languages-tabulation t)
   ;; RTRT SCRIPT PTU: set indentation style
   (setq section-languages-rtrt-script nil)
   ;; PERL: set indentation style
   (setq section-languages-perl t)
-  (progn
+  (when section-languages-perl
     ;; number of space for indentation in perl
     (setq profile-perl-indent-offset 2)
-    ) ; (progn
-  ) ; (progn
+    ) ; (when section-languages-perl
+  ) ; (when section-languages
 
 
 ;;; SELECTION: selection can be kill + selection is highlight + kill->copy in
 ;;; read only
 (setq section-selection t)
-(progn
+(when section-selection
   ;; SHIFT SELECTION: selection can be done with shit and arrow keys (default
   ;; setting since 23.3)
   (setq section-selection-with-shift t)
-  ) ; (progn
+  ) ; (when section-selection
 
 
 ;;; DISPLAY:
 (setq section-display t)
-(progn
+(when section-display
   ;; WINDOWS/BUFFERS: buffers with *buffername* should be displayed in the same
   ;; window first column in window will display buffer limit, next page will leave
   ;; 5 shared line
   (setq section-display-windows-buffers t)
-  (progn
+  (when section-display-windows-buffers
     ;;; VISUAL LINE: word wrap, truncate line without cut word
     ;; END and HOME will go to the end/start of screen line not logical line
     (setq section-display-windows-buffers-visual-line nil)
-    ) ; (progn
+    ) ; (when section-display-windows-buffers
   ;; SPEEDBAR: set size and display of speedbar (see GLOSSARY) (no used)
   (setq section-display-speedbar nil)
   ;; FONT: set font
   ;; REQUIREMENT: `profile-font'
   (setq section-display-font t)
-  (progn
+  (when section-display-font
     ;; ANTIALIAS
     ;; set antialiasing on font rendering
     (setq section-display-font-antialias t)
@@ -554,10 +554,10 @@
     ;;
     ;; INTERNATIONAL: ISO or utf-8 or ...  (not used)
     (setq section-display-font-international t)
-    ) ; (progn
+    ) ; (when section-display-font
   ;; COLOR: set color
   (setq section-display-color t)
-  (progn
+  (when section-display-color
     ;; PARENTHESES MODE: matched parentheses are highlight
     (setq section-display-color-parentheses-mode t)
     ;; PARENTHESES MINIBUFFER: matched parentheses are highlight and if not
@@ -567,11 +567,11 @@
     (setq section-display-color-parentheses-highlight nil)
     ;; COLOR THEME: set color by color-theme mode (or manual settings nil)
     (setq section-display-color-theme t)
-    (progn ;; only if section-display-color-theme equal 'nil' (do not use it
-           ;; with terminal)
+    (if section-display-color-theme
+      ;; do not use it with terminal
       ;; theme to be used
       (setq profile-color-theme "zenburn")
-      ) ; (progn
+      ) ; (if section-display-color-theme
     (progn ; if section-display-color-theme nil
       ;;
       ;; MISC: current line highlight + full syntax coloration
@@ -585,26 +585,31 @@
       ;; REQUIREMENT: `section-mode-cedet-ecb'
       (setq section-display-color-ecb nil)
       ) ; (progn
-    ) ; (progn
-  ) ; (progn
+    ) ; (when section-display-color
+  ) ; (when section-display
 
 
 ;;; INTERFACE: display buffer name in titlebar (example "<[ foobar.c ]>")
 (setq section-interface t)
-(progn
+(when section-interface
   ;; DECORATION: remove all mouse interface (toolbar, menubar, scrollbar)
   (setq section-interface-remove-decoration nil)
   ;; MODELINE: set some option to add in the grey line at the bottom of each
   ;; buffer
   (setq section-interface-modeline t)
+  ;; WINDOW TITLE
+  ;; %b buffername ; %F frame name ; %l line number ; %c column number
+  ;; %p percent of buffer above top ; %m mode name ; %n Narrow mode
+  ;; %z coding systems ; %Z %z + end-of-line format ; %- infinitely dashes
+  (setq profile-window-title "<[ %b ]>")
   ;; TRANSPARENCY: the whole emacs will be transparent
   ;; REQUIREMENT: `profile-transparency'
   ;;              `section-environment-terminal-vs-graphics'
   (setq section-interface-transparency t)
-  (progn
+  (when section-interface-transparency
     ;; transparency of the window. 0=transparent/100=opaque
     (setq profile-transparency 96)
-    ) ; (progn
+    ) ; (when section-interface-transparency
   ;; FULLSCREEN:
   ;; REQUIREMENT: `section-environment-os-recognition'
   ;;              `section-environment-terminal-vs-graphics'
@@ -612,12 +617,12 @@
   ;; ECB: set size, display, refresh and remove opening tips
   ;; REQUIREMENT: `section-mode-cedet-ecb'
   (setq section-interface-ecb t)
-  (progn
+  (when section-interface-ecb
     ;; ECB ASCII TREE: display ascii guides instead of image for arborescence
     ;; tree
     (setq section-interface-ecb-ascii-tree nil)
-    )
-  ) ; (progn
+    ) ; (when section-interface-ecb
+  ) ; (when section-interface
 
 
 ;;; COMPLETION: enable letter case completion + dynamic completion
@@ -626,14 +631,14 @@
 
 ;;; SHORTCUT:
 (setq section-shortcut t)
-(progn
+(when section-shortcut
   ;; ALL (GLOBAL): add global shortcut (for whole Emacs)
   (setq section-shortcut-global t)
-  (progn
+  (when section-shortcut-global
     ;; CUA: enable C-x, C-c, C-v to cut copy paste
     ;; don't recommend it otherwise see http://www.emacswiki.org/CuaMode
     (setq section-shortcut-global-cua nil)
-    ) ; (progn
+    ) ; (when section-shortcut-global
   ;; WINDOWS: add shortcut to manage windows
   (setq section-shortcut-windows t)
   ;; BUFFERS: add shortcut to manage buffers
@@ -647,36 +652,36 @@
   (setq section-shortcut-function t)
   ;; TAGS: add shortcut to manage gtags or etags
   (setq section-shortcut-tags t)
-  (progn
+  (when section-shortcut-tags
     ;; ETAGS:
     (setq section-shortcut-tags-exuberant-ctags nil)
     ;; GTAGS:
     ;; REQUIREMENT: section-mode-gnu-global
     (setq section-shortcut-tags-gnu-global t)
-    ) ; (progn
+    ) ; (when section-shortcut-tags
   ;; SEMANTIC: add shortcut to move in source code with semantic
   ;; REQUIREMENT: `section-mode-cedet-semantic'
   (setq section-shortcut-semantic t)
-  ) ; (progn
+  ) ; (when section-shortcut
 
 
 ;;; MOUSE: smooth wheel + lazy decoration when scroll
 (setq section-mouse t)
-(progn
+(when section-mouse
   ;; PASTE CURSOR: yank at point not mouse cursor (either when yank with mouse
   ;; wheel)
   (setq section-mouse-paste-to-point-not-mouse-cursor nil)
   ;; AVOIDANCE: mouse cursor avoid the keyboard cursor when typing
   ;; REQUIREMENT: `section-environment-terminal-vs-graphics'
   (setq section-mouse-avoidance nil)
-) ; (progn
+  ) ; (when section-mouse
 
 
 ;;; ANNOYANCES: no welcome message + yes->y + do not query to refresh buffer +
 ;; remove insert key + remove C-Pup & C-Dwn + wheel click do nothing + no dialog
 ;; box + no tooltips
 (setq section-annoyances t)
-(progn
+(when section-annoyances
   ;; TRUNCATE LINE: whole line not visible (need to scroll right)
   (setq section-annoyances-truncate-line t)
   ;; SCROLL PRESERVE CURSOR POSITION: when wheel scroll the cursor do not move
@@ -689,7 +694,7 @@
   ;; CLASSIC SCROLL: when scroll at start or end screen with arrow, it will
   ;; always scroll line by line
   (setq section-annoyances-classic-scroll t)
-  ) ; (progn
+  ) ; (when section-annoyances
 
 
 ;;; MISC: remove whitespace at end of line + define name, browser, shell, new
@@ -697,7 +702,7 @@
 ;; REQUIREMENT: `profile-username'
 ;;              `profile-column'
 (setq section-misc t)
-(progn
+(when section-misc
   ;; SPACE
   (setq profile-remove-useless-ending-space t)
   (setq profile-always-new-line-at-end t)
@@ -715,29 +720,29 @@
   ;;              profile-latitude
   ;;              profile-location-name
   (setq section-misc-calendar nil)
-  (progn
+  (when section-misc-calendar
     ;; CALENDAR in French
     (setq section-misc-calendar-french t)
-    ) ; (progn
+    ) ; (when section-misc-calendar
   ;; DICTIONARY: set default dictionary, etc
   ;; REQUIREMENT: `profile-ispell-program'
   ;;              `profile-ispell-dictionary'
   (setq section-misc-dictionary nil)
-  (progn
+  (when section-misc-dictionary
     ;; path of apsell
     (setq profile-ispell-program "aspell")
     ;; default dictionnary
     (setq profile-ispell-dictionary "english")
-    ) ; (progn
+    ) ; (when section-misc-dictionary
   ;; BOOKMARK: set default bookmark storage
   (setq section-misc-bookmark t)
-  (progn
+  (when section-misc-bookmark
     ;; sort bookmark
     (setq profile-bookmark-sort nil)
-    ) ; (progn
+    ) ; (when section-misc-bookmark
   ;; SCREENSAVER: Set screensaver when idle time higher than 5 minutes
   (setq section-misc-screensaver t)
-  ) ; (progn
+  ) ; (when section-misc
 
 
 ;;; CUSTOMIZE: all customize settings are put in here when you use interface
@@ -748,9 +753,6 @@
 ;; this function will be call at the end after all configuration, it can be use
 ;; to override some settings or add settings without modify the configuration
 (defun function-to-call-after-loading-conf ()
-  ;; to have nice color for powerline with zenburn not nice with solarized light
-  ;; or other light theme
-  (setq powerline-color1 (face-background 'highlight))
   ) ; (defun function-to-call-after-loading-conf ()
 
 

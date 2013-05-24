@@ -20,7 +20,7 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.5
+;; Version: 3.6
 ;; Created: October 2006
 ;; Last-Updated: May 2013
 
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-05-23 (3.6)
+;;    remove mixtab shortcut
 ;; 2013-05-07 (3.5)
 ;;    remove helm shortcut to close compile window
 ;; 2013-04-24 (3.4)
@@ -330,7 +332,6 @@
        ;; show/hide block
        (local-set-key   (kbd "<M-left>")        'fold-dwim-toggle)
        (local-set-key   (kbd "<M-right>")       'fold-dwim-toggle)
-       (local-set-key   (kbd "<tab>")           'mixtab)
        ;; hide all
        (local-set-key   (kbd "<M-up>")          'fold-dwim-hide-all)
        ;; show all

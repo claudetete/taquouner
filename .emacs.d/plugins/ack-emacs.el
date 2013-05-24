@@ -7,7 +7,7 @@
 ;; Copyright (C) 2009-2011 Nikolaj Schumacher
 ;; for type-alist
 
-;; Copyright (C) 2012 Claude Tete <claude.tete@gmail.com>
+;; Copyright (C) 2012-2013 Claude Tete <claude.tete@gmail.com>
 ;; for ack-same() (inspired by ack-and-a-half)
 ;; and face from grep-mode
 
@@ -30,9 +30,9 @@
 ;; Author: Kim van Wyk and Johan Kohler
 ;;         Nikolaj Schumacher
 ;;         Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.2
 ;; Created: 2008
-;; Last-Updated: December 2012
+;; Last-Updated: May 2013
 
 ;;; Commentary:
 ;;
@@ -41,6 +41,8 @@
 ;; Same error when I try with `shell-command' ...
 
 ;;; Change Log:
+;; 2013-05-17 (1.2)
+;;    update for ack 2.0x
 ;; 2012-12-27 (1.1)
 ;;    fix double quote bug
 ;; 2012-11-27 (1.0)
@@ -184,12 +186,14 @@ This function is called from `compilation-filter-hook'."
 
 (defun ack-type ()
   "Return --type option or --type-set"
-  (let ((type (car (cdr (assq major-mode ack-mode-type-alist)))))
+  (let ((type (car (cdr (assq major-mode ack-mode-type-alist))))
+         (ext (car (last (split-string buffer-file-name "\\."))))
+         (mode (car (split-string (format "%s" major-mode) "-"))))
     (if type
       ;; known type
-      (concat "--type=" type)
+      (concat "--" type)
       ;; unknown type use the file extension
-      (concat "--type-set=" (car (split-string (format "%s" major-mode) "-")) "=." (car (last (split-string buffer-file-name "\\.")))))))
+      (concat "--type-set " mode ":ext:" ext " --" mode))))
 
 (defun ack (dir pattern args)
   "Run ack, with user-specified ARGS, and collect output in a buffer.
@@ -219,7 +223,8 @@ This function is called from `compilation-filter-hook'."
 The types of files searched are determined by `ack-mode-type-alist' and
 `ack-mode-extension-alist'.  If no type is configured, the buffer's
 file extension is used for the search."
-  (interactive (list (read-file-name "Run same ack in directory: " nil "" t)
+  (interactive (list (let ((insert-default-directory nil))
+                       (read-file-name "Run same ack in directory (put . to have relative path): " nil "" t))
                  (read-string "Search for: " (thing-at-point 'symbol))
                  ;; get type
                  (read-string "Ack arguments: " (concat "--nogroup " (ack-type) " -Q -i") nil "" nil)))
