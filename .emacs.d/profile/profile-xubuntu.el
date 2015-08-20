@@ -1,6 +1,6 @@
 ;;; profile-xubuntu.el --- a config file for profile
 
-;; Copyright (c) 2012-2013 Claude Tete
+;; Copyright (c) 2012-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.5
+;; Version: 0.6
 ;; Created: June 2012
-;; Last-Updated: December 2012
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2014-03-26 (0.6)
+;;    move synergy mode
 ;; 2012-12-05 (0.5)
 ;;    reorganize the file (like emacs.el)
 ;; 2012-06-26 (0.4)
@@ -120,8 +122,6 @@
 (when section-functions
   ;; MAGNETI MARELLI: load custom function for MM profile
   (setq section-function-mm nil)
-  ;; SYNERGY: mode for synergy
-  (setq section-function-synergy nil)
   ) ; (when section-functions
 
 
@@ -373,8 +373,20 @@
   (setq section-mode-ediff t)
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (setq section-mode-magit nil)
-  (progn
+  (when section-mode-magit
     (setq profile-magit-exec "git")
+    )
+  ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
+  ;; emacs)
+  (setq section-mode-synergy nil)
+  (when section-mode-synergy
+    (setq profile-synergy-username "")
+    (setq profile-synergy-database "")
+    (setq profile-synergy-server "")
+    (setq profile-synergy-history-filter nil)
+    (setq profile-synergy-diff-external-command nil)
+    (setq profile-synergy-diff-external-parameter nil)
+    (setq profile-synergy-diff-external-swap-file nil)
     )
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)

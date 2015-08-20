@@ -117,6 +117,7 @@
 ;;;; insert printf or ifdef for debug (used in epita kaneton project)
 ;;(global-set-key         [f7]                    'printf-debug-shortcut)
 ;;(global-set-key         [f8]                    'ifdef-debug-shortcut)
+(global-set-key         (kbd "<f9>")              'tag-insert-shortcut)
 
 ;;;; run apropos for the word at point
 ;;(global-set-key [f1]                            'vectra-apropos-on-word)
@@ -263,6 +264,10 @@
 
 ;; delete all blank character or line except one
 (global-set-key         (kbd "<M-SPC>")         'just-one-space-or-line)
+
+;; move page to page (to next/previous  character)
+(global-set-key         (kbd "<M-up>")          'backward-page)
+(global-set-key         (kbd "<M-down>")        'forward-page)
 
 ;;
 ;;; HOME/END
@@ -420,6 +425,42 @@
       (local-set-key    (kbd "<C-up>")          'undo-tree-visualize-undo-to-x)
       (local-set-key    (kbd "<C-down>")        'undo-tree-visualize-redo-to-x)
       )))
+
+
+;;
+;;; SYNERGY
+(when section-mode-synergy
+  ;; start
+  (global-set-key       (kbd "C-c s s")         'synergy-start)
+  ;; checkout
+  (global-set-key       (kbd "C-c s c")         'synergy-checkout)
+  ;; checkout with current task
+  (global-set-key       (kbd "C-c s x")         'synergy-checkout-with-current-task)
+  ;; uncheckout
+  (global-set-key       (kbd "C-c s d")         'synergy-uncheckout)
+  ;; diff
+  (global-set-key       (kbd "C-c s =")         'synergy-diff-with-previous)
+  ;; history
+  (global-set-key       (kbd "C-c s h")         'synergy-history)
+  ;; reconcile to server
+  (global-set-key       (kbd "C-c s r")         'synergy-reconcile-to-server)
+  ;; reconcile from server
+  (global-set-key       (kbd "C-c s w")         'synergy-reconcile-to-local)
+  ;; show conflict
+  (global-set-key       (kbd "C-c s f")         'synergy-show-conflict)
+  ;; create task
+  (global-set-key       (kbd "C-c s t c")       'synergy-create-task)
+  ;; set current task
+  (global-set-key       (kbd "C-c s t d")       'synergy-set-current-task)
+  ;; set task release
+  (global-set-key       (kbd "C-c s t r")       'synergy-set-task-as-current)
+  ;; complete/checkin task
+  (global-set-key       (kbd "C-c s t i")       'synergy-checkin-task)
+  ;; update/reconfigure
+  (global-set-key       (kbd "C-c s u")         'synergy-reconfigure)
+  ;; update/reconfigure current
+  (global-set-key       (kbd "C-c s p")         'synergy-reconfigure-current-project)
+  ) ; (when section-function-synergy
 
 ;; yank menu in popup
 (global-set-key         (kbd "C-M-y")           '(lambda ()

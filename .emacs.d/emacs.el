@@ -1,6 +1,6 @@
 ;;; emacs.el --- config file for Emacs
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 9.0
+;; Version: 9.1
 ;; Created: October 2006
-;; Last-Updated: September 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2014-03-26 (9.1)
+;;    add synergy-web mode and remove old function synergy
 ;; 2013-09-10 (9.0)
 ;;    add magit mode, ansi color mode + synergy functions
 ;; 2013-05-30 (8.9)
@@ -386,10 +388,6 @@ before message."
   ;; FILE: dotemacs/function-mm.el
   ;; load custom function for MM profile
   (defvar section-function-mm nil)
-  ;; SYNERGY                                                            1.2
-  ;; FILE: dotemacs/function-synergy.el
-  ;; mode for synergy
-  (defvar section-function-synergy nil)
   ) ; (progn
 
 
@@ -744,6 +742,19 @@ before message."
   (defvar section-mode-magit nil)
   (progn
     (defvar profile-magit-exec "git")
+    )
+  ;;
+  ;; SYNERGY                                                            2.61
+  ;; use synergy without java client GUI (do not use vc interface from emacs)
+  (defvar section-mode-synergy nil)
+  (progn
+    (defvar profile-synergy-username "")
+    (defvar profile-synergy-database "")
+    (defvar profile-synergy-server "")
+    (defvar profile-synergy-history-filter nil)
+    (defvar profile-synergy-diff-external-command nil)
+    (defvar profile-synergy-diff-external-parameter nil)
+    (defvar profile-synergy-diff-external-swap-file nil)
     )
   ;;
   ;; DIMINISH                                                           2.99

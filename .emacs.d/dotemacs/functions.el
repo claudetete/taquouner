@@ -1,6 +1,6 @@
 ;;; functions.el --- a config file to add some function
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.8
+;; Version: 5.9
 ;; Created: October 2006
-;; Last-Updated: September 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,9 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2014-03-26 (5.9)
+;;    add function to insert tag for reqtify in source code + remove old
+;;    function of synergy
 ;; 2013-09-10 (5.8)
 ;;    add parameters and functions for synergy support
 ;; 2013-05-07 (5.7)
@@ -156,6 +159,25 @@
       "#endif\n")
   (indent-according-to-mode) (backward-char 8)
   )
+
+;;; insert a C comment to add tag for coverage
+(defun tag-insert-shortcut ()
+  "Insert a tag for coverage."
+  (interactive)
+  (let (my-module (my-buffer buffer-file-name))
+    (when (string-match "/\\(...\\)[^/]*$" my-buffer)
+      (setq my-module (upcase (match-string 1 my-buffer)))
+      (beginning-of-line)
+      (insert " /*----------------------------*/")
+      (indent-according-to-mode)
+      (insert "\n /* [COV.TAMBORIM_SDD_" my-module "_] */")
+      (indent-according-to-mode)
+      (insert "\n /*----------------------------*/")
+      (indent-according-to-mode)
+      (insert "\n")
+      (search-backward my-module)
+      (forward-char 4)
+      )))
 
 ;;
 ;;;
@@ -1211,27 +1233,6 @@ delete blank lines"
 (when section-mode-rtrt-script
   (try-require 'function-rtrt "    ")
   ) ; (when section-mode-rtrt-script
-
-;;
-;;;
-;;;; SYNERGY
-(when section-function-synergy
-  (try-require 'function-synergy "    ")
-;  (when section-mode-helm
-;    (defalias 'synergy-completing-read 'helm-completing-read-default))
-  (setq synergy-username "FT346598")
-  (setq synergy-database "/opt/ccm/databases/kc390_spds")
-  (setq synergy-server "http://synergy7.sds.safran:8410")
-  (setq synergy-history-filter '(
-                                  "|" "sed" "s/F281393/DMN    /"
-                                  "|" "sed" "s/FT346530/MQL     /"
-                                  "|" "sed" "s/FT346575/MGD     /"
-                                  "|" "sed" "s/FT346560/CPT     /"
-                                  "|" "sed" "s/FT346433/NGT     /"
-                                  "|" "sed" "s/FT346439/BVX     /"
-                                  "|" "sed" "s/FT346598/CTE     /"
-                                 ))
-  ) ; (when section-function-synergy
 
 ;;
 ;;;

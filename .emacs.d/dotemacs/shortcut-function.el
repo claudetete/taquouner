@@ -1,6 +1,6 @@
 ;;; shortcut-function.el --- a config file for function shortcut
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.4
+;; Version: 3.5
 ;; Created: October 2006
-;; Last-Updated: September 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2014-03-26 (3.5)
+;;    move synergy shortcuts in global + web alias instead of shortcuts
 ;; 2013-09-10 (3.4)
 ;;    add synergy shortcuts
 ;; 2013-05-07 (3.3)
@@ -188,37 +190,6 @@
   ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
 
 ;;
-;;; SYNERGY
-(when section-function-synergy
-  ;; start
-  (global-set-key       (kbd "C-c s s")         'synergy-start)
-  ;; checkout
-  (global-set-key       (kbd "C-c s c")         'synergy-checkout)
-  ;; checkout
-  (global-set-key       (kbd "C-c s d")         'synergy-uncheckout)
-  ;; history
-  (global-set-key       (kbd "C-c s h")         'synergy-history)
-  ;; reconcile to server
-  (global-set-key       (kbd "C-c s r")         'synergy-reconcile-to-server)
-  ;; reconcile from server
-  (global-set-key       (kbd "C-c s w")         'synergy-reconcile-to-local)
-  ;; show conflict
-  (global-set-key       (kbd "C-c s f")         'synergy-show-conflict)
-  ;; create task
-  (global-set-key       (kbd "C-c s t c")       'synergy-create-task)
-  ;; set current task
-  (global-set-key       (kbd "C-c s t d")       'synergy-set-current-task)
-  ;; set task release
-  (global-set-key       (kbd "C-c s t r")       'synergy-set-task-as-current)
-  ;; complete/checkin task
-  (global-set-key       (kbd "C-c s t i")       'synergy-checkin-task)
-  ;; update/reconfigure
-  (global-set-key       (kbd "C-c s u")         'synergy-reconfigure)
-  ;; update/reconfigure current
-  (global-set-key       (kbd "C-c s p")         'synergy-reconfigure-current-project)
-  ) ; (when section-function-synergy
-
-;;
 ;;; SCROLL
 ;; scroll while keeping cursor position
 (global-set-key         (kbd "<H-down>")        'scroll-down-keep-cursor)
@@ -227,22 +198,18 @@
 ;;
 ;;; WEB SEARCH
 ;; translate word at point or region
-(global-set-key         (kbd "<f12>")           'translate-enfr)
-(global-set-key         (kbd "<M-f12>")         'translate-fren)
-;;
+(defalias       'enfr   'translate-enfr)
+(defalias       'fren   'translate-fren)
 ;; synonym
-(global-set-key         (kbd "<S-f12>")         'synonym-fr)
-;;
+(defalias       's      'synonym-fr)
 ;; grammatical conjugation
-(global-set-key         (kbd "<C-f12>")         'conjugation-fr)
-;;
+(defalias       'c      'conjugation-fr)
 ;; wikipedia
-(global-set-key         (kbd "<f11>")           'wikipedia-en)
-(global-set-key         (kbd "<M-f11>")         'wikipedia-fr)
-;;
+(defalias       'we     'wikipedia-en)
+(defalias       'w      'wikipedia-fr)
 ;; google
-(global-set-key         (kbd "<C-M-f11>")       'google-fr)
-(global-set-key         (kbd "<C-f11>")         'google-en)
+(defalias       'g      'google-fr)
+(defalias       'ge     'google-en)
 
 ;;
 ;;; CASE

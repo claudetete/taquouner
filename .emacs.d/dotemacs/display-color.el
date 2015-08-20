@@ -1,6 +1,6 @@
 ;;; display-color.el --- a config file for color displayed setting
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.4
+;; Version: 2.5
 ;; Created: October 2006
-;; Last-Updated: September 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2014-03-26 (2.5)
+;;    add solarized theme for Emacs 24
 ;; 2013-09-10 (2.4)
 ;;    add ansi color for compile window
 ;; 2012-12-27 (2.3)
@@ -130,6 +132,7 @@
       (progn
         ;; add path of theme
         (add-to-list 'custom-theme-load-path (concat (file-name-as-directory dotemacs-path) "plugins/themes"))
+        (add-to-list 'custom-theme-load-path (concat (file-name-as-directory dotemacs-path) "plugins/themes/solarized"))
         (custom-set-variables
           ;; add secure hash
           '(custom-safe-themes
@@ -138,7 +141,6 @@
                  ;; SHA-1 hash
                  "9e82ddb6aec1178072266e7824fabe2e2cfbcef5ce62a09f98ad74e76adce201" ; sweet
                  "7606cceeaa8251c5997f9ab71bf3b701a7ac4050db3ac232dc8feb9d338fa1de" ; zenburn
-                 "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" ; solarized-light
                  default
                  ))))
         (cond

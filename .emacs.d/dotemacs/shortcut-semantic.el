@@ -1,6 +1,6 @@
 ;;; shortcut-semantic.el --- a config file for semantic mode shortcut
 
-;; Copyright (c) 2010-2013 Claude Tete
+;; Copyright (c) 2010-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2010
-;; Last-Updated: May 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-semantic'
 
 ;;; Change Log:
+;; 2014-03-26 (1.7)
+;;    modify helm-imenu shortcut
 ;; 2013-05-07 (1.6)
 ;;    add shortcut for smart-forward mode
 ;; 2013-04-10 (1.5)
@@ -75,7 +77,7 @@
   (global-set-key       (kbd "<mouse-3>")               'imenu)
   ;; add helm menu shortcut
   (when section-mode-helm-imenu
-    (global-set-key     (kbd "C-c C-f")                 'helm-imenu))
+    (global-set-key     (kbd "C-c C-d")                 'helm-imenu))
 
 )
 

@@ -1,6 +1,6 @@
 ;;; mode.el --- a config file for all mode settings
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.8
+;; Version: 4.9
 ;; Created: October 2006
-;; Last-Updated: September 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2014-03-26 (4.9)
+;;    add synergy-web mode + clean last added mode
 ;; 2013-09-10 (4.8)
 ;;    add magit mode
 ;; 2013-05-30 (4.7)
@@ -344,9 +346,9 @@
     (try-require 'mm-dbc "      ")
     (message "    2.15.2 CAN Dbc... Done"))
   ;;; CCM DIFF
-  (when section-mode-mm-diff (message "    2.15.3 Synergy Diff...")
+  (when section-mode-mm-diff (message "    2.15.3 MM Diff...")
     (try-require 'mm-diff "      ")
-    (message "    2.15.3 Synergy Diff... Done"))
+    (message "    2.15.3 MM Diff... Done"))
   (message "  2.15 Magneti Marelli... Done"))
 
 ;;
@@ -954,12 +956,12 @@
 ;;; EDIFF
 ;; graphical diff (## to toggle whitespace ignoring)
 (when section-mode-ediff (message "  2.59 Ediff...")
-  (load-library "ediff")
-  ;; always split with two vertical buffer in ediff mode
-  ;(add-hook 'ediff-before-setup-hook 'new-frame)
-  ;(add-hook 'ediff-quit-hook 'delete-frame)
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  (setq ediff-split-window-function 'split-window-horizontally)
+  (when (try-require 'ediff "    ")
+    ;; always split with two vertical buffer in ediff mode
+    ;;(add-hook 'ediff-before-setup-hook 'new-frame)
+    ;;(add-hook 'ediff-quit-hook 'delete-frame)
+    (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+    (setq ediff-split-window-function 'split-window-horizontally))
   (message "  2.59 Ediff... Done"))
 
 ;;
@@ -968,10 +970,25 @@
 ;; under windows you can use msys make (after edit of Makefile) to install magit
 (when section-mode-magit (message "  2.60 Magit...")
   (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/magit"))
-  (try-require 'magit)
-  (setq magit-git-executable profile-magit-exec)
-  (setq magit-commit-all-when-nothing-staged t)
+  (when (try-require 'magit "    ")
+    (setq magit-git-executable profile-magit-exec)
+    (setq magit-commit-all-when-nothing-staged t))
   (message "  2.60 Magit... Done"))
+
+;;
+;;;
+;;;; SYNERGY
+;; use synergy without java client GUI (do not use vc interface from emacs)
+(when section-mode-synergy (message "  2.61 Synergy...")
+  (when (try-require 'synergy-web "    ")
+    (setq synergy-username profile-synergy-username)
+    (setq synergy-database profile-synergy-database)
+    (setq synergy-server profile-synergy-server)
+    (setq synergy-history-filter (append profile-synergy-history-filter synergy-history-filter))
+    (setq synergy-diff-external-command profile-synergy-diff-external-command)
+    (setq synergy-diff-external-parameter profile-synergy-diff-external-parameter)
+    (setq synergy-diff-external-swap-file profile-synergy-diff-external-swap-file))
+  (message "  2.61 Synergy... Done"))
 
 ;;
 ;;; DIMINISH
@@ -986,7 +1003,7 @@
     (eval-after-load "gtags"
       '(diminish 'gtags-mode " G"))
     (eval-after-load "undo-tree"
-      '(diminish 'undo-tree-mode " UTree"))
+      '(diminish 'undo-tree-mode " UndoT"))
 
     (add-hook 'emacs-lisp-mode-hook
       (lambda()

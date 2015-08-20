@@ -1,6 +1,6 @@
 ;;; profile-sagem-defense.el --- a config file for profile
 
-;; Copyright (c) 2013 Claude Tete
+;; Copyright (c) 2013-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: June 2013
-;; Last-Updated: Septe;ber 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2014-03-26 (0.2)
+;;    add Beyond Compare in PATH + move synergy mode + update ecb source filters
+;;    + modify font/theme + move temporary directory to avoid crypting software
 ;; 2013-06-05 (0.1)
 ;;    creation from alstom transport profile
 
@@ -88,6 +91,7 @@
         "c:/Program Files (x86)/IBM/Rational/Logiscope/6.6/bin"      ";"
         "c:/Program Files (x86)/SYNCHRONe/CCC/3.0"                   ";"
         "z:/Tools/SREC~1.0/SREC"                                     ";"
+        "c:/Program Files (x86)/Beyond Compare 3"                    ";"
         )
       )
     ;; executables path
@@ -113,6 +117,7 @@
          "c:/Program Files (x86)/IBM/Rational/Logiscope/6.6/bin"
          "c:/Program Files (x86)/SYNCHRONe/CCC/3.0"
          "z:/Tools/SREC~1.0/SREC"
+         "c:/Program Files (x86)/Beyond Compare 3"
          )
       )
     ;; languages
@@ -163,8 +168,6 @@
 (when section-functions
   ;; MAGNETI MARELLI: load custom function for MM profile
   (setq section-function-mm nil)
-  ;; SYNERGY: mode for synergy
-  (setq section-function-synergy t)
   ) ; (when section-functions
 
 
@@ -242,7 +245,7 @@
       ;; files to be ignored in "ecb source" !! RTFM !!
       (setq profile-ecb-source-file-regexps
         '((".*"
-            ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|err\\|i\\|met\\|merge\\|contrib\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
+            ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\)$\\)\\)")
             ("^\\.\\(emacs\\|gnus\\)$"))
            )
         )
@@ -435,6 +438,28 @@
   (progn
     (setq profile-magit-exec "C:/MinGW/msys/1.0/bin/git.exe")
     )
+  ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
+  ;; emacs)
+  (setq section-mode-synergy t)
+  (when section-mode-synergy
+    (setq profile-synergy-username "FT346598")
+    (setq profile-synergy-database "/opt/ccm/databases/kc390_spds")
+    (setq profile-synergy-server "http://synergy7.sds.safran:8410")
+    (setq profile-synergy-history-filter '(
+                                            "|" "sed" "s/F281393/DMN    /"
+                                            "|" "sed" "s/FT346530/MQL     /"
+                                            "|" "sed" "s/FT346575/MGD     /"
+                                            "|" "sed" "s/FT346560/CPT     /"
+                                            "|" "sed" "s/FT346433/NGT     /"
+                                            "|" "sed" "s/FT346439/BVX     /"
+                                            "|" "sed" "s/FT346434/ASE     /"
+                                            "|" "sed" "s/FT346581/CCH     /"
+                                            "|" "sed" "s/FT346596/MDA     /"
+                                            ))
+    (setq profile-synergy-diff-external-command "BCompare.exe")
+    (setq profile-synergy-diff-external-parameter "")
+    (setq profile-synergy-diff-external-swap-file t)
+    ) ; (when section-mode-synergy
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -526,7 +551,7 @@
   (when section-display-font
     ;; ANTIALIAS
     ;; set antialiasing on font rendering
-    (setq section-display-font-antialias nil)
+    (setq section-display-font-antialias t)
     ;; choice between (it's just some nice font, you can use another font):
     ;;; Terminal
     ;; nice, very tiny, only ascii (too tiny ?)
@@ -541,7 +566,8 @@
     ;;
     ;;; Proggy Tiny Z, 6
     ;; good, very tiny (slashed 'zero', dot and comma can be mixed)
-    (setq profile-font "ProggyTinySZ-6")
+;    (setq profile-font "ProggyTinySZ-6")
+    (setq profile-font "Monaco-8")
     ;;
     ;;; DejaVu Sans Mono, 10
     ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
@@ -596,7 +622,8 @@
     (if  section-display-color-theme
       ;; do not use it with terminal
       ;; theme to be used
-      (setq profile-color-theme "sweet")
+;      (setq profile-color-theme "sweet")
+      (setq profile-color-theme "solarized-light")
       (progn ; if section-display-color-theme nil
         ;;
         ;; MISC: current line highlight + full syntax coloration
@@ -735,8 +762,8 @@
   (setq profile-remove-useless-ending-space t)
   (setq profile-always-new-line-at-end t)
   ;; backup directory
-  (setq profile-backup-directory nil)
-  (setq profile-autosave-directory nil)
+  (setq profile-backup-directory "D:/tmp/emacs")
+  (setq profile-autosave-directory "D:/tmp/emacs")
   ;; use by fill-xxx or fill column indicator mode
   (setq profile-fill-column 80)
   ;; browser to open url

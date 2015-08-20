@@ -1,6 +1,6 @@
 ;;; shortcut-tags.el --- a config file for tags shortcut
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: September 2010
-;; Last-Updated: April 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2014-03-26 (2.1)
+;;    modify gtags find file function shortcut
 ;; 2013-04-10 (2.0)
 ;;    change find file shortcut + clean up
 ;; 2012-08-01 (1.9)
@@ -111,7 +113,7 @@
       ) ; (if section-mode-cedet-ecb
 
     ;; find file in the gnu global project (regexp) (need new function of gtags see function.el)
-    (global-set-key     (kbd "C-c F")           'gtags-find-file-custom)
+    (global-set-key     (kbd "C-c C-f")             'gtags-find-file-custom)
 
     ;; find all references (regexp)
     (global-set-key     (kbd "C-M-=")           'gtags-find-with-grep-symbol-assigned)

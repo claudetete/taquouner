@@ -1,6 +1,6 @@
 ;;; shortcut-grep.el --- a config file for grep shortcut
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2014 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.0
 ;; Created: October 2006
-;; Last-Updated: April 2013
+;; Last-Updated: March 2014
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2014-03-26 (2.0)
+;;    change ace jump shortcut and find-name-dired function
 ;; 2013-04-10 (1.9)
 ;;    add helm mode shortcut
 ;; 2012-12-04 (1.8)
@@ -80,7 +82,7 @@
   (global-set-key       (kbd "C-c e")           'occur))
 
 ;; search a file in a directory (recursively) to open it
-(global-set-key         (kbd "M-f")             'find-name-dired)
+(global-set-key         (kbd "C-c c-f")         'find-name-dired)
 
 ;;
 ;;; HELM
@@ -113,12 +115,12 @@
 ;;
 ;;; ACE JUMP
 (when section-mode-ace-jump
-  (global-set-key       (kbd "<f9>")            'ace-jump-mode)
+  (global-set-key       (kbd "<f12>")            'ace-jump-mode)
   ;; can also use <C-u f9>
-  (global-set-key       (kbd "<M-f9>")          'ace-jump-char-mode)
+  (global-set-key       (kbd "<M-f12>")          'ace-jump-char-mode)
   ;; can also use <C-u C-u f9>
-  (global-set-key       (kbd "<C-f9>")          'ace-jump-line-mode)
-  (global-set-key       (kbd "<S-f9>")          'ace-jump-mode-pop-mark)
+  (global-set-key       (kbd "<C-f12>")          'ace-jump-line-mode)
+  (global-set-key       (kbd "<S-f12>")          'ace-jump-mode-pop-mark)
   )
 
 (provide 'shortcut-grep)
