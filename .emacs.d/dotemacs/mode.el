@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.6
+;; Version: 4.8
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2013-09-10 (4.8)
+;;    add magit mode
+;; 2013-05-30 (4.7)
+;;    add ediff mode settings
 ;; 2013-05-23 (4.6)
 ;;    add condition for powerline modeline + add rainbow mode
 ;; 2013-05-07 (4.5)
@@ -903,13 +907,20 @@
     (setq helm-candidate-separator
       "--separator------------------------------")
     (when section-mode-cedet-ecb
-      ;; hide compile window when quit helm
-      (add-hook 'helm-cleanup-hook 'ecb-toggle-compile)
+    ;;  ;; hide compile window when quit helm
+    ;;  (add-hook 'helm-cleanup-hook 'ecb-toggle-compile)
       ;; quit helm when hide compile window
       (add-hook 'ecb-toggle-compile-hide-hook 'helm-keyboard-quit))
     (when section-mode-helm-buffers-list
       ;; to avoid error with helm-buffers-list
       (setq ido-use-virtual-buffers nil))
+    ;(add-to-list 'helm-completing-read-handlers-alist)
+    ;(setq helm-completing-read-handlers-alist
+    ;  (append 'helm-completing-read-handlers-alist
+    ;    '((execute-extended-command . nil))
+    ;    ))
+    ;; enable helm for completing-read and read-file-name command
+    ;(helm-mode t)
     )
   (message "  2.55 Helm... Done"))
 
@@ -927,16 +938,40 @@
 ;;
 ;;; SMART-FORWARD
 (when section-mode-smart-forward (message "  2.57 Smart-forward...")
-  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins/expand-region"))
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/expand-region"))
   (when (try-require 'expand-region "    ")
     (try-require 'smart-forward "    "))
   (message "  2.57 Smart-forward... Done"))
 
 ;;
 ;;; RAINBOW MODE
+  ;; show string color in color in lisp
 (when section-mode-rainbow (message "  2.58 Rainbow...")
   (try-require 'autoload-rainbow-mode "    ")
   (message "  2.58 Rainbow... Done"))
+
+;;
+;;; EDIFF
+;; graphical diff (## to toggle whitespace ignoring)
+(when section-mode-ediff (message "  2.59 Ediff...")
+  (load-library "ediff")
+  ;; always split with two vertical buffer in ediff mode
+  ;(add-hook 'ediff-before-setup-hook 'new-frame)
+  ;(add-hook 'ediff-quit-hook 'delete-frame)
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (message "  2.59 Ediff... Done"))
+
+;;
+;;; MAGIT
+;; use git with nice interface (do not use vc interface from emacs)
+;; under windows you can use msys make (after edit of Makefile) to install magit
+(when section-mode-magit (message "  2.60 Magit...")
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/magit"))
+  (try-require 'magit)
+  (setq magit-git-executable profile-magit-exec)
+  (setq magit-commit-all-when-nothing-staged t)
+  (message "  2.60 Magit... Done"))
 
 ;;
 ;;; DIMINISH

@@ -52,10 +52,10 @@
 
 ;;
 ;;; LOAD
-(let ((profile-path (concat (file-name-as-directory dotemacs-path) "profile/profile-" profile-name ".el"))
+(let ((profile-file-path (concat (file-name-as-directory dotemacs-path) "profile/profile-" profile-name ".el"))
        (profile-file (concat "profile-" profile-name ".el")))
   ;; load only if the file exists
-  (if (file-exists-p profile-path)
+  (if (file-exists-p profile-file-path)
     (try-require profile-file "      ")
     (progn
       (display-warning 'profile-name (concat profile-name " profile do not exist") :warning)

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.8
+;; Version: 2.9
 ;; Created: August 2010
-;; Last-Updated: April 2013
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2013-09-10 (2.9)
+;;    add magit and synergy in compile window
 ;; 2013-04-12 (2.8)
 ;;    add browse kill ring + undo tree + helm mode + config spec mode + elp mode
 ;;    in compile window
@@ -211,6 +213,8 @@
                 ("\\*.*helm.*\\*" . t)
                 ("*clearcase-config-spec*")
                 ("*ELP Profiling Results*")
+                ("\\s-*\\*[mM]agit.*\\*\\s-*" . t)
+                ("*[Ss]ynergy*" . t)
                 )))
 
     ;; auto expand tree

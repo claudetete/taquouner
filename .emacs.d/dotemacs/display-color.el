@@ -1,6 +1,6 @@
 ;;; display-color.el --- a config file for color displayed setting
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2013-09-10 (2.4)
+;;    add ansi color for compile window
 ;; 2012-12-27 (2.3)
 ;;    add/update hash for theme + add solarized + add setting color for powerline + update dot emacs path
 ;; 2012-07-09 (2.2)
@@ -505,6 +507,27 @@
       ) ; when section-mode-cedet-ecb
     ) ; (progn
   ) ; if section-display-color-theme
+
+;;
+;;; ANSI COLOR COMPILE WINDOW
+(when section-display-color-ansi-color-compile (message "    5.4.8 Ansi color for Compile...")
+  ;; thanks to http://stackoverflow.com/a/3072831
+  (try-require 'ansi-color "      ")
+  ;; define a function to colorize compile buffer
+  (defun colorize-compilation-buffer ()
+    ;; set to write to add color
+    (toggle-read-only)
+    ;; apply color on all buffer
+    (ansi-color-apply-on-region (point-min) (point-max))
+    ;; set read only
+    (toggle-read-only))
+  ;; add this function to compile buffer filter hook
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+  ;; put nice color from my .Xdefaults
+  ;; black red green yellow blue magenta cyan white
+  (setq ansi-color-names-vector ["#757575" "#FF7272" "#ABCB8D" "yellow" "#67CDE9" "#E2BAF1" "#36FFFC" "#F1F1F1"])
+  (setq ansi-color-map (ansi-color-make-color-map))
+  (message "    5.4.8 Ansi color for Compile... Done"))
 
 
 (provide 'display-color)

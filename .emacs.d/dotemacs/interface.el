@@ -20,7 +20,7 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
 ;; Last-Updated: May 2013
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2013-05-30 (2.2)
+;;    remove settings for ediff (put in mode.el)
 ;; 2013-05-23 (2.1)
 ;;    add window title from profile
 ;; 2013-05-07 (2.0)
@@ -68,14 +70,6 @@
 
 ;; shrink the size of fring bar (bar at left and right of each buffer
 (set-fringe-mode '(8 . 4))
-
-;; always split vertically in ediff mode
-(defun my-ediff-setting()
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-merge-split-window-function 'split-window-horizontally)
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  )
-(add-hook 'ediff-before-setup-hook 'my-ediff-setting)
 
 ;; maximize a frame when it is created
 (add-hook 'after-make-frame-functions

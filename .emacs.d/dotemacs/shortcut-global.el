@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.6
+;; Version: 3.8
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-09-10 (3.8)
+;;    add magit shortcut
+;; 2013-05-30 (3.7)
+;;    fix bug with shortcut in ediff mode
 ;; 2013-05-23 (3.6)
 ;;    remove mixtab shortcut
 ;; 2013-05-07 (3.5)
@@ -280,6 +284,22 @@
   )
 
 ;;
+;;; MAGIT
+(when section-mode-magit
+  ;; git status (entry point of magit)
+  (global-set-key       (kbd "C-c g g")           'magit-status)
+  ;; git pull
+  (global-set-key       (kbd "C-c g p")           'magit-pull)
+  ;; git log
+  (global-set-key       (kbd "C-c g l")           'magit-log)
+  ;; git standard output
+  (global-set-key       (kbd "C-c g d")           '(lambda ()
+                                                     (interactive)
+                                                     (magit-display-process)
+                                                     (switch-to-buffer "*magit-process*")))
+  )
+
+;;
 ;;; DIRED PLUS
 ;; REQUIREMENT: var     `section-mode-dired-plus'
 (when section-mode-dired-plus
@@ -294,18 +314,19 @@
 
 ;;
 ;;; EDIFF
-(eval-after-load "ediff"
-  '(progn
-     ;; I think it does not not work
-     ;; previous diff
-     (define-key ediff-mode-map         (kbd "<M-up>")          'ediff-previous-difference)
-     ;; next diff
-     (define-key ediff-mode-map         (kbd "<M-down>")        'ediff-next-difference)
-     ;; get modification from left
-     (define-key ediff-mode-map         (kbd "<M-right>")       'ediff-copy-A-to-B)
-     ;; get modification from right
-     (define-key ediff-mode-map         (kbd "<M-left>")        'ediff-copy-B-to-A)
-     )
+(when section-mode-ediff
+  (add-hook 'ediff-startup-hook
+    '(lambda ()
+       ;; previous diff
+       (define-key ediff-mode-map       (kbd "<M-up>")          'ediff-previous-difference)
+       ;; next diff
+       (define-key ediff-mode-map       (kbd "<M-down>")        'ediff-next-difference)
+       ;; get modification from left
+       (define-key ediff-mode-map       (kbd "<M-right>")       'ediff-copy-A-to-B)
+       ;; get modification from right
+       (define-key ediff-mode-map       (kbd "<M-left>")        'ediff-copy-B-to-A)
+       )
+    )
   )
 
 ;;

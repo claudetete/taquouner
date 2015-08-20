@@ -120,6 +120,8 @@
 (when section-functions
   ;; MAGNETI MARELLI: load custom function for MM profile
   (setq section-function-mm nil)
+  ;; SYNERGY: mode for synergy
+  (setq section-function-synergy nil)
   ) ; (when section-functions
 
 
@@ -362,6 +364,18 @@
     ;; time before hide scroll-bar (nil to always show)
     (setq profile-yascroll-delay-to-hide nil)
     ) ; (when section-mode-yascroll
+  ;; SMART-FORWARD: move in code with semantic see example in
+  ;; plugins/smart-forward.el
+  (setq section-mode-smart-forward nil)
+  ;; RAINBOW MODE: show string color in color
+  (setq section-mode-rainbow t)
+  ;; EDIFF: graphical diff (## to toggle whitespace ignoring)
+  (setq section-mode-ediff t)
+  ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
+  (setq section-mode-magit nil)
+  (progn
+    (setq profile-magit-exec "git")
+    )
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (when section-mode
@@ -409,7 +423,7 @@
   (when section-languages-lisp
     ;; number of space for indentation in lisp
     (setq profile-lisp-indent-offset 2)
-    ) ; (progn
+    ) ; (when section-languages-lisp
   ;; TAB: tab always in space
   (setq section-languages-tabulation t)
   ;; RTRT SCRIPT PTU: set indentation style
@@ -564,6 +578,8 @@
         (setq section-display-color-ecb nil)
         ) ; (progn
       ) ; (if section-display-color-theme
+    ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
+    (setq section-display-color-ansi-color-compile t)
     ) ; (when section-display-color
   ) ; (when section-display
 
@@ -653,6 +669,9 @@
   ;; AVOIDANCE: mouse cursor avoid the keyboard cursor when typing
   ;; REQUIREMENT: `section-environment-terminal-vs-graphics'
   (setq section-mouse-avoidance nil)
+  ;; SMOOTH SCROLL: it will always scroll line by line with arrow at start or
+  ;; end of screen
+  (setq section-mouse-smooth-scroll t)
   ) ; (when section-mouse
 
 
@@ -670,9 +689,6 @@
   ;; ALL BACKUP FILE IN DIRECTORY all backup files will be created in a
   ;; directory
   (setq section-annoyances-backup-file-in-directory t)
-  ;; CLASSIC SCROLL: when scroll at start or end screen with arrow, it will
-  ;; always scroll line by line
-  (setq section-annoyances-classic-scroll t)
   ) ; (when section-annoyances
 
 

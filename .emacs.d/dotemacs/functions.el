@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.7
+;; Version: 5.8
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2013-09-10 (5.8)
+;;    add parameters and functions for synergy support
 ;; 2013-05-07 (5.7)
 ;;    condition on os detection for maximize function + do not run code for test
 ;; 2013-04-11 (5.6)
@@ -1209,6 +1211,27 @@ delete blank lines"
 (when section-mode-rtrt-script
   (try-require 'function-rtrt "    ")
   ) ; (when section-mode-rtrt-script
+
+;;
+;;;
+;;;; SYNERGY
+(when section-function-synergy
+  (try-require 'function-synergy "    ")
+;  (when section-mode-helm
+;    (defalias 'synergy-completing-read 'helm-completing-read-default))
+  (setq synergy-username "FT346598")
+  (setq synergy-database "/opt/ccm/databases/kc390_spds")
+  (setq synergy-server "http://synergy7.sds.safran:8410")
+  (setq synergy-history-filter '(
+                                  "|" "sed" "s/F281393/DMN    /"
+                                  "|" "sed" "s/FT346530/MQL     /"
+                                  "|" "sed" "s/FT346575/MGD     /"
+                                  "|" "sed" "s/FT346560/CPT     /"
+                                  "|" "sed" "s/FT346433/NGT     /"
+                                  "|" "sed" "s/FT346439/BVX     /"
+                                  "|" "sed" "s/FT346598/CTE     /"
+                                 ))
+  ) ; (when section-function-synergy
 
 ;;
 ;;;

@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mouse
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              car     `section-environment-terminal-vs-graphics'
 
 ;;; Change Log:
+;; 2013-09-10 (1.9)
+;;    change options for scrolling
 ;; 2013-05-23 (1.8)
 ;;    add option from profile for smooth scroll (with arrows)
 ;; 2013-05-07 (1.7)
@@ -88,7 +90,9 @@
 ;; scroll with margin and without jump
 (when section-mouse-smooth-scroll (message "  9.3 Smooth Scroll...")
   ;; to avoid jump from (http://www.emacswiki.org/cgi-bin/wiki/SmoothScrolling)
-  (setq scroll-conservatively 10000)
+  ;; set with max value
+  (setq scroll-conservatively most-positive-fixnum)
+  ;; do nothing ?
   ;;(setq auto-window-vscroll nil)
 
   ;; do not work under ms window and small font (100 lines by window)

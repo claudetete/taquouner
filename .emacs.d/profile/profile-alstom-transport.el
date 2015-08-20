@@ -434,6 +434,8 @@
     ) ; (when section-mode-yascroll
   ;; SMART-FORWARD: move in code with semantic see example in plugins/smart-forward.el
   (setq section-mode-smart-forward nil)
+  ;; EDIFF: graphical diff (## to toggle whitespace ignoring)
+  (setq section-mode-ediff t)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -700,6 +702,9 @@
   ;; AVOIDANCE: mouse cursor avoid the keyboard cursor when typing
   ;; REQUIREMENT: `section-environment-terminal-vs-graphics'
   (setq section-mouse-avoidance t)
+  ;; SMOOTH SCROLL: it will always scroll line by line with arrow at start or
+  ;; end of screen
+  (setq section-mouse-smooth-scroll nil)
 ) ; (when section-mouse
 
 
@@ -717,9 +722,6 @@
   ;; ALL BACKUP FILE IN DIRECTORY all backup files will be created in a
   ;; directory
   (setq section-annoyances-backup-file-in-directory t)
-  ;; CLASSIC SCROLL: when scroll at start or end screen with arrow, it will
-  ;; always scroll line by line
-  (setq section-annoyances-classic-scroll nil)
   ) ; (when section-annoyances
 
 
@@ -767,7 +769,7 @@
     (setq profile-bookmark-sort nil)
     ) ; (when section-misc-bookmark
   ;; SCREENSAVER: Set screensaver when idle time higher than 5 minutes
-  (setq section-misc-screensaver nil)
+  (setq section-misc-screensaver t)
   ) ; (when section-misc
 
 

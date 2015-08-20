@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 8.8
+;; Version: 9.0
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,10 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2013-09-10 (9.0)
+;;    add magit mode, ansi color mode + synergy functions
+;; 2013-05-30 (8.9)
+;;    add ediff section + remove old scroll section
 ;; 2013-05-17 (8.8)
 ;;    add rainbow mode + window title by profile + smooth scroll mode + clean
 ;;    section to load nothing when profile is empty
@@ -332,8 +336,8 @@ before message."
   ;;                    section-environment-terminal-vs-graphics
   (defvar section-environment-set-path nil)
   (progn
-    (defvar profile-path nil)
-    (defvar profile-exec-path nil)
+    (defvar profile-path "")
+    (defvar profile-exec-path '(""))
     (defvar profile-lang "en_US")
     ) ; (progn
   ;;
@@ -382,6 +386,10 @@ before message."
   ;; FILE: dotemacs/function-mm.el
   ;; load custom function for MM profile
   (defvar section-function-mm nil)
+  ;; SYNERGY                                                            1.2
+  ;; FILE: dotemacs/function-synergy.el
+  ;; mode for synergy
+  (defvar section-function-synergy nil)
   ) ; (progn
 
 
@@ -727,6 +735,17 @@ before message."
   ;; show string color in color
   (defvar section-mode-rainbow nil)
   ;;
+  ;; EDIFF                                                              2.59
+  ;; graphical diff (## to toggle whitespace ignoring)
+  (defvar section-mode-ediff nil)
+  ;;
+  ;; MAGIT                                                              2.60
+  ;; use git with nice interface (do not use vc interface from emacs)
+  (defvar section-mode-magit nil)
+  (progn
+    (defvar profile-magit-exec "git")
+    )
+  ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
   (defvar section-mode-diminish nil)
@@ -885,6 +904,10 @@ before message."
     ;; REQUIREMENT:     section-mode-cedet-ecb
     ;; set color for ecb-mode
     (defvar section-display-color-ecb nil)
+    ;;
+    ;; ANSI COLOR COMPILE WINDOW                                        5.4.8
+    ;; have color and no more junk like this ^[[32m
+    (defvar section-display-color-ansi-color-compile nil)
     ) ; (progn
   ) ; (progn
 
@@ -1016,8 +1039,9 @@ before message."
   (defvar section-mouse-avoidance nil)
   ;;
   ;; SMOOTH SCROLL                                                      9.3
+  ;; it will always scroll line by line with arrow at start or end of screen
   (defvar section-mouse-smooth-scroll nil)
-) ; (progn
+  ) ; (progn
 
 
 ;;
@@ -1044,11 +1068,6 @@ before message."
   ;; ALL BACKUP FILE IN DIRECTORY                                       10.4
   ;; all backup files will be created in a directory
   (defvar section-annoyances-backup-file-in-directory nil)
-  ;;
-  ;; CLASSIC SCROLL                                                     10.5
-  ;; when scroll at start or end screen with arrow, it will always scroll line
-  ;; by line
-  (defvar section-annoyances-classic-scroll nil)
   ) ; (progn
 
 

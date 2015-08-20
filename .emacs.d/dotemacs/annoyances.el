@@ -1,6 +1,6 @@
 ;;; annoyances.el --- a config file for all annoying things
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2013 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, annoying
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.9
+;; Version: 2.0
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-annoyances'
 
 ;;; Change Log:
+;; 2013-09-10 (2.0)
+;;    remove old code
 ;; 2012-07-09 (1.9)
 ;;    scroll horizontally when no truncate line
 ;; 2012-06-14 (1.8)
@@ -167,13 +169,6 @@
     kept-old-versions 2)
   (message "  10.4 All backup files in a directory... Done"))
 
-;;
-;;; CLASSIC SCROLL
-;; REQUIREMENT: var     `section-annoyances-classic-scroll'
-(when section-annoyances-classic-scroll (message "  10.5 Scroll line by line...")
-  ;; set with max value
-  (setq scroll-conservatively most-positive-fixnum)
-  (message "  10.5 Scroll line by line... Done"))
 
 (provide 'annoyances)
 

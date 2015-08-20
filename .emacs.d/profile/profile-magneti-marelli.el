@@ -230,6 +230,8 @@
   (when section-mode-yascroll
     (setq profile-yascroll-delay-to-hide nil)
     )
+  (setq section-mode-smart-forward nil)
+  (setq section-mode-ediff nil)
   (setq section-mode-diminish nil)
   )
 
@@ -346,6 +348,7 @@
 (when section-mouse
   (setq section-mouse-paste-to-point-not-mouse-cursor t)
   (setq section-mouse-avoidance t)
+  (setq section-mouse-smooth-scroll t)
 )
 
 (setq section-annoyances t)
@@ -354,7 +357,6 @@
   (setq section-annoyances-scroll-preserve-cursor-position nil)
   (setq section-annoyances-no-backup-file nil)
   (setq section-annoyances-backup-file-in-directory t)
-  (setq section-annoyances-classic-scroll nil)
   )
 
 (setq section-misc t)

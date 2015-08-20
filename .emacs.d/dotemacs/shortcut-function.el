@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.3
+;; Version: 3.4
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-09-10 (3.4)
+;;    add synergy shortcuts
 ;; 2013-05-07 (3.3)
 ;;    remove shortcut to close clearcase config spec mode
 ;; 2013-04-12 (3.2)
@@ -184,6 +186,37 @@
   ;; edit config spec
   (global-set-key       (kbd "C-c c s")         'clearcase-config-spec-edit)
   ) ; (when (or section-mode-clearcase section-mode-vc-clearcase)
+
+;;
+;;; SYNERGY
+(when section-function-synergy
+  ;; start
+  (global-set-key       (kbd "C-c s s")         'synergy-start)
+  ;; checkout
+  (global-set-key       (kbd "C-c s c")         'synergy-checkout)
+  ;; checkout
+  (global-set-key       (kbd "C-c s d")         'synergy-uncheckout)
+  ;; history
+  (global-set-key       (kbd "C-c s h")         'synergy-history)
+  ;; reconcile to server
+  (global-set-key       (kbd "C-c s r")         'synergy-reconcile-to-server)
+  ;; reconcile from server
+  (global-set-key       (kbd "C-c s w")         'synergy-reconcile-to-local)
+  ;; show conflict
+  (global-set-key       (kbd "C-c s f")         'synergy-show-conflict)
+  ;; create task
+  (global-set-key       (kbd "C-c s t c")       'synergy-create-task)
+  ;; set current task
+  (global-set-key       (kbd "C-c s t d")       'synergy-set-current-task)
+  ;; set task release
+  (global-set-key       (kbd "C-c s t r")       'synergy-set-task-as-current)
+  ;; complete/checkin task
+  (global-set-key       (kbd "C-c s t i")       'synergy-checkin-task)
+  ;; update/reconfigure
+  (global-set-key       (kbd "C-c s u")         'synergy-reconfigure)
+  ;; update/reconfigure current
+  (global-set-key       (kbd "C-c s p")         'synergy-reconfigure-current-project)
+  ) ; (when section-function-synergy
 
 ;;
 ;;; SCROLL

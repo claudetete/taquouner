@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
-;; Last-Updated: April 2013
+;; Last-Updated: September 2013
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2013-09-10 (1.7)
+;;    add shortcut to delete window or frame
 ;; 2013-04-10 (1.6)
 ;;    bind myself windmove to add ignore error
 ;; 2012-08-01 (1.5)
@@ -81,12 +83,14 @@
                                                    (interactive)
                                                    (split-window-below)
                                                    (windmove-down 0)))
+(global-set-key         (kbd "<C-kp-2>")        'delete-window)
 (global-set-key         (kbd "<M-kp-6>")        '(lambda ()
                                                    (interactive)
                                                    (split-window-right)
                                                    (windmove-right 0)))
+(global-set-key         (kbd "<C-kp-6>")        'delete-window)
 (global-set-key         (kbd "<M-kp-5>")        'make-frame-command)
-(global-set-key         (kbd "<M-kp-enter>")    'delete-frame)
+(global-set-key         (kbd "<C-kp-5>")        'delete-frame)
 
 
 (provide 'shortcut-windows)
