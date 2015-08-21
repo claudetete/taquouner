@@ -107,7 +107,6 @@
     ;; browsing
     '(ecb-highlight-tag-with-point-delay 0.5)
     )
-
   ) ; when section-mode-cedet-ecb
 
 

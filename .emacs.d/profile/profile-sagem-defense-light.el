@@ -69,7 +69,7 @@
       (concat
         "z:/cmbuilder/3.0beta2_KC390"                                ";"
         "c:/cygwin/lib/python2.5"                                    ";"
-        "d:/CTE/tools/.emacs.d/plugins/gnu_global_628wb/bin"         ";"
+        "G:/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin"             ";"
         "c:/perl/perl/site/bin"                                      ";"
         "c:/perl/perl/bin"                                           ";"
         "c:/perl/c/bin"                                              ";"
@@ -81,7 +81,7 @@
         "d:/CTE/tools/MikTex/miktex/bin"                             ";"
         "c:/WINDOWS"                                                 ";"
         "c:/WINDOWS/System32"                                        ";"
-        "d:/CTE/tools/GnuWin32/bin"                                  ";"
+        "G:/tools/LiberKey/MyApps/GnuWin32/bin"                      ";"
         "c:/Program Files (x86)/Aspell/bin/"                         ";"
         "d:/Tools/diab/5.8.0.0/WIN32/bin"                            ";"
         "c:/Program Files (x86)/IBM/Rational/Synergy/7.1/bin"        ";"
@@ -96,7 +96,7 @@
       '(
          "z:/cmbuilder/3.0beta2_KC390"
          "c:/cygwin/lib/python2.5"
-         "d:/CTE/tools/.emacs.d/plugins/gnu_global_628wb/bin"
+         "G:/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin"
          "c:/perl/perl/site/bin"
          "c:/perl/perl/bin"
          "c:/perl/c/bin"
@@ -143,9 +143,9 @@
     ;; shell
     (setq profile-shell-file-name "C:/cygwin/bin/bash.exe")
     ;; ediff
-    (setq profile-ediff-diff-program "D:/CTE/tools/GnuWin32/bin/diff.exe")
-    (setq profile-ediff-diff3-program "D:/CTE/tools/GnuWin32/bin/diff3.exe")
-    (setq profile-ediff-cmp-program "D:/CTE/tools/GnuWin32/bin/cmp.exe")
+    (setq profile-ediff-diff-program "G:/tools/LiberKey/MyApps/GnuWin32/bin/diff.exe")
+    (setq profile-ediff-diff3-program "G:/tools/LiberKey/MyApps/GnuWin32/bin/diff3.exe")
+    (setq profile-ediff-cmp-program "G:/tools/LiberKey/MyApps/GnuWin32/bin/cmp.exe")
     ) ; (when section-environment-executable
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa t)
@@ -208,8 +208,8 @@
            ;; BANDAS
 ;           "y:/BANDAS_sw/BANDAS.ede.el"
            ;; TAMBORIM
-;           "D:/KC390_BL/Source/TAMBORIM_sw~CTE_BL/TAMBORIM_sw/TAMBORIM.ede.el"
-           "D:/KC390/Source/TAMBORIM_sw~FT346598/TAMBORIM_sw/TAMBORIM.ede.el"
+           "D:/KC390/Source/TAMBORIM_sw~CTE_V2.1.0_2/TAMBORIM_sw/TAMBORIM_sw.el"
+           "D:/KC390/Source/TAMBORIM_sw~CTE_V2.2.0/TAMBORIM_sw/TAMBORIM_sw.el"
            )
         )
       ) ; (when section-mode-cedet-semantic
@@ -223,12 +223,14 @@
         '(
            ;; before is put the EDE projects (see project.el)
            ("D:/KC390/Source/KC390_sw~FT346598/KC390_sw"                "KC390_sw")
+           ("D:/KC390/Source/KC390_VBF"                                 "KC390_VBF")
            ("D:/KC390/Source/GEN_databases~FT346598/GEN_databases"      "GEN_databases")
            ("D:/KC390/Source/Scripts_trace32~FT346598/Scripts_trace32"  "Scripts_trace32")
-           ("Z:/"                                                       "KC390_cmBuilder")
+           ("D:/KC390/"                                                 "KC390_root")
            ("C:/Users/FT346598/AppData/Roaming"                         "/home")
            ("C:/cygwin/home/FT346598"                                   "/cygwin")
-           ("d:/CTE"                                                    "/CTE")
+           ("D:/CTE"                                                    "/CTE")
+           ("G:/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d" "DotEmacs")
            )
         )
       ;; regexp of folder to exclude in "ecb directories"
@@ -243,7 +245,7 @@
       ;; files to be ignored in "ecb source" !! RTFM !!
       (setq profile-ecb-source-file-regexps
         '((".*"
-            ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\)$\\)\\)")
+            ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\|pyc\\)$\\)\\)")
             ("^\\.\\(emacs\\|gnus\\)$"))
            )
         )
@@ -256,7 +258,6 @@
       ;; regexp to form group in "ecb history"
       (setq profile-ecb-history-make-buckets
         '(
-           "ccn4_pm4s"
            "include"
            "\\.muse$"
            "\\.ptu$"
@@ -432,7 +433,7 @@
   ;; EDIFF: graphical diff (## to toggle whitespace ignoring)
   (setq section-mode-ediff t)
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
-  (setq section-mode-magit t)
+  (setq section-mode-magit nil)
   (when section-mode-magit
     (setq profile-magit-exec "C:/MinGW/msys/1.0/bin/git.exe")
     ) ; (when section-mode-magit
@@ -441,8 +442,10 @@
   (setq section-mode-synergy t)
   (when section-mode-synergy
     (setq profile-synergy-username "FT346598")
-    (setq profile-synergy-database "/opt/ccm/databases/kc390_spds")
-    (setq profile-synergy-server "http://synergy7.sds.safran:8410")
+    ;;(setq profile-synergy-database "/opt/ccm/databases/kc390_spds") ;; KC390
+    ;;(setq profile-synergy-server "http://synergy7c.sds.safran:8410") ;; KC390
+    (setq profile-synergy-database "/opt/ccm/databases/trcu")
+    (setq profile-synergy-server "http://synergy7a.sds.safran:8410")
     (setq profile-synergy-history-filter '(
                                             "|" "sed" "s/F281393/DMN    /"
                                             "|" "sed" "s/FT346530/MQL     /"
@@ -458,6 +461,12 @@
     (setq profile-synergy-diff-external-parameter "")
     (setq profile-synergy-diff-external-swap-file t)
     ) ; (when section-mode-synergy
+  ;; HIDE-LINES: hide lines using regexp (like narrow but with regex and not
+  ;; region)
+  (setq section-mode-hide-lines t)
+  ;; AGGRESSIVE-INDENT: indent all line in function/condition in C or lisp mode
+  ;; when edit it
+  (setq section-mode-aggressive-indent nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -476,14 +485,14 @@
     ;; new type
     (setq profile-c-extra-types
       '(
-         "ubyte"
-         "ushort"
-         "ulong"
-         "ulonglong"
-         "sbyte"
-         "sshort"
-         "slong"
-         "slonglong"
+         "t_u8"
+         "t_i8"
+         "t_u16"
+         "t_i16"
+         "t_u32"
+         "t_i32"
+         "t_u64"
+         "t_i64"
          )
       )
     ;; prepocessing command
@@ -622,22 +631,11 @@
       ;; do not use it with terminal
       ;; theme to be used
       (setq profile-color-theme "solarized-light")
-      (progn ; if section-display-color-theme nil
-        ;;
-        ;; MISC: current line highlight + full syntax coloration
-        (setq section-display-color-misc t)
-        ;; MODE: set color for c-mode, cursor and current line
-        (setq section-display-color-mode t)
-        ;; GREP: set color for grep window (all search, occur, grep, grep-find,
-        ;; etc)
-        (setq section-display-color-grep t)
-        ;; ECB: set color for ecb-mode
-        ;; REQUIREMENT: `section-mode-cedet-ecb'
-        (setq section-display-color-ecb t)
-        ) ; (progn
       ) ; (if  section-display-color-theme
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq section-display-color-ansi-color-compile t)
+    ;; HIGHLIGHT CURRENT LINE: have current line highlighted
+    (setq section-display-color-highlight-line nil)
     ) ; (when section-display-color
   ) ; (when section-display
 
@@ -743,7 +741,7 @@
   ;; SCROLL PRESERVE CURSOR POSITION: when wheel scroll the cursor do not move
   (setq section-annoyances-scroll-preserve-cursor-position nil)
   ;; NO BACKUP FILE: no backup file will be created
-  (setq section-annoyances-no-backup-file nil)
+  (setq section-annoyances-no-backup-file t)
   ;; ALL BACKUP FILE IN DIRECTORY all backup files will be created in a
   ;; directory
   (setq section-annoyances-backup-file-in-directory t)
@@ -807,10 +805,31 @@
 ;; to override some settings or add settings without modify the configuration
 (defun function-to-call-after-loading-conf ()
   ;; to disable all version control
-  ;(setq vc-handled-backends nil)
+  (setq vc-handled-backends nil)
 
   ;; set only one zone program
-    (setq zone-programs [ zone-pgm-putz-with-case ])
+  (setq zone-programs [ zone-pgm-putz-with-case ])
+
+  ;; try to unslow emacs when open file
+  (remove-hook 'find-file-hooks 'vc-find-file-hook)
+
+  ;; do not freeze when redisplay ?
+  (redisplay-dont-pause t)
+
+  ;; hide and show to apply setting
+  (ecb-toggle-ecb-windows nil)
+  (ecb-toggle-ecb-windows t)
+
+  (message "### END")
+
+  ;; to print (to be tested)
+  ;;;;  Windows printer
+  ;;(setq-default ps-lpr-command (expand-file-name "gsprint.exe"))
+  ;;(setq-default ps-printer-name t)
+  ;;(setq-default ps-printer-name-option nil)
+  ;;(setq ps-lpr-switches '("-query")) ; show printer dialog
+  ;;(setq ps-right-header '("/pagenumberstring load" ps-time-stamp-mon-dd-yyyy))))
+
   ) ; (defun function-to-call-after-loading-conf ()
 
 (provide 'profile-sagem-defense-light)

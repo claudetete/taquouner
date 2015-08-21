@@ -409,6 +409,12 @@
     (setq profile-synergy-diff-external-parameter nil)
     (setq profile-synergy-diff-external-swap-file nil)
     )
+  ;; HIDE-LINES: hide lines using regexp (like narrow but with regex and not
+  ;; region)
+  (setq section-mode-hide-lines nil)
+  ;; AGGRESSIVE-INDENT: indent all line in function/condition in C or lisp mode
+  ;; when edit it
+  (setq section-mode-aggressive-indent nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (when section-mode

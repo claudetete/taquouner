@@ -1,6 +1,6 @@
 ;;; interface.el --- a config file for Emacs interface
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2015 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, interface
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: August 2015
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-interface'
 
 ;;; Change Log:
+;; 2015-08-21 (2.3)
+;;    use new function to maximize window (frame) with emacs 24.5
 ;; 2013-05-30 (2.2)
 ;;    remove settings for ediff (put in mode.el)
 ;; 2013-05-23 (2.1)
@@ -130,7 +132,9 @@
 (when section-interface-fullscreen (message "  6.4 FullScreen...")
   ;; start in fullscreen
   ;; need to put fullscreen after font settings !
-  (frame-maximizer)
+  (if (or running-on-emacs-24-4 running-on-emacs-24-5)
+    (toggle-frame-maximized)
+    (frame-maximizer))
   (message "  6.4 FullScreen... Done"))
 
 ;;

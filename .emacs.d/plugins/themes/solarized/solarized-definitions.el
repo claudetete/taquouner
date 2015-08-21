@@ -197,7 +197,7 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
              (menu ((t (,@fg-base0 ,@bg-base02))))
              (minibuffer-prompt ((t (,@fmt-bold ,@fg-cyan)))) ; Question
              (mode-line  ; StatusLine
-              ((t (,@fg-green ,@bg-base02 ,@fmt-none :box nil))))
+              ((t (,@fg-base02 ,@bg-green ,@fmt-none :box nil))))
              (mode-line-inactive ; StatusLineNC
               ((t (,@fg-base00 ,@bg-base02 ,@fmt-none :box nil))))
              (mode-line-emphasis ((t (,@fmt-none :box nil))))
@@ -478,10 +478,10 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
              ;; parenface
              (paren-face ((t (,@fg-base01))))
              ;; powerline
-             (powerline-active1 ((t (,@fg-base02 ,@bg-base1 ,@fmt-none))))
-             (powerline-inactive1 ((t (,@fg-base01 ,@bg-base0 ,@fmt-none))))
-             (powerline-active2 ((t (,@fg-base3 ,@bg-base01 ,@fmt-none))))
-             (powerline-inactive2 ((t (,@fg-base2 ,@bg-base00 ,@fmt-none))))
+             (powerline-active1 ((t (,@bg-base1 ,@fg-base02 ,@fmt-none))))
+             (powerline-inactive1 ((t (,@bg-base0 ,@fg-base01 ,@fmt-none))))
+             (powerline-active2 ((t (,@bg-base01 ,@fg-base3 ,@fmt-none))))
+             (powerline-inactive2 ((t (,@bg-base00 ,@fg-base2 ,@fmt-none))))
              ;; rainbow-delimiters
              (rainbow-delimiters-depth-1-face ((t (,@fg-cyan))))
              (rainbow-delimiters-depth-2-face ((t (,@fg-yellow))))

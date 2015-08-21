@@ -1,6 +1,6 @@
 ;;; mode.el --- a config file for all mode settings
 
-;; Copyright (c) 2006-2014 Claude Tete
+;; Copyright (c) 2006-2015 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.9
+;; Version: 5.0
 ;; Created: October 2006
-;; Last-Updated: March 2014
+;; Last-Updated: August 2015
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2015-08-21 (5.0)
+;;    add hide-lines mode (like narrow but with regex) + aggressive indent mode
 ;; 2014-03-26 (4.9)
 ;;    add synergy-web mode + clean last added mode
 ;; 2013-09-10 (4.8)
@@ -536,6 +538,7 @@
 (when section-mode-dired-sort (message "  2.32 Dired Sort...")
   (when (try-require 'autoload-dired-sort-menu "    ")
     (custom-set-variables
+      ;; dired is allow to delete recursively folder
       '(dired-recursive-copies t)
       '(dired-recursive-deletes t)
       ;; set a profile of sorting
@@ -989,6 +992,26 @@
     (setq synergy-diff-external-parameter profile-synergy-diff-external-parameter)
     (setq synergy-diff-external-swap-file profile-synergy-diff-external-swap-file))
   (message "  2.61 Synergy... Done"))
+
+;;
+;;;
+;;;; HIDE-LINES
+;; hide lines using regexp (like narrow but with regex and not region)
+(when section-mode-hide-lines (message "  2.62 Hide-Lines...")
+  (when (try-require 'hide-lines "    ")
+    ;; can hide incrementaly
+    (try-require 'hidesearch "    "))
+  (message "  2.62 Hide-Lines... Done"))
+
+;;
+;;;
+;;;; AGGRESSIVE-INDENT
+;; indent all line in function/condition in C or lisp mode when edit it
+(when section-mode-aggressive-indent (message "  2.63 Aggressive-Indent...")
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/names-master"))
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/aggressive-indent-mode-master"))
+  (try-require 'aggressive-indent "    ")
+  (message "  2.63 Aggressive-Indent... Done"))
 
 ;;
 ;;; DIMINISH

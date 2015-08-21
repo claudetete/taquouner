@@ -1,6 +1,6 @@
 ;;; shortcut-global.el --- a config file for global Emacs shortcut
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2015 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.8
+;; Version: 3.9
 ;; Created: October 2006
-;; Last-Updated: September 2013
+;; Last-Updated: August 2015
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2015-08-21 (3.9)
+;;    add condition to cua-rect shortcut + add hide-lines shortcuts
 ;; 2013-09-10 (3.8)
 ;;    add magit shortcut
 ;; 2013-05-30 (3.7)
@@ -221,7 +223,11 @@
                                                    (kill-line -1)))
 
 ;; cua rectangle
-(define-key cua--rectangle-keymap [remap kill-ring-save-x] 'cua-copy-rectangle)
+(eval-after-load "cua-rect"
+  '(progn
+     (define-key cua--rectangle-keymap [remap kill-ring-save-x] 'cua-copy-region)
+     )
+  )
 
 ;;
 ;;; HELM
@@ -265,7 +271,7 @@
 ;; delete all blank character or line except one
 (global-set-key         (kbd "<M-SPC>")         'just-one-space-or-line)
 
-;; move page to page (to next/previous  character)
+;; move page to page (to next/previous character)
 (global-set-key         (kbd "<M-up>")          'backward-page)
 (global-set-key         (kbd "<M-down>")        'forward-page)
 
@@ -466,6 +472,17 @@
 (global-set-key         (kbd "C-M-y")           '(lambda ()
                                                    (interactive)
                                                    (popup-menu 'yank-menu)))
+
+;;
+;;; SYNERGY
+(when section-mode-hide-lines
+  ;; hide match
+  (global-set-key       (kbd "C-c h h")         'hide-lines-matching)
+  ;; hide not match
+  (global-set-key       (kbd "C-c h n")         'hide-lines-not-matching)
+  ;; show all
+  (global-set-key       (kbd "C-c h s")         'hide-lines-show-all)
+  ) ; (when section-mode-hide-lines
 
 ;;
 ;;; ALIAS

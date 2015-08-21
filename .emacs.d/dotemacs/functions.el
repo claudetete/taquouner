@@ -1,6 +1,6 @@
 ;;; functions.el --- a config file to add some function
 
-;; Copyright (c) 2006-2014 Claude Tete
+;; Copyright (c) 2006-2015 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.9
+;; Version: 6.0
 ;; Created: October 2006
-;; Last-Updated: March 2014
+;; Last-Updated: August 2015
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2015-08-21 (6.0)
+;;    add new web search + function to go in symref buffer
 ;; 2014-03-26 (5.9)
 ;;    add function to insert tag for reqtify in source code + remove old
 ;;    function of synergy
@@ -168,11 +170,11 @@
     (when (string-match "/\\(...\\)[^/]*$" my-buffer)
       (setq my-module (upcase (match-string 1 my-buffer)))
       (beginning-of-line)
-      (insert " /*----------------------------*/")
+      (insert " /* -------------------------- */")
       (indent-according-to-mode)
       (insert "\n /* [COV.TAMBORIM_SDD_" my-module "_] */")
       (indent-according-to-mode)
-      (insert "\n /*----------------------------*/")
+      (insert "\n /* -------------------------- */")
       (indent-according-to-mode)
       (insert "\n")
       (search-backward my-module)
@@ -863,11 +865,7 @@ line instead."
             (url-hexify-string string)))
         (browse-url-generic
           (concat "http://www.wordreference.com/fren/"
-            (url-hexify-string string)))
-        )
-      )
-    )
-  )
+            (url-hexify-string string)))))))
 ;;; translate from English to French in generic browser
 (defun translate-enfr (beg end)
   "Translate the word at point using WordReference or Google Translate when a region is selected."
@@ -882,10 +880,7 @@ line instead."
           (concat "http://www.wordreference.com/enfr/"
             (url-hexify-string string)))
         )
-      (message "No word at point or no mark set")
-      )
-    )
-  )
+      (message "No word at point or no mark set"))))
 ;;; search in French Wikipedia
 (defun wikipedia-fr (beg end)
   "Search the word at point or selected region using Wikipedia."
@@ -894,23 +889,17 @@ line instead."
     (if string
       (browse-url-generic
         (concat "http://fr.wikipedia.org/wiki/Special:Search?search=" (url-hexify-string string)))
-      (message "No word at point or no mark set")
-      )
-    )
-  )
+      (message "No word at point or no mark set"))))
 ;;
 ;;; search in English Wikipedia
 (defun wikipedia-en (beg end)
-  "Search the word at point or selected region using Wikipedia."
+  "Search the word at point or selected region using Wikipedia in English."
   (interactive (clt-get-string-position))
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
         (concat "http://en.wikipedia.org/wiki/Special:Search?search=" (url-hexify-string string)))
-      (message "No word at point or no mark set")
-      )
-    )
-  )
+      (message "No word at point or no mark set"))))
 ;;
 ;;; search synonym in French
 (defun synonym-fr (beg end)
@@ -920,9 +909,16 @@ line instead."
     (if string
       (browse-url-generic
         (concat "http://www.synonymes.com/synonyme.php?mot=" (url-hexify-string string) "&x=0&y=0"))
-	  )
-    )
-  )
+      (message "No word at point or no mark set"))))
+;;; search synonym in English
+(defun synonym-en (beg end)
+  "Search the word at point or selected region using Synonym.com."
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "http://http://www.synonym.com/synonyms/" (url-hexify-string string) "&x=0&y=0"))
+      (message "No word at point or no mark set"))))
 ;;
 ;;; search grammatical conjugation in French
 (defun conjugation-fr (beg end)
@@ -932,10 +928,16 @@ line instead."
     (if string
       (browse-url-generic
         (concat "http://www.leconjugueur.com/php5/index.php?v=" (url-hexify-string string)))
-      (message "No word at point or no mark set")
-      )
-    )
-  )
+      (message "No word at point or no mark set"))))
+;;; search grammatical conjugation in English
+(defun conjugation-en (beg end)
+  "Search the word at point or selected region using theconjugator.com."
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "http://www.theconjugator.com/php5/index.php?verbe=" (url-hexify-string string)))
+      (message "No word at point or no mark set"))))
 ;;
 ;;; search in French Google
 (defun google-fr (beg end)
@@ -946,23 +948,27 @@ line instead."
       (browse-url-generic
         (concat "http://www.google.fr/search?hl=fr&hs=0HH&q=" (url-hexify-string string)
           "&btnG=Rechercher&meta=&num=100&as_qdr=a&as_occt=any"))
-      (message "No word at point or no mark set")
-      )
-    )
-  )
+      (message "No word at point or no mark set"))))
 ;;; search in English Google
 (defun google-en (beg end)
-  "Search the word at point or selected region using google.fr."
+  "Search the word at point or selected region using google.com."
   (interactive (clt-get-string-position))
   (let ((string (buffer-substring beg end)))
     (if string
       (browse-url-generic
         (concat "http://www.google.fr/search?hl=en&hs=0HH&q=" (url-hexify-string string)
           "&btnG=Rechercher&meta=&num=100&as_qdr=a&as_occt=any"))
-      (message "No word at point or no mark set")
-      )
-    )
-  )
+      (message "No word at point or no mark set"))))
+;;
+;;; search in DuckDuckGo
+(defun duckduckgo (beg end)
+  "Search the word at point or selected region using duckduckgo.com."
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (browse-url-generic
+        (concat "https://duckduckgo.com/?q=" (url-hexify-string string)))
+      (message "No word at point or no mark set"))))
 
 ;;
 ;;;
@@ -1058,6 +1064,12 @@ line instead."
   (if (get-buffer "*Bookmark List*")
     (switch-to-special-buffer "*Bookmark List*")
     (bookmark-bmenu-list))
+  )
+;;; go to the symbol reference buffer in special window
+(defun switch-to-symref-buffer ()
+  "Switch to the Symref buffer."
+  (interactive)
+  (switch-to-special-buffer "*Sy*")
   )
 
 ;;

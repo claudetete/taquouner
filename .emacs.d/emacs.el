@@ -1,6 +1,6 @@
 ;;; emacs.el --- config file for Emacs
 
-;; Copyright (c) 2006-2014 Claude Tete
+;; Copyright (c) 2006-2015 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 9.1
+;; Version: 9.2
 ;; Created: October 2006
-;; Last-Updated: March 2014
+;; Last-Updated: August 2015
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2015-08-21 (9.2)
+;;    add hide-lines mode + aggressive indent mode + remove old colors + custom
+;;    hl-line
 ;; 2014-03-26 (9.1)
 ;;    add synergy-web mode and remove old function synergy
 ;; 2013-09-10 (9.0)
@@ -757,6 +760,14 @@ before message."
     (defvar profile-synergy-diff-external-swap-file nil)
     )
   ;;
+  ;; HIDE-LINES                                                         2.62
+  ;; hide lines using regexp (like narrow but with regex and not region)
+  (defvar section-mode-hide-lines nil)
+  ;;
+  ;; AGGRESSIVE-INDENT                                                  2.63
+  ;; indent all line in function/condition in C or lisp mode when edit it
+  (defvar section-mode-aggressive-indent nil)
+  ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
   (defvar section-mode-diminish nil)
@@ -896,29 +907,15 @@ before message."
       (defvar profile-color-theme "zenburn")
       ) ; (progn
 
-    ;; MISC                                                             5.4.4
-    ;; REQUIREMENT:     section-environment-terminal-vs-graphics
-    ;;                  section-display-color-theme nil
-    ;; current line highlight + full syntax coloration
-    (defvar section-display-color-misc nil)
     ;;
-    ;; MODE                                                             5.4.5
-    ;; REQUIREMENT:     section-environment-terminal-vs-graphics
-    ;; set color for c-mode, cursor and current line
-    (defvar section-display-color-mode nil)
-    ;;
-    ;; GREP                                                             5.4.6
-    ;; set color for grep window (all search, occur, grep, grep-find, etc)
-    (defvar section-display-color-grep nil)
-    ;;
-    ;; ECB                                                              5.4.7
-    ;; REQUIREMENT:     section-mode-cedet-ecb
-    ;; set color for ecb-mode
-    (defvar section-display-color-ecb nil)
-    ;;
-    ;; ANSI COLOR COMPILE WINDOW                                        5.4.8
+    ;; ANSI COLOR COMPILE WINDOW                                        5.4.5
     ;; have color and no more junk like this ^[[32m
     (defvar section-display-color-ansi-color-compile nil)
+
+    ;;
+    ;; HIGHLIGHT CURRENT LINE                                           5.4.6
+    ;; have current line highlighted
+    (defvar section-display-color-highlight-line nil)
     ) ; (progn
   ) ; (progn
 
@@ -1009,7 +1006,7 @@ before message."
 
   ;; FUNCTION                                                           8.6
   ;; FILE: dotemacs/shortcut-function.el
-  ;; add shortcut to manage ecb windows
+  ;; add shortcut to manage custom functions
   (defvar section-shortcut-function nil)
 
   ;; TAGS                                                               8.7

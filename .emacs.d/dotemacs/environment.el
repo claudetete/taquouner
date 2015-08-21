@@ -1,6 +1,6 @@
 ;;; environment.el --- a config file for environment settings
 
-;; Copyright (c) 2006-2012 Claude Tete
+;; Copyright (c) 2006-2015 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.8
+;; Version: 2.9
 ;; Created: October 2006
-;; Last-Updated: December 2012
+;; Last-Updated: August 2015
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `dotemacs-path'
 
 ;;; Change Log:
+;; 2015-08-21 (2.9)
+;;    add environment variable for emacs version 24.4 and 24.5
 ;; 2012-12-27 (2.8)
 ;;    update dot emacs path
 ;; 2012-10-26 (2.7)
@@ -86,6 +88,8 @@
 ;;
 ;;; VERSION RECOGNITION
 (when section-environment-version-recognition (message "  0.2 Version Recognition...")
+  (defvar running-on-emacs-24-4 nil)
+  (defvar running-on-emacs-24-5 nil)
   (if (= emacs-major-version 23)
     ;; Emacs 23.x
     (progn
@@ -97,6 +101,12 @@
     (progn
       (defvar running-on-emacs-23 nil)
       (defvar running-on-emacs-24 t)
+      (when (= emacs-minor-version 4)
+        (setq running-on-emacs-24-4 t)
+        )
+      (when (= emacs-minor-version 5)
+        (setq running-on-emacs-24-5 t)
+        )
       (message "* Running on Emacs 24")
       )
     )

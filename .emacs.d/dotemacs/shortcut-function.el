@@ -1,6 +1,6 @@
 ;;; shortcut-function.el --- a config file for function shortcut
 
-;; Copyright (c) 2006-2014 Claude Tete
+;; Copyright (c) 2006-2015 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.5
+;; Version: 3.6
 ;; Created: October 2006
-;; Last-Updated: March 2014
+;; Last-Updated: August 2015
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2015-08-21 (3.6)
+;;    add aliases for web search
 ;; 2014-03-26 (3.5)
 ;;    move synergy shortcuts in global + web alias instead of shortcuts
 ;; 2013-09-10 (3.4)
@@ -202,6 +204,7 @@
 (defalias       'fren   'translate-fren)
 ;; synonym
 (defalias       's      'synonym-fr)
+(defalias       'se     'synonym-en)
 ;; grammatical conjugation
 (defalias       'c      'conjugation-fr)
 ;; wikipedia
@@ -210,6 +213,8 @@
 ;; google
 (defalias       'g      'google-fr)
 (defalias       'ge     'google-en)
+;; duckduckgo
+(defalias       'dd     'duckduckgo)
 
 ;;
 ;;; CASE

@@ -96,10 +96,10 @@
 (setq-default default-tab-width 8)
 (setq-default tab-width 8)
 ;; set tab stops based on default-tab-width
-(setq-default tab-stop-list (loop for i
-                                  from default-tab-width to 120
-                                  by default-tab-width
-                                  collect i))
+;(setq-default tab-stop-list (loop for i
+;                                  from default-tab-width to 120
+;                                  by default-tab-width
+;                                  collect i))
 ;; backspace on whitespace turns to spaces and removes one
 (setq backward-delete-char-untabify-method 'untabify)
 ;; fill-xxx is set with a width of profile-fill-column

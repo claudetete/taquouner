@@ -432,6 +432,12 @@
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
   ;; emacs)
   (setq section-mode-synergy nil)
+  ;; HIDE-LINES: hide lines using regexp (like narrow but with regex and not
+  ;; region)
+  (setq section-mode-hide-lines nil)
+  ;; AGGRESSIVE-INDENT: indent all line in function/condition in C or lisp mode
+  ;; when edit it
+  (setq section-mode-aggressive-indent nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
