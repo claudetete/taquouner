@@ -4,6 +4,11 @@
 
 ## Presentation
 * You can read [.emacs.d/features.pdf Slides](https://github.com/claudetete/.emacs.d/blob/master/.emacs.d/features.pdf) created with Emacs which present some features of Emacs, to catch a brief glimpse of Emacs potential
+* This GNU Emacs configuration:
+  * Uses a system with `profiles`, I use one profile for one computer (work laptop, work desktop, home desktop...)
+  * Customizable (by example: you do not want my shortcuts, just one variable set to `nil` in profile)
+  * Modes (Add-One/Plugins) are built-in, no need to think about which version is compatible with the configuration
+  * Work on both MS Windows and Linux
 
 ### You can find here some help to start with Emacs.
 * All adding shortcuts are thought for a QWERTY keyboard (some shortcut can be hurtful with an AZERTY keyboard)
