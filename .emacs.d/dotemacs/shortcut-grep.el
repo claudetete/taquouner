@@ -1,6 +1,6 @@
 ;;; shortcut-grep.el --- a config file for grep shortcut
 
-;; Copyright (c) 2006-2014 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: October 2006
-;; Last-Updated: March 2014
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2016-09-28 (2.1)
+;;    add platinium search (+helm) shortcut
 ;; 2014-03-26 (2.0)
 ;;    change ace jump shortcut and find-name-dired function
 ;; 2013-04-10 (1.9)
@@ -110,6 +112,15 @@
   (global-set-key       (kbd "<C-f3>")          'ack)
   ;; run ack with thing at point but only with same file type
   (global-set-key       (kbd "<M-f3>")          'ack-same)
+  )
+
+;;
+;;; PLATINIUM SEARCH
+(when section-mode-platinium-search
+  (if section-mode-helm
+    (global-set-key     (kbd "<M-f3>")          'helm-do-ag)
+    (global-set-key     (kbd "<M-f3>")          'pt-regexp)
+    )
   )
 
 ;;

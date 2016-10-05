@@ -1,6 +1,6 @@
 ;;; environment.el --- a config file for environment settings
 
-;; Copyright (c) 2006-2015 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.9
+;; Version: 3.0
 ;; Created: October 2006
-;; Last-Updated: August 2015
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `dotemacs-path'
 
 ;;; Change Log:
+;; 2016-09-28 (3.0)
+;;    add emacs version 25 into env variable + update package management
 ;; 2015-08-21 (2.9)
 ;;    add environment variable for emacs version 24.4 and 24.5
 ;; 2012-12-27 (2.8)
@@ -88,19 +90,20 @@
 ;;
 ;;; VERSION RECOGNITION
 (when section-environment-version-recognition (message "  0.2 Version Recognition...")
+  (defvar running-on-emacs-23 nil)
+  (defvar running-on-emacs-24 nil)
+  (defvar running-on-emacs-25 nil)
   (defvar running-on-emacs-24-4 nil)
   (defvar running-on-emacs-24-5 nil)
-  (if (= emacs-major-version 23)
+  (cond
     ;; Emacs 23.x
-    (progn
-      (defvar running-on-emacs-23 t)
-      (defvar running-on-emacs-24 nil)
+    ((= emacs-major-version 23)
+      (setq running-on-emacs-23 t)
       (message "* Running on Emacs 23")
       )
     ;; Emacs 24.x
-    (progn
-      (defvar running-on-emacs-23 nil)
-      (defvar running-on-emacs-24 t)
+    ((= emacs-major-version 24)
+      (setq running-on-emacs-24 t)
       (when (= emacs-minor-version 4)
         (setq running-on-emacs-24-4 t)
         )
@@ -108,6 +111,10 @@
         (setq running-on-emacs-24-5 t)
         )
       (message "* Running on Emacs 24")
+      )
+    ((= emacs-major-version 25)
+      (setq running-on-emacs-25 t)
+      (message "* Running on Emacs 25")
       )
     )
   (message "  0.2 Version Recognition... Done"))
@@ -185,7 +192,7 @@
 ;; REQUIREMENT: var     `section-environment-os-recognition'
 (when section-environment-executable (message "  0.7 Executable...")
   (custom-set-variables
-    '(shell-file-name profile-shell-file-name)
+    ;'(shell-file-name profile-shell-file-name)
     '(ediff-diff-program profile-ediff-diff-program)
     '(ediff-diff3-program profile-ediff-diff3-program)
     '(ediff-cmp-program profile-ediff-cmp-program)
@@ -196,28 +203,40 @@
 ;;
 ;;; ELPA
 (when section-environment-elpa (message "  0.8 ELPA...")
-  (when (and section-environment-version-recognition running-on-emacs-23)
-    ;; add to load path the profile directory
-    (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/elpa"))
+  (when (and section-environment-version-recognition (not running-on-emacs-23))
+    (when profile-environment-elpa-proxy-http
+     ;; add to load path the profile directory
+     (require 'url) ; need to have url-proxy-services defined
+     ;; backquot instead of quote will allow use of comma to evaluate symbol after
+     ;; example:
+     ;;  (setq toto 12)
+     ;;  (setq list '(("tata" . 42)))
+     ;;  (add-to-list 'list `("titi" . ,toto))
+     ;; result into a list (("titi" . 12) ("tata" . 42))
+     (add-to-list 'url-proxy-services '("no_proxy" . "localhost") t)
+     (add-to-list 'url-proxy-services `("http" . ,profile-environment-elpa-proxy-http) t)
+     (add-to-list 'url-proxy-services `("https" . ,profile-environment-elpa-proxy-https) t))
 
-    ;; This was installed by package-install.el.  This provides support for the
-    ;; package system and interfacing with ELPA, the package archive.  Move this
-    ;; code earlier if you want to reference packages in your .emacs.
-    (when (try-require 'package "    ") (package-initialize))
-    )
-
-  ;; set path where put all packages
-  (setq package-user-dir (concat (file-name-as-directory dotemacs-path) "plugins/elpa"))
-
-  ;;;; set package server
-  ;;; only with Emacs 24 ?
-  (setq package-archives
-    '(
-       ("ELPA"      . "http://tromey.com/elpa/")
-       ("gnu"       . "http://elpa.gnu.org/packages/")
-       ("marmalade" . "http://marmalade-repo.org/packages/")
-       ("melpa"     . "http://melpa.milkbox.net/packages/")
-       )
+    (when (try-require 'package "    ")
+      ;; set package server
+      (add-to-list 'package-archives '("ELPA"      . "http://tromey.com/elpa/") t)
+      (add-to-list 'package-archives '("gnu"       . "http://elpa.gnu.org/packages/") t)
+      ;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+      (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/") t)
+      ;; set proxy
+      ;; set path where put all packages
+      (setq package-user-dir (concat (file-name-as-directory dotemacs-path) "plugins/elpa"))
+      ;; init package
+      (package-initialize)
+      ;; refresh package list only when no package were found
+      (when (not package-archive-contents)
+        (package-refresh-contents))
+      ;; install package from list defined in profile
+      (mapc #'(lambda (package)
+                (unless (package-installed-p package)
+                  (package-install package)))
+        profile-environment-elpa-package-list)
+      )
     )
   (message "  0.8 ELPA... Done"))
 

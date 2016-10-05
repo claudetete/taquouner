@@ -1,6 +1,6 @@
 ;;; profile-emacs-portable.el --- a config file for profile
 
-;; Copyright (c) 2012-2013 Claude Tete
+;; Copyright (c) 2012-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -22,7 +22,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: October 2012
-;; Last-Updated: May 2013
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2016-09-28 (1.1)
+;;    update with new mode/variable
 ;; 2012-10-23 (0.1)
 ;;    creation from default profile
 
@@ -109,6 +111,11 @@
     ) ; (when section-environment-executable
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa nil)
+  (when section-environment-elpa
+    (setq profile-environment-elpa-proxy-http nil)
+    (setq profile-environment-elpa-proxy-https nil)
+    (setq profile-environment-elpa-package-list '())
+    )   ; (when section-environment-elpa
   ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-hyper t)
@@ -154,7 +161,9 @@
     (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
     ;; path of gnu global executable
     (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_628wb/bin/global.exe"))
+    ;; path of gnu global executable
     (setq profile-gnu-global-gtags (concat dotemacs-path "/plugins/gnu_global_628wb/bin/gtags.exe"))
+    ;;
     ;; SEMANTIC: can do tag, list of function/variable..., preproc, etc
     (setq section-mode-cedet-semantic t)
     (when section-mode-cedet-semantic
@@ -246,6 +255,12 @@
   (setq section-mode-dired-plus t)
   ;; GNU/GLOBAL: Tag management mode (use modified gtags.el)
   (setq section-mode-gnu-global t)
+  (when section-mode-gnu-global
+    ;; GNU/GLOBAL gtags
+    (setq section-mode-gnu-global-gtags t)
+    ;; GNU/GLOBAL ggtags
+    (setq section-mode-gnu-global-ggtags nil)
+    ) ; (when section-mode-gnu-global
   ;; EPROJECT (grischka): project management mode (never used)
   (setq section-mode-eproject nil)
   ;; RTRT SCRIPT: rtrt script mode (syntax coloration)
@@ -368,10 +383,59 @@
     ;; time before hide scroll-bar (nil to always show)
     (setq profile-yascroll-delay-to-hide nil)
     ) ; (when section-mode-yascroll
-  ;; SMART-FORWARD: move in code with semantic see example in plugins/smart-forward.el
+  ;; SMART-FORWARD: move in code with semantic see example in
+  ;; plugins/smart-forward.el
   (setq section-mode-smart-forward nil)
+  ;; RAINBOW MODE: show string color in color
+  (setq section-mode-rainbow nil)
   ;; EDIFF: graphical diff (## to toggle whitespace ignoring)
   (setq section-mode-ediff nil)
+  ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
+  (setq section-mode-magit nil)
+  (when section-mode-magit
+    (setq profile-magit-exec "git")
+    )
+  ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
+  ;; emacs)
+  (setq section-mode-synergy nil)
+  (when section-mode-synergy
+    (setq profile-synergy-username "")
+    (setq profile-synergy-database "")
+    (setq profile-synergy-server "")
+    (setq profile-synergy-history-filter nil)
+    (setq profile-synergy-diff-external-command nil)
+    (setq profile-synergy-diff-external-parameter nil)
+    (setq profile-synergy-diff-external-swap-file nil)
+    ) ; (when section-mode-synergy
+  ;; HIDE-LINES: hide lines using regexp (like narrow but with regex and not
+  ;; region)
+  (setq section-mode-hide-lines nil)
+  ;; AGGRESSIVE-INDENT: indent all line in function/condition in C or lisp mode
+  ;; when edit it
+  (setq section-mode-aggressive-indent nil)
+  ;; PLATINIUM SEARCH: A front-end for pt, The Platinum Searcher (faster than
+  ;; ack)
+  (setq section-mode-platinium-search nil)
+  ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation
+  ;; buffer)
+  (setq section-mode-popwin nil)
+  ;; PROJECTILE: Project management, filtered find-file, only with root file
+  ;; from version control
+  (setq section-mode-projectile nil)
+  ;; COMPANY MODE: Completion mode using back-ends to have symbol
+  (setq section-mode-company nil)
+  ;; EXPAND-REGION: Increase selected region by semantic units
+  (setq section-mode-expand-region nil)
+  ;; FUNCTION-ARGS: Show function parameters in C and C++
+  (setq section-mode-function-args nil)
+  ;; ELPY: Python mode like an IDE
+  (setq section-mode-elpy nil)
+  (when section-mode-elpy
+    ;; add elpy package
+    ;; and flycheck package, about warnings/errors check on the fly
+    (add-to-list 'profile-environment-elpa-package-list 'elpy t)
+    (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+    ) ; (when section-mode-elpy
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -413,6 +477,8 @@
     (when section-languages-c-hide-show
       (setq section-languages-c-hide-show-hide-all-at-start nil)
       ) ; (when section-languages-c-hide-show
+    ;; FLYMAKE
+    (setq section-languages-c-flymake nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -430,6 +496,8 @@
     ;; number of space for indentation in perl
     (setq profile-perl-indent-offset 2)
     ) ; (when section-languages-perl
+  ;; C++ QT: set include for Qt 4.8
+  (setq section-languages-c++-qt nil)
   ) ; (when section-languages
 
 
@@ -497,21 +565,13 @@
     (setq section-display-color-theme t)
     (if section-display-color-theme
       ;; do not use it with terminal
+      ;; theme to be used
       (setq profile-color-theme "zenburn")
-      (progn ; if section-display-color-theme nil
-        ;;
-        ;; MISC: current line highlight + full syntax coloration
-        (setq section-display-color-misc nil)
-        ;; MODE: set color for c-mode, cursor and current line
-        (setq section-display-color-mode nil)
-        ;; GREP: set color for grep window (all search, occur, grep, grep-find,
-        ;; etc)
-        (setq section-display-color-grep nil)
-        ;; ECB: set color for ecb-mode
-        ;; REQUIREMENT: `section-mode-cedet-ecb'
-        (setq section-display-color-ecb nil)
-        ) ; (progn
       ) ; (if section-display-color-theme
+    ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
+    (setq section-display-color-ansi-color-compile t)
+    ;; HIGHLIGHT CURRENT LINE: have current line highlighted
+    (setq section-display-color-highlight-line nil)
     ) ; (when section-display-color
   ) ; (when section-display
 

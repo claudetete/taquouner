@@ -1,6 +1,6 @@
 ;;; mode-ecb.el --- a config file for ecb mode settings
 
-;; Copyright (c) 2010-2013 Claude Tete
+;; Copyright (c) 2010-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ecb, mode, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.9
+;; Version: 3.0
 ;; Created: August 2010
-;; Last-Updated: September 2013
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -34,6 +34,8 @@
 ;; do not forget to run cedet before and run ecb-byte-compile to finish
 
 ;;; Change Log:
+;; 2016-09-28 (3.0)
+;;    add special buffer in ECB compilation window
 ;; 2013-09-10 (2.9)
 ;;    add magit and synergy in compile window
 ;; 2013-04-12 (2.8)
@@ -189,7 +191,8 @@
                 ("*Apropos*")
                 ("*Occur*")
                 ("*shell*")
-                ("\s-*\\*Completions*\s-*" . t)
+                ("*Completions*")
+                ("\\s-*\\*[cC]ompletion.*\\*\\s-*" . t)
                 ("\\*[cC]ompilation.*\\*" . t)
                 ("\\*i?grep.*\\*" . t)
                 ("*JDEE Compile Server*")
@@ -217,6 +220,9 @@
                 ("*[Ss]ynergy*" . t)
                 )))
 
+    ;; do not ignore special display
+    '(ecb-ignore-special-display nil)
+
     ;; auto expand tree
     '(ecb-auto-expand-tag-tree-collapse-other (quote only-if-on-tag))
     '(ecb-expand-methods-switch-off-auto-expand nil)
@@ -228,7 +234,7 @@
     '(ecb-process-non-semantic-files nil)
 
     ;; tags file can be modified when a file is opened
-    '(tags-loop-revert-buffers t)
+    '(tags-loop-revert-buffers nil)
     ;;
     ;; color of lines find in *Tag List*
     '(tags-tag-face (quote match))

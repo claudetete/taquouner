@@ -7,6 +7,7 @@
 ;; Created: 2006/07/08 07:35:50
 ;;
 ;; Copyright (c) 2006, 2011 Le Wang
+;; Copyright (c) 2016 Claude TETE
 
 ;; Version: 0.2
 ;; Last-Updated: Wed Apr  4 08:00:33 2012 (+0800)
@@ -14,7 +15,7 @@
 ;;     Update #: 18
 ;; URL: https://github.com/lewang/le_emacs_MRU_yank
 ;; Keywords:
-;; Compatibility: GNU Emacs 21, 23.2.1
+;; Compatibility: GNU Emacs 21, 23.2.1, 24, 25.1
 ;; Keywords: convenience editing
 ;; X-URL: not distributed yet
 
@@ -118,22 +119,17 @@ return the new list."
                (or
                 (and (= (ad-get-arg 0) 0)
                      ;; reset clipboard so it can be accessed again
-                     (cond  ((memq interprogram-paste-function '(x-get-selection-value
-                                                                 x-selection-value))
-                             (when (funcall interprogram-paste-function)
-                               (set (cond ((eq window-system 'mac)
-                                           'x-last-selected-text-clipboard)
-                                          ((eq window-system 'ns)
-                                           'ns-last-selected-text)
-                                          (t
-                                           'x-last-selected-text))
-                                    nil)
-                               t))
-                            ((null interprogram-paste-function)
-                             nil)
-                            (t
-                             (message "MRU-yank: I don't know how to support %s" interprogram-paste-function)
-                             nil)))
+                  (cond
+                    ((memq interprogram-paste-function '(gui-get-selection-value
+                                                          gui-selection-value))
+                      (when (funcall interprogram-paste-function)
+                        (set 'gui--last-selected-text-clipboard nil)
+                        t))
+                    ((null interprogram-paste-function)
+                      nil)
+                    (t
+                      (message "MRU-yank: I don't know how to support %s" interprogram-paste-function)
+                      nil)))
                 (not kill-ring)      ; empty kill-ring
                 )))
       ad-do-it

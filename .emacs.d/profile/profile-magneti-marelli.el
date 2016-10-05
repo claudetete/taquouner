@@ -1,6 +1,6 @@
 ;;; profile-magneti-marelli.el --- a config file for profile
 
-;; Copyright (c) 2012-2013 Claude Tete
+;; Copyright (c) 2012-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -69,8 +69,14 @@
     (setq profile-ediff-cmp-program "d:/cygwin/usr/bin/GnuWin32/bin/cmp.exe")
     )
   (setq section-environment-elpa nil)
+  (when section-environment-elpa
+    (setq profile-environment-elpa-proxy-http nil)
+    (setq profile-environment-elpa-proxy-https nil)
+    (setq profile-environment-elpa-package-list '())
+    )
   (setq section-environment-hyper t)
   (setq section-environment-super nil)
+  (setq section-environment-server nil)
   )
 
 (setq section-functions t)
@@ -166,6 +172,10 @@
     )
   (setq section-mode-dired-plus t)
   (setq section-mode-gnu-global t)
+  (when section-mode-gnu-global
+    (setq section-mode-gnu-global-gtags t)
+    (setq section-mode-gnu-global-ggtags nil)
+    )
   (setq section-mode-eproject nil)
   (setq section-mode-rtrt-script nil)
   (setq section-mode-vc-clearcase nil)
@@ -229,9 +239,38 @@
   (setq section-mode-yascroll nil)
   (when section-mode-yascroll
     (setq profile-yascroll-delay-to-hide nil)
-    )
   (setq section-mode-smart-forward nil)
+  (setq section-mode-rainbow nil)
   (setq section-mode-ediff nil)
+  (setq section-mode-magit nil)
+  (when section-mode-magit
+    (setq profile-magit-exec "git")
+    )
+  (setq section-mode-synergy nil)
+  (when section-mode-synergy
+    (setq profile-synergy-username "")
+    (setq profile-synergy-database "")
+    (setq profile-synergy-server "")
+    (setq profile-synergy-history-filter nil)
+    (setq profile-synergy-diff-external-command nil)
+    (setq profile-synergy-diff-external-parameter nil)
+    (setq profile-synergy-diff-external-swap-file nil)
+    ) ; (when section-mode-synergy
+  (setq section-mode-hide-lines nil)
+  (setq section-mode-aggressive-indent nil)
+  (setq section-mode-platinium-search nil)
+  (setq section-mode-popwin nil)
+  (setq section-mode-projectile nil)
+  (setq section-mode-company nil)
+  (setq section-mode-expand-region nil)
+  (setq section-mode-function-args nil)
+  (setq section-mode-elpy nil)
+  (when section-mode-elpy
+    ;; add elpy package
+    ;; and flycheck package, about warnings/errors check on the fly
+    (add-to-list 'profile-environment-elpa-package-list 'elpy t)
+    (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+    ) ; (when section-mode-elpy
   (setq section-mode-diminish nil)
   )
 
@@ -261,6 +300,7 @@
       (setq section-languages-c-hide-show-hide-all-at-start nil)
       )
     )
+    (setq section-languages-c-flymake nil)
   (setq section-languages-lisp t)
   (when section-languages-lisp
     (setq profile-lisp-indent-offset 2)
@@ -271,6 +311,7 @@
   (when section-languages-perl
     (setq profile-perl-indent-offset 2)
     )
+  (setq section-languages-c++-qt nil)
   )
 
 (setq section-selection t)
@@ -297,12 +338,10 @@
     (setq section-display-color-parentheses-visible t)
     (setq section-display-color-parentheses-highlight nil)
     (setq section-display-color-theme t)
-    (when section-display-color-theme
+    (if section-display-color-theme
       (setq profile-color-theme "sweet")
-      (setq section-display-color-misc nil)
-      (setq section-display-color-mode nil)
-      (setq section-display-color-grep nil)
-      (setq section-display-color-ecb nil)
+    (setq section-display-color-ansi-color-compile t)
+    (setq section-display-color-highlight-line nil)
       )
     )
   )

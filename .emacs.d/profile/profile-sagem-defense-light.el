@@ -1,6 +1,6 @@
 ;;; profile-sagem-defense-light.el --- a config file for profile
 
-;; Copyright (c) 2013 Claude Tete
+;; Copyright (c) 2013-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: June 2013
-;; Last-Updated: September 2013
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2016-09-22 (0.2)
+;;    complete with new mode, remove usage of ECB by switching to helm +
+;;    projectile + popwin
 ;; 2013-06-05 (0.1)
 ;;    creation from alstom transport profile
 
@@ -67,9 +70,12 @@
     ;; path
     (setq profile-path
       (concat
+        "c:/WinPython27/python-2.7.10"                               ";"
+        "c:/WinPython27/python-2.7.10/Scripts"                       ";"
         "z:/cmbuilder/3.0beta2_KC390"                                ";"
-        "c:/cygwin/lib/python2.5"                                    ";"
-        "G:/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin"             ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/pt_windows_amd64" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything-1.3.4.686.x64.Multilingual" ";"
         "c:/perl/perl/site/bin"                                      ";"
         "c:/perl/perl/bin"                                           ";"
         "c:/perl/c/bin"                                              ";"
@@ -94,9 +100,12 @@
     ;; executables path
     (setq profile-exec-path
       '(
+         "c:/WinPython27/python-2.7.10"
+         "c:/WinPython27/python-2.7.10/Scripts"
          "z:/cmbuilder/3.0beta2_KC390"
-         "c:/cygwin/lib/python2.5"
-         "G:/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/pt_windows_amd64"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything-1.3.4.686.x64.Multilingual"
          "c:/perl/perl/site/bin"
          "c:/perl/perl/bin"
          "c:/perl/c/bin"
@@ -125,11 +134,6 @@
     ;; diab compiler
     (setenv "DIABLIB" "d:/Tools/diab/5.8.0.0")
     (setenv "LM_LICENSE_FILE" "d:/Tools/diab/license/WRSLicense.lic")
-    ;; cmbuilder
-    (setenv "PYTHONPATH" (concat
-                           "/cygdrive/z/cmbuilder/3.0beta2_KC390" ":"
-                           "/cygdrive/c/cygwin/lib/python2.5"))
-    (setenv "cmConfiguration" "Z:/cmbuilder/3.0beta2_KC390/cmConfiguration")
     ) ; (when section-environment-set-path
 
   ;; MS WINDOWS PERFORMANCE: increase performance on MS Windows
@@ -141,14 +145,20 @@
   (setq section-environment-executable t)
   (when section-environment-executable
     ;; shell
-    (setq profile-shell-file-name "C:/cygwin/bin/bash.exe")
+    (setq profile-shell-file-name "bash")
     ;; ediff
-    (setq profile-ediff-diff-program "G:/tools/LiberKey/MyApps/GnuWin32/bin/diff.exe")
-    (setq profile-ediff-diff3-program "G:/tools/LiberKey/MyApps/GnuWin32/bin/diff3.exe")
-    (setq profile-ediff-cmp-program "G:/tools/LiberKey/MyApps/GnuWin32/bin/cmp.exe")
+    (setq profile-ediff-diff-program "D:/CTE/tools/LiberKey/MyApps/GnuWin32/bin/diff.exe")
+    (setq profile-ediff-diff3-program "D:/CTE/tools/LiberKey/MyApps/GnuWin32/bin/diff3.exe")
+    (setq profile-ediff-cmp-program "D:/CTE/tools/LiberKey/MyApps/GnuWin32/bin/cmp.exe")
     ) ; (when section-environment-executable
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa t)
+  (when section-environment-elpa
+    (setq profile-environment-elpa-proxy-http "vipsds1.safran:8080")
+    (setq profile-environment-elpa-proxy-https "vipsds1.safran:8080")
+    ;; fill at each requested mode
+    ;;(setq profile-environment-elpa-package-list '(first-package second-package))
+    )
   ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-hyper t)
@@ -191,7 +201,7 @@
     ;;    "your-emacs-path/lisp/cedet"
     ;;    "your-emacs-path/lisp/speedbar.*"
     ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
-    (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
+    (setq profile-cedet-path nil)
     ;; path of gnu global executable
     (setq profile-gnu-global (concat dotemacs-path "/plugins/gnu_global_628wb/bin/global.exe"))
     ;; path of gnu global executable
@@ -203,67 +213,37 @@
       ;; project : the order is important: display in reverse order (first->last)
       (setq profile-ede-project
         '(
-           ;; SURDO
-;           "y:/SURDO_sw/SURDO.ede.el"
-           ;; BANDAS
-;           "y:/BANDAS_sw/BANDAS.ede.el"
-           ;; TAMBORIM
-           "D:/KC390/Source/TAMBORIM_sw~CTE_V2.1.0_2/TAMBORIM_sw/TAMBORIM_sw.el"
-           "D:/KC390/Source/TAMBORIM_sw~CTE_V2.2.0/TAMBORIM_sw/TAMBORIM_sw.el"
            )
         )
       ) ; (when section-mode-cedet-semantic
     ;; ECB: "Emacs Code Browser"
     ;; can display other windows or speedbar to view folder tree, source list,
     ;; variable/function list, buffer history, etc
-    (setq section-mode-cedet-ecb t)
+    (setq section-mode-cedet-ecb nil)
     (when section-mode-cedet-ecb
       ;; set default path in "ecb directories"
       (setq profile-ecb-source-path
         '(
-           ;; before is put the EDE projects (see project.el)
-           ("D:/KC390/Source/KC390_sw~FT346598/KC390_sw"                "KC390_sw")
-           ("D:/KC390/Source/KC390_VBF"                                 "KC390_VBF")
-           ("D:/KC390/Source/GEN_databases~FT346598/GEN_databases"      "GEN_databases")
-           ("D:/KC390/Source/Scripts_trace32~FT346598/Scripts_trace32"  "Scripts_trace32")
-           ("D:/KC390/"                                                 "KC390_root")
-           ("C:/Users/FT346598/AppData/Roaming"                         "/home")
-           ("C:/cygwin/home/FT346598"                                   "/cygwin")
-           ("D:/CTE"                                                    "/CTE")
-           ("G:/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d" "DotEmacs")
            )
         )
       ;; regexp of folder to exclude in "ecb directories"
       (setq profile-ecb-excluded-directories-regexps
         '(
-           "^\\.+$"
-           "^\\(TOTO\\|TITI\\)$"
-           "\\(Cvisualdspplus2\\|RTRT_res\\)$" ; RTRT
-           "\\(TOTO\\|TITI\\)$"                ; example
            )
         )
       ;; files to be ignored in "ecb source" !! RTFM !!
       (setq profile-ecb-source-file-regexps
         '((".*"
-            ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\|pyc\\)$\\)\\)")
-            ("^\\.\\(emacs\\|gnus\\)$"))
            )
         )
       ;; files to be ignored from Version Control VC
       (setq profile-ecb-sources-exclude-cvsignore
         '(
-           "_ccmwaid.inf"
            )
         )
       ;; regexp to form group in "ecb history"
       (setq profile-ecb-history-make-buckets
         '(
-           "include"
-           "\\.muse$"
-           "\\.ptu$"
-           "\\.ahk$"
-           "\\.[hc][p]*$"
-           "\\.el$"
            )
         )
       ) ; (when section-mode-cedet-ecb
@@ -303,6 +283,12 @@
   (setq section-mode-dired-plus t)
   ;; GNU/GLOBAL: Tag management mode (use modified gtags.el)
   (setq section-mode-gnu-global t)
+  (when section-mode-gnu-global
+    ;; GNU/GLOBAL gtags
+    (setq section-mode-gnu-global-gtags nil)
+    ;; GNU/GLOBAL ggtags
+    (setq section-mode-gnu-global-ggtags t)
+    ) ; (when section-mode-gnu-global
   ;; EPROJECT (grischka): project management mode (never used)
   (setq section-mode-eproject nil)
   ;; RTRT SCRIPT: rtrt script mode (syntax coloration)
@@ -318,7 +304,7 @@
     (setq profile-cleartool "C:/Program Files/IBM/RationalSDLC/ClearCase/bin/cleartool.exe")
     ) ; (when section-mode-vc-clearcase
   ;; CLEARCASE: ClearCase mode
-  (setq section-mode-clearcase t)
+  (setq section-mode-clearcase nil)
   (when section-mode-clearcase
     (setq section-mode-clearcase-el nil)
     ) ; (when section-mode-clearcase
@@ -384,7 +370,7 @@
   ;; MRU YANK: (Most Recently Used) in kill-ring
   (setq section-mode-mru-yank t)
   ;; ACK: search with ack (no more grep) (need perl interpreter)
-  (setq section-mode-ack t)
+  (setq section-mode-ack nil)
   (when section-mode-ack
     (setq section-mode-ack-full nil)
     (setq section-mode-ack-and-half nil)
@@ -398,7 +384,7 @@
   ;; PS2PDF: print buffer/region in pdf
   (setq section-mode-ps2pdf t)
   ;; AUCTEX: latex mode
-  (setq section-mode-auctex t)
+  (setq section-mode-auctex nil)
   ;; HELM: helm mode (fork of anything mode)
   (setq section-mode-helm t)
   (when section-mode-helm
@@ -409,11 +395,11 @@
     ;; replace browse kill ring
     (setq section-mode-helm-kill-ring t)
     ;; replace M-x
-    (setq section-mode-helm-M-x nil)
+    (setq section-mode-helm-M-x t)
     ;; replace occur
     (setq section-mode-helm-occur t)
     ;; replace find files C-x C-f
-    (setq section-mode-helm-find-files nil)
+    (setq section-mode-helm-find-files t)
     ;; replace recentf
     (setq section-mode-helm-recentf t)
     ;; add imenu bind
@@ -431,21 +417,21 @@
   ;; RAINBOW MODE: show string color in color
   (setq section-mode-rainbow t)
   ;; EDIFF: graphical diff (## to toggle whitespace ignoring)
-  (setq section-mode-ediff t)
+  (setq section-mode-ediff nil)
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (setq section-mode-magit nil)
   (when section-mode-magit
-    (setq profile-magit-exec "C:/MinGW/msys/1.0/bin/git.exe")
+    (setq profile-magit-exec "D:/Tools/Git/bin/git.exe")
     ) ; (when section-mode-magit
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
   ;; emacs)
   (setq section-mode-synergy t)
   (when section-mode-synergy
     (setq profile-synergy-username "FT346598")
-    ;;(setq profile-synergy-database "/opt/ccm/databases/kc390_spds") ;; KC390
-    ;;(setq profile-synergy-server "http://synergy7c.sds.safran:8410") ;; KC390
-    (setq profile-synergy-database "/opt/ccm/databases/trcu")
-    (setq profile-synergy-server "http://synergy7a.sds.safran:8410")
+    (setq profile-synergy-database "/opt/ccm/databases/kc390_spds") ;; KC390
+    (setq profile-synergy-server "http://synergy7c.sds.safran:8410") ;; KC390
+    ;;(setq profile-synergy-database "/opt/ccm/databases/trcu")
+    ;;(setq profile-synergy-server "http://synergy7a.sds.safran:8410")
     (setq profile-synergy-history-filter '(
                                             "|" "sed" "s/F281393/DMN    /"
                                             "|" "sed" "s/FT346530/MQL     /"
@@ -467,6 +453,31 @@
   ;; AGGRESSIVE-INDENT: indent all line in function/condition in C or lisp mode
   ;; when edit it
   (setq section-mode-aggressive-indent nil)
+  ;; PLATINIUM SEARCH: A front-end for pt, The Platinum Searcher (faster than
+  ;; ack)
+  (setq section-mode-platinium-search t)
+  ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation
+  ;; buffer)
+  (setq section-mode-popwin t)
+  ;; PROJECTILE: Project management, filtered find-file, only with root file
+  ;; from version control
+  (setq section-mode-projectile t)
+  ;; COMPANY MODE: Completion mode using back-ends to have symbol
+  (setq section-mode-company nil)
+  ;; EXPAND-REGION: Increase selected region by semantic units
+  (setq section-mode-expand-region t)
+  ;; FUNCTION-ARGS: Show function parameters in C and C++
+  (setq section-mode-function-args nil)
+  ;; ELPY: Python mode like an IDE
+  (setq section-mode-elpy t)
+  (when section-mode-elpy
+    ;; add elpy package
+    ;; and flycheck package, about warnings/errors check on the fly
+    ;; and autopep8 package, about fix automagically some pep8 rules after save python file
+    (add-to-list 'profile-environment-elpa-package-list 'elpy t)
+    (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+    (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
+    ) ; (when section-mode-elpy
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -508,6 +519,8 @@
     (when section-languages-c-hide-show
       (setq section-languages-c-hide-show-hide-all-at-start nil)
       ) ; (when section-languages-c-hide-show
+    ;; FLYMAKE
+    (setq section-languages-c-flymake nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -525,6 +538,8 @@
     ;; number of space for indentation in perl
     (setq profile-perl-indent-offset 2)
     ) ; (when section-languages-perl
+  ;; C++ QT: set include for Qt 4.8
+  (setq section-languages-c++-qt nil)
   ) ; (when section-languages
 
 
@@ -558,7 +573,6 @@
   (when section-display-font
     ;; ANTIALIAS
     ;; set antialiasing on font rendering
-;    (setq section-display-font-antialias nil)
     (setq section-display-font-antialias t)
     ;; choice between (it's just some nice font, you can use another font):
     ;;; Terminal
@@ -627,11 +641,11 @@
     (setq section-display-color-parentheses-highlight nil)
     ;; COLOR THEME: set color by color-theme mode (or manual settings nil)
     (setq section-display-color-theme t)
-    (if  section-display-color-theme
+    (if section-display-color-theme
       ;; do not use it with terminal
       ;; theme to be used
       (setq profile-color-theme "solarized-light")
-      ) ; (if  section-display-color-theme
+      ) ; (if section-display-color-theme
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
@@ -667,11 +681,11 @@
   (setq section-interface-fullscreen t)
   ;; ECB: set size, display, refresh and remove opening tips
   ;; REQUIREMENT: `section-mode-cedet-ecb'
-  (setq section-interface-ecb t)
+  (setq section-interface-ecb nil)
   (when section-interface-ecb
     ;; ECB ASCII TREE: display ascii guides instead of image for arborescence
     ;; tree
-    (setq section-interface-ecb-ascii-tree t)
+    (setq section-interface-ecb-ascii-tree nil)
     ) ; (when section-interface-ecb
   ) ; (when section-interface
 
@@ -696,7 +710,7 @@
   (setq section-shortcut-buffers t)
   ;; ECB: add shortcut to manage ecb windows
   ;; REQUIREMENT: `section-mode-cedet-ecb'
-  (setq section-shortcut-ecb t)
+  (setq section-shortcut-ecb nil)
   ;; GREP: add shortcut to manage grep
   (setq section-shortcut-grep t)
   ;; FUNCTION: add shortcut to manage new functions
@@ -763,7 +777,7 @@
   ;; use by fill-xxx or fill column indicator mode
   (setq profile-fill-column 80)
   ;; browser to open url
-  (setq profile-browser "D:/CTE/tools/OperaNext/launcher.exe")
+  (setq profile-browser "D:/CTE/tools/LiberKey/MyApps/Vivaldi/Application/vivaldi.exe")
   ;;
   ;; CALENDAR set latitude/longitude + location + holidays + custom date in
   ;; Modeline lunar phase, sunrise/sunset, time etc
@@ -814,11 +828,7 @@
   (remove-hook 'find-file-hooks 'vc-find-file-hook)
 
   ;; do not freeze when redisplay ?
-  (redisplay-dont-pause t)
-
-  ;; hide and show to apply setting
-  (ecb-toggle-ecb-windows nil)
-  (ecb-toggle-ecb-windows t)
+  ;(redisplay-dont-pause t)
 
   (message "### END")
 
@@ -831,6 +841,7 @@
   ;;(setq ps-right-header '("/pagenumberstring load" ps-time-stamp-mon-dd-yyyy))))
 
   ) ; (defun function-to-call-after-loading-conf ()
+
 
 (provide 'profile-sagem-defense-light)
 

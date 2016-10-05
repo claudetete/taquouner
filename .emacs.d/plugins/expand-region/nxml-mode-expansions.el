@@ -27,18 +27,20 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'expand-region-core)
 (require 'html-mode-expansions)
+(require 'nxml-mode)
 
 (defun er/mark-nxml-tag ()
   "Marks one nxml element e.g. <p>"
   (interactive)
   (cond ((looking-at "<")
          (nxml-mark-token-after))
-        ((looking-back ">")
+        ((er/looking-back-exact ">")
          (backward-char 1)
          (nxml-mark-token-after))
-        ((looking-back "<[^<>]*")
+        ((er/looking-back-max "<[^<>]*" 1000)
          (nxml-mark-token-after))))
 
 (defun er/mark-nxml-element ()
@@ -67,26 +69,34 @@
     (nxml-backward-up-element)
     (nxml-forward-balanced-item 1)))
 
-(defun er/mark-nxml-attribute-string ()
-  "Marks an attribute string."
+(defun er/inside-nxml-attribute-string? ()
+  "Returns the attribute from `xmltok-attributes' array that
+point is in, or otherwise nil"
+  (save-excursion 
+    (forward-char 1)
+    (nxml-token-before))
+  (cl-find-if (lambda (att)
+		(and (<= (xmltok-attribute-value-start att) (point))
+		     (>= (xmltok-attribute-value-end att) (point))))
+	      xmltok-attributes))
+
+(defun er/mark-nxml-attribute-inner-string ()
+  "Marks an attribute string"
   (interactive)
-  (when (looking-back "[\"']")
-    (backward-char 1))
-  ;; Using syntax highlighting is a hack, but I can't figure out how
-  ;; to use nxml-mode functions to do it.
-  (font-lock-fontify-buffer)
-  (when (member (get-char-property (point) 'face)
-                '((nxml-attribute-value)
-                  (nxml-attribute-value-delimiter)))
-    (while (member (get-char-property (point) 'face)
-                   '((nxml-attribute-value)
-                     (nxml-attribute-value-delimiter)))
-      (backward-char 1))
-    (set-mark (point))
-    (forward-sexp 1)
-    (exchange-point-and-mark)
-    ;; move past the '='
-    (forward-char 1)))
+  (let ((attr (er/inside-nxml-attribute-string?)))
+    (when attr
+      (set-mark (xmltok-attribute-value-start attr))
+      (goto-char (xmltok-attribute-value-end attr))
+      (exchange-point-and-mark))))
+
+(defun er/mark-nxml-attribute-string ()
+  "Marks an attribute string inside quotes."
+  (interactive)
+  (let ((attr (er/inside-nxml-attribute-string?)))
+    (when attr      
+      (set-mark (1- (xmltok-attribute-value-start attr)))
+      (goto-char (1+ (xmltok-attribute-value-end attr)))
+      (exchange-point-and-mark))))
 
 (defun er/add-nxml-mode-expansions ()
   "Adds Nxml-specific expansions for buffers in nxml-mode"
@@ -100,6 +110,7 @@
           er/mark-nxml-element
           er/mark-nxml-containing-element
           er/mark-nxml-attribute-string
+          er/mark-nxml-attribute-inner-string
           ;; Steal from html-mode-expansions
           er/mark-html-attribute)
         ;; some normal marks are more hindrance than help:

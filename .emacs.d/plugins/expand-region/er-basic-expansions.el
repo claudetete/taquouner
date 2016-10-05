@@ -31,22 +31,20 @@
   (interactive)
   (let ((word-regexp "\\sw"))
     (when (or (looking-at word-regexp)
-              (looking-back word-regexp))
+              (er/looking-back-on-line word-regexp))
       (skip-syntax-forward "w")
       (set-mark (point))
-      (while (looking-back word-regexp)
-        (backward-char)))))
+      (skip-syntax-backward "w"))))
 
 (defun er/mark-symbol ()
   "Mark the entire symbol around or in front of point."
   (interactive)
   (let ((symbol-regexp "\\s_\\|\\sw"))
     (when (or (looking-at symbol-regexp)
-              (looking-back symbol-regexp))
+              (er/looking-back-on-line symbol-regexp))
       (skip-syntax-forward "_w")
       (set-mark (point))
-      (while (looking-back symbol-regexp)
-        (backward-char)))))
+      (skip-syntax-backward "_w"))))
 
 (defun er/mark-symbol-with-prefix ()
   "Mark the entire symbol around or in front of point, including prefix."
@@ -55,13 +53,12 @@
         (prefix-regexp "\\s'"))
     (when (or (looking-at prefix-regexp)
               (looking-at symbol-regexp)
-              (looking-back symbol-regexp))
+              (er/looking-back-on-line symbol-regexp))
       (skip-syntax-forward "'")
       (skip-syntax-forward "_w")
       (set-mark (point))
-      (while (or (looking-back symbol-regexp)
-                 (looking-back prefix-regexp))
-        (backward-char)))))
+      (skip-syntax-backward "_w")
+      (skip-syntax-backward "'"))))
 
 ;; Mark method call
 
@@ -81,13 +78,13 @@ period and marks next symbol."
 (defun er/mark-method-call ()
   "Mark the current symbol (including dots) and then paren to closing paren."
   (interactive)
-  (let ((symbol-regexp "\\s_\\|\\sw\\|\\."))
+  (let ((symbol-regexp "\\(\\s_\\|\\sw\\|\\.\\)+"))
     (when (or (looking-at symbol-regexp)
-              (looking-back symbol-regexp))
+              (er/looking-back-on-line symbol-regexp))
       (skip-syntax-backward "_w.")
       (set-mark (point))
-      (while (looking-at symbol-regexp)
-        (forward-char))
+      (when (looking-at symbol-regexp)
+        (goto-char (match-end 0)))
       (if (looking-at "(")
           (forward-list))
       (exchange-point-and-mark))))
@@ -123,11 +120,12 @@ period and marks next symbol."
 
 (defun er--move-point-forward-out-of-string ()
   "Move point forward until it exits the current quoted string."
-  (while (er--point-inside-string-p) (forward-char)))
+  (er--move-point-backward-out-of-string)
+  (forward-sexp))
 
 (defun er--move-point-backward-out-of-string ()
   "Move point backward until it exits the current quoted string."
-  (while (er--point-inside-string-p) (backward-char)))
+  (goto-char (nth 8 (syntax-ppss))))
 
 (defun er/mark-inside-quotes ()
   "Mark the inside of the current string, not including the quotation marks."
@@ -146,7 +144,7 @@ period and marks next symbol."
   (if (er--point-inside-string-p)
       (er--move-point-backward-out-of-string)
     (when (and (not (use-region-p))
-               (looking-back "\\s\""))
+               (er/looking-back-on-line "\\s\""))
       (backward-char)
       (er--move-point-backward-out-of-string)))
   (when (looking-at "\\s\"")
@@ -191,7 +189,7 @@ period and marks next symbol."
 (defun er/mark-outside-pairs ()
   "Mark pairs (as defined by the mode), including the pair chars."
   (interactive)
-  (if (looking-back "\\s)+\\=")
+  (if (er/looking-back-on-line "\\s)+\\=")
       (ignore-errors (backward-list 1))
     (skip-chars-forward er--space-str))
   (when (and (er--point-inside-pairs-p)

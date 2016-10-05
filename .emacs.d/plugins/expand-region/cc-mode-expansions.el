@@ -46,6 +46,8 @@
 ;;; Code:
 
 (require 'expand-region-core)
+(require 'er-basic-expansions)
+(require 'cc-cmds)
 
 (defun er/c-mark-statement ()
   "Mark the current C statement.
@@ -101,7 +103,7 @@ This function captures identifiers composed of multiple
   (when (use-region-p)
     (when (> (point) (mark))
       (exchange-point-and-mark))
-    (while (looking-back "::")
+    (while (er/looking-back-exact "::")
       (backward-char 2)
       (skip-syntax-backward "_w"))
     (exchange-point-and-mark)

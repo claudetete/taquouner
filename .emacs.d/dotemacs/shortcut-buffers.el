@@ -1,6 +1,6 @@
 ;;; shortcut-buffers.el --- a config file for buffer shortcut
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, buffer
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: October 2006
-;; Last-Updated: April 2013
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2016-09-28 (2.1)
+;;    modify shortcut for bookmarks
 ;; 2013-04-10 (2.0)
 ;;    add shortcut for helm mode + clean up
 ;; 2013-02-05 (1.9)
@@ -61,6 +63,8 @@
 ;;; Code:
 ;; close the current buffer
 (global-set-key         (kbd "M-`")             'kill-this-buffer)
+;; remove read-only attribute to a buffer/file
+(global-set-key         (kbd "C-x C-q")         'set-buffer-file-writable)
 ;;
 ;; show a list of buffers in a new window
 ;; to replace electric buffers list with helm buffers list
@@ -70,8 +74,8 @@
 ;;
 ;; show the window of bookmark
 (if section-mode-helm-bookmark
-  (global-set-key       (kbd "C-c b")           'helm-bookmarks)
-  (global-set-key       (kbd "C-c b")           'bookmark-bmenu-list))
+  (global-set-key       (kbd "C-c C-b")           'helm-bookmarks)
+  (global-set-key       (kbd "C-c C-b")           'bookmark-bmenu-list))
 
 ;;;; go to the next buffer (like new editor which I never like it)
 ;;(global-set-key         [(control tab)]         'previous-user-buffer)

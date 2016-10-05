@@ -33,6 +33,7 @@
 ;;; Code:
 
 (require 'expand-region-core)
+(require 'sgml-mode)
 
 (defun er/mark-html-attribute ()
   "Mark html-attribute presumes that point is at the assignment part of attr=\"value\".
@@ -41,7 +42,7 @@ first anyway.  Does not support html-attributes with spaces
 around the equal sign or unquotes attributes atm."
   (interactive)
   (when (or (looking-at "\\(\\s_\\|\\sw\\)*=")
-            (looking-back "="))
+            (er/looking-back-exact "="))
     (search-backward " ")
     (forward-char 1)
     (set-mark (point))

@@ -1,6 +1,6 @@
 ;;; profile-simple.el --- a config file for profile
 
-;; Copyright (c) 2013-2014 Claude Tete
+;; Copyright (c) 2013-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,15 +20,17 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: May 2013
-;; Last-Updated: March 2014
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
 ;; profile use to have a quick emacs to run from gui
 
 ;;; Change Log:
+;; 2016-09-28 (1.1)
+;;    update with new mode/variable
 ;; 2014-03-26 (0.2)
 ;;    move synergy mode
 ;; 2013-05-13 (0.1)
@@ -432,12 +434,44 @@
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
   ;; emacs)
   (setq section-mode-synergy nil)
+  (when section-mode-synergy
+    (setq profile-synergy-username "")
+    (setq profile-synergy-database "")
+    (setq profile-synergy-server "")
+    (setq profile-synergy-history-filter nil)
+    (setq profile-synergy-diff-external-command nil)
+    (setq profile-synergy-diff-external-parameter nil)
+    (setq profile-synergy-diff-external-swap-file nil)
+    ) ; (when section-mode-synergy
   ;; HIDE-LINES: hide lines using regexp (like narrow but with regex and not
   ;; region)
   (setq section-mode-hide-lines nil)
   ;; AGGRESSIVE-INDENT: indent all line in function/condition in C or lisp mode
   ;; when edit it
   (setq section-mode-aggressive-indent nil)
+  ;; PLATINIUM SEARCH: A front-end for pt, The Platinum Searcher (faster than
+  ;; ack)
+  (setq section-mode-platinium-search nil)
+  ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation
+  ;; buffer)
+  (setq section-mode-popwin nil)
+  ;; PROJECTILE: Project management, filtered find-file, only with root file
+  ;; from version control
+  (setq section-mode-projectile nil)
+  ;; COMPANY MODE: Completion mode using back-ends to have symbol
+  (setq section-mode-company nil)
+  ;; EXPAND-REGION: Increase selected region by semantic units
+  (setq section-mode-expand-region nil)
+  ;; FUNCTION-ARGS: Show function parameters in C and C++
+  (setq section-mode-function-args nil)
+  ;; ELPY: Python mode like an IDE
+  (setq section-mode-elpy nil)
+  (when section-mode-elpy
+    ;; add elpy package
+    ;; and flycheck package, about warnings/errors check on the fly
+    (add-to-list 'profile-environment-elpa-package-list 'elpy t)
+    (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+    ) ; (when section-mode-elpy
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -479,6 +513,8 @@
     (when section-languages-c-hide-show
       (setq section-languages-c-hide-show-hide-all-at-start nil)
       ) ; (when section-languages-c-hide-show
+    ;; FLYMAKE
+    (setq section-languages-c-flymake nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -496,6 +532,8 @@
     ;; number of space for indentation in perl
     (setq profile-perl-indent-offset 2)
     ) ; (when section-languages-perl
+  ;; C++ QT: set include for Qt 4.8
+  (setq section-languages-c++-qt nil)
   ) ; (when section-languages
 
 
@@ -599,25 +637,12 @@
     (if section-display-color-theme
       ;; do not use it with terminal
       ;; theme to be used
-;      (setq profile-color-theme "sweet")
       (setq profile-color-theme "zenburn")
-;      (setq profile-color-theme "solarized-light")
-      (progn ; if section-display-color-theme nil
-        ;;
-        ;; MISC: current line highlight + full syntax coloration
-        (setq section-display-color-misc t)
-        ;; MODE: set color for c-mode, cursor and current line
-        (setq section-display-color-mode t)
-        ;; GREP: set color for grep window (all search, occur, grep, grep-find,
-        ;; etc)
-        (setq section-display-color-grep t)
-        ;; ECB: set color for ecb-mode
-        ;; REQUIREMENT: `section-mode-cedet-ecb'
-        (setq section-display-color-ecb t)
-        ) ; (progn
       ) ; (if section-display-color-theme
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq section-display-color-ansi-color-compile t)
+    ;; HIGHLIGHT CURRENT LINE: have current line highlighted
+    (setq section-display-color-highlight-line nil)
     ) ; (when section-display-color
   ) ; (when section-display
 
@@ -711,7 +736,7 @@
   ;; SMOOTH SCROLL: it will always scroll line by line with arrow at start or
   ;; end of screen
   (setq section-mouse-smooth-scroll t)
-) ; (when section-mouse
+  ) ; (when section-mouse
 
 
 ;;; ANNOYANCES: no welcome message + yes->y + do not query to refresh buffer +

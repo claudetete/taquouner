@@ -1,6 +1,6 @@
 ;;; languages.el --- a config file for programing languages
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.3
+;; Version: 3.4
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2016-09-28 (3.4)
+;;    replace about electric-pair to add new emacs version 25
 ;; 2013-05-23 (3.3)
 ;;    add condition to set semantic option for c++
 ;; 2013-05-07 (3.2)
@@ -104,7 +106,7 @@
     ;; Compile mode without ask
     (setq compilation-read-command profile-c-ask-before-compile)
 
-    (when (and section-environment-version-recognition running-on-emacs-24)
+    (when (and section-environment-version-recognition (not running-on-emacs-23))
       ;; pair of parenthesis, bracket, etc
       (electric-pair-mode t))
 
@@ -161,7 +163,7 @@
     '(lambda ()
        ;; set indent size
        (setq lisp-indent-offset profile-lisp-indent-offset)
-       (when (and section-environment-version-recognition running-on-emacs-24)
+       (when (and section-environment-version-recognition (not running-on-emacs-23))
          ;; pair of parenthesis, bracket, etc
          (electric-pair-mode t))
 

@@ -160,6 +160,7 @@ This function is called from `compilation-filter-hook'."
         (while (re-search-forward "\033\\[[0-9;]*[mK]" end 1)
           (replace-match "" t t))))))
 
+;;;###autoload
 (defun ack-run (dir pattern args)
   "Run ack, with user-specified ARGS, and collect output in a buffer.
  While ack runs asynchronously, you can use the \\[next-error] command to
@@ -184,6 +185,7 @@ This function is called from `compilation-filter-hook'."
                     ack-full-buffer-name)))
       (regexp-quote pattern))))
 
+;;;###autoload
 (defun ack-type ()
   "Return --type option or --type-set"
   (let ((type (car (cdr (assq major-mode ack-mode-type-alist))))
@@ -195,6 +197,7 @@ This function is called from `compilation-filter-hook'."
       ;; unknown type use the file extension
       (concat "--type-set " mode ":ext:" ext " --" mode))))
 
+;;;###autoload
 (defun ack (dir pattern args)
   "Run ack, with user-specified ARGS, and collect output in a buffer.
  While ack runs asynchronously, you can use the \\[next-error] command to
@@ -207,6 +210,7 @@ This function is called from `compilation-filter-hook'."
   ;; run ack
   (ack-run dir pattern args))
 
+;;;###autoload
 (defun ack-dir (dir pattern args)
   "Run ack, with user-specified ARGS, and collect output in a buffer.
  While ack runs asynchronously, you can use the \\[next-error] command to
@@ -218,6 +222,7 @@ This function is called from `compilation-filter-hook'."
   ;; run ack
   (ack-run dir pattern args))
 
+;;;###autoload
 (defun ack-same (dir pattern args)
   "Run ack with --type matching the current `major-mode'.
 The types of files searched are determined by `ack-mode-type-alist' and

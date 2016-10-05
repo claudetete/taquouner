@@ -1,6 +1,6 @@
 ;;; display-font.el --- a config file for font setting
 
-;; Copyright (c) 2006-2015 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, font
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.0
+;; Version: 2.1
 ;; Created: October 2006
-;; Last-Updated: August 2015
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-display-font'
 
 ;;; Change Log:
+;; 2016-09-28 (2.1)
+;;    replace condition about emacs version
 ;; 2015-08-21 (2.0)
 ;;    do not use obsolete function to set font and size
 ;; 2013-05-07 (1.9)
@@ -66,7 +68,7 @@
     (progn
       (setq profile-font (concat profile-font ":antialias=none"))
       ))
-  (if (and section-environment-version-recognition running-on-emacs-24)
+  (if (and section-environment-version-recognition (not running-on-emacs-23))
     ;; new function to set font since 23.1
     (set-frame-font profile-font)
     ;; obsolete function to set font

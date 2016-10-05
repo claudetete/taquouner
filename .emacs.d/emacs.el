@@ -1,6 +1,6 @@
 ;;; emacs.el --- config file for Emacs
 
-;; Copyright (c) 2006-2015 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 9.2
+;; Version: 9.3
 ;; Created: October 2006
-;; Last-Updated: August 2015
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,9 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2016-09-28 (9.3)
+;;    add proxy for packages + new GNU Global mode + add platinium search,
+;;    popwin, projectile, company and elpy mode
 ;; 2015-08-21 (9.2)
 ;;    add hide-lines mode + aggressive indent mode + remove old colors + custom
 ;;    hl-line
@@ -324,6 +327,7 @@ before message."
   (defvar section-environment-profile t)
   (progn
     (defvar profile-name "default")
+    (defvar profile "Default")
     ) ; (progn
   ;;
   ;; VERSION RECOGNITION                                                0.2
@@ -365,6 +369,11 @@ before message."
   ;; ELPA                                                               0.8
   ;; for multiple repo and up to date
   (defvar section-environment-elpa nil)
+  (progn
+    (defvar profile-environment-elpa-proxy-http nil)
+    (defvar profile-environment-elpa-proxy-https nil)
+    (defvar profile-environment-elpa-package-list '())
+    )
   ;;
   ;; HYPER                                                              0.9
   ;; set menu key as hyper key
@@ -534,6 +543,12 @@ before message."
   ;; see function to add from function.el and put the absolute path of
   ;; global executable
   (defvar section-mode-gnu-global nil)
+  (progn
+    ;; GNU/GLOBAL gtags                                               2.17.1
+    (defvar section-mode-gnu-global-gtags nil)
+    ;; GNU/GLOBAL ggtags                                              2.17.2
+    (defvar section-mode-gnu-global-ggtags nil)
+    ) ; (progn
   ;;
   ;; EPROJECT (grischka)                                                2.18
   ;; project management mode (never used)
@@ -767,6 +782,35 @@ before message."
   ;; AGGRESSIVE-INDENT                                                  2.63
   ;; indent all line in function/condition in C or lisp mode when edit it
   (defvar section-mode-aggressive-indent nil)
+  ;;
+  ;; PLATINIUM SEARCH                                                   2.64
+  ;; A front-end for pt, The Platinum Searcher (faster than ack)
+  (defvar section-mode-platinium-search nil)
+  ;;
+  ;; POPWIN                                                             2.65
+  ;; A pop-up manager for annoying buffer (have like ECB compilation buffer)
+  (defvar section-mode-popwin nil)
+  ;;
+  ;; PROJECTILE                                                         2.66
+  ;; Project management, filtered find-file, only with root file from version
+  ;; control
+  (defvar section-mode-projectile nil)
+  ;;
+  ;; COMPANY MODE                                                       2.67
+  ;; Completion mode using back-ends to have symbol
+  (defvar section-mode-company nil)
+  ;;
+  ;; EXPAND-REGION                                                      2.68
+  ;; Increase selected region by semantic units
+  (defvar section-mode-expand-region nil)
+  ;;
+  ;; FUNCTION-ARGS                                                      2.69
+  ;; Show function parameters in C and C++
+  (defvar section-mode-function-args nil)
+  ;;
+  ;; ELPY                                                               2.70
+  ;; Python mode like an IDE
+  (defvar section-mode-elpy nil)
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
@@ -1107,8 +1151,10 @@ before message."
   ;; set latitude/longitude + location + holidays + custom date in Modeline
   ;; lunar phase, sunrise/sunset, time etc
   (defvar section-misc-calendar nil)
-  ;;
-  (defvar profile-shell-cygwin "bash")
+  (progn
+    ;; CALENDAR in French
+    (setq section-misc-calendar-french nil)
+    ) ; (progn
   ;;
   ;; DICTIONARY                                                         11.2
   ;; set default dictionary, etc

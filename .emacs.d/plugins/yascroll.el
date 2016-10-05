@@ -1,10 +1,10 @@
 ;;; yascroll.el --- Yet Another Scroll Bar Mode
 
-;; Copyright (C) 2011, 2012  Tomohiro Matsuyama
+;; Copyright (C) 2011-2015  Tomohiro Matsuyama
 
-;; Author: Tomohiro Matsuyama <tomo@cx4a.org>
+;; Author: Tomohiro Matsuyama <m2ym.pub@gmail.com>
 ;; Keywords: convenience
-;; Version: 0.2.0
+;; Package-Requires: ((cl-lib "0.3"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,8 +26,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl))
+(require 'cl-lib)
 
 
 
@@ -52,13 +51,20 @@ logical position to the right-edge of the window, and PADDING is
 a positive number of padding to the edge."
   (save-excursion
     (let* ((window-width (window-width))
+           (window-margin (destructuring-bind (left-margin . right-margin)
+                              (window-margins)
+                            (+ (or left-margin 0) (or right-margin 0))))
            (column-bol (progn (yascroll:vertical-motion (cons 0 0))
                               (current-column)))
            (column-eol (progn (yascroll:vertical-motion
                                (cons (- window-width 1 (if window-system 0 1)) 0))
                               (current-column)))
            (column-eol-visual (- column-eol column-bol))
-           (padding (- window-width column-eol-visual (if window-system 0 1))))
+
+           (padding (- window-width
+                       window-margin
+                       column-eol-visual
+                       (if window-system 0 1))))
       (list (point) padding))))
 
 
@@ -150,6 +156,7 @@ scroll bar."
                        (propertize " " 'face 'yascroll:thumb-text-area))))
           (put-text-property 0 1 'cursor t after-string)
           (overlay-put overlay 'after-string after-string)
+          (overlay-put overlay 'window (selected-window))
           overlay)
       (let ((overlay (make-overlay edge-pos (1+ edge-pos)))
             (display-string
@@ -157,6 +164,7 @@ scroll bar."
                          'face 'yascroll:thumb-text-area
                          'cursor t)))
         (overlay-put overlay 'display display-string)
+        (overlay-put overlay 'window (selected-window))
         overlay))))
 
 (defun yascroll:make-thumb-overlay-fringe (left-or-right)
@@ -169,6 +177,7 @@ scroll bar."
          (overlay (make-overlay pos pos)))
     (overlay-put overlay 'after-string after-string)
     (overlay-put overlay 'fringe-helper t)
+    (overlay-put overlay 'window (selected-window))
     overlay))
 
 (defun yascroll:make-thumb-overlay-left-fringe ()
@@ -185,10 +194,10 @@ scroll bar."
     (vertical-motion window-line)
     ;; Make thumb overlays.
     (condition-case nil
-        (loop repeat size
-              do (push (funcall make-thumb-overlay)
-                       yascroll:thumb-overlays)
-              until (zerop (vertical-motion 1)))
+        (cl-loop repeat size
+                 do (push (funcall make-thumb-overlay)
+                          yascroll:thumb-overlays)
+                 until (zerop (vertical-motion 1)))
       (end-of-buffer nil))))
 
 (defun yascroll:delete-thumb-overlays ()
@@ -212,15 +221,17 @@ scroll bar."
 
 (defun yascroll:choose-scroll-bar ()
   (when (memq window-system yascroll:enabled-window-systems)
-    (loop with (left-width right-width &rest) = (window-fringes)
-          for scroll-bar in (yascroll:listify yascroll:scroll-bar)
-          if (or (eq scroll-bar 'text-area)
-                 (and (eq scroll-bar 'left-fringe)
-                      (> left-width 0))
-                 (and (eq scroll-bar 'right-fringe)
-                      (> right-width 0)))
-          return scroll-bar)))
+    (cl-destructuring-bind (left-width right-width outside-margins)
+        (window-fringes)
+      (cl-loop for scroll-bar in (yascroll:listify yascroll:scroll-bar)
+               if (or (eq scroll-bar 'text-area)
+                      (and (eq scroll-bar 'left-fringe)
+                           (> left-width 0))
+                      (and (eq scroll-bar 'right-fringe)
+                           (> right-width 0)))
+               return scroll-bar))))
 
+;;;###autoload
 (defun yascroll:show-scroll-bar ()
   "Show scroll bar in BUFFER."
   (interactive)
@@ -241,12 +252,13 @@ scroll bar."
                     (left-fringe 'yascroll:make-thumb-overlay-left-fringe)
                     (right-fringe 'yascroll:make-thumb-overlay-right-fringe)
                     (text-area 'yascroll:make-thumb-overlay-text-area))))
-            (if (<= thumb-buffer-line buffer-lines)
+            (when (<= thumb-buffer-line buffer-lines)
               (yascroll:make-thumb-overlays make-thumb-overlay
                                             thumb-window-line
                                             thumb-size)
               (yascroll:schedule-hide-scroll-bar))))))))
 
+;;;###autoload
 (defun yascroll:hide-scroll-bar ()
   "Hide scroll bar of BUFFER."
   (interactive)
@@ -284,6 +296,7 @@ and disable `yascroll-bar-mode'."
 (defun yascroll:after-window-configuration-change ()
   (yascroll:update-scroll-bar))
 
+;;;###autoload
 (define-minor-mode yascroll-bar-mode
   "Yet Another Scroll Bar Mode."
   :group 'yascroll
@@ -307,9 +320,13 @@ and disable `yascroll-bar-mode'."
   (when (yascroll:enabled-buffer-p (current-buffer))
     (yascroll-bar-mode 1)))
 
+;;;###autoload
 (define-global-minor-mode global-yascroll-bar-mode
   yascroll-bar-mode yascroll:turn-on
   :group 'yascroll)
 
 (provide 'yascroll)
+;; Local Variables:
+;; indent-tabs-mode: nil
+;; End:
 ;;; yascroll.el ends here

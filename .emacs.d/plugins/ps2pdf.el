@@ -65,6 +65,7 @@ For GNU/Linux and Unix-ish systems, this will be \"kpdf\" or
   :type 'string
   :group 'ps2pdf)
 
+;;;###autoload
 (defun ps2pdf-convert (file)
   "Convert Postscript FILE to PDF."
   (setq file (expand-file-name file))
@@ -78,12 +79,14 @@ For GNU/Linux and Unix-ish systems, this will be \"kpdf\" or
         pdf-file
       (error "PDF creation failed"))))
 
+;;;###autoload
 (defun ps2pdf (file)
   "Convert Postscript FILE to PDF."
   (interactive "fSelect Postscript file: ")
   (let ((pdf-file (ps2pdf-convert file)))
     (message "PDF file %s created successfully" pdf-file)))
 
+;;;###autoload
 (defun ps2pdf-with-faces (type)
   "Create PDF from buffer or region."
   (let ((fname (make-temp-file "ps2pdf-buffer" nil ".ps"))
@@ -98,6 +101,7 @@ For GNU/Linux and Unix-ish systems, this will be \"kpdf\" or
     (message "PDF file %s created successfully" pdf-file)
     pdf-file))
 
+;;;###autoload
 (defun ps2pdf-from-region ()
   "Create PDF from region and open it."
   (interactive)
@@ -106,6 +110,7 @@ For GNU/Linux and Unix-ish systems, this will be \"kpdf\" or
     (shell-command
      (format "%s %s" ps2pdf-open-program (ps2pdf-with-faces 'region)))))
 
+;;;###autoload
 (defun ps2pdf-from-buffer ()
   "Create PDF from buffer and open it."
   (interactive)
@@ -114,6 +119,7 @@ For GNU/Linux and Unix-ish systems, this will be \"kpdf\" or
     (shell-command
      (format "%s %s" ps2pdf-open-program (ps2pdf-with-faces 'buffer)))))
 
+;;;###autoload
 (defun ps2pdf-reset-faces ()
   "Reset faces.
 Use this if you change color theme or similar and the colors does

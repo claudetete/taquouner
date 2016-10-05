@@ -1,6 +1,6 @@
 ;;; display-color.el --- a config file for color displayed setting
 
-;; Copyright (c) 2006-2015 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, display, color, mode, ecb, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.6
+;; Version: 2.7
 ;; Created: October 2006
-;; Last-Updated: August 2015
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -33,6 +33,8 @@
 ;;              var     `section-display-color-theme'
 
 ;;; Change Log:
+;; 2016-09-28 (2.7)
+;;    replace condition about emacs version
 ;; 2015-08-21 (2.6)
 ;;    remove old colorization + add custom highlight current line
 ;; 2014-03-26 (2.5)
@@ -118,7 +120,7 @@
 ;;
 ;;; COLOR-THEME
   (message "    5.4.4 Color Theme...")
-  (if (and section-environment-version-recognition running-on-emacs-24)
+  (if (and section-environment-version-recognition (not running-on-emacs-23))
     (progn
       ;; add path of theme
       (add-to-list 'custom-theme-load-path (concat (file-name-as-directory dotemacs-path) "plugins/themes"))

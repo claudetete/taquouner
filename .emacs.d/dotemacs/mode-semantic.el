@@ -1,6 +1,6 @@
 ;;; mode-semantic.el --- a config file for semantic mode settings
 
-;; Copyright (c) 2010-2012 Claude Tete
+;; Copyright (c) 2010-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: August 2010
-;; Last-Updated: December 2012
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -30,7 +30,7 @@
 ;; REQUIREMENT: var     `section-mode-cedet-semantic'
 ;;              var     `section-mode-cedet'
 ;;
-;; cedet included in Emacs 23 is not the same than cedet-snapshot so it need
+;; cedet included in Emacs is not the same than cedet-snapshot so it need
 ;; different parameter
 ;;
 ;; To help identify speed issues with the semantic analyzer, you can use
@@ -53,6 +53,9 @@
 ;; again.
 
 ;;; Change Log:
+;; 2016-09-28 (1.8)
+;;    enable semantic/ia + patch list of major mode to remove python
+;;    (manage by elpy)
 ;; 2012-12-27 (1.7)
 ;;    update dot emacs path
 ;; 2012-06-12 (1.6)
@@ -134,6 +137,8 @@
 
     ;; semanticdb is used
     (try-require 'semantic/db "      ")
+    ;; semantic ia is used
+    (try-require 'semantic/ia "      ")
 
     ;;;; load GNU/Global for semantic
     ;;(try-require 'semantic/db-global)
@@ -161,9 +166,30 @@
 
       '(global-semanticdb-minor-mode t)
 
+      ;; remove python mode in this list
+      '(semantic-new-buffer-setup-functions
+        '((c-mode . semantic-default-c-setup)
+           (c++-mode . semantic-default-c-setup)
+           (html-mode . semantic-default-html-setup)
+           (java-mode . wisent-java-default-setup)
+           (js-mode . wisent-javascript-setup-parser)
+           ;;(python-mode . wisent-python-default-setup)
+           (scheme-mode . semantic-default-scheme-setup)
+           (srecode-template-mode . srecode-template-setup-parser)
+           (texinfo-mode . semantic-default-texi-setup)
+           (makefile-automake-mode . semantic-default-make-setup)
+           (makefile-gmake-mode . semantic-default-make-setup)
+           (makefile-makepp-mode . semantic-default-make-setup)
+           (makefile-bsdmake-mode . semantic-default-make-setup)
+           (makefile-imake-mode . semantic-default-make-setup)
+           (makefile-mode . semantic-default-make-setup)))
+
       ;; show the function name in the header line
-      '(global-semantic-stickyfunc-mode t)
+      ;'(global-semantic-stickyfunc-mode t)
       )
+
+    ;; do not use cedet with python (do not work wisent-python-default-setup is still called somewhere)
+    (remove-hook 'python-mode-hook 'wisent-python-default-setup)
 
     ;; Increase the delay before activation
     (setq semantic-idle-scheduler-idle-time 10)

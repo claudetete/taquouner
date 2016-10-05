@@ -111,7 +111,7 @@
 (defun er/mark-js-object-property-value ()
   "Mark the current object property value, ie. from : to , or }"
   (interactive)
-  (unless (er--inside-pairs-p)
+  (unless (er--point-inside-pairs-p)
     (error "Point is not inside an object"))
   (search-backward ":")
   (forward-char)
@@ -122,7 +122,7 @@
     (if (looking-at "\\s(")
         (forward-list)
       (forward-char)))
-  (when (looking-back "[\s\n]")
+  (when (er/looking-back-max "[\s\n]" 400)
     (search-backward-regexp "[^\s\n]")
     (forward-char))
   (exchange-point-and-mark))
@@ -133,21 +133,38 @@ If point is inside the value, that will be marked first anyway."
   (interactive)
   (when (or (looking-at "\"?\\(\\s_\\|\\sw\\| \\)*\":")
             (looking-at "\\(\\s_\\|\\sw\\)*:")
-            (looking-back ": ?"))
+            (er/looking-back-max ": ?" 2))
     (search-backward-regexp "[{,]")
     (forward-char)
     (search-forward-regexp "[^\s\n]")
     (backward-char)
     (set-mark (point))
     (search-forward ":")
-    (while (not (looking-at "[},]"))
+    (while (or (not (looking-at "[},]"))
+               (er--point-inside-string-p))
       (if (looking-at "\\s(")
           (forward-list)
         (forward-char)))
-    (when (looking-back "[\s\n]")
+    (when (er/looking-back-max "[\s\n]" 400)
       (search-backward-regexp "[^\s\n]")
       (forward-char))
     (exchange-point-and-mark)))
+
+(defun er/mark-js-call ()
+  "Mark the current symbol (including dots) and then parens or squares."
+  (interactive)
+  (let ((symbol-regexp "\\(\\s_\\|\\sw\\|\\.\\)+"))
+    (when (or (looking-at symbol-regexp)
+              (er/looking-back-on-line symbol-regexp))
+      (skip-syntax-backward "_w.")
+      (when (looking-at "!")
+        (forward-char 1))
+      (set-mark (point))
+      (when (looking-at symbol-regexp)
+        (goto-char (match-end 0)))
+      (if (looking-at "\\[\\|(")
+          (forward-list))
+      (exchange-point-and-mark))))
 
 (defun er/add-js-mode-expansions ()
   "Adds JS-specific expansions for buffers in js-mode"
@@ -158,7 +175,8 @@ If point is inside the value, that will be marked first anyway."
                                                     er/mark-js-object-property
                                                     er/mark-js-if
                                                     er/mark-js-inner-return
-                                                    er/mark-js-outer-return))))
+                                                    er/mark-js-outer-return
+                                                    er/mark-js-call))))
 
 (er/enable-mode-expansions 'js-mode 'er/add-js-mode-expansions)
 (er/enable-mode-expansions 'js2-mode 'er/add-js-mode-expansions)

@@ -1,6 +1,6 @@
 ;;; mode.el --- a config file for all mode settings
 
-;; Copyright (c) 2006-2015 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.0
+;; Version: 5.1
 ;; Created: October 2006
-;; Last-Updated: August 2015
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,11 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2016-09-28 (5.1)
+;;    move helm mode (to be load first) + manage project without ECB + add mode
+;;    ggtags (GNU Global) + modify condition about new emacs version 25 + add
+;;    some autoload + add platinium search + popwin (with helm) to replace ECB
+;;    + add projectile mode, company mode and elpy mode
 ;; 2015-08-21 (5.0)
 ;;    add hide-lines mode (like narrow but with regex) + aggressive indent mode
 ;; 2014-03-26 (4.9)
@@ -130,11 +135,44 @@
 ;;; Code:
 
 ;;; DIRECTORY
-(when section-mode-directory (message "  2.1 Load Directory...")
+(when section-mode-directory (message "  2.0 Load Directory...")
   ;; path to load mode
   (add-to-list 'load-path (file-name-as-directory dotemacs-path))
   (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins"))
-  (message "  2.1 Load Directory... Done"))
+  (message "  2.0 Load Directory... Done"))
+
+;;
+;;; HELM (fork ANYTHING)
+;; choose anything with the same nice interface
+(when section-mode-helm (message "  2.1 Helm...")
+  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins/helm-master"))
+  (custom-set-variables
+    '(helm-follow-mode-persistent t))
+  (when (try-require 'helm-config "    ")
+    (setq helm-locate-command "es -s %s %s")
+    (setq helm-candidate-separator
+      "--separator------------------------------")
+    (when section-mode-cedet-ecb
+      ;; quit helm when hide compile window
+      (add-hook 'ecb-toggle-compile-hide-hook 'helm-keyboard-quit))
+    (when section-mode-helm-buffers-list
+      ;; to avoid error with helm-buffers-list
+      (setq ido-use-virtual-buffers nil))
+    (when (and section-mode-helm-bookmark section-mode-helm-find-files)
+      (custom-set-variables
+        '(helm-type-bookmark-actions
+           (quote
+             (("Jump to bookmark with find-files" . helm-bookmark-find-files-jump)
+               ("Jump to bookmark"                . helm-bookmark-jump)
+               ("Jump to BM other window"         . helm-bookmark-jump-other-window)
+               ("Bookmark edit annotation"        . bookmark-edit-annotation)
+               ("Bookmark show annotation"        . bookmark-show-annotation)
+               ("Delete bookmark(s)"              . helm-delete-marked-bookmarks)
+               ("Edit Bookmark"                   . helm-bookmark-edit-bookmark)
+               ("Rename bookmark"                 . helm-bookmark-rename)
+               ("Relocate bookmark"               . bookmark-relocate))))))
+    )
+  (message "  2.1 Helm... Done"))
 
 ;;
 ;;; VECTRA
@@ -243,9 +281,6 @@
     (when section-mode-cedet-ecb (message "    2.7.2 ECB...")
       (try-require 'mode-ecb "      ")
       (message "    2.7.2 ECB... Done"))
-
-    ;; load the different projects
-    (try-require 'project "      ")
     )
   (message "  2.7 CEDET... Done"))
 
@@ -364,15 +399,35 @@
 ;;
 ;;; GNU/GLOBAL
 (when section-mode-gnu-global (message "  2.17 GNU/Global...")
-  (when (try-require 'autoload-gtags "    ")
-    (autoload 'gtags-mode "gtags" "" t)
-    (defun gtags-c-mode ()
-      (gtags-mode 1)
-      (setq gtags-select-buffer-single t)
-      )
-    (gtags-mode t) ; only for diminish mode
-    (add-hook 'c-mode-common-hook 'gtags-c-mode)
-    (add-hook 'emacs-lisp-mode-hook 'gtags-c-mode)
+  (if section-mode-gnu-global-gtags
+    (progn
+      ;; GTAGS
+      (message "    2.17.1 gtags.el...")
+      (when (try-require 'autoload-gtags "      ")
+        (autoload 'gtags-mode "gtags" "" t)
+        (defun gtags-c-mode ()
+          (gtags-mode 1)
+          (setq gtags-select-buffer-single t))
+        (gtags-mode t) ; only for diminish mode
+        (add-hook 'c-mode-common-hook 'gtags-c-mode)
+        (add-hook 'emacs-lisp-mode-hook 'gtags-c-mode))
+      (message "    2.17.1 gtags.el... Done"))
+
+    (progn
+      ;; GGTAGS
+      (message "    2.17.2 ggtags.el...")
+      (when section-mode-gnu-global-ggtags
+        (when (try-require 'autoload-ggtags "      ")
+          (eval-after-load "ggtags"
+            '(setq ggtags-mode-line-project-name ""))
+          (if section-mode-helm
+            (when (try-require 'helm-gtags "        ")
+              (add-hook 'c-mode-hook 'helm-gtags-mode))
+            (add-hook 'c-mode-common-hook
+              (lambda ()
+                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+                  (ggtags-mode 1))))))
+        (message "    2.17.2 ggtags.el... Done")))
     )
   (message "  2.17 GNU/Global... Done"))
 
@@ -504,11 +559,9 @@
 ;;; UNDO TREE
 (when section-mode-undo-tree (message "  2.28 Undo Tree...")
   (when (try-require 'autoload-undo-tree "    ")
-    ;; If you want to replace the standard Emacs' undo system with the
-    ;; `undo-tree-mode' system in all buffers, you can enable it globally by
-    ;; adding:
-    ;;
-    (global-undo-tree-mode t))
+    ;; enable globally in all mode
+    (global-undo-tree-mode t)
+    )
   (message "  2.28 Undo Tree... Done"))
 
 ;;
@@ -730,7 +783,7 @@
   (when (try-require 'autoload-rainbow-delimiters "    ")
     ;; set dark background
     (setq-default frame-background-mode 'dark)
-    (when (and section-environment-version-recognition running-on-emacs-24)
+    (when (and section-environment-version-recognition (not running-on-emacs-23))
       ;; enable this mode in programming mode
       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
     )
@@ -784,7 +837,7 @@
 ;;; FOLD DWIM
 ;; show hide code source block
 (when section-mode-fold-dwim (message "  2.45 Folding DWIM...")
-  (try-require 'fold-dwim "    ")
+  (try-require 'autoload-fold-dwim "    ")
   (message "  2.45 Folding DWIM... Done"))
 
 ;;
@@ -860,7 +913,7 @@
     (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
     )
   (when section-mode-ack-emacs
-    (try-require 'ack-emacs "    ")
+    (try-require 'autoload-ack-emacs "    ")
     (setq ack-command (concat (file-name-as-directory dotemacs-path) "plugins/ack-standalone"))
     )
   (message "  2.50 ACK... Done"))
@@ -892,7 +945,7 @@
 ;; print buffer/region in pdf (the pdf background is unavoidably white so dark
 ;; theme don't render good)
 (when section-mode-ps2pdf (message "  2.53 PS2PDF...")
-  (try-require 'ps2pdf "    ")
+  (try-require 'autoload-ps2pdf "    ")
 ;  (try-require 'w32-winprint)
   (message "  2.53 PS2PDF... Done"))
 
@@ -902,32 +955,6 @@
 (when section-mode-auctex (message "  2.54 AUCTEX...")
   (try-require 'mode-auctex "      ")
   (message "  2.54 AUCTEX... Done"))
-
-;;
-;;; HELM (fork ANYTHING)
-;; choose anything with the same nice interface
-(when section-mode-helm (message "  2.55 Helm...")
-  (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins/helm-master"))
-  (when (try-require 'helm-config "    ")
-    (setq helm-candidate-separator
-      "--separator------------------------------")
-    (when section-mode-cedet-ecb
-    ;;  ;; hide compile window when quit helm
-    ;;  (add-hook 'helm-cleanup-hook 'ecb-toggle-compile)
-      ;; quit helm when hide compile window
-      (add-hook 'ecb-toggle-compile-hide-hook 'helm-keyboard-quit))
-    (when section-mode-helm-buffers-list
-      ;; to avoid error with helm-buffers-list
-      (setq ido-use-virtual-buffers nil))
-    ;(add-to-list 'helm-completing-read-handlers-alist)
-    ;(setq helm-completing-read-handlers-alist
-    ;  (append 'helm-completing-read-handlers-alist
-    ;    '((execute-extended-command . nil))
-    ;    ))
-    ;; enable helm for completing-read and read-file-name command
-    ;(helm-mode t)
-    )
-  (message "  2.55 Helm... Done"))
 
 ;;
 ;;; YASCROLL
@@ -983,11 +1010,11 @@
 ;;;; SYNERGY
 ;; use synergy without java client GUI (do not use vc interface from emacs)
 (when section-mode-synergy (message "  2.61 Synergy...")
-  (when (try-require 'synergy-web "    ")
+  (when (try-require 'autoload-synergy-web "    ")
     (setq synergy-username profile-synergy-username)
     (setq synergy-database profile-synergy-database)
     (setq synergy-server profile-synergy-server)
-    (setq synergy-history-filter (append profile-synergy-history-filter synergy-history-filter))
+    (setq synergy-history-filter profile-synergy-history-filter)
     (setq synergy-diff-external-command profile-synergy-diff-external-command)
     (setq synergy-diff-external-parameter profile-synergy-diff-external-parameter)
     (setq synergy-diff-external-swap-file profile-synergy-diff-external-swap-file))
@@ -998,9 +1025,9 @@
 ;;;; HIDE-LINES
 ;; hide lines using regexp (like narrow but with regex and not region)
 (when section-mode-hide-lines (message "  2.62 Hide-Lines...")
-  (when (try-require 'hide-lines "    ")
+  (when (try-require 'autoload-hide-lines "    ")
     ;; can hide incrementaly
-    (try-require 'hidesearch "    "))
+    (try-require 'autoload-hidesearch "    "))
   (message "  2.62 Hide-Lines... Done"))
 
 ;;
@@ -1014,6 +1041,161 @@
   (message "  2.63 Aggressive-Indent... Done"))
 
 ;;
+;;;
+;;;; PLATINIUM SEARCH
+;; A front-end for pt, The Platinum Searcher (faster than ack)
+(when section-mode-platinium-search (message "  2.64 Platinium Search...")
+  (when (try-require 'autoload-pt "    ")
+    (setq pt-executable "pt.exe")
+    (when section-mode-helm
+      (try-require 'autoload-helm-ag "      ")
+      (custom-set-variables
+        ;; use thing at point to get default value
+        '(helm-ag-insert-at-point 'symbol)
+        ;; use platinium search with helm-ag mode
+        '(helm-ag-base-command "pt --smart-case -e --nogroup"))
+      )
+    )
+  (message "  2.64 Platinium Search... Done"))
+
+;;
+;;;
+;;;; POPWIN
+;; A pop-up manager for annoying buffer (have like ECB compilation buffer)
+(when section-mode-popwin (message "  2.65 PopWin...")
+  (when (try-require 'popwin "    ")
+    (popwin-mode 1)
+
+    (push '(compilation-mode :noselect t :stick t) popwin:special-display-config)
+    (push '("*Shell Command Output*" :stick t) popwin:special-display-config)
+    (push '("\\s-*\\*helm.*" :regexp t) popwin:special-display-config)
+    (push '(dired-mode :stick t) popwin:special-display-config)
+    (push '("*Messages*" :stick t) popwin:special-display-config)
+    (push '("*Calculator*" :stick t) popwin:special-display-config)
+    (push "*vc*" popwin:special-display-config)
+    (push "*vc-diff*" popwin:special-display-config)
+    (push '("*Apropos*" :stick t) popwin:special-display-config)
+    (push '("*Occur*" :stick t) popwin:special-display-config)
+    (push "*shell*" popwin:special-display-config)
+    (push '("*Help*" :stick t) popwin:special-display-config)
+    (push '("*Backtrace*" :stick t) popwin:special-display-config)
+    (push "*Compile-log*" popwin:special-display-config)
+    (push '("*[Ss]ynergy*" :regexp r :stick t) popwin:special-display-config)
+    (push '("\\s-*\\*[cC]ompletions*\\*\\s-*" :regexp t) popwin:special-display-config)
+    (push '("\\*[cC]ompilation.*\\*" :regexp t :stick t) popwin:special-display-config)
+    (push '("\\*i?grep.*\\*" :regexp t :stick t) popwin:special-display-config)
+    (push "*JDEE Compile Server*" popwin:special-display-config)
+    (push "*ccm*" popwin:special-display-config)
+    (push '("\\*GTAGS SELECT\\*.*" :regexp t :stick t) popwin:special-display-config)
+    (push "*Bookmark List*" popwin:special-display-config)
+    (push "*Semantic Context Analyze*" popwin:special-display-config)
+    (push "*Macroexpansion*" popwin:special-display-config)
+    (push '("\\*Symref .*" :regexp t :stick t) popwin:special-display-config)
+    (push "*ECB Analyse*" popwin:special-display-config)
+    (push "*Kill Ring*" popwin:special-display-config)
+    (push "*clearcase-config-spec*" popwin:special-display-config)
+    (push "*ELP Profiling Results*" popwin:special-display-config)
+    (push '("$\\s-*\\*[mM]agit.*\\*\\s-*" :regexp t :stick t) popwin:special-display-config)
+    (push '("*pt-search*" :stick t) popwin:special-display-config)
+    (push '("$\\s-*\\*[Aa]ck\\*\\s-*" :regexp t :stick t) popwin:special-display-config)
+    (push '("$\\s-*\\*[Gg]tags.*\\*" :regexp t :stick t) popwin:special-display-config)
+    ;; display undo-tree-visualize in a popwindow at right with only 10% of width
+    (push '("\\s-*\\*undo-tree.*" :regexp t :width 0.1 :position right) popwin:special-display-config)
+    (push '("*Python Doc*" :stick t) popwin:special-display-config)
+    (push '("*helm ag results*" :stick t) popwin:special-display-config)
+    )
+  (message "  2.65 PopWin... Done"))
+
+
+;;
+;;;
+;;;; PROJECTILE
+;; Project management, filtered find-file, only with root file from version
+;; control
+(when section-mode-projectile (message "  2.66 Projectile...")
+  ;; dash is a dependency of projectile
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/dash.el-master"))
+  (when (try-require 'dash "    ")
+    ;; dash is found so load projectile
+    (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/projectile-master"))
+    (eval-after-load "projectile"
+      '(setq projectile-mode-line
+         '(:eval (list " ["
+                   (propertize (projectile-project-name)
+                     ;; color of solarized light
+;                     'face '(:foreground "#8100be" :background "#93a1a1"))
+                     'face 'powerline-active1)
+                   "]"))))
+    (when (try-require 'projectile "      ")
+      ;; enable projectile
+      (projectile-global-mode)
+      ;; add find of Synergy project
+      ;(push "_ccmwaid.inf" projectile-project-root-files-bottom-up)
+      ;; use external files indexer
+      (setq projectile-indexing-method 'alien)
+      ;; enable cache of files index
+      (setq projectile-enable-caching t)
+      ;; remove "Projectile" in mode-line from "Projectile[myProject]" to "[MyProject]"
+      ;(setq projectile-mode-line (format " [%s]" (projectile-project-name)))
+      ;; use helm with projectile
+      (when section-mode-helm
+        (when (try-require 'helm-projectile "          ")
+          (setq projectile-completion-system 'helm)
+          (helm-projectile-on))
+      )))
+  (message "  2.66 Projectile... Done"))
+
+;;
+;;;
+;;;; COMPANY MODE
+;; Completion mode using back-ends to have symbol
+(when section-mode-company (message "  2.67 Company Mode...")
+  (setq company-backends (delete 'company-semantic company-backends))
+  (load-file (concat (file-name-as-directory dotemacs-path) "plugins/company/company-autoloads.el"))
+  (add-hook 'after-init-hook 'global-company-mode)
+  (when section-mode-helm
+    (try-require 'autoload-helm-company "      "))
+  (message "  2.67 Company Mode... Done"))
+
+;;
+;;; EXPAND-REGION
+(when section-mode-expand-region (message "  2.68 Expand-region...")
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/expand-region"))
+  (when (try-require 'expand-region "    ")
+    ;; see shortcut-global.el for settings
+    )
+  (message "  2.68 Expand-region... Done"))
+
+;;
+;;; FUNCTION-ARGS
+(when section-mode-function-args (message "  2.69 Function-args...")
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/function-args"))
+  (when (try-require 'function-args "    ")
+    (fa-config-default)
+    )
+  (message "  2.69 Function-args... Done"))
+
+;;
+;;; ELPY
+(when section-mode-elpy (message "  2.70 Elpy...")
+  ;; install from list of packages
+  (elpy-enable)
+  (elpy-use-ipython)
+  ;;(setq python-shell-interpreter "C:/WinPython27/python-2.7.10/Scripts/ipython.exe")
+  ;;(setq python-shell-interpreter-args "")
+  ;(setq python-shell-interpreter-args "-i")
+  ;; use flycheck not flymake with elpy
+  (when (require 'flycheck nil t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+  ;; enable autopep8 formatting on save
+  ;(require 'py-autopep8)
+  ;(setq py-autopep8-options '("--ignore=E22,E224,E501"))
+  ;(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  (setq python-shell-unbuffered nil) ; found at https://github.com/jorgenschaefer/elpy/issues/733
+  (message "  2.70 Elpy... Done"))
+
+;;
 ;;; DIMINISH
 ;;              must be load after all other modes
 ;; shrink major and minor mode name in the modeline
@@ -1022,11 +1204,15 @@
     (eval-after-load "abbrev"
       '(diminish 'abbrev-mode " Ab"))
     (eval-after-load "yasnippet"
-      '(diminish 'yas/minor-mode " Y"))
+      '(diminish 'yas-minor-mode " Y"))
     (eval-after-load "gtags"
       '(diminish 'gtags-mode " G"))
     (eval-after-load "undo-tree"
       '(diminish 'undo-tree-mode " UndoT"))
+    (eval-after-load "projectile-mode"
+      '(diminish 'undo-tree-mode " Prj"))
+    (eval-after-load "company-mode"
+      '(diminish 'undo-tree-mode " C"))
 
     (add-hook 'emacs-lisp-mode-hook
       (lambda()

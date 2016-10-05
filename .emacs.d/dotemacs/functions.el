@@ -1,6 +1,6 @@
 ;;; functions.el --- a config file to add some function
 
-;; Copyright (c) 2006-2015 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 6.0
+;; Version: 6.1
 ;; Created: October 2006
-;; Last-Updated: August 2015
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,9 @@
 ;; it need to be split...
 
 ;;; Change Log:
+;; 2016-09-28 (6.1)
+;;    remove dash as symbol character + overload helm function about dir + add
+;;    reverse string + multiple key about space remover
 ;; 2015-08-21 (6.0)
 ;;    add new web search + function to go in symref buffer
 ;; 2014-03-26 (5.9)
@@ -202,6 +205,7 @@
   (if (looking-at clt-symbol-regexp)
     (clt-match-string 0) nil)
   )
+;; TO BE REPLACE by word-at-point
 ;;; interactive select word at point (by Claude TETE)
 (defun select-word-under ()
   "Select the word under cursor."
@@ -209,9 +213,9 @@
   (let (pt)
     (when (boundp 'auto-highlight-symbol-mode)
       (ahs-clear))
-    (skip-chars-backward "-_A-Za-z0-9")
+    (skip-chars-backward "_A-Za-z0-9")
     (setq pt (point))
-    (skip-chars-forward "-_A-Za-z0-9")
+    (skip-chars-forward "_A-Za-z0-9")
     (set-mark pt)
     )
   )
@@ -798,6 +802,57 @@ line instead."
 
 ;;
 ;;;
+;;;; HELM-FILES
+;;; do not display dot paths in list of files with helm
+(defvar helm-ff-directory-no-dots-p t)
+;; rework original function
+(defun helm-ff-directory-files-no-dots (helm-ff-directory-files directory &optional full)
+  "List contents of DIRECTORY.
+Argument FULL mean absolute path.
+It is same as `directory-files' but do not always returns the
+dotted filename '.' and '..' even on root directories in Windows
+systems unlike original function."
+  ;; original code
+  (setq directory (file-name-as-directory
+                    (expand-file-name directory)))
+  ;; original variables
+  (let* (file-error
+         (ls   (condition-case err
+                 (directory-files
+                   directory full directory-files-no-dot-files-regexp)
+                 ;; Handle file-error from here for Windows
+                 ;; because predicates like `file-readable-p' and friends
+                 ;; seem broken on emacs for Windows systems (always returns t).
+                 ;; This should never be called on GNU/Linux/Unix
+                 ;; as the error is properly intercepted in
+                 ;; `helm-find-files-get-candidates' by `file-readable-p'.
+                 (file-error
+                  (prog1
+                      (list (format "%s:%s"
+                                    (car err)
+                                    (mapconcat 'identity (cdr err) " ")))
+                    (setq file-error t)))))
+          (dot  (concat directory "."))
+          (dot2 (concat directory ".."))
+          ;; new variable
+          ret)
+    ;; original code
+    ;(append (and (not file-error) (list dot dot2)) ls)))
+    ;; new code
+    (if helm-ff-directory-no-dots-p
+      (setq ret ls)
+      (if (not file-error)
+        (setq ret (append (list dot dot2) ls))
+        (setq ret ls)))
+    ret))
+
+;; replace helm-ff-directory-files by helm-ff-directory-files-no-dots by using advice
+(advice-add 'helm-ff-directory-files :around #'helm-ff-directory-files-no-dots)
+;; to remove advice on original function
+;(advice-remove 'helm-ff-directory-files #'helm-ff-directory-files-no-dots)
+
+;;
+;;;
 ;;;; SCROLL WITH KEEPING CURSOR
 ;;; Scroll the text one line down while keeping the cursor (by Geotechnical
 ;;; Software Services)
@@ -998,6 +1053,16 @@ line instead."
     )
   )
 
+(defun reverse-string (beg end)
+  "Reverse the str where str is a string"
+  (interactive (clt-get-string-position))
+  (let ((string (buffer-substring beg end)))
+    (if string
+      (delete-region beg end)
+      (message (concat "=" string "="))
+      (insert (string-reverse string))
+      )))
+
 ;;
 ;;;
 ;;;; SWITCH BUFFER
@@ -1148,6 +1213,51 @@ at the point."
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
 
+;; steal from http://stackoverflow.com/a/208787
+(defun set-buffer-file-writable ()
+  "Make the file shown in the current buffer writable.
+Make the buffer writable as well."
+  (interactive)
+  (read-only-mode 'toggle)
+  (unix-output "chmod" "+w" (buffer-file-name))
+  (message (trim-right '(?\n) (unix-output "ls" "-l" (buffer-file-name)))))
+
+;; use by set-buffer-file-writable function
+;; steal from http://stackoverflow.com/a/208787
+(defun unix-output (command &rest args)
+  "Run a unix command and, if it returns 0, return the output as a string.
+Otherwise, signal an error.  The error message is the first line of the output."
+  (let ((output-buffer (generate-new-buffer "*stdout*")))
+    (unwind-protect
+      (let ((return-value (apply 'call-process command nil
+                            output-buffer nil args)))
+        (set-buffer output-buffer)
+        (save-excursion
+          (unless (= return-value 0)
+            (goto-char (point-min))
+            (end-of-line)
+            (if (= (point-min) (point))
+              (error "Command failed: %s%s" command
+                (with-output-to-string
+                  (dolist (arg args)
+                    (princ " ")
+                    (princ arg))))
+              (error "%s" (buffer-substring-no-properties (point-min)
+                            (point)))))
+          (buffer-substring-no-properties (point-min) (point-max))))
+      (kill-buffer output-buffer))))
+
+;; use by unix-output function
+;; steal from http://stackoverflow.com/a/208787
+(defun trim-right (bag string &optional start end)
+  (setq bag (if (eq bag t) '(?\  ?\n ?\t ?\v ?\r ?\f) bag)
+    start (or start 0)
+    end (or end (length string)))
+  (while (and (> end 0)
+           (member (aref string (1- end)) bag))
+    (decf end))
+  (substring string start end))
+
 ;;; replace tab with space + replace '+- non unicode
 (defun clean-at ()
   "Clean files from AT."
@@ -1166,33 +1276,57 @@ at the point."
 
 ;;
 ;;;
+;;;; HELM BOOKMARK FIND FILES JUMP
+(defun helm-bookmark-find-files-jump (candidate)
+  "Jump to bookmark in find files from keyboard."
+  (let ((current-prefix-arg helm-current-prefix-arg)
+         non-essential
+        (candidate-path (bookmark-get-filename (bookmark-get-bookmark candidate 'noerror))))
+    (if (file-directory-p candidate-path)
+      (helm-find-files-1 candidate-path)
+      (message (concat "Not a directory: " candidate-path)))))
+
+;;
+;;;
 ;;;; DELETE
 (defun just-one-space-or-line ()
   "Delete spaces exept one if there is a print character on the line otherwise
 delete blank lines"
   (interactive)
   (save-excursion
-    (let ((start (point))
-           (end)
-           (line-start (line-beginning-position))
-           (line-end (line-beginning-position 2)))
-      ;; get end of line or start of next word
-      (skip-chars-forward " \t")
-      (when (looking-at "\r")
-        (forward-char))
-      (when (looking-at "\n")
-        (forward-char))
-      (setq end (point))
-      ;; go back
-      (goto-char start)
-      ;; get start of line or end of previous word
-      (skip-chars-backward " \t")
-      (setq start (point))
-      (if (and (eq start line-start) (eq end line-end))
-        (progn
-          (just-one-space 0)
-          (delete-blank-lines))
-        (just-one-space)))))
+    (let* ((start (point))
+            (end)
+            (line-start (line-beginning-position))
+            (line-end (line-beginning-position 2))
+            (keys (recent-keys))
+            (len (length keys))
+            (key1 (if (> len 0) (elt keys (- len 1)) nil))
+            (key2 (if (> len 1) (elt keys (- len 2)) nil))
+            (key-equal-1 (equal key1 key2)))
+      (cond
+        (key-equal-1
+          (message "second")
+          (skip-chars-backward " \t")
+          (delete-char 1))
+        (t
+          (message "first")
+          ;; get end of line or start of next word
+          (skip-chars-forward " \t")
+          (when (looking-at "\r")
+            (forward-char))
+          (when (looking-at "\n")
+            (forward-char))
+          (setq end (point))
+          ;; go back
+          (goto-char start)
+          ;; get start of line or end of previous word
+          (skip-chars-backward " \t")
+          (setq start (point))
+          (if (and (eq start line-start) (eq end line-end))
+            (progn
+              (just-one-space 0)
+              (delete-blank-lines))
+            (just-one-space)))))))
 
 ;; google code wiki to tex
 (defun wiki2tex ()

@@ -1,6 +1,6 @@
 ;;; shortcut-global.el --- a config file for global Emacs shortcut
 
-;; Copyright (c) 2006-2015 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.9
+;; Version: 4.0
 ;; Created: October 2006
-;; Last-Updated: August 2015
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2016-09-28 (4.0)
+;;    modify align shortcut (helm/projectile conflict) + add helm/company
+;;    shortcuts + add popwin shortcut + add helm shortcut + remove bind into c
+;;    mode (helm conflict) + add elpy shortcut + undo tree shortcut
 ;; 2015-08-21 (3.9)
 ;;    add condition to cua-rect shortcut + add hide-lines shortcuts
 ;; 2013-09-10 (3.8)
@@ -170,8 +174,8 @@
                                                    ))
 
 ;; align a region following regexp
-(global-set-key         "\C-cpp"                'align)
-(global-set-key         "\C-cpl"                'align-regexp)
+(global-set-key         (kbd "C-c a a")         'align)
+(global-set-key         (kbd "C-c a s")         'align-regexp)
 
 ;; remove a pair of matched parentheses/brackets
 ;; see "M-(" to create a pair of matched parentheses around the region
@@ -204,8 +208,19 @@
 ;; run calc quick
 (global-set-key         (kbd "<M-kp-multiply>") 'quick-calc)
 
+;;
+;;; EXPAND
 ;; run hippie expand
 (global-set-key         (kbd "M-?")             'hippie-expand)
+;; company mode
+(when section-mode-company
+  (if section-mode-helm
+    (eval-after-load 'company
+      '(progn
+         ;; use helm with comapny mode
+         (define-key company-mode-map     (kbd "C-/")     'helm-company)
+         (define-key company-active-map   (kbd "C-/")     'helm-company)))
+    (global-set-key     (kbd "C-/")             'company-complete)))
 
 ;; run rss reader
 (global-set-key         (kbd "H-r")             'newsticker-show-news)
@@ -230,21 +245,67 @@
   )
 
 ;;
-;;; HELM
-;; to replace yank-pop by helm-kill-ring
-(when section-mode-helm-kill-ring
-  (global-set-key       (kbd "M-y")             '(lambda ()
-                                                   (interactive)
-                                                   (if (eq last-command 'yank)
-                                                     (progn
-                                                       (setq last-command 'yank)
-                                                       (yank-pop))
-                                                     (helm-show-kill-ring)))))
-;; to replace M-x by helm
-(when section-mode-helm-M-x
-  (global-set-key       (kbd "M-x")             'helm-M-x))
+;;; POPWIN
+;; quit helm with F2 or resume his last session
+(when section-mode-popwin
+  (global-set-key               (kbd "<f2>")            '(lambda ()
+                                                           (interactive)
+                                                           (if (popwin:popup-window-live-p)
+                                                             (popwin:close-popup-window)
+                                                             ;;FIXME check if helm buffer to use helm-resume
+                                                             (popwin:popup-last-buffer))))
+  )
 
 ;;
+;;; HELM
+(when section-mode-helm
+  (with-eval-after-load "helm"
+    ;; quit helm with ESCAPE
+    (define-key helm-map        (kbd "<escape>")        'helm-keyboard-quit)
+    ;; quit helm with f2
+    (define-key helm-map        (kbd "<f2>")            'helm-keyboard-quit)
+    ;; go to beginning of buffer
+    (define-key helm-map        (kbd "M-<home>")        'helm-beginning-of-buffer)
+    (define-key helm-map        (kbd "C-<home>")        'helm-beginning-of-buffer)
+    ;; go to end of buffer
+    (define-key helm-map        (kbd "M-<end>")         'helm-end-of-buffer)
+    (define-key helm-map        (kbd "C-<end>")         'helm-end-of-buffer)
+    ;; show previous element in history
+    (define-key helm-map        (kbd "M-<up>")          'previous-history-element)
+    ;; show next element in history
+    (define-key helm-map        (kbd "M-<down>")        'next-history-element)
+
+    ;; to replace yank-pop by helm-kill-ring
+    (when section-mode-helm-kill-ring
+      (global-set-key           (kbd "M-y")             '(lambda ()
+                                                           (interactive)
+                                                           (if (eq last-command 'yank)
+                                                             (progn
+                                                               (setq last-command 'yank)
+                                                               (yank-pop))
+                                                             (helm-show-kill-ring)))))
+    ;; to replace M-x by helm
+    (when section-mode-helm-M-x
+      (global-set-key           (kbd "M-x")             'helm-M-x))
+    ;; to replace buffer list same shortcut than with ECB
+    (when section-mode-helm-buffers-list
+      (global-set-key           (kbd "M-z")             'helm-buffers-list))
+    ;; to have imenu in helm with function/variable list
+
+    ;; add helm menu shortcut
+  (when section-mode-helm-imenu
+    (global-set-key             (kbd "M-\\")             'helm-semantic-or-imenu))
+    ) ; (with-eval-after-load "helm"
+  ) ; (when section-mode-helm
+
+;;
+;;; C
+;; remove report bug bind in c-mode to bind helm-bookmark
+(when section-mode-c
+  (add-hook 'c-mode-common-hook '(lambda () (local-unset-key (kbd "C-c C-b")))))
+
+;;
+;;; CEDET
 ;; to compile
 (when section-mode-cedet-ecb
   (add-hook 'compilation-filter-hook '(lambda ()
@@ -311,14 +372,25 @@
   )
 
 ;;
+;;; ELPY
+(when section-mode-elpy
+  (add-hook 'elpy-mode-hook
+    (lambda ()
+      (local-unset-key (kbd "M-TAB"))
+      (define-key elpy-mode-map (kbd "<M-up>")          'backward-page)
+      (define-key elpy-mode-map (kbd "<M-down>")        'forward-page)
+      ))
+  )
+
+;;
 ;;; DIRED PLUS
 ;; REQUIREMENT: var     `section-mode-dired-plus'
 (when section-mode-dired-plus
   (eval-after-load "dired"
     '(progn
        ;; open with default associated application
-       (define-key dired-mode-map (kbd "<H-return>") 'dired-w32-browser)
-       (define-key dired-mode-map (kbd "[")          'dired-up-directory)
+       (define-key dired-mode-map       (kbd "<H-return>")      'dired-w32-browser)
+       (define-key dired-mode-map       (kbd "[")               'dired-up-directory)
        )
     )
   )
@@ -403,6 +475,9 @@
 ;;
 ;;; UNDO TREE
 (when section-mode-undo-tree
+  (global-set-key       (kbd "C-_")             'undo-tree-undo)
+  (global-set-key       (kbd "M-_")             'undo-tree-redo)
+  (global-set-key       (kbd "C-M-_")           'undo-tree-visualize)
   (add-hook 'undo-tree-visualizer-mode-hook
     (lambda ()
       ;; enter and 'q' key will quit undo tree
@@ -432,6 +507,12 @@
       (local-set-key    (kbd "<C-down>")        'undo-tree-visualize-redo-to-x)
       )))
 
+;;
+;;; EXPAND-REGION
+(when section-mode-expand-region
+  ;; M-s then s, s, etc to expand selection region
+  (global-set-key       (kbd "M-s")             'er/expand-region)
+  )
 
 ;;
 ;;; SYNERGY
@@ -468,13 +549,13 @@
   (global-set-key       (kbd "C-c s p")         'synergy-reconfigure-current-project)
   ) ; (when section-function-synergy
 
+
 ;; yank menu in popup
 (global-set-key         (kbd "C-M-y")           '(lambda ()
                                                    (interactive)
                                                    (popup-menu 'yank-menu)))
-
 ;;
-;;; SYNERGY
+;;; HIDE-LINES
 (when section-mode-hide-lines
   ;; hide match
   (global-set-key       (kbd "C-c h h")         'hide-lines-matching)

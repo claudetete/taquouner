@@ -1,6 +1,6 @@
 ;;; autoloads.el --- a script file to generate autoload files
 
-;; Copyright (c) 2013 Claude Tete
+;; Copyright (c) 2013-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, autoload, generated, load
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.5
 ;; Created: April 2013
-;; Last-Updated: May 2013
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,10 @@
 ;;  emacs -Q -l autoloads.el -f autoloads
 
 ;;; Change Log:
+;; 2016-09-28 (0.5)
+;;    add platinium search, fold dwim, ack, ps2pdf, synergy, hide lines, helm...
+;; 2015-10-21 (0.4)
+;;    add ggtags
 ;; 2013-05-17 (0.3)
 ;;    add rainbow mode
 ;; 2013-05-07 (0.2)
@@ -59,6 +63,8 @@
   (update-file-autoloads "dired+.el"                 t (concat autoloads-location "autoload-dired+.el"))
   ;; GNU/GLOBAL
   (update-file-autoloads "gtags.el"                  t (concat autoloads-location "autoload-gtags.el"))
+  ;; GNU/GLOBAL ggtags
+  (update-file-autoloads "ggtags.el"                 t (concat autoloads-location "autoload-ggtags.el"))
   ;; AUTO HIGHLIGHT SYMBOL
   (update-file-autoloads "auto-highlight-symbol.el"  t (concat autoloads-location "autoload-auto-highlight-symbol.el"))
   ;; UNDO TREE
@@ -89,6 +95,27 @@
   (update-file-autoloads "ace-jump-mode.el"          t (concat autoloads-location "autoload-ace-jump-mode.el"))
   ;; RAINBOW MODE
   (update-file-autoloads "rainbow-mode.el"           t (concat autoloads-location "autoload-rainbow-mode.el"))
+  ;; PLATINIUM SEARCH
+  (update-file-autoloads "pt.el"                     t (concat autoloads-location "autoload-pt.el"))
+  ;; FOLD-DWIM
+  (update-file-autoloads "fold-dwim.el"              t (concat autoloads-location "autoload-fold-dwim.el"))
+  ;; ACK-EMACS
+  (update-file-autoloads "ack-emacs.el"              t (concat autoloads-location "autoload-ack-emacs.el"))
+  ;; PS2PDF
+  (update-file-autoloads "ps2pdf.el"                 t (concat autoloads-location "autoload-ps2pdf.el"))
+  ;; SYNERGY
+  (update-file-autoloads "synergy-web.el"            t (concat autoloads-location "autoload-synergy-web.el"))
+  ;; HIDE-LINES
+  (update-file-autoloads "hide-lines.el"             t (concat autoloads-location "autoload-hide-lines.el"))
+  (update-file-autoloads "hidesearch.el"             t (concat autoloads-location "autoload-hidesearch.el"))
+  ;; HELM PLATINIUM SEARCH
+  (update-file-autoloads "helm-pt.el"                t (concat autoloads-location "autoload-helm-pt.el"))
+  ;; HELM PLATINIUM SEARCH
+  (update-file-autoloads "helm-ag.el"                t (concat autoloads-location "autoload-helm-ag.el"))
+  ;; HELM COMPANY
+  (update-file-autoloads "helm-company.el"           t (concat autoloads-location "autoload-helm-company.el"))
+  ;; COMPANY
+  (update-file-autoloads "company-mode/company.el"   t (concat autoloads-location "company-mode/autoload-company.el"))
 
   ;; quit emacs
   (kill-emacs)

@@ -6,7 +6,7 @@
 
 ;; Author: Donald Ephraim Curtis <dcurtis@milkbox.net>
 ;; URL: http://github.com/milkypostman/powerline/
-;; Version: 2.3
+;; Version: 2.4
 ;; Keywords: mode-line
 ;; Package-Requires: ((cl-lib "0.2"))
 
@@ -18,8 +18,8 @@
 
 ;;; Code:
 
-(require 'powerline-themes)
-(require 'powerline-separators)
+(eval-and-compile (require 'powerline-themes))
+(eval-and-compile (require 'powerline-separators))
 
 (require 'cl-lib)
 
@@ -41,11 +41,17 @@
   "Powerline face 2."
   :group 'powerline)
 
+(defface mode-line-buffer-id-inactive
+  '((t (:inherit mode-line-buffer-id)))
+  "Powerline mode-line face"
+  :group 'powerline)
+
 (defcustom powerline-default-separator 'arrow
   "The separator to use for the default theme.
 
-Valid Values: arrow, slant, chamfer, wave, brace, roundstub,
-zigzag, butt, rounded, contour, curve"
+Valid Values: alternate, arrow, arrow-fade, bar, box, brace,
+butt, chamfer, contour, curve, rounded, roundstub, wave, zigzag,
+utf-8."
   :group 'powerline
   :type '(choice (const alternate)
                  (const arrow)
@@ -62,7 +68,18 @@ zigzag, butt, rounded, contour, curve"
                  (const slant)
                  (const wave)
                  (const zigzag)
+		 (const utf-8)
                  (const nil)))
+
+(defcustom powerline-utf-8-separator-left #xe0b0
+  "The unicode character number for the left facing separator"
+  :group 'powerline
+  :type  '(choice integer (const nil)))
+
+(defcustom powerline-utf-8-separator-right #xe0b2
+  "The unicode character number for the right facing separator"
+  :group 'powerline
+  :type  '(choice integer (const nil)))
 
 (defcustom powerline-default-separator-dir '(left . right)
   "The separator direction to use for the default theme.
@@ -95,10 +112,15 @@ This is needed to make sure that text is properly aligned."
   :group 'powerline
   :type 'boolean)
 
+(defcustom powerline-gui-use-vcs-glyph nil
+  "Display a unicode character to represent a version control system. Not always supported in GUI."
+  :group 'powerline
+  :type 'boolean)
+
 (defun pl/create-or-get-cache ()
   "Return a frame-local hash table that acts as a memoization cache for powerline. Create one if the frame doesn't have one yet."
-  (or (frame-parameter nil 'powerline-cache)
-      (pl/reset-cache)))
+  (let ((table (frame-parameter nil 'powerline-cache)))
+    (if (hash-table-p table) table (pl/reset-cache))))
 
 (defun pl/reset-cache ()
   "Reset and return the frame-local hash table used for a memoization cache."
@@ -107,15 +129,34 @@ This is needed to make sure that text is properly aligned."
     (modify-frame-parameters nil `((powerline-cache . ,table)))
     table))
 
+(defun powerline-current-separator ()
+  "Get the current default separator. Always returns utf-8 in non-gui mode."
+  (if window-system
+      powerline-default-separator
+    'utf-8))
+
 ;;
 ;; the frame-local powerline cache causes problems if included in a saved desktop,
 ;; so delete it before the desktop is saved.
 ;;
 ;; see https://github.com/milkypostman/powerline/issues/58
 ;;
-(defun powerline-delete-cache ()
-  (set-frame-parameter nil 'powerline-cache nil))
-(add-hook 'desktop-save-hook 'powerline-delete-cache)
+;; It is better to put the following code into your init file for Emacs 24.4 or later.
+;; (require 'frameset)
+;; (push '(powerline-cache . :never) frameset-filter-alist)
+;;
+(defun powerline-delete-cache (&optional frame)
+  "Set the FRAME cache to nil."
+  (set-frame-parameter frame 'powerline-cache nil))
+
+(defun powerline-desktop-save-delete-cache ()
+  "Set all caches to nil unless `frameset-filter-alist' has :never for powerline-cache."
+  (unless (and (boundp 'frameset-filter-alist)
+               (eq (cdr (assq 'powerline-cache frameset-filter-alist))
+                   :never))
+    (dolist (fr (frame-list)) (powerline-delete-cache fr))))
+
+(add-hook 'desktop-save-hook 'powerline-desktop-save-delete-cache)
 
 ;; from memoize.el @ http://nullprogram.com/blog/2010/07/26/
 (defun pl/memoize (func)
@@ -178,6 +219,8 @@ The memoization cache is frame-local."
   (pl/memoize (pl/zigzag right))
   (pl/memoize (pl/nil left))
   (pl/memoize (pl/nil right))
+  (pl/utf-8 left)
+  (pl/utf-8 right)
   (pl/reset-cache))
 
 (powerline-reset)
@@ -218,7 +261,7 @@ static char * %s[] = {
      'xpm t :ascent 'center)))
 
 (defun pl/percent-xpm
-    (height pmax pmin winend winstart width color1 color2)
+  (height pmax pmin winend winstart width color1 color2)
   "Generate percentage xpm of HEIGHT for PMAX to PMIN given WINEND and WINSTART with WIDTH and COLOR1 and COLOR2."
   (let* ((height- (1- height))
          (fillstart (round (* height- (/ (float winstart) (float pmax)))))
@@ -288,7 +331,7 @@ static char * %s[] = {
 (defmacro defpowerline (name body)
   "Create function NAME by wrapping BODY with powerline padding an propetization."
   `(defun ,name
-       (&optional face pad)
+     (&optional face pad)
      (powerline-raw ,body face pad)))
 
 (defun pl/property-substrings (str prop)
@@ -406,9 +449,12 @@ static char * %s[] = {
 
 ;;;###autoload (autoload 'powerline-vc "powerline")
 (defpowerline powerline-vc
-  (when (and (buffer-file-name (current-buffer))
-             vc-mode)
-    (format-mode-line '(vc-mode vc-mode))))
+  (when (and (buffer-file-name (current-buffer)) vc-mode)
+    (if (and window-system (not powerline-gui-use-vcs-glyph))
+	(format-mode-line '(vc-mode vc-mode))
+      (format " %s%s"
+	      (char-to-string #xe0a0)
+	      (format-mode-line '(vc-mode vc-mode))))))
 
 ;;;###autoload (autoload 'powerline-buffer-size "powerline")
 (defpowerline powerline-buffer-size
@@ -424,8 +470,19 @@ static char * %s[] = {
                           (force-mode-line-update)))))
 
 ;;;###autoload (autoload 'powerline-buffer-id "powerline")
-(defpowerline powerline-buffer-id
-  (format-mode-line mode-line-buffer-identification))
+(defun powerline-buffer-id (&optional face pad)
+  (powerline-raw
+   (format-mode-line
+    (concat " " (propertize
+		 "%b"
+		 'face face
+		 'mouse-face 'mode-line-highlight
+		 'help-echo "Buffer name\n\ mouse-1: Previous buffer\n\ mouse-3: Next buffer"
+		 'local-map (let ((map (make-sparse-keymap)))
+			      (define-key map [mode-line mouse-1] 'mode-line-previous-buffer)
+			      (define-key map [mode-line mouse-3] 'mode-line-next-buffer)
+			      map))))
+   face pad))
 
 ;;;###autoload (autoload 'powerline-process "powerline")
 (defpowerline powerline-process
@@ -455,14 +512,31 @@ static char * %s[] = {
 
 (add-hook 'minibuffer-exit-hook 'pl/minibuffer-exit)
 
+(defvar powerline-selected-window (frame-selected-window))
 (defun powerline-set-selected-window ()
   "sets the variable `powerline-selected-window` appropriately"
   (when (not (minibuffer-window-active-p (frame-selected-window)))
     (setq powerline-selected-window (frame-selected-window))))
 
+(defun powerline-unset-selected-window ()
+  "Unsets the variable `powerline-selected-window` and updates the modeline"
+  (setq powerline-selected-window nil)
+  (force-mode-line-update))
+
 (add-hook 'window-configuration-change-hook 'powerline-set-selected-window)
+
+;; focus-in-hook was introduced in emacs v24.4.
+;; Gets evaluated in the last frame's environment.
 (add-hook 'focus-in-hook 'powerline-set-selected-window)
-(add-hook 'focus-out-hook 'powerline-set-selected-window)
+
+;; focus-out-hook was introduced in emacs v24.4.
+(add-hook 'focus-out-hook 'powerline-unset-selected-window)
+
+;; Executes after the window manager requests that the user's events
+;; be directed to a different frame.
+(defadvice handle-switch-frame
+    (after powerline-set-selected-window-after-switch-frame activate)
+  (powerline-set-selected-window))
 
 (defadvice select-window (after powerline-select-window activate)
   "makes powerline aware of window changes"
@@ -495,7 +569,7 @@ static char * %s[] = {
   (if values
       (let ((val (car values)))
         (+ (cond
-            ((stringp val) (length (format-mode-line val)))
+            ((stringp val) (string-width (format-mode-line val)))
             ((and (listp val) (eq 'image (car val)))
              (car (image-size val)))
             (t 0))

@@ -1,6 +1,6 @@
 ;;; shortcut-tags.el --- a config file for tags shortcut
 
-;; Copyright (c) 2006-2014 Claude Tete
+;; Copyright (c) 2006-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: September 2010
-;; Last-Updated: March 2014
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2016-09-28 (2.2)
+;;    add helm/gtags and helm/projectile shortcuts
 ;; 2014-03-26 (2.1)
 ;;    modify gtags find file function shortcut
 ;; 2013-04-10 (2.0)
@@ -95,25 +97,40 @@
                                                                 (ecb-toggle-compile)
                                                                 ))
         )
-      (progn
-        ;; cycles to next result
-        ;; After doing gtags-find-(tag|rtag|symbol|with-grep)
-        (global-set-key         (kbd "M-,")             'ww-next-gtag)
+      (if section-mode-helm
+        (progn
+          (eval-after-load "helm-gtags"
+            '(progn
+               (define-key helm-gtags-mode-map  (kbd "C-M-.")   'helm-gtags-find-pattern)
+               (define-key helm-gtags-mode-map  (kbd "M-.")     'helm-gtags-dwim)
+               (define-key helm-gtags-mode-map  (kbd "C-<")     'helm-gtags-pop-stack)
+               (define-key helm-gtags-mode-map  (kbd "C-.")     'helm-gtags-find-rtag)
+               (define-key helm-gtags-mode-map  (kbd "C-M-,")   'helm-gtags-update-tags)
+               (define-key helm-gtags-mode-map  (kbd "<f3>")    'helm-gtags-next-history)
+               ))
+          ) ; (progn
+        (progn
+          ;; find tag
+          (global-set-key         (kbd "M-.")            'ggtags-find-tag-dwim)
+          (global-set-key         [(control >)]          'ggtags-find-tag-dwim)
+          (global-set-key         (kbd "M->")            'semantic-goto-definition)
 
-        ;; find tag
-        (global-set-key         "\M-."                  'gtags-find-tag)
+          ;; go back after find tag
+          (global-set-key         (kbd "M-*")             'ggtags-navigation-mode-abort)
+          (global-set-key         (kbd "M-<kp-multiply>") 'ggtags-navigation-mode-abort)
+          (global-set-key         [(control <)]           'ggtags-navigation-mode-abort)
+          (global-set-key         (kbd "M-<")             'semantic-pop-tag-mark)
 
-        ;; go back after find tag
-        (global-set-key         "\M-*"                  'gtags-pop-stack)
-        (global-set-key         (kbd "M-<kp-multiply>") 'gtags-pop-stack)
-
-        ;; find all references (regexp)
-        (global-set-key         (kbd "C-M-.")           'gtags-find-with-grep)
+          ;; find all references (regexp)
+          (global-set-key         (kbd "C-M-.")           'ggtags-find-reference)
+          ) ; (progn
         ) ; (progn
       ) ; (if section-mode-cedet-ecb
 
-    ;; find file in the gnu global project (regexp) (need new function of gtags see function.el)
-    (global-set-key     (kbd "C-c C-f")             'gtags-find-file-custom)
+    (when (and section-mode-helm section-mode-projectile)
+      ;; find file in the gnu global project (regexp) (need new function of gtags see function.el)
+      (global-set-key           (kbd "C-c C-f")         'helm-projectile-find-file)
+      ) ; (when (and section-mode-helm section-mode-projectile)
 
     ;; find all references (regexp)
     (global-set-key     (kbd "C-M-=")           'gtags-find-with-grep-symbol-assigned)

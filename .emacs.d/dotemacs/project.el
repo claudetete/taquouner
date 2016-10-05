@@ -1,6 +1,6 @@
 ;;; project.el --- a config file for ede project settings
 
-;; Copyright (c) 2011, 2012 Claude Tete
+;; Copyright (c) 2011-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, ede, cedet, project, ide
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: July 2011
-;; Last-Updated: December 2012
+;; Last-Updated: September 2016
 
 ;;; Commentary:
 ;;
@@ -36,6 +36,8 @@
 ;; (see `.emacs.d/profile/profile-default.el' as example)
 
 ;;; Change Log:
+;; 2016-09-28 (1.7)
+;;    EDE can be disabled
 ;; 2012-12-06 (1.6)
 ;;    error not in message but in warning buffer
 ;; 2012-07-09 (1.5)
@@ -55,16 +57,20 @@
 
 
 ;;; Code:
-(while profile-ede-project
-  (let (file)
-    (setq file (pop profile-ede-project))
-    (if (file-exists-p file)
-      (load-file file)
-      (display-warning 'profile-ede-project (format "file not found: %s" file) :warning)
+
+;;
+;;; EDE PROJECT
+(when section-mode-cedet-ecb
+  (while profile-ede-project
+    (let (file)
+      (setq file (pop profile-ede-project))
+      (if (file-exists-p file)
+        (load-file file)
+        (display-warning 'profile-ede-project (format "file not found: %s" file) :warning)
+        )
       )
     )
   )
-
 
 (provide 'project)
 

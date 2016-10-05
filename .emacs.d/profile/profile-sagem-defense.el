@@ -152,6 +152,12 @@
     ) ; (when section-environment-executable
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa t)
+  (when section-environment-elpa
+    (setq profile-environment-elpa-proxy-http ")
+    (setq profile-environment-elpa-proxy-https ")
+    ;; fill at each requested mode
+    ;;(setq profile-environment-elpa-package-list '())
+    )
   ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-hyper t)
@@ -304,6 +310,12 @@
   (setq section-mode-dired-plus t)
   ;; GNU/GLOBAL: Tag management mode (use modified gtags.el)
   (setq section-mode-gnu-global t)
+  (when section-mode-gnu-global
+    ;; GNU/GLOBAL gtags
+    (setq section-mode-gnu-global-gtags nil)
+    ;; GNU/GLOBAL ggtags
+    (setq section-mode-gnu-global-ggtags t)
+    ) ; (when section-mode-gnu-global
   ;; EPROJECT (grischka): project management mode (never used)
   (setq section-mode-eproject nil)
   ;; RTRT SCRIPT: rtrt script mode (syntax coloration)
@@ -435,9 +447,9 @@
   (setq section-mode-ediff t)
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (setq section-mode-magit t)
-  (progn
+  (when section-mode-magit
     (setq profile-magit-exec "C:/MinGW/msys/1.0/bin/git.exe")
-    )
+    ) ; (when section-mode-magit
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
   ;; emacs)
   (setq section-mode-synergy t)
@@ -460,6 +472,37 @@
     (setq profile-synergy-diff-external-parameter "")
     (setq profile-synergy-diff-external-swap-file t)
     ) ; (when section-mode-synergy
+  ;; HIDE-LINES: hide lines using regexp (like narrow but with regex and not
+  ;; region)
+  (setq section-mode-hide-lines nil)
+  ;; AGGRESSIVE-INDENT: indent all line in function/condition in C or lisp mode
+  ;; when edit it
+  (setq section-mode-aggressive-indent nil)
+  ;; PLATINIUM SEARCH: A front-end for pt, The Platinum Searcher (faster than
+  ;; ack)
+  (setq section-mode-platinium-search nil)
+  ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation
+  ;; buffer)
+  (setq section-mode-popwin nil)
+  ;; PROJECTILE: Project management, filtered find-file, only with root file
+  ;; from version control
+  (setq section-mode-projectile nil)
+  ;; COMPANY MODE: Completion mode using back-ends to have symbol
+  (setq section-mode-company nil)
+  ;; EXPAND-REGION: Increase selected region by semantic units
+  (setq section-mode-expand-region nil)
+  ;; FUNCTION-ARGS: Show function parameters in C and C++
+  (setq section-mode-function-args nil)
+  ;; ELPY: Python mode like an IDE
+  (setq section-mode-elpy nil)
+  (when section-mode-elpy
+    ;; add elpy package
+    ;; and flycheck package, about warnings/errors check on the fly
+    ;; and autopep8 package, about fix automagically some pep8 rules after save python file
+    (add-to-list 'profile-environment-elpa-package-list 'elpy t)
+    (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+    (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
+    ) ; (when section-mode-elpy
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -501,6 +544,8 @@
     (when section-languages-c-hide-show
       (setq section-languages-c-hide-show-hide-all-at-start nil)
       ) ; (when section-languages-c-hide-show
+    ;; FLYMAKE
+    (setq section-languages-c-flymake nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -518,6 +563,8 @@
     ;; number of space for indentation in perl
     (setq profile-perl-indent-offset 2)
     ) ; (when section-languages-perl
+  ;; C++ QT: set include for Qt 4.8
+  (setq section-languages-c++-qt nil)
   ) ; (when section-languages
 
 
@@ -619,27 +666,15 @@
     (setq section-display-color-parentheses-highlight nil)
     ;; COLOR THEME: set color by color-theme mode (or manual settings nil)
     (setq section-display-color-theme t)
-    (if  section-display-color-theme
+    (if section-display-color-theme
       ;; do not use it with terminal
       ;; theme to be used
-;      (setq profile-color-theme "sweet")
-      (setq profile-color-theme "solarized-light")
-      (progn ; if section-display-color-theme nil
-        ;;
-        ;; MISC: current line highlight + full syntax coloration
-        (setq section-display-color-misc t)
-        ;; MODE: set color for c-mode, cursor and current line
-        (setq section-display-color-mode t)
-        ;; GREP: set color for grep window (all search, occur, grep, grep-find,
-        ;; etc)
-        (setq section-display-color-grep t)
-        ;; ECB: set color for ecb-mode
-        ;; REQUIREMENT: `section-mode-cedet-ecb'
-        (setq section-display-color-ecb t)
-        ) ; (progn
+      (setq profile-color-theme "sweet")
       ) ; (if  section-display-color-theme
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq section-display-color-ansi-color-compile t)
+    ;; HIGHLIGHT CURRENT LINE: have current line highlighted
+    (setq section-display-color-highlight-line nil)
     ) ; (when section-display-color
   ) ; (when section-display
 
@@ -815,38 +850,6 @@
     (setq zone-programs [ zone-pgm-putz-with-case ])
   ) ; (defun function-to-call-after-loading-conf ()
 
-;; switch to solarized theme to use with ps2dpf
-(defalias 'll '(lambda ()
-                 (interactive)
-                 (disable-theme 'sweet)
-                 (load-theme 'solarized-light)
-                 (setq powerline-color1 (face-foreground 'default))
-                 (setq powerline-color2 (face-foreground 'shadow))
-                 (ecb-toggle-compile-window -1)))
-;; switch back
-(defalias 'lk '(lambda ()
-                 (interactive)
-                 (disable-theme 'solarized-light)
-                 (load-theme 'sweet)
-                 (setq powerline-color1 "grey30") ; = sweet-grey+2
-                 (setq powerline-color2 "grey50") ; = sweet-grey
-                 (ecb-toggle-compile-window -1)))
-;; switch to solarized theme for use ps2dpf
-(defalias 'lz '(lambda ()
-                 (interactive)
-                 (disable-theme 'sweet)
-                 (load-theme 'zenburn)
-                 (setq powerline-color1 (face-background 'highlight))
-                 (setq powerline-color2 (face-foreground 'shadow))
-                 (ecb-toggle-compile-window -1)))
-;; switch back
-(defalias 'lb '(lambda ()
-                 (interactive)
-                 (disable-theme 'zenburn)
-                 (load-theme 'sweet)
-                 (setq powerline-color1 "grey30") ; = sweet-grey+2
-                 (setq powerline-color2 "grey50") ; = sweet-grey
-                 (ecb-toggle-compile-window -1)))
 
 
 (provide 'profile-sagem-defense)

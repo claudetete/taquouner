@@ -1,6 +1,6 @@
 ;;; shortcut-semantic.el --- a config file for semantic mode shortcut
 
-;; Copyright (c) 2010-2014 Claude Tete
+;; Copyright (c) 2010-2016 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2010
-;; Last-Updated: March 2014
+;; Last-Updated: Spetember 2016
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-semantic'
 
 ;;; Change Log:
+;; 2016-09-28 (1.8)
+;;    change condition about cedet and helm
 ;; 2014-03-26 (1.7)
 ;;    modify helm-imenu shortcut
 ;; 2013-05-07 (1.6)
@@ -54,31 +56,28 @@
 
 
 ;;; Code:
-(when section-mode-cedet-semantic
+(when (and section-mode-cedet section-mode-cedet-semantic)
   ;; go to the tag with shift + left click
   (global-set-key       (kbd "<S-down-mouse-1>")        'ignore)
   (global-set-key       (kbd "<S-mouse-1>")             '(lambda (event)
                                                            (interactive "e") ; the function get a event parameter (from mouse click)
                                                            (mouse-set-point event) ; set the point at the mouse position
                                                            (semantic-goto-definition (point))))
-  ;; go to the tag
-  (global-set-key       (kbd "M-.")                     'semantic-goto-definition)
-  (global-set-key       [(control  >)]                  'semantic-goto-definition)
+  (when (not section-mode-helm)
+    ;; go to the tag
+    (global-set-key       (kbd "M-.")                     'semantic-goto-definition)
+    ;; (global-set-key       [(control  >)]                  'semantic-goto-definition)
 
-  ;; find all references of a symbol by regexp
-  (global-set-key       (kbd "C-M-.")                   'semantic-symref-regexp)
+    ;; find all references of a symbol by regexp
+    (global-set-key       (kbd "C-M-.")                   'semantic-symref-regexp)
 
-  ;; return back after "go to the tag"
-  ;; you can use the default shortcut: M-xB, which ask where you want go back
-  (global-set-key       [(control  <)]                  'semantic-pop-tag-mark)
-  (global-set-key       (kbd "<mouse-4>")               'semantic-pop-tag-mark)
-
+    ;; return back after "go to the tag"
+    ;; you can use the default shortcut: M-xB, which ask where you want go back
+    (global-set-key       [(control  <)]                  'semantic-pop-tag-mark)
+    (global-set-key       (kbd "<mouse-4>")               'semantic-pop-tag-mark)
+    ) ; (when (not section-mode-helm)
   ;; right click will open menu with list of variable/function/include
   (global-set-key       (kbd "<mouse-3>")               'imenu)
-  ;; add helm menu shortcut
-  (when section-mode-helm-imenu
-    (global-set-key     (kbd "C-c C-d")                 'helm-imenu))
-
 )
 
 ;;
