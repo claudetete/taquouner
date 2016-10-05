@@ -239,8 +239,8 @@
       (setq profile-ecb-source-file-regexps
         '((".*"
             ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|ri2\\|fdc\\|map\\|lis\\|a\\|so\\|tcl\\|err\\|i\\|met\\|merge\\|contrib\\|summary\\.txt\\|atc\\.txt\\)$\\)\\)")
-            ("^\\.\\(emacs\\|gnus\\)$"))
-           )
+            ("^\\.\\(emacs\\|gnus\\)$")
+           ))
         )
       ;; files to be ignored from Version Control VC
       (setq profile-ecb-sources-exclude-cvsignore

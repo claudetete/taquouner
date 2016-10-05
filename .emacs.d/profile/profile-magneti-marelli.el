@@ -132,8 +132,8 @@
       (setq profile-ecb-source-file-regexps
         '((".*"
             ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\)$\\)\\)")
-            ("^\\.\\(emacs\\|gnus\\)$"))
-          )
+            ("^\\.\\(emacs\\|gnus\\)$")
+          ))
         )
       (setq profile-ecb-sources-exclude-cvsignore
         '(
