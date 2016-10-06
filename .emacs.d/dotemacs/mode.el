@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.1
+;; Version: 5.2
 ;; Created: October 2006
-;; Last-Updated: September 2016
+;; Last-Updated: October 2016
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2016-10-06 (5.2)
+;;    remove .emacs.d from load-path
 ;; 2016-09-28 (5.1)
 ;;    move helm mode (to be load first) + manage project without ECB + add mode
 ;;    ggtags (GNU Global) + modify condition about new emacs version 25 + add
@@ -137,7 +139,6 @@
 ;;; DIRECTORY
 (when section-mode-directory (message "  2.0 Load Directory...")
   ;; path to load mode
-  (add-to-list 'load-path (file-name-as-directory dotemacs-path))
   (add-to-list 'load-path  (concat (file-name-as-directory dotemacs-path) "plugins"))
   (message "  2.0 Load Directory... Done"))
 

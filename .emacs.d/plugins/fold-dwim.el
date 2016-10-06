@@ -173,6 +173,7 @@ nothing but an ellipsis.  TODO: only recenter if we end up near
 the top or bottom of the screen"
   (recenter))
 
+;;;###autoload
 (defun fold-dwim-toggle-selective-display ()
   "Set selective display to indentation of current line"
   (interactive)
@@ -186,6 +187,7 @@ the top or bottom of the screen"
             (set-selective-display nil)
           (set-selective-display col))))))
 
+;;;###autoload
 (defun fold-dwim-hide-all ()
   "Hide all folds of various kinds in the buffer or region"
   (interactive)
@@ -207,6 +209,7 @@ the top or bottom of the screen"
         (folding-whole-buffer))))
   (fold-dwim-maybe-recenter))
 
+;;;###autoload
 (defun fold-dwim-show-all ()
   "Show all folds of various kinds in the buffer or region"
   (interactive)
@@ -259,7 +262,6 @@ the top or bottom of the screen"
             (hide-entry)))))
     (fold-dwim-maybe-recenter))
 
-
 (defun fold-dwim-show ()
   "If point is in a closed or temporarily open fold,
   open it.  Returns nil if nothing was done"
@@ -309,7 +311,8 @@ the top or bottom of the screen"
                        (folding-show-current-entry)
                        (setq stop t))))))
       stop)))
-                   
+
+;;;###autoload
 (defun fold-dwim-toggle ()
   "Try fold-dwim-show to show any hidden text at point; if no
 hidden fold is found, try fold-dwim-hide to hide the construction
