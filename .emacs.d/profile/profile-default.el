@@ -1,6 +1,6 @@
 ;;; profile-default.el --- a config file for profile
 
-;; Copyright (c) 2012-2016 Claude Tete
+;; Copyright (c) 2012-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.1
+;; Version: 1.3
 ;; Created: June 2012
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,10 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2017-05-26 (1.3)
+;;    add irony mode
+;; 2017-01-20 (1.2)
+;;    add new option about org mode
 ;; 2016-09-28 (1.1)
 ;;    update with new mode/variable
 ;; 2014-03-26 (1.0)
@@ -324,6 +328,16 @@
   (setq section-mode-dired-sort t)
   ;; ORG MODE: to organize everything (also use on Android)
   (setq section-mode-org-mode nil)
+  (when section-mode-org-mode
+    ;; path where org will look
+    (setq profile-org-directory (concat dotemacs-path "/org"))
+    ;; default org file where all task/todo capture will goes
+    (setq profile-org-default-notes-file (concat profile-org-directory "/notes.org"))
+    ;; agenda will look only in default org file
+    (setq profile-org-agenda-files (concat profile-org-directory "/agenda.list"))
+    ;; first buffer to show up is default org file
+    (setq section-mode-org-default-as-init-buffer t)
+    ) ; (when section-mode-org-mode
   ;; ISEARCH+: add some features to isearch
   (setq section-mode-isearch+ nil)
   ;; PSVN: add geatures to subversion integration
@@ -365,7 +379,9 @@
     ) ; (when section-mode-ack
   ;; ACE JUMP: move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
-  (setq section-mode-ace-jump t)
+  (setq section-mode-ace-jump nil)
+  ;; AVY: move quickly and easily with avy (replacement of ace jump)
+  (setq section-mode-avy t)
   ;; DIREDFUL: color dired buffer
   (setq section-mode-diredful t)
   ;; PS2PDF: print buffer/region in pdf
@@ -404,12 +420,12 @@
   ;; RAINBOW MODE: show string color in color
   (setq section-mode-rainbow t)
   ;; EDIFF: graphical diff (## to toggle whitespace ignoring)
-  (setq section-mode-ediff t)
+  (setq section-mode-ediff nil)
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (setq section-mode-magit nil)
   (when section-mode-magit
     (setq profile-magit-exec "git")
-    )
+    ) ; (when section-mode-magit
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
   ;; emacs)
   (setq section-mode-synergy nil)
@@ -448,9 +464,24 @@
   (when section-mode-elpy
     ;; add elpy package
     ;; and flycheck package, about warnings/errors check on the fly
+    ;; and autopep8 package, about fix automagically some pep8 rules after save python file
     (add-to-list 'profile-environment-elpa-package-list 'elpy t)
     (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+    (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
     ) ; (when section-mode-elpy
+  ;; SMARTPARENS:
+  (setq section-mode-smartparens nil)
+  ;; PLANTUML: generate uml diagram from text
+  (setq section-mode-plantuml nil)
+  ;; GRAPHVIZ DOT: generate diagram from text
+  (setq section-mode-graphviz-dot nil)
+  ;; HASKELL: editing, debugging and developing Haskell programs
+  (setq section-mode-haskell nil)
+  ;; CFLOW: useful to have call tree in C source code
+  (setq section-mode-cflow nil)
+  ;; IRONY: improving the editing experience for the C, C++ and Objective-C
+  ;; using clang
+  (setq section-mode-irony nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (when section-mode
@@ -494,6 +525,8 @@
       ) ; (when section-languages-c-hide-show
     ;; FLYMAKE
     (setq section-languages-c-flymake nil)
+    ;; FLYCHECK (replacement of flymake using irony mode)
+    (setq section-languages-c-flycheck t)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)

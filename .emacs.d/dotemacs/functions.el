@@ -328,6 +328,7 @@
     (occur word)
     )
   )
+
 ;;
 ;;; occur when incremental search (by Fabrice Niessen)
 (defun isearch-occur ()
@@ -335,16 +336,19 @@
   (interactive)
   (let ((case-fold-search isearch-case-fold-search))
     (occur (if isearch-regexp isearch-string (regexp-quote isearch-string)))))
+
 ;;
 ;;; incremental search the word at the point (from www.emacswiki.org)
 ;; I-search with initial contents
 (defvar isearch-initial-string nil)
+
 (defun isearch-set-initial-string ()
   "Set initialization of isearch."
   (remove-hook 'isearch-mode-hook 'isearch-set-initial-string)
   (setq isearch-string isearch-initial-string)
   (isearch-search-and-update)
   )
+
 (defun isearch-forward-at-point (&optional regexp-p no-recursive-edit)
   "Interactive search forward for the symbol at point (optional REGEXP-P and NO-RECURSIVE-EDIT)."
   (interactive "P\np")
@@ -360,6 +364,7 @@
       )
     )
   )
+
 ;; ---------------- matching word pairs ------------------
 ;; The idea here is that while emacs has built-in support for matching
 ;; things like parentheses, I work with a variety of syntaxes that use
@@ -395,7 +400,8 @@
         (goto-char orig-point)
         (error (format "Did not find match; nesting at file end is %d" nesting))
       )
-    )))
+      )))
+
 ;;; find the matching word/character /* it's a pain to point the word begining */
 ;; This is what I bind to C-left and C-right with some mode. (inspired by Scott McPeak)
 (defun find-matching-keyword ()
@@ -403,8 +409,8 @@
   (interactive)
   (cond
     ;; these first two come from lisp/emulation/vi.el
-    ((looking-at "[[({]") (forward-sexp 1) (backward-char 1))
-    ((looking-at "[])}]") (forward-char 1) (backward-sexp 1))
+    ((looking-at "[[({]") (forward-sexp 1))
+    ((looking-back "[])}]") (backward-sexp 1))
     ;;
     ;; rtp file from RTRT
     ((looking-at "<unit_testing>")
@@ -1063,6 +1069,56 @@ systems unlike original function."
       (insert (string-reverse string))
       )))
 
+(defun clt-function-on-each-lines (func)
+  ;; declare variable
+  (let (end)
+    (save-excursion
+      ;; go to end of region
+      (goto-char (region-end))
+      (if (not (bolp))
+        (forward-line 1))
+      ;; go to begin of current line
+      (beginning-of-line)
+      ;; store last line marker
+      (setq end (copy-marker (point-marker)))
+      ;; go to begin of region
+      (goto-char (region-beginning))
+      ;; go to begin of current line
+      (beginning-of-line)
+      ;; loop on each line of region
+      (while (< (point-marker) end)
+        ;; apply
+        (funcall func)
+        ;; go to next line
+        (forward-line 1)
+        )
+      )
+    )
+  )
+
+
+;;
+;;;
+;;;; ORG MODE
+(defun org-shiftright-dwim ()
+  "Org Shift Right on current line or all line of region."
+  (interactive)
+  (if (use-region-p)
+    (clt-function-on-each-lines 'org-shiftright)
+    (org-shiftright)
+    )
+  )
+
+(defun org-shiftleft-dwim ()
+  "Org Shift Left on current line or all line of region."
+  (interactive)
+  (if (use-region-p)
+    (clt-function-on-each-lines 'org-shiftleft)
+    (org-shiftleft)
+    )
+  )
+
+
 ;;
 ;;;
 ;;;; SWITCH BUFFER
@@ -1350,6 +1406,34 @@ delete blank lines"
       (replace-regexp "^\\s-*----\\s-*$" "" nil start end)
       ))
   )
+
+;; from http://emacs.stackexchange.com/a/11049 by Jordon Biondo
+(defun rectangle-number-lines-wrapper (start end start-at step &optional format)
+  "Insert numbers in front of the region-rectangle.
+
+START-AT, if non-nil, should be a number from which to begin
+counting.  STEP, if non-nil should be a number to increment by.
+FORMAT, if non-nil, should be a format string to pass to `format'
+along with the line count.  When called interactively with a
+prefix argument, prompt for START-AT, STEP, and FORMAT."
+  (interactive
+   (if (not current-prefix-arg)
+     (let* ((start (region-beginning))
+             (end   (region-end))
+             (start-at (read-number "Number to count from: " 1))
+             (step (read-number "Step: " 1)))
+       (list start end start-at step
+         (read-string "Format string: "
+           (rectangle--default-line-number-format
+             start end start-at))))
+     (list (region-beginning) (region-end) 1 1 nil)))
+  (cl-letf (((symbol-function 'rectangle-number-line-callback)
+              `(lambda (start _end format-string)
+                 (move-to-column start t)
+                 (insert (format format-string rectangle-number-line-counter))
+                 (setq rectangle-number-line-counter
+                   (+ rectangle-number-line-counter ,step)))))
+    (rectangle-number-lines start end start-at format)))
 
 
 ;;

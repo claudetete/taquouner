@@ -303,6 +303,16 @@
   (setq section-mode-dired-sort t)
   ;; ORG MODE: to organize everything (also use on Android)
   (setq section-mode-org-mode nil)
+  (when section-mode-org-mode
+    ;; path where org will look
+    (setq profile-org-directory (concat dotemacs-path "/org"))
+    ;; default org file where all task/todo capture will goes
+    (setq profile-org-default-notes-file (concat profile-org-directory "/notes.org"))
+    ;; agenda will look only in default org file
+    (setq profile-org-agenda-files (concat profile-org-directory "/agenda.list"))
+    ;; first buffer to show up is default org file
+    (setq section-mode-org-default-as-init-buffer t)
+    ) ; (when section-mode-org-mode
   ;; ISEARCH+: add some features to isearch
   (setq section-mode-isearch+ nil)
   ;; PSVN: add geatures to subversion integration

@@ -1,6 +1,6 @@
 ;;; shortcut-tags.el --- a config file for tags shortcut
 
-;; Copyright (c) 2006-2016 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, tags
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: September 2010
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-shortcut-tags'
 
 ;;; Change Log:
+;; 2017-05-26 (2.3)
+;;    fix gtags and projectile with helm shortcuts
 ;; 2016-09-28 (2.2)
 ;;    add helm/gtags and helm/projectile shortcuts
 ;; 2014-03-26 (2.1)
@@ -103,6 +105,7 @@
             '(progn
                (define-key helm-gtags-mode-map  (kbd "C-M-.")   'helm-gtags-find-pattern)
                (define-key helm-gtags-mode-map  (kbd "M-.")     'helm-gtags-dwim)
+               (define-key helm-gtags-mode-map  (kbd "C->")     'helm-gtags-dwim)
                (define-key helm-gtags-mode-map  (kbd "C-<")     'helm-gtags-pop-stack)
                (define-key helm-gtags-mode-map  (kbd "C-.")     'helm-gtags-find-rtag)
                (define-key helm-gtags-mode-map  (kbd "C-M-,")   'helm-gtags-update-tags)
@@ -127,10 +130,6 @@
         ) ; (progn
       ) ; (if section-mode-cedet-ecb
 
-    (when (and section-mode-helm section-mode-projectile)
-      ;; find file in the gnu global project (regexp) (need new function of gtags see function.el)
-      (global-set-key           (kbd "C-c C-f")         'helm-projectile-find-file)
-      ) ; (when (and section-mode-helm section-mode-projectile)
 
     ;; find all references (regexp)
     (global-set-key     (kbd "C-M-=")           'gtags-find-with-grep-symbol-assigned)

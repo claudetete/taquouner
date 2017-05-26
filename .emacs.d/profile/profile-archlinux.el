@@ -281,6 +281,16 @@
   (setq section-mode-dired-sort t)
   ;; ORG MODE: to organize everything (also use on Android)
   (setq section-mode-org-mode nil)
+  (when section-mode-org-mode
+    ;; path where org will look
+    (setq profile-org-directory (concat dotemacs-path "/org"))
+    ;; default org file where all task/todo capture will goes
+    (setq profile-org-default-notes-file (concat profile-org-directory "/notes.org"))
+    ;; agenda will look only in default org file
+    (setq profile-org-agenda-files (concat profile-org-directory "/agenda.list"))
+    ;; first buffer to show up is default org file
+    (setq section-mode-org-default-as-init-buffer t)
+    ) ; (when section-mode-org-mode
   ;; ISEARCH+: add some features to isearch
   (setq section-mode-isearch+ nil)
   ;; PSVN: add geatures to subversion integration
@@ -323,6 +333,8 @@
   ;; ACE JUMP: move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
   (setq section-mode-ace-jump t)
+  ;; AVY: move quickly and easily with avy (replacement of ace jump)
+  (setq section-mode-avy t)
   ;; DIREDFUL: color dired buffer
   (setq section-mode-diredful nil)
   ;; PS2PDF: print buffer/region in pdf
@@ -371,25 +383,13 @@
   ;; emacs)
   (setq section-mode-synergy nil)
   (when section-mode-synergy
-    (setq profile-synergy-username "FT346598")
-    (setq profile-synergy-database "/opt/ccm/databases/kc390_spds") ;; KC390
-    (setq profile-synergy-server "http://synergy7c.sds.safran:8410") ;; KC390
-    ;;(setq profile-synergy-database "/opt/ccm/databases/trcu")
-    ;;(setq profile-synergy-server "http://synergy7a.sds.safran:8410")
-    (setq profile-synergy-history-filter '(
-                                            "|" "sed" "s/F281393/DMN    /"
-                                            "|" "sed" "s/FT346530/MQL     /"
-                                            "|" "sed" "s/FT346575/MGD     /"
-                                            "|" "sed" "s/FT346560/CPT     /"
-                                            "|" "sed" "s/FT346433/NGT     /"
-                                            "|" "sed" "s/FT346439/BVX     /"
-                                            "|" "sed" "s/FT346434/ASE     /"
-                                            "|" "sed" "s/FT346581/CCH     /"
-                                            "|" "sed" "s/FT346596/MDA     /"
-                                            ))
-    (setq profile-synergy-diff-external-command "BCompare.exe")
-    (setq profile-synergy-diff-external-parameter "")
-    (setq profile-synergy-diff-external-swap-file t)
+    (setq profile-synergy-username "")
+    (setq profile-synergy-database "")
+    (setq profile-synergy-server "")
+    (setq profile-synergy-history-filter nil)
+    (setq profile-synergy-diff-external-command nil)
+    (setq profile-synergy-diff-external-parameter nil)
+    (setq profile-synergy-diff-external-swap-file nil)
     ) ; (when section-mode-synergy
   ;; HIDE-LINES: hide lines using regexp (like narrow but with regex and not
   ;; region)
@@ -422,6 +422,19 @@
     (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
     (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
     ) ; (when section-mode-elpy
+  ;; SMARTPARENS:
+  (setq section-mode-smartparens nil)
+  ;; PLANTUML: generate uml diagram from text
+  (setq section-mode-plantuml nil)
+  ;; GRAPHVIZ DOT: generate diagram from text
+  (setq section-mode-graphviz-dot nil)
+  ;; HASKELL: editing, debugging and developing Haskell programs
+  (setq section-mode-haskell nil)
+  ;; CFLOW: useful to have call tree in C source code
+  (setq section-mode-cflow nil)
+  ;; IRONY: improving the editing experience for the C, C++ and Objective-C
+  ;; using clang
+  (setq section-mode-irony nil)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -465,6 +478,8 @@
       ) ; (when section-languages-c-hide-show
     ;; FLYMAKE
     (setq section-languages-c-flymake nil)
+    ;; FLYCHECK (replacement of flymake using irony mode)
+    (setq section-languages-c-flycheck nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -475,7 +490,7 @@
   ;; TAB: tab always in space
   (setq section-languages-tabulation t)
   ;; RTRT SCRIPT PTU: set indentation style
-  (setq section-languages-rtrt-script t)
+  (setq section-languages-rtrt-script nil)
   ;; PERL: set indentation style
   (setq section-languages-perl t)
   (when section-languages-perl
@@ -762,14 +777,6 @@
 ;; this function will be call at the end after all configuration, it can be use
 ;; to override some settings or add settings without modify the configuration
 (defun function-to-call-after-loading-conf ()
-  ;; to disable all version control
-  ;(setq vc-handled-backends nil)
-
-  ;; try to unslow emacs when open file
-  ;(remove-hook 'find-file-hooks 'vc-find-file-hook)
-
-  (message "### END")
-
   ) ; (defun function-to-call-after-loading-conf ()
 
 

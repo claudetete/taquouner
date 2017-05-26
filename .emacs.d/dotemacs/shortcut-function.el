@@ -1,6 +1,6 @@
 ;;; shortcut-function.el --- a config file for function shortcut
 
-;; Copyright (c) 2006-2015 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, function
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.6
+;; Version: 3.7
 ;; Created: October 2006
-;; Last-Updated: August 2015
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2017-05-26 (3.7)
+;;    replace alias of translation + new shortcut about go to balance
+;;    expression to avoid Hyper (not on all keyboard) + org shortcut to modify
+;;    multiple lines
 ;; 2015-08-21 (3.6)
 ;;    add aliases for web search
 ;; 2014-03-26 (3.5)
@@ -200,8 +204,8 @@
 ;;
 ;;; WEB SEARCH
 ;; translate word at point or region
-(defalias       'enfr   'translate-enfr)
-(defalias       'fren   'translate-fren)
+(defalias       'ef   'translate-enfr)
+(defalias       'fe   'translate-fren)
 ;; synonym
 (defalias       's      'synonym-fr)
 (defalias       'se     'synonym-en)
@@ -228,14 +232,23 @@
 ;;
 ;;; SEARCH
 ;; navigate to start/end of balance expressions
-(global-set-key         (kbd "M-[")             'find-matching-keyword)
 (global-set-key         (kbd "M-]")             'find-matching-keyword)
 
 ;;
 ;;; INDENT
 ;; indent the whole function
-(global-set-key         (kbd "C-M-|")           'indent-defun)
+(global-set-key         (kbd "C-M-l")           'indent-defun)
 
+;;
+;;; ORG MODE
+(when section-mode-org-mode
+  (add-hook 'org-mode-hook
+    (lambda ()
+      (define-key org-mode-map      (kbd "<S-right>")       'org-shiftright-dwim)
+      (define-key org-mode-map      (kbd "<S-left>")        'org-shiftleft-dwim)
+      )
+    )
+  )
 
 (provide 'shortcut-function)
 

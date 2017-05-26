@@ -1,6 +1,6 @@
 ;;; my-misc.el --- a config file for misc settings
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, misc
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.6
+;; Version: 2.7
 ;; Created: October 2006
-;; Last-Updated: May 2013
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-environment-os-recognition'
 
 ;;; Change Log:
+;; 2017-05-26 (2.7)
+;;    remove diary option about org mode compatibility
 ;; 2013-05-07 (2.6)
 ;;    add condition for some minor options
 ;; 2013-04-12 (2.5)
@@ -160,7 +162,7 @@
     ;; do not show holidays by default
     '(calendar-view-holidays-initially-flag nil)
     ;; show diary mark in calendar
-    '(calendar-mark-diary-entries-flag t)
+    ;'(calendar-mark-diary-entries-flag t)
     )
 
   (when section-misc-calendar-french (message "    11.1.1 French calendar...")

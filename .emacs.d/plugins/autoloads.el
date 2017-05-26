@@ -93,6 +93,8 @@
   (update-file-autoloads "fastnav.el"                t (concat autoloads-location "autoload-fastnav.el"))
   ;; ACE JUMP
   (update-file-autoloads "ace-jump-mode.el"          t (concat autoloads-location "autoload-ace-jump-mode.el"))
+  ;; AVY
+  (update-file-autoloads "avy.el"                    t (concat autoloads-location "autoload-avy.el"))
   ;; RAINBOW MODE
   (update-file-autoloads "rainbow-mode.el"           t (concat autoloads-location "autoload-rainbow-mode.el"))
   ;; PLATINIUM SEARCH

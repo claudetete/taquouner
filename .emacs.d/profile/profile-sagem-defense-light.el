@@ -1,6 +1,6 @@
 ;;; profile-sagem-defense-light.el --- a config file for profile
 
-;; Copyright (c) 2013-2016 Claude Tete
+;; Copyright (c) 2013-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: June 2013
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -70,60 +70,123 @@
     ;; path
     (setq profile-path
       (concat
-        "c:/WinPython27/python-2.7.10"                               ";"
-        "c:/WinPython27/python-2.7.10/Scripts"                       ";"
+        ;; before MSYS2 to make sure to use this version of tools
+        ;; (do not put path which contains gcc otherwise it will be used instead of MSYS2 one)
         "z:/cmbuilder/3.0beta2_KC390"                                ";"
+        "c:/WinPython27/python-2.7.10"                               ";"
+        "c:/perl/perl/bin"                                           ";"
+        "D:/Tools/Git/bin"                                           ";"
+        "C:/Program Files/Haskell/bin"                               ";"
+        ;; MSYS2
+        "D:/KC390/Tools/MSYS2/usr/bin"                               ";"
+        "D:/KC390/Tools/MSYS2/mingw64/bin"                           ";"
+        ;; Python utils
+        "c:/WinPython27/python-2.7.10/Scripts"                       ";"
+        ;; emacs useful binary
         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/pt_windows_amd64" ";"
         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin" ";"
-        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything-1.3.4.686.x64.Multilingual" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/cflow-mingw-master" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/irony-mode/server/build/bin" ";"
+        ;; Perl utils
         "c:/perl/perl/site/bin"                                      ";"
-        "c:/perl/perl/bin"                                           ";"
         "c:/perl/c/bin"                                              ";"
+        ;; Cygwin (useful ?)
         "c:/cygwin/bin"                                              ";"
         "c:/cygwin/usr/bin"                                          ";"
         "c:/cygwin/usr/local/bin"                                    ";"
+        ;; MSYS (old version)
         "c:/MinGW/msys/1.0/bin"                                      ";"
+        ;; GhostScript (useful for auctex)
         "c:/Program Files (x86)/gs/gs9.06/bin"                       ";"
+        ;; LaTeX engine
         "d:/CTE/tools/MikTex/miktex/bin"                             ";"
+        ;; MS Windows usual path
         "c:/WINDOWS"                                                 ";"
         "c:/WINDOWS/System32"                                        ";"
+        ;; GNU Win32 (useful ?)
         "G:/tools/LiberKey/MyApps/GnuWin32/bin"                      ";"
+        ;; Aspell
         "c:/Program Files (x86)/Aspell/bin/"                         ";"
+        ;; Diab Data compiler
         "d:/Tools/diab/5.8.0.0/WIN32/bin"                            ";"
+        ;; Synergy (configuration management)
         "c:/Program Files (x86)/IBM/Rational/Synergy/7.1/bin"        ";"
+        ;; Logiscope (Source Code Analyzer)
         "c:/Program Files (x86)/IBM/Rational/Logiscope/6.6/bin"      ";"
+        ;; CCC from SYNCHRONe (Safran ED, checksum calculator)
         "c:/Program Files (x86)/SYNCHRONe/CCC/3.0"                   ";"
+        ;; srec2bin and bin2srec patched by Safran ED
         "z:/Tools/SREC~1.0/SREC"                                     ";"
-        "c:/Program Files (x86)/Beyond Compare 3"                    ";"
+        ;; Beyond Compare 4 (diff tool)
+        "c:/Program Files (x86)/Beyond Compare 4"                    ";"
+        ;; Java engine (useful ?)
+        "C:/ProgramData/Oracle/Java/javapath"                        ";"
+        ;; GraphViz
+        "D:/Tools/GraphViz/bin"                                      ";"
+        ;; Haskell utils
+        "C:/Program Files/Haskell Platform/8.0.1/lib/extralibs/bin"  ";"
+        "C:/Program Files/Haskell Platform/8.0.1/bin"                ";"
         )
       )
     ;; executables path
     (setq profile-exec-path
       '(
-         "c:/WinPython27/python-2.7.10"
-         "c:/WinPython27/python-2.7.10/Scripts"
+         ;; before MSYS2 to make sure to use this version of tools
+         ;; (do not put path which contains gcc otherwise it will be used instead of MSYS2 one)
          "z:/cmbuilder/3.0beta2_KC390"
+         "c:/WinPython27/python-2.7.10"
+         "c:/perl/perl/bin"
+         "D:/Tools/Git/bin"
+         "C:/Program Files/Haskell/bin"
+         ;; MSYS2
+         "D:/KC390/Tools/MSYS2/usr/bin"
+         "D:/KC390/Tools/MSYS2/mingw64/bin"
+         ;; Python utils
+         "c:/WinPython27/python-2.7.10/Scripts"
+         ;; emacs useful binary
          "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/pt_windows_amd64"
          "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin"
-         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything-1.3.4.686.x64.Multilingual"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/cflow-mingw-master"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/irony-mode/server/build/bin"
+         ;; Perl utils
          "c:/perl/perl/site/bin"
-         "c:/perl/perl/bin"
          "c:/perl/c/bin"
+         ;; Cygwin (useful ?)
          "c:/cygwin/bin"
          "c:/cygwin/usr/bin"
          "c:/cygwin/usr/local/bin"
+         ;; MSYS (old version)
          "c:/MinGW/msys/1.0/bin"
+         ;; GhostScript (useful for auctex)
          "c:/Program Files (x86)/gs/gs9.06/bin"
+         ;; LaTeX engine
          "d:/CTE/tools/MikTex/miktex/bin"
+         ;; MS Windows usual path
          "c:/WINDOWS"
          "c:/WINDOWS/System32"
+         ;; Aspell
          "c:/Program Files (x86)/Aspell/bin/"
+         ;; Diab Data compiler
          "d:/Tools/diab/5.8.0.0/WIN32/bin"
+         ;; Synergy (configuration management)
          "c:/Program Files (x86)/IBM/Rational/Synergy/7.1/bin"
+         ;; Logiscope (Source Code Analyzer)
          "c:/Program Files (x86)/IBM/Rational/Logiscope/6.6/bin"
+         ;; CCC from SYNCHRONe (Safran ED, checksum calculator)
          "c:/Program Files (x86)/SYNCHRONe/CCC/3.0"
+         ;; srec2bin and bin2srec patched (Safran ED)
          "z:/Tools/SREC~1.0/SREC"
-         "c:/Program Files (x86)/Beyond Compare 3"
+         ;; Beyond Compare 4 (diff tool)
+         "c:/Program Files (x86)/Beyond Compare 4"
+         ;; Java engine (useful ?)
+         "C:/ProgramData/Oracle/Java/javapath"
+         ;; GraphViz
+         "D:/Tools/GraphViz/bin"
+         ;; Haskell utils
+         "C:/Program Files/Haskell Platform/8.0.1/lib/extralibs/bin"
+         "C:/Program Files/Haskell Platform/8.0.1/bin"
          )
       )
     ;; languages
@@ -154,8 +217,8 @@
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa t)
   (when section-environment-elpa
-    (setq profile-environment-elpa-proxy-http "vipsds1.safran:8080")
-    (setq profile-environment-elpa-proxy-https "vipsds1.safran:8080")
+    ;(setq profile-environment-elpa-proxy-http "vipsds1.safran:8080")
+    ;(setq profile-environment-elpa-proxy-https "vipsds1.safran:8080")
     ;; fill at each requested mode
     ;;(setq profile-environment-elpa-package-list '(first-package second-package))
     )
@@ -164,7 +227,7 @@
   (setq section-environment-hyper t)
   ;; SUPER: windows key become super key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
-  (setq section-environment-super nil)
+  (setq section-environment-super t)
   ;; SERVER : start a server for emacs client (and have only one instance)
   (setq section-environment-server t)
   ) ; (when section-environment
@@ -336,7 +399,17 @@
   ;; DIRED SORT: more option to sort in Dired mode
   (setq section-mode-dired-sort t)
   ;; ORG MODE: to organize everything (also use on Android)
-  (setq section-mode-org-mode nil)
+  (setq section-mode-org-mode t)
+  (when section-mode-org-mode
+    ;; path where org will look
+    (setq profile-org-directory "D:/CTE/org")
+    ;; default org file where all task/todo capture will goes
+    (setq profile-org-default-notes-file (concat profile-org-directory "/KC390.org"))
+    ;; agenda will look only in default org file
+    (setq profile-org-agenda-files (concat profile-org-directory "/agenda.list"))
+    ;; first buffer to show up is default org file
+    (setq section-mode-org-default-as-init-buffer t)
+    ) ; (when section-mode-org-mode
   ;; ISEARCH+: add some features to isearch
   (setq section-mode-isearch+ nil)
   ;; PSVN: add geatures to subversion integration
@@ -378,7 +451,9 @@
     ) ; (when section-mode-ack
   ;; ACE JUMP: move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
-  (setq section-mode-ace-jump t)
+  (setq section-mode-ace-jump nil)
+  ;; AVY: move quickly and easily with avy (replacement of ace jump)
+  (setq section-mode-avy t)
   ;; DIREDFUL: color dired buffer
   (setq section-mode-diredful nil)
   ;; PS2PDF: print buffer/region in pdf
@@ -478,6 +553,19 @@
     (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
     (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
     ) ; (when section-mode-elpy
+  ;; SMARTPARENS:
+  (setq section-mode-smartparens t)
+  ;; PLANTUML: generate uml diagram from text
+  (setq section-mode-plantuml t)
+  ;; GRAPHVIZ DOT: generate diagram from text
+  (setq section-mode-graphviz-dot t)
+  ;; HASKELL: editing, debugging and developing Haskell programs
+  (setq section-mode-haskell t)
+  ;; CFLOW: useful to have call tree in C source code
+  (setq section-mode-cflow t)
+  ;; IRONY: improving the editing experience for the C, C++ and Objective-C
+  ;; using clang
+  (setq section-mode-irony t)
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -521,6 +609,8 @@
       ) ; (when section-languages-c-hide-show
     ;; FLYMAKE
     (setq section-languages-c-flymake nil)
+    ;; FLYCHECK (replacement of flymake using irony mode)
+    (setq section-languages-c-flycheck t)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -636,7 +726,7 @@
     (setq section-display-color-parentheses-mode t)
     ;; PARENTHESES MINIBUFFER: matched parentheses are highlight and if not
     ;; visible show it in the Minibuffer
-    (setq section-display-color-parentheses-visible t)
+    (setq section-display-color-parentheses-visible nil)
     ;; PARENTHESES HIGHLIGHT: matched parentheses are highlight in rainbow color
     (setq section-display-color-parentheses-highlight nil)
     ;; COLOR THEME: set color by color-theme mode (or manual settings nil)
@@ -826,6 +916,18 @@
 
   ;; try to unslow emacs when open file
   (remove-hook 'find-file-hooks 'vc-find-file-hook)
+
+  ;; add txt as other file for python mode, to switch from toto.py to toto.txt
+  (add-hook 'elpy-mode-hook
+    (lambda ()
+      (setq ff-search-directories '("."))
+      (setq ff-other-file-alist '(
+                                   ("\\.txt$" (".py"))
+                                   ("\\.py$" (".txt"))))
+      ;;(setq ff-other-file-alist '(
+      ;;                             ("\\.txt\\'" (".py"))
+      ;;                             ("\\.py\\'" (".txt"))))
+      ))
 
   ;; do not freeze when redisplay ?
   ;(redisplay-dont-pause t)

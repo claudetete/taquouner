@@ -199,6 +199,11 @@
   (setq section-mode-diff-color t)
   (setq section-mode-dired-sort t)
   (setq section-mode-org-mode nil)
+  (when section-mode-org-mode
+    (setq profile-org-directory (concat dotemacs-path "/org"))
+    (setq profile-org-default-notes-file (concat profile-org-directory "/notes.org"))
+    (setq profile-org-agenda-files (concat profile-org-directory "/agenda.list"))
+    (setq section-mode-org-default-as-init-buffer t))
   (setq section-mode-isearch+ nil)
   (setq section-mode-psvn nil)
   (setq section-mode-powerline nil)

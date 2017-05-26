@@ -1,6 +1,6 @@
 ;;; shortcut-global.el --- a config file for global Emacs shortcut
 
-;; Copyright (c) 2006-2016 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.0
+;; Version: 4.1
 ;; Created: October 2006
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2017-05-26 (4.1)
+;;    clean up + remove essential hyper shortcut (not on all keyboard...) +
+;;    use rectangle mode and no more cua rectangle + modify shortcut to improve
+;;    org mode compatibility + add haskell shortcut
 ;; 2016-09-28 (4.0)
 ;;    modify align shortcut (helm/projectile conflict) + add helm/company
 ;;    shortcuts + add popwin shortcut + add helm shortcut + remove bind into c
@@ -110,7 +114,7 @@
 ;;(normal-erase-is-backspace-mode)
 
 ;; close current buffer and its window
-(global-set-key         [f4]                    'kill-buffer-and-window)
+(global-set-key         (kbd "<f4>")            'kill-buffer-and-window)
 
 ;; run ispell (dictionary) (set language in `section-misc')
 ;; never used
@@ -140,9 +144,6 @@
 
 ;; save current buffer as a bookmark
 (global-set-key         "\C-cv"                 'bookmark-set)
-
-;;;; ??
-;;(global-set-key         "\C-up"                 'backward-sentence)
 
 ;; delete backward a word
 (global-set-key         "\C-z"                  'backward-kill-word)
@@ -177,33 +178,22 @@
 (global-set-key         (kbd "C-c a a")         'align)
 (global-set-key         (kbd "C-c a s")         'align-regexp)
 
-;; remove a pair of matched parentheses/brackets
-;; see "M-(" to create a pair of matched parentheses around the region
-(global-set-key         (kbd "C-(")             'delete-pair)
-
 ;; refresh current buffer
 (global-set-key         (kbd "M-p")             'revert-buffer)
 
 ;; switch between header/source file
-(global-set-key         (kbd "C-`")             'ff-find-related-file)
+(global-set-key         (kbd "C-`")             'ff-find-other-file)
 
 ;; switch between others header/source files
-(global-set-key         [\C-f4]                 'ff-find-other-file)
+(global-set-key         (kbd "<C-f4>")          'ff-find-other-file)
 
 ;; fill paragraph at point
 (global-set-key         (kbd "C-c ]")           'fill-paragraph)
 ;; fill region
 (global-set-key         (kbd "C-c [")           'fill-region)
 
-;; change local dictionary
-(global-set-key         (kbd "C-c $")           'ispell-change-dictionary)
-
 ;; (un)comment region
 (global-set-key         (kbd "H-/")             'comment-or-uncomment-region)
-
-;; move to the matched parenthesis
-(global-set-key         (kbd "<H-right>")       'forward-sexp)
-(global-set-key         (kbd "<H-left>")        'backward-sexp)
 
 ;; run calc quick
 (global-set-key         (kbd "<M-kp-multiply>") 'quick-calc)
@@ -217,7 +207,7 @@
   (if section-mode-helm
     (eval-after-load 'company
       '(progn
-         ;; use helm with comapny mode
+         ;; use helm with company mode
          (define-key company-mode-map     (kbd "C-/")     'helm-company)
          (define-key company-active-map   (kbd "C-/")     'helm-company)))
     (global-set-key     (kbd "C-/")             'company-complete)))
@@ -228,10 +218,6 @@
 ;; insert register
 (global-set-key         (kbd "C-c i")           'insert-register)
 
-;; kill forward a word (like M-d)
-(global-set-key         (kbd "<M-delete>")      'kill-word)
-;; kill forward a line (like C-k)
-(global-set-key         (kbd "<C-delete>")      'kill-line)
 ;; kill backward a line (like C-u C-k)
 (global-set-key         (kbd "<C-backspace>")   '(lambda ()
                                                    (interactive)
@@ -242,6 +228,40 @@
   '(progn
      (define-key cua--rectangle-keymap [remap kill-ring-save-x] 'cua-copy-region)
      )
+  )
+
+;;
+;;; RECTANGLE
+(if (or running-on-emacs-24-4 running-on-emacs-24-5 running-on-emacs-25)
+  (progn
+    (global-set-key       (kbd "<C-return>")      'rectangle-mark-mode)
+    (when (try-require 'rect)
+      ;; insert string (interactively, Enter to apply)
+      (define-key rectangle-mark-mode-map       (kbd "t")               'string-rectangle)
+      (define-key rectangle-mark-mode-map       (kbd "s")               'string-rectangle)
+      (define-key rectangle-mark-mode-map       (kbd "i")               'string-rectangle)
+      ;; useful to to enter in rectangle mode and insert with C-return twice
+      (define-key rectangle-mark-mode-map       (kbd "<C-return>")      'string-rectangle)
+      ;; insert rectangle of space (C-x r o and C-o)
+      (define-key rectangle-mark-mode-map       (kbd "<space>")         'open-rectangle)
+      ;; Kill rectangle (C-x r k)
+      (define-key rectangle-mark-mode-map       (kbd "C-k")             'kill-rectangle)
+      ;; Copy rectangle (C-x r M-w)
+      (define-key rectangle-mark-mode-map       (kbd "M-w")             'copy-rectangle-as-kill)
+      ;; Delete rectangle (delete key also works) (C-x r d)
+      (define-key rectangle-mark-mode-map       (kbd "d")               'delete-rectangle)
+      ;; Yank rectangle (C-x r y)
+      (define-key rectangle-mark-mode-map       (kbd "C-y")             'yank-rectangle)
+      ;; Insert incremented number (C-x r N)
+      (define-key rectangle-mark-mode-map       (kbd "n")               'rectangle-number-lines-wrapper)
+      ;; Clear rectangle, insert space instead of rectangle (C-x r c)
+      (define-key rectangle-mark-mode-map       (kbd "<S-space>")       'clear-rectangle)
+      ;; Trim rectangle, remove space from left
+      (define-key rectangle-mark-mode-map       (kbd "<M-space>")       'delete-whitespace-rectangle)
+      ;; move from corner to corner
+      (define-key rectangle-mark-mode-map       (kbd "<return>")        'rectangle-exchange-point-and-mark)
+      )
+    )
   )
 
 ;;
@@ -333,8 +353,8 @@
 (global-set-key         (kbd "<M-SPC>")         'just-one-space-or-line)
 
 ;; move page to page (to next/previous character)
-(global-set-key         (kbd "<M-up>")          'backward-page)
-(global-set-key         (kbd "<M-down>")        'forward-page)
+(global-set-key         (kbd "<C-M-prior>")     'backward-page)
+(global-set-key         (kbd "<C-M-next>")      'forward-page)
 
 ;;
 ;;; HOME/END
@@ -377,8 +397,8 @@
   (add-hook 'elpy-mode-hook
     (lambda ()
       (local-unset-key (kbd "M-TAB"))
-      (define-key elpy-mode-map (kbd "<M-up>")          'backward-page)
-      (define-key elpy-mode-map (kbd "<M-down>")        'forward-page)
+      (define-key elpy-mode-map (kbd "<C-M-prior>")     'backward-page)
+      (define-key elpy-mode-map (kbd "<C-M-next>")      'forward-page)
       ))
   )
 
@@ -434,12 +454,12 @@
   (add-hook 'c-mode-hook
     '(lambda ()
        ;; show/hide block
-       (local-set-key   (kbd "<M-left>")        'fold-dwim-toggle)
-       (local-set-key   (kbd "<M-right>")       'fold-dwim-toggle)
+       (local-set-key   (kbd "<H-left>")        'fold-dwim-toggle)
+       (local-set-key   (kbd "<H-right>")       'fold-dwim-toggle)
        ;; hide all
-       (local-set-key   (kbd "<M-up>")          'fold-dwim-hide-all)
+       (local-set-key   (kbd "<H-up>")          'fold-dwim-hide-all)
        ;; show all
-       (local-set-key   (kbd "<M-down>")        'fold-dwim-show-all)
+       (local-set-key   (kbd "<H-down>")        'fold-dwim-show-all)
        ))
   ;; only when rtrt is used
   (when section-mode-rtrt-script
@@ -463,13 +483,6 @@
                                                    (hide-sublevels 1)))
        ;; show all
        (local-set-key   (kbd "C-.")             'show-all)
-       ;; hide current block
-;;       (local-set-key   (kbd "<M-left>")        '(lambda ()
-;;                                                   (interactive)
-;;                                                   (outline-up-heading 1)
-;;                                                   (hide-subtree)))
-;;       ;; show block
-;;       (local-set-key   (kbd "<M-right>")       'show-subtree)
        )))
 
 ;;
@@ -564,6 +577,34 @@
   ;; show all
   (global-set-key       (kbd "C-c h s")         'hide-lines-show-all)
   ) ; (when section-mode-hide-lines
+
+
+
+;;
+;;; ORG MODE
+(when section-mode-org-mode
+  ;; to add from everywhere a note/todo into default org file `org-default-notes-file'
+  (global-set-key       (kbd "C-c o c")         'org-capture)
+  (global-set-key       (kbd "C-c o o")         'org-capture)
+  ;; to open from everywhere an org file
+  (global-set-key       (kbd "C-c o f")         'org-iswitchb)
+  )
+
+;;
+;;; HASKELL
+(when section-mode-haskell
+  (eval-after-load "haskell-mode"
+    '(progn
+       (define-key haskell-mode-map (kbd "<S-f10>") 'haskell-process-load-or-reload)
+       (define-key haskell-mode-map (kbd "<M-f10>") 'haskell-interactive-bring)
+       ;; (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+       ;; (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+       ;; (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+       ;; (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+       ;; (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+       )
+    )
+)
 
 ;;
 ;;; ALIAS

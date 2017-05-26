@@ -8,10 +8,14 @@
       **EMACS**
 </slide>
 
-<slide title="Emacs: Features already in Emacs">
+<slide title="Emacs">
+-
+</slide>
+
+<slide title="Emacs: Features already in Emacs 25">
  - Presentation (created with Emacs) of several features which are not always present in other text editor or IDE
  - slide order is not important the first thing is not the most important
- - don't panic about octopus shortcuts you will get used (or use Menu bar or "=Ctrl+Right Click=")
+ - don't panic about octopus shortcuts you will get used to it (or use Menu bar or "=Ctrl+Right Click=")
 </slide>
 
 ; interface

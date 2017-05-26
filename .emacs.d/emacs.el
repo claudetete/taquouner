@@ -622,6 +622,12 @@ before message."
   ;; ORG MODE                                                           2.33
   ;; to organize everything (also use on Android)
   (defvar section-mode-org-mode nil)
+  (progn
+    (defvar profile-org-directory "")
+    (defvar profile-org-agenda-files "")
+    (defvar profile-org-default-notes-file "")
+    (defvar section-mode-org-default-as-init-buffer nil)
+    )
   ;;
   ;; ISEARCH+                                                           2.34
   ;; add some features to isearch
@@ -700,6 +706,12 @@ before message."
   ;; move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
   (defvar section-mode-ace-jump nil)
+  (progn
+    ;;
+    ;;; AVY
+    ;; move quickly and easily with avy like with ace jump
+    (defvar section-mode-avy nil)
+    )
   ;;
   ;; DIREDFUL                                                           2.52
   ;; color dired buffer
@@ -812,6 +824,33 @@ before message."
   ;; Python mode like an IDE
   (defvar section-mode-elpy nil)
   ;;
+  ;; SMARTPARENS                                                        2.71
+  ;; useful to have nice navigation through source code structure
+  (defvar section-mode-smartparens nil)
+  ;;
+  ;; PLANTUML                                                           2.72
+  ;; generate uml diagram from text
+  (defvar section-mode-plantuml nil)
+  ;;
+  ;; GRAPHVIZ DOT                                                       2.73
+  ;; generate diagram from text
+  (defvar section-mode-graphviz-dot nil)
+  ;;
+  ;; HASKELL                                                            2.74
+  ;; editing, debugging and developing Haskell programs
+  (defvar section-mode-haskell nil)
+  ;;
+  ;; CFLOW                                                              2.75
+  ;; useful to have call tree in C source code
+  (defvar section-mode-cflow nil)
+  ;;
+  ;; IRONY                                                              2.76
+  ;; improving the editing experience for the C, C++ and Objective-C
+  ;; using clang (only work after emacs 24.4 under MS Windows)
+  ;; need cmake and clang in path and exec path of emacs (profile-path and
+  ;; profile-exec-path)
+  (defvar section-mode-irony nil)
+  ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline
   (defvar section-mode-diminish nil)
@@ -841,6 +880,8 @@ before message."
       ) ; (progn
     ;; FLYMAKE
     (defvar section-languages-c-flymake nil)
+    ;; FLYCHECK (replacement of flymake using irony mode)
+    (defvar section-languages-c-flycheck nil)
     ) ; (progn
   ;;
   ;; LISP                                                               3.2

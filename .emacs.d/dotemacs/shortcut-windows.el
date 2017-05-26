@@ -1,6 +1,6 @@
 ;;; shortcut-windows.el --- a config file for windows shortcut
 
-;; Copyright (c) 2006-2013 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, window
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.7
+;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: September 2013
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2017-05-26 (1.8)
+;;    add new shortcut to delete frame (cannot remember previous one)
 ;; 2013-09-10 (1.7)
 ;;    add shortcut to delete window or frame
 ;; 2013-04-10 (1.6)
@@ -91,6 +93,7 @@
 (global-set-key         (kbd "<C-kp-6>")        'delete-window)
 (global-set-key         (kbd "<M-kp-5>")        'make-frame-command)
 (global-set-key         (kbd "<C-kp-5>")        'delete-frame)
+(global-set-key         (kbd "<C-kp-decimal>")  'delete-frame)
 
 
 (provide 'shortcut-windows)

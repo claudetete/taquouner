@@ -1,6 +1,6 @@
 ;;; shortcut-semantic.el --- a config file for semantic mode shortcut
 
-;; Copyright (c) 2010-2016 Claude Tete
+;; Copyright (c) 2010-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, semantic, bovinate, cedet, shortcut
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: October 2010
-;; Last-Updated: Spetember 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `section-mode-cedet-semantic'
 
 ;;; Change Log:
+;; 2017-05-26 (1.9)
+;;    try logical shortcut about smartparens
 ;; 2016-09-28 (1.8)
 ;;    change condition about cedet and helm
 ;; 2014-03-26 (1.7)
@@ -118,6 +120,64 @@
        (local-set-key   (kbd "<M-left>")                'smart-backward)
        (local-set-key   (kbd "<M-right>>")              'smart-forward)))
   ) ; (when section-mode-smart-forward
+
+
+(if section-mode-smartparens
+  (progn
+    ;; (todo when no more upper hierarchy, goes to next/previous using beginning-of-defun in c-mode or sp-backward/forward-sexp)
+    ;; move to upper block in file following upper hierarchy
+    (define-key smartparens-mode-map      (kbd "<M-left>")        'sp-backward-up-sexp)
+    ;; move to downer block in file following downer hierarchy
+    (define-key smartparens-mode-map      (kbd "<M-right>")       'sp-down-sexp)
+
+    ;; move to upper block in file following downer hierarchy
+    (define-key smartparens-mode-map      (kbd "<M-up>")          'sp-backward-down-sexp)
+    ;; move to downer block in file following upper hierarchy
+    (define-key smartparens-mode-map      (kbd "<M-down>")        'sp-up-sexp)
+
+    ;; move to beginning of expression just after special character
+    (define-key smartparens-mode-map      (kbd "<M-home>")        'sp-beginning-of-sexp)
+    ;; move to end of expression before special character
+    (define-key smartparens-mode-map      (kbd "<M-end>")         'sp-end-of-sexp)
+
+    ;; move to beginning of previous expression
+    (define-key smartparens-mode-map      (kbd "<M-prior>")       'sp-backward-sexp)
+    ;; move to beginning of next expression
+    (define-key smartparens-mode-map      (kbd "<M-next>")        'sp-next-sexp)
+
+    ;; move to ending of previous expression
+    (define-key smartparens-mode-map      (kbd "<S-prior>")       'sp-previous-sexp)
+    ;; move to ending of next expression
+    (define-key smartparens-mode-map      (kbd "<S-next>")        'sp-forward-sexp)
+
+    (define-key smartparens-mode-map      (kbd "<M-delete>")      'sp-unwrap-sexp)
+    (define-key smartparens-mode-map      (kbd "<M-backspace>")   'sp-backward-unwrap-sexp)
+
+    ;; M-( will enclose symbol at point with ()
+    (define-key smartparens-mode-map      (kbd "M-(")             '(lambda () (interactive)
+                                                                     (sp-wrap-with-pair "(")))
+    ;; M-[ will enclose symbol at point with []
+    (define-key smartparens-mode-map      (kbd "M-[")             '(lambda () (interactive)
+                                                                     (sp-wrap-with-pair "[")))
+    ;; M-" will enclose symbol at point with ""
+    (define-key smartparens-mode-map      (kbd "M-\"")            '(lambda () (interactive)
+                                                                     (sp-wrap-with-pair "\"")))
+    ;; M-' will enclose symbol at point with ''
+    (define-key smartparens-mode-map      (kbd "M-\'")            '(lambda () (interactive)
+                                                                     (sp-wrap-with-pair "\'")))
+
+    ;;(define-key smartparens-mode-map      (kbd "<S-home>")        'sp-end-of-previous-sexp)
+    ;;(define-key smartparens-mode-map      (kbd "<S-end>")         'sp-beginning-of-next-sexp)
+    ;;(define-key smartparens-mode-map      (kbd "<S-prior>")       'sp-beginning-of-previous-sexp)
+    ;;(define-key smartparens-mode-map (kbd "") 'sp-end-of-next-sexp (&optional arg)             ;; none
+    )
+  ;; smartparens not used
+  (progn
+    ;; move to the matched parenthesis
+    (global-set-key         (kbd "<M-right>") 'forward-sexp)
+    (global-set-key         (kbd "<M-left>")  'backward-sexp)
+    )
+  )
 
 
 (provide 'shortcut-semantic)

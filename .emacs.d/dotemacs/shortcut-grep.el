@@ -1,6 +1,6 @@
 ;;; shortcut-grep.el --- a config file for grep shortcut
 
-;; Copyright (c) 2006-2016 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, shortcut, grep
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;;              var     `section-shortcut'
 
 ;;; Change Log:
+;; 2017-05-26 (2.2)
+;;    use helm with projectile if used instead of patched gtags + add avy mode
 ;; 2016-09-28 (2.1)
 ;;    add platinium search (+helm) shortcut
 ;; 2014-03-26 (2.0)
@@ -83,8 +85,12 @@
   (global-set-key       (kbd "C-c e")           'helm-occur)
   (global-set-key       (kbd "C-c e")           'occur))
 
-;; search a file in a directory (recursively) to open it
-(global-set-key         (kbd "C-c c-f")         'find-name-dired)
+(if (and section-mode-helm section-mode-projectile)
+  ;; find file in the gnu global project (regexp) (need new function of gtags see function.el)
+  (global-set-key           (kbd "C-c C-f")         'helm-projectile-find-file)
+  ;; search a file in a directory (recursively) to open it
+  (global-set-key         (kbd "C-c C-f")         'find-name-dired)
+  ) ; (when (and section-mode-helm section-mode-projectile)
 
 ;;
 ;;; HELM
@@ -125,13 +131,21 @@
 
 ;;
 ;;; ACE JUMP
-(when section-mode-ace-jump
-  (global-set-key       (kbd "<f12>")            'ace-jump-mode)
-  ;; can also use <C-u f9>
-  (global-set-key       (kbd "<M-f12>")          'ace-jump-char-mode)
-  ;; can also use <C-u C-u f9>
-  (global-set-key       (kbd "<C-f12>")          'ace-jump-line-mode)
-  (global-set-key       (kbd "<S-f12>")          'ace-jump-mode-pop-mark)
+(if section-mode-ace-jump
+  (progn
+    (global-set-key     (kbd "<f12>")           'ace-jump-mode)
+    ;; can also use <C-u f9>
+    (global-set-key     (kbd "<M-f12>")         'ace-jump-char-mode)
+    ;; can also use <C-u C-u f9>
+    (global-set-key     (kbd "<C-f12>")         'ace-jump-line-mode)
+    (global-set-key     (kbd "<S-f12>")         'ace-jump-mode-pop-mark)
+    )
+  (when section-mode-avy
+    (global-set-key     (kbd "<f12>")           'avy-goto-char-2)
+    (global-set-key     (kbd "<M-f12>")         'avy-goto-word-or-subword-1)
+    (global-set-key     (kbd "<C-f12>")         'avy-goto-line)
+    (global-set-key     (kbd "<S-F12>")         'avy-pop-mark)
+    )
   )
 
 (provide 'shortcut-grep)

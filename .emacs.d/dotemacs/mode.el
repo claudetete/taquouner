@@ -1,6 +1,6 @@
 ;;; mode.el --- a config file for all mode settings
 
-;; Copyright (c) 2006-2016 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.2
+;; Version: 5.3
 ;; Created: October 2006
-;; Last-Updated: October 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,10 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2017-05-26 (5.3)
+;;    manage helm locate with MS Windows + more option about org mode +
+;;    add avy mode (replacement of ace jump) + update magit mode + add irony
+;;    mode, smartparens, plantuml, graphviz, haskell and cflow
 ;; 2016-10-06 (5.2)
 ;;    remove .emacs.d from load-path
 ;; 2016-09-28 (5.1)
@@ -150,7 +154,21 @@
   (custom-set-variables
     '(helm-follow-mode-persistent t))
   (when (try-require 'helm-config "    ")
-    (setq helm-locate-command "es -s %s %s")
+    (when running-on-ms-windows
+      ;; configure everything instead of locate under MS Windows
+      ;; client must be started in background before use
+      ;; $ Everything.exe -startup
+      (setq helm-locate-command "es -s %s -sort run-count %s")
+      (setq helm-locate-fuzzy-match nil)
+      (defun helm-es-hook ()
+        (when (and (equal (assoc-default 'name (helm-get-current-source)) "Locate")
+                (string-match "\\`es" helm-locate-command))
+          (mapc (lambda (file)
+                  (call-process "es" nil nil nil
+                    "-inc-run-count" (convert-standard-filename file)))
+            (helm-marked-candidates))))
+      (add-hook 'helm-find-many-files-after-hook 'helm-es-hook)
+      )
     (setq helm-candidate-separator
       "--separator------------------------------")
     (when section-mode-cedet-ecb
@@ -611,11 +629,36 @@
 ;;
 ;;; ORG MODE
 (when section-mode-org-mode (message "  2.33 Org Mode...")
-  ;; The following lines are always needed.  Choose your own keys.
-  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-  (global-set-key "\C-cl" 'org-store-link)
-  (global-set-key "\C-ca" 'org-agenda)
-  (global-set-key "\C-cb" 'org-iswitchb)
+  ;; no need to require or add in load-path it is built-in
+
+  ;; set org directory where every org file will goes
+  (setq org-directory profile-org-directory)
+  ;; Which files do I want to be checked for entries when compiling my agenda
+  ;; Can be customized with add current buffer "C-c [" or remove current buffer "C-c ]"
+  (setq org-agenda-files profile-org-agenda-files)
+  ;; which file to put captured notes
+  (setq org-default-notes-file profile-org-default-notes-file)
+
+  ;; set timestamp when TODO is DONE
+  (setq org-log-done t)
+  ;; to not show schedule or deadline in agenda if task is done
+  ;(setq org-agenda-skip-scheduled-if-done t)
+  ;(setq org-agenda-skip-deadline-if-done t)
+  ;; to use ido to do completion for org mode
+  (setq org-completion-use-ido t)
+
+  ;; to know shortcuts see shortcut-global.el
+
+  ;; Make windmove work in org-mode:
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right)
+
+  (when section-mode-org-default-as-init-buffer
+    ;; use default org file to be the first initial buffer open by emacs
+    (setq initial-buffer-choice org-default-notes-file)
+    )
   (message "  2.33 Org Mode... Done"))
 
 ;;
@@ -922,15 +965,26 @@
 ;;
 ;;; ACE JUMP
 ;; move quickly and easily with ace jump see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
-(when section-mode-ace-jump (message "  2.51 ACE Jump...")
-  (autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
-  ;; to enable jump back
-  (autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back:-)" t)
-  (eval-after-load "ace-jump-mode" '(ace-jump-mode-enable-mark-sync))
-  ;; to enable only in the current window
-  (eval-after-load "ace-jump-mode" '(setq ace-jump-mode-scope 'window))
-  (message "  2.51 ACE Jump... Done"))
+(if section-mode-ace-jump
+  (progn (message "  2.51 ACE Jump...")
+    (autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
+    ;; to enable jump back
+    (autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back:-)" t)
+    (eval-after-load "ace-jump-mode" '(ace-jump-mode-enable-mark-sync))
+    ;; to enable only in the current window
+    (eval-after-load "ace-jump-mode" '(setq ace-jump-mode-scope 'window))
+    (message "  2.51 ACE Jump... Done"))
 
+  ;;
+  ;;; AVY
+  ;; move quickly and easily with avy (replacement of ace jump)
+  (when section-mode-avy (message "  2.51 AVY...")
+    ;(mapc #'byte-compile-file '("avy.el"))
+    (try-require 'autoload-avy "    ")
+    ;; do search only in current buffer
+    (eval-after-load "avy" '(setq avy-all-windows nil))
+    (message "  2.51 AVY... Done"))
+  )
 ;;
 ;;; DIREDFUL
 ;; add color to dired
@@ -1000,10 +1054,13 @@
 ;; use git with nice interface (do not use vc interface from emacs)
 ;; under windows you can use msys make (after edit of Makefile) to install magit
 (when section-mode-magit (message "  2.60 Magit...")
-  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/magit"))
-  (when (try-require 'magit "    ")
-    (setq magit-git-executable profile-magit-exec)
-    (setq magit-commit-all-when-nothing-staged t))
+  ;; dash is a dependency of projectile
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/dash.el-master"))
+  (when (try-require 'dash "    ")
+    (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/magit"))
+    (when (try-require 'magit "    ")
+      (setq magit-git-executable profile-magit-exec)
+      (setq magit-commit-all-when-nothing-staged t)))
   (message "  2.60 Magit... Done"))
 
 ;;
@@ -1082,6 +1139,7 @@
     (push '("*Backtrace*" :stick t) popwin:special-display-config)
     (push "*Compile-log*" popwin:special-display-config)
     (push '("*[Ss]ynergy*" :regexp r :stick t) popwin:special-display-config)
+    (push '("\\s-*\\*[Ss]ynergy.*\\*\\s-*" :regexp r :stick t) popwin:special-display-config)
     (push '("\\s-*\\*[cC]ompletions*\\*\\s-*" :regexp t) popwin:special-display-config)
     (push '("\\*[cC]ompilation.*\\*" :regexp t :stick t) popwin:special-display-config)
     (push '("\\*i?grep.*\\*" :regexp t :stick t) popwin:special-display-config)
@@ -1104,6 +1162,8 @@
     (push '("\\s-*\\*undo-tree.*" :regexp t :width 0.1 :position right) popwin:special-display-config)
     (push '("*Python Doc*" :stick t) popwin:special-display-config)
     (push '("*helm ag results*" :stick t) popwin:special-display-config)
+    (push '("*haskell*" :stick t) popwin:special-display-config)
+    (push '("*debug:haskell*" :stick t) popwin:special-display-config)
     )
   (message "  2.65 PopWin... Done"))
 
@@ -1156,6 +1216,11 @@
   (add-hook 'after-init-hook 'global-company-mode)
   (when section-mode-helm
     (try-require 'autoload-helm-company "      "))
+  ;; when irony mode is used
+  (when section-mode-irony
+    (eval-after-load 'company
+      '(add-to-list 'company-backends 'company-irony))
+    )
   (message "  2.67 Company Mode... Done"))
 
 ;;
@@ -1194,7 +1259,156 @@
   ;(setq py-autopep8-options '("--ignore=E22,E224,E501"))
   ;(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
   (setq python-shell-unbuffered nil) ; found at https://github.com/jorgenschaefer/elpy/issues/733
+  ;; add customize compile command line to execute current python file
+  ;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
+  (add-hook 'elpy-mode-hook
+    (lambda ()
+      (set (make-local-variable 'compile-command)
+        (concat "python " (shell-quote-argument buffer-file-name)))))
   (message "  2.70 Elpy... Done"))
+
+;;
+;;; SMARTPARENS
+;; useful to have nice navigation through source code structure
+(when section-mode-smartparens (message "  2.71 Smartparens...")
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/smartparens"))
+  (when (try-require 'smartparens-config "    ")
+    ;; enable everywhere
+    (smartparens-global-mode t)
+    ;; Always start smartparens mode in some major mode.
+    ;(add-hook 'c-mode-hook #'smartparens-mode)
+    ;(add-hook 'c-mode-hook #'smartparens-mode)
+    ;; do not navigate between symbol only between special characters
+    (setq p-navigate-consider-symbols nil)
+    ;; do not consider comment as sexps
+    (setq sp-navigate-comments-as-sexps nil)
+    ;; replace electric pai in perl by smartparens
+    (with-eval-after-load 'cperl-mode
+      (add-hook 'smartparens-enabled-hook (lambda () (define-key cperl-mode-map "{" nil)))
+      (add-hook 'smartparens-disabled-hook (lambda () (define-key cperl-mode-map "{" 'cperl-electric-lbrace))))
+    )
+  (message "  2.71 Smartparens... Done"))
+
+;;
+;;; PLANTUML
+;; generate uml diagram from text
+(when section-mode-plantuml (message "  2.72 PlantUML...")
+  (when (try-require 'plantuml-mode "    ")
+    ;; define path to plantuml executable
+    (setq plantuml-jar-path (concat (file-name-as-directory dotemacs-path) "plugins/plantuml.jar"))
+    (add-to-list 'auto-mode-alist '("\\.\\(puml\\)$" . plantuml-mode))
+
+    )
+  (message "  2.72 PlantUML... Done"))
+
+;;
+;;; GRAPHVIZ DOT
+;; generate diagram from text
+(when section-mode-graphviz-dot (message "  2.73 Graphviz Dot...")
+  (when (try-require 'graphviz-dot-mode "    ")
+
+    )
+  (message "  2.73 Graphviz Dot... Done"))
+
+;;
+;;; HASKELL
+;; editing, debugging and developing Haskell programs
+(when section-mode-haskell (message "  2.74 Haskell...")
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/haskell-mode/"))
+  (when (try-require 'haskell-mode-autoloads "    ")
+    ;; add info/help in emacs
+    (add-to-list 'Info-default-directory-list (concat (file-name-as-directory dotemacs-path) "plugins/haskell-mode/"))
+    ;; enable interactive mode with a prompt
+    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+    (custom-set-variables
+      ;; remove suggest import line from ghc output
+      '(haskell-process-suggest-remove-import-lines t)
+      ;; autoload module that have already been loaded
+      '(haskell-process-auto-import-loaded-modules t)
+      ;; enable debug log
+      '(haskell-process-log t)
+      )
+    )
+  (message "  2.74 Haskell... Done"))
+
+;;
+;;; CFLOW
+;; useful to have call tree in C source code
+(when section-mode-cflow (message "  2.75 GNU cflow...")
+  (add-to-list 'load-path (concat (file-name-as-directory dotemacs-path) "plugins/cflow-mingw-master/cflow-1.4/elisp"))
+  (autoload 'cflow-mode "cflow-mode")
+  (setq auto-mode-alist (append auto-mode-alist
+                          '(("\\.cflow$" . cflow-mode))))
+  (message "  2.75 GNU cflow... Done"))
+
+;;
+;;; IRONY
+;; improving the editing experience for the C, C++ and Objective-C using clang
+(when section-mode-irony (message "  2.76 Irony...")
+  ;; irony work fine on linux but only with emacs >= 24.4 on ms windows
+  (if (or running-on-gnu-linux (and running-on-ms-windows (or
+                                                              running-on-emacs-24-4
+                                                              running-on-emacs-24-5
+                                                              running-on-emacs-25)))
+    (progn
+      ;; install from list of packages
+      (add-hook 'c++-mode-hook 'irony-mode)
+      (add-hook 'c-mode-hook 'irony-mode)
+      (add-hook 'objc-mode-hook 'irony-mode)
+      (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+      (eval-after-load 'flycheck
+        '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+      )
+    (message "* Irony mode is not compatible with your environment")
+    )
+
+  (when running-on-ms-windows
+    ;; Windows performance tweaks
+    (when (boundp 'w32-pipe-read-delay)
+      (setq w32-pipe-read-delay 0))
+    ;;
+    ;; this options is only since emacs 25
+    (when running-on-emacs-25
+      ;; Set the buffer size to 64K on Windows (from the original 4K)
+      (when (boundp 'w32-pipe-buffer-size)
+        (setq irony-server-w32-pipe-buffer-size (* 64 1024)))
+      )
+    )
+
+  ;; Irony for MS Windows (extract from wiki of github + small add)
+  ;; IRONY-SERVER build (a compiled version is available in this repository
+  ;; plugins/irony-mode.zip)
+  ;;
+  ;; Prerequisites: Msys2, and MinGW packages.
+  ;;
+  ;; clang and cmake were installed through Msys2/MinGW's pacman and are at
+  ;; standard locations. These are the steps taken to get irony-mode to work.
+  ;; (you can use mingw64 package, but used gcc and clang must all be from
+  ;; mingw64 or mingw32 or msys)
+  ;;
+  ;; git clone https://github.com/Sarcasm/irony-mode.git ~/irony-mode
+  ;;
+  ;; Add in your .bashrc (or shell init), path location of binaries:
+  ;; # MSYS
+  ;; export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
+  ;; # MINGW x86_64 (to use mingw64 installed packages)
+  ;; export PATH="/mingw64/bin:$PATH"
+  ;;
+  ;; Open a mingw{32, 64} shell. cd into the irony-mode server sub-directory,
+  ;; $ cd irony-mode/server
+  ;; $ mkdir build
+  ;;
+  ;; The find module that comes with this project should be able to find
+  ;; libclang, which is called clang.dll in MinGW Packages.
+  ;;
+  ;; To Build (next step only if no error):
+  ;; $ cd build
+  ;; $ cmake -G "MSYS Makefiles" ..
+  ;; or when using mingw64 package
+  ;; $ cmake -DLIBCLANG_LIBRARY=/mingw64/bin/clang.dll -G "MSYS Makefiles" ..
+  ;; $ make -j 4
+
+  (message "  2.76 Irony... Done"))
 
 ;;
 ;;; DIMINISH

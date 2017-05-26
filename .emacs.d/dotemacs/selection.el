@@ -1,6 +1,6 @@
 ;;; selection.el --- a config file for text selection settings
 
-;; Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, selection, text
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.6
+;; Version: 1.7
 ;; Created: October 2006
-;; Last-Updated: July 2012
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-selection'
 
 ;;; Change Log:
+;; 2017-05-26 (1.7)
+;;    add condition about emacs 25 for cua rectangle selection (bad
+;;    compatibility with undo)
 ;; 2012-07-09 (1.6)
 ;;    clean up
 ;; 2012-05-10 (1.5)
@@ -55,8 +58,9 @@
 ;; selection is highlighted
 (setq transient-mark-mode t)
 
-;; to have rectangle mode
-(cua-selection-mode t)
+(if (or running-on-emacs-23 (and running-on-emacs-24 (not running-on-emacs-24-4) (not running-on-emacs-24-5)))
+  ;; to have rectangle mode
+  (cua-selection-mode t))
 ;; bug with enabled dynamic completion, it insert 0x00
 
 ;; read under

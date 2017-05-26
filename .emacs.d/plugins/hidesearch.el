@@ -1,13 +1,13 @@
 ;;; hidesearch.el --- Incremental search while hiding non-matching lines.
-;; 
+;;
 ;;; Author: Craig Muth
-;; 
+;;
 ;;; History
-;; 
+;;
 ;; 2007-06-05 - Initial release
-;; 
+;;
 ;;; Commentary
-;; 
+;;
 ;; Here's a sample of what you might add to your .emacs file to get this
 ;; to work:
 ;;
@@ -31,7 +31,7 @@
 ;;  - During a search try pressing C-1 through C-9
 ;;   - to jump to the nth visible line and un-hide all
 ;;   - Some terminals don't correctly pass these chars through to emacs
-;; 
+;;
 
 ;;;###autoload
 (defun hidesearch (&optional initial-pattern press-enter) (interactive)
@@ -60,7 +60,7 @@
         (setq ch (read-char)))
 
       ; Check last char entered
-      (cond 
+      (cond
         ; Do nothing if C-m
         ((= ch ?\C-m))
         ((= ch ?\C-a) (show-all-invisible))
@@ -89,7 +89,6 @@
 ))
 )
 
-;;;###autoload
 (defun hidesearch-goto-line-show-all (line &optional press-enter)
   (beginning-of-buffer)
   (next-line line)
@@ -100,7 +99,6 @@
   (when press-enter (command-execute "\C-m"))
 )
 
-;;;###autoload
 (define-key isearch-mode-map (kbd "C-h")
   (lambda ()
     "When run during isearch, show only lines matching search."

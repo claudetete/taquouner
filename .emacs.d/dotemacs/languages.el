@@ -1,6 +1,6 @@
 ;;; languages.el --- a config file for programing languages
 
-;; Copyright (c) 2006-2016 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, languages, lisp, c, tabulation
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.4
+;; Version: 3.5
 ;; Created: October 2006
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,9 @@
 ;; REQUIREMENT: var     `section-languages'
 
 ;;; Change Log:
+;; 2017-05-26 (3.5)
+;;    add flycheck hook on C mode + run perl file directly when instance
+;;    compile mode
 ;; 2016-09-28 (3.4)
 ;;    replace about electric-pair to add new emacs version 25
 ;; 2013-05-23 (3.3)
@@ -143,6 +146,11 @@
     (add-hook 'c-mode-hook 'flymake-clang-c-load)
     )
 
+  (when (and section-languages-c-flycheck section-mode-irony)
+    ;; auto syntax check
+    (add-hook 'c-mode-hook 'flycheck-mode))
+
+
   (custom-set-variables
     ;; command to preprocess
     '(c-macro-preprocessor profile-c-macro-preprocessor)
@@ -198,6 +206,12 @@
 (when section-languages-perl (message "  3.5 Languages Perl...")
   ;; set indent size
   (setq perl-indent-level profile-perl-indent-offset)
+  ;; add customize compile command line to execute current python file
+  ;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
+  (add-hook 'perl-mode-hook
+    (lambda ()
+      (set (make-local-variable 'compile-command)
+        (concat "perl " (shell-quote-argument buffer-file-name)))))
   (message "  3.5 Languages Perl... Done"))
 
 

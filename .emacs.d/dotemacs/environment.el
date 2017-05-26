@@ -1,6 +1,6 @@
 ;;; environment.el --- a config file for environment settings
 
-;; Copyright (c) 2006-2016 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, environment, os, path
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.0
+;; Version: 3.1
 ;; Created: October 2006
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -32,6 +32,8 @@
 ;;              var     `dotemacs-path'
 
 ;;; Change Log:
+;; 2017-05-26 (3.1)
+;;    remove useless settings about super/hyper for MS Windows
 ;; 2016-09-28 (3.0)
 ;;    add emacs version 25 into env variable + update package management
 ;; 2015-08-21 (2.9)
@@ -92,9 +94,9 @@
 (when section-environment-version-recognition (message "  0.2 Version Recognition...")
   (defvar running-on-emacs-23 nil)
   (defvar running-on-emacs-24 nil)
-  (defvar running-on-emacs-25 nil)
   (defvar running-on-emacs-24-4 nil)
   (defvar running-on-emacs-24-5 nil)
+  (defvar running-on-emacs-25 nil)
   (cond
     ;; Emacs 23.x
     ((= emacs-major-version 23)
@@ -258,11 +260,12 @@
   (when (and section-environment-os-recognition running-on-ms-windows)
     ;; setting the PC keyboard's various keys to
     ;; Super or Hyper, for emacs running on Windows.
-    (setq
-      w32-pass-lwindow-to-system nil
-      w32-pass-rwindow-to-system nil
-      w32-lwindow-modifier 'super ;; Left Windows key
-      w32-rwindow-modifier 'super) ;; Right Windows key
+    ;; Left Windows key
+    ;(setq w32-pass-lwindow-to-system nil)
+    (setq w32-lwindow-modifier 'super)
+    ;; Right Windows key
+    ;(setq w32-pass-rwindow-to-system nil)
+    (setq w32-rwindow-modifier 'super)
     )
   (message "  0.10 Super... Done"))
 
