@@ -1,9 +1,9 @@
-# Emacs Taquouner, dotemacs with profiles
+# Taquouner, my dotemacs configuration with profiles
 ----
 
 ## Presentation
-Taquouner, a dotemacs configuration with porfile, is almost daily used since 2006, started with one file of hundred of copied/pasted elisp line.
-Then started to grow faster few years later to manage multiple computer and environment (linux/windows, home/work, etc).
+Taquouner, a dotemacs configuration with profile, is almost daily used since 2006, started with one file of hundred of copied/pasted elisp line.
+Then started to grow faster few years later to manage multiple computers and environments (linux/windows, home/work, usb key, etc).
 It follow my needs of embedded developer, a lot of C and some scripting langages.
 
 * It contains:
@@ -14,7 +14,7 @@ It follow my needs of embedded developer, a lot of C and some scripting langages
     * Helm (replace all dialog box for anything)
     * Projectile (project manager)
     * GNU Global (symbol/tag manager)
-    * Company (completion)
+    * Company/Irony (completion)
     * Browse Kill Ring (visualize clipboard history)
     * Undo Tree (visualize undo stack)
     * Powerline (modern status bar)
@@ -47,7 +47,7 @@ It follow my needs of embedded developer, a lot of C and some scripting langages
     * Daily used with Emacs 25.1 on Windows 7 and on ArchLinux
 
 I deliberately try to take point of view of people not used to Emacs.
-* ~~You can read [.emacs.d/features.pdf Slides](https://github.com/claudetete/.emacs.d/blob/master/.emacs.d/features.pdf) created with Emacs which present some features of Emacs, to catch a brief glimpse of Emacs potential~~ Deprecated, must be updated.
+* ~~You can read [.emacs.d/features.pdf Slides](https://github.com/claudetete/taquouner/blob/master/.emacs.d/features.pdf) created with Emacs which present some features of Emacs, to catch a brief glimpse of Emacs potential~~ Deprecated, must be updated to match Emacs 25.
 
 ### You can find here some help to start with Emacs principle.
 * All adding shortcuts are thought for a QWERTY keyboard (some shortcut can be hurtful with an AZERTY keyboard)
@@ -60,7 +60,7 @@ I deliberately try to take point of view of people not used to Emacs.
 * *s-x* means key 'Super' + key 'x' (Super = Windows which is the key Windows between Ctrl and Alt or Command for Apple)
 
 ## Installation
-See [Installation on MS Windows](https://github.com/claudetete/.emacs.d/wiki/Installation) or [Installation on Linux](https://github.com/claudetete/.emacs.d/wiki/Installation%20Linux) on wiki of this repository.
+See [Installation on MS Windows](https://github.com/claudetete/taquouner/wiki/Installation) or [Installation on Linux](https://github.com/claudetete/taquouner/wiki/Installation%20Linux) on wiki of this repository.
 
 ## Essential shortcuts
 | Shortcut | Description |
@@ -85,10 +85,11 @@ See [Installation on MS Windows](https://github.com/claudetete/.emacs.d/wiki/Ins
 
 * The mouse scroll has acceleration by default be careful (I rarely use it)
 
-You can find more in [.emacs.d/cheatsheet_en.pdf](https://github.com/claudetete/.emacs.d/blob/master/.emacs.d/cheatsheet_en.pdf)
+You can find more in [.emacs.d/cheatsheet_en.pdf](https://github.com/claudetete/taquouner/blob/master/.emacs.d/cheatsheet_en.pdf)
 
 ## Issues/Update
 If you want update some mode, fix or modify this configuration, fork it and ask for a pull request.
 
 ## Taquouner ethymology
-Taquouner is a french dialiect verb no more used which means "work but with few results"
+Taquouner is a very old french dialiect verb which is no more used and means "lots of work but with few or none results".
+I believe it really fits to the ideas that other people have on my activities of an "simple" editor configuration.
