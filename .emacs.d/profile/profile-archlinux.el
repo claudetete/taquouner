@@ -1,6 +1,6 @@
 ;;; profile-archlinux.el --- a config file for profile
 
-;; Copyright (c) 2016 Claude Tete
+;; Copyright (c) 2016-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: October 2016
-;; Last-Updated: October 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,13 +30,15 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2017-05-30 (0,2)
+;;    update to newest profile option
 ;; 2016-10-05 (0.1)
 ;;    creation from sagem defense light profile
 
 
 ;;; Code:
 ;; load private variable
-(try-require 'profile-archlinux-private "      ")
+(try-require 'profile-archlinux-private "    ")
 
 ;; Enable/disable section:
 ;; (setq section-xxx X) where 'xxx' means a section of .emacs and 'X' take
@@ -102,7 +104,7 @@
     (setq profile-environment-elpa-proxy-https "")
     ;; fill at each requested mode
     ;;(setq profile-environment-elpa-package-list '(first-package second-package))
-    )
+    )   ; (when section-environment-elpa
   ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-hyper t)
@@ -435,6 +437,13 @@
   ;; IRONY: improving the editing experience for the C, C++ and Objective-C
   ;; using clang
   (setq section-mode-irony nil)
+  ;; MARKDOWN: mode to edit Markdown-formatted text (by example wiki of github)
+  (setq section-mode-markdown t)
+  (when section-mode-markdown
+    ;; to enable markdown mode with github flavoured for all .md files and not
+    ;; only for README.md
+    (setq section-mode-markdown-github t)
+    ) ; (when section-mode-markdown
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -547,8 +556,7 @@
     ;;
     ;;; Proggy Tiny Z, 6
     ;; good, very tiny (slashed 'zero', dot and comma can be mixed)
-;    (setq profile-font "ProggyTinySZ-6")
-    (setq profile-font "Monaco-8")
+    ;;(setq profile-font "ProggyTinySZ-6")
     ;;
     ;;; DejaVu Sans Mono, 10
     ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
@@ -572,7 +580,7 @@
     ;;(setq profile-font "Monaco-10")
     ;;; Monaco, 8
     ;; nice, big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;;(setq profile-font "Monaco-8")
+    (setq profile-font "Monaco-8")
     ;;
     ;;; ProFont, 8
     ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
@@ -584,6 +592,32 @@
     ;;; Courier New 8
     ;; classic but big and large
     ;;(setq profile-font "Courier New-8")
+    ;;
+    ;;; Ubuntu Mono, 10
+    ;; (setq profile-font "Ubuntu Mono-10")
+    ;;; Ubuntu Mono, 8
+    ;; (setq profile-font "Ubuntu Mono-8")
+    ;;
+    ;;; Terminus, 10
+    ;; (setq profile-font "Terminus-10")
+    ;;; Terminus, 8
+    ;; (setq profile-font "Terminus-8")
+    ;;
+    ;;; Monospace, 8
+    ;; (setq profile-font "Monospace-8")
+    ;;
+    ;;; Liberation Mono, 8
+    ;; (setq profile-font "Liberation Mono-8")
+    ;;
+    ;;; Inconsolata, 10
+    ;; (setq profile-font "Inconsolata-10")
+    ;;; Inconsolata, 8
+    ;; (setq profile-font "Inconsolata-8")
+    ;;
+    ;;; Droid Sans Mono, 10
+    ;; (setq profile-font "Droid Sans Mono-10")
+    ;;; Droid Sans Mono, 8
+    ;; (setq profile-font "Droid Sans Mono-8")
     ;;
     ;; INTERNATIONAL: ISO or utf-8 or ...  (not used)
     (setq section-display-font-international t)

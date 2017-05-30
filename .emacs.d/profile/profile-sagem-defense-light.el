@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2017-05-30 (0.3)
+;;    update to newest profile option + MSYS2 has now priority
 ;; 2016-09-22 (0.2)
 ;;    complete with new mode, remove usage of ECB by switching to helm +
 ;;    projectile + popwin
@@ -77,17 +79,17 @@
         "c:/perl/perl/bin"                                           ";"
         "D:/Tools/Git/bin"                                           ";"
         "C:/Program Files/Haskell/bin"                               ";"
+        ;; emacs useful binary
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/pt_windows_amd64" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_656wb/bin" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/cflow-mingw-master" ";"
+        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/irony-mode/server/build/bin" ";"
         ;; MSYS2
         "D:/KC390/Tools/MSYS2/usr/bin"                               ";"
         "D:/KC390/Tools/MSYS2/mingw64/bin"                           ";"
         ;; Python utils
         "c:/WinPython27/python-2.7.10/Scripts"                       ";"
-        ;; emacs useful binary
-        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/pt_windows_amd64" ";"
-        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin" ";"
-        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything" ";"
-        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/cflow-mingw-master" ";"
-        "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/irony-mode/server/build/bin" ";"
         ;; Perl utils
         "c:/perl/perl/site/bin"                                      ";"
         "c:/perl/c/bin"                                              ";"
@@ -139,17 +141,17 @@
          "c:/perl/perl/bin"
          "D:/Tools/Git/bin"
          "C:/Program Files/Haskell/bin"
+         ;; emacs useful binary
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/pt_windows_amd64"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_656wb/bin"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/cflow-mingw-master"
+         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/irony-mode/server/build/bin"
          ;; MSYS2
          "D:/KC390/Tools/MSYS2/usr/bin"
          "D:/KC390/Tools/MSYS2/mingw64/bin"
          ;; Python utils
          "c:/WinPython27/python-2.7.10/Scripts"
-         ;; emacs useful binary
-         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/pt_windows_amd64"
-         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/gnu_global_628wb/bin"
-         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/Everything"
-         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/cflow-mingw-master"
-         "D:/CTE/tools/LiberKey/MyApps/GNU_EmacsPortable/App/GNU_Emacs/.emacs.d/plugins/irony-mode/server/build/bin"
          ;; Perl utils
          "c:/perl/perl/site/bin"
          "c:/perl/c/bin"
@@ -217,11 +219,11 @@
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa t)
   (when section-environment-elpa
-    ;(setq profile-environment-elpa-proxy-http "vipsds1.safran:8080")
-    ;(setq profile-environment-elpa-proxy-https "vipsds1.safran:8080")
+    (setq profile-environment-elpa-proxy-http nil)
+    (setq profile-environment-elpa-proxy-https nil)
     ;; fill at each requested mode
     ;;(setq profile-environment-elpa-package-list '(first-package second-package))
-    )
+    )   ; (when section-environment-elpa
   ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-hyper t)
@@ -566,6 +568,13 @@
   ;; IRONY: improving the editing experience for the C, C++ and Objective-C
   ;; using clang
   (setq section-mode-irony t)
+  ;; MARKDOWN: mode to edit Markdown-formatted text (by example wiki of github)
+  (setq section-mode-markdown t)
+  (when section-mode-markdown
+    ;; to enable markdown mode with github flavoured for all .md files and not
+    ;; only for README.md
+    (setq section-mode-markdown-github t)
+    ) ; (when section-mode-markdown
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -667,54 +676,79 @@
     ;; choice between (it's just some nice font, you can use another font):
     ;;; Terminal
     ;; nice, very tiny, only ascii (too tiny ?)
-    ;;(setq profile-font "Terminal-6")
+    ;; (setq profile-font "Terminal-6")
     ;;
     ;;; Anonymous Pro, 10
     ;; nice, big (slashed 'zero', 'one' and minus 'L' can be mixed up)
-    ;;(setq profile-font "Anonymous Pro-10")
+    ;; (setq profile-font "Anonymous Pro-10")
     ;;; Anonymous Pro, 8
     ;; nice, small (slashed 'zero', 'one' and minus 'L' can be mixed up, parentheses and curly bracket can be mixed up)
-    ;;(setq profile-font "Anonymous Pro-8")
+    ;; (setq profile-font "Anonymous Pro-8")
     ;;
     ;;; Proggy Tiny Z, 6
     ;; good, very tiny (slashed 'zero', dot and comma can be mixed)
-;    (setq profile-font "ProggyTinySZ-6")
-    (setq profile-font "Monaco-8")
+    ;; (setq profile-font "ProggyTinySZ-6")
     ;;
     ;;; DejaVu Sans Mono, 10
     ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
-    ;;(setq profile-font "DejaVu Sans Mono-10")
+    ;; (setq profile-font "DejaVu Sans Mono-10")
     ;;; DejaVu Sans Mono, 8
-    ;;(setq profile-font "DejaVu Sans Mono-8")
+    ;; (setq profile-font "DejaVu Sans Mono-8")
     ;;
     ;;; Inconsolata, 10
     ;; not so good with ms window (slashed 'zero', capitalized 'i' and minus 'L' can be mixed up)
-    ;;(setq profile-font "Inconsolata-10")
+    ;; (setq profile-font "Inconsolata-10")
     ;;
     ;;; Lucida Console, 10
     ;; nice, big, large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-    ;;(setq profile-font "Lucida Console-10")
+    ;; (setq profile-font "Lucida Console-10")
     ;;; Lucida Console, 8
     ;; nice, small large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-    ;;(setq profile-font "Lucida Console-8")
+    ;; (setq profile-font "Lucida Console-8")
     ;;
     ;;; Monaco, 10
     ;; nice, very big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;;(setq profile-font "Monaco-10")
+    ;; (setq profile-font "Monaco-10")
     ;;; Monaco, 8
     ;; nice, big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;;(setq profile-font "Monaco-8")
+    (setq profile-font "Monaco-8")
     ;;
     ;;; ProFont, 8
     ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
-    ;;(setq profile-font "ProFontWindows-8")
+    ;; (setq profile-font "ProFontWindows-8")
     ;;
     ;;; Courier New 10
     ;; classic but big and large
-    ;;(setq profile-font "Courier New-10")
+    ;; (setq profile-font "Courier New-10")
     ;;; Courier New 8
     ;; classic but big and large
-    ;;(setq profile-font "Courier New-8")
+    ;; (setq profile-font "Courier New-8")
+    ;;
+    ;;; Ubuntu Mono, 10
+    ;; (setq profile-font "Ubuntu Mono-10")
+    ;;; Ubuntu Mono, 8
+    ;; (setq profile-font "Ubuntu Mono-8")
+    ;;
+    ;;; Terminus, 10
+    ;; (setq profile-font "Terminus-10")
+    ;;; Terminus, 8
+    ;; (setq profile-font "Terminus-8")
+    ;;
+    ;;; Monospace, 8
+    ;; (setq profile-font "Monospace-8")
+    ;;
+    ;;; Liberation Mono, 8
+    ;; (setq profile-font "Liberation Mono-8")
+    ;;
+    ;;; Inconsolata, 10
+    ;; (setq profile-font "Inconsolata-10")
+    ;;; Inconsolata, 8
+    ;; (setq profile-font "Inconsolata-8")
+    ;;
+    ;;; Droid Sans Mono, 10
+    ;; (setq profile-font "Droid Sans Mono-10")
+    ;;; Droid Sans Mono, 8
+    ;; (setq profile-font "Droid Sans Mono-8")
     ;;
     ;; INTERNATIONAL: ISO or utf-8 or ...  (not used)
     (setq section-display-font-international t)

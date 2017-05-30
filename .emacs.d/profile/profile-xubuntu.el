@@ -1,6 +1,6 @@
 ;;; profile-xubuntu.el --- a config file for profile
 
-;; Copyright (c) 2012-2016 Claude Tete
+;; Copyright (c) 2012-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.7
+;; Version: 0.8
 ;; Created: June 2012
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,7 +30,9 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
-;; 2016-09-28 (1.1)
+;; 2017-05-30 (0.8)
+;;    update to newest profile option
+;; 2016-09-28 (0.7)
 ;;    update with new mode/variable
 ;; 2014-03-26 (0.6)
 ;;    move synergy mode
@@ -100,18 +102,19 @@
   (setq section-environment-executable t)
   (when section-environment-executable
     ;; shell
-    (setq profile-shell-file-name "/bin/bash")
+    (setq profile-shell-file-name "bash")
     ;; ediff
-    (setq profile-ediff-diff-program "/bin/diff")
-    (setq profile-ediff-diff3-program "/bin/diff3")
-    (setq profile-ediff-cmp-program "/bin/cmp")
+    (setq profile-ediff-diff-program "diff")
+    (setq profile-ediff-diff3-program "diff3")
+    (setq profile-ediff-cmp-program "cmp")
     ) ; (when section-environment-executable
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa nil)
   (when section-environment-elpa
     (setq profile-environment-elpa-proxy-http nil)
     (setq profile-environment-elpa-proxy-https nil)
-    (setq profile-environment-elpa-package-list '())
+    ;; fill at each requested mode
+    ;;(setq profile-environment-elpa-package-list '(first-package second-package))
     )   ; (when section-environment-elpa
   ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
@@ -157,9 +160,9 @@
     ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
     (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
     ;; path of gnu global executable
-    (setq profile-gnu-global "/bin/global")
+    (setq profile-gnu-global "global")
     ;; path of gnu global executable
-    (setq profile-gnu-global-gtags "/bin/gtags")
+    (setq profile-gnu-global-gtags "gtags")
     ;;
     ;; SEMANTIC: can do tag, list of function/variable..., preproc, etc
     (setq section-mode-cedet-semantic t)
@@ -265,9 +268,9 @@
   (setq section-mode-vc-clearcase nil)
   (when section-mode-vc-clearcase
     ;; path to version tree executable
-    (setq profile-backup-directory (concat dotemacs-path "/backup"))
+    (setq profile-clearcase-vtree "c:/path/to/ClearCase/bin/clearvtree.exe")
     ;; path to cleartool executable
-    (setq profile-autosave-directory (concat dotemacs-path "/cache"))
+    (setq profile-cleartool "c:/path/to/ClearCase/bin/cleartool.exe")
     ) ; (when section-mode-vc-clearcase
   ;; CLEARCASE: ClearCase mode (not used)
   (setq section-mode-clearcase nil)
@@ -355,6 +358,8 @@
   ;; ACE JUMP: move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
   (setq section-mode-ace-jump t)
+  ;; AVY: move quickly and easily with avy (replacement of ace jump)
+  (setq section-mode-avy nil)
   ;; DIREDFUL: color dired buffer
   (setq section-mode-diredful t)
   ;; PS2PDF: print buffer/region in pdf
@@ -398,7 +403,7 @@
   (setq section-mode-magit nil)
   (when section-mode-magit
     (setq profile-magit-exec "git")
-    )
+    ) ; (when section-mode-magit
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
   ;; emacs)
   (setq section-mode-synergy nil)
@@ -437,9 +442,31 @@
   (when section-mode-elpy
     ;; add elpy package
     ;; and flycheck package, about warnings/errors check on the fly
+    ;; and autopep8 package, about fix automagically some pep8 rules after save python file
     (add-to-list 'profile-environment-elpa-package-list 'elpy t)
     (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+    (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
     ) ; (when section-mode-elpy
+  ;; SMARTPARENS:
+  (setq section-mode-smartparens nil)
+  ;; PLANTUML: generate uml diagram from text
+  (setq section-mode-plantuml nil)
+  ;; GRAPHVIZ DOT: generate diagram from text
+  (setq section-mode-graphviz-dot nil)
+  ;; HASKELL: editing, debugging and developing Haskell programs
+  (setq section-mode-haskell nil)
+  ;; CFLOW: useful to have call tree in C source code
+  (setq section-mode-cflow nil)
+  ;; IRONY: improving the editing experience for the C, C++ and Objective-C
+  ;; using clang
+  (setq section-mode-irony nil)
+  ;; MARKDOWN: mode to edit Markdown-formatted text (by example wiki of github)
+  (setq section-mode-markdown t)
+  (when section-mode-markdown
+    ;; to enable markdown mode with github flavoured for all .md files and not
+    ;; only for README.md
+    (setq section-mode-markdown-github nil)
+    ) ; (when section-mode-markdown
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (when section-mode
@@ -483,6 +510,8 @@
       ) ; (when section-languages-c-hide-show
     ;; FLYMAKE
     (setq section-languages-c-flymake nil)
+    ;; FLYCHECK (replacement of flymake using irony mode)
+    (setq section-languages-c-flycheck nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)

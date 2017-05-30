@@ -20,7 +20,7 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.3
+;; Version: 1.4
 ;; Created: June 2012
 ;; Last-Updated: May 2017
 
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2017-05-30 (1.4)
+;;    add markdown mode
 ;; 2017-05-26 (1.3)
 ;;    add irony mode
 ;; 2017-01-20 (1.2)
@@ -135,7 +137,8 @@
   (when section-environment-elpa
     (setq profile-environment-elpa-proxy-http nil)
     (setq profile-environment-elpa-proxy-https nil)
-    (setq profile-environment-elpa-package-list '())
+    ;; fill at each requested mode
+    ;;(setq profile-environment-elpa-package-list '(first-package second-package))
     )   ; (when section-environment-elpa
   ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
@@ -482,6 +485,13 @@
   ;; IRONY: improving the editing experience for the C, C++ and Objective-C
   ;; using clang
   (setq section-mode-irony nil)
+  ;; MARKDOWN: mode to edit Markdown-formatted text (by example wiki of github)
+  (setq section-mode-markdown t)
+  (when section-mode-markdown
+    ;; to enable markdown mode with github flavoured for all .md files and not
+    ;; only for README.md
+    (setq section-mode-markdown-github nil)
+    ) ; (when section-mode-markdown
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish nil)
   ) ; (when section-mode
@@ -526,7 +536,7 @@
     ;; FLYMAKE
     (setq section-languages-c-flymake nil)
     ;; FLYCHECK (replacement of flymake using irony mode)
-    (setq section-languages-c-flycheck t)
+    (setq section-languages-c-flycheck nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)

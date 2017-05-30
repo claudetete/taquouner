@@ -1,6 +1,6 @@
 ;;; autoloads.el --- a script file to generate autoload files
 
-;; Copyright (c) 2013-2016 Claude Tete
+;; Copyright (c) 2013-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, autoload, generated, load
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.5
+;; Version: 0.6
 ;; Created: April 2013
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;  emacs -Q -l autoloads.el -f autoloads
 
 ;;; Change Log:
+;; 2017-05-30 (0.6)
+;;    add markdown mode
 ;; 2016-09-28 (0.5)
 ;;    add platinium search, fold dwim, ack, ps2pdf, synergy, hide lines, helm...
 ;; 2015-10-21 (0.4)
@@ -118,6 +120,8 @@
   (update-file-autoloads "helm-company.el"           t (concat autoloads-location "autoload-helm-company.el"))
   ;; COMPANY
   (update-file-autoloads "company-mode/company.el"   t (concat autoloads-location "company-mode/autoload-company.el"))
+  ;; MARKDOWN
+  (update-file-autoloads "markdown-mode.el"          t (concat autoloads-location "autoload-markdown-mode.el"))
 
   ;; quit emacs
   (kill-emacs)

@@ -1,6 +1,6 @@
 ;;; profile-magneti-marelli.el --- a config file for profile
 
-;; Copyright (c) 2012-2016 Claude Tete
+;; Copyright (c) 2012-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -203,7 +203,8 @@
     (setq profile-org-directory (concat dotemacs-path "/org"))
     (setq profile-org-default-notes-file (concat profile-org-directory "/notes.org"))
     (setq profile-org-agenda-files (concat profile-org-directory "/agenda.list"))
-    (setq section-mode-org-default-as-init-buffer t))
+    (setq section-mode-org-default-as-init-buffer t)
+    )
   (setq section-mode-isearch+ nil)
   (setq section-mode-psvn nil)
   (setq section-mode-powerline nil)
@@ -227,6 +228,7 @@
     (setq section-mode-ack-emacs t)
     )
   (setq section-mode-ace-jump t)
+  (setq section-mode-avy nil)
   (setq section-mode-diredful t)
   (setq section-mode-ps2pdf t)
   (setq section-mode-auctex nil)
@@ -244,6 +246,7 @@
   (setq section-mode-yascroll nil)
   (when section-mode-yascroll
     (setq profile-yascroll-delay-to-hide nil)
+    )
   (setq section-mode-smart-forward nil)
   (setq section-mode-rainbow nil)
   (setq section-mode-ediff nil)
@@ -260,7 +263,7 @@
     (setq profile-synergy-diff-external-command nil)
     (setq profile-synergy-diff-external-parameter nil)
     (setq profile-synergy-diff-external-swap-file nil)
-    ) ; (when section-mode-synergy
+    )
   (setq section-mode-hide-lines nil)
   (setq section-mode-aggressive-indent nil)
   (setq section-mode-platinium-search nil)
@@ -271,11 +274,20 @@
   (setq section-mode-function-args nil)
   (setq section-mode-elpy nil)
   (when section-mode-elpy
-    ;; add elpy package
-    ;; and flycheck package, about warnings/errors check on the fly
     (add-to-list 'profile-environment-elpa-package-list 'elpy t)
     (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
-    ) ; (when section-mode-elpy
+    (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
+    )
+  (setq section-mode-smartparens nil)
+  (setq section-mode-plantuml nil)
+  (setq section-mode-graphviz-dot nil)
+  (setq section-mode-haskell nil)
+  (setq section-mode-cflow nil)
+  (setq section-mode-irony nil)
+  (setq section-mode-markdown t)
+  (when section-mode-markdown
+    (setq section-mode-markdown-github nil)
+    )
   (setq section-mode-diminish nil)
   )
 
@@ -306,6 +318,8 @@
       )
     )
     (setq section-languages-c-flymake nil)
+    (setq section-languages-c-flycheck nil)
+    )
   (setq section-languages-lisp t)
   (when section-languages-lisp
     (setq profile-lisp-indent-offset 2)
@@ -345,9 +359,9 @@
     (setq section-display-color-theme t)
     (if section-display-color-theme
       (setq profile-color-theme "sweet")
+      )
     (setq section-display-color-ansi-color-compile t)
     (setq section-display-color-highlight-line nil)
-      )
     )
   )
 
@@ -393,7 +407,7 @@
   (setq section-mouse-paste-to-point-not-mouse-cursor t)
   (setq section-mouse-avoidance t)
   (setq section-mouse-smooth-scroll t)
-)
+  )
 
 (setq section-annoyances t)
 (when section-annoyances
@@ -430,7 +444,7 @@
 (setq section-filecustomize t)
 
 (defun function-to-call-after-loading-conf ()
-  ) ; (defun function-to-call-after-loading-conf ()
+  )
 
 
 (provide 'profile-magneti-marelli)

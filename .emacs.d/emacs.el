@@ -1,6 +1,6 @@
 ;;; emacs.el --- config file for Emacs
 
-;; Copyright (c) 2006-2016 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, emacs
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 9.3
+;; Version: 9.4
 ;; Created: October 2006
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -137,6 +137,8 @@
 ;;  - add "end" and "home" x1, x2 and x3
 
 ;;; Change Log:
+;; 2017-05-30 (9.4)
+;;    add markdown mode
 ;; 2016-09-28 (9.3)
 ;;    add proxy for packages + new GNU Global mode + add platinium search,
 ;;    popwin, projectile, company and elpy mode
@@ -850,6 +852,15 @@ before message."
   ;; need cmake and clang in path and exec path of emacs (profile-path and
   ;; profile-exec-path)
   (defvar section-mode-irony nil)
+  ;;
+  ;; MARKDOWN                                                           2.77
+  ;; mode to edit Markdown-formatted text (by example wiki of github)
+  (defvar section-mode-markdown nil)
+  (progn
+    ;; to enable markdown mode with github flavoured for all .md files and not
+    ;; only for README.md
+    (defvar section-mode-markdown-github nil)
+    )
   ;;
   ;; DIMINISH                                                           2.99
   ;; shrink major and minor mode name in the modeline

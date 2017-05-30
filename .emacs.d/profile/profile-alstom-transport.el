@@ -1,6 +1,6 @@
 ;;; profile-alstom-transport.el --- a config file for profile
 
-;; Copyright (c) 2012-2016 Claude Tete
+;; Copyright (c) 2012-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.9
+;; Version: 1.0
 ;; Created: June 2012
-;; Last-Updated: September 2016
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,7 +30,9 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
-;; 2016-09-28 (1.1)
+;; 2017-05-30 (1.0)
+;;    update to newest profile option
+;; 2016-09-28 (0.9)
 ;;    update with new mode/variable
 ;; 2013-05-17 (0.8)
 ;;    add new mode + add condition to disable quickly some part
@@ -137,6 +139,7 @@
     ;; languages
     (setq profile-lang "en_US") ; for subversion and Dired
 
+    ;; win32 python
     (setenv "PYTHONIOENCODING" "iso8859_15")
     ) ; (when section-environment-set-path
 
@@ -423,6 +426,8 @@
   ;; ACE JUMP: move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
   (setq section-mode-ace-jump t)
+  ;; AVY: move quickly and easily with avy (replacement of ace jump)
+  (setq section-mode-avy nil)
   ;; DIREDFUL: color dired buffer
   (setq section-mode-diredful nil)
   ;; PS2PDF: print buffer/region in pdf
@@ -466,7 +471,7 @@
   (setq section-mode-magit nil)
   (when section-mode-magit
     (setq profile-magit-exec "git")
-    )
+    ) ; (when section-mode-magit
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
   ;; emacs)
   (setq section-mode-synergy nil)
@@ -505,9 +510,31 @@
   (when section-mode-elpy
     ;; add elpy package
     ;; and flycheck package, about warnings/errors check on the fly
+    ;; and autopep8 package, about fix automagically some pep8 rules after save python file
     (add-to-list 'profile-environment-elpa-package-list 'elpy t)
     (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+    (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
     ) ; (when section-mode-elpy
+  ;; SMARTPARENS:
+  (setq section-mode-smartparens nil)
+  ;; PLANTUML: generate uml diagram from text
+  (setq section-mode-plantuml nil)
+  ;; GRAPHVIZ DOT: generate diagram from text
+  (setq section-mode-graphviz-dot nil)
+  ;; HASKELL: editing, debugging and developing Haskell programs
+  (setq section-mode-haskell nil)
+  ;; CFLOW: useful to have call tree in C source code
+  (setq section-mode-cflow nil)
+  ;; IRONY: improving the editing experience for the C, C++ and Objective-C
+  ;; using clang
+  (setq section-mode-irony nil)
+  ;; MARKDOWN: mode to edit Markdown-formatted text (by example wiki of github)
+  (setq section-mode-markdown t)
+  (when section-mode-markdown
+    ;; to enable markdown mode with github flavoured for all .md files and not
+    ;; only for README.md
+    (setq section-mode-markdown-github nil)
+    ) ; (when section-mode-markdown
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -551,6 +578,8 @@
       ) ; (when section-languages-c-hide-show
     ;; FLYMAKE
     (setq section-languages-c-flymake nil)
+    ;; FLYCHECK (replacement of flymake using irony mode)
+    (setq section-languages-c-flycheck nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -674,7 +703,7 @@
       ;; do not use it with terminal
       ;; theme to be used
       (setq profile-color-theme "sweet")
-      ) ; (if  section-display-color-theme
+      ) ; (if section-display-color-theme
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
@@ -770,7 +799,7 @@
   ;; SMOOTH SCROLL: it will always scroll line by line with arrow at start or
   ;; end of screen
   (setq section-mouse-smooth-scroll nil)
-) ; (when section-mouse
+  ) ; (when section-mouse
 
 
 ;;; ANNOYANCES: no welcome message + yes->y + do not query to refresh buffer +

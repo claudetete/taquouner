@@ -1,6 +1,6 @@
 ;;; profile-sagem-defense.el --- a config file for profile
 
-;; Copyright (c) 2013-2014 Claude Tete
+;; Copyright (c) 2013-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: config, profile, environment, working
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: June 2013
-;; Last-Updated: March 2014
+;; Last-Updated: May 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; REQUIREMENT: var     `section-environment-profile'
 
 ;;; Change Log:
+;; 2017-05-30 (0.3)
+;;    update to newest profile option
 ;; 2014-03-26 (0.2)
 ;;    add Beyond Compare in PATH + move synergy mode + update ecb source filters
 ;;    + modify font/theme + move temporary directory to avoid crypting software
@@ -153,11 +155,11 @@
   ;; ELPA: packages system support with repositories
   (setq section-environment-elpa t)
   (when section-environment-elpa
-    (setq profile-environment-elpa-proxy-http ")
-    (setq profile-environment-elpa-proxy-https ")
+    (setq profile-environment-elpa-proxy-http nil)
+    (setq profile-environment-elpa-proxy-https nil)
     ;; fill at each requested mode
     ;;(setq profile-environment-elpa-package-list '())
-    )
+    )   ; (when section-environment-elpa
   ;; HYPER: menu key become hyper key (modifier key)
   ;; REQUIREMENT: `section-environment-os-recognition'
   (setq section-environment-hyper t)
@@ -416,6 +418,8 @@
   ;; ACE JUMP: move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
   (setq section-mode-ace-jump t)
+  ;; AVY: move quickly and easily with avy (replacement of ace jump)
+  (setq section-mode-avy nil)
   ;; DIREDFUL: color dired buffer
   (setq section-mode-diredful nil)
   ;; PS2PDF: print buffer/region in pdf
@@ -513,6 +517,26 @@
     (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
     (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
     ) ; (when section-mode-elpy
+  ;; SMARTPARENS:
+  (setq section-mode-smartparens nil)
+  ;; PLANTUML: generate uml diagram from text
+  (setq section-mode-plantuml nil)
+  ;; GRAPHVIZ DOT: generate diagram from text
+  (setq section-mode-graphviz-dot nil)
+  ;; HASKELL: editing, debugging and developing Haskell programs
+  (setq section-mode-haskell nil)
+  ;; CFLOW: useful to have call tree in C source code
+  (setq section-mode-cflow nil)
+  ;; IRONY: improving the editing experience for the C, C++ and Objective-C
+  ;; using clang
+  (setq section-mode-irony nil)
+  ;; MARKDOWN: mode to edit Markdown-formatted text (by example wiki of github)
+  (setq section-mode-markdown t)
+  (when section-mode-markdown
+    ;; to enable markdown mode with github flavoured for all .md files and not
+    ;; only for README.md
+    (setq section-mode-markdown-github nil)
+    ) ; (when section-mode-markdown
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq section-mode-diminish t)
   ) ; (when section-mode
@@ -556,6 +580,8 @@
       ) ; (when section-languages-c-hide-show
     ;; FLYMAKE
     (setq section-languages-c-flymake nil)
+    ;; FLYCHECK (replacement of flymake using irony mode)
+    (setq section-languages-c-flycheck nil)
     ) ; (when section-languages-c
   ;; LISP: set indentation style
   (setq section-languages-lisp t)
@@ -612,54 +638,79 @@
     ;; choice between (it's just some nice font, you can use another font):
     ;;; Terminal
     ;; nice, very tiny, only ascii (too tiny ?)
-    ;;(setq profile-font "Terminal-6")
+    ;; (setq profile-font "Terminal-6")
     ;;
     ;;; Anonymous Pro, 10
     ;; nice, big (slashed 'zero', 'one' and minus 'L' can be mixed up)
-    ;;(setq profile-font "Anonymous Pro-10")
+    ;; (setq profile-font "Anonymous Pro-10")
     ;;; Anonymous Pro, 8
     ;; nice, small (slashed 'zero', 'one' and minus 'L' can be mixed up, parentheses and curly bracket can be mixed up)
-    ;;(setq profile-font "Anonymous Pro-8")
+    ;; (setq profile-font "Anonymous Pro-8")
     ;;
     ;;; Proggy Tiny Z, 6
     ;; good, very tiny (slashed 'zero', dot and comma can be mixed)
-;    (setq profile-font "ProggyTinySZ-6")
-    (setq profile-font "Monaco-8")
+    (setq profile-font "ProggyTinySZ-6")
     ;;
     ;;; DejaVu Sans Mono, 10
     ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
-    ;;(setq profile-font "DejaVu Sans Mono-10")
+    ;; (setq profile-font "DejaVu Sans Mono-10")
     ;;; DejaVu Sans Mono, 8
-    ;;(setq profile-font "DejaVu Sans Mono-8")
+    ;; (setq profile-font "DejaVu Sans Mono-8")
     ;;
     ;;; Inconsolata, 10
     ;; not so good with ms window (slashed 'zero', capitalized 'i' and minus 'L' can be mixed up)
-    ;;(setq profile-font "Inconsolata-10")
+    ;; (setq profile-font "Inconsolata-10")
     ;;
     ;;; Lucida Console, 10
     ;; nice, big, large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-    ;;(setq profile-font "Lucida Console-10")
+    ;; (setq profile-font "Lucida Console-10")
     ;;; Lucida Console, 8
     ;; nice, small large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-    ;;(setq profile-font "Lucida Console-8")
+    ;; (setq profile-font "Lucida Console-8")
     ;;
     ;;; Monaco, 10
     ;; nice, very big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;;(setq profile-font "Monaco-10")
+    ;; (setq profile-font "Monaco-10")
     ;;; Monaco, 8
     ;; nice, big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;;(setq profile-font "Monaco-8")
+    ;; (setq profile-font "Monaco-8")
     ;;
     ;;; ProFont, 8
     ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
-    ;;(setq profile-font "ProFontWindows-8")
+    ;; (setq profile-font "ProFontWindows-8")
     ;;
     ;;; Courier New 10
     ;; classic but big and large
-    ;;(setq profile-font "Courier New-10")
+    ;; (setq profile-font "Courier New-10")
     ;;; Courier New 8
     ;; classic but big and large
-    ;;(setq profile-font "Courier New-8")
+    ;; (setq profile-font "Courier New-8")
+    ;;
+    ;;; Ubuntu Mono, 10
+    ;; (setq profile-font "Ubuntu Mono-10")
+    ;;; Ubuntu Mono, 8
+    ;; (setq profile-font "Ubuntu Mono-8")
+    ;;
+    ;;; Terminus, 10
+    ;; (setq profile-font "Terminus-10")
+    ;;; Terminus, 8
+    ;; (setq profile-font "Terminus-8")
+    ;;
+    ;;; Monospace, 8
+    ;; (setq profile-font "Monospace-8")
+    ;;
+    ;;; Liberation Mono, 8
+    ;; (setq profile-font "Liberation Mono-8")
+    ;;
+    ;;; Inconsolata, 10
+    ;; (setq profile-font "Inconsolata-10")
+    ;;; Inconsolata, 8
+    ;; (setq profile-font "Inconsolata-8")
+    ;;
+    ;;; Droid Sans Mono, 10
+    ;; (setq profile-font "Droid Sans Mono-10")
+    ;;; Droid Sans Mono, 8
+    ;; (setq profile-font "Droid Sans Mono-8")
     ;;
     ;; INTERNATIONAL: ISO or utf-8 or ...  (not used)
     (setq section-display-font-international t)
@@ -680,7 +731,7 @@
       ;; do not use it with terminal
       ;; theme to be used
       (setq profile-color-theme "sweet")
-      ) ; (if  section-display-color-theme
+      ) ; (if section-display-color-theme
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted

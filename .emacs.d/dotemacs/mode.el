@@ -20,7 +20,7 @@
 
 ;; Keywords: config, mode
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 5.3
+;; Version: 5.4
 ;; Created: October 2006
 ;; Last-Updated: May 2017
 
@@ -31,6 +31,8 @@
 ;;              var     `section-external-directory'
 
 ;;; Change Log:
+;; 2017-05-30 (5.4)
+;;    add markdown mode with github flavoured
 ;; 2017-05-26 (5.3)
 ;;    manage helm locate with MS Windows + more option about org mode +
 ;;    add avy mode (replacement of ace jump) + update magit mode + add irony
@@ -1409,6 +1411,22 @@
   ;; $ make -j 4
 
   (message "  2.76 Irony... Done"))
+
+
+;;
+;;; MARKDOWN
+;; mode to edit Markdown-formatted text (by example wiki of github)
+(when section-mode-markdown (message "  2.77 Markdown...")
+  (when (try-require 'autoload-markdown-mode "    ")
+    (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+    (if section-mode-markdown-github
+      (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
+      (progn
+        (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+        (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
+      )
+    )
+  (message "  2.77 Markdown... Done"))
 
 ;;
 ;;; DIMINISH
