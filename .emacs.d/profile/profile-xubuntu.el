@@ -17,19 +17,18 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
-
-;; Keywords: config, profile, environment, working
+
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.8
+;; Version: 0.9
 ;; Created: June 2012
-;; Last-Updated: May 2017
-
+;; Last-Updated: July 2017
+
 ;;; Commentary:
-;;
-;; load by `dotemacs/profile.el'
-;; REQUIREMENT: var     `section-environment-profile'
-
+;; Default profile loaded by init.el
+
 ;;; Change Log:
+;; 2017-07-28 (0.9)
+;;    update to new conf format
 ;; 2017-05-30 (0.8)
 ;;    update to newest profile option
 ;; 2016-09-28 (0.7)
@@ -47,443 +46,535 @@
 ;; 2012-06-04 (0.1)
 ;;    creation from scratch
 
-
 ;;; Code:
 ;; load private variable
 (try-require 'profile-xubuntu-private "    ")
 
 ;; Enable/disable section:
-;; (setq section-xxx X) where 'xxx' means a section of .emacs and 'X' take
+;; (setq tqnr-section-xxx X) where 'xxx' means a section of .emacs and 'X' take
 ;; 'nil' (disable) or 't' (enable) value
 ;;
 ;; Settings:
-;; (setq profile-xxx X)
+;; (setq tqnr-profile-xxx X)
 
-;;; ENVIRONMENT
-(setq section-environment t)
-(when section-environment
-  ;; PROFILE: load profile from .emacs.d/profile/ directory
-  (setq section-environment-profile t)
-  (when section-environment-profile
-    (setq profile "xubuntu")
-    ) ; (when section-environment-profile
-  ;; VERSION RECOGNITION: detect system: Emacs version
-  (setq section-environment-version-recognition t)
-  ;; OS RECOGNITION: detect system: MS Windows or Linux
-  (setq section-environment-os-recognition t)
-  ;; TERMINAL VS GRAPHICS: detect system: terminal or graphical
-  (setq section-environment-terminal-vs-graphics t)
-  ;; SET PATH: path for all executables
-  ;; REQUIREMENT: `section-environment-os-recognition'
-  ;;              `section-environment-terminal-vs-graphics'
-  (setq section-environment-set-path t)
-  (when section-environment-set-path
-    ;; path
-    (setq profile-path
+;; ENVIRONMENT: Environment check and configuration
+(setq tqnr-section-environment t)
+(when tqnr-section-environment
+  ;; VERSION RECOGNITION: detect Emacs version
+  (setq tqnr-section-environment-version-recognition t)
+  ;; OS RECOGNITION: detect OS type (MS Windows vs GNU Linux)
+  (setq tqnr-section-environment-os-recognition t)
+  ;; TERMINAL VS GRAPHICS: detect Emacs terminal vs graphics
+  (setq tqnr-section-environment-terminal-vs-graphics t)
+  ;; SET PATH: Set environment variable PATH
+  (setq tqnr-section-environment-set-path t)
+  (when tqnr-section-environment-set-path
+    ;; PATH environment variable concat with current PATH
+    (setq tqnr-profile-path
       (concat
         "/bin" ":"
         )
       )
-    ;; executables path
-    (setq profile-exec-path
+    ;;
+    ;; emacs can also search in this path exec for external tool
+    (setq tqnr-profile-exec-path
       '(
          "/bin"
          )
       )
-    ;; languages
-    (setq profile-lang "en_US") ; for subversion and Dired
-    ) ; (when section-environment-set-path
-  ;; MS WINDOWS PERFORMANCE: increase performance on MS Windows
-  ;; REQUIREMENT: `section-environment-os-recognition'
-  (setq section-environment-ms-windows-performance t)
-  ;; EXECUTABLE: set some executable like shell or diff
-  ;; REQUIREMENT: `section-environment-os-recognition'
-  ;;              `section-environment-terminal-vs-graphics'
-  (setq section-environment-executable t)
-  (when section-environment-executable
-    ;; shell
-    (setq profile-shell-file-name "bash")
-    ;; ediff
-    (setq profile-ediff-diff-program "diff")
-    (setq profile-ediff-diff3-program "diff3")
-    (setq profile-ediff-cmp-program "cmp")
-    ) ; (when section-environment-executable
-  ;; ELPA: packages system support with repositories
-  (setq section-environment-elpa nil)
-  (when section-environment-elpa
-    (setq profile-environment-elpa-proxy-http nil)
-    (setq profile-environment-elpa-proxy-https nil)
-    ;; fill at each requested mode
-    ;;(setq profile-environment-elpa-package-list '(first-package second-package))
-    )   ; (when section-environment-elpa
-  ;; HYPER: menu key become hyper key (modifier key)
-  ;; REQUIREMENT: `section-environment-os-recognition'
-  (setq section-environment-hyper t)
-  ;; SUPER: windows key become super key (modifier key)
-  ;; REQUIREMENT: `section-environment-os-recognition'
-  (setq section-environment-super nil)
-  ;; SERVER : start a server for emacs client (and have only one instance)
-  (setq section-environment-server nil)
-  ) ; (when section-environment
 
-
-;;; FUNCTIONS: new functions
-(setq section-functions t)
-(when section-functions
-  ;; MAGNETI MARELLI: load custom function for MM profile
-  (setq section-function-mm nil)
-  ) ; (when section-functions
+    ;;
+    ;; LOCALE: languages settings about subversion and dired
+    (setq tqnr-profile-lang "en_US")
+    ) ;; (when tqnr-section-environment-set-path
+  ;; MS WINDOWS PERFORMANCE: MS Windows specific configuration about performance
+  (setq tqnr-section-environment-ms-windows-performance nil)
+  ;; EXECUTABLE: Set path of some exe
+  (setq tqnr-section-environment-executable t)
+  (when tqnr-section-environment-executable
+    ;; diff program
+    (setq tqnr-profile-ediff-diff-program "diff")
+    (setq tqnr-profile-ediff-diff3-program "diff3")
+    (setq tqnr-profile-ediff-cmp-program "cmp")
+    ) ;; (when tqnr-section-environment-executable
+  ;; HYPER: Enable Hyper modifier key (Menu key, shortcut with "H-") on MS Windows
+  (setq tqnr-section-environment-hyper t)
+  ;; SUPER: Enable Super modifier key (Windows key, shortcut with "s-") on MS Windows
+  (setq tqnr-section-environment-super nil)
+  ;; SERVER: start the emacs server to have only one emacs client instance
+  (setq tqnr-section-environment-server nil)
 
-
-;;; MODE: load extern files which are modes in plugins/
-(setq section-mode t)
-(when section-mode
-  ;; DIRECTORY: add "plugins/" to load path
-  (setq section-mode-directory t)
+  ;; PACKAGE: package management
+  (setq tqnr-section-environment-package nil)
+  (when tqnr-section-environment-package
+    ;; PROXY: proxy setting about package management
+    (setq tqnr-profile-environment-elpa-proxy-http nil)
+    (setq tqnr-profile-environment-elpa-proxy-https nil)
+    ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
+    (setq tqnr-profile-environment-elpa-package-list '())
+    ) ;; (when tqnr-section-environment-package
+
+  ;; SHORTCUT: Environment shortcut to declare hook about shortcut
+  (setq tqnr-section-environment-shortcut nil)
+  ) ;; (when tqnr-section-environment
+
+;; FUNCTION: custom functions
+(setq tqnr-section-function t)
+(when tqnr-section-function
+
+  ;; GENERATE PROFILE
+  ;; functions to generate profile from all config file
+  ;;
+  ;; interactive function `tqnr-generate-profile' will parse dotemacs directory to
+  ;; generate a default profile file or with a parameter not nil init-profile.el file
+  (setq tqnr-section-function-generate-profile t)
+
+  ;; EDIT BUFFER: custom function about edition of buffer text
+  (setq tqnr-section-function-edit-buffer t)
+  (when tqnr-section-function-edit-buffer
+    ;; FLAG DEBUG: used in kaneton project (epita)
+    (setq tqnr-function-kaneton t)
+    ) ;; (when tqnr-section-function-edit-buffer
+
+  ;; SELECT COPY: custom function about copying and selecting buffer text
+  (setq tqnr-section-function-select-copy t)
+
+  ;; SEARCH: custom function about searching in buffer text
+  (setq tqnr-section-function-search t)
+
+  ;; BUFFER WINDOW: custom function about buffer and window handling
+  (setq tqnr-section-function-buffer-window t)
+
+  ;; FILE: custom function about file management
+  (setq tqnr-section-function-file t)
+
+  ;; MACRO: custom function about macro management
+  (setq tqnr-section-function-macro t)
+
+  ;; SEMANTIC: custom function about semantic mode
+  (setq tqnr-section-function-semantic t)
+
+  ;; WEB: custom function about web interface to browser
+  (setq tqnr-section-function-web t)
+
+  ;; HELM: custom function about Helm mode
+  (setq tqnr-section-function-helm t)
+
+  ;; AUCTEX: custom function about AUCTeX
+  (setq tqnr-section-function-auctex nil)
+
+  ;; ORG MODE: custom function about org-mode
+  (setq tqnr-section-function-org-mode nil)
+
+  ;; MAGNETI MARELLI: custom functions about Magneti Marelli specific needs
+  (setq tqnr-section-function-magneti-marelli nil)
+
+  ;; ECB: custom function about ecb mode
+  (setq tqnr-section-function-ecb nil)
+
+  ;; CLEARCASE: custom function about ClearCase integration into GNU Emacs
+  (setq tqnr-section-function-clearcase nil)
+
+  ;; RTRT: custom function about RTRT script .ptu file
+  (setq tqnr-section-function-rtrt nil)
+  ) ;; (when tqnr-section-function
+
+;; MODE: load extern files which are modes in plugins/
+(setq tqnr-section-mode t)
+(when tqnr-section-mode
+
+  ;; HELM: (fork ANYTHING) choose anything with the same nice interface
+  (setq tqnr-section-mode-helm nil)
+  (when tqnr-section-mode-helm
+    ;; replace yank-pop or browse kill ring by helm-kill-ring
+    (setq tqnr-section-mode-helm-kill-ring nil)
+    ;; replace M-x
+    (setq tqnr-section-mode-helm-M-x nil)
+    ;; replace electric buffer list
+    (setq tqnr-section-mode-helm-buffers-list nil)
+    ;; add helm menu shortcut for function/variable list
+    (setq tqnr-section-mode-helm-imenu nil)
+    ;; replace occur by helm
+    (setq tqnr-section-mode-helm-occur nil)
+    ;; replace find files C-x C-f
+    (setq tqnr-section-mode-helm-find-files nil)
+    ;; replace recentf
+    (setq tqnr-section-mode-helm-recentf nil)
+    ;; replace bookmark list
+    (setq tqnr-section-mode-helm-bookmark nil)
+    ) ;; (when tqnr-section-mode-helm
+
   ;; VECTRA: man and doc in emacs (never used)
-  (setq section-mode-vectra nil)
-  ;; HOME/END: add some useful function to home and end keys
-  (setq section-mode-home-end t)
+  (setq tqnr-section-mode-vectra nil)
+
+  ;; HOME END: add some useful function to home and end keys
+  (setq tqnr-section-mode-home-end t)
+
   ;; DOXYMACS: emacs interface for doxygen comments
-  (setq section-mode-doxymacs nil)
-  ;; IDO: yet another switch buffer
-  (setq section-mode-ido nil)
-  ;; UNIQUIFY: create unique buffer name
-  (setq section-mode-uniquify t)
+  (setq tqnr-section-mode-doxymacs nil)
+
+  ;; IDO
+  ;; yet another switch buffer
+  ;; 2010: erratic behavior with exotic filename under MS Windows (not used)
+  (setq tqnr-section-mode-ido t)
+
+  ;; UNIQUIFY: create unique buffer names
+  (setq tqnr-section-mode-uniquify t)
+
   ;; CEDET: "Collection of Emacs Development Environment Tools"
-  (setq section-mode-cedet t)
-  (when section-mode-cedet
+  (setq tqnr-section-mode-cedet nil)
+  (when tqnr-section-mode-cedet
     ;; if you want to use emacs included CEDET set to nil
     ;; otherwise set the path of cedet.el and you need to remove:
-    ;;    "your-emacs-path/lisp/cedet"
-    ;;    "your-emacs-path/lisp/speedbar.*"
-    ;;    "your-emacs-path/lisp/emacs-lisp/eieio*"
-    (setq profile-cedet-path (concat dotemacs-path "/plugins/cedet-1.1/common/cedet.elc"))
-    ;; path of gnu global executable
-    (setq profile-gnu-global "global")
-    ;; path of gnu global executable
-    (setq profile-gnu-global-gtags "gtags")
+    ;;   `your-emacs-path/lisp/cedet'
+    ;;   `your-emacs-path/lisp/speedbar.*'
+    ;;   `your-emacs-path/lisp/emacs-lisp/eieio*'
+    (setq tqnr-profile-cedet-path nil)
+    ;; bin path of gnu global for cedet
+    (setq tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/global.exe"))
+    (setq tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/gtags.exe"))
     ;;
-    ;; SEMANTIC: can do tag, list of function/variable..., preproc, etc
-    (setq section-mode-cedet-semantic t)
-    (when section-mode-cedet-semantic
-      ;; project : the order is important: display in reverse order (first->last)
-      (setq profile-ede-project
-        '(
-           ;; project
-           ;;"/path/to/project/project.ede.el"
-           )
-        )
-      ) ; (when section-mode-cedet-semantic
-    ;; ECB: "Emacs Code Browser"
+    ;; CEDET SEMANTIC: can do tag, list of function/variable..., preproc, etc
+    (setq tqnr-section-mode-cedet-semantic t)
+    ;; list of projects: the order is important, display in reverse order (first->last)
+    (setq tqnr-profile-ede-project '())
+    ;;
+    ;; CEDET ECB (Emacs Code Browser): transform Emacs interface to IDE
     ;; can display other windows or speedbar to view folder tree, source list,
     ;; variable/function list, buffer history, etc
-    (setq section-mode-cedet-ecb t)
-    (when section-mode-cedet-ecb
-      ;; set default path in "ecb directories"
-      (setq profile-ecb-source-path
-        '(
-           ;; before is put the ede projects (see project.el)
-           ("~/.emacs.d/"        "Dotemacs")
-           )
-        )
-      ;; regexp of folder to exclude in "ecb directories"
-      (setq profile-ecb-excluded-directories-regexps
-        '(
-           "^\\.+$"             ; hidden folder
-           "\\(TOTO\\|TITI\\)$" ; example
-           )
-        )
-      ;; files to be ignored in "ecb source" !! RTFM !!
-      (setq profile-ecb-source-file-regexps
-        '((".*"
-            ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\)$\\)\\)")
-            ("^\\.\\(emacs\\|gnus\\)$")
-           ))
-        )
-      ;; files to be ignored from Version Control VC
-      (setq profile-ecb-sources-exclude-cvsignore
-        '(
-           "example"
-           )
-        )
-      ;; regexp to form group in "ecb history"
-      (setq profile-ecb-history-make-buckets
-        '(
-           "include" ; all file from an include folder
-           "\\.[hc][p]*$" ; all c cpp and h files
-           "\\.el$" ; all elisp files
-           )
-        )
-      ) ; (when section-mode-cedet-ecb
-    ) ; (when section-mode-cedet
+    (setq tqnr-section-mode-cedet-ecb nil)
+    ;; set default path in "ecb directories"
+    (setq tqnr-profile-ecb-source-path '())
+    ;; regexp of folder to exclude in "ecb directories"
+    (setq tqnr-profile-ecb-excluded-directories-regexps '())
+    ;; files to be ignored in "ecb source" !! RTFM !!
+    (setq tqnr-profile-ecb-source-file-regexps '(()))
+    ;; files to be ignored from Version Control VC
+    (setq tqnr-profile-ecb-sources-exclude-cvsignore '())
+    ;; regexp to form group in "ecb history"
+    (setq tqnr-profile-ecb-history-make-buckets '())
+    ) ;; (when tqnr-section-mode-cedet
+
   ;; BATCH: mode for .bat script in MS Windows
-  (setq section-mode-batch t)
+  (setq tqnr-section-mode-batch t)
+
   ;; VISUAL BASIC: mode for VisualBasic and VisualBasicAdvance
-  (setq section-mode-vb t)
+  (setq tqnr-section-mode-visual-basic t)
+
   ;; WINDOW NUMBERING: give a number of each window to easily jump in it
-  (setq section-mode-window-numbering nil)
-  ;; C: define new type in C
-  (setq section-mode-c t)
-  (when section-mode-c
-    ;; CWARN: display small error in source code (forget semi-colon, etc)
-    (setq section-mode-c-cwarn nil)
-    ;; DATA DEBUG: ??  (not used)
-    (setq section-mode-c-data-debug nil)
-    ) ; (when section-mode-c
-  ;; ICOMPLETION: more completion in Minibuffer
-  (setq section-mode-icompletion nil)
-  ;; YASNIPPET: snippet mode
-  (setq section-mode-yasnippet t)
-  ;; BROWSE KILL RING: mode to browse the kill ring memory yank only on the
-  ;; first left top window...
-  (setq section-mode-browse-kill-ring t)
-  ;; MAGNETI MARELLI:
-  (setq section-mode-mm nil)
-  (when section-mode-mm
-    ;; EOL: syntax color for End Of Line file
-    (setq section-mode-mm-eol nil)
-    ;; CAN DBC: light syntax color for Database CAN file
-    (setq section-mode-mm-dbc nil)
-    ;; CCM DIFF: light syntax color for synergy diff file
-    (setq section-mode-mm-diff nil)
-    ) ; (when section-mode-mm
-  ;; DIRED+: improve Dired mode, color, open with, etc
-  (setq section-mode-dired-plus t)
-  ;; GNU/GLOBAL: Tag management mode (use modified gtags.el)
-  (setq section-mode-gnu-global t)
-  (when section-mode-gnu-global
-    ;; GNU/GLOBAL gtags
-    (setq section-mode-gnu-global-gtags t)
-    ;; GNU/GLOBAL ggtags
-    (setq section-mode-gnu-global-ggtags nil)
-    ) ; (when section-mode-gnu-global
-  ;; EPROJECT (grischka): project management mode (never used)
-  (setq section-mode-eproject nil)
+  (setq tqnr-section-mode-window-numbering nil)
+
+  ;; CWARN
+  ;; show small warning in code source
+  ;; (ex: set in test, semi colon after test...)
+  (setq tqnr-section-mode-cwarn nil)
+
+  ;; C DATA DEBUG: ?? (never manage to make it work)
+  (setq tqnr-section-mode-c-data-debug nil)
+
+  ;; ICOMPLETION: more completion in minibuffer
+  (setq tqnr-section-mode-icompletion nil)
+
+  ;; YASNIPPET: enable snippet for emacs
+  (setq tqnr-section-mode-yasnippet t)
+
+  ;; BROWSE KILL RING: mode to browse the kill ring memory yank only on the first left top window...
+  (setq tqnr-section-mode-browse-kill-ring t)
+
+  ;; MM EOL: MAGNETI MARELLI, End Of Line file mode
+  (setq tqnr-section-mode-mm-eol nil)
+
+  ;; MM DBC: CAN dbc mode
+  (setq tqnr-section-mode-mm-dbc nil)
+
+  ;; MM DIFF: synergy classic diff mode
+  (setq tqnr-section-mode-mm-diff nil)
+
+  ;; DIRED PLUS: improve Dired mode, color, open with, etc
+  (setq tqnr-section-mode-dired-plus t)
+
+  ;; GNU GLOBAL: Tag management mode
+  (setq tqnr-section-mode-gnu-global t)
+  (when tqnr-section-mode-gnu-global
+    ;; gtags interface (use modified gtags.el)
+    (setq tqnr-section-mode-gnu-global-gtags t)
+    ;; ggtags interface
+    (setq tqnr-section-mode-gnu-global-ggtags nil)
+    ) ;; (when tqnr-section-mode-gnu-global
+
+  ;; EPROJECT: (grischka): project management mode (never used)
+  (setq tqnr-section-mode-eproject nil)
+
   ;; RTRT SCRIPT: rtrt script mode (syntax coloration)
-  (setq section-mode-rtrt-script nil)
-  ;; VC CLEARCASE: vc ClearCase mode
-  ;; REQUIREMENT: `profile-clearcase-vtree'
-  ;;              `profile-cleartool'
-  (setq section-mode-vc-clearcase nil)
-  (when section-mode-vc-clearcase
+  (setq tqnr-section-mode-rtrt-script nil)
+
+  ;; VC CLEARCASE: vc ClearCase mode (not used)
+  (setq tqnr-section-mode-vc-clearcase nil)
+  (when tqnr-section-mode-vc-clearcase
     ;; path to version tree executable
-    (setq profile-clearcase-vtree "c:/path/to/ClearCase/bin/clearvtree.exe")
+    (setq tqnr-profile-clearcase-vtree "clearvtree.exe")
     ;; path to cleartool executable
-    (setq profile-cleartool "c:/path/to/ClearCase/bin/cleartool.exe")
-    ) ; (when section-mode-vc-clearcase
-  ;; CLEARCASE: ClearCase mode (not used)
-  (setq section-mode-clearcase nil)
-  (when section-mode-clearcase
-    (setq section-mode-clearcase-el nil)
-    ) ; (when section-mode-clearcase
+    (setq tqnr-profile-cleartool "cleartool.exe")
+    ) ;; (when tqnr-section-mode-vc-clearcase
+
+  ;; CLEARCASE: ClearCase mode
+  (setq tqnr-section-mode-clearcase nil)
+  (when tqnr-section-mode-clearcase
+    ;; ClearCase Emacs integration
+    (setq tqnr-section-mode-clearcase-el nil)
+    ) ;; (when tqnr-section-mode-clearcase
+
   ;; AUTOHOTKEY: AutoHotKey mode
-  (setq section-mode-autohotkey nil)
-  ;; OUTLINE: Outline mode to manually hide/show source code block
-  (setq section-mode-outline t)
+  (setq tqnr-section-mode-autohotkey nil)
+
+  ;; OUTLINE: to manually hide some block in code source
+  (setq tqnr-section-mode-outline t)
+
   ;; AUTO HIGHLIGHT SYMBOL: to automatically highlight symbol at point
-  (setq section-mode-auto-highlight-symbol t)
+  (setq tqnr-section-mode-auto-highlight-symbol t)
+
   ;; GOOGLE CALENDAR: to import Google calendar
-  ;; REQUIREMENT: `profile-google-calendar-user'
-  ;;              `profile-google-calendar-src'
-  ;;              `profile-google-calendar-directory'
-  ;;              `profile-google-calendar-url'
-  (setq section-mode-google-calendar nil)
-  ;; FILL COLUMN INDICATOR: show a line at fill-column (set at 80 in
-  ;; dotemacs/misc.el be careful enable truncate line
-  (setq section-mode-fill-column-indicator nil)
+  (setq tqnr-section-mode-google-calendar nil)
+
+  ;; FILL COLUMN INDICATOR
+  ;; show a line at fill-column (set at 80 in
+  ;; dotemacs/11-misc.el be careful it enable truncate line
+  (setq tqnr-section-mode-fill-column-indicator nil)
+
   ;; MUSE: muse mode to have nice doc
-  (setq section-mode-muse nil)
+  (setq tqnr-section-mode-muse nil)
+
   ;; UNDO TREE: replace the undo built in function
-  (setq section-mode-undo-tree t)
+  (setq tqnr-section-mode-undo-tree t)
+
   ;; CSV: parse/edit/sort CSV file
-  (setq section-mode-csv t)
-  ;; SUBVERSION: support Subversion 1.7
-  (setq section-mode-subversion t)
+  (setq tqnr-section-mode-csv t)
+
+  ;; SUBSVERSION: support Subversion 1.7
+  (setq tqnr-section-mode-subversion t)
+
   ;; DIFF COLOR: add color to diff mode
-  (setq section-mode-diff-color t)
+  (setq tqnr-section-mode-diff-color t)
+
   ;; DIRED SORT: more option to sort in Dired mode
-  (setq section-mode-dired-sort t)
+  (setq tqnr-section-mode-dired-sort t)
+
   ;; ORG MODE: to organize everything (also use on Android)
-  (setq section-mode-org-mode nil)
-  (when section-mode-org-mode
-    ;; path where org will look
-    (setq profile-org-directory (concat dotemacs-path "/org"))
+  (setq tqnr-section-mode-org-mode nil)
+  (when tqnr-section-mode-org-mode
+    ;; set org directory where every org file will goes
+    (setq tqnr-profile-org-directory (concat (file-name-as-directory tqnr-dotemacs-path) "org"))
     ;; default org file where all task/todo capture will goes
-    (setq profile-org-default-notes-file (concat profile-org-directory "/notes.org"))
+    (setq tqnr-profile-org-default-notes-file (concat (file-name-as-directory tqnr-profile-org-directory) "my.org"))
     ;; agenda will look only in default org file
-    (setq profile-org-agenda-files (concat profile-org-directory "/agenda.list"))
-    ;; first buffer to show up is default org file
-    (setq section-mode-org-default-as-init-buffer t)
-    ) ; (when section-mode-org-mode
-  ;; ISEARCH+: add some features to isearch
-  (setq section-mode-isearch+ nil)
-  ;; PSVN: add geatures to subversion integration
-  (setq section-mode-psvn nil)
+    (setq tqnr-profile-org-agenda-files (concat (file-name-as-directory tqnr-profile-org-directory) "agenda.list"))
+    ;; first buffer to show up is default org file when opening emacs
+    (setq tqnr-section-mode-org-default-as-init-buffer t)
+    ) ;; (when tqnr-section-mode-org-mode
+
+  ;; ISEARCH PLUS: add some features to isearch
+  (setq tqnr-section-mode-isearch-plus nil)
+
+  ;; PSVN: add an icon in modeline where color give status of SVN
+  (setq tqnr-section-mode-psvn nil)
+
   ;; POWERLINE: fancy modeline
-  (setq section-mode-powerline t)
+  (setq tqnr-section-mode-powerline t)
+
   ;; NYAN: add bar in modeline given position in buffer
-  (setq section-mode-nyan nil)
-  ;; SML: add bar in modeline given position in buffer
-  (setq section-mode-sml nil)
+  (setq tqnr-section-mode-nyan nil)
+
+  ;; SML: show position in a scollbar
+  (setq tqnr-section-mode-sml nil)
+
   ;; DIRED: change option to command ls for dired mode
-  (setq section-mode-dired t)
+  (setq tqnr-section-mode-dired t)
+
   ;; ISEARCH: scroll is possible when incremental search
-  (setq section-mode-isearch t)
-  ;; RAINBOW DELIMITERS: scroll is possible when incremental search
-  (setq section-mode-rainbow-delimiters nil)
-  ;; CALFW: a more graphical calendar (like google agenda)
-  (setq section-mode-calfw nil)
+  (setq tqnr-section-mode-isearch t)
+
+  ;; RAINBOW DELIMITERS: highlight nested parentheses, brackets in different color depending of depth
+  (setq tqnr-section-mode-rainbow-delimiters nil)
+
   ;; DIRED DETAILS: show hide details in dired mode
-  (setq section-mode-dired-details t)
+  (setq tqnr-section-mode-dired-details t)
+
   ;; SMART TAB: expand or indent at the point with tab
-  (setq section-mode-smart-tab nil)
+  (setq tqnr-section-mode-smart-tab nil)
+
   ;; FOLD DWIM: show hide code source block
-  (setq section-mode-fold-dwim t)
-  ;; DIRED LETTER ISEARCH: activate by default isearch in dired mode
-  (setq section-mode-dired-lis nil)
-  ;; NXHTML: enhance html mode
-  (setq section-mode-nxhtml nil)
+  (setq tqnr-section-mode-fold-dwim t)
+
+  ;; DIRED LIS: activate by default isearch in dired mode
+  (setq tqnr-section-mode-dired-lis nil)
+
+  ;; NXHTML: nXhtml: enhance html mode
+  (setq tqnr-section-mode-nxhtml nil)
+
   ;; FASTNAV: fast navigation like with zap-to-char but only to move
-  (setq section-mode-fastnav t)
+  (setq tqnr-section-mode-fastnav t)
+
   ;; MRU YANK: (Most Recently Used) in kill-ring
-  (setq section-mode-mru-yank t)
+  (setq tqnr-section-mode-mru-yank t)
+
   ;; ACK: search with ack (no more grep) (need perl interpreter)
-  (setq section-mode-ack t)
-  (when section-mode-ack
-    (setq section-mode-ack-full nil)
-    (setq section-mode-ack-and-half nil)
-    (setq section-mode-ack-emacs t)
-    ) ; (when section-mode-ack
-  ;; ACE JUMP: move quickly and easily with ace jump
+  (setq tqnr-section-mode-ack nil)
+  (when tqnr-section-mode-ack
+    ;; Full-ack mode to interface ack with emacs
+    (setq tqnr-section-mode-ack-full nil)
+    ;; ack and half mode to interface ack with emacs
+    (setq tqnr-section-mode-ack-and-half nil)
+    ;; ack-emacs mode to interface ack with emacs
+    (setq tqnr-section-mode-ack-emacs nil)
+    ) ;; (when tqnr-section-mode-ack
+
+  ;; ACE JUMP
+  ;; move quickly and easily with ace jump
   ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
-  (setq section-mode-ace-jump t)
+  (setq tqnr-section-mode-ace-jump nil)
+
   ;; AVY: move quickly and easily with avy (replacement of ace jump)
-  (setq section-mode-avy nil)
+  (setq tqnr-section-mode-avy t)
+
   ;; DIREDFUL: color dired buffer
-  (setq section-mode-diredful t)
-  ;; PS2PDF: print buffer/region in pdf
-  (setq section-mode-ps2pdf t)
+  (setq tqnr-section-mode-diredful t)
+
+  ;; PS2PDF
+  ;; print buffer/region in pdf (the pdf background is unavoidably white so dark
+  ;; theme don't render good)
+  (setq tqnr-section-mode-ps2pdf nil)
+
   ;; AUCTEX: latex mode
-  (setq section-mode-auctex nil)
-  ;; HELM: helm mode (fork of anything mode)
-  (setq section-mode-helm nil)
-  (when section-mode-helm
-    ;; replace bookmark list
-    (setq section-mode-helm-bookmark t)
-    ;; replace electric buffer list
-    (setq section-mode-helm-buffers-list t)
-    ;; replace browse kill ring
-    (setq section-mode-helm-kill-ring t)
-    ;; replace M-x
-    (setq section-mode-helm-M-x nil)
-    ;; replace occur
-    (setq section-mode-helm-occur t)
-    ;; replace find files C-x C-f
-    (setq section-mode-helm-find-files t)
-    ;; replace recentf
-    (setq section-mode-helm-recentf t)
-    ;; add imenu bind
-    (setq section-mode-helm-imenu t)
-    ) ; (when section-mode-helm
-  ;; YASCROLL: add a small visual scroll-bar (can not be used with mouse click)
-  (setq section-mode-yascroll t)
-  (when section-mode-yascroll
+  (setq tqnr-section-mode-auctex nil)
+
+  ;; YASCROLL
+  ;; add a small visual scroll-bar (can not be used with mouse click)
+  ;; see https://github.com/m2ym/yascroll-el for screenshot
+  (setq tqnr-section-mode-yascroll t)
+  (when tqnr-section-mode-yascroll
     ;; time before hide scroll-bar (nil to always show)
-    (setq profile-yascroll-delay-to-hide nil)
-    ) ; (when section-mode-yascroll
-  ;; SMART-FORWARD: move in code with semantic see example in
-  ;; plugins/smart-forward.el
-  (setq section-mode-smart-forward nil)
-  ;; RAINBOW MODE: show string color in color
-  (setq section-mode-rainbow t)
+    (setq tqnr-profile-yascroll-delay-to-hide nil)
+    ) ;; (when tqnr-section-mode-yascroll
+
+  ;; SMART FORWARD: move in code with semantic see example in plugins/smart-forward.el
+  (setq tqnr-section-mode-smart-forward nil)
+
+  ;; RAINBOW: show string color in color
+  (setq tqnr-section-mode-rainbow t)
+
   ;; EDIFF: graphical diff (## to toggle whitespace ignoring)
-  (setq section-mode-ediff t)
+  (setq tqnr-section-mode-ediff t)
+
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
-  (setq section-mode-magit nil)
-  (when section-mode-magit
-    (setq profile-magit-exec "git")
-    ) ; (when section-mode-magit
-  ;; SYNERGY: use synergy without java client GUI (do not use vc interface from
-  ;; emacs)
-  (setq section-mode-synergy nil)
-  (when section-mode-synergy
-    (setq profile-synergy-username "")
-    (setq profile-synergy-database "")
-    (setq profile-synergy-server "")
-    (setq profile-synergy-history-filter nil)
-    (setq profile-synergy-diff-external-command nil)
-    (setq profile-synergy-diff-external-parameter nil)
-    (setq profile-synergy-diff-external-swap-file nil)
-    ) ; (when section-mode-synergy
-  ;; HIDE-LINES: hide lines using regexp (like narrow but with regex and not
-  ;; region)
-  (setq section-mode-hide-lines nil)
-  ;; AGGRESSIVE-INDENT: indent all line in function/condition in C or lisp mode
-  ;; when edit it
-  (setq section-mode-aggressive-indent nil)
-  ;; PLATINIUM SEARCH: A front-end for pt, The Platinum Searcher (faster than
-  ;; ack)
-  (setq section-mode-platinium-search nil)
-  ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation
-  ;; buffer)
-  (setq section-mode-popwin nil)
-  ;; PROJECTILE: Project management, filtered find-file, only with root file
-  ;; from version control
-  (setq section-mode-projectile nil)
-  ;; COMPANY MODE: Completion mode using back-ends to have symbol
-  (setq section-mode-company nil)
-  ;; EXPAND-REGION: Increase selected region by semantic units
-  (setq section-mode-expand-region nil)
-  ;; FUNCTION-ARGS: Show function parameters in C and C++
-  (setq section-mode-function-args nil)
-  ;; ELPY: Python mode like an IDE
-  (setq section-mode-elpy nil)
-  (when section-mode-elpy
-    ;; add elpy package
-    ;; and flycheck package, about warnings/errors check on the fly
-    ;; and autopep8 package, about fix automagically some pep8 rules after save python file
-    (add-to-list 'profile-environment-elpa-package-list 'elpy t)
-    (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
-    (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
-    ) ; (when section-mode-elpy
-  ;; SMARTPARENS:
-  (setq section-mode-smartparens nil)
+  (setq tqnr-section-mode-magit nil)
+  (when tqnr-section-mode-magit
+    ;; path to git executable
+    (setq tqnr-profile-magit-exec "git")
+    ) ;; (when tqnr-section-mode-magit
+
+  ;; SYNERGY: use synergy without java client GUI (do not use vc interface from emacs)
+  (setq tqnr-section-mode-synergy nil)
+  (when tqnr-section-mode-synergy
+    ;; login to connect to synergy server
+    (setq tqnr-profile-synergy-username "")
+    ;; database path to connect to synergy server
+    (setq tqnr-profile-synergy-database "")
+    ;; server url to connect to synergy server
+    (setq tqnr-profile-synergy-server "")
+    ;; command line to modify history output
+    ;; by example: '("|" "sed" "s/login/readable_name/")
+    (setq tqnr-profile-synergy-history-filter '())
+    ;; external tool to do diff with synergy
+    (setq tqnr-profile-synergy-diff-external-command "")
+    ;; command line parameter to external tool to do diff
+    (setq tqnr-profile-synergy-diff-external-parameter "")
+    ;; swap files in diff (left/right) about external diff tool
+    (setq tqnr-profile-synergy-diff-external-swap-file nil)
+    ) ;; (when tqnr-section-mode-synergy
+
+  ;; HIDE LINES: hide lines using regexp (like narrow but with regex and not region)
+  (setq tqnr-section-mode-hide-lines nil)
+
+  ;; AGGRESSIVE INDENT: indent all line in function/condition in C or lisp mode when edit it
+  (setq tqnr-section-mode-aggressive-indent nil)
+
+  ;; PLATINUM SEARCHER: A front-end for pt, The Platinum Searcher (faster than ack)
+  (setq tqnr-section-mode-platinum-searcher nil)
+  (when tqnr-section-mode-platinum-searcher
+    ;; path to pt executable
+    (setq tqnr-profile-mode-platinum-searcher-exec "")
+    ) ;; (when tqnr-section-mode-platinum-searcher
+
+  ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation buffer)
+  (setq tqnr-section-mode-popwin t)
+
+  ;; PROJECTILE: Project management, filtered find-file, only with root file from version control
+  (setq tqnr-section-mode-projectile t)
+
+  ;; COMPANY: Completion mode using external back-ends to have symbol
+  (setq tqnr-section-mode-company nil)
+
+  ;; EXPAND REGION: Increase selected region by semantic units
+  (setq tqnr-section-mode-expand-region nil)
+
+  ;; FUNCTION ARGS: Show function parameters in C and C++
+  (setq tqnr-section-mode-function-args nil)
+
+  ;; ELPY
+  ;; Python mode like an IDE (only install is from package)
+  ;;  ;; add elpy package
+  ;;  ;; and flycheck package, about warnings/errors check on the fly
+  ;;  ;; and autopep8 package, about fix automagically some pep8 rules after save python file
+  ;;  (add-to-list 'profile-environment-elpa-package-list 'elpy t)
+  ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
+  ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
+  (setq tqnr-section-mode-elpy nil)
+
+  ;; SMARTPARENS: useful to have nice navigation through source code structure
+  (setq tqnr-section-mode-smartparens nil)
+
   ;; PLANTUML: generate uml diagram from text
-  (setq section-mode-plantuml nil)
+  (setq tqnr-section-mode-plantuml nil)
+
   ;; GRAPHVIZ DOT: generate diagram from text
-  (setq section-mode-graphviz-dot nil)
+  (setq tqnr-section-mode-graphviz-dot nil)
+
   ;; HASKELL: editing, debugging and developing Haskell programs
-  (setq section-mode-haskell nil)
+  (setq tqnr-section-mode-haskell nil)
+
   ;; CFLOW: useful to have call tree in C source code
-  (setq section-mode-cflow nil)
-  ;; IRONY: improving the editing experience for the C, C++ and Objective-C
-  ;; using clang
-  (setq section-mode-irony nil)
+  (setq tqnr-section-mode-cflow nil)
+
+  ;; IRONY: improving the editing experience for the C, C++ and Objective-C using clang
+  (setq tqnr-section-mode-irony nil)
+
   ;; MARKDOWN: mode to edit Markdown-formatted text (by example wiki of github)
-  (setq section-mode-markdown t)
-  (when section-mode-markdown
+  (setq tqnr-section-mode-markdown t)
+  (when tqnr-section-mode-markdown
     ;; to enable markdown mode with github flavoured for all .md files and not
     ;; only for README.md
-    (setq section-mode-markdown-github nil)
-    ) ; (when section-mode-markdown
-  ;; DIMINISH: shrink major and minor mode name in the modeline
-  (setq section-mode-diminish nil)
-  ) ; (when section-mode
+    (setq tqnr-section-mode-markdown-github t)
+    ) ;; (when tqnr-section-mode-markdown
 
-
-;;; LANGUAGES:
-(setq section-languages t)
-(when section-languages
-  ;; C: set indentation style and preprocessing option
-  ;; REQUIREMENT: profile-c-indent-offset
-  (setq section-languages-c t)
-  (when section-languages-c
-    ;; all profile-c-* variables could be set in ede project
+  ;; EASY KILL: mode to easy copy/kill/cut text/line/word/expression/function...
+  (setq tqnr-section-mode-easy-kill t)
+
+  ;; DIMINISH: shrink major and minor mode name in the modeline
+  (setq tqnr-section-mode-diminish nil)
+  ) ;; (when tqnr-section-mode
+
+;; LANGUAGES: Set style and/or indentation for multiple languages
+(setq tqnr-section-languages t)
+(when tqnr-section-languages
+  ;;
+  ;; C
+  ;;   language settings, set indentation style and preprocessing option
+  (setq tqnr-section-languages-c t)
+  (when tqnr-section-languages-c
     ;; number of space for indentation in C
-    (setq profile-c-indent-offset 2)
-    ;; new type
-    (setq profile-c-extra-types
+    (setq tqnr-profile-c-indent-offset 2)
+    ;; new types (add name string in list)
+    (setq tqnr-profile-c-extra-types
       '(
          "ubyte"
          "ushort"
@@ -495,342 +586,320 @@
          "slonglong"
          )
       )
-    ;; prepocessing command
-    (setq profile-c-macro-preprocessor "cpp -C")
-    ;; compile flags
-    (setq profile-c-macro-cppflags "-D__DEBUG__")
-    ;; confirme compile command before execute
-    (setq profile-c-ask-before-compile t)
-    ;;
+    ;; Compile mode without ask
+    (setq tqnr-profile-c-ask-before-compile t)
     ;; INDENT PREPROCESSOR: make a #define be align with C code
-    (setq section-languages-c-indent-preprocessor nil)
-    (setq section-languages-c-hide-show t)
-    (when section-languages-c-hide-show
-      (setq section-languages-c-hide-show-hide-all-at-start nil)
-      ) ; (when section-languages-c-hide-show
-    ;; FLYMAKE
-    (setq section-languages-c-flymake nil)
-    ;; FLYCHECK (replacement of flymake using irony mode)
-    (setq section-languages-c-flycheck nil)
-    ) ; (when section-languages-c
-  ;; LISP: set indentation style
-  (setq section-languages-lisp t)
-  (when section-languages-lisp
+    (setq tqnr-section-languages-c-indent-preprocessor nil)
+    ;; HIDE SHOW: use outline minor mode to fold source code block
+    (setq tqnr-section-languages-c-hide-show t)
+    ;; HIDE ALL AT START: hide all when opening file
+    (setq tqnr-section-languages-c-hide-show-hide-all-at-start nil)
+    ;; FLYMAKE: verification error/warning in source code on the fly
+    (setq tqnr-section-languages-c-flymake nil)
+    ;; FLYCHECK: verification error/warning in source code on the fly
+    (setq tqnr-section-languages-c-flycheck nil)
+    ;; command to preprocess
+    (setq tqnr-profile-c-macro-preprocessor "cpp -C")
+    ;; set flags about macro preprocessing
+    (setq tqnr-profile-c-macro-cppflags "-D__DEBUG__")
+    ) ;; (when tqnr-section-languages-c
+  ;;
+  ;; LISP
+  ;;   set indentation style
+  (setq tqnr-section-languages-lisp t)
+  (when tqnr-section-languages-lisp
     ;; number of space for indentation in lisp
-    (setq profile-lisp-indent-offset 2)
-    ) ; (when section-languages-lisp
-  ;; TAB: tab always in space
-  (setq section-languages-tabulation t)
-  ;; RTRT SCRIPT PTU: set indentation style
-  (setq section-languages-rtrt-script nil)
-  ;; PERL: set indentation style
-  (setq section-languages-perl t)
-  (when section-languages-perl
+    (setq tqnr-profile-lisp-indent-offset 2)
+    ) ;; (when tqnr-section-languages-lisp
+  ;;
+  ;; TABULATION
+  ;;   tab always in space
+  (setq tqnr-section-languages-tabulation t)
+  ;;
+  ;; RTRT SCRIPT PTU
+  ;;   set indentation style
+  (setq tqnr-section-languages-rtrt-script nil)
+  (when tqnr-section-languages-rtrt-script
+    ;; set number of space for indentation in rtrt script .ptu
+    (setq tqnr-profile-rtrt-indent-offset 2)
+    ) ;; (when tqnr-section-languages-rtrt-script
+  ;;
+  ;; PERL
+  ;;   set indentation style
+  (setq tqnr-section-languages-perl t)
+  (when tqnr-section-languages-perl
     ;; number of space for indentation in perl
-    (setq profile-perl-indent-offset 2)
-    ) ; (when section-languages-perl
-  ;; C++ QT: set include for Qt 4.8
-  (setq section-languages-c++-qt nil)
-  ) ; (when section-languages
+    (setq tqnr-profile-perl-indent-offset 2)
+    ) ;; (when tqnr-section-languages-perl
+  ;;
+  ;; C++ QT
+  ;;   set include for Qt 4.8
+  (setq tqnr-section-languages-c++-qt nil)
+  ) ;; (when tqnr-section-languages
 
-
-;;; SELECTION: selection can be kill + selection is highlight + kill->copy in
-;;; read only
-(setq section-selection t)
-(when section-selection
-  ;; SHIFT SELECTION: selection can be done with shit and arrow keys (default
-  ;; setting since 23.3)
-  (setq section-selection-with-shift t)
-  ) ; (when section-selection
+;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only
+(setq tqnr-section-selection t)
+(when tqnr-section-selection
+  ;; SHIFT SELECTION
+  (setq tqnr-section-selection-with-shift t)
+  ) ;; (when tqnr-section-selection
 
-
-;;; DISPLAY:
-(setq section-display t)
-(when section-display
-  ;; WINDOWS/BUFFERS: buffers with *buffername* should be displayed in the same
-  ;; window first column in window will display buffer limit, next page will leave
-  ;; 5 shared line
-  (setq section-display-windows-buffers t)
-  (when section-display-windows-buffers
-    ;;; VISUAL LINE: word wrap, truncate line without cut word
+;; DISPLAY: modification about display in buffers, font, color...
+(setq tqnr-section-display t)
+(when tqnr-section-display
+
+  ;; BUFFER
+  ;; buffers with *buffername* should be displayed in the same window
+  ;; first column in window will display buffer limit, next page will leave 5 shared line
+  (setq tqnr-section-display-buffer t)
+  (when tqnr-section-display-buffer
+    ;; VISUAL LINE: word wrap, truncate line without cut word
     ;; END and HOME will go to the end/start of screen line not logical line
-    (setq section-display-windows-buffers-visual-line nil)
-    ) ; (when section-display-windows-buffers
+    (setq tqnr-section-display-windows-buffers-visual-line nil)
+    ) ;; (when tqnr-section-display-buffer
+
   ;; SPEEDBAR: set size and display of speedbar (see GLOSSARY) (no used)
-  (setq section-display-speedbar nil)
-  ;; FONT: set font
-  ;; REQUIREMENT: `profile-font'
-  (setq section-display-font t)
-  (when section-display-font
-    ;; ANTIALIAS
-    ;; set antialiasing on font rendering
-    (setq section-display-font-antialias nil)
+  (setq tqnr-section-display-speedbar nil)
+
+  ;; FONT: set font in terminal or in graphical
+  (setq tqnr-section-display-font t)
+  (when tqnr-section-display-font
+    ;; Font family and size:
     ;; choice between (it's just some nice font, you can use another font):
-    ;;; Terminal
+    ;;
+    ;; "Terminal-6"
     ;; nice, very tiny, only ascii (too tiny ?)
-    ;; (setq profile-font "Terminal-6")
     ;;
-    ;;; Anonymous Pro, 10
+    ;; "Anonymous Pro-10"
     ;; nice, big (slashed 'zero', 'one' and minus 'L' can be mixed up)
-    ;;(setq profile-font "Anonymous Pro-10")
-    ;;; Anonymous Pro, 8
+    ;; "Anonymous Pro-8"
     ;; nice, small (slashed 'zero', 'one' and minus 'L' can be mixed up, parentheses and curly bracket can be mixed up)
-    ;; (setq profile-font "Anonymous Pro-8")
     ;;
-    ;;; Proggy Tiny Z, 6
+    ;; "ProggyTinySZ-6"
     ;; good, very tiny (slashed 'zero', dot and comma can be mixed)
-    ;; (setq profile-font "ProggyTinySZ-6")
     ;;
-    ;;; DejaVu Sans Mono, 10
+    ;; "DejaVu Sans Mono-10"
     ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
-    ;; (setq profile-font "DejaVu Sans Mono-10")
-    ;;; DejaVu Sans Mono, 8
+    ;; "DejaVu Sans Mono-8"
     ;; (setq profile-font "DejaVu Sans Mono-8")
     ;;
-    ;;; Inconsolata, 10
+    ;; "Inconsolata-10"
     ;; not so good with ms window (slashed 'zero', capitalized 'i' and minus 'L' can be mixed up)
-    ;; (setq profile-font "Inconsolata-10")
     ;;
-    ;;; Lucida Console, 10
+    ;; "Lucida Console-10"
     ;; nice, big, large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-    ;; (setq profile-font "Lucida Console-10")
-    ;;; Lucida Console, 8
+    ;; "Lucida Console-8"
     ;; nice, small large (not slashed 'zero' so 'zero' and capitalized 'o' can be mixed up)
-    ;; (setq profile-font "Lucida Console-8")
     ;;
-    ;;; Monaco, 10
+    ;; "Monaco-10"
     ;; nice, very big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;; (setq profile-font "Monaco-10")
-    ;;; Monaco, 8
+    ;; "Monaco-8"
     ;; nice, big, large (slashed 'zero', 'dot' and 'comma' can be mixed up)
-    ;; (setq profile-font "Monaco-8")
     ;;
-    ;;; ProFont, 8
+    ;; "ProFontWindows-8"
     ;; nice, tiny, (slashed 'zero', 'one' and minus 'L' can be mixed up)
-    ;; (setq profile-font "ProFontWindows-8")
     ;;
-    ;;; Courier New 10
+    ;; "Courier New-10"
     ;; classic but big and large
-    ;; (setq profile-font "Courier New-10")
-    ;;; Courier New 8
+    ;; "Courier New-8"
     ;; classic but big and large
-    ;; (setq profile-font "Courier New-8")
     ;;
-    ;;; Ubuntu Mono, 10
-    ;; (setq profile-font "Ubuntu Mono-10")
-    ;;; Ubuntu Mono, 8
-    (setq profile-font "Ubuntu Mono-8")
+    ;; "Ubuntu Mono-10"
+    ;; "Ubuntu Mono-8"
     ;;
-    ;;; Terminus, 10
-    ;; (setq profile-font "Terminus-10")
-    ;;; Terminus, 8
-    ;; (setq profile-font "Terminus-8")
+    ;; "Terminus-10"
+    ;; "Terminus-8"
     ;;
-    ;;; Monospace, 8
-    ;; (setq profile-font "Monospace-8")
+    ;; "Monospace-8"
     ;;
-    ;;; Liberation Mono, 8
-    ;; (setq profile-font "Liberation Mono-8")
+    ;; "Liberation Mono-8"
     ;;
-    ;;; Inconsolata, 10
-    ;; (setq profile-font "Inconsolata-10")
-    ;;; Inconsolata, 8
-    ;; (setq profile-font "Inconsolata-8")
+    ;; "Inconsolata-10"
+    ;; "Inconsolata-8"
     ;;
-    ;;; Droid Sans Mono, 10
-    ;; (setq profile-font "Droid Sans Mono-10")
-    ;;; Droid Sans Mono, 8
-    ;; (setq profile-font "Droid Sans Mono-8")
-    ;;
-    ;; INTERNATIONAL: ISO or utf-8 or ...  (not used)
-    (setq section-display-font-international t)
-    ) ; (when section-display-font
-  ;; COLOR: set color
-  (setq section-display-color t)
-  (when section-display-color
+    ;; "Droid Sans Mono-10"
+    ;; "Droid Sans Mono-8"
+    (setq tqnr-profile-font "Ubuntu Mono-8")
+    ;; ANTIALIAS: set antialiasing on font rendering
+    (setq tqnr-section-display-font-antialias nil)
+    ) ;; (when tqnr-section-display-font
+
+  ;; COLOR: set color in emacs
+  (setq tqnr-section-display-color t)
+  (when tqnr-section-display-color
     ;; PARENTHESES MODE: matched parentheses are highlight
-    (setq section-display-color-parentheses-mode t)
+    (setq tqnr-section-display-color-parentheses-mode t)
     ;; PARENTHESES MINIBUFFER: matched parentheses are highlight and if not
     ;; visible show it in the Minibuffer
-    (setq section-display-color-parentheses-visible t)
+    (setq tqnr-section-display-color-parentheses-visible t)
     ;; PARENTHESES HIGHLIGHT: matched parentheses are highlight in rainbow color
-    (setq section-display-color-parentheses-highlight nil)
+    (setq tqnr-section-display-color-parentheses-highlight nil)
     ;; COLOR THEME: set color by color-theme mode (or manual settings nil)
-    (setq section-display-color-theme t)
-    (if section-display-color-theme
-      ;; do not use it with terminal
-      ;; theme to be used
-      (setq profile-color-theme "zenburn")
-      ) ; (if section-display-color-theme
+    (setq tqnr-section-display-color-theme t)
+    ;; theme to be used, do not use it with terminal
+    (setq tqnr-profile-color-theme "zenburn")
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
-    (setq section-display-color-ansi-color-compile t)
+    (setq tqnr-section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
-    (setq section-display-color-highlight-line nil)
-    ) ; (when section-display-color
-  ) ; (when section-display
+    (setq tqnr-section-display-color-highlight-line nil)
+    ) ;; (when tqnr-section-display-color
+  ) ;; (when tqnr-section-display
 
-
-;;; INTERFACE: display buffer name in titlebar (example "<[ foobar.c ]>")
-(setq section-interface t)
-(when section-interface
-  ;; DECORATION: remove all mouse interface (toolbar, menubar, scrollbar)
-  (setq section-interface-remove-decoration nil)
-  ;; MODELINE: set some option to add in the grey line at the bottom of each
-  ;; buffer
-  (setq section-interface-modeline t)
-  ;; WINDOW TITLE
-  ;; %b buffername ; %F frame name ; %l line number ; %c column number
-  ;; %p percent of buffer above top ; %m mode name ; %n Narrow mode
-  ;; %z coding systems ; %Z %z + end-of-line format ; %- infinitely dashes
-  (setq profile-window-title "<[ %b ]>")
-  ;; TRANSPARENCY: the whole emacs will be transparent
-  ;; REQUIREMENT: `profile-transparency'
-  ;;              `section-environment-terminal-vs-graphics'
-  (setq section-interface-transparency t)
-  (when section-interface-transparency
+;; INTERFACE
+(setq tqnr-section-interface t)
+(when tqnr-section-interface
+
+  ;; MAIN WINDOW: modification about main window of emacs
+  (setq tqnr-section-interface-main-window t)
+  ;;
+  (when tqnr-section-interface-main-window
+    ;; DECORATION: remove all mouse interface (toolbar, menubar, scrollbar)
+    (setq tqnr-section-interface-remove-decoration nil)
+    ;;
+    ;; WINDOW TITLE: buffer name in title bar (example "< foobar.c >") (from grandm_y)
+    ;; %b buffername ; %F frame name ; %l line number ; %c column number
+    ;; %p percent of buffer above top ; %m mode name ; %n Narrow mode
+    ;; %z coding systems ; %Z %z + end-of-line format ; %- infinitely dashes
+    (setq tqnr-profile-window-title "<[ %b ]>")
+    ;;
+    ;; TRANSPARENCY: the whole emacs window will be transparent
+    (setq tqnr-section-interface-transparency t)
     ;; transparency of the window. 0=transparent/100=opaque
-    (setq profile-transparency 96)
-    ) ; (when section-interface-transparency
-  ;; FULLSCREEN:
-  ;; REQUIREMENT: `section-environment-os-recognition'
-  ;;              `section-environment-terminal-vs-graphics'
-  (setq section-interface-fullscreen t)
-  ;; ECB: set size, display, refresh and remove opening tips
-  ;; REQUIREMENT: `section-mode-cedet-ecb'
-  (setq section-interface-ecb t)
-  (when section-interface-ecb
-    ;; ECB ASCII TREE: display ascii guides instead of image for arborescence
-    ;; tree
-    (setq section-interface-ecb-ascii-tree nil)
-    ) ; (when section-interface-ecb
-  ) ; (when section-interface
+    (setq tqnr-profile-transparency 96)
+    ;;
+    ;; FULLSCREEN: main window start in fullscreen
+    (setq tqnr-section-interface-fullscreen t)
+    ) ;; (when tqnr-section-interface-main-window
 
-
-;;; COMPLETION: enable letter case completion + dynamic completion
-(setq section-completion t)
+  ;; MODELINE
+  ;; set some option to add in the grey line at the bottom of each buffer
+  ;; (replaced by powerline mode)
+  (setq tqnr-section-interface-modeline t)
 
-
-;;; SHORTCUT:
-(setq section-shortcut t)
-(when section-shortcut
-  ;; ALL (GLOBAL): add global shortcut (for whole Emacs)
-  (setq section-shortcut-global t)
-  (when section-shortcut-global
+  ;; ECB: set size, display, refresh and remove opening tips of ECB window
+  (setq tqnr-section-interface-ecb nil)
+  (when tqnr-section-interface-ecb
+    ;; ECB ICON FOR TREE: display icon image instead of ascii guides for arborescence tree
+    (setq tqnr-section-interface-ecb-ascii-tree nil)
+    ) ;; (when tqnr-section-interface-ecb
+  ) ;; (when tqnr-section-interface
+
+;; COMPLETION: enable letter case completion + dynamic completion
+(setq tqnr-section-completion t)
+
+;; SHORTCUT: custom binding or shortcut for everything in GNU Emacs (thought for qwerty keyboard)
+(setq tqnr-section-shortcut t)
+(when tqnr-section-shortcut
+
+  ;; GLOBAL: add global shortcut (for whole Emacs)
+  (setq tqnr-section-shortcut-global t)
+  (when tqnr-section-shortcut-global
     ;; CUA: enable C-x, C-c, C-v to cut copy paste
     ;; don't recommend it otherwise see http://www.emacswiki.org/CuaMode
-    (setq section-shortcut-global-cua nil)
-    ) ; (when section-shortcut-global
+    (setq tqnr-section-shortcut-global-cua nil)
+    ) ;; (when tqnr-section-shortcut-global
+
   ;; WINDOWS: add shortcut to manage windows
-  (setq section-shortcut-windows t)
-  ;; BUFFERS: add shortcut to manage buffers
-  (setq section-shortcut-buffers t)
-  ;; ECB: add shortcut to manage ecb windows
-  ;; REQUIREMENT: `section-mode-cedet-ecb'
-  (setq section-shortcut-ecb t)
+  (setq tqnr-section-shortcut-windows t)
+
+  ;; BUFFER: add shortcut to manage buffers
+  (setq tqnr-section-shortcut-buffer t)
+
   ;; GREP: add shortcut to manage grep
-  (setq section-shortcut-grep t)
-  ;; FUNCTION: add shortcut to manage new functions
-  (setq section-shortcut-function t)
-  ;; TAGS: add shortcut to manage gtags or etags
-  (setq section-shortcut-tags t)
-  (when section-shortcut-tags
-    ;; ETAGS:
-    (setq section-shortcut-tags-exuberant-ctags nil)
-    ;; GTAGS:
-    ;; REQUIREMENT: section-mode-gnu-global
-    (setq section-shortcut-tags-gnu-global t)
-    ) ; (when section-shortcut-tags
+  (setq tqnr-section-shortcut-grep t)
+
+  ;; ETAG: add shortcut to manage gtags or etags
+  (setq tqnr-section-shortcut-etag t)
+
   ;; SEMANTIC: add shortcut to move in source code with semantic
-  ;; REQUIREMENT: `section-mode-cedet-semantic'
-  (setq section-shortcut-semantic t)
-  ) ; (when section-shortcut
+  (setq tqnr-section-shortcut-semantic t)
 
-
-;;; MOUSE: smooth wheel + lazy decoration when scroll
-(setq section-mouse t)
-(when section-mouse
-  ;; PASTE CURSOR: yank at point not mouse cursor (either when yank with mouse
-  ;; wheel)
-  (setq section-mouse-paste-to-point-not-mouse-cursor nil)
-  ;; AVOIDANCE: mouse cursor avoid the keyboard cursor when typing
-  ;; REQUIREMENT: `section-environment-terminal-vs-graphics'
-  (setq section-mouse-avoidance nil)
-  ;; SMOOTH SCROLL: it will always scroll line by line with arrow at start or
-  ;; end of screen
-  (setq section-mouse-smooth-scroll t)
-  ) ; (when section-mouse
+  ;; HOOK
+  (setq tqnr-section-shortcut-hook t)
+  ) ;; (when tqnr-section-shortcut
 
-
-;;; ANNOYANCES: no welcome message + yes->y + do not query to refresh buffer +
-;; remove insert key + remove C-Pup & C-Dwn + wheel click do nothing + no dialog
-;; box + no tooltips
-(setq section-annoyances t)
-(when section-annoyances
+;; MOUSE: smooth wheel + lazy decoration when scroll
+(setq tqnr-section-mouse t)
+(when tqnr-section-mouse
+  ;; PASTE CURSOR: yank at point and not at mouse cursor (either when yank with mouse wheel)
+  (setq tqnr-section-mouse-paste-to-point-not-mouse-cursor nil)
+  ;; AVOIDANCE: move mouse cursor at top right of the buffer to not bother me
+  (setq tqnr-section-mouse-avoidance nil)
+  ;; SMOOTH SCROLL: scroll with margin and without jump
+  (setq tqnr-section-mouse-smooth-scroll t)
+  ) ;; (when tqnr-section-mouse
+
+;; ANNOYANCES
+;; no welcome message + yes->y + do not query to refresh buffer + remove insert
+;; key + remove C-Pup & C-Dwn + wheel click do nothing + no dialog box + no
+;; tooltips
+(setq tqnr-section-annoyances t)
+(when tqnr-section-annoyances
   ;; TRUNCATE LINE: whole line not visible (need to scroll right)
-  (setq section-annoyances-truncate-line t)
-  ;; SCROLL PRESERVE CURSOR POSITION: when wheel scroll the cursor do not move
-  (setq section-annoyances-scroll-preserve-cursor-position t)
-  ;; NO BACKUP FILE: no backup file will be created
-  (setq section-annoyances-no-backup-file nil)
-  ;; ALL BACKUP FILE IN DIRECTORY all backup files will be created in a
-  ;; directory
-  (setq section-annoyances-backup-file-in-directory t)
-  ) ; (when section-annoyances
-
-
-;;; MISC: remove whitespace at end of line + define name, browser, shell, new
-;; line at end of file, compression, column 78 alignment
-;; REQUIREMENT: `profile-username'
-;;              `profile-column'
-(setq section-misc t)
-(when section-misc
-  ;; SPACE
-  (setq profile-remove-useless-ending-space t)
-  (setq profile-always-new-line-at-end t)
-  ;; backup directory
-  (setq profile-backup-directory (concat dotemacs-path "/backup"))
-  (setq profile-autosave-directory (concat dotemacs-path "/cache"))
-  ;; use by fill-xxx or fill column indicator mode
-  (setq profile-fill-column 80)
-  ;; browser to open url
-  (setq profile-browser "firefox")
+  (setq tqnr-section-annoyances-truncate-line t)
   ;;
-  ;; CALENDAR set latitude/longitude + location + holidays + custom date in
-  ;; Modeline lunar phase, sunrise/sunset, time etc
-  ;; REQUIREMENT: profile-longitude
-  ;;              profile-latitude
-  ;;              profile-location-name
-  (setq section-misc-calendar nil)
-  (when section-misc-calendar
-    ;; CALENDAR in French
-    (setq section-misc-calendar-french t)
-    ) ; (when section-misc-calendar
-  ;; DICTIONARY: set default dictionary, etc
-  ;; REQUIREMENT: `profile-ispell-program'
-  ;;              `profile-ispell-dictionary'
-  (setq section-misc-dictionary nil)
-  (when section-misc-dictionary
-    ;; path of apsell
-    (setq profile-ispell-program "aspell")
-    ;; default dictionnary
-    (setq profile-ispell-dictionary "english")
-    ) ; (when section-misc-dictionary
-  ;; BOOKMARK: set default bookmark storage
-  (setq section-misc-bookmark t)
-  (when section-misc-bookmark
-    ;; sort bookmark
-    (setq profile-bookmark-sort nil)
-    ) ; (when section-misc-bookmark
-  ;; SCREENSAVER: Set screensaver when idle time higher than 5 minutes
-  (setq section-misc-screensaver t)
-  ) ; (when section-misc
+  ;; SCROLL PRESERVE CURSOR POSITION: when wheel scroll the cursor do not move
+  (setq tqnr-section-annoyances-scroll-preserve-cursor-position t)
+  ;;
+  ;; NO BACKUP FILE: turn off backup files
+  (setq tqnr-section-annoyances-no-backup-file nil)
+  ;;
+  ;; ALL BACKUP FILE IN DIRECTORY: all backup files goes in a directory
+  (setq tqnr-section-annoyances-backup-file-in-directory t)
+  (when tqnr-section-annoyances-backup-file-in-directory
+    ;; all backup files goes in a directory
+    (setq tqnr-profile-backup-directory (concat (file-name-as-directory tqnr-dotemacs-path) "backup"))
+    (setq tqnr-profile-autosave-directory (concat (file-name-as-directory tqnr-dotemacs-path) "cache"))
+    ) ;; (when tqnr-section-annoyances-backup-file-in-directory
+  ) ;; (when tqnr-section-annoyances
 
-
-;;; CUSTOMIZE: all customize settings are put in here when you use interface
+;; MISC
+;; remove whitespace at end of line + define name, browser, shell, new
+;; line at end of file, compression, column 78 alignment
+(setq tqnr-section-misc t)
+(when tqnr-section-misc
+  ;;
+  ;; SPACE: remove useless space at the end of line
+  (setq tqnr-profile-remove-useless-ending-space t)
+  ;; END OF FILE: be sure that a new line is at the end of a file when it's saved
+  (setq tqnr-profile-always-new-line-at-end t)
+  ;; COLUMN: fill-xxx is set with a width
+  (setq tqnr-profile-fill-column 80)
+  ;;
+  ;; WEB: set browser to open url
+  (setq tqnr-profile-browser "firefox")
+  ;;
+  ;; CALENDAR: set latitude/longitude + location + holidays + custom date in
+  ;; Modeline lunar phase, sunrise/sunset, time, etc
+  (setq tqnr-section-misc-calendar nil)
+  (when tqnr-section-misc-calendar
+    ;; FRENCH CALENDAR: set French holidays and day/month/moon phase name
+    (setq tqnr-section-misc-calendar-french t)
+    ) ;; (when tqnr-section-misc-calendar
+  ;; DICTIONARY: language settings
+  (setq tqnr-section-misc-dictionary nil)
+  (when tqnr-section-misc-dictionary
+    ;; set program to be use with ispell
+    (setq tqnr-profile-ispell-program "aspell")
+    ;; language to use with ispell
+    (setq tqnr-profile-ispell-dictionary "english")
+    ) ;; (when tqnr-section-misc-dictionary
+  ;; BOOKMARK: default file, each command to add/modify bookmark save bookmark file
+  (setq tqnr-section-misc-bookmark t)
+  (when tqnr-section-misc-bookmark
+    ;; BOOKMARK SORT: sort or do not sort bookmark when saving bookmark file
+    (setq tqnr-profile-bookmark-sort nil)
+    ) ;; (when tqnr-section-misc-bookmark t
+  ;; SCREENSAVER: when idle for 5min some animations on buffer text
+  (setq tqnr-section-misc-screensaver t)
+  ) ;; (when tqnr-section-misc
+
+;; FILECUSTOMIZE
+;; all customize settings are put in here when you use interface
 ;; (customize) to change settings
-(setq section-filecustomize t)
+(setq tqnr-section-filecustomize t)
 
-;;; AFTER LOADING CONF
+;; AFTER LOADING CONF
 ;; this function will be call at the end after all configuration, it can be use
 ;; to override some settings or add settings without modify the configuration
 (defun function-to-call-after-loading-conf ()

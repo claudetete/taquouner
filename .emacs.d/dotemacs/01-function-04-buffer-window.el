@@ -1,0 +1,386 @@
+;;; 01-function-04-buffer-window.el --- add some function about buffer and window handling
+
+;; Copyright (c) 2017 Claude Tete
+;;
+;; This file is NOT part of GNU Emacs.
+;;
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;
+
+;; Author: Claude Tete  <claude.tete@gmail.com>
+;; Version: 0.1
+;; Created: July 2017
+;; Last-Updated: July 2017
+
+;;; Commentary:
+;;
+;; [SUBHEADER.custom function about buffer and window handling]
+;;
+
+;;; Change Log:
+;; 2017-07-21 (0.1)
+;;    creation from split of functions.el
+
+
+;;; Code:
+
+;;
+;; END OF LINE
+;; convert MS-DOS format \r\n to Unix format \n (by ??)
+(defun dos2unix ()
+  "Transform a DOS file to a Unix file."
+  (interactive)
+  (goto-char (point-min))
+  (while (search-forward "\r" nil t)
+    (replace-match "")
+  )
+  )
+
+;; convert Unix format \n to MS-DOS format \r\n (by ??)
+(defun unix2dos ()
+  "Transform a Unix file to a DOS file."
+  (interactive)
+  (goto-char (point-min))
+  (while (search-forward "\n" nil t)
+    (replace-match "\r\n")
+  )
+)
+
+;;
+;; SWAP/SPLIT WINDOWS
+;; swap 2 windows (by Fabrice Niessen)
+(defun my-swap-windows ()
+  "If you have 2 windows, it swaps them."
+  (interactive)
+  (cond ((not (= (count-windows) 2))
+          (message "You need exactly 2 windows to do this."))
+    (t
+      (let* ((w1 (first (window-list)))
+              (w2 (second (window-list)))
+              (b1 (window-buffer w1))
+              (b2 (window-buffer w2))
+              (s1 (window-start w1))
+              (s2 (window-start w2)))
+        (set-window-buffer w1 b2)
+        (set-window-buffer w2 b1)
+        (set-window-start w1 s2)
+        (set-window-start w2 s1)
+        )
+      )
+    )
+  )
+
+;; toggle between horizontal and vertical split for 2 windows (by Fabrice
+;; Niessen)
+(defun my-toggle-window-split ()
+  "Vertical split shows more of each line, horizontal split shows
+more lines. This code toggles between them. It only works for
+frames with exactly two windows."
+  (interactive)
+  (if (= (count-windows) 2)
+    (let* ((this-win-buffer (window-buffer))
+            (next-win-buffer (window-buffer (next-window)))
+            (this-win-edges (window-edges (selected-window)))
+            (next-win-edges (window-edges (next-window)))
+            (this-win-2nd (not (and (<= (car this-win-edges)
+                                      (car next-win-edges))
+                                 (<= (cadr this-win-edges)
+                                   (cadr next-win-edges)))))
+            (splitter
+	      (if (= (car this-win-edges)
+                    (car (window-edges (next-window))))
+                'split-window-horizontally
+		'split-window-vertically)
+              )
+            )
+      (delete-other-windows)
+      (let ((first-win (selected-window)))
+        (funcall splitter)
+        (if this-win-2nd (other-window 1))
+        (set-window-buffer (selected-window) this-win-buffer)
+        (set-window-buffer (next-window) next-win-buffer)
+        (select-window first-win)
+        (if this-win-2nd (other-window 1)))
+      )
+    )
+  )
+
+;; shortcuts are put in a hook to be loaded after everything else in init process
+(add-hook 'tqnr-after-init-shortcut-hook
+  (lambda ()
+    ;; swap 2 windows
+    (global-set-key     (kbd "C-c ~")   'my-swap-windows)
+    ;; toggle the split (horizontal or vertical)
+    (global-set-key     (kbd "C-c |")   'my-toggle-window-split)
+    ) ;; (lambda ()
+  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+
+
+;;
+;; RESIZE WINDOW
+;; where is the window vertically by Sergey Ovechkin (pomeo)
+(defun win-resize-top-or-bot ()
+  "Figure out if the current window is on top, bottom or in the
+middle"
+  (let* ((win-edges (window-edges))
+          (this-window-y-min (nth 1 win-edges))
+          (this-window-y-max (nth 3 win-edges))
+          (fr-height (frame-height)))
+    (cond
+      ((eq 0 this-window-y-min) "top")
+      ((eq (- fr-height 1) this-window-y-max) "bot")
+      (t "mid"))))
+
+;; where is the window horizontally by Sergey Ovechkin (pomeo)
+(defun win-resize-left-or-right ()
+  "Figure out if the current window is to the left, right or in the
+middle"
+  (let* ((win-edges (window-edges))
+          (this-window-x-min (nth 0 win-edges))
+          (this-window-x-max (nth 2 win-edges))
+          (fr-width (frame-width)))
+    (cond
+      ((eq 0 this-window-x-min) "left")
+      ((eq (+ fr-width 2) this-window-x-max) "right") ; why 4 ? 2 works for me
+      (t "mid"))))
+
+;; what to do when I want to push split line to the top (by Claude TETE)
+(defun win-resize-top ()
+  (interactive)
+  (let ((win-pos (win-resize-top-or-bot)))
+    (cond
+      ((equal "top" win-pos) (shrink-window 1))
+      ((equal "mid" win-pos) (shrink-window 1))
+      ((equal "bot" win-pos) (enlarge-window 1))
+      )
+    )
+  )
+
+;; what to do when I want to push split line to the bottom  (by Claude TETE)
+(defun win-resize-bottom ()
+  (interactive)
+  (let ((win-pos (win-resize-top-or-bot)))
+    (cond
+      ((equal "top" win-pos) (enlarge-window 1))
+      ((equal "mid" win-pos) (enlarge-window 1))
+      ((equal "bot" win-pos) (shrink-window 1))
+      )
+    )
+  )
+
+;; what to do when I want to push split line to the left (by Claude TETE)
+(defun win-resize-left ()
+  (interactive)
+  (let ((win-pos (win-resize-left-or-right)))
+    (cond
+      ((equal "left"  win-pos) (shrink-window-horizontally 1))
+      ((equal "mid"   win-pos) (shrink-window-horizontally 1))
+      ((equal "right" win-pos) (enlarge-window-horizontally 1))
+      )
+    )
+  )
+
+;; what to do when I want to push split line to the right (by Claude TETE)
+(defun win-resize-right ()
+  (interactive)
+  (let ((win-pos (win-resize-left-or-right)))
+    (cond
+      ((equal "left"  win-pos) (enlarge-window-horizontally 1))
+      ((equal "mid"   win-pos) (enlarge-window-horizontally 1))
+      ((equal "right" win-pos) (shrink-window-horizontally 1))
+      )
+    )
+  )
+
+
+;; shortcuts are put in a hook to be loaded after everything else in init process
+(add-hook 'tqnr-after-init-shortcut-hook
+  (lambda ()
+    ;; resize window more easily (before we should use `C-x {'...)
+    ;; vertical
+    (global-set-key     (kbd "<C-S-up>")        'win-resize-top)
+    (global-set-key     (kbd "<C-S-down>")      'win-resize-bottom)
+    ;; horizontal
+    (global-set-key     (kbd "<C-S-left>")      'win-resize-left)
+    (global-set-key     (kbd "<C-S-right>")     'win-resize-right)
+    ) ;; (lambda ()
+  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+
+
+;;
+;; SWITCH BUFFER
+;; Switching Between Two Recently Used Buffers (by Mathias Dahl)
+;; like Alt+Tab in Windows Managers (not used)
+(defun switch-to-previous-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1))
+  )
+
+;;
+;; SCROLL WITH KEEPING CURSOR
+;; Scroll the text one line down while keeping the cursor (by Geotechnical
+;; Software Services)
+(defun scroll-down-keep-cursor ()
+  (interactive)
+  (scroll-down 1))
+
+;; Scroll the text one line up while keeping the cursor (by Geotechnical
+;; Software Services)
+(defun scroll-up-keep-cursor ()
+  (interactive)
+  (scroll-up 1))
+
+;; shortcuts are put in a hook to be loaded after everything else in init process
+(add-hook 'tqnr-after-init-shortcut-hook
+  (lambda ()
+    ;; scroll while keeping cursor position
+    (global-set-key     (kbd "<H-down>")        'scroll-down-keep-cursor)
+    (global-set-key     (kbd "<H-up>")          'scroll-up-keep-cursor)
+    ) ;; (lambda ()
+  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+
+
+;;
+;; MAXIMIZE
+;; maximize the current frame (the whole Emacs window) (by Claude TETE)
+(defun frame-maximizer ()
+  "Maximize the current frame."
+  (interactive)
+  (when (and tqnr-section-environment-os-recognition tqnr-running-in-graphical)
+    (when tqnr-running-on-ms-windows
+      (w32-send-sys-command 61488)
+      (sit-for 0)
+      )
+    (when tqnr-running-on-gnu-linux
+      (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+      (x-send-client-message nil 0 nil "_NET_WM_STATE" 32 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+      )
+    )
+  )
+
+;;
+;; SWITCH BUFFER
+(defun switch-to-special-buffer (buffer)
+  "Switch to BUFFER in a special window like ecb compile window."
+  (let ((buf (buffer-name)))
+    ;; when the buffer is the same as the current buffer
+    (if (string= buf buffer)
+      ;; when ecb is active toggle the compile window
+      (if tqnr-section-mode-cedet-ecb
+        (ecb-toggle-compile)
+        ;; else go the previous buffer
+        (switch-to-prev-buffer))
+      (if (get-buffer buffer)
+        (progn
+          ;; when ecb is used display in compile window
+          (when tqnr-section-mode-cedet-ecb
+            (ecb-goto-window-compilation))
+          (switch-to-buffer buffer))
+        (message (concat "Do not switch, " buffer " does not exist.")))
+      )
+    )
+  )
+
+;; go to the grep or ack buffer in special window
+(defun switch-to-grep-ack-buffer ()
+  "Switch to the grep or ack buffer."
+  (interactive)
+  ;; when ack mode and buffer exist
+  (if (and tqnr-section-mode-ack-emacs (get-buffer "*ack*"))
+    (switch-to-special-buffer "*ack*")
+    (switch-to-special-buffer "*grep*"))
+  )
+
+;; go to the compilation buffer in special window
+(defun switch-to-compilation-buffer ()
+  "Switch to the compilation buffer."
+  (interactive)
+  (switch-to-special-buffer "*compilation*")
+  )
+
+;; go to the vc or vc diff buffer in special window
+(defun switch-to-vc-buffer ()
+  "Switch to the vc or vc diff buffer."
+  (interactive)
+  ;; when vc diff buffer already exist
+  (if (get-buffer "*vc-diff*")
+    (switch-to-special-buffer "*vc-diff*")
+    (switch-to-special-buffer "*vc*"))
+  )
+
+;; go to the occur buffer in special window
+(defun switch-to-occur-buffer ()
+  "Switch to the occur buffer."
+  (interactive)
+  (switch-to-special-buffer "*Occur*")
+  )
+
+;; go to the help buffer in special window
+(defun switch-to-help-buffer ()
+  "Switch to the help buffer."
+  (interactive)
+  (switch-to-special-buffer "*Help*")
+  )
+
+;; go to the help buffer in special window
+(defun switch-to-bookmark-buffer ()
+  "Switch to the bookmark buffer."
+  (interactive)
+  (if (get-buffer "*Bookmark List*")
+    (switch-to-special-buffer "*Bookmark List*")
+    (bookmark-bmenu-list))
+  )
+
+;; go to the symbol reference buffer in special window
+(defun switch-to-symref-buffer ()
+  "Switch to the Symref buffer."
+  (interactive)
+  (switch-to-special-buffer "*Sy*")
+  )
+
+
+;; shortcuts are put in a hook to be loaded after everything else in init process
+(add-hook 'tqnr-after-init-shortcut-hook
+  (lambda ()
+    ;; switch to grep or ack buffer
+    (global-set-key     (kbd "M-2")     'switch-to-grep-ack-buffer)
+    ;; switch to bookmark buffer
+    (global-set-key     (kbd "M-3")     'switch-to-bookmark-buffer)
+    ;; switch to compile buffer
+    (global-set-key     (kbd "M-4")     'switch-to-compilation-buffer)
+    ;; switch to vc buffer
+    (global-set-key     (kbd "M-5")     'switch-to-vc-buffer)
+    ;; switch to help buffer
+    (global-set-key     (kbd "M-6")     'switch-to-help-buffer)
+
+    ;; the previous global-set-key are unset in diff mode ???
+    (add-hook 'diff-mode-hook
+      (lambda ()
+        ;; switch to grep or ack buffer
+        (local-set-key  (kbd "M-2")     'switch-to-grep-ack-buffer)
+        ;; switch to bookmark buffer
+        (local-set-key  (kbd "M-3")     'switch-to-bookmark-buffer)
+        ;; switch to compile buffer
+        (local-set-key  (kbd "M-4")     'switch-to-compilation-buffer)
+        ;; switch to vc buffer
+        (local-set-key  (kbd "M-5")     'switch-to-vc-buffer)
+        ;; switch to help buffer
+        (local-set-key  (kbd "M-6")     'switch-to-help-buffer)))
+    ) ;; (lambda ()
+  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+
+
+(provide '01-function-04-buffer-window)
+
+;;; 01-function-04-buffer-window.el ends here

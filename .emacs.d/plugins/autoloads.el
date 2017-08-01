@@ -20,9 +20,9 @@
 
 ;; Keywords: config, autoload, generated, load
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.6
+;; Version: 0.7
 ;; Created: April 2013
-;; Last-Updated: May 2017
+;; Last-Updated: July 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;  emacs -Q -l autoloads.el -f autoloads
 
 ;;; Change Log:
+;; 2017-08-01 (0.7)
+;;    add missing helm extension
 ;; 2017-05-30 (0.6)
 ;;    add markdown mode
 ;; 2016-09-28 (0.5)
@@ -118,10 +120,21 @@
   (update-file-autoloads "helm-ag.el"                t (concat autoloads-location "autoload-helm-ag.el"))
   ;; HELM COMPANY
   (update-file-autoloads "helm-company.el"           t (concat autoloads-location "autoload-helm-company.el"))
+  ;; HELM GTAGS
+  (update-file-autoloads "helm-gtags.el"             t (concat autoloads-location "autoload-helm-gtags.el"))
   ;; COMPANY
   (update-file-autoloads "company-mode/company.el"   t (concat autoloads-location "company-mode/autoload-company.el"))
   ;; MARKDOWN
   (update-file-autoloads "markdown-mode.el"          t (concat autoloads-location "autoload-markdown-mode.el"))
+  ;; EASY-KILL
+  (update-file-autoloads "easy-kill.el"              t (concat autoloads-location "autoload-easy-kill.el"))
+
+  ;; PROJECTILE
+  (update-file-autoloads "projectile-master/projectile.el" t
+    (concat autoloads-location "projectile-master/autoload-projectile.el"))
+  ;; HELM PROJECTILE
+  (update-file-autoloads "projectile-master/helm-projectile.el" t
+    (concat autoloads-location "projectile-master/autoload-helm-projectile.el"))
 
   ;; quit emacs
   (kill-emacs)
