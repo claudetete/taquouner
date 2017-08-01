@@ -4,12 +4,14 @@
 ## Presentation
 Taquouner, a dotemacs configuration with profile, is almost daily used since 2006, started with one file of hundred of copied/pasted elisp line.
 Then started to grow faster few years later to manage multiple computers and environments (linux/windows, home/work, usb key, etc).
+Lately, jump to automatically load every elisp files in dotemacs directory (see [Add new mode/options](https://github.com/claudetete/taquouner/wiki/Adding)).
 It follow my needs of embedded developer, a lot of C and some scripting langages.
 
 * It contains:
   * A system with `profiles`, I use one profile for one computer/system (work laptop, work desktop, home desktop...)
     * Customizable (by example: you do not want my shortcuts, just one variable set to `nil` instead of `t` in profile)
     * Options to gently start with emacs (shift selection, universal Cut/Copy/Paste shortcut, No backup file, usual scroll behavior, etc)
+    * Easily grow by simply adding elisp files in dotemacs folder (every elisp filename starting with decimal is loaded) and regenerate profile files (to enable new file).
   * Modes (Add-On/Plugins) are built-in, no need to think about which version is compatible with the configuration or configure it
     * Helm (replace all dialog box for anything)
     * Projectile (project manager)
@@ -43,8 +45,8 @@ It follow my needs of embedded developer, a lot of C and some scripting langages
     * start in fullscreen
   * Environment
     * Work on both MS Windows and Linux
-    * Should work with Emacs 23.3 to 25.1
-    * Daily used with Emacs 25.1 on Windows 7 and on ArchLinux
+    * Should work with Emacs 23.3 to 25.2
+    * Daily used with Emacs 25.2 on Windows 7 and on ArchLinux
 
 I deliberately try to take point of view of people not used to Emacs.
 * ~~You can read [.emacs.d/features.pdf Slides](https://github.com/claudetete/taquouner/blob/master/.emacs.d/features.pdf) created with Emacs which present some features of Emacs, to catch a brief glimpse of Emacs potential~~ Deprecated, must be updated to match Emacs 25.
@@ -60,7 +62,7 @@ I deliberately try to take point of view of people not used to Emacs.
 * *s-x* means key 'Super' + key 'x' (Super = Windows which is the key Windows between Ctrl and Alt or Command for Apple)
 
 ## Installation
-See [Installation on MS Windows](https://github.com/claudetete/taquouner/wiki/Installation) or [Installation on Linux](https://github.com/claudetete/taquouner/wiki/Installation%20Linux) on wiki of this repository.
+See FIXME must be updated~~[Installation on MS Windows](https://github.com/claudetete/taquouner/wiki/Installation) or [Installation on Linux](https://github.com/claudetete/taquouner/wiki/Installation%20Linux) on wiki of this repository~~.
 
 ## Essential shortcuts
 | Shortcut | Description |
