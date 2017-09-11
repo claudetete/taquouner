@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.improve Dired mode, color, open with, etc]
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    add toggle read only in dired buffer as shortcut
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -43,12 +45,14 @@
 (eval-after-load "dired"
   '(progn
      ;; open with default associated application
-     (define-key dired-mode-map         (kbd "H-RET")   'dired-w32-browser)
+     (define-key dired-mode-map         (kbd "H-RET")           'dired-w32-browser)
      ;; was dired-advertised-find-file
-     (define-key dired-mode-map         (kbd "RET")     'dired-find-alternate-file)
+     (define-key dired-mode-map         (kbd "RET")             'dired-find-alternate-file)
      ;; was dired-up-directory
-     (define-key dired-mode-map (kbd "[") (lambda () (interactive) (find-alternate-file "..")))
-     ;;(define-key dired-mode-map         (kbd "[")       'dired-up-directory)
+     (define-key dired-mode-map         (kbd "[")               (lambda () (interactive) (find-alternate-file "..")))
+     ;;(define-key dired-mode-map         (kbd "[")               'dired-up-directory)
+     ;; edit buffer of dired to modify filename by example (C-x C-s or C-c C-c to apply modification)
+     (define-key dired-mode-map         (kbd "C-c C-e")         'dired-toggle-read-only)
      )
   )
 

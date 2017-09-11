@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.5
+;; Version: 2.6
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;; section comment
@@ -31,6 +31,8 @@
 ;; [SUBHEADER.modification about main window of emacs]
 
 ;;; Change Log:
+;; 2017-09-11 (2.6)
+;;    fix new frame font + add setting about popup window
 ;; 2017-07-25 (2.5)
 ;;    update to new conf format
 ;; 2016-09-28 (2.4)
@@ -83,7 +85,7 @@
   '(lambda (f)
      (with-selected-frame f
        (when tqnr-profile-font
-         (set-frame-parameter frame 'font tqnr-profile-font))
+         (set-frame-font tqnr-profile-font))
        (frame-maximizer)
        )))
 
@@ -137,6 +139,13 @@
     (toggle-frame-maximized)
     (frame-maximizer))
   (message "    FullScreen... Done"))
+
+;; [COMMENT.]
+;; [VARCOMMENT.Do not popup any window by splitting vertically only horizontally]
+;; [VARIABLE.tqnr-section-interface-popup-window-horizontally nil]
+(when tqnr-section-interface-popup-window-horizontally
+  (setq split-width-threshold nil))
+
 
 (provide '06-interface-00-main-window)
 

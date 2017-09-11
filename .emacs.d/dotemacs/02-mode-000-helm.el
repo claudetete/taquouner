@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.(fork ANYTHING) choose anything with the same nice interface]
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    add swoop and flx + remove useless shortcut
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -37,8 +39,8 @@
 ;;
 (add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/helm-master"))
 
-(custom-set-variables
-  '(helm-follow-mode-persistent t))
+;; (custom-set-variables
+;;   '(helm-follow-mode-persistent t))
 
 (when (try-require 'helm-config "    ")
   (when tqnr-running-on-ms-windows
@@ -77,6 +79,70 @@
              ("Edit Bookmark"                   . helm-bookmark-edit-bookmark)
              ("Rename bookmark"                 . helm-bookmark-rename)
              ("Relocate bookmark"               . bookmark-relocate))))))
+
+
+  ;; [VARCOMMENT.isearch by helm]
+  ;; [VARIABLE.tqnr-section-mode-helm-swoop nil]
+  (when tqnr-section-mode-helm-swoop
+    (when (try-require 'helm-swoop "    ")
+
+      (with-eval-after-load "isearch"
+        ;; When doing isearch, hand the word over to helm-swoop
+        (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch))
+
+      (with-eval-after-load "helm-swoop"
+        ;; From helm-swoop to helm-multi-swoop-all
+        (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
+        ;; Move up and down like isearch
+        (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+        (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+        (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+        (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line))
+
+      ;; Save buffer when helm-multi-swoop-edit complete
+      (setq helm-multi-swoop-edit-save t)
+      ;; If this value is t, split window inside the current window
+      (setq helm-swoop-split-with-multiple-windows nil)
+
+      ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
+      (setq helm-swoop-split-direction 'split-window-vertically)
+
+      ;; If nil, you can slightly boost invoke speed in exchange for text color
+      (setq helm-swoop-speed-or-color t)
+
+      ;; ;; Go to the opposite side of line from the end or beginning of line
+      (setq helm-swoop-move-to-line-cycle t)
+
+      ;; Optional face for line numbers
+      ;; Face name is `helm-swoop-line-number-face`
+      (setq helm-swoop-use-line-number-face t)
+
+      ;; If you prefer fuzzy matching
+      (setq helm-swoop-use-fuzzy-match t)
+
+      ;; shortcuts are put in a hook to be loaded after everything else in init process
+      (add-hook 'tqnr-after-init-shortcut-hook
+        (lambda ()
+          ;; run helm swoop
+          ;; [VARCOMMENT.do not have default value when run helm swoop]
+          ;; [VARIABLE.tqnr-section-mode-helm-swoop-without-pre-input nil]
+          (if tqnr-section-mode-helm-swoop-without-pre-input
+            (global-set-key (kbd "C-S-s") 'helm-swoop-without-pre-input)
+            (global-set-key (kbd "C-S-s") 'helm-swoop))
+          ;; return to localization of invokation of helm swoop
+          (global-set-key (kbd "M-<") 'helm-swoop-back-to-last-point)
+          (global-set-key (kbd "C-M-S-s") 'helm-multi-swoop)
+          ) ;; (lambda ()
+        ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+      ))
+
+  ;; [VARCOMMENT.replace fuzzy search in find-files by flx, more human matches]
+  ;; [VARIABLE.tqnr-section-mode-helm-flx nil]
+  (when tqnr-section-mode-helm-flx
+    (when (try-require 'helm-flx " ")
+      (helm-flx-mode +1)
+      (setq helm-flx-for-helm-find-files t)))
+
   )
 
 
@@ -119,7 +185,6 @@
     ;; [VARCOMMENT.replace electric buffer list]
     ;; [VARIABLE.tqnr-section-mode-helm-buffers-list nil]
     (when tqnr-section-mode-helm-buffers-list
-      (global-set-key     (kbd "M-z")             'helm-buffers-list)
       ;; override electric-buffer-list from 08-shortcut-02-buffer
       (global-set-key     (kbd "C-x C-b")         'helm-buffers-list)
       )

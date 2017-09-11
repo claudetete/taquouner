@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Tag management mode]
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    remove autoload for performance
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -52,7 +54,7 @@
       (eval-after-load "ggtags"
         '(setq ggtags-mode-line-project-name ""))
       (if tqnr-section-mode-helm
-        (when (try-require 'autoload-helm-gtags "        ")
+        (when (try-require 'helm-gtags "        ")
           (add-hook 'c-mode-hook 'helm-gtags-mode))
         (add-hook 'c-mode-common-hook
           (lambda ()

@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.set font in terminal or in graphical]
 
 ;;; Change Log:
+;; 2017-09-11 (2.3)
+;;    add new font as example
 ;; 2017-07-25 (2.2)
 ;;    update to new conf format
 ;; 2016-09-28 (2.1)
@@ -115,6 +117,12 @@
 ;;
 ;; "Droid Sans Mono-10"
 ;; "Droid Sans Mono-8"
+;;
+;; "Iosevka-10"
+;; "Iosevka-8"
+;; nice can use any variant of this open source font (by example slashed zero, dot zero, empty zero)
+;; see https://be5invis.github.io/Iosevka/ for more settings
+;;
 ;; ]]
 ;; [VARIABLE.tqnr-profile-font "Lucida Console-10"]
 (when tqnr-profile-font

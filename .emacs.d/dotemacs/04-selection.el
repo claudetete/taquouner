@@ -52,7 +52,7 @@
 
 
 ;;; Code:
-;; selection can be killed
+;; selection can be killed/deleted
 (delete-selection-mode t)
 ;;
 ;; selection is highlighted

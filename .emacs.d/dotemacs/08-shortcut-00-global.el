@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 4.2
+;; Version: 4.3
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;; section comment
@@ -31,6 +31,9 @@
 ;; [SUBHEADER.add global shortcut (for whole Emacs)]
 
 ;;; Change Log:
+;; 2017-09-11 (4.3)
+;;    add logical shortcut to refresh buffer + hydra condition about rectangle
+;;    shortcut
 ;; 2017-07-25 (4.2)
 ;;    update to new conf format
 ;; 2017-05-26 (4.1)
@@ -161,6 +164,7 @@
 
 ;; refresh current buffer
 (global-set-key         (kbd "M-p")             'revert-buffer)
+(global-set-key         (kbd "<f5>")            'revert-buffer)
 
 ;; switch between header/source file
 (global-set-key         (kbd "C-`")             'ff-find-other-file)
@@ -202,7 +206,8 @@
 ;;
 ;;; RECTANGLE
 (when (or tqnr-running-on-emacs-24-4 tqnr-running-on-emacs-24-5 tqnr-running-on-emacs-25)
-  (global-set-key       (kbd "<C-return>")      'rectangle-mark-mode)
+  (when (not tqnr-section-mode-hydra)
+    (global-set-key       (kbd "<C-return>")      'rectangle-mark-mode))
   (with-eval-after-load "rect"
     ;; insert string (interactively, Enter to apply)
     (define-key rectangle-mark-mode-map         (kbd "t")               'string-rectangle)
@@ -212,8 +217,9 @@
     (define-key rectangle-mark-mode-map         (kbd "C-RET")           'string-rectangle)
     ;; insert rectangle of space (C-x r o and C-o)
     (define-key rectangle-mark-mode-map         (kbd "SPC")             'open-rectangle)
+
     ;; Kill rectangle (C-x r k)
-    (define-key rectangle-mark-mode-map         (kbd "C-k")             'kill-rectangle)
+    (define-key rectangle-mark-mode-map         (kbd "C-w")             'kill-rectangle)
     ;; Copy rectangle (C-x r M-w)
     (define-key rectangle-mark-mode-map         (kbd "M-w")             'copy-rectangle-as-kill)
     ;; Delete rectangle (delete key also works) (C-x r d)

@@ -21,12 +21,14 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 3.2
 ;; Created: October 2006
-;; Last-Updated: May 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;; [HEADER.Environment check and configuration]
 
 ;;; Change Log:
+;; 2017-09-01 (3.2)
+;;    do reasonable settings about garbage collection + simplify path and exec
 ;; 2017-05-26 (3.1)
 ;;    remove useless settings about super/hyper for MS Windows
 ;; 2016-09-28 (3.0)
@@ -78,6 +80,43 @@
 
 
 ;;; Code:
+
+;;
+;; [SUBCOMMENT.GARBAGE COLLECTION: speed up start of emacs]
+;; [SUBSECTION.tqnr-section-environment-garbage-collection nil]
+(when tqnr-section-environment-garbage-collection
+  ;; garbage collection to hundred times of the default. Supposedly
+  ;; significantly speeds up startup time. see http://jonnay.github.io/emagicians-starter-kit/Emagician-Base.html#orgheadline3
+  (defun garbage-collection-set-max ()
+    ;; it means garbage collector will start only after eating 512MB of RAM
+    (setq gc-cons-threshold (* 512 1024 1024)))
+
+  (defun garbage-collection-set-default ()
+    ;; return to default value, currently set to 800KB of RAM
+    (setq gc-cons-threshold (get 'gc-cons-threshold 'standard-value)))
+
+  (defun garbage-collection-set-10MB ()
+    ;; set to reasonable value 10MB of RAM
+    (setq gc-cons-threshold (* 10 1024 1024)))
+
+  ;; [VARCOMMENT.MINIBUFFER: increase temporarily garbage collection when execute something]
+  ;; [VARIABLE.tqnr-section-environment-garbage-collection-minibuffer nil]
+  (when tqnr-section-environment-garbage-collection-minibuffer
+    ;; see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+    ;; increase threshold when opening a minibuffer to execute something
+    (add-hook 'minibuffer-setup-hook #'garbage-collection-set-10MB)
+    ;; restore to default when exiting a minibuffer
+    (add-hook 'minibuffer-exit-hook #'garbage-collection-set-default))
+
+  ;; [VARCOMMENT.START: speed up a little the start of emacs]
+  ;; [VARIABLE.tqnr-environment-garbage-collection-start nil]
+  (when tqnr-environment-garbage-collection-start
+    ;; set max of threshold of garbage collection to avoid running it during start-up
+    (garbage-collection-set-max)
+    ;; reset threshold after start-up
+    (add-hook 'emacs-startup-hook #'garbage-collection-set-default))
+  ) ;; (when tqnr-section-environment-garbage-collection
+
 ;;
 ;; [SUBCOMMENT.VERSION RECOGNITION: detect Emacs version]
 ;; [SUBSECTION.tqnr-section-environment-version-recognition t]
@@ -156,13 +195,11 @@
 ;; [SUBSECTION.tqnr-section-environment-set-path t]
 (when tqnr-section-environment-set-path (message "    Set Path...")
   ;; [VARCOMMENT.PATH environment variable concat with current PATH]
-  ;; [VARIABLE.tqnr-profile-path (concat "" "")]
-  (setenv "PATH" (concat tqnr-profile-path (getenv "PATH")))
-
-  ;; [COMMENT.]
-  ;; [VARCOMMENT.emacs can also search in this path exec for external tool]
-  ;; [VARIABLE.tqnr-profile-exec-path '()]
-  (setq exec-path tqnr-profile-exec-path)
+  ;; [VARIABLE.tqnr-profile-path (list )]
+  ;; need to use (list ) instead of '() to be able to use variable in it see https://stackoverflow.com/questions/24188100/using-mapconcat-to-concatenate-a-list-containing-a-variable
+  (setenv "PATH" (concat (mapconcat 'identity tqnr-profile-path ";") (getenv "PATH")))
+  ;; emacs can also search in this path exec for external tool
+  (setq exec-path (append tqnr-profile-path exec-path))
   ;; [COMMENT.]
   ;; [VARCOMMENT.LOCALE: languages settings about subversion and dired]
   ;; [VARIABLE.tqnr-profile-lang "en_US"]
@@ -174,14 +211,6 @@
 ;; [SUBCOMMENT.MS WINDOWS PERFORMANCE: MS Windows specific configuration about performance]
 ;; [SUBSECTION.tqnr-section-environment-ms-windows-performance t]
 (when tqnr-section-environment-ms-windows-performance (message "    MS Windows: improve performance...")
-  ;; This sets garbage collection to hundred times of the default.  Supposedly
-  ;; significantly speeds up startup time. (Seems to work for me, but my
-  ;; computer is pretty modern. Disable if you are on anything less than 1
-  ;; ghz).
-  (setq gc-cons-threshold (* 511 1024 1024))
-  (setq gc-cons-percentage 0.5)
-  (run-with-idle-timer 5 t #'garbage-collect)
-  (setq garbage-collection-messages t)
   ;;
   ;; try to improve slow performance on windows.
   (when (and tqnr-section-environment-os-recognition tqnr-running-on-ms-windows)

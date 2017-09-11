@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Increase selected region by semantic units]
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    add shortcut about contract region/selection
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -44,6 +46,8 @@
   (lambda ()
     ;; M-s then s, s, etc to expand selection region
     (global-set-key     (kbd "M-s")     'er/expand-region)
+    ;; M-S to contract expanded selection region
+    (global-set-key     (kbd "M-S")     'er/contract-region)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

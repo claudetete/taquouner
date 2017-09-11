@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,8 @@
 ;;
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    add condition to adapt when hydra mode is used
 ;; 2017-07-21 (0.1)
 ;;    creation from split of old functions.el
 
@@ -51,32 +53,34 @@
 
 ;;; when region is selected call last macro on region else call last macro (by
 ;;; Claude TETE)
-(defun call-last-kbd-macro-region ()
-  (interactive)
+(defun call-last-kbd-macro-region (repeat)
+  (interactive "p")
   (if (use-region-p)
     (apply-macro-to-region-lines (region-beginning) (region-end))
-    (call-last-kbd-macro)
+    (call-last-kbd-macro repeat)
     )
   )
 
 ;; shortcuts are put in a hook to be loaded after everything else in init process
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
-    ;; macro (by Fabrice Niessen)
-    ;; start/stop recording a keyboard macro (if you change it you also must change
-    ;; it in functions.el)
-    (global-set-key     (kbd "<S-f8>")          'toggle-kbd-macro-recording-on)
-    ;; execute the most recent keyboard macro or on each line if a region is
-    ;; selected
-    (global-set-key     (kbd "<f8>")            'call-last-kbd-macro-region)
-    ;; assign a name to the last keyboard macro defined
-    (global-set-key     (kbd "<C-f8>")          'name-last-kbd-macro)
-    ;; edit the last keyboard macro defined
-    (global-set-key     (kbd "<M-f8>")          'edit-last-kbd-macro)
-    ;; select previous macro
-    (global-set-key     (kbd "<H-f8>")          'kmacro-cycle-ring-previous)
-    ;; select next macro
-    (global-set-key     (kbd "<H-S-f8>")        'kmacro-cycle-ring-next)
+    (when (not tqnr-section-mode-hydra-macro)
+      ;; macro (by Fabrice Niessen)
+      ;; start/stop recording a keyboard macro (if you change it you also must change
+      ;; it in functions.el)
+      (global-set-key     (kbd "<S-f8>")          'toggle-kbd-macro-recording-on)
+      ;; execute the most recent keyboard macro or on each line if a region is
+      ;; selected
+      (global-set-key     (kbd "<f8>")            'call-last-kbd-macro-region)
+      ;; assign a name to the last keyboard macro defined
+      (global-set-key     (kbd "<C-f8>")          'name-last-kbd-macro)
+      ;; edit the last keyboard macro defined
+      (global-set-key     (kbd "<M-f8>")          'edit-last-kbd-macro)
+      ;; select previous macro
+      (global-set-key     (kbd "<H-f8>")          'kmacro-cycle-ring-previous)
+      ;; select next macro
+      (global-set-key     (kbd "<H-S-f8>")        'kmacro-cycle-ring-next)
+      )
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

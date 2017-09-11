@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.6
+;; Version: 3.7
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [HEADER.Set style and/or indentation for multiple languages]
 
 ;;; Change Log:
+;; 2017-09-11 (3.7)
+;;    fix C setting error + add arduino specific settings
 ;; 2017-07-25 (3.6)
 ;;    update to new conf format
 ;; 2017-05-26 (3.5)
@@ -98,7 +100,7 @@
 (when tqnr-section-languages-c (message "   Languages C...")
 
   ;; must be only load with c-mode else some variables are not defined
-  (defun tqrn-c-mode ()
+  (defun tqnr-c-mode ()
     ;; style k&r and not gnu
     (c-set-style "k&r")
     ;;(c-set-style "eZSystems")
@@ -280,6 +282,22 @@
     ) ; (when (and tqnr-section-mode-cedet (and tqnr-section-mode-cedet-bzr tqnr-section-mode-cedet-loaded))
 
   (message "    Laguages C++ Qt... Done"))
+
+;; [[SUBCOMMENT.
+;; ARDUINO
+;;   set indentation style
+;; ]]
+;; [SUBSECTION.tqnr-section-languages-arduino nil]
+(when tqnr-section-languages-arduino (message "    Languages Arduino...")
+  ;; must be only load arduino-mode which is loaded after c mode
+  (defun tqnr-arduino-mode ()
+    ;; [VARCOMMENT.number of space for indentation in Arduino]
+    ;; [VARIABLE.tqnr-profile-arduino-indent-offset 2]
+    (setq c-basic-offset tqnr-profile-arduino-indent-offset)
+    )
+  ;; set c mode
+  (add-hook 'arduino-mode-hook 'tqnr-arduino-mode)
+  (message "    Languages Arduino... Done"))
 
 
 (provide '03-languages)

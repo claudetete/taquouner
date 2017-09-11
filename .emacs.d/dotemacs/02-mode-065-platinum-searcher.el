@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.A front-end for pt, The Platinum Searcher (faster than ack)]
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    replace fixed pt executable for helm ag mode
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -43,7 +45,7 @@
       ;; use thing at point to get default value
       '(helm-ag-insert-at-point 'symbol)
       ;; use platinum search with helm-ag mode
-      '(helm-ag-base-command "pt --smart-case -e --nogroup"))
+      '(helm-ag-base-command (concat pt-executable " --smart-case -e --nogroup")))
     )
   )
 

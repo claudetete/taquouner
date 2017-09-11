@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.1
+;; Version: 2.2
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 ;; ]]
 
 ;;; Change Log:
+;; 2017-09-11 (2.2)
+;;    add new setting about ask to quit emacs
 ;; 2017-07-26 (2.1)
 ;;    update to new conf format
 ;; 2013-09-10 (2.0)
@@ -91,9 +93,10 @@
 ;; no more tooltips (delay of 9999 seconds before displayed)
 (setq tooltip-delay 9999)
 
-;;;; ask confirmation to quit Emacs
-;;;; do not use it's a pain
-;;(setq confirm-kill-emacs t)
+;; [VARCOMMENT.ask confirmation to quit Emacs]
+;; [VARIABLE.tqnr-section-annoyances-comfirm-quit nil]
+(when tqnr-section-annoyances-comfirm-quit
+  (setq confirm-kill-emacs 'yes-or-no-p))
 
 ;; enable up/down case region
 (put 'upcase-region 'disabled nil)
@@ -111,6 +114,7 @@
 (setq scroll-preserve-screen-position t)
 
 ;;
+;; [COMMENT.]
 ;; [SUBCOMMENT.TRUNCATE LINE: whole line not visible (need to scroll right)]
 ;; [SUBSECTION.tqnr-section-annoyances-truncate-line nil]
 (when tqnr-section-annoyances-truncate-line (message "    Truncate Line...")

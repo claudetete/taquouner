@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.fancy modeline]
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    try to fix wrong separator color + all the icons integration
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -37,6 +39,11 @@
   ;; in Emacs 23 it was not define
   (defun get-scroll-bar-mode () scroll-bar-mode)
   (defsetf get-scroll-bar-mode set-scroll-bar-mode))
+
+;; new in emacs 24, using sRGB colorspace by default, powerline does not like it
+;; see https://github.com/milkypostman/powerline/issues/54
+(when (or tqnr-running-on-emacs-24 tqnr-running-on-emacs-25)
+  (setq ns-use-srgb-colorspace nil))
 
 ;; use new powerline mode
 ;; see
@@ -71,9 +78,11 @@
                           ;; LEFT
                           ;; display [RO] when visited a read-only file
                           (when (and buffer-read-only buffer-file-name)
-                            (powerline-raw "[RO]" face-warning))
-                          ;; encoding and eol indicator
-                          (powerline-raw mode-line-mule-info nil 'l)
+                            (if tqnr-section-mode-all-the-icons
+                              (concat
+                                (powerline-raw " ")
+                                (all-the-icons-octicon "lock" :face 'font-lock-warning-face :v-adjust 0.05))
+                              (powerline-raw "[RO]" face-warning)))
                           ;; buffername
                           (powerline-buffer-id nil 'l)
                           ;; display * at end of buffer name when buffer was modified
@@ -87,7 +96,12 @@
                           ;;
                           ;; LEFT MIDDLE
                           ;; major mode
-                          (powerline-major-mode face-between 'l)
+                          (if tqnr-section-mode-all-the-icons
+                            (concat (powerline-raw " " face-between)
+                              (if active
+                                (all-the-icons-icon-for-mode major-mode :face 'powerline-active1 :v-adjust 0.05)
+                                (all-the-icons-icon-for-mode major-mode :face 'powerline-inactive1 :v-adjust 0.05)))
+                            (powerline-major-mode face-between 'l))
                           ;; process
                           (powerline-process face-between)
                           ;; minor mode
@@ -124,8 +138,22 @@
 
                           ;;
                           ;; RIGHT
+                          ;; encoding and eol indicator
+                          (when buffer-file-coding-system
+                            (powerline-raw (symbol-name buffer-file-coding-system))
+                            (powerline-raw " " nil 'l)
+                            (powerline-raw
+                              (let* ((eol (coding-system-eol-type buffer-file-coding-system)))
+                                (cond
+                                  ((eq eol 0) "(Unix)")
+                                  ((eq eol 1) "(Dos)")
+                                  ((eq eol 2) "(Mac)")
+                                  (t ""))))
+                            ;;(powerline-raw mode-line-mule-info nil 'l)
+                            (powerline-raw " " nil 'r))
                           ;; position indicator
                           (powerline-raw "%6p" nil 'r)
+
                           )))
              ;;(message "%s %s" separator-left (funcall 'powerline-wave-left mode-line face1))
              (concat
@@ -134,6 +162,8 @@
                (powerline-render rhs)))))))
   ;; set arrow fade as separator
   (setq powerline-default-separator 'arrow-fade)
+  (when tqnr-section-mode-all-the-icons
+    (setq powerline-height 22))
   (powerline-my-theme)
   )
 

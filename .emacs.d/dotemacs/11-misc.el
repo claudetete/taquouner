@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.8
+;; Version: 2.9
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;; ]]
 
 ;;; Change Log:
+;; 2017-09-11 (2.9)
+;;    remove dictionary settings to move in flyspell mode settings
 ;; 2017-07-26 (2.8)
 ;;    update to new conf format
 ;; 2017-05-26 (2.7)
@@ -278,50 +280,6 @@
 
   (message "    Calendar... Done"))
 
-
-;; [SUBCOMMENT.DICTIONARY: language settings]
-;; [SUBSECTION.tqnr-section-misc-dictionary nil]
-(when tqnr-section-misc-dictionary (message "    Dictionary...")
-  ;; [VARCOMMENT.set program to be use with ispell]
-  ;; [VARIABLE.tqnr-profile-ispell-program "aspell"]
-  (setq ispell-program-name tqnr-profile-ispell-program)
-  ;; [VARCOMMENT.language to use with ispell]
-  ;; [VARIABLE.tqnr-profile-ispell-dictionary "english"]
-  (setq ispell-dictionary tqnr-profile-ispell-dictionary)
-  ;; save the personal dictionary without confirmation
-  (setq ispell-silently-savep t)
-  ;; to speed up aspell but less accurate
-  (setq ispell-extra-args '("--sug-mode=ultra"))
-
-  ;; autoload to load aspell only when needed
-  ;; if load/require it search aspell executable in 7 seconds !
-  (autoload 'ispell-word "ispell"
-    "Check the spelling of word in buffer." t)
-  (autoload 'ispell-region "ispell"
-    "Check the spelling of region." t)
-  (autoload 'ispell-buffer "ispell"
-    "Check the spelling of buffer." t)
-  (autoload 'ispell-complete-word "ispell"
-    "Look up current word in dictionary and try to complete it." t)
-  (autoload 'ispell-change-dictionary "ispell"
-    "Change ispell dictionary." t)
-  (autoload 'ispell-message "ispell"
-    "Check spelling of mail message or news post.")
-  (autoload 'ispell-minor-mode "ispell"
-    "Toggle mode to automatically spell check words as they are typed in.")
-
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      ;; run ispell (dictionary) (set language in `section-misc')
-      (global-set-key         (kbd "<f7>")            'ispell-buffer)
-      (global-set-key         (kbd "<S-f7>")          'ispell-word)
-      (global-set-key         (kbd "<M-f7>")          'ispell-region)
-      (global-set-key         (kbd "<C-f7>")          'ispell-comments-and-strings)
-      (global-set-key         (kbd "<C-M-f7>")        'ispell-change-dictionary)
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  (message "    Dictionary... Done"))
 
 ;; [SUBCOMMENT.BOOKMARK: default file, each command to add/modify bookmark save bookmark file]
 ;; [SUBSECTION.tqnr-section-misc-bookmark t]

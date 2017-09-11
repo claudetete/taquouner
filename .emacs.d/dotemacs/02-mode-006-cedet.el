@@ -1,6 +1,6 @@
 ;;; 02-mode-006-cedet.el --- configuration of cedet mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2006-2017 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,16 +19,18 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
-;; Created: July 2017
-;; Last-Updated: July 2017
+;; Version: 2.1
+;; Created: October 2006
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER."Collection of Emacs Development Environment Tools"]
 
 ;;; Change Log:
-;; 2017-07-24 (0.1)
+;; 2017-09-11 (2.1)
+;;    fix taquouner profile variable default value
+;; 2017-07-24 (2.0)
 ;;    merge from split of old mode.el
 ;; 2016-09-28 (1.8)
 ;;    enable semantic/ia + patch list of major mode to remove python
@@ -98,8 +100,8 @@
 ;; only if cedet can be loaded
 (when tqnr-is-cedet-loaded
   ;; [VARCOMMENT.bin path of gnu global for cedet]
-  ;; [VARIABLE.tqnr-profile-gnu-global (concat tqnr-dotemacs-path "/plugins/gnu_global_628wb/bin/global.exe")]
-  ;; [VARIABLE.tqnr-profile-gnu-global-gtags (concat tqnr-dotemacs-path "/plugins/gnu_global_628wb/bin/gtags.exe")]
+  ;; [VARIABLE.tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/global.exe")]
+  ;; [VARIABLE.tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/gtags.exe")]
   (setq cedet-global-command tqnr-profile-gnu-global)
   (setq cedet-global-gtags-command tqnr-profile-gnu-global-gtags)
 

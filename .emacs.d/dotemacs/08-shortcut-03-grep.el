@@ -19,15 +19,18 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.3
+;; Version: 2.4
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.add shortcut to manage grep]
 
 ;;; Change Log:
+;; 2017-09-11 (2.4)
+;;    add condition about same hydra search shortcut not very useful here when
+;;    helm is used
 ;; 2017-07-26 (2.3)
 ;;    update to new conf format
 ;; 2017-05-26 (2.2)
@@ -62,11 +65,13 @@
 
 ;;; Code:
 
-;; next occurrence of grep
-(global-set-key         (kbd "<f3>")            'next-match)
-;;
-;; previous occurrence of grep
-(global-set-key         (kbd "<S-f3>")          'previous-error)
+(when (not tqnr-section-mode-hydra-search)
+  ;; next occurrence of grep
+  (global-set-key         (kbd "<f3>")            'next-match)
+  ;;
+  ;; previous occurrence of grep
+  (global-set-key         (kbd "<S-f3>")          'previous-error)
+  ) ;; (when (not tqnr-section-mode-hydra-search)
 
 ;; search all occurrences in the current buffer
 ;; (more like modern graphical editor)

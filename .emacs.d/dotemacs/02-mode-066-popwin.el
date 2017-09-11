@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.A pop-up manager for annoying buffer (have like ECB compilation buffer)]
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    remove helm window (not very friendly with popwin, use shackle instead)
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -38,7 +40,6 @@
 
   (push '(compilation-mode :noselect t :stick t) popwin:special-display-config)
   (push '("*Shell Command Output*" :stick t) popwin:special-display-config)
-  (push '("\\s-*\\*helm.*" :regexp t) popwin:special-display-config)
   (push '(dired-mode :stick t) popwin:special-display-config)
   (push '("*Messages*" :stick t) popwin:special-display-config)
   (push '("*Calculator*" :stick t) popwin:special-display-config)
@@ -73,7 +74,6 @@
   ;; display undo-tree-visualize in a popwindow at right with only 10% of width
   (push '("\\s-*\\*undo-tree.*" :regexp t :width 0.1 :position right) popwin:special-display-config)
   (push '("*Python Doc*" :stick t) popwin:special-display-config)
-  (push '("*helm ag results*" :stick t) popwin:special-display-config)
   (push '("*haskell*" :stick t) popwin:special-display-config)
   (push '("*debug:haskell*" :stick t) popwin:special-display-config)
   )
@@ -86,7 +86,6 @@
                                            (interactive)
                                            (if (popwin:popup-window-live-p)
                                              (popwin:close-popup-window)
-                                             ;;FIXME check if helm buffer to use helm-resume
                                              (popwin:popup-last-buffer))))
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook

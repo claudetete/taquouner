@@ -19,14 +19,16 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 
 ;;; Change Log:
+;; 2017-09-11 (0.2)
+;;    update to new mode and small optimization
 ;; 2017-07-07 (0.1)
 ;;    creation from scratch
 
@@ -35,6 +37,14 @@
 ;; ENVIRONMENT: Environment check and configuration
 (defvar tqnr-section-environment nil)
 (progn ;; tqnr-section-environment
+  ;; GARBAGE COLLECTION: speed up start of emacs
+  (defvar tqnr-section-environment-garbage-collection nil)
+  (progn ;; tqnr-section-environment-garbage-collection
+    ;; MINIBUFFER: increase temporarily garbage collection when execute something
+    (defvar tqnr-section-environment-garbage-collection-minibuffer nil)
+    ;; START: speed up a little the start of emacs
+    (defvar tqnr-environment-garbage-collection-start nil)
+    ) ;; (progn ;; tqnr-section-environment-garbage-collection
   ;; VERSION RECOGNITION: detect Emacs version
   (defvar tqnr-section-environment-version-recognition nil)
   ;; OS RECOGNITION: detect OS type (MS Windows vs GNU Linux)
@@ -45,10 +55,7 @@
   (defvar tqnr-section-environment-set-path nil)
   (progn ;; tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-path "")
-    ;;
-    ;; emacs can also search in this path exec for external tool
-    (defvar tqnr-profile-exec-path '())
+    (defvar tqnr-profile-path '())
     ;;
     ;; LOCALE: languages settings about subversion and dired
     (defvar tqnr-profile-lang "")
@@ -152,6 +159,12 @@
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
   (defvar tqnr-section-mode-helm nil)
   (progn ;; tqnr-section-mode-helm
+    ;; replace isearch by helm
+    (defvar tqnr-section-mode-helm-swoop nil)
+    ;; do not have default value when run helm swoop
+    (defvar tqnr-section-mode-helm-swoop-without-pre-input nil)
+    ;; replace fuzzy search in find-files by flx, more human matches
+    (defvar tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
     (defvar tqnr-section-mode-helm-kill-ring nil)
     ;; replace M-x
@@ -527,6 +540,56 @@
   ;; EASY KILL: mode to easy copy/kill/cut text/line/word/expression/function...
   (defvar tqnr-section-mode-easy-kill nil)
 
+  ;; ARDUINO: mode to enable c mode for .ino files and use emacs as external editor of arduino ide
+  (defvar tqnr-section-mode-arduino nil)
+
+  ;; ALL THE ICONS
+  ;; mode to have nice icons (from special fonts)
+  ;; install font on your system from `fonts' folder or use
+  ;; M-x all-the-icons-install-fonts
+  (defvar tqnr-section-mode-all-the-icons nil)
+
+  ;; SHACKLE
+  ;; mode to have popup always following same rules
+  ;; like popwin but just add constraint to popup not replace the whole thing
+  ;; Helm does not like popwin...
+  (defvar tqnr-section-mode-shackle nil)
+
+  ;; RIPGREP: A front-end for rg, ripgrep (faster than anything...)
+  (defvar tqnr-section-mode-ripgrep nil)
+
+  ;; HYDRA: Create families of short bindings with a common prefix
+  (defvar tqnr-section-mode-hydra nil)
+  (progn ;; tqnr-section-mode-hydra
+    ;; Use Hydra to manage rectangle shortcuts
+    (defvar tqnr-section-mode-hydra-rectangle nil)
+    ;; Use Hydra to manage windows/frame/buffer shortcuts
+    (defvar tqnr-section-mode-hydra-display nil)
+    ;; Use Hydra to manage transpose shortcuts
+    (defvar tqnr-section-mode-hydra-transpose nil)
+    ;; Use Hydra to manage help/web shortcuts
+    (defvar tqnr-section-mode-hydra-help-web nil)
+    ;; Use Hydra to manage macro shortcuts
+    (defvar tqnr-section-mode-hydra-macro nil)
+    ;; Use Hydra to manage spelling shortcuts
+    (defvar tqnr-section-mode-hydra-spelling nil)
+    ;; Use Hydra to manage search shortcuts
+    (defvar tqnr-section-mode-hydra-search nil)
+    ;; Use Hydra to manage smartparens shortcuts
+    (defvar tqnr-section-mode-hydra-smartparens nil)
+    ) ;; (progn ;; tqnr-section-mode-hydra
+
+  ;; FLYSPELL: On-the-fly spell checking
+  (defvar tqnr-section-mode-flyspell nil)
+  (progn ;; tqnr-section-mode-flyspell
+    ;; set program to be use with ispell
+    (defvar tqnr-profile-ispell-program "aspell")
+    ;; language to use with ispell
+    (defvar tqnr-profile-ispell-dictionary "english")
+    ;; POPUP: Correct the misspelled word in popup menu
+    (defvar tqnr-section-mode-flyspell-popup nil)
+    ) ;; (progn ;; tqnr-section-mode-flyspell
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
   ) ;; (progn ;; tqnr-section-mode
@@ -592,6 +655,14 @@
   ;; C++ QT
   ;;   set include for Qt 4.8
   (defvar tqnr-section-languages-c++-qt nil)
+  ;;
+  ;; ARDUINO
+  ;;   set indentation style
+  (defvar tqnr-section-languages-arduino nil)
+  (progn ;; tqnr-section-languages-arduino
+    ;; number of space for indentation in Arduino
+    (defvar tqnr-profile-arduino-indent-offset 2)
+    ) ;; (progn ;; tqnr-section-languages-arduino
   ) ;; (progn ;; tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only
@@ -726,6 +797,9 @@
     ;;
     ;; FULLSCREEN: main window start in fullscreen
     (defvar tqnr-section-interface-fullscreen nil)
+    ;;
+    ;; Do not popup any window by splitting vertically only horizontally
+    (defvar tqnr-section-interface-popup-window-horizontally nil)
     ) ;; (progn ;; tqnr-section-interface-main-window
 
   ;; MODELINE
@@ -792,6 +866,8 @@
 ;; tooltips
 (defvar tqnr-section-annoyances nil)
 (progn ;; tqnr-section-annoyances
+  ;; ask confirmation to quit Emacs
+  (defvar tqnr-section-annoyances-comfirm-quit nil)
   ;; TRUNCATE LINE: whole line not visible (need to scroll right)
   (defvar tqnr-section-annoyances-truncate-line nil)
   ;;
@@ -842,14 +918,6 @@
     ;; FRENCH CALENDAR: set French holidays and day/month/moon phase name
     (defvar tqnr-section-misc-calendar-french nil)
     ) ;; (progn ;; tqnr-section-misc-calendar
-  ;; DICTIONARY: language settings
-  (defvar tqnr-section-misc-dictionary nil)
-  (progn ;; tqnr-section-misc-dictionary
-    ;; set program to be use with ispell
-    (defvar tqnr-profile-ispell-program "aspell")
-    ;; language to use with ispell
-    (defvar tqnr-profile-ispell-dictionary "english")
-    ) ;; (progn ;; tqnr-section-misc-dictionary
   ;; BOOKMARK: default file, each command to add/modify bookmark save bookmark file
   (defvar tqnr-section-misc-bookmark nil)
   (progn ;; tqnr-section-misc-bookmark
