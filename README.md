@@ -62,7 +62,7 @@ I deliberately try to take point of view of people not used to Emacs.
 * *s-x* means key 'Super' + key 'x' (Super = Windows which is the key Windows between Ctrl and Alt or Command for Apple)
 
 ## Installation
-See FIXME must be updated~~[Installation on MS Windows](https://github.com/claudetete/taquouner/wiki/Installation) or [Installation on Linux](https://github.com/claudetete/taquouner/wiki/Installation%20Linux) on wiki of this repository~~.
+See FIXME must be updated ~~[Installation on MS Windows](https://github.com/claudetete/taquouner/wiki/Installation) or [Installation on Linux](https://github.com/claudetete/taquouner/wiki/Installation%20Linux) on wiki of this repository~~ .
 
 ## Essential shortcuts
 | Shortcut | Description |
