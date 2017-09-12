@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.A front-end for pt, The Platinum Searcher (faster than ack)]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-09-11 (0.2)
@@ -37,7 +38,7 @@
 ;;; Code:
 (when (try-require 'autoload-pt "    ")
   ;; [VARCOMMENT.path to pt executable]
-  ;; [VARIABLE.tqnr-profile-mode-platinum-searcher-exec "pt.exe"]
+  ;; [VARIABLE.tqnr-profile-mode-platinum-searcher-exec "pt"]
   (setq pt-executable tqnr-profile-mode-platinum-searcher-exec)
   (when tqnr-section-mode-helm
     (try-require 'autoload-helm-ag "      ")

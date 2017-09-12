@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.CAN dbc mode]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

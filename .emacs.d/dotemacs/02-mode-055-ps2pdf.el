@@ -28,6 +28,7 @@
 ;; [[SUBHEADER.print buffer/region in pdf (the pdf background is unavoidably white so dark
 ;; theme don't render good)
 ;; ]]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

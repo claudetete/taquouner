@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Tag management mode]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-09-11 (0.2)

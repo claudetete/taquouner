@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [HEADER.enable letter case completion + dynamic completion]
+;; [DEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-25 (1.6)

@@ -28,6 +28,7 @@
 ;; [[HEADER.remove whitespace at end of line + define name, browser, shell, new
 ;; line at end of file, compression, column 78 alignment
 ;; ]]
+;; [DEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-11 (2.9)
@@ -82,6 +83,7 @@
 ;; ]]
 ;; [VARIABLE.tqnr-profile-username "your beautiful name"]
 (setq user-full-name tqnr-profile-username)
+;; [COMMENT.!!!PRIVATE!!! End]
 
 ;; use compression
 (auto-compression-mode t)
@@ -174,6 +176,7 @@
   (setq calendar-longitude tqnr-profile-longitude)
   ;; [VARIABLE.tqnr-profile-location-name "Neverland"]
   (setq calendar-location-name tqnr-profile-location-name)
+  ;; [COMMENT.!!!PRIVATE!!! End]
 
   (custom-set-variables
     ;; do not show holidays by default
@@ -183,7 +186,7 @@
     )
 
   ;; [VARCOMMENT.FRENCH CALENDAR: set French holidays and day/month/moon phase name]
-  ;; [VARIABLE.tqnr-section-misc-calendar-french nil]
+  ;; [VARIABLE.tqnr-section-misc-calendar-french t]
   (when tqnr-section-misc-calendar-french (message "      French calendar...")
     ;; display today mark in calendar
     (setq today-visible-calendar-hook 'calendar-mark-today)

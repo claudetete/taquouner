@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.more option to sort in Dired mode]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

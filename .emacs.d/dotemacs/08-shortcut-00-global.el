@@ -26,9 +26,11 @@
 ;;; Commentary:
 ;; section comment
 ;; [HEADER.custom binding or shortcut for everything in GNU Emacs (thought for qwerty keyboard)]
+;; [DEFAULT.t]
 ;;
 ;; subsection comment
 ;; [SUBHEADER.add global shortcut (for whole Emacs)]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-11 (4.3)

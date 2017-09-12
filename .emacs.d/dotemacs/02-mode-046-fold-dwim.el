@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.show hide code source block]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

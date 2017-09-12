@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.show string color in color]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

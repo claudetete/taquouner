@@ -26,9 +26,11 @@
 ;;; Commentary:
 ;; section comment
 ;; [HEADER.modification of GNU Emacs interface, size, title, decoration...]
+;; [DEFAULT.t]
 ;;
 ;; subsection comment
 ;; [SUBHEADER.modification about main window of emacs]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-11 (2.6)
@@ -112,7 +114,7 @@
 ;; %p percent of buffer above top ; %m mode name ; %n Narrow mode
 ;; %z coding systems ; %Z %z + end-of-line format ; %- infinitely dashes
 ;; ]]
-;; [VARIABLE.tqnr-profile-window-title "< %b >"]
+;; [VARIABLE.tqnr-profile-window-title "GNU Emacs - %b"]
 (if tqnr-profile-window-title
   (setq frame-title-format tqnr-profile-window-title)
   (setq frame-title-format "<[ %b ]>")

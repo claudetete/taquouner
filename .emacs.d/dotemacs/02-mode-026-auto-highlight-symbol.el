@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.to automatically highlight symbol at point]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

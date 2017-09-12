@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Project management, filtered find-file, only with root file from version control]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

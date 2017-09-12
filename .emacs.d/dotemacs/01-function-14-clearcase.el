@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about ClearCase integration into GNU Emacs]
+;; [SUBDEFAULT.nil]
 ;;
 ;; under MS Windows can be used with AutoHotKey script ClearCaseShortcut.ahk to
 ;; keep homogeneous bind for clearcase functions

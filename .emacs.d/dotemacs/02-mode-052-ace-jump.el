@@ -28,6 +28,7 @@
 ;; [[SUBHEADER.move quickly and easily with ace jump
 ;; see http://dl.dropbox.com/u/3254819/AceJumpModeDemo/AceJumpDemo.htm
 ;; ]]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

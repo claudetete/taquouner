@@ -28,6 +28,7 @@
 ;; [[SUBHEADER.show a line at fill-column (set at 80 in
 ;; dotemacs/11-misc.el be careful it enable truncate line
 ;; ]]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

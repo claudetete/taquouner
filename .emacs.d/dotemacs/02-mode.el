@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [HEADER.load extern files which are modes in plugins/]
+;; [DEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-25 (0.1)

@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [HEADER.Set style and/or indentation for multiple languages]
+;; [DEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-11 (3.7)
@@ -96,7 +97,7 @@
 ;; C
 ;;   language settings, set indentation style and preprocessing option
 ;; ]]
-;; [SUBSECTION.tqnr-section-languages-c nil]
+;; [SUBSECTION.tqnr-section-languages-c t]
 (when tqnr-section-languages-c (message "   Languages C...")
 
   ;; must be only load with c-mode else some variables are not defined
@@ -114,11 +115,22 @@
     (c-toggle-hungry-state t)
 
     ;; [VARCOMMENT.new types (add name string in list)]
-    ;; [VARIABLE.tqnr-profile-c-extra-types '()]
+    ;; [[VARIABLE.tqnr-profile-c-extra-types
+    ;;   '(
+    ;;      "ubyte"
+    ;;      "ushort"
+    ;;      "ulong"
+    ;;      "ulonglong"
+    ;;      "sbyte"
+    ;;      "sshort"
+    ;;      "slong"
+    ;;      "slonglong"
+    ;;      )
+    ;; ]]
     (setq c-font-lock-extra-types (append tqnr-profile-c-extra-types c-font-lock-extra-types))
 
     ;; [VARCOMMENT.Compile mode without ask]
-    ;; [VARIABLE.tqnr-profile-c-ask-before-compile nil]
+    ;; [VARIABLE.tqnr-profile-c-ask-before-compile t]
     (setq compilation-read-command tqnr-profile-c-ask-before-compile)
 
     (when (and tqnr-section-environment-version-recognition (not tqnr-running-on-emacs-23))
@@ -134,7 +146,7 @@
       (c-set-offset 'cpp-macro 0))
 
     ;; [VARCOMMENT.HIDE SHOW: use outline minor mode to fold source code block]
-    ;; [VARIABLE.tqnr-section-languages-c-hide-show nil]
+    ;; [VARIABLE.tqnr-section-languages-c-hide-show t]
     (when tqnr-section-languages-c-hide-show
       (outline-minor-mode t)
       ;; [VARCOMMENT.HIDE ALL AT START: hide all when opening file]
@@ -182,12 +194,12 @@
 
   (custom-set-variables
     ;; [VARCOMMENT.command to preprocess]
-    ;; [VARIABLE.tqnr-profile-c-macro-preprocessor ""]
+    ;; [VARIABLE.tqnr-profile-c-macro-preprocessor "cpp -C"]
     '(c-macro-preprocessor tqnr-profile-c-macro-preprocessor)
     ;; do not prompt for flags
     '(c-macro-prompt-flag nil)
     ;; [VARCOMMENT.set flags about macro preprocessing]
-    ;; [VARIABLE.tqnr-profile-c-macro-cppflags ""]
+    ;; [VARIABLE.tqnr-profile-c-macro-cppflags "-D__DEBUG__"]
     '(c-macro-cppflags tqnr-profile-c-macro-cppflags)
     ;; resize the height of the window like the size of the expand macro
     '(c-macro-shrink-window-flag t)
@@ -199,7 +211,7 @@
 ;; LISP
 ;;   set indentation style
 ;; ]]
-;; [SUBSECTION.tqnr-section-languages-lisp nil]
+;; [SUBSECTION.tqnr-section-languages-lisp t]
 (when tqnr-section-languages-lisp (message "    Languages Lisp...")
   (add-hook 'lisp-interaction-mode-hook
     '(lambda ()
@@ -247,7 +259,7 @@
 ;; PERL
 ;;   set indentation style
 ;; ]]
-;; [SUBSECTION.tqnr-section-languages-perl nil]
+;; [SUBSECTION.tqnr-section-languages-perl t]
 (when tqnr-section-languages-perl (message "    Languages Perl...")
   ;; [VARCOMMENT.number of space for indentation in perl]
   ;; [VARIABLE.tqnr-profile-perl-indent-offset 2]

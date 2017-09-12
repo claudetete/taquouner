@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.rtrt script mode (syntax coloration)]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

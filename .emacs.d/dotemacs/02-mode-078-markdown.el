@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.mode to edit Markdown-formatted text (by example wiki of github)]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-25 (0.1)
@@ -39,7 +40,7 @@
   ;; [[VARCOMMENT.to enable markdown mode with github flavoured for all .md files and not
   ;; only for README.md
   ;; ]]
-  ;; [VARIABLE.tqnr-section-mode-markdown-github nil]
+  ;; [VARIABLE.tqnr-section-mode-markdown-github t]
   (if tqnr-section-mode-markdown-github
     (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
     (progn

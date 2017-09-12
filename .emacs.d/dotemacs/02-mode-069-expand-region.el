@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Increase selected region by semantic units]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-11 (0.2)

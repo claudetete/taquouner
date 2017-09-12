@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about AUCTeX]
+;; [SUBDEFAULT.nil]
 ;;
 
 ;;; Change Log:

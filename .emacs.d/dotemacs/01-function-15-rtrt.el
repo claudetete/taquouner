@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about RTRT script .ptu file]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-21 (1.6)

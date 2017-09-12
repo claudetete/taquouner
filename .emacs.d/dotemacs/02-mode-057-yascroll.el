@@ -28,6 +28,7 @@
 ;; [[SUBHEADER.add a small visual scroll-bar (can not be used with mouse click)
 ;; see https://github.com/m2ym/yascroll-el for screenshot
 ;; ]]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER."Collection of Emacs Development Environment Tools"]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-09-11 (2.1)
@@ -165,7 +166,12 @@
 
 
         ;; [VARCOMMENT.list of projects: the order is important, display in reverse order (first->last)]
-        ;; [VARIABLE.tqnr-profile-ede-project '()]
+        ;; [[VARIABLE.tqnr-profile-ede-project
+        ;;   '(
+        ;;      ;; project
+        ;;      "c:/path/to/project/project.ede.el"
+        ;;      )
+        ;; ]]
         (while tqnr-profile-ede-project
           (let (file)
             (setq file (pop tqnr-profile-ede-project))
@@ -325,23 +331,49 @@
         '(ecb-options-version "2.40")
 
         ;; [VARCOMMENT.set default path in "ecb directories"]
-        ;; [VARIABLE.tqnr-profile-ecb-source-path '()]
+        ;; [[VARIABLE.tqnr-profile-ecb-source-path
+        ;;   '(
+        ;;      ;; before is put the ede projects (see project.el)
+        ;;      ("c:/path/i/want/to/have/in/ecb/directory/"        "display name")
+        ;;      ("c:/second/path/i/want/to/have/in/ecb/directory/" "display name2")
+        ;;      )
+        ;; ]]
         '(ecb-source-path tqnr-profile-ecb-source-path)
 
         ;; [VARCOMMENT.regexp of folder to exclude in "ecb directories"]
-        ;; [VARIABLE.tqnr-profile-ecb-excluded-directories-regexps '()]
+        ;; [[VARIABLE.tqnr-profile-ecb-excluded-directories-regexps
+        ;;   '(
+        ;;      "^\\.+$"             ; hidden folder
+        ;;      "\\(TOTO\\|TITI\\)$" ; example
+        ;;      )
+        ;; ]]
         '(ecb-excluded-directories-regexps tqnr-profile-ecb-excluded-directories-regexps)
 
         ;; [VARCOMMENT.files to be ignored in "ecb source" !! RTFM !!]
-        ;; [VARIABLE.tqnr-profile-ecb-source-file-regexps '(())]
+        ;; [[VARIABLE.tqnr-profile-ecb-source-file-regexps
+        ;;   '((".*"
+        ;;       ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\)$\\)\\)")
+        ;;       ("^\\.\\(emacs\\|gnus\\)$")
+        ;;       ))
+        ;; ]]
         '(ecb-source-file-regexps tqnr-profile-ecb-source-file-regexps)
 
         ;; [VARCOMMENT.files to be ignored from Version Control VC]
-        ;; [VARIABLE.tqnr-profile-ecb-sources-exclude-cvsignore '()]
+        ;; [[VARIABLE.tqnr-profile-ecb-sources-exclude-cvsignore
+        ;;   '(
+        ;;      "example"
+        ;;      )
+        ;; ]]
         '(ecb-sources-exclude-cvsignore tqnr-profile-ecb-sources-exclude-cvsignore)
 
         ;; [VARCOMMENT.regexp to form group in "ecb history"]
-        ;; [VARIABLE.tqnr-profile-ecb-history-make-buckets '()]
+        ;; [[VARIABLE.tqnr-profile-ecb-history-make-buckets
+        ;;   '(
+        ;;      "include" ; all file from an include folder
+        ;;      "\\.[hc][p]*$" ; all c cpp and h files
+        ;;      "\\.el$" ; all elisp files
+        ;;      )
+        ;; ]]
         '(ecb-history-make-buckets tqnr-profile-ecb-history-make-buckets)
 
           ;;;; ask each time I kill a buffer if I want keep it in "ecb history"

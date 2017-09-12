@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.latex mode]
+;; [SUBDEFAULT.nil]
 ;;
 ;; Requirements:
 ;;  For MS Windows:

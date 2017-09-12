@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.set font in terminal or in graphical]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-11 (2.3)

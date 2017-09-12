@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.useful to have call tree in C source code]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-25 (0.1)

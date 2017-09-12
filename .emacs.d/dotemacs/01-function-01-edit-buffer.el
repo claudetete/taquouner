@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about edition of buffer text]
+;; [SUBDEFAULT.t]
 ;;
 
 ;;; Change Log:

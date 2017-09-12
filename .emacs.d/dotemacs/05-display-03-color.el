@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.set color in emacs]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-25 (2.8)

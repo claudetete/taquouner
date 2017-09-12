@@ -28,6 +28,7 @@
 ;; [[HEADER.all customize settings are put in here when you use interface
 ;; (customize) to change settings
 ;; ]]
+;; [DEFAULT.t]
 
 
 ;;; Change Log:

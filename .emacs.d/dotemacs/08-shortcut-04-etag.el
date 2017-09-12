@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.add shortcut to manage gtags or etags]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-26 (2.4)

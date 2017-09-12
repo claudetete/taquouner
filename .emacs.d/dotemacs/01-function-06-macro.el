@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about macro management]
+;; [SUBDEFAULT.t]
 ;;
 
 ;;; Change Log:

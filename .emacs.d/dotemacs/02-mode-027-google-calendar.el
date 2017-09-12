@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.to import Google calendar]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)
@@ -45,6 +46,7 @@
     (setq google-calendar-directory      tqnr-profile-google-calendar-directory)
     ;; [VARIABLE.tqnr-profile-google-calendar-url "https://www.google.com/calendar/ical..."]
     (setq google-calendar-url            tqnr-profile-google-calendar-url)
+    ;; [COMMENT.!!!PRIVATE!!! End]
 
     (setq google-calendar-auto-update    t)
     (google-calendar-download)

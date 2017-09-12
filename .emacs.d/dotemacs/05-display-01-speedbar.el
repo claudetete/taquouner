@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.set size and display of speedbar (see GLOSSARY) (no used)]
+;; [SUBDEFAULT.nil]
 ;;
 ;; it's a pain because it open a new window but not integrated
 ;;

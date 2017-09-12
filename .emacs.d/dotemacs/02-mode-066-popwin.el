@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.A pop-up manager for annoying buffer (have like ECB compilation buffer)]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-11 (0.2)

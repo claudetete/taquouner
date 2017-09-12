@@ -25,7 +25,8 @@
 
 ;;; Commentary:
 ;;
-;; [HEADER.run hook for all shortcuts from the whole configuration]
+;; [SUBHEADER.run hook for all shortcuts from the whole configuration]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-21 (1.1)

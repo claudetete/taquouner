@@ -29,6 +29,7 @@
 ;; key + remove C-Pup & C-Dwn + wheel click do nothing + no dialog box + no
 ;; tooltips
 ;; ]]
+;; [DEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-11 (2.2)
@@ -116,7 +117,7 @@
 ;;
 ;; [COMMENT.]
 ;; [SUBCOMMENT.TRUNCATE LINE: whole line not visible (need to scroll right)]
-;; [SUBSECTION.tqnr-section-annoyances-truncate-line nil]
+;; [SUBSECTION.tqnr-section-annoyances-truncate-line t]
 (when tqnr-section-annoyances-truncate-line (message "    Truncate Line...")
   ;; do not truncate line
   ;; a displayed row is a line but can be hidden outside window (need to
@@ -130,7 +131,7 @@
 
 ;; [COMMENT.]
 ;; [SUBCOMMENT.SCROLL PRESERVE CURSOR POSITION: when wheel scroll the cursor do not move]
-;; [SUBSECTION.tqnr-section-annoyances-scroll-preserve-cursor-position nil]
+;; [SUBSECTION.tqnr-section-annoyances-scroll-preserve-cursor-position t]
 (when tqnr-section-annoyances-scroll-preserve-cursor-position (message "    Scroll preserve cursor position...")
   ;; return to same line on a scroll back
   (setq scroll-preserve-screen-position t)
@@ -146,7 +147,7 @@
 
 ;; [COMMENT.]
 ;; [SUBCOMMENT.ALL BACKUP FILE IN DIRECTORY: all backup files goes in a directory]
-;; [SUBSECTION.tqnr-section-annoyances-backup-file-in-directory nil]
+;; [SUBSECTION.tqnr-section-annoyances-backup-file-in-directory t]
 (when tqnr-section-annoyances-backup-file-in-directory (message "    All backup files in a directory...")
   ;; [VARCOMMENT.all backup files goes in a directory]
   ;; [VARIABLE.tqnr-profile-backup-directory nil]

@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.to organize everything (also use on Android)]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)
@@ -36,15 +37,15 @@
 ;; no need to require or add in load-path it is built-in
 
 ;; [VARCOMMENT.set org directory where every org file will goes]
-;; [VARIABLE.tqnr-profile-org-directory "c:/path/directory"]
+;; [VARIABLE.tqnr-profile-org-directory (concat (file-name-as-directory tqnr-dotemacs-path) "org")]
 (setq org-directory tqnr-profile-org-directory)
 
 ;; [VARCOMMENT.default org file where all task/todo capture will goes]
-;; [VARIABLE.tqnr-profile-org-default-notes-file (concat tqnr-profile-org-directory "/KC390.org")]
+;; [VARIABLE.tqnr-profile-org-default-notes-file (concat (file-name-as-directory tqnr-profile-org-directory) "my.org")]
 (setq org-default-notes-file tqnr-profile-org-default-notes-file)
 
 ;; [VARCOMMENT.agenda will look only in default org file]
-;; [VARIABLE.tqnr-profile-org-agenda-files (concat tqnr-profile-org-directory "/agenda.list")]
+;; [VARIABLE.tqnr-profile-org-agenda-files (concat (file-name-as-directory tqnr-profile-org-directory) "agenda.list")]
 ;; Which files do I want to be checked for entries when compiling my agenda
 ;; Can be customized with add current buffer "C-c [" or remove current buffer "C-c ]"
 (setq org-agenda-files tqnr-profile-org-agenda-files)
@@ -66,7 +67,7 @@
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 
 ;; [VARCOMMENT.first buffer to show up is default org file when opening emacs]
-;; [VARIABLE.tqnr-section-mode-org-default-as-init-buffer nil]
+;; [VARIABLE.tqnr-section-mode-org-default-as-init-buffer t]
 (when tqnr-section-mode-org-default-as-init-buffer
   ;; use default org file to be the first initial buffer open by emacs
   (setq initial-buffer-choice org-default-notes-file)

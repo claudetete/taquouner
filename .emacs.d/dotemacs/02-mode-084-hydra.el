@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Create families of short bindings with a common prefix]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-01 (0.1)
@@ -42,7 +43,7 @@
   ;; RECTANGLE
   ;;
   ;; [VARCOMMENT.Use Hydra to manage rectangle shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-rectangle nil]
+  ;; [VARIABLE.tqnr-section-mode-hydra-rectangle t]
   (when tqnr-section-mode-hydra-rectangle
     ;; docstring inspired by https://oremacs.com/2015/04/15/hydra-idle-hint/
     (when (try-require 'rect "        ")
@@ -95,7 +96,7 @@
   ;; DISPLAY
   ;;
   ;; [VARCOMMENT.Use Hydra to manage windows/frame/buffer shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-display nil]
+  ;; [VARIABLE.tqnr-section-mode-hydra-display t]
   (when tqnr-section-mode-hydra-display
     ;; need to unbind them to be able to bind them into hydra
     (define-key hydra-base-map    (kbd "<kp-0>")        nil)
@@ -171,7 +172,7 @@
   ;; TRANSPOSE
   ;;
   ;; [VARCOMMENT.Use Hydra to manage transpose shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-transpose nil]
+  ;; [VARIABLE.tqnr-section-mode-hydra-transpose t]
   (when tqnr-section-mode-hydra-transpose
     (defhydra hydra-transpose (:color red
                                 :hint nil)
@@ -209,7 +210,7 @@
   ;; HELP/WEB
   ;;
   ;; [VARCOMMENT.Use Hydra to manage help/web shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-help-web nil]
+  ;; [VARIABLE.tqnr-section-mode-hydra-help-web t]
   (when tqnr-section-mode-hydra-help-web
     (defhydra hydra-help-web (:color pink
                                :hint nil)
@@ -259,7 +260,7 @@
   ;; MACRO
   ;;
   ;; [VARCOMMENT.Use Hydra to manage macro shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-macro nil]
+  ;; [VARIABLE.tqnr-section-mode-hydra-macro t]
   (when tqnr-section-mode-hydra-macro
     (defhydra hydra-macro (:color pink
                             :hint nil
@@ -300,7 +301,7 @@
   ;; SPELLING
   ;;
   ;; [VARCOMMENT.Use Hydra to manage spelling shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-spelling nil]
+  ;; [VARIABLE.tqnr-section-mode-hydra-spelling t]
   (when tqnr-section-mode-hydra-spelling
     (defhydra hydra-spelling (:color pink
                                :hint nil)
@@ -339,7 +340,7 @@
   ;; SEARCH
   ;;
   ;; [VARCOMMENT.Use Hydra to manage search shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-search nil]
+  ;; [VARIABLE.tqnr-section-mode-hydra-search t]
   (when tqnr-section-mode-hydra-search
     (defhydra hydra-search (:color pink
                              :hint nil)
@@ -422,7 +423,7 @@
   ;; SMARTPARENS
   ;;
   ;; [VARCOMMENT.Use Hydra to manage smartparens shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-smartparens nil]
+  ;; [VARIABLE.tqnr-section-mode-hydra-smartparens t]
   (when tqnr-section-mode-hydra-smartparens
     (defhydra hydra-smartparens (:color pink
                                   :hint nil)

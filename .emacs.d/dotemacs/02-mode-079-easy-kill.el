@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.mode to easy copy/kill/cut text/line/word/expression/function...]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-25 (0.1)

@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about ecb mode]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-21 (1.5)

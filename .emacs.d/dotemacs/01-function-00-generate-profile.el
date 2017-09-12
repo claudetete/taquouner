@@ -19,14 +19,15 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; section comment
 ;; [HEADER.custom functions]
+;; [DEFAULT.t]
 ;;
 ;;
 ;; subsection comment
@@ -35,8 +36,12 @@
 ;; interactive function `tqnr-generate-profile' will parse dotemacs directory to
 ;; generate a default profile file or with a parameter not nil init-profile.el file
 ;; ]]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2017-09-12 (0.2)
+;;    add default value for header and subheader (default profile is now fully
+;;    generated)
 ;; 2017-07-20 (0.1)
 ;;    create from scratch
 
@@ -59,7 +64,9 @@
          ;; extract filename from file path without extension
          (filename (file-name-base file))
          (section nil)
+         (section-default nil)
          (subsection nil)
+         (subsection-default nil)
          (symbol-full nil)
          (symbol-section nil))
     ;; build section and subsection names
@@ -82,8 +89,8 @@
           (tqnr-print-profile-end tqnr-profile-section)
           )
 
-        (tqnr-print-profile-init file symbol-section)
-        (tqnr-print-profile-set (concat symbol-section " nil"))
+        (setq section-default (tqnr-print-profile-init file symbol-section))
+        (tqnr-print-profile-set (concat symbol-section " " section-default))
         )
 
       ;; when filename has a subsection
@@ -95,10 +102,10 @@
             (setq tqnr-profile-depth-counter (+ tqnr-profile-depth-counter 1)))
 
 
-          (tqnr-print-profile-init-subsection file symbol-full)
+          (setq subsection-default (tqnr-print-profile-init-subsection file symbol-full))
 
           ;; print that subsection is started
-          (tqnr-print-profile-set (concat symbol-full " nil"))
+          (tqnr-print-profile-set (concat symbol-full " " subsection-default))
           )
         )
 
@@ -309,16 +316,17 @@
                 (tqnr-print-profile-begin tqnr-profile-section)
                 ;; indent
                 (setq tqnr-profile-depth-counter (+ tqnr-profile-depth-counter 1))))
-            ;; print what found between found tag and last bracket on line
-            (tqnr-print-profile-set (buffer-substring substring-start (point)) t)
-            ;; move to next line
-            (forward-line 1)
-            ;; print raw multiple line until ]]
-            (tqnr-profile-print-multiline)
-            (setq tqnr-profile-depth-counter-prev (+ tqnr-profile-depth-counter-prev 1))
-            ;; close definition or set of subsection
-            (tqnr-print-profile-end-unit (buffer-substring substring-start (point)) t)
-            (setq tqnr-profile-depth-counter-prev (- tqnr-profile-depth-counter-prev 1))
+            (let ((variable-name (buffer-substring substring-start (point))))
+              ;; print what found between found tag and last bracket on line
+              (tqnr-print-profile-set variable-name t)
+              ;; move to next line
+              (forward-line 1)
+              ;; print raw multiple line until ]]
+              (tqnr-profile-print-multiline)
+              (setq tqnr-profile-depth-counter-prev (+ tqnr-profile-depth-counter-prev 1))
+              ;; close definition or set of subsection
+              (tqnr-print-profile-end-unit variable-name t)
+              (setq tqnr-profile-depth-counter-prev (- tqnr-profile-depth-counter-prev 1)))
             )
           (t t))
         (setq tqnr-profile-depth-counter-prev tqnr-profile-depth-counter)
@@ -330,8 +338,9 @@
 
 (defun tqnr-print-profile-init (file section)
   "Print init comment of config file to insert into profile buffer."
-  (let ((substring-start nil)
-         (is-first-comment t))
+  (let* ((substring-start nil)
+          (is-first-comment t)
+          (default-value "nil"))
     ;; new empty line without indentation
     (tqnr-profile-print "\n" t)
     (tqnr-profile-print (concat ";; " (mapconcat 'upcase (cdr (cdr (delete "" (split-string section "\\-")))) " ")))
@@ -342,7 +351,7 @@
       ;; go to beginning of file
       (goto-char 1)
       ;; search for a useful tag (one '[' = one line, two '[' = multiple line)
-      (while (re-search-forward ";\\s-*\\(\\[?\\[HEADER\\.\\)" nil t)
+      (while (re-search-forward ";\\s-*\\(\\[?\\[\\(?:HEADER\\|DEFAULT\\)\\.\\)" nil t)
         (setq substring-start (point))
         ;; match string correspond to which tag
         (cond
@@ -380,15 +389,24 @@
             ;; print raw multiple line until ]]
             (tqnr-profile-print-multiline ";; ")
             )
+
+          ((string-equal (match-string 1) "[DEFAULT.")
+            ;; to move point to last closing bracket on line
+            (tqnr-profile-move-to-closing-bracket)
+            ;; return default value
+            (setq default-value (buffer-substring-no-properties substring-start (point))))
+
           (t t)))
       (when is-first-comment
         (tqnr-profile-print "\n"))
-      )))
+      )
+    default-value))
 
 (defun tqnr-print-profile-init-subsection (file subsection)
   "Print init comment of config file subsection to insert into profile buffer."
-  (let ((substring-start nil)
-         (is-first-comment t))
+  (let* ((substring-start nil)
+          (is-first-comment t)
+          (default-value "nil"))
     ;; new empty line without indentation
     (tqnr-profile-print "\n" t)
     (tqnr-profile-print (concat ";; " (mapconcat 'upcase (cdr (cdr (cdr (delete "" (split-string subsection "\\-"))))) " ")))
@@ -399,7 +417,7 @@
       ;; go to beginning of file
       (goto-char 1)
       ;; search for a useful tag (one '[' = one line, two '[' = multiple line)
-      (while (re-search-forward ";\\s-*\\(\\[?\\[SUBHEADER\\.\\)" nil t)
+      (while (re-search-forward ";\\s-*\\(\\[?\\[\\(?:SUBHEADER\\|SUBDEFAULT\\)\\.\\)" nil t)
         (setq substring-start (point))
         ;; match string correspond to which tag
         (cond
@@ -438,10 +456,18 @@
             ;; print raw multiple line until ]]
             (tqnr-profile-print-multiline ";; ")
             )
+
+          ((string-equal (match-string 1) "[SUBDEFAULT.")
+            ;; to move point to last closing bracket on line
+            (tqnr-profile-move-to-closing-bracket)
+            ;; return default value
+            (setq default-value (buffer-substring-no-properties substring-start (point))))
+
           (t t)))
       (when is-first-comment
         (tqnr-profile-print "\n"))
-      )))
+      )
+    default-value))
 
 (defun tqnr-profile-print-multiline (&optional prefix)
   "Insert in profile buffer raw multiline without ;; prefix of comment."

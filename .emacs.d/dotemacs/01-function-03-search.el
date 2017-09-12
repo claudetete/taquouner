@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about searching in buffer text]
+;; [SUBDEFAULT.t]
 ;;
 
 ;;; Change Log:

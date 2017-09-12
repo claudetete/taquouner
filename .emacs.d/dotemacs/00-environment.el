@@ -25,6 +25,7 @@
 
 ;;; Commentary:
 ;; [HEADER.Environment check and configuration]
+;; [DEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-09-01 (3.2)
@@ -83,7 +84,7 @@
 
 ;;
 ;; [SUBCOMMENT.GARBAGE COLLECTION: speed up start of emacs]
-;; [SUBSECTION.tqnr-section-environment-garbage-collection nil]
+;; [SUBSECTION.tqnr-section-environment-garbage-collection t]
 (when tqnr-section-environment-garbage-collection
   ;; garbage collection to hundred times of the default. Supposedly
   ;; significantly speeds up startup time. see http://jonnay.github.io/emagicians-starter-kit/Emagician-Base.html#orgheadline3
@@ -100,7 +101,7 @@
     (setq gc-cons-threshold (* 10 1024 1024)))
 
   ;; [VARCOMMENT.MINIBUFFER: increase temporarily garbage collection when execute something]
-  ;; [VARIABLE.tqnr-section-environment-garbage-collection-minibuffer nil]
+  ;; [VARIABLE.tqnr-section-environment-garbage-collection-minibuffer t]
   (when tqnr-section-environment-garbage-collection-minibuffer
     ;; see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
     ;; increase threshold when opening a minibuffer to execute something
@@ -195,7 +196,45 @@
 ;; [SUBSECTION.tqnr-section-environment-set-path t]
 (when tqnr-section-environment-set-path (message "    Set Path...")
   ;; [VARCOMMENT.PATH environment variable concat with current PATH]
-  ;; [VARIABLE.tqnr-profile-path (list )]
+  ;; [[VARIABLE.tqnr-profile-path
+  ;;   (list
+  ;;     ;; before MSYS2 to make sure to use this version of tools
+  ;;     ;; (do not put path which contains gcc otherwise it will be used instead of MSYS2 one)
+  ;;     "C:/WinPython27/python-2.7.10"
+  ;;     "C:/perl/perl/bin"
+  ;;     "C:/Git/bin"
+  ;;     ;; emacs useful binary
+  ;;     (file-name-as-directory tqnr-dotemacs-path) "plugins/pt_windows_amd64"
+  ;;     (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin"
+  ;;     (file-name-as-directory tqnr-dotemacs-path) "plugins/cflow-mingw-master"
+  ;;     (file-name-as-directory tqnr-dotemacs-path) "plugins/irony-mode/server/build/bin"
+  ;;     ;; MSYS2
+  ;;     "C:/MSYS2/usr/bin"
+  ;;     "C:/MSYS2/mingw64/bin"
+  ;;     ;; Python utils
+  ;;     "C:/WinPython27/python-2.7.10/Scripts"
+  ;;     ;; Perl utils
+  ;;     "C:/perl/perl/site/bin"
+  ;;     "C:/perl/c/bin"
+  ;;     ;; Cygwin (useful ?)
+  ;;     "C:/cygwin/bin"
+  ;;     "C:/cygwin/usr/bin"
+  ;;     "C:/cygwin/usr/local/bin"
+  ;;     ;; GhostScript (useful for auctex)
+  ;;     "C:/Program Files (x86)/gs/gs9.06/bin"
+  ;;     ;; LaTeX engine
+  ;;     "C:/MikTex/miktex/bin"
+  ;;     ;; MS Windows usual path
+  ;;     "C:/WINDOWS"
+  ;;     "C:/WINDOWS/System32"
+  ;;     ;; Aspell
+  ;;     "C:/Program Files (x86)/Aspell/bin/"
+  ;;     ;; Java engine (useful ?)
+  ;;     "C:/ProgramData/Oracle/Java/javapath"
+  ;;     ;; GraphViz
+  ;;     "C:/GraphViz/bin"
+  ;;     )
+  ;; ]]
   ;; need to use (list ) instead of '() to be able to use variable in it see https://stackoverflow.com/questions/24188100/using-mapconcat-to-concatenate-a-list-containing-a-variable
   (setenv "PATH" (concat (mapconcat 'identity tqnr-profile-path ";") (getenv "PATH")))
   ;; emacs can also search in this path exec for external tool
@@ -256,7 +295,7 @@
 
 ;;
 ;; [SUBCOMMENT.SUPER: Enable Super modifier key (Windows key, shortcut with "s-") on MS Windows]
-;; [SUBSECTION.tqnr-section-environment-super t]
+;; [SUBSECTION.tqnr-section-environment-super nil]
 ;; be careful with this it fully disable windows key when Emacs has focus
 (when tqnr-section-environment-super (message "    Super...")
   (when (and tqnr-section-environment-os-recognition tqnr-running-on-ms-windows)
@@ -273,7 +312,7 @@
 
 ;;
 ;; [SUBCOMMENT.SERVER: start the emacs server to have only one emacs client instance]
-;; [SUBSECTION.tqnr-section-environment-server t]
+;; [SUBSECTION.tqnr-section-environment-server nil]
 (when tqnr-section-environment-server (message "    Server...")
   (when (and tqnr-section-environment-terminal-vs-graphics tqnr-running-in-graphical)
     (server-start)

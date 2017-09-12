@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.A front-end for rg, ripgrep (faster than anything...)]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-09-01 (0.1)

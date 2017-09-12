@@ -28,6 +28,7 @@
 ;; [[SUBHEADER.set some option to add in the grey line at the bottom of each buffer
 ;; (replaced by powerline mode)
 ;; ]]
+;; [SUBDEFAULT.t]
 ;;
 ;; TODO: put all option like now but with color
 

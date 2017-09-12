@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.generate uml diagram from text]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-25 (0.1)

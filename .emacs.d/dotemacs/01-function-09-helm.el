@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about Helm mode]
+;; [SUBDEFAULT.t]
 ;;
 
 ;;; Change Log:

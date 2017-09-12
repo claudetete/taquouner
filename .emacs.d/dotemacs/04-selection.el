@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [HEADER.selection can be kill + selection is highlight + kill->copy in read only]
+;; [DEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-25 (1.8)

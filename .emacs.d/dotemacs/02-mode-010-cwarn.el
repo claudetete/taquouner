@@ -28,6 +28,7 @@
 ;; [[SUBHEADER.show small warning in code source
 ;; (ex: set in test, semi colon after test...)
 ;; ]]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

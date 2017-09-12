@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.use git with nice interface (do not use vc interface from emacs)]
+;; [SUBDEFAULT.nil]
 ;;
 ;; FIXME update to newer version to work with emacs 25
 

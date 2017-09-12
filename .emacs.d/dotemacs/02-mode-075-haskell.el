@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.editing, debugging and developing Haskell programs]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-25 (0.1)

@@ -19,15 +19,18 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
 ;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.(fork ANYTHING) choose anything with the same nice interface]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2017-09-11 (0.3)
+;;    add option to enable Helm globally (by example to work in write-file)
 ;; 2017-09-11 (0.2)
 ;;    add swoop and flx + remove useless shortcut
 ;; 2017-07-24 (0.1)
@@ -217,6 +220,12 @@
       ;; override bookmark-bmenu-list from 08-shortcut-02-buffer
       (global-set-key           (kbd "C-c C-b")         'helm-bookmarks)
       )
+
+    ;; [VARCOMMENT.enable Helm everywhere when asking file]
+    ;; [VARIABLE.tqnr-section-mode-helm-global nil]
+    (when tqnr-section-mode-helm-global
+      ;; to enable helm everywhere completing-read or read-file-name function are used
+      (helm-mode 1))
 
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook

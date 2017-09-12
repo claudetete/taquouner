@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.mode to enable c mode for .ino files and use emacs as external editor of arduino ide]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-08-02 (0.1)

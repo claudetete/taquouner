@@ -28,6 +28,7 @@
 ;; [[SUBHEADER.yet another switch buffer
 ;; 2010: erratic behavior with exotic filename under MS Windows (not used)
 ;; ]]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-24 (0.1)

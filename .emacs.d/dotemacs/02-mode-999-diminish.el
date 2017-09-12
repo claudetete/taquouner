@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.shrink major and minor mode name in the modeline]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-25 (0.1)

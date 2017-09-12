@@ -26,11 +26,13 @@
 ;;; Commentary:
 ;; section comment
 ;; [HEADER.modification about display in buffers, font, color...]
+;; [DEFAULT.t]
 ;;
 ;; subsection comment
 ;; [[SUBHEADER.buffers with *buffername* should be displayed in the same window
 ;; first column in window will display buffer limit, next page will leave 5 shared line
 ;; ]]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-25 (2.0)

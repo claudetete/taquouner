@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about copying and selecting buffer text]
+;; [SUBDEFAULT.t]
 ;;
 
 ;;; Change Log:

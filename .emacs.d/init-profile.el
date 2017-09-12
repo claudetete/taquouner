@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
 ;; Last-Updated: September 2017
 
@@ -27,6 +27,8 @@
 ;;
 
 ;;; Change Log:
+;; 2017-09-12 (0.3)
+;;    add helm global mode setting
 ;; 2017-09-11 (0.2)
 ;;    update to new mode and small optimization
 ;; 2017-07-07 (0.1)
@@ -181,6 +183,8 @@
     (defvar tqnr-section-mode-helm-recentf nil)
     ;; replace bookmark list
     (defvar tqnr-section-mode-helm-bookmark nil)
+    ;; enable Helm everywhere when asking file
+    (defvar tqnr-section-mode-helm-global nil)
     ) ;; (progn ;; tqnr-section-mode-helm
 
   ;; VECTRA: man and doc in emacs (never used)

@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.set size, display, refresh and remove opening tips of ECB window]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-07-25 (1.8)

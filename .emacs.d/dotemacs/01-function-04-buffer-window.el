@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about buffer and window handling]
+;; [SUBDEFAULT.t]
 ;;
 
 ;;; Change Log:

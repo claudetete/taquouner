@@ -268,6 +268,8 @@
     (setq tqnr-section-mode-helm-recentf t)
     ;; replace bookmark list
     (setq tqnr-section-mode-helm-bookmark t)
+    ;; enable Helm everywhere when asking file
+    (setq tqnr-section-mode-helm-global t)
     ) ;; (when tqnr-section-mode-helm
 
   ;; VECTRA: man and doc in emacs (never used)

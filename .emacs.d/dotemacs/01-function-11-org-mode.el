@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about org-mode]
+;; [SUBDEFAULT.nil]
 ;;
 
 ;;; Change Log:

@@ -32,6 +32,14 @@
 ;; ENVIRONMENT: Environment check and configuration
 (setq tqnr-section-environment t)
 (when tqnr-section-environment
+  ;; GARBAGE COLLECTION: speed up start of emacs
+  (setq tqnr-section-environment-garbage-collection t)
+  (when tqnr-section-environment-garbage-collection
+    ;; MINIBUFFER: increase temporarily garbage collection when execute something
+    (setq tqnr-section-environment-garbage-collection-minibuffer t)
+    ;; START: speed up a little the start of emacs
+    (setq tqnr-environment-garbage-collection-start nil)
+    ) ;; (when tqnr-section-environment-garbage-collection
   ;; VERSION RECOGNITION: detect Emacs version
   (setq tqnr-section-environment-version-recognition t)
   ;; OS RECOGNITION: detect OS type (MS Windows vs GNU Linux)
@@ -43,20 +51,11 @@
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
     (setq tqnr-profile-path
-      (concat
-        "d:/cygwin/bin" ";"
-        "d:/cygwin/usr/bin/gnuwin32/bin" ";"
+      (list
+        "D:/cygwin/bin"
+        "D:/cygwin/usr/bin/gnuwin32/bin"
         )
-      )
-    ;;
-    ;; emacs can also search in this path exec for external tool
-    (setq tqnr-profile-exec-path
-      '(
-         "d:/cygwin/bin"
-         "d:/cygwin/usr/bin/gnuwin32/bin"
-         )
-      )
-
+      ) ;; (setq tqnr-profile-path
     ;;
     ;; LOCALE: languages settings about subversion and dired
     (setq tqnr-profile-lang "en_US")
@@ -67,9 +66,9 @@
   (setq tqnr-section-environment-executable t)
   (when tqnr-section-environment-executable
     ;; diff program
-    (setq tqnr-profile-ediff-diff-program "diff.exe")
-    (setq tqnr-profile-ediff-diff3-program "diff3.exe")
-    (setq tqnr-profile-ediff-cmp-program "cmp.exe")
+    (setq tqnr-profile-ediff-diff-program "diff")
+    (setq tqnr-profile-ediff-diff3-program "diff3")
+    (setq tqnr-profile-ediff-cmp-program "cmp")
     ) ;; (when tqnr-section-environment-executable
   ;; HYPER: Enable Hyper modifier key (Menu key, shortcut with "H-") on MS Windows
   (setq tqnr-section-environment-hyper t)
@@ -89,7 +88,7 @@
     ) ;; (when tqnr-section-environment-package
 
   ;; SHORTCUT: Environment shortcut to declare hook about shortcut
-  (setq tqnr-section-environment-shortcut nil)
+  (setq tqnr-section-environment-shortcut t)
   ) ;; (when tqnr-section-environment
 
 ;; FUNCTION: custom functions
@@ -107,7 +106,7 @@
   (setq tqnr-section-function-edit-buffer t)
   (when tqnr-section-function-edit-buffer
     ;; FLAG DEBUG: used in kaneton project (epita)
-    (setq tqnr-function-kaneton t)
+    (setq tqnr-function-kaneton nil)
     ) ;; (when tqnr-section-function-edit-buffer
 
   ;; SELECT COPY: custom function about copying and selecting buffer text
@@ -160,6 +159,12 @@
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
   (setq tqnr-section-mode-helm nil)
   (when tqnr-section-mode-helm
+    ;; isearch by helm
+    (setq tqnr-section-mode-helm-swoop nil)
+    ;; do not have default value when run helm swoop
+    (setq tqnr-section-mode-helm-swoop-without-pre-input nil)
+    ;; replace fuzzy search in find-files by flx, more human matches
+    (setq tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
     (setq tqnr-section-mode-helm-kill-ring nil)
     ;; replace M-x
@@ -176,6 +181,8 @@
     (setq tqnr-section-mode-helm-recentf nil)
     ;; replace bookmark list
     (setq tqnr-section-mode-helm-bookmark nil)
+    ;; enable Helm everywhere when asking file
+    (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
 
   ;; VECTRA: man and doc in emacs (never used)
@@ -219,7 +226,8 @@
          "d:/ccm_wa/NBNF/NBNF_HL/NBNF_HL.ede.el"
          "d:/ccm_wa/ECAR/ENSF.ede.el"
          "d:/ccm_wa/PQ36/PQ36_HL/PQ35GPHL.ede.el"
-         ))
+         )
+      ) ;; (setq tqnr-profile-ede-project
     ;;
     ;; CEDET ECB (Emacs Code Browser): transform Emacs interface to IDE
     ;; can display other windows or speedbar to view folder tree, source list,
@@ -233,7 +241,8 @@
          ("d:/cygwin/usr/bin"                                  "/bin")
          ("d:/cygwin/usr/bin/.emacs.d"                         "/emacs.d")
          ("c:/Documents and Settings/tete/Local Settings/Temp" "/temp")
-         ))
+         )
+      ) ;; (setq tqnr-profile-ecb-source-path
     ;; regexp of folder to exclude in "ecb directories"
     (setq tqnr-profile-ecb-excluded-directories-regexps
       '(
@@ -241,18 +250,21 @@
          "^\\(Doc\\|Dev\\|.*_root\\|Application\\|Base\\|Control\\|System\\|Presentation\\|TechnicalNote\\|HTML\\)$"
          "\\(01_ProjectPlan\\|02_ProjectMonitoringAndControl\\|03_RequirementManagement\\|04_SupplierAgreementManagement\\|05_ProcessAndProductQualityAssurance\\|06_ConfigurationManagement\\|07_RequirementDevelopment\\|08_TechnicalSolution\\|10_Verification\\|11_Validation\\)$"
          "\\(01_SystemIntegrationAndValidationPlan\\|02_SystemIntegrationTestCases\\|03_SystemIntegrationTestReport\\|05_DeliveryToCustomer\\|06_DeliveryToInternal\\|88_VerificationReportsAndChecklists\\|99_OtherPI\\)$"
-         ))
+         )
+      ) ;; (setq tqnr-profile-ecb-excluded-directories-regexps
     ;; files to be ignored in "ecb source" !! RTFM !!
     (setq tqnr-profile-ecb-source-file-regexps
       '((".*"
           ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|_ccmwaid\\.inf\\|\\.\\(elc\\|obj\\|o\\|class\\|lib\\|dll\\|a\\|so\\|cache\\|xls\\|doc\\)$\\)\\)")
           ("^\\.\\(emacs\\|gnus\\)$")
-          )))
+          ))
+      ) ;; (setq tqnr-profile-ecb-source-file-regexps
     ;; files to be ignored from Version Control VC
     (setq tqnr-profile-ecb-sources-exclude-cvsignore
       '(
          "_ccmwaid.inf"
-         ))
+         )
+      ) ;; (setq tqnr-profile-ecb-sources-exclude-cvsignore
     ;; regexp to form group in "ecb history"
     (setq tqnr-profile-ecb-history-make-buckets
       '(
@@ -263,7 +275,8 @@
          "|XL1"
          "|PQ35GPHL"
          "\\.el$"
-         ))
+         )
+      ) ;; (setq tqnr-profile-ecb-history-make-buckets
     ) ;; (when tqnr-section-mode-cedet
 
   ;; BATCH: mode for .bat script in MS Windows
@@ -513,7 +526,7 @@
   (setq tqnr-section-mode-platinum-searcher nil)
   (when tqnr-section-mode-platinum-searcher
     ;; path to pt executable
-    (setq tqnr-profile-mode-platinum-searcher-exec "")
+    (setq tqnr-profile-mode-platinum-searcher-exec "pt")
     ) ;; (when tqnr-section-mode-platinum-searcher
 
   ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation buffer)
@@ -570,6 +583,56 @@
   ;; EASY KILL: mode to easy copy/kill/cut text/line/word/expression/function...
   (setq tqnr-section-mode-easy-kill t)
 
+  ;; ARDUINO: mode to enable c mode for .ino files and use emacs as external editor of arduino ide
+  (setq tqnr-section-mode-arduino nil)
+
+  ;; ALL THE ICONS
+  ;; mode to have nice icons (from special fonts)
+  ;; install font on your system from `fonts' folder or use
+  ;; M-x all-the-icons-install-fonts
+  (setq tqnr-section-mode-all-the-icons nil)
+
+  ;; SHACKLE
+  ;; mode to have popup always following same rules
+  ;; like popwin but just add constraint to popup not replace the whole thing
+  ;; Helm does not like popwin...
+  (setq tqnr-section-mode-shackle nil)
+
+  ;; RIPGREP: A front-end for rg, ripgrep (faster than anything...)
+  (setq tqnr-section-mode-ripgrep nil)
+
+  ;; HYDRA: Create families of short bindings with a common prefix
+  (setq tqnr-section-mode-hydra nil)
+  (when tqnr-section-mode-hydra
+    ;; Use Hydra to manage rectangle shortcuts
+    (setq tqnr-section-mode-hydra-rectangle nil)
+    ;; Use Hydra to manage windows/frame/buffer shortcuts
+    (setq tqnr-section-mode-hydra-display nil)
+    ;; Use Hydra to manage transpose shortcuts
+    (setq tqnr-section-mode-hydra-transpose nil)
+    ;; Use Hydra to manage help/web shortcuts
+    (setq tqnr-section-mode-hydra-help-web nil)
+    ;; Use Hydra to manage macro shortcuts
+    (setq tqnr-section-mode-hydra-macro nil)
+    ;; Use Hydra to manage spelling shortcuts
+    (setq tqnr-section-mode-hydra-spelling nil)
+    ;; Use Hydra to manage search shortcuts
+    (setq tqnr-section-mode-hydra-search nil)
+    ;; Use Hydra to manage smartparens shortcuts
+    (setq tqnr-section-mode-hydra-smartparens nil)
+    ) ;; (when tqnr-section-mode-hydra
+
+  ;; FLYSPELL: On-the-fly spell checking
+  (setq tqnr-section-mode-flyspell nil)
+  (when tqnr-section-mode-flyspell
+    ;; set program to be use with ispell
+    (setq tqnr-profile-ispell-program "aspell")
+    ;; language to use with ispell
+    (setq tqnr-profile-ispell-dictionary "english")
+    ;; POPUP: Correct the misspelled word in popup menu
+    (setq tqnr-section-mode-flyspell-popup nil)
+    ) ;; (when tqnr-section-mode-flyspell
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
   ) ;; (when tqnr-section-mode
@@ -596,7 +659,7 @@
          "slong"
          "slonglong"
          )
-      )
+      ) ;; (setq tqnr-profile-c-extra-types
     ;; Compile mode without ask
     (setq tqnr-profile-c-ask-before-compile t)
     ;; INDENT PREPROCESSOR: make a #define be align with C code
@@ -646,6 +709,14 @@
   ;; C++ QT
   ;;   set include for Qt 4.8
   (setq tqnr-section-languages-c++-qt nil)
+  ;;
+  ;; ARDUINO
+  ;;   set indentation style
+  (setq tqnr-section-languages-arduino nil)
+  (when tqnr-section-languages-arduino
+    ;; number of space for indentation in Arduino
+    (setq tqnr-profile-arduino-indent-offset 2)
+    ) ;; (when tqnr-section-languages-arduino
   ) ;; (when tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only
@@ -692,7 +763,7 @@
     ;; "DejaVu Sans Mono-10"
     ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
     ;; "DejaVu Sans Mono-8"
-    ;; (setq profile-font "DejaVu Sans Mono-8")
+    ;; not so nice with ms window (dot 'zero', capitalized 'i' and minus 'L' can be mixed up)
     ;;
     ;; "Inconsolata-10"
     ;; not so good with ms window (slashed 'zero', capitalized 'i' and minus 'L' can be mixed up)
@@ -730,6 +801,12 @@
     ;;
     ;; "Droid Sans Mono-10"
     ;; "Droid Sans Mono-8"
+    ;;
+    ;; "Iosevka-10"
+    ;; "Iosevka-8"
+    ;; nice can use any variant of this open source font (by example slashed zero, dot zero, empty zero)
+    ;; see https://be5invis.github.io/Iosevka/ for more settings
+    ;;
     (setq tqnr-profile-font "Terminal-6")
     ;; ANTIALIAS: set antialiasing on font rendering
     (setq tqnr-section-display-font-antialias nil)
@@ -756,7 +833,7 @@
     ) ;; (when tqnr-section-display-color
   ) ;; (when tqnr-section-display
 
-;; INTERFACE
+;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...
 (setq tqnr-section-interface t)
 (when tqnr-section-interface
 
@@ -780,6 +857,9 @@
     ;;
     ;; FULLSCREEN: main window start in fullscreen
     (setq tqnr-section-interface-fullscreen t)
+    ;;
+    ;; Do not popup any window by splitting vertically only horizontally
+    (setq tqnr-section-interface-popup-window-horizontally nil)
     ) ;; (when tqnr-section-interface-main-window
 
   ;; MODELINE
@@ -825,7 +905,7 @@
   ;; SEMANTIC: add shortcut to move in source code with semantic
   (setq tqnr-section-shortcut-semantic t)
 
-  ;; HOOK
+  ;; HOOK: run hook for all shortcuts from the whole configuration
   (setq tqnr-section-shortcut-hook t)
   ) ;; (when tqnr-section-shortcut
 
@@ -846,6 +926,9 @@
 ;; tooltips
 (setq tqnr-section-annoyances t)
 (when tqnr-section-annoyances
+  ;; ask confirmation to quit Emacs
+  (setq tqnr-section-annoyances-comfirm-quit nil)
+  ;;
   ;; TRUNCATE LINE: whole line not visible (need to scroll right)
   (setq tqnr-section-annoyances-truncate-line nil)
   ;;
@@ -887,20 +970,12 @@
     ;; FRENCH CALENDAR: set French holidays and day/month/moon phase name
     (setq tqnr-section-misc-calendar-french t)
     ) ;; (when tqnr-section-misc-calendar
-  ;; DICTIONARY: language settings
-  (setq tqnr-section-misc-dictionary nil)
-  (when tqnr-section-misc-dictionary
-    ;; set program to be use with ispell
-    (setq tqnr-profile-ispell-program "aspell")
-    ;; language to use with ispell
-    (setq tqnr-profile-ispell-dictionary "english")
-    ) ;; (when tqnr-section-misc-dictionary
   ;; BOOKMARK: default file, each command to add/modify bookmark save bookmark file
   (setq tqnr-section-misc-bookmark t)
   (when tqnr-section-misc-bookmark
     ;; BOOKMARK SORT: sort or do not sort bookmark when saving bookmark file
     (setq tqnr-profile-bookmark-sort nil)
-    ) ;; (when tqnr-section-misc-bookmark t
+    ) ;; (when tqnr-section-misc-bookmark
   ;; SCREENSAVER: when idle for 5min some animations on buffer text
   (setq tqnr-section-misc-screensaver nil)
   ) ;; (when tqnr-section-misc

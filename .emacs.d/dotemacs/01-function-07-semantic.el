@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about semantic mode]
+;; [SUBDEFAULT.t]
 ;;
 
 ;;; Change Log:

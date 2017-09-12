@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.On-the-fly spell checking]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-09-08 (0.1)

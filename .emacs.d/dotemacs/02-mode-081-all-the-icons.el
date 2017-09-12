@@ -29,6 +29,7 @@
 ;; install font on your system from `fonts' folder or use
 ;; M-x all-the-icons-install-fonts
 ;; ]]
+;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
 ;; 2017-08-30 (0.1)

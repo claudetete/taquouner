@@ -26,6 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [HEADER.smooth wheel + lazy decoration when scroll]
+;; [DEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-26 (2.0)
@@ -85,7 +86,7 @@
 
 ;;
 ;; [SUBCOMMENT.SMOOTH SCROLL: scroll with margin and without jump]
-;; [SUBSECTION.tqnr-section-mouse-smooth-scroll nil]
+;; [SUBSECTION.tqnr-section-mouse-smooth-scroll t]
 (when tqnr-section-mouse-smooth-scroll (message "    Smooth Scroll...")
   ;; to avoid jump from (http://www.emacswiki.org/cgi-bin/wiki/SmoothScrolling)
   ;; set with max value

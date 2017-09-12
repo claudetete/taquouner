@@ -25,6 +25,7 @@
 
 ;;; Commentary:
 ;; [SUBHEADER.Environment shortcut to declare hook about shortcut]
+;; [SUBDEFAULT.t]
 
 ;;; Change Log:
 ;; 2017-07-21 (0.1)
