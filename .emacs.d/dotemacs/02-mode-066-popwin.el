@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
 ;; Last-Updated: September 2017
 
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2017-09-14 (0.3)
+;;    use patch of popwin to show it only by splitting current window
 ;; 2017-09-11 (0.2)
 ;;    remove helm window (not very friendly with popwin, use shackle instead)
 ;; 2017-07-24 (0.1)
@@ -47,14 +49,14 @@
   (push "*vc*" popwin:special-display-config)
   (push "*vc-diff*" popwin:special-display-config)
   (push '("*Apropos*" :stick t) popwin:special-display-config)
-  (push '("*Occur*" :stick t) popwin:special-display-config)
+  (push '("*Occur*" :stick t :inside t) popwin:special-display-config)
   (push "*shell*" popwin:special-display-config)
   (push '("*Help*" :stick t) popwin:special-display-config)
   (push '("*Backtrace*" :stick t) popwin:special-display-config)
   (push "*Compile-log*" popwin:special-display-config)
   (push '("*[Ss]ynergy*" :regexp r :stick t) popwin:special-display-config)
   (push '("\\s-*\\*[Ss]ynergy.*\\*\\s-*" :regexp r :stick t) popwin:special-display-config)
-  (push '("\\s-*\\*[cC]ompletions*\\*\\s-*" :regexp t) popwin:special-display-config)
+  (push '("\\s-*\\*[cC]ompletions*\\*\\s-*" :regexp t :inside t) popwin:special-display-config)
   (push '("\\*[cC]ompilation.*\\*" :regexp t :stick t) popwin:special-display-config)
   (push '("\\*i?grep.*\\*" :regexp t :stick t) popwin:special-display-config)
   (push "*JDEE Compile Server*" popwin:special-display-config)
