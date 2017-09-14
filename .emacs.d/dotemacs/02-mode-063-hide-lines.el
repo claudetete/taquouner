@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2017-09-14 (0.2)
+;;    modify prefix key to avoid problem with outline mode
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -43,11 +45,11 @@
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
     ;; hide match
-    (global-set-key     (kbd "C-c h h")         'hide-lines-matching)
+    (global-set-key     (kbd "C-c l h")         'hide-lines-matching)
     ;; hide not match
-    (global-set-key     (kbd "C-c h n")         'hide-lines-not-matching)
+    (global-set-key     (kbd "C-c l n")         'hide-lines-not-matching)
     ;; show all
-    (global-set-key     (kbd "C-c h s")         'hide-lines-show-all)
+    (global-set-key     (kbd "C-c l s")         'hide-lines-show-all)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

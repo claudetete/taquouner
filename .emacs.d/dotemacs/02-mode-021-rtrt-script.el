@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
@@ -29,14 +29,15 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2017-09-14 (0.2)
+;;    remove outline setting, it is redundant with specific outline mode setting
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:
 (when (try-require 'rtrt-ptu "    ")
-  (when tqnr-section-mode-outline
-    (outline-minor-mode 1)))
+  )
 
 
 (provide '02-mode-021-rtrt-script)

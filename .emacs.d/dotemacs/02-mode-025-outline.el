@@ -36,14 +36,22 @@
 ;;; Code:
 (outline-minor-mode 1)
 
+;; [VARCOMMENT.HIDE ALL AT START: hide all when opening file]
+;; [VARIABLE.tqnr-section-mode-outline-hide-all-at-start nil]
+(when tqnr-section-mode-outline-hide-all-at-start
+  (hide-sublevels 1))
+
 
 ;; shortcuts are put in a hook to be loaded after everything else in init process
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
-    ;; bind toggle hide/show block
-    (global-set-key     (kbd "C-c h")   'outline-toggle-children)
+    (when (not tqnr-section-mode-hydra-outline)
+      ;; bind toggle hide/show block
+      (global-set-key     (kbd "C-c h")   'outline-toggle-children)
+      ) ;; (when (not tqnr-section-mode-hydra-outline)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+
 
 (provide '02-mode-025-outline)
 

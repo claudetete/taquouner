@@ -416,6 +416,10 @@
 
   ;; OUTLINE: to manually hide some block in code source
   (setq tqnr-section-mode-outline nil)
+  (when tqnr-section-mode-outline
+    ;; HIDE ALL AT START: hide all when opening file
+    (setq tqnr-section-mode-outline-hide-all-at-start nil)
+    ) ;; (when tqnr-section-mode-outline
 
   ;; AUTO HIGHLIGHT SYMBOL: to automatically highlight symbol at point
   (setq tqnr-section-mode-auto-highlight-symbol t)
@@ -683,6 +687,8 @@
     (setq tqnr-section-mode-hydra-search t)
     ;; Use Hydra to manage smartparens shortcuts
     (setq tqnr-section-mode-hydra-smartparens t)
+    ;; Use Hydra to manage outline shortcuts
+    (setq tqnr-section-mode-hydra-outline nil)
     ) ;; (when tqnr-section-mode-hydra
 
   ;; FLYSPELL: On-the-fly spell checking
@@ -727,10 +733,6 @@
     (setq tqnr-profile-c-ask-before-compile t)
     ;; INDENT PREPROCESSOR: make a #define be align with C code
     (setq tqnr-section-languages-c-indent-preprocessor nil)
-    ;; HIDE SHOW: use outline minor mode to fold source code block
-    (setq tqnr-section-languages-c-hide-show t)
-    ;; HIDE ALL AT START: hide all when opening file
-    (setq tqnr-section-languages-c-hide-show-hide-all-at-start nil)
     ;; FLYMAKE: verification error/warning in source code on the fly
     (setq tqnr-section-languages-c-flymake nil)
     ;; FLYCHECK: verification error/warning in source code on the fly

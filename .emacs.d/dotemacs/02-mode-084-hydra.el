@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: September 2017
 ;; Last-Updated: September 2017
 
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2017-09-14 (0.2)
+;;    add shortcut about outline mode
 ;; 2017-09-01 (0.1)
 ;;    creation from scratch
 
@@ -424,7 +426,7 @@
   ;;
   ;; [VARCOMMENT.Use Hydra to manage smartparens shortcuts]
   ;; [VARIABLE.tqnr-section-mode-hydra-smartparens t]
-  (when tqnr-section-mode-hydra-smartparens
+  (when (and tqnr-section-mode-hydra-smartparens tqnr-section-mode-smartparens)
     (defhydra hydra-smartparens (:color pink
                                   :hint nil)
       "
@@ -466,6 +468,53 @@
         ) ;; (lambda ()
       ) ;; (add-hook 'tqnr-after-init-shortcut-hook
     ) ;; (when tqnr-section-mode-hydra-spelling
+
+
+  ;;
+  ;; OUTLINE
+  ;;
+  ;; [VARCOMMENT.Use Hydra to manage outline shortcuts]
+  ;; [VARIABLE.tqnr-section-mode-hydra-outline nil]
+  (when (and tqnr-section-mode-hydra-outline tqnr-section-mode-outline)
+    (defhydra hydra-outline (:color pink :hint nil)
+      "
+^Hide^             ^Show^           ^Move
+^^^^^^------------------------------------------------------
+_q_: sublevels     _a_: all         _u_: up
+_t_: body          _e_: entry       _n_: next visible
+_o_: other         _i_: children    _p_: previous visible
+_c_: entry         _k_: branches    _f_: forward same level
+_l_: leaves        _s_: subtree     _b_: backward same level
+_d_: subtree
+"
+      ;; Hide
+      ("q" hide-sublevels)    ; Hide everything but the top-level headings
+      ("t" hide-body)         ; Hide everything but headings (all body lines)
+      ("o" hide-other)        ; Hide other branches
+      ("c" hide-entry)        ; Hide this entry's body
+      ("l" hide-leaves)       ; Hide body lines in this entry and sub-entries
+      ("d" hide-subtree)      ; Hide everything in this entry and sub-entries
+      ;; Show
+      ("a" show-all)          ; Show (expand) everything
+      ("e" show-entry)        ; Show this heading's body
+      ("i" show-children)     ; Show this heading's immediate child sub-headings
+      ("k" show-branches)     ; Show all sub-headings under this heading
+      ("s" show-subtree)      ; Show (expand) everything in this heading & below
+      ;; Move
+      ("u" outline-up-heading)                ; Up
+      ("n" outline-next-visible-heading)      ; Next
+      ("p" outline-previous-visible-heading)  ; Previous
+      ("f" outline-forward-same-level)        ; Forward - same level
+      ("b" outline-backward-same-level)       ; Backward - same level
+      ("z" nil "leave"))
+
+    ;; shortcuts are put in a hook to be loaded after everything else in init process
+    (add-hook 'tqnr-after-init-shortcut-hook
+      (lambda ()
+        (global-set-key   (kbd "C-c h")    'hydra-outline/body)
+        ) ;; (lambda ()
+      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+    ) ;; (when tqnr-section-mode-hydra-outline
 
   ) ;; (when (try-require 'hydra "      ")
 

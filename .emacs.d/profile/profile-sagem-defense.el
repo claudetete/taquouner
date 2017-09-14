@@ -153,9 +153,9 @@
   (setq tqnr-section-environment-executable t)
   (when tqnr-section-environment-executable
     ;; diff program
-    (setq tqnr-profile-ediff-diff-program "diff.exe")
-    (setq tqnr-profile-ediff-diff3-program "diff3.exe")
-    (setq tqnr-profile-ediff-cmp-program "cmp.exe")
+    (setq tqnr-profile-ediff-diff-program "diff")
+    (setq tqnr-profile-ediff-diff3-program "diff3")
+    (setq tqnr-profile-ediff-cmp-program "cmp")
     ) ;; (when tqnr-section-environment-executable
   ;; HYPER: Enable Hyper modifier key (Menu key, shortcut with "H-") on MS Windows
   (setq tqnr-section-environment-hyper t)
@@ -396,7 +396,11 @@
   (setq tqnr-section-mode-autohotkey t)
 
   ;; OUTLINE: to manually hide some block in code source
-  (setq tqnr-section-mode-outline nil)
+  (setq tqnr-section-mode-outline t)
+  (when tqnr-section-mode-outline
+    ;; HIDE ALL AT START: hide all when opening file
+    (setq tqnr-section-mode-outline-hide-all-at-start nil)
+    ) ;; (when tqnr-section-mode-outline
 
   ;; AUTO HIGHLIGHT SYMBOL: to automatically highlight symbol at point
   (setq tqnr-section-mode-auto-highlight-symbol t)
@@ -677,6 +681,8 @@
     (setq tqnr-section-mode-hydra-search t)
     ;; Use Hydra to manage smartparens shortcuts
     (setq tqnr-section-mode-hydra-smartparens t)
+    ;; Use Hydra to manage outline shortcuts
+    (setq tqnr-section-mode-hydra-outline t)
     ) ;; (when tqnr-section-mode-hydra
 
   ;; FLYSPELL: On-the-fly spell checking
@@ -721,10 +727,6 @@
     (setq tqnr-profile-c-ask-before-compile t)
     ;; INDENT PREPROCESSOR: make a #define be align with C code
     (setq tqnr-section-languages-c-indent-preprocessor nil)
-    ;; HIDE SHOW: use outline minor mode to fold source code block
-    (setq tqnr-section-languages-c-hide-show t)
-    ;; HIDE ALL AT START: hide all when opening file
-    (setq tqnr-section-languages-c-hide-show-hide-all-at-start nil)
     ;; FLYMAKE: verification error/warning in source code on the fly
     (setq tqnr-section-languages-c-flymake nil)
     ;; FLYCHECK: verification error/warning in source code on the fly
@@ -963,7 +965,7 @@
   ;; SEMANTIC: add shortcut to move in source code with semantic
   (setq tqnr-section-shortcut-semantic t)
 
-  ;; HOOK
+  ;; HOOK: run hook for all shortcuts from the whole configuration
   (setq tqnr-section-shortcut-hook t)
   ) ;; (when tqnr-section-shortcut
 
@@ -986,6 +988,7 @@
 (when tqnr-section-annoyances
   ;; ask confirmation to quit Emacs
   (setq tqnr-section-annoyances-comfirm-quit t)
+  ;;
   ;; TRUNCATE LINE: whole line not visible (need to scroll right)
   (setq tqnr-section-annoyances-truncate-line t)
   ;;

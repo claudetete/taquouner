@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.7
+;; Version: 3.8
 ;; Created: October 2006
 ;; Last-Updated: September 2017
 
@@ -29,6 +29,9 @@
 ;; [DEFAULT.t]
 
 ;;; Change Log:
+;; 2017-09-14 (3.8)
+;;    remove outline setting which is redundant with specific outline mode
+;;    setting
 ;; 2017-09-11 (3.7)
 ;;    fix C setting error + add arduino specific settings
 ;; 2017-07-25 (3.6)
@@ -144,30 +147,7 @@
     ;; [VARIABLE.tqnr-section-languages-c-indent-preprocessor nil]
     (when tqnr-section-languages-c-indent-preprocessor
       (c-set-offset 'cpp-macro 0))
-
-    ;; [VARCOMMENT.HIDE SHOW: use outline minor mode to fold source code block]
-    ;; [VARIABLE.tqnr-section-languages-c-hide-show t]
-    (when tqnr-section-languages-c-hide-show
-      (outline-minor-mode t)
-      ;; [VARCOMMENT.HIDE ALL AT START: hide all when opening file]
-      ;; [VARIABLE.tqnr-section-languages-c-hide-show-hide-all-at-start nil]
-      (when tqnr-section-languages-c-hide-show-hide-all-at-start
-        (hide-sublevels 1))
-      )
     )
-
-  (when tqnr-section-languages-c-hide-show
-    (add-hook 'outline-minor-mode-hook
-      (lambda ()
-        ;; hide all
-        (local-set-key  (kbd "C-,")     (lambda ()
-                                          (interactive)
-                                          (hide-sublevels 1)))
-        ;; show all
-        (local-set-key  (kbd "C-.")     'show-all)
-        )
-      )
-    ) ;; (when tqnr-section-languages-c-hide-show
 
   ;; set c mode
   (add-hook 'c-mode-common-hook 'tqnr-c-mode)
