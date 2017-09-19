@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
 ;; Last-Updated: September 2017
 
@@ -29,6 +29,9 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2017-09-19 (0.3)
+;;    add slurp and barf shortcut + additional shortcut about wrap pair or () []
+;;    and {}
 ;; 2017-09-11 (0.2)
 ;;    redefine shortcuts to have more rationale behaviour without thinking about
 ;;    semantic expression + add <> pair in elisp to insert shortcut + add
@@ -62,41 +65,58 @@
   ;; (todo when no more upper hierarchy, goes to next/previous using beginning-of-defun in c-mode or sp-backward/forward-sexp)
 
   ;; move to previous on same level or upper block
-  (define-key smartparens-mode-map      (kbd "<M-up>")          'sp-backward-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-up>")          #'sp-backward-sexp)
   ;; move to next on same level or upper block
-  (define-key smartparens-mode-map      (kbd "<M-down>")        'sp-next-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-down>")        #'sp-next-sexp)
   ;; move to upper block at begin of block
-  (define-key smartparens-mode-map      (kbd "<M-left>")        'sp-backward-up-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-left>")        #'sp-backward-up-sexp)
   ;; move to downer block at begin of block
-  (define-key smartparens-mode-map      (kbd "<M-right>")       'sp-down-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-right>")       #'sp-down-sexp)
 
   ;; move to previous on same level or upper block at end of block
-  (define-key smartparens-mode-map      (kbd "<M-S-up>")        'sp-previous-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-S-up>")        #'sp-previous-sexp)
   ;; move to next on same level or upper block at end of block
-  (define-key smartparens-mode-map      (kbd "<M-S-down>")      'sp-forward-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-S-down>")      #'sp-forward-sexp)
   ;; move to downer block at end of block
-  (define-key smartparens-mode-map      (kbd "<M-S-left>")      'sp-backward-down-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-S-left>")      #'sp-backward-down-sexp)
   ;; move to upper block at end of block
-  (define-key smartparens-mode-map      (kbd "<M-S-right>")     'sp-up-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-S-right>")     #'sp-up-sexp)
 
   ;; move to beginning of expression just after special character
-  (define-key smartparens-mode-map      (kbd "<M-home>")        'sp-beginning-of-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-home>")        #'sp-beginning-of-sexp)
   ;; move to end of expression before special character
-  (define-key smartparens-mode-map      (kbd "<M-end>")         'sp-end-of-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-end>")         #'sp-end-of-sexp)
 
   ;; unwrap current block or next
-  (define-key smartparens-mode-map      (kbd "<M-delete>")      'sp-unwrap-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-delete>")      #'sp-unwrap-sexp)
   ;; unwrap downer block or previous
-  (define-key smartparens-mode-map      (kbd "<M-backspace>")   'sp-backward-unwrap-sexp)
+  (define-key smartparens-mode-map      (kbd "<M-backspace>")   #'sp-backward-unwrap-sexp)
+
+  ;; unwrap current block or next
+  (define-key smartparens-mode-map      (kbd "<M-S-delete>")    #'sp-splice-sexp)
+
+  ;; include next expression in current wrap
+  (define-key smartparens-mode-map      (kbd "C-(")             #'sp-backward-slurp-sexp)
+  ;; move out last expression from current wrap
+  (define-key smartparens-mode-map      (kbd "C-M-(")           #'sp-backward-barf-sexp)
+
+  ;; include next expression in current wrap
+  (define-key smartparens-mode-map      (kbd "C-)")             #'sp-forward-slurp-sexp)
+  ;; move out last expression from current wrap
+  (define-key smartparens-mode-map      (kbd "C-M-)")           #'sp-forward-barf-sexp)
 
   ;; M-( will enclose symbol at point with (), H-( will replace existing pair at point with ()
   (define-key smartparens-mode-map      (kbd "M-(")             (lambda () (interactive)
+                                                                  (sp-wrap-with-pair "(")))
+  (define-key smartparens-mode-map      (kbd "M-)")             (lambda () (interactive)
                                                                   (sp-wrap-with-pair "(")))
   (define-key smartparens-mode-map      (kbd "H-(")             (lambda () (interactive)
                                                                   (sp-rewrap-sexp '("(" . ")"))))
 
   ;; M-[ will enclose symbol at point with [], H-[ will replace existing pair at point with []
   (define-key smartparens-mode-map      (kbd "M-[")             (lambda () (interactive)
+                                                                  (sp-wrap-with-pair "[")))
+  (define-key smartparens-mode-map      (kbd "M-]")             (lambda () (interactive)
                                                                   (sp-wrap-with-pair "[")))
   (define-key smartparens-mode-map      (kbd "H-[")             (lambda () (interactive)
                                                                   (sp-rewrap-sexp '("[" . "]"))))
@@ -114,6 +134,8 @@
                                                                   (sp-rewrap-sexp '("'" . "'"))))
   ;; M-{ will enclose symbol at point with {}, H-{ will replace existing pair at point with ''
   (define-key smartparens-mode-map      (kbd "M-{")             (lambda () (interactive)
+                                                                  (sp-wrap-with-pair "{")))
+  (define-key smartparens-mode-map      (kbd "M-}")             (lambda () (interactive)
                                                                   (sp-wrap-with-pair "{")))
   (define-key smartparens-mode-map      (kbd "H-{")             (lambda () (interactive)
                                                                   (sp-rewrap-sexp '("{" . "}"))))

@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: September 2017
 ;; Last-Updated: September 2017
 
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2017-09-19 (0.3)
+;;    use smartparens transpose instead of `tranpose-sexps'
 ;; 2017-09-14 (0.2)
 ;;    add shortcut about outline mode
 ;; 2017-09-01 (0.1)
@@ -190,7 +192,9 @@
 "
       ("c" transpose-chars)
       ("w" transpose-words)
-      ("x" transpose-sexps)
+      ("x" (if tqnr-section-mode-smartparens
+             (sp-transpose-sexp)
+             (transpose-sexps)))
       ("l" transpose-lines)
       ("s" transpose-sentences)
       ("p" transpose-paragraphs)

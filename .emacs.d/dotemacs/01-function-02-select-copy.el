@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;
 
 ;;; Change Log:
+;; 2017-09-19 (0.2)
+;;    add shortcut to pop local mark (more easily than C-u C-SPC)
 ;; 2017-07-21 (0.1)
 ;;    creation from split of old functions.el
 
@@ -173,6 +175,23 @@
   ;;  (set-register register (car kill-ring)))
   ;;(define-key global-map "\C-w" 'kill-region-x)
   )
+
+
+;; like `exchange-point-and-mark' (C-x C-x) but after action on rectangle
+;; and do not have unpop function (must implement a unpop mark ring)
+;; helm-mark-ring was no help, always put at beginning of line of mark...
+(defun pop-local-mark ()
+  "Do like C-u C-SPC but saving current point in mark ring"
+  (interactive)
+  (set-mark-command t))
+
+;; shortcuts are put in a hook to be loaded after everything else in init process
+(add-hook 'tqnr-after-init-shortcut-hook
+  (lambda ()
+    ;; remap C-u C-SPC more easily
+    (global-set-key     (kbd "C-x x")   'pop-local-mark)
+    ) ;; (lambda ()
+  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 
 
 (provide '01-function-02-select-copy)

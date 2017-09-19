@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: July 2017
 ;; Last-Updated: September 2017
 
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2017-09-19 (0.4)
+;;    move F2 shortcut to function buffer/window
 ;; 2017-09-14 (0.3)
 ;;    use patch of popwin to show it only by splitting current window
 ;; 2017-09-11 (0.2)
@@ -80,18 +82,6 @@
   (push '("*haskell*" :stick t) popwin:special-display-config)
   (push '("*debug:haskell*" :stick t) popwin:special-display-config)
   )
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    ;; quit helm with F2 or resume his last session
-    (global-set-key     (kbd "<f2>")    '(lambda ()
-                                           (interactive)
-                                           (if (popwin:popup-window-live-p)
-                                             (popwin:close-popup-window)
-                                             (popwin:popup-last-buffer))))
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 
 
 (provide '02-mode-066-popwin)

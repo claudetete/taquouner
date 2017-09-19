@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: September 2017
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;
 
 ;;; Change Log:
+;; 2017-09-19 (0.2)
+;;    shortcut F2 can resume helm or popwin windows regarding last opened one
 ;; 2017-07-21 (0.1)
 ;;    creation from split of functions.el
 
@@ -380,6 +382,45 @@ middle"
         (local-set-key  (kbd "M-6")     'switch-to-help-buffer)))
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+
+(when (and tqnr-section-mode-popwin tqnr-section-mode-helm)
+  (defvar tqnr-last-popup-type nil
+    "Last type of popup window helm vs popwin")
+  (defun tqnr-set-last-popup ()
+    "Check when pop popwin or helm and store type."
+    (if (popwin:popup-window-live-p)
+      (setq tqnr-last-popup-type "popwin")
+      (setq tqnr-last-popup-type "helm")))
+
+  ;; when popwin buffer/window is created and showed
+  (add-hook 'popwin:after-popup-hook #'tqnr-set-last-popup)
+  ;; when helm is not already created
+  (add-hook 'helm-before-initialize-hook #'tqnr-set-last-popup)
+
+  (defun resume-popwin-or-helm ()
+    "Will resume popwin or helm regarding last closed or close current popwin
+session."
+    (interactive)
+    ;; is popwin running ?
+    (if (popwin:popup-window-live-p)
+      ;; close current popwin
+      (popwin:close-popup-window)
+      ;; is last opened was popwin or helm
+      (if (string-equal tqnr-last-popup-type "popwin")
+        ;; resume popwin
+        (popwin:popup-last-buffer)
+        ;; resume helm
+        (helm-resume helm-last-buffer))))
+
+
+  ;; shortcuts are put in a hook to be loaded after everything else in init process
+  (add-hook 'tqnr-after-init-shortcut-hook
+    (lambda ()
+      ;;  F2 resume last session of popwin or helm (F2 is already set in helm map to quit)
+      (global-set-key   (kbd "<f2>")    #'resume-popwin-or-helm)
+      ) ;; (lambda ()
+    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+  )
 
 
 (provide '01-function-04-buffer-window)
