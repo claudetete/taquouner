@@ -696,6 +696,9 @@
     (setq tqnr-section-mode-flyspell-popup t)
     ) ;; (when tqnr-section-mode-flyspell
 
+  ;; DUMB JUMP: On-the-fly spell checking
+  (setq tqnr-section-mode-dumb-jump t)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
   ) ;; (when tqnr-section-mode

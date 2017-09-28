@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: July 2017
 ;; Last-Updated: September 2017
 
@@ -27,6 +27,8 @@
 ;;
 
 ;;; Change Log:
+;; 2017-09-28 (0.4)
+;;    add dumb jump mode
 ;; 2017-09-12 (0.3)
 ;;    add helm global mode setting
 ;; 2017-09-11 (0.2)
@@ -599,6 +601,9 @@
     ;; POPUP: Correct the misspelled word in popup menu
     (defvar tqnr-section-mode-flyspell-popup nil)
     ) ;; (progn ;; tqnr-section-mode-flyspell
+
+  ;; DUMB JUMP: On-the-fly spell checking
+  (defvar tqnr-section-mode-dumb-jump nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)

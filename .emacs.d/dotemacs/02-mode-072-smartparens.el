@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: July 2017
 ;; Last-Updated: September 2017
 
@@ -29,6 +29,9 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2017-09-28 (0.4)
+;;    remove shortcut M-] already used by `find-matching-keyword' in
+;;    01-function-03-search.el
 ;; 2017-09-19 (0.3)
 ;;    add slurp and barf shortcut + additional shortcut about wrap pair or () []
 ;;    and {}
@@ -116,8 +119,8 @@
   ;; M-[ will enclose symbol at point with [], H-[ will replace existing pair at point with []
   (define-key smartparens-mode-map      (kbd "M-[")             (lambda () (interactive)
                                                                   (sp-wrap-with-pair "[")))
-  (define-key smartparens-mode-map      (kbd "M-]")             (lambda () (interactive)
-                                                                  (sp-wrap-with-pair "[")))
+  ;;(define-key smartparens-mode-map      (kbd "M-]")             (lambda () (interactive)
+  ;;                                                                (sp-wrap-with-pair "[")))
   (define-key smartparens-mode-map      (kbd "H-[")             (lambda () (interactive)
                                                                   (sp-rewrap-sexp '("[" . "]"))))
 
