@@ -1,6 +1,6 @@
 ;;; 01-function-01-edit-buffer.el --- add some function about edit buffer text
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 6.2
+;; Version: 6.3
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;
 
 ;;; Change Log:
+;; 2018-01-31 (6.3)
+;;    fix cleanup and add new clean about tav + add function to delete extra space
 ;; 2017-07-21 (6.2)
 ;;    split file into multiple files
 ;; 2016-09-28 (6.1)
@@ -381,12 +383,35 @@ at the point."
   (save-excursion
     (untabify (point-min) (point-max))
     (goto-char (point-min))
-    (while (search-forward "�" nil t)
+    (while (search-forward "" nil t)
       (replace-match "'"))
-    (while (search-forward "�" nil t)
+    (goto-char (point-min))
+    (while (search-forward "" nil t)
       (replace-match "+"))
-    (while (search-forward "�" nil t)
+    (goto-char (point-min))
+    (while (search-forward "" nil t)
       (replace-match "-"))
+    )
+  )
+
+;; replace tab with space + replace '+- non unicode
+(defun clean-tav-gael ()
+  "Clean files from TAV inside GAEL."
+  (interactive)
+  (save-excursion
+    (untabify (point-min) (point-max))
+    (goto-char (point-min))
+    (while (search-forward "”" nil t)
+      (replace-match "\""))
+    (goto-char (point-min))
+    (while (search-forward "“" nil t)
+      (replace-match "\""))
+    (goto-char (point-min))
+    (while (search-forward "‘" nil t)
+      (replace-match "'"))
+    (goto-char (point-min))
+    (while (search-forward "’" nil t)
+      (replace-match "'"))
     )
   )
 
@@ -431,11 +456,26 @@ delete blank lines"
               (delete-blank-lines))
             (just-one-space)))))))
 
+;; from https://www.emacswiki.org/emacs/DeletingWhitespace
+(defun delete-horizontal-space-forward ()
+  "Delete all space and tabs after point."
+  (interactive "*")
+  (delete-region (point) (progn (skip-chars-forward " \t") (point))))
+
+(defun delete-horizontal-space-backward ()
+  "Delete all space and tabs before point."
+  (interactive "*")
+  (delete-horizontal-space t))
+
 ;; shortcuts are put in a hook to be loaded after everything else in init process
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
     ;; delete all blank character or line except one
     (global-set-key     (kbd "M-SPC")   'just-one-space-or-line)
+    ;; delete all space until next word
+    (global-set-key     (kbd "M-S-SPC") 'delete-horizontal-space-forward)
+    ;; delete all space until previous word
+    (global-set-key     (kbd "H-SPC")   'delete-horizontal-space-backward)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

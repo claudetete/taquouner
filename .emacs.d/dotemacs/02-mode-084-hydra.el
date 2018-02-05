@@ -1,6 +1,6 @@
 ;;; 02-mode-084-hydra.el --- configuration of hydra, new ways to bind
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: September 2017
-;; Last-Updated: September 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,9 @@
 ;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2018-01-31 (0.4)
+;;    fix problem when delete rectangle + macro run do not quit + add hydra for
+;;    ada commands
 ;; 2017-09-19 (0.3)
 ;;    use smartparens transpose instead of `tranpose-sexps'
 ;; 2017-09-14 (0.2)
@@ -57,12 +60,12 @@
                                   :post (deactivate-mark))
       "
 ╭─^───^─────┐
-│R^ect^angle│     ^ ^    Insertion        ^  O^thers
-└─^───^─────╯──┬──^─^──────────────────┬──^───^───────────────────────────╮
-  [_M-w_] Copy   [_s_]          String   [_DEL_]      Delete
-  [_C-w_] Kill   [_SPC_]        String   [_S-SPC_]    Replace by space
-  [_C-y_] Yank   [_<C-return>_] Space    [_M-SPC_]    Delete only space
-   ^   ^         [_n_]          Number   [_<return>_] Cycle corner cursor
+│R^ect^angle│    I^n^sertion       ^  O^thers               [_q_] Quit
+└─^───^─────╯──┬──^─^───────────┬──^───^───────────────────────────╮
+  [_M-w_] Copy   [_s_]   String   [_<delete>_] Delete
+  [_C-w_] Kill   [_SPC_] String   [_S-SPC_]    Replace by space
+  [_C-y_] Yank   [_n_]   Number   [_M-SPC_]    Delete only space
+   ^   ^          ^ ^             [_<return>_] Cycle corner cursor
 
 "
         ;; Copy/Paste
@@ -76,10 +79,11 @@
         ("<C-return>" open-rectangle :color blue)
         ("n"          rectangle-number-lines-wrapper :color blue)
         ;; Others
-        ("DEL"   delete-rectangle :color blue)
-        ("S-SPC" clear-rectangle :color blue)
-        ("M-SPC" delete-whitespace-rectangle :color blue)
-        ("<return>"   rectangle-exchange-point-and-mark)
+        ("<delete>"    delete-rectangle :color blue)
+        ("<backspace>" delete-rectangle :color blue)
+        ("S-SPC"       clear-rectangle :color blue)
+        ("M-SPC"       delete-whitespace-rectangle :color blue)
+        ("<return>"    rectangle-exchange-point-and-mark)
         ;; with hint
         ("r" (if (region-active-p)
                (deactivate-mark)
@@ -283,7 +287,7 @@
 "
       ;;
       ("<f8>" kmacro-start-macro :color blue)
-      ("r"    call-last-kbd-macro-region :color blue)
+      ("r"    call-last-kbd-macro-region)
       ;;
       ("s"   kmacro-name-last-macro)
       ("DEL" kmacro-delete-ring-head)
@@ -435,8 +439,8 @@
                                   :hint nil)
       "
 ╭──^────────^─┐
-│Sm^artparen^s│ M^ove at^ beg^in       ^    M^ove Insi^de                           [_q_] Quit
-└──^────────^─╯──^──────^────^─────────^──┬──^────────^────────────────────────────────────╮
+│Sm^artparen^s│ M^ove at^ beg^in       ^    M^ove Insi^de                             [_q_] Quit
+└──^────────^─╯──^──────^────^─────────^──┬──^────────^──────────────────────────────────────╮
    ^        ^   [_<M-up>_]   ^         ^    [_<M-home>_] Begin
    ^        ^    ^  ↑   ^    ^         ^    [_<M-end>_]  End
   [_<M-left>_]   ^←   → ^   [_<M-right>_]
@@ -469,6 +473,43 @@
         (global-set-key   (kbd "C-c <down>")  'hydra-smartparens/body)
         (global-set-key   (kbd "C-c <left>")  'hydra-smartparens/body)
         (global-set-key   (kbd "C-c <right>") 'hydra-smartparens/body)
+        ) ;; (lambda ()
+      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+    ) ;; (when tqnr-section-mode-hydra-spelling
+
+
+  ;;
+  ;; ADA
+  ;;
+  ;; [VARCOMMENT.Use Hydra to manage ada compile shortcuts]
+  ;; [VARIABLE.tqnr-section-mode-hydra-ada t]
+  (when (and tqnr-section-mode-hydra-ada tqnr-section-mode-ada tqnr-section-function-ada)
+    (defhydra hydra-ada (:color pink
+                          :hint nil)
+      "
+╭──^──────^─┐
+│Ada Compile│ Current file   P^r^oject    [_q_] Quit
+└──^──────^─╯──────────────┬──^─^────────────────╮
+  [_<f10>_] Build            [_b_] Build All
+  [_p_] Pretty printer       [_c_] Clean All
+  [_s_] Check syntax         [_n_] Native build
+"
+      ;; Move In/Out
+      ("<f10>" ada-gps-build)
+      ("p"     ada-gps-pretty-print)
+      ("s"     ada-gps-check)
+      ("b"     ada-gps-build-all)
+      ("c"     ada-gps-clean-all)
+      ("n"     ada-gps-build-native)
+      ;;
+      ("q" nil :color blue)
+      )
+    ;; shortcuts are put in a hook to be loaded after everything else in init process
+    (add-hook 'tqnr-after-init-shortcut-hook
+      (lambda ()
+        (with-eval-after-load "ada-mode"
+          (define-key ada-mode-map      (kbd "<f10>")   'hydra-ada/body)
+          ) ;; (with-eval-after-load "ada-mode"
         ) ;; (lambda ()
       ) ;; (add-hook 'tqnr-after-init-shortcut-hook
     ) ;; (when tqnr-section-mode-hydra-spelling

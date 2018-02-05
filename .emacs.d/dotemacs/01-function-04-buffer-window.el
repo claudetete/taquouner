@@ -1,6 +1,6 @@
 ;;; 01-function-04-buffer-window.el --- add some function about buffer and window handling
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: September 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,9 @@
 ;;
 
 ;;; Change Log:
+;; 2018-01-31 (0.3)
+;;    rework switch special buffer to do a toggle compatible with ecb, helm,
+;;    popwin and newly ada functions
 ;; 2017-09-19 (0.2)
 ;;    shortcut F2 can resume helm or popwin windows regarding last opened one
 ;; 2017-07-21 (0.1)
@@ -274,112 +277,133 @@ middle"
 
 ;;
 ;; SWITCH BUFFER
-(defun switch-to-special-buffer (buffer)
+(defun toggle-special-buffer (buffer)
   "Switch to BUFFER in a special window like ecb compile window."
-  (let ((buf (buffer-name)))
-    ;; when the buffer is the same as the current buffer
-    (if (string= buf buffer)
-      ;; when ecb is active toggle the compile window
-      (if tqnr-section-mode-cedet-ecb
-        (ecb-toggle-compile)
-        ;; else go the previous buffer
-        (switch-to-prev-buffer))
-      (if (get-buffer buffer)
-        (progn
-          ;; when ecb is used display in compile window
-          (when tqnr-section-mode-cedet-ecb
-            (ecb-goto-window-compilation))
-          (switch-to-buffer buffer))
-        (message (concat "Do not switch, " buffer " does not exist.")))
+  (if (not (get-buffer buffer))
+    (message (concat "Do not switch, " buffer " does not exist."))
+    (let ((buffer-current (buffer-name))
+           (window-buffer (get-buffer-window buffer)))
+      ;; when buffer is currently displayed in a window (showed)
+      (if window-buffer
+        ;; when the buffer is the same as the current buffer
+        (if (string= buffer-current buffer)
+          ;; when ecb is active toggle the compile window
+          (if tqnr-section-mode-cedet-ecb
+            (ecb-toggle-compile)
+            ;; else close current window containing special buffer
+            (if tqnr-section-mode-popwin
+              ;; when popwin is used
+              (popwin:close-popup-window)
+              ;; otherwise delete window
+              (delete-window)))
+          ;; special buffer in a window but not selected so select this window
+          (select-window window-buffer))
+        ;; special buffer is not in a window (not showed)
+        (if tqnr-section-mode-cedet-ecb
+          ;; when ecb is toggle ecb compile window
+          (ecb-goto-window-compilation)
+          (if (and tqnr-section-mode-popwin
+                (not (string-match-p (regexp-quote "helm") buffer)))
+            ;; show special buffer in popwin
+            (popwin:display-buffer buffer)
+            ;; show special buffer using built-in switch
+            (switch-to-buffer buffer)))
+        )
       )
     )
   )
 
 ;; go to the grep or ack buffer in special window
-(defun switch-to-grep-ack-buffer ()
+(defun toggle-search-buffer ()
   "Switch to the grep or ack buffer."
   (interactive)
   ;; when ack mode and buffer exist
-  (if (and tqnr-section-mode-ack-emacs (get-buffer "*ack*"))
-    (switch-to-special-buffer "*ack*")
-    (switch-to-special-buffer "*grep*"))
+  (if (get-buffer "*ack*")
+    (toggle-special-buffer "*ack*")
+    (if (get-buffer "*helm-ag*")
+      (toggle-special-buffer "*helm-ag*")
+      (toggle-special-buffer "*grep*")))
   )
 
 ;; go to the compilation buffer in special window
-(defun switch-to-compilation-buffer ()
+(defun toggle-compilation-buffer ()
   "Switch to the compilation buffer."
   (interactive)
-  (switch-to-special-buffer "*compilation*")
-  )
+  (if (get-buffer "*compilation*")
+    (toggle-special-buffer "*compilation*")
+    (if (and tqnr-section-function-ada
+          (get-buffer ada-gps-buffer-name-last))
+      (toggle-special-buffer ada-gps-buffer-name-last)
+      (message "Do not switch, no existing compilation buffers."))))
 
 ;; go to the vc or vc diff buffer in special window
-(defun switch-to-vc-buffer ()
+(defun toggle-vc-buffer ()
   "Switch to the vc or vc diff buffer."
   (interactive)
   ;; when vc diff buffer already exist
   (if (get-buffer "*vc-diff*")
-    (switch-to-special-buffer "*vc-diff*")
-    (switch-to-special-buffer "*vc*"))
+    (toggle-special-buffer "*vc-diff*")
+    (toggle-special-buffer "*vc*"))
   )
 
 ;; go to the occur buffer in special window
-(defun switch-to-occur-buffer ()
+(defun toggle-occur-buffer ()
   "Switch to the occur buffer."
   (interactive)
-  (switch-to-special-buffer "*Occur*")
+  (toggle-special-buffer "*Occur*")
   )
 
 ;; go to the help buffer in special window
-(defun switch-to-help-buffer ()
+(defun toggle-help-buffer ()
   "Switch to the help buffer."
   (interactive)
-  (switch-to-special-buffer "*Help*")
+  (toggle-special-buffer "*Help*")
   )
 
 ;; go to the help buffer in special window
-(defun switch-to-bookmark-buffer ()
+(defun toggle-bookmark-buffer ()
   "Switch to the bookmark buffer."
   (interactive)
   (if (get-buffer "*Bookmark List*")
-    (switch-to-special-buffer "*Bookmark List*")
+    (toggle-special-buffer "*Bookmark List*")
     (bookmark-bmenu-list))
   )
 
 ;; go to the symbol reference buffer in special window
-(defun switch-to-symref-buffer ()
+(defun toggle-symref-buffer ()
   "Switch to the Symref buffer."
   (interactive)
-  (switch-to-special-buffer "*Sy*")
+  (toggle-special-buffer "*Sy*")
   )
 
 
 ;; shortcuts are put in a hook to be loaded after everything else in init process
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
-    ;; switch to grep or ack buffer
-    (global-set-key     (kbd "M-2")     'switch-to-grep-ack-buffer)
     ;; switch to bookmark buffer
-    (global-set-key     (kbd "M-3")     'switch-to-bookmark-buffer)
+    (global-set-key     (kbd "M-2")     'toggle-bookmark-buffer)
+    ;; switch to grep or ack buffer
+    (global-set-key     (kbd "M-3")     'toggle-search-buffer)
     ;; switch to compile buffer
-    (global-set-key     (kbd "M-4")     'switch-to-compilation-buffer)
+    (global-set-key     (kbd "M-4")     'toggle-compilation-buffer)
     ;; switch to vc buffer
-    (global-set-key     (kbd "M-5")     'switch-to-vc-buffer)
+    (global-set-key     (kbd "M-5")     'toggle-vc-buffer)
     ;; switch to help buffer
-    (global-set-key     (kbd "M-6")     'switch-to-help-buffer)
+    (global-set-key     (kbd "M-6")     'toggle-help-buffer)
 
     ;; the previous global-set-key are unset in diff mode ???
     (add-hook 'diff-mode-hook
       (lambda ()
-        ;; switch to grep or ack buffer
-        (local-set-key  (kbd "M-2")     'switch-to-grep-ack-buffer)
         ;; switch to bookmark buffer
-        (local-set-key  (kbd "M-3")     'switch-to-bookmark-buffer)
+        (local-set-key  (kbd "M-2")     'toggle-bookmark-buffer)
+        ;; switch to grep or ack buffer
+        (local-set-key  (kbd "M-3")     'toggle-search-buffer)
         ;; switch to compile buffer
-        (local-set-key  (kbd "M-4")     'switch-to-compilation-buffer)
+        (local-set-key  (kbd "M-4")     'toggle-compilation-buffer)
         ;; switch to vc buffer
-        (local-set-key  (kbd "M-5")     'switch-to-vc-buffer)
+        (local-set-key  (kbd "M-5")     'toggle-vc-buffer)
         ;; switch to help buffer
-        (local-set-key  (kbd "M-6")     'switch-to-help-buffer)))
+        (local-set-key  (kbd "M-6")     'toggle-help-buffer)))
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

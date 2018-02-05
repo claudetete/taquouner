@@ -1,6 +1,6 @@
 ;;; init-profile.el --- a config file for profile
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,14 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.4
+;; Version: 0.5
 ;; Created: July 2017
-;; Last-Updated: September 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
 
 ;;; Change Log:
+;; 2018-01-31 (0.5)
+;;    add ada function, ripgrep, hydra ada, ada mode, pandoc, fitnesse, flex isearch + reuse/adapt
+;;    fill column indicator
 ;; 2017-09-28 (0.4)
 ;;    add dumb jump mode
 ;; 2017-09-12 (0.3)
@@ -154,7 +157,48 @@
 
   ;; RTRT: custom function about RTRT script .ptu file
   (defvar tqnr-section-function-rtrt nil)
-  ) ;; (progn ;; tqnr-section-function
+
+  ;; ADA: functions to have multiple compile mode in ada
+  (defvar tqnr-section-function-ada nil)
+  (progn ;; tqnr-section-function-ada
+    ;; BUILD
+    ;; Command of build one file in ada
+    (defvar tqnr-ada-gps-build-command "gnat build")
+    ;; Buffer name of build one file in ada
+    (defvar tqnr-ada-gps-build-buffer-name "*ada-build*")
+    ;; CHECK
+    ;; Command of check one file in ada
+    (defvar tqnr-ada-gps-check-command "gnat check")
+    ;; Buffer name of check one file in ada
+    (defvar tqnr-ada-gps-check-buffer-name "*ada-check*")
+    ;; PRETTY PRINT
+    ;; Command of pretty-print one file in ada
+    (defvar tqnr-ada-gps-pretty-print-command "gnat pretty")
+    ;; Buffer name of pretty-print one file in ada
+    (defvar tqnr-ada-gps-pretty-print-buffer-name "*ada-pretty-print*")
+    ;; BUILD ALL
+    ;; Command of build all project files
+    (defvar tqnr-ada-gps-build-all-command "gnat make")
+    ;; Buffer name of build all project files command
+    (defvar tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
+    ;; CLEAN ALL
+    ;; Command of clean all generated file
+    (defvar tqnr-ada-gps-clean-all-command "gnat clean")
+    ;; Buffer name of clean all generated command
+    (defvar tqnr-ada-gps-clean-all-buffer-name "*ada-clean-all*")
+    ;; BUILD NATIVE
+    ;; Command of build for native execution
+    (defvar tqnr-ada-gps-build-native-command "gnat clean")
+    ;; Buffer name of native build command
+    (defvar tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
+    ) ;; (progn ;; tqnr-section-function-ada
+
+  ;; RIPGREP: functions to add type support to helm ag for ripgrep
+  (defvar tqnr-section-function-ripgrep nil)
+
+  ;; CALC: functions to add type support to helm ag for ripgrep
+  (defvar tqnr-section-function-calc nil)
+  ) ;; (when tqnr-section-function
 
 ;; MODE: load extern files which are modes in plugins/
 (defvar tqnr-section-mode nil)
@@ -216,8 +260,8 @@
     ;;   `your-emacs-path/lisp/emacs-lisp/eieio*'
     (defvar tqnr-profile-cedet-path nil)
     ;; bin path of gnu global for cedet
-    (defvar tqnr-profile-gnu-global (concat tqnr-dotemacs-path "/plugins/gnu_global_628wb/bin/global.exe"))
-    (defvar tqnr-profile-gnu-global-gtags (concat tqnr-dotemacs-path "/plugins/gnu_global_628wb/bin/gtags.exe"))
+    (defvar tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/global.exe"))
+    (defvar tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/gtags.exe"))
     ;;
     ;; CEDET SEMANTIC: can do tag, list of function/variable..., preproc, etc
     (defvar tqnr-section-mode-cedet-semantic nil)
@@ -332,10 +376,24 @@
     (defvar tqnr-profile-google-calendar-url "https://www.google.com/calendar/ical...")
     ) ;; (progn ;; tqnr-section-mode-google-calendar
 
-  ;; FILL COLUMN INDICATOR
-  ;; show a line at fill-column (set at 80 in
-  ;; dotemacs/11-misc.el be careful it enable truncate line
+  ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (defvar tqnr-section-mode-fill-column-indicator nil)
+  (progn ;; tqnr-section-mode-fill-column-indicator
+    ;; pixel width of vertical line default is 1 (nil)
+    (defvar tqnr-profile-fill-column-indicator-vertical-line-width nil)
+    ;; color of vertical line in color format or nil (set comment theme face)
+    (defvar tqnr-profile-fill-column-indicator-vertical-line-color nil)
+    ;; Use a fixed column for vertical line to not use fill-column value otherwise nil
+    (defvar tqnr-profile-fill-column-indicator-vertical-line-position nil)
+    ;; enable vertical line in C mode
+    (defvar tqnr-profile-fill-column-indicator-mode-c nil)
+    ;; enable vertical line in C++ mode
+    (defvar tqnr-profile-fill-column-indicator-mode-c++ nil)
+    ;; enable vertical line in ADA mode
+    (defvar tqnr-profile-fill-column-indicator-mode-ada nil)
+    ;; enable vertical line in all mode
+    (defvar tqnr-profile-fill-column-indicator-mode-all nil)
+    ) ;; (progn ;; tqnr-section-mode-fill-column-indicator
 
   ;; MUSE: muse mode to have nice doc
   (defvar tqnr-section-mode-muse nil)
@@ -359,11 +417,11 @@
   (defvar tqnr-section-mode-org-mode nil)
   (progn ;; tqnr-section-mode-org-mode
     ;; set org directory where every org file will goes
-    (defvar tqnr-profile-org-directory "c:/path/directory")
+    (defvar tqnr-profile-org-directory "")
     ;; default org file where all task/todo capture will goes
-    (defvar tqnr-profile-org-default-notes-file (concat tqnr-profile-org-directory "/KC390.org"))
+    (defvar tqnr-profile-org-default-notes-file "")
     ;; agenda will look only in default org file
-    (defvar tqnr-profile-org-agenda-files (concat tqnr-profile-org-directory "/agenda.list"))
+    (defvar tqnr-profile-org-agenda-files "")
     ;; first buffer to show up is default org file when opening emacs
     (defvar tqnr-section-mode-org-default-as-init-buffer nil)
     ) ;; (progn ;; tqnr-section-mode-org-mode
@@ -435,6 +493,11 @@
   ;; DIREDFUL: color dired buffer
   (defvar tqnr-section-mode-diredful nil)
 
+  ;; PS2PDF
+  ;; print buffer/region in pdf (the pdf background is unavoidably white so dark
+  ;; theme don't render good)
+  (defvar tqnr-section-mode-ps2pdf nil)
+
   ;; AUCTEX: latex mode
   (defvar tqnr-section-mode-auctex nil)
 
@@ -474,7 +537,7 @@
     (defvar tqnr-profile-synergy-server "")
     ;; command line to modify history output
     ;; by example: '("|" "sed" "s/login/readable_name/")
-    (defvar tqnr-profile-synergy-history-filter "")
+    (defvar tqnr-profile-synergy-history-filter '())
     ;; external tool to do diff with synergy
     (defvar tqnr-profile-synergy-diff-external-command "")
     ;; command line parameter to external tool to do diff
@@ -567,6 +630,36 @@
 
   ;; RIPGREP: A front-end for rg, ripgrep (faster than anything...)
   (defvar tqnr-section-mode-ripgrep nil)
+  (progn ;; tqnr-section-mode-ripgrep
+    ;; List of types to add to ripgrep configuration (no .ripgrep configuration file only cli parameters)
+    ;; It should respect ripgrep format for --type-add parameter (extract from $ripgrep --help):
+    ;;   --type-add <TYPE>...
+    ;;   Add a new glob for a particular file type. Only one glob can be added at a time.
+    ;;   Multiple --type-add flags can be provided. Unless --type-clear is used, globs are added
+    ;;   to any existing globs defined inside of ripgrep.
+    ;;
+    ;;   Note that this MUST be passed to every invocation of ripgrep. Type settings are NOT
+    ;;   persisted.
+    ;;
+    ;;   Example: rg --type-add 'foo:*.foo' -tfoo PATTERN.
+    ;;
+    ;;   --type-add can also be used to include rules from other types with the special include
+    ;;   directive. The include directive permits specifying one or more other type names
+    ;;   (separated by a comma) that have been defined and its rules will automatically be
+    ;;   imported into the type specified. For example, to create a type called src that matches
+    ;;   C++, Python and Markdown files, one can use:
+    ;;
+    ;;   --type-add 'src:include:cpp,py,md'
+    ;;
+    ;;   Additional glob rules can still be added to the src type by using the --type-add flag
+    ;;   again:
+    ;;
+    ;;   --type-add 'src:include:cpp,py,md' --type-add 'src:*.foo'
+    ;;
+    ;;   Note that type names must consist only of Unicode letters or numbers. Punctuation
+    ;;   characters are not allowed.
+    (defvar tqnr-section-mode-ripgrep-additional-type '())
+    ) ;; (progn ;; tqnr-section-mode-ripgrep
 
   ;; HYDRA: Create families of short bindings with a common prefix
   (defvar tqnr-section-mode-hydra nil)
@@ -587,6 +680,8 @@
     (defvar tqnr-section-mode-hydra-search nil)
     ;; Use Hydra to manage smartparens shortcuts
     (defvar tqnr-section-mode-hydra-smartparens nil)
+    ;; Use Hydra to manage ada compile shortcuts
+    (defvar tqnr-section-mode-hydra-ada nil)
     ;; Use Hydra to manage outline shortcuts
     (defvar tqnr-section-mode-hydra-outline nil)
     ) ;; (progn ;; tqnr-section-mode-hydra
@@ -604,6 +699,21 @@
 
   ;; DUMB JUMP: On-the-fly spell checking
   (defvar tqnr-section-mode-dumb-jump nil)
+
+  ;; ADA: Ada mode for edit/navigate/compile ada source code
+  (defvar tqnr-section-mode-ada nil)
+
+  ;; FITNESSE: FitNesse MarkUp files syntax highlight
+  (defvar tqnr-section-mode-fitnesse nil)
+
+  ;; PANDOC: PanDoc tools mode to translate between markup syntax
+  (defvar tqnr-section-mode-pandoc nil)
+
+  ;; FLEX ISEARCH: Flex Isearch mode add fuzzy match when doing incremental search
+  (defvar tqnr-section-mode-flex-isearch nil)
+
+  ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
+  (defvar tqnr-section-mode-org-jira nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
@@ -758,6 +868,12 @@
     ;;
     ;; "Droid Sans Mono-10"
     ;; "Droid Sans Mono-8"
+    ;;
+    ;; "Iosevka-10"
+    ;; "Iosevka-8"
+    ;; nice can use any variant of this open source font (by example slashed zero, dot zero, empty zero)
+    ;; see https://be5invis.github.io/Iosevka/ for more settings
+    ;;
     (defvar tqnr-profile-font "Lucida Console-10")
     ;; ANTIALIAS: set antialiasing on font rendering
     (defvar tqnr-section-display-font-antialias nil)
@@ -856,7 +972,7 @@
   ;; SEMANTIC: add shortcut to move in source code with semantic
   (defvar tqnr-section-shortcut-semantic nil)
 
-  ;; HOOK
+  ;; HOOK: run hook for all shortcuts from the whole configuration
   (defvar tqnr-section-shortcut-hook nil)
   ) ;; (progn ;; tqnr-section-shortcut
 
@@ -879,6 +995,7 @@
 (progn ;; tqnr-section-annoyances
   ;; ask confirmation to quit Emacs
   (defvar tqnr-section-annoyances-comfirm-quit nil)
+  ;;
   ;; TRUNCATE LINE: whole line not visible (need to scroll right)
   (defvar tqnr-section-annoyances-truncate-line nil)
   ;;
@@ -905,6 +1022,7 @@
   ;; !!!PRIVATE!!! all theses variable should be put in private file of profile
   ;; USERNAME: define user name
   (defvar tqnr-profile-username "")
+  ;; !!!PRIVATE!!! End
   ;;
   ;; SPACE: remove useless space at the end of line
   (defvar tqnr-profile-remove-useless-ending-space nil)
@@ -926,6 +1044,7 @@
     (defvar tqnr-profile-latitude 0.00)
     (defvar tqnr-profile-longitude 0.00)
     (defvar tqnr-profile-location-name "Neverland")
+    ;; !!!PRIVATE!!! End
     ;; FRENCH CALENDAR: set French holidays and day/month/moon phase name
     (defvar tqnr-section-misc-calendar-french nil)
     ) ;; (progn ;; tqnr-section-misc-calendar
@@ -938,6 +1057,9 @@
   ;; SCREENSAVER: when idle for 5min some animations on buffer text
   (defvar tqnr-section-misc-screensaver nil)
   ) ;; (progn ;; tqnr-section-misc
+
+;; SAFE LOCAL VARIABLE: all customize settings from any .dir-local.el are put in customize
+(defvar tqnr-section-safe-local-variable nil)
 
 ;; FILECUSTOMIZE
 ;; all customize settings are put in here when you use interface

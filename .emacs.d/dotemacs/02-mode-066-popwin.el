@@ -1,6 +1,6 @@
 ;;; 02-mode-066-popwin.el --- configuration of popwin mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.4
+;; Version: 0.5
 ;; Created: July 2017
-;; Last-Updated: September 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2018-01-31 (0.5)
+;;    add magit and ada command function
 ;; 2017-09-19 (0.4)
 ;;    move F2 shortcut to function buffer/window
 ;; 2017-09-14 (0.3)
@@ -81,6 +83,13 @@
   (push '("*Python Doc*" :stick t) popwin:special-display-config)
   (push '("*haskell*" :stick t) popwin:special-display-config)
   (push '("*debug:haskell*" :stick t) popwin:special-display-config)
+  (push '("*magit async*" :height 3) popwin:special-display-config)
+  (push '(tqnr-ada-gps-build-buffer-name :stick t) popwin:special-display-config)
+  (push '(tqnr-ada-gps-check-buffer-name :stick t) popwin:special-display-config)
+  (push '(tqnr-ada-gps-pretty-print-buffer-name :stick t) popwin:special-display-config)
+  (push '(tqnr-ada-gps-build-all-buffer-name :stick t) popwin:special-display-config)
+  (push '(tqnr-ada-gps-clean-all-buffer-name :stick t) popwin:special-display-config)
+  (push '(tqnr-ada-gps-build-native-buffer-name :stick t) popwin:special-display-config)
   )
 
 

@@ -34,6 +34,9 @@
 
 
 ;;; Code:
+;; useful to have seq-filter
+(require 'seq)
+
 ;;
 ;; LOAD ALL DEFINITION
 ;; current section when loading files

@@ -1,6 +1,6 @@
 ;;; 02-mode-072-smartparens.el --- configuration of smartparens mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.4
+;; Version: 0.5
 ;; Created: July 2017
-;; Last-Updated: September 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2018-01-31 (0.5)
+;;    rename path + add exception about quote in ada mode and fitnesse
 ;; 2017-09-28 (0.4)
 ;;    remove shortcut M-] already used by `find-matching-keyword' in
 ;;    01-function-03-search.el
@@ -44,7 +46,7 @@
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/smartparens"))
+(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/smartparens-master"))
 (when (try-require 'smartparens-config "    ")
   ;; enable everywhere
   (smartparens-global-mode t)
@@ -61,6 +63,13 @@
     (add-hook 'smartparens-disabled-hook (lambda () (define-key cperl-mode-map "{" 'cperl-electric-lbrace))))
   ;; add pair < > in lisp mode
   (sp-local-pair 'emacs-lisp-mode "<" ">")
+  ;; remove pair ' ' in ada mode
+  (sp-local-pair 'ada-mode "'" nil :actions nil)
+  ;; remove pair ' ' in minibuffer
+  (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+
+  ;; can be used
+  ;(sp-local-pair 'fitnesse-mode "'''" "'''")
 
   )
 

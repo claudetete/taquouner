@@ -1,6 +1,6 @@
 ;;; 02-mode-075-haskell.el --- configuration of haskell mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -29,15 +29,17 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2018-01-31 (0.2)
+;;    change path and load
 ;; 2017-07-25 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/haskell-mode/"))
-(when (try-require 'haskell-mode-autoloads "    ")
+(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/haskell-mode-master/"))
+(when (try-require 'autoload-haskell-mode-autoloads "    ")
   ;; add info/help in emacs
-  (add-to-list 'Info-default-directory-list (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/haskell-mode/"))
+  (add-to-list 'Info-default-directory-list (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/haskell-mode-master/"))
   ;; enable interactive mode with a prompt
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (custom-set-variables

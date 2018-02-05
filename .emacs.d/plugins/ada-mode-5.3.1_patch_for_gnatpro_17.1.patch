@@ -1,0 +1,37 @@
+diff -ruN ada-mode-5.3.1/ada_mode_gps_indent.gpr.gp ada-mode-5.3.1_patch_pro/ada_mode_gps_indent.gpr.gp
+--- ada-mode-5.3.1/ada_mode_gps_indent.gpr.gp	2017-10-03 23:02:22.000000000 +0200
++++ ada-mode-5.3.1_patch_pro/ada_mode_gps_indent.gpr.gp	2018-01-29 10:46:01.771740200 +0100
+@@ -71,7 +71,7 @@
+    end Compiler;
+ 
+    package Linker is
+-      for Default_Switches ("Ada") use ("-lpthread");
++      -- for Default_Switches ("Ada") use ("-lpthread");
+    end Linker;
+ 
+    package Binder is
+diff -ruN ada-mode-5.3.1/gpr_query.gpr.gp ada-mode-5.3.1_patch_pro/gpr_query.gpr.gp
+--- ada-mode-5.3.1/gpr_query.gpr.gp	2017-10-03 23:02:22.000000000 +0200
++++ ada-mode-5.3.1_patch_pro/gpr_query.gpr.gp	2018-01-29 10:46:15.264089300 +0100
+@@ -59,7 +59,7 @@
+    end Compiler;
+ 
+    package Linker is
+-      for Default_Switches ("Ada") use ("-lpthread");
++      -- for Default_Switches ("Ada") use ("-lpthread");
+    end Linker;
+ 
+    package Binder is
+diff -ruN ada-mode-5.3.1/gpr_query-process_refresh.adb.gp ada-mode-5.3.1_patch_pro/gpr_query-process_refresh.adb.gp
+--- ada-mode-5.3.1/gpr_query-process_refresh.adb.gp	2017-10-03 23:02:22.000000000 +0200
++++ ada-mode-5.3.1_patch_pro/gpr_query-process_refresh.adb.gp	2018-01-29 10:46:24.419004700 +0100
+@@ -20,9 +20,7 @@
+ begin
+    Parse_All_LI_Files
+      (Self                => Xref,
+-#if HAVE_GNATCOLL_XREF="no"
+       Tree                => Tree,
+-#end if;
+       Project             => Tree.Root_Project,
+       Parse_Runtime_Files => False, --  True encounters bug in gnatcoll.projects; null pointer
+       Show_Progress       => Progress_Reporter,

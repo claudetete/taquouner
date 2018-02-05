@@ -1,6 +1,6 @@
 ;;; 02-mode-000-helm.el --- configuration of helm mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: July 2017
-;; Last-Updated: September 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2018-01-31 (0.4)
+;;    truncate more longer name + modify key to switch to swoop
 ;; 2017-09-11 (0.3)
 ;;    add option to enable Helm globally (by example to work in write-file)
 ;; 2017-09-11 (0.2)
@@ -68,7 +70,10 @@
     (add-hook 'ecb-toggle-compile-hide-hook 'helm-keyboard-quit))
   (when tqnr-section-mode-helm-buffers-list
     ;; to avoid error with helm-buffers-list
-    (setq ido-use-virtual-buffers nil))
+    (setq ido-use-virtual-buffers nil)
+    ;; increase number of characters of buffer name before truncate
+    (setq helm-buffer-max-length 80)
+    )
   (when (and tqnr-section-mode-helm-bookmark tqnr-section-mode-helm-find-files)
     (custom-set-variables
       '(helm-type-bookmark-actions
@@ -91,7 +96,7 @@
 
       (with-eval-after-load "isearch"
         ;; When doing isearch, hand the word over to helm-swoop
-        (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch))
+        (define-key isearch-mode-map (kbd "M-s") 'helm-swoop-from-isearch))
 
       (with-eval-after-load "helm-swoop"
         ;; From helm-swoop to helm-multi-swoop-all

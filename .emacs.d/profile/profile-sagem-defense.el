@@ -1,6 +1,6 @@
 ;;; profile-sagem-defense.el --- a config file for profile
 
-;; Copyright (c) 2013-2017 Claude Tete
+;; Copyright (c) 2013-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -17,26 +17,6 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
-
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.5
-;; Created: June 2013
-;; Last-Updated: September 2017
-
-;;; Commentary:
-;;
-;;; Change Log:
-;; 2017-09-11 (0.5)
-;;    fix path variable + add new mode and setting
-;; 2017-07-27 (0.4)
-;;    update to new conf format
-;; 2017-05-30 (0.3)
-;;    update to newest profile option + MSYS2 has now priority
-;; 2016-09-22 (0.2)
-;;    complete with new mode, remove usage of ECB by switching to helm +
-;;    projectile + popwin
-;; 2013-06-05 (0.1)
-;;    creation from alstom transport profile
 
 ;;; Code:
 ;; load private variable
@@ -237,6 +217,47 @@
 
   ;; RTRT: custom function about RTRT script .ptu file
   (setq tqnr-section-function-rtrt nil)
+
+  ;; ADA: functions to have multiple compile mode in ada
+  (setq tqnr-section-function-ada nil)
+  (when tqnr-section-function-ada
+    ;; BUILD
+    ;; Command of build one file in ada
+    (setq tqnr-ada-gps-build-command "gnat build")
+    ;; Buffer name of build one file in ada
+    (setq tqnr-ada-gps-build-buffer-name "*ada-build*")
+    ;; CHECK
+    ;; Command of check one file in ada
+    (setq tqnr-ada-gps-check-command "gnat check")
+    ;; Buffer name of check one file in ada
+    (setq tqnr-ada-gps-check-buffer-name "*ada-check*")
+    ;; PRETTY PRINT
+    ;; Command of pretty-print one file in ada
+    (setq tqnr-ada-gps-pretty-print-command "gnat pretty")
+    ;; Buffer name of pretty-print one file in ada
+    (setq tqnr-ada-gps-pretty-print-buffer-name "*ada-pretty-print*")
+    ;; BUILD ALL
+    ;; Command of build all project files
+    (setq tqnr-ada-gps-build-all-command "gnat make")
+    ;; Buffer name of build all project files command
+    (setq tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
+    ;; CLEAN ALL
+    ;; Command of clean all generated file
+    (setq tqnr-ada-gps-clean-all-command "gnat clean")
+    ;; Buffer name of clean all generated command
+    (setq tqnr-ada-gps-clean-all-buffer-name "*ada-clean-all*")
+    ;; BUILD NATIVE
+    ;; Command of build for native execution
+    (setq tqnr-ada-gps-build-native-command "gnat clean")
+    ;; Buffer name of native build command
+    (setq tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
+    ) ;; (when tqnr-section-function-ada
+
+  ;; RIPGREP: functions to add type support to helm ag for ripgrep
+  (setq tqnr-section-function-ripgrep nil)
+
+  ;; CALC: functions to add type support to helm ag for ripgrep
+  (setq tqnr-section-function-calc nil)
   ) ;; (when tqnr-section-function
 
 ;; MODE: load extern files which are modes in plugins/
@@ -408,10 +429,24 @@
   ;; GOOGLE CALENDAR: to import Google calendar
   (setq tqnr-section-mode-google-calendar nil)
 
-  ;; FILL COLUMN INDICATOR
-  ;; show a line at fill-column (set at 80 in
-  ;; dotemacs/11-misc.el be careful it enable truncate line
+  ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (setq tqnr-section-mode-fill-column-indicator nil)
+  (when tqnr-section-mode-fill-column-indicator
+    ;; pixel width of vertical line default is 1 (nil)
+    (setq tqnr-profile-fill-column-indicator-vertical-line-width nil)
+    ;; color of vertical line in color format or nil (set comment theme face)
+    (setq tqnr-profile-fill-column-indicator-vertical-line-color nil)
+    ;; Use a fixed column for vertical line to not use fill-column value otherwise nil
+    (setq tqnr-profile-fill-column-indicator-vertical-line-position nil)
+    ;; enable vertical line in C mode
+    (setq tqnr-profile-fill-column-indicator-mode-c nil)
+    ;; enable vertical line in C++ mode
+    (setq tqnr-profile-fill-column-indicator-mode-c++ nil)
+    ;; enable vertical line in ADA mode
+    (setq tqnr-profile-fill-column-indicator-mode-ada nil)
+    ;; enable vertical line in all mode
+    (setq tqnr-profile-fill-column-indicator-mode-all nil)
+    ) ;; (when tqnr-section-mode-fill-column-indicator
 
   ;; MUSE: muse mode to have nice doc
   (setq tqnr-section-mode-muse nil)
@@ -422,7 +457,7 @@
   ;; CSV: parse/edit/sort CSV file
   (setq tqnr-section-mode-csv t)
 
-  ;; SUBSVERSION: support Subversion 1.7
+  ;; SUBVERSION: support Subversion 1.7
   (setq tqnr-section-mode-subversion nil)
 
   ;; DIFF COLOR: add color to diff mode
@@ -661,6 +696,36 @@
 
   ;; RIPGREP: A front-end for rg, ripgrep (faster than anything...)
   (setq tqnr-section-mode-ripgrep t)
+  (when tqnr-section-mode-ripgrep
+    ;; List of types to add to ripgrep configuration (no .ripgrep configuration file only cli parameters)
+    ;; It should respect ripgrep format for --type-add parameter (extract from $ripgrep --help):
+    ;;   --type-add <TYPE>...
+    ;;   Add a new glob for a particular file type. Only one glob can be added at a time.
+    ;;   Multiple --type-add flags can be provided. Unless --type-clear is used, globs are added
+    ;;   to any existing globs defined inside of ripgrep.
+    ;;
+    ;;   Note that this MUST be passed to every invocation of ripgrep. Type settings are NOT
+    ;;   persisted.
+    ;;
+    ;;   Example: rg --type-add 'foo:*.foo' -tfoo PATTERN.
+    ;;
+    ;;   --type-add can also be used to include rules from other types with the special include
+    ;;   directive. The include directive permits specifying one or more other type names
+    ;;   (separated by a comma) that have been defined and its rules will automatically be
+    ;;   imported into the type specified. For example, to create a type called src that matches
+    ;;   C++, Python and Markdown files, one can use:
+    ;;
+    ;;   --type-add 'src:include:cpp,py,md'
+    ;;
+    ;;   Additional glob rules can still be added to the src type by using the --type-add flag
+    ;;   again:
+    ;;
+    ;;   --type-add 'src:include:cpp,py,md' --type-add 'src:*.foo'
+    ;;
+    ;;   Note that type names must consist only of Unicode letters or numbers. Punctuation
+    ;;   characters are not allowed.
+    (setq tqnr-section-mode-ripgrep-additional-type '())
+    ) ;; (when tqnr-section-mode-ripgrep
 
   ;; HYDRA: Create families of short bindings with a common prefix
   (setq tqnr-section-mode-hydra t)
@@ -681,6 +746,8 @@
     (setq tqnr-section-mode-hydra-search t)
     ;; Use Hydra to manage smartparens shortcuts
     (setq tqnr-section-mode-hydra-smartparens t)
+    ;; Use Hydra to manage ada compile shortcuts
+    (setq tqnr-section-mode-hydra-ada nil)
     ;; Use Hydra to manage outline shortcuts
     (setq tqnr-section-mode-hydra-outline t)
     ) ;; (when tqnr-section-mode-hydra
@@ -698,6 +765,21 @@
 
   ;; DUMB JUMP: On-the-fly spell checking
   (setq tqnr-section-mode-dumb-jump t)
+
+  ;; ADA: Ada mode for edit/navigate/compile ada source code
+  (setq tqnr-section-mode-ada nil)
+
+  ;; FITNESSE: FitNesse MarkUp files syntax highlight
+  (setq tqnr-section-mode-fitnesse nil)
+
+  ;; PANDOC: PanDoc tools mode to translate between markup syntax
+  (setq tqnr-section-mode-pandoc nil)
+
+  ;; FLEX ISEARCH: Flex Isearch mode add fuzzy match when doing incremental search
+  (setq tqnr-section-mode-flex-isearch nil)
+
+  ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
+  (setq tqnr-section-mode-org-jira nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
@@ -725,7 +807,7 @@
          "t_u64"
          "t_i64"
          )
-      )
+      ) ;; (setq tqnr-profile-c-extra-types
     ;; Compile mode without ask
     (setq tqnr-profile-c-ask-before-compile t)
     ;; INDENT PREPROCESSOR: make a #define be align with C code
@@ -869,7 +951,6 @@
     ;; nice can use any variant of this open source font (by example slashed zero, dot zero, empty zero)
     ;; see https://be5invis.github.io/Iosevka/ for more settings
     ;;
-    ;;(setq tqnr-profile-font "Monaco-8")
     (setq tqnr-profile-font "Iosevka-8")
     ;; ANTIALIAS: set antialiasing on font rendering
     (setq tqnr-section-display-font-antialias t)
@@ -1042,6 +1123,9 @@
   ;; SCREENSAVER: when idle for 5min some animations on buffer text
   (setq tqnr-section-misc-screensaver nil)
   ) ;; (when tqnr-section-misc
+
+;; SAFE LOCAL VARIABLE: all customize settings from any .dir-local.el are put in customize
+(setq tqnr-section-safe-local-variable t)
 
 ;; FILECUSTOMIZE
 ;; all customize settings are put in here when you use interface

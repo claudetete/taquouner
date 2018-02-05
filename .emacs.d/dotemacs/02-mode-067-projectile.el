@@ -1,6 +1,6 @@
 ;;; 02-mode-067-projectile.el --- configuration of projectile mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,9 @@
 ;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2018-01-31 (0.2)
+;;    modify projectile git command to include submodules files + use
+;;    .projectile file in git root project
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -37,6 +40,9 @@
 ;; dash is a dependency of projectile
 (add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/dash.el-master"))
 (when (try-require 'dash "    ")
+  ;; list all files even in git submodules (remove --others and add --recurse-submodules)
+  (custom-set-variables
+    '(projectile-git-command "git ls-files -z --cached --recurse-submodules --exclude-standard"))
   ;; dash is found so load projectile
   (add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/projectile-master"))
   (eval-after-load "projectile"

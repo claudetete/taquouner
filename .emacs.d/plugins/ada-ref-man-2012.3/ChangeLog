@@ -1,0 +1,33 @@
+2017-02-23  Stephen Leake  <stephen_leake@stephe-leake.org>
+
+	* packages/ada-ref-man/ada-ref-man.el: actually bump version
+
+2017-02-23  Stephen Leake  <stephen_leake@stephe-leake.org>
+
+	* packages/ada-ref-man/*: release version 2012 TC1
+
+2014-11-21  Stephen Leake  <stephen_leake@stephe-leake.org>
+
+	release ada-mode 5.1.7, wisi 1.1.0; minor format changes in ada-ref-man
+	(take 2)
+
+2014-09-29  Stefan Monnier  <monnier@iro.umontreal.ca>
+
+	* ada-ref-man.el: Fix up formatting details.
+
+2014-09-28  Stephen Leake  <stephen_leake@stephe-leake.org>
+
+	publish ada-mode 5.1.6, wisi 1.0.6, new package ada-ref-man
+
+	* admin/archive-contents.el (archive--metadata): include 'dir' in files,
+	for doc-only packages
+	 (archive--metadata): fix typo in error message
+
+	* packages/ada-mode/ada-ref-man.el: New file.
+	* packages/ada-mode/*: version 5.1.6
+
+	* packages/ada-ref-man/: New directory.
+
+	* packages/wisi/*: version 1.0.6
+	* packages/wisi/README: New file.
+

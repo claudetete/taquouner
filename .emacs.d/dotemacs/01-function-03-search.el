@@ -1,6 +1,6 @@
 ;;; 01-function-03-search.el --- add some function about searching in buffer
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;
 
 ;;; Change Log:
+;; 2018-01-31 (0.2)
+;;    add FitNesse collaspable section in matching symbol
 ;; 2017-07-21 (0.1)
 ;;    creation from split of old functions.el
 
@@ -198,6 +200,14 @@
     ((looking-at "#endif")
       (when (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
         (find-matching-element 're-search-backward 0 "#endif" "#if")))
+    ;;
+    ;; FitNesse
+    ((looking-at "!\\*")
+      (when (eq major-mode 'fitnesse-mode)
+        (find-matching-element 're-search-forward 2 "!\\*" "\\*!")))
+    ((looking-at "\\*!")
+      (when (eq major-mode 'fitnesse-mode)
+        (find-matching-element 're-search-backward 0 "\\*!" "!\\*")))
     ;;
     ;;(t (error "Cursor is not on ASSERT nor RETRACT"))
     (t t))

@@ -1,6 +1,6 @@
 ;;; 02-mode-999-diminish.el --- configuration of diminish mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2018-01-31 (0.2)
+;;    remove a lot of minor mode
 ;; 2017-07-25 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -37,18 +39,23 @@
 ;; must be load after all other modes
 (when (try-require 'diminish "    ")
   (eval-after-load "abbrev"
-    '(diminish 'abbrev-mode " Ab"))
+    '(diminish 'abbrev-mode))
   (eval-after-load "yasnippet"
-    '(diminish 'yas-minor-mode " Y"))
+    '(diminish 'yas-minor-mode))
   (eval-after-load "gtags"
-    '(diminish 'gtags-mode " G"))
+    '(diminish 'gtags-mode))
   (eval-after-load "undo-tree"
-    '(diminish 'undo-tree-mode " UndoT"))
+    '(diminish 'undo-tree-mode))
   (eval-after-load "projectile-mode"
-    '(diminish 'undo-tree-mode " Prj"))
-  (eval-after-load "company-mode"
-    '(diminish 'undo-tree-mode " C"))
-
+    '(diminish 'projectile-mode))
+  (eval-after-load 'company
+    '(diminish 'company-mode))
+  (eval-after-load 'helm-mode
+    '(diminish 'helm-mode))
+  (eval-after-load 'smartparens-mode
+    '(diminish 'smartparens-mode))
+  (eval-after-load 'hs-minor-mode
+    '(diminish 'hs-minor-mode))
   (add-hook 'emacs-lisp-mode-hook
     (lambda()
       (setq mode-name "el")))

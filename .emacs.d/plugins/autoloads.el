@@ -128,13 +128,11 @@
   (update-file-autoloads "markdown-mode.el"          t (concat autoloads-location "autoload-markdown-mode.el"))
   ;; EASY-KILL
   (update-file-autoloads "easy-kill.el"              t (concat autoloads-location "autoload-easy-kill.el"))
-
   ;; PROJECTILE
   (update-file-autoloads "projectile-master/projectile.el" t
     (concat autoloads-location "projectile-master/autoload-projectile.el"))
   ;; HELM PROJECTILE
-  (update-file-autoloads "projectile-master/helm-projectile.el" t
-    (concat autoloads-location "projectile-master/autoload-helm-projectile.el"))
+  (update-file-autoloads "helm-projectile.el"        t (concat autoloads-location "autoload-helm-projectile.el"))
 
   ;; quit emacs
   (kill-emacs)

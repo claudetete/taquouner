@@ -1,6 +1,6 @@
 ;;; 00-environment.el --- a config file for environment settings
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.2
+;; Version: 3.3
 ;; Created: October 2006
-;; Last-Updated: September 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;; [HEADER.Environment check and configuration]
 ;; [DEFAULT.t]
 
 ;;; Change Log:
+;; 2018-01-31 (3.3)
+;;    fix error with garbage collection
 ;; 2017-09-01 (3.2)
 ;;    do reasonable settings about garbage collection + simplify path and exec
 ;; 2017-05-26 (3.1)
@@ -94,7 +96,7 @@
 
   (defun garbage-collection-set-default ()
     ;; return to default value, currently set to 800KB of RAM
-    (setq gc-cons-threshold (get 'gc-cons-threshold 'standard-value)))
+    (setq gc-cons-threshold (car (get 'gc-cons-threshold 'standard-value))))
 
   (defun garbage-collection-set-10MB ()
     ;; set to reasonable value 10MB of RAM
