@@ -1,6 +1,6 @@
 ;;; 02-mode-053-avy.el --- configuration of avy mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: January 2018
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,9 @@
 ;; [SUBDEFAULT.t]
 
 ;;; Change Log:
+;; 2018-01-31 (0.2)
+;;    add more shortcut to run avy mode (above/below) + use new function goto
+;;    word 2
 ;; 2017-07-24 (0.1)
 ;;    creation from split of old mode.el (see 02-mode.el for history)
 
@@ -43,9 +46,30 @@
 ;; shortcuts are put in a hook to be loaded after everything else in init process
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
-    (global-set-key     (kbd "<f12>")           'avy-goto-char-2)
-    (global-set-key     (kbd "<M-f12>")         'avy-goto-word-or-subword-1)
-    (global-set-key     (kbd "<C-f12>")         'avy-goto-line)
+    (global-set-key     (kbd "<f12> <f12>")     'avy-goto-char-2)
+    (global-set-key     (kbd "<f12> <up>")      'avy-goto-char-2-above)
+    (global-set-key     (kbd "<f12> <down>")    'avy-goto-char-2-below)
+    (global-set-key     (kbd "<M-f12> <M-f12>") 'avy-goto-word-2)
+    (global-set-key     (kbd "<M-f12> <up>")    'avy-goto-word-2-above)
+    (global-set-key     (kbd "<M-f12> <down>")  'avy-goto-word-2-below)
+    ;; move to line and keep column position
+    ;; workaround from https://github.com/abo-abo/avy/issues/127
+    (global-set-key     (kbd "<C-f12> <C-f12>") (lambda ()
+                                                  (interactive)
+                                                  (let ((col (current-column)))
+                                                    (avy-goto-line)
+                                                    (move-to-column col))))
+    (global-set-key     (kbd "<C-f12> <up>")    (lambda ()
+                                                  (interactive)
+                                                  (let ((col (current-column)))
+                                                    (avy-goto-line-above)
+                                                    (move-to-column col))))
+    (global-set-key     (kbd "<C-f12> <down>")  (lambda ()
+                                                  (interactive)
+                                                  (let ((col (current-column)))
+                                                    (avy-goto-line-below)
+                                                    (move-to-column col))))
+
     (global-set-key     (kbd "<S-F12>")         'avy-pop-mark)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
