@@ -19,15 +19,17 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 3.3
+;; Version: 3.4
 ;; Created: October 2006
-;; Last-Updated: January 2018
+;; Last-Updated: February 2018
 
 ;;; Commentary:
 ;; [HEADER.Environment check and configuration]
 ;; [DEFAULT.t]
 
 ;;; Change Log:
+;; 2018-02-06 (3.4)
+;;    fix problem about concat of path list
 ;; 2018-01-31 (3.3)
 ;;    fix error with garbage collection
 ;; 2017-09-01 (3.2)
@@ -238,7 +240,7 @@
   ;;     )
   ;; ]]
   ;; need to use (list ) instead of '() to be able to use variable in it see https://stackoverflow.com/questions/24188100/using-mapconcat-to-concatenate-a-list-containing-a-variable
-  (setenv "PATH" (concat (mapconcat 'identity tqnr-profile-path ";") (getenv "PATH")))
+  (setenv "PATH" (concat (mapconcat 'identity tqnr-profile-path ";") ";" (getenv "PATH")))
   ;; emacs can also search in this path exec for external tool
   (setq exec-path (append tqnr-profile-path exec-path))
   ;; [COMMENT.]
