@@ -1,6 +1,6 @@
 ;;; 02-mode-013-yasnippet.el --- configuration of yasnippet mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -34,11 +34,25 @@
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/yasnippet-0.6.1c"))
-(when (try-require 'yasnippet "    ") ; not yasnippet-bundle
-  (setq yas/root-directory (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/yasnippet-0.6.1c/snippets"))
-  (yas/load-directory yas/root-directory))
-(yas/global-mode)
+(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/yasnippet"))
+(when (try-require 'yasnippet "    ")
+  ;; Add your own snippets to ~/.emacs.d/plugins/snippets by placing files there or invoking yas-new-snippet.
+  (setq yas-snippet-dirs
+    '(
+       ;; keep default value
+       "~/.emacs.d/snippets"
+       ;; add path to collection of snippets
+       (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/snippets")
+       ))
+  (yas/global-mode 1))
+
+
+;; shortcuts are put in a hook to be loaded after everything else in init process
+(add-hook 'tqnr-after-init-shortcut-hook
+  (lambda ()
+    (global-set-key (kbd "C-c C-e") 'yas/expand)
+    ) ;; (lambda ()
+  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 
 
 (provide '02-mode-013-yasnippet)

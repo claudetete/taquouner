@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: FitnesseDebug
+# key: FitnesseDebug
+# key: fitnessedebug
+# key: debug
+# key: d
+# --
+!|FitnesseDebug|
+|breakPoint|etapeId|
+|true      | $0 |
