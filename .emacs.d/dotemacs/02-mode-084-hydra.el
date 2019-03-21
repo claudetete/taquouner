@@ -234,13 +234,26 @@
   [_b_] Binding    [_y_] Synonyme En          [_i_] Wikipedia En
   [_v_] Variable   [_c_] Conjugation Fr       [_d_] Duckduckgo
    ^ ^             [_j_] Conjugation En
+  Capitalized to use default help instead of helpful.
 "
       ;; Help
-      ("f" describe-function :color blue)
-      ("k" describe-key :color blue)
-      ("a" apropos-command :color blue)
+      ("f" (if tqnr-section-mode-helpful
+             (helpful-callable)
+             (describe-function)) :color blue)
+      ("F" describe-function :color blue)
+      ("k" (if tqnr-section-mode-helpful
+             (helpful-key)
+             (describe-key)) :color blue)
+      ("K" describe-key :color blue)
+      ("a" (if tqnr-section-mode-helpful
+             (helpful-command)
+             (apropos-command)) :color blue)
+      ("A" apropos-command :color blue)
       ("b" describe-bindings :color blue)
-      ("v" describe-variable :color blue)
+      ("v" (if tqnr-section-mode-helpful
+             (helpful-variable)
+             (describe-variable)) :color blue)
+      ("V" describe-variable :color blue)
       ;; Spelling
       ("e" translate-fren :color blue)
       ("r" translate-enfr :color blue)
@@ -469,10 +482,7 @@
     ;; shortcuts are put in a hook to be loaded after everything else in init process
     (add-hook 'tqnr-after-init-shortcut-hook
       (lambda ()
-        (global-set-key   (kbd "C-c <up>")    'hydra-smartparens/body)
-        (global-set-key   (kbd "C-c <down>")  'hydra-smartparens/body)
-        (global-set-key   (kbd "C-c <left>")  'hydra-smartparens/body)
-        (global-set-key   (kbd "C-c <right>") 'hydra-smartparens/body)
+        (global-set-key         (kbd "C-c s")   'hydra-smartparens/body)
         ) ;; (lambda ()
       ) ;; (add-hook 'tqnr-after-init-shortcut-hook
     ) ;; (when tqnr-section-mode-hydra-spelling
@@ -562,6 +572,79 @@ _d_: subtree
     ) ;; (when tqnr-section-mode-hydra-outline
 
   ) ;; (when (try-require 'hydra "      ")
+
+
+  ;;
+  ;; ORG MOTION/HINT
+  ;;
+  ;; [VARCOMMENT.Use Hydra to manage org shortcuts]
+  ;; [VARIABLE.tqnr-section-mode-hydra-org-mode t]
+  (when (and tqnr-section-mode-hydra-org-mode tqnr-section-mode-org-mode)
+    (defhydra hydra-org-mode (:color pink
+                               :hint nil)
+      "
+╭──^──────^┐
+│Or^g Mode^│  ^ Move^     ^Hint    ^                              [_q_] Quit
+└──^──────^╯──^─────^──┬──^────────^──────────────────────────────────────╮
+   ^      ^   [_<up>_]
+   ^      ^    ^ ↑  ^
+  [_<left>_]   ^← → ^
+   ^      ^    ^ ↓  ^
+   ^      ^  [_<down>_]
+"
+      ;; Move Visible
+      ("<left>"   outline-up-heading)
+      ("<up>"     org-previous-visible-heading)
+      ("<down>"   org-next-visible-heading)
+      ;; Move on Same Level (even not visible)
+      ("<M-up>"   org-backward-same-level)
+      ("<M-down>" org-forward-same-level)
+      ;;
+      ("q" nil :color blue)
+      )
+    ;; shortcuts are put in a hook to be loaded after everything else in init process
+    (add-hook 'tqnr-after-init-shortcut-hook
+      (lambda ()
+        (with-eval-after-load "org-mode"
+          (define-key org-mode-map      (kbd "C-c C-J")         'hydra-org-mode/body)
+          ) ;; (with-eval-after-load "org-mode"
+        ) ;; (lambda ()
+      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+    ) ;; (when tqnr-section-mode-hydra-spelling
+
+
+  ;;
+  ;; TOGGLE SPECIAL BUFFER
+  ;;
+  ;; [VARCOMMENT.Use Hydra to manage special buffer toggle shortcuts]
+  ;; [VARIABLE.tqnr-section-mode-hydra-special-buffer t]
+  (when tqnr-section-function-buffer-window
+    (defhydra hydra-special-buffer (:color blue
+                                     :hint nil)
+    "
+╭──^─^───────────┐
+│Sp^e^cial Buffer│   [_q_] Quit
+└──^─^───────────╯───────────╮
+  [_b_] Bookmark        (M-2)
+  [_s_] Search          (M-3)
+  [_c_] Compile         (M-4)
+  [_g_] Version Control (M-5)
+  [_h_] Help            (M-6)
+"
+      ("b" toggle-bookmark-buffer)
+      ("s" toggle-search-buffer)
+      ("c" toggle-compilation-buffer)
+      ("g" toggle-vc-buffer)
+      ("h" toggle-help-buffer)
+      ("q" nil nil :color blue)
+      )
+    ;; shortcuts are put in a hook to be loaded after everything else in init process
+    (add-hook 'tqnr-after-init-shortcut-hook
+      (lambda ()
+        (global-set-key   (kbd "M-1") 'hydra-special-buffer/body)
+        ) ;; (lambda ()
+      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+    ) ;; (when tqnr-section-function-buffer-window
 
 
 ;;
