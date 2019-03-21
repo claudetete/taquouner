@@ -146,6 +146,7 @@ middle"
     (cond
       ((eq 0 this-window-y-min) "top")
       ((eq (- fr-height 1) this-window-y-max) "bot")
+      ;; TODO do not take into account shackle or popwin window
       (t "mid"))))
 
 ;; where is the window horizontally by Sergey Ovechkin (pomeo)
@@ -321,7 +322,7 @@ middle"
   (if (get-buffer "*ack*")
     (toggle-special-buffer "*ack*")
     (if (get-buffer "*helm-ag*")
-      (toggle-special-buffer "*helm-ag*")
+      (helm-resume "*helm-ag*")
       (toggle-special-buffer "*grep*")))
   )
 
@@ -357,6 +358,7 @@ middle"
 (defun toggle-help-buffer ()
   "Switch to the help buffer."
   (interactive)
+  ;; TODO add helpful
   (toggle-special-buffer "*Help*")
   )
 

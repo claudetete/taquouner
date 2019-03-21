@@ -42,7 +42,7 @@
 ;;; Code:
 
 ;;
-(add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/helm-master"))
+(add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/helm-3.0"))
 
 ;; (custom-set-variables
 ;;   '(helm-follow-mode-persistent t))
@@ -52,16 +52,16 @@
     ;; configure everything instead of locate under MS Windows
     ;; client must be started in background before use
     ;; $ Everything.exe -startup
-    (setq helm-locate-command "es -s %s -sort run-count %s")
-    (setq helm-locate-fuzzy-match nil)
-    (defun helm-es-hook ()
-      (when (and (equal (assoc-default 'name (helm-get-current-source)) "Locate")
-              (string-match "\\`es" helm-locate-command))
-        (mapc (lambda (file)
-                (call-process "es" nil nil nil
-                  "-inc-run-count" (convert-standard-filename file)))
-          (helm-marked-candidates))))
-    (add-hook 'helm-find-many-files-after-hook 'helm-es-hook)
+    ;; (setq helm-locate-command "es -s %s -sort run-count %s")
+    ;; (setq helm-locate-fuzzy-match nil)
+    ;; (defun helm-es-hook ()
+    ;;   (when (and (equal (assoc-default 'name (helm-get-current-source)) "Locate")
+    ;;           (string-match "\\`es" helm-locate-command))
+    ;;     (mapc (lambda (file)
+    ;;             (call-process "es" nil nil nil
+    ;;               "-inc-run-count" (convert-standard-filename file)))
+    ;;       (helm-marked-candidates))))
+    ;; (add-hook 'helm-find-many-files-after-hook 'helm-es-hook)
     )
   (setq helm-candidate-separator
     "--separator------------------------------")
@@ -78,15 +78,15 @@
     (custom-set-variables
       '(helm-type-bookmark-actions
          (quote
-           (("Jump to bookmark with find-files" . helm-bookmark-find-files-jump)
-             ("Jump to bookmark"                . helm-bookmark-jump)
-             ("Jump to BM other window"         . helm-bookmark-jump-other-window)
-             ("Bookmark edit annotation"        . bookmark-edit-annotation)
-             ("Bookmark show annotation"        . bookmark-show-annotation)
-             ("Delete bookmark(s)"              . helm-delete-marked-bookmarks)
-             ("Edit Bookmark"                   . helm-bookmark-edit-bookmark)
-             ("Rename bookmark"                 . helm-bookmark-rename)
-             ("Relocate bookmark"               . bookmark-relocate))))))
+           ( ("Jump to bookmark"                 . helm-bookmark-jump)
+             ("Jump to bookmark with find-files" . helm-bookmark-find-files-jump)
+             ("Jump to BM other window"          . helm-bookmark-jump-other-window)
+             ("Bookmark edit annotation"         . bookmark-edit-annotation)
+             ("Bookmark show annotation"         . bookmark-show-annotation)
+             ("Delete bookmark(s)"               . helm-delete-marked-bookmarks)
+             ("Edit Bookmark"                    . helm-bookmark-edit-bookmark)
+             ("Rename bookmark"                  . helm-bookmark-rename)
+             ("Relocate bookmark"                . bookmark-relocate))))))
 
 
   ;; [VARCOMMENT.isearch by helm]
@@ -222,6 +222,7 @@
     ;; [VARIABLE.tqnr-section-mode-helm-bookmark nil]
     (when tqnr-section-mode-helm-bookmark
       (add-hook 'c-mode-common-hook '(lambda () (local-unset-key (kbd "C-c C-b"))))
+      (add-hook 'ada-mode-hook '(lambda () (local-unset-key (kbd "C-c C-b"))))
       ;; override bookmark-bmenu-list from 08-shortcut-02-buffer
       (global-set-key           (kbd "C-c C-b")         'helm-bookmarks)
       )

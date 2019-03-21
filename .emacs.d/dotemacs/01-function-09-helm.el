@@ -1,6 +1,6 @@
 ;;; 01-function-09-helm.el --- add some function about helm mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: December 2018
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;
 
 ;;; Change Log:
+;; 2018-12-05 (0.2)
+;;    fix after update to last helm version
 ;; 2017-07-21 (0.1)
 ;;    creation from split of old functions.el
 
@@ -41,7 +43,7 @@
 ;;;; HELM-FILES
 ;;; do not display dot paths in list of files with helm
 (defvar helm-ff-directory-no-dots-p t)
-;; rework original function
+;; rework original function `helm-ff-directory-files'
 (defun helm-ff-directory-files-no-dots (helm-ff-directory-files directory &optional full)
   "List contents of DIRECTORY.
 Argument FULL mean absolute path.
@@ -54,8 +56,7 @@ systems unlike original function."
   ;; original variables
   (let* (file-error
          (ls   (condition-case err
-                 (directory-files
-                   directory full directory-files-no-dot-files-regexp)
+                   (helm-list-directory directory)
                  ;; Handle file-error from here for Windows
                  ;; because predicates like `file-readable-p' and friends
                  ;; seem broken on emacs for Windows systems (always returns t).
@@ -72,6 +73,7 @@ systems unlike original function."
           (dot2 (concat directory ".."))
           ;; new variable
           ret)
+    (puthash directory (+ (length ls) 2) helm-ff--directory-files-hash)
     ;; original code
     ;(append (and (not file-error) (list dot dot2)) ls)))
     ;; new code
