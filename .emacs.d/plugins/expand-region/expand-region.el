@@ -159,6 +159,7 @@ before calling `er/expand-region' for the first time."
                (not (memq last-command '(er/expand-region er/contract-region))))
       (er/prepare-for-more-expansions))))
 
+(eval-after-load "ada-mode"      '(require 'ada-mode-expansions))
 (eval-after-load "clojure-mode"  '(require 'clojure-mode-expansions))
 (eval-after-load "css-mode"      '(require 'css-mode-expansions))
 (eval-after-load "erlang-mode"   '(require 'erlang-mode-expansions))

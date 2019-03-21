@@ -38,7 +38,8 @@
 ;;; Code:
 (add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/expand-region"))
 (when (try-require 'expand-region "    ")
-  ;; see shortcut-global.el for settings
+  ;; do not use fast key to expand/contract (bind by default to 's' and '-')
+  (setq expand-region-fast-keys-enabled nil)
   )
 
 
