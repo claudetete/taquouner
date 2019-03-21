@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: July 2018
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;
 
 ;;; Change Log:
+;; 2018-07-24 (0.3)
+;;    add link to open GitExtensions file history
 ;; 2018-01-29 (0.2)
 ;;    update magit version to be compatible with emacs 24 + add shortcut + add
 ;;    ugly hack to open difftool
@@ -42,11 +44,11 @@
 ;; dash is a dependency of projectile
 (add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/magit-master/lisp"))
 (when (try-require 'magit "    ")
-  ;; [VARCOMMENT.path to git executable]
-  ;; [VARIABLE.tqnr-profile-magit-exec "git"]
-  ;;(setq magit-git-executable tqnr-profile-magit-exec)
   (setq magit-commit-all-when-nothing-staged t)
   (setq magit-process-popup-time 1)
+
+  ;; do not show diff when commit
+  (setq magit-commit-show-diff nil)
 
   (defun magit-difftool-buffer-file ()
     "Open git difftool to compare with HEAD (no commited changes)."
@@ -63,7 +65,16 @@
     "Open git difftool to compare with HEAD (no commited changes)."
     (interactive)
     (-if-let (file (magit-file-relative-name))
-      (magit-run-async-command (concat "git difftool HEAD --no-prompt -- " file) t t)
+      (magit-run-async-command (concat "git difftool HEAD --no-prompt -- " file) t nil)
+      (user-error "Buffer isn't visiting a file")))
+
+  (defun magit-file-history-external ()
+    "Open GUI of git filehistory (need to have GitExtensions in PATH).
+Useful until magit can open difftool instead of Ediff."
+    (interactive)
+    ;; get absolute file path of current file
+    (-if-let (file (concat (file-name-as-directory (magit-toplevel)) (magit-file-relative-name)))
+      (magit-run-async-command (concat "gitex.cmd filehistory " file) t)
       (user-error "Buffer isn't visiting a file")))
 
   (defvar magit-async-command-buffer "*magit async*")
@@ -72,43 +83,54 @@
     "Call the COMMAND in an asynchronous process."
     ;; do not show a new window
     (save-window-excursion
-      (kill-buffer (get-buffer-create magit-async-command-buffer))
-      ;; get current buffer
-      (let ((my-async-buffer (generate-new-buffer magit-async-command-buffer))
-             (default-directory (if toplevel
-                                  (or (magit-toplevel)
-                                    (user-error "Not inside a Git repository"))
-                                  default-directory)))
-        ;; call command
-        (async-shell-command command my-async-buffer)
-        ;; do not ask about process running with async buffer
-        (set-process-query-on-exit-flag (get-buffer-process my-async-buffer) nil)
-        (if keep-buffer
-          ;; pop async buffer (after 1s: to wait async process start)
-          (run-with-timer 1 nil (lambda (my-async-buffer) (pop-to-buffer magit-async-command-buffer)) my-async-buffer)
-          ;; kill async buffer (after 1s: to wait async process start)
-          (run-with-timer 1 nil (lambda (my-async-buffer) (kill-buffer my-async-buffer)) my-async-buffer))
+      (if keep-buffer
+        (progn
+          (kill-buffer (get-buffer-create magit-async-command-buffer))
+          ;; get current buffer
+          (let ((my-async-buffer (generate-new-buffer magit-async-command-buffer))
+                 (default-directory (if toplevel
+                                      (or (magit-toplevel)
+                                        (user-error "Not inside a Git repository"))
+                                      default-directory)))
+            ;; call command
+            (async-shell-command command my-async-buffer)
+            ;; do not ask about process running with async buffer
+            (set-process-query-on-exit-flag (get-buffer-process my-async-buffer) nil)
+            ;; pop async buffer (after 1s: to wait async process start)
+            (run-with-timer 1 nil (lambda (my-async-buffer) (pop-to-buffer magit-async-command-buffer)) my-async-buffer)))
+        (progn
+          (set (make-local-variable 'async-shell-command-display-buffer) nil)
+          ;; call command
+          (async-shell-command command))
         )))
+
+  ;; add X shortcut in popup action to open with difftool instead of Ediff
+  (try-require 'magit-exttool)
 
   ;; shortcuts are put in a hook to be loaded after everything else in init process
   (add-hook 'tqnr-after-init-shortcut-hook
     (lambda ()
       ;; git status (entry point of magit) then 'h' to popup help
-      (global-set-key       (kbd "C-c g g")      'magit-status)
+      (global-set-key   (kbd "C-c g g")         'magit-status)
       ;; git fetch
-      (global-set-key       (kbd "C-c g f")      'magit-fetch-popup)
+      (global-set-key   (kbd "C-c g f")         'magit-fetch-popup)
       ;; git stash
-      (global-set-key       (kbd "C-c g s")      'magit-stash-popup)
+      (global-set-key   (kbd "C-c g s")         'magit-stash-popup)
       ;; git push
-      (global-set-key       (kbd "C-c g p")      'magit-push-popup)
+      (global-set-key   (kbd "C-c g p")         'magit-push-popup)
       ;; git pull
-      (global-set-key       (kbd "C-c g u")      'magit-pull-popup)
+      (global-set-key   (kbd "C-c g u")         'magit-pull-popup)
       ;; git merge
-      (global-set-key       (kbd "C-c g m")      'magit-merge-popup)
+      (global-set-key   (kbd "C-c g m")         'magit-merge-popup)
       ;; magit dispatch
-      (global-set-key       (kbd "C-c g SPC")    'magit-dispatch-popup)
+      (global-set-key   (kbd "C-c g SPC")       'magit-dispatch-popup)
       ;; magit diff
-      (global-set-key       (kbd "C-c g =")      'magit-difftool-buffer-file)
+      (global-set-key   (kbd "C-c g =")         'magit-difftool-buffer-file)
+      ;; magit file/buffer
+      (global-set-key   (kbd "C-c g b")         'magit-file-popup)
+      ;; magit fil history with external tool
+      (global-set-key   (kbd "C-c g l")         'magit-file-history-external)
+      (global-set-key   (kbd "C-c g h")         'magit-file-history-external)
       ) ;; (lambda ()
     ) ;; (add-hook 'tqnr-after-init-shortcut-hook
   )

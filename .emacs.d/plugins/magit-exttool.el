@@ -18,15 +18,15 @@
           (add-to-list 'mergelist file)
           (add-to-list 'difflist file)))
       (if (equal (magit-diff-type) 'staged)
-        (magit-exttool-run-tool difflist "difftool" "--cached")
-        (magit-exttool-run-tool difflist "difftool"))
-      (magit-exttool-run-tool mergelist  "mergetool"))))
+        (magit-exttool-run-tool difflist "difftool" "--cached" "--no-prompt")
+        (magit-exttool-run-tool difflist "difftool" "--no-prompt"))
+      (magit-exttool-run-tool mergelist  "mergetool" "--no-prompt"))))
 
 (defun magit-exttool-open  (&optional file)
   ""
   ;; Modified from `magit-stage'.
   (if file
-      (magit-exttool-run "difftool" file)
+      (magit-exttool-run "difftool" "--no-prompt" file)
     (--when-let (magit-current-section)
         (pcase (list (magit-diff-scope))
           (`(file)
