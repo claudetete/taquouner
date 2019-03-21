@@ -56,9 +56,18 @@
     '(diminish 'smartparens-mode))
   (eval-after-load 'hs-minor-mode
     '(diminish 'hs-minor-mode))
+  (eval-after-load 'iimage-mode
+    '(diminish 'iimage-mode))
+  (eval-after-load 'pandoc-mode
+    '(diminish 'pandoc-mode))
+  (eval-after-load 'auto-revert-mode
+    '(diminish 'auto-revert-mode))
   (add-hook 'emacs-lisp-mode-hook
     (lambda()
       (setq mode-name "el")))
+  (eval-after-load 'fitnesse-mode
+    (lambda()
+      (setq mode-name "FiT")))
   )
 
 

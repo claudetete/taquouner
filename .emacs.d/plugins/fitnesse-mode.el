@@ -1,6 +1,6 @@
 ;;; fitnesse-mode.el --- a mode to edit FitNesse MarkUp files
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -26,9 +26,8 @@
 
 ;;; Commentary:
 ;;
-;; TODO syntax highlighting
 ;; TODO motion between collapsable sections
-;; TODO fold collapsable sections (outline integration)
+;; TODO fold collapsable sections (outline integration), workaround with custom function
 ;; TODO follow links (cross reference)
 ;; TODO snippet to insert anything
 ;; TODO smartparens integration
@@ -66,8 +65,9 @@
   nil
   (progn
     (setq fitnesse-mode-map (make-sparse-keymap))
-    (define-key fitnesse-mode-map (kbd "<M-up>") 'fitnesse-up-section)
-    (define-key fitnesse-mode-map (kbd "<M-down>") 'fitnesse-down-section)
+    (define-key fitnesse-mode-map (kbd "<M-up>") #'fitnesse-up-section)
+    (define-key fitnesse-mode-map (kbd "<M-down>") #'fitnesse-down-section)
+    (define-key fitnesse-mode-map (kbd "C-c a a") #'fitnesse-align)
     ))
 
 ;; outline support
@@ -76,8 +76,8 @@
 (defconst fitnesse-mode-font-lock-keyword
   (list
     ;; comment
-    '("^\\s-*\\(#.*\\)$"
-       (1 font-lock-comment-face nil t))
+    ;; '("^\\s-*\\(#.*\\)$"
+    ;;    (1 font-lock-comment-face nil t))
     ;; code multiline
     '("^\\s-*\\({{{\\(.\\|\n\\)*?}}}\\)"
        (1 font-lock-comment-face nil t))
@@ -109,7 +109,7 @@
     '("\\(--.*?--\\)"
        (1 font-lock-type-face nil t))
     ;; link
-    '("[^\\.A-Za-z0-9]\\(\\(?:\\.[A-Z][a-zA-Z0-9]*\\)\\(?:\\.[A-Z][a-zA-Z0-9]*\\)*\\)"
+    '("[^\\.<A-Za-z0-9]\\(\\(?:[\\.<][A-Z][a-zA-Z0-9]*\\)\\(?:\\.[A-Z][a-zA-Z0-9]*\\)*\\(#[0-9]\\)*\\)"
        (1 font-lock-preprocessor-face nil t))
     )
   "Keyword for fitnesse-mode.")
@@ -119,7 +119,7 @@
     ;; ''' character is punctuation
     (modify-syntax-entry ?\' "." syntax-table)
     ;; '#' character is start of comment
-    (modify-syntax-entry ?\# "<" syntax-table)
+    ;(modify-syntax-entry ?\# "<" syntax-table)
     ;; '\n' character is end of comment
     (modify-syntax-entry ?\n ">" syntax-table)
     ;; '!' character is punctuation
@@ -198,6 +198,11 @@
   (interactive)
   (re-search-forward "^\\s-*\\(\\*+!\\)"))
 
+(defun fitnesse-align ()
+  ""
+  (interactive)
+  ;; call external fitformat with current path of file
+  )
 
 
 ;; associate context.txt files to fitnesse-mode

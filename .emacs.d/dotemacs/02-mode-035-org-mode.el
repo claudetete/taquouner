@@ -74,16 +74,20 @@
   )
 
 
-;; windmove work when S-left/right do nothing in org buffer
 (add-hook 'org-mode-hook
   (lambda ()
-    (define-key org-mode-map      (kbd "<S-right>")       'org-shiftright-dwim)
-    (define-key org-mode-map      (kbd "<S-left>")        'org-shiftleft-dwim)
+    ;; windmove work when S-left/right do nothing in org buffer
+    (define-key org-mode-map    (kbd "<S-right>")       'org-shiftright-dwim)
+    (define-key org-mode-map    (kbd "<S-left>")        'org-shiftleft-dwim)
+
+    ;; add new shortcut to open browse mode
+    (define-key org-mode-map    (kbd "C-c <up>")        'org-goto)
+    (define-key org-mode-map    (kbd "C-c <down>")      'org-goto)
     )
   )
 
 
-;; shortcuts are put in a hook to be loaded after everything else in init process
+;; SHORTCUTS are put in a hook to be loaded after everything else in init process
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
     ;; to add from everywhere a note/todo into default org file `org-default-notes-file'

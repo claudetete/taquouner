@@ -49,6 +49,7 @@
   (push '("*Shell Command Output*" :stick t) popwin:special-display-config)
   (push '(dired-mode :stick t) popwin:special-display-config)
   (push '("*Messages*" :stick t) popwin:special-display-config)
+  (push '("*compilation*" :stick t) popwin:special-display-config)
   (push '("*Calculator*" :stick t) popwin:special-display-config)
   (push "*vc*" popwin:special-display-config)
   (push "*vc-diff*" popwin:special-display-config)
@@ -90,6 +91,7 @@
   (push '(tqnr-ada-gps-build-all-buffer-name :stick t) popwin:special-display-config)
   (push '(tqnr-ada-gps-clean-all-buffer-name :stick t) popwin:special-display-config)
   (push '(tqnr-ada-gps-build-native-buffer-name :stick t) popwin:special-display-config)
+  (push '("\\s-*\\*helpful.*\\*\\s-*" :regexp t :stick t) popwin:special-display-config)
   )
 
 

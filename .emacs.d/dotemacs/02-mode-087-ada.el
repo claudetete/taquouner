@@ -1,6 +1,6 @@
 ;;; 02-mode-087-ada.el --- configuration of ada mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2018 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: October 2017
-;; Last-Updated: October 2017
+;; Last-Updated: February 2018
 
 ;;; Commentary:
 ;;
@@ -29,6 +29,8 @@
 ;; [SUBDEFAULT.nil]
 
 ;;; Change Log:
+;; 2018-02-21 (0.2)
+;;    fix fill-column indicator set buffer locally
 ;; 2017-10-25 (0.1)
 ;;    creation from scratch
 
@@ -57,11 +59,11 @@
   ;; Use the regular major mode hook to add a buffer-local hack-local-variables-hook (https://www.emacswiki.org/emacs/LocalVariables)
   (add-hook 'ada-mode-hook 'my-ada-mode-hook)
   (defun my-ada-mode-hook ()
-    (add-hook 'hack-local-variables-hook
-      (lambda ()
-        (setq-local tab-width 7)
-        (setq-local fill-column 100)
-        )))
+    ;; fill-column is a automatically local variable when set
+    (set-fill-column 100)
+    ;; tab-width is a automatically local variable when set
+    (setq tab-width 7)
+    )
 
   )
 

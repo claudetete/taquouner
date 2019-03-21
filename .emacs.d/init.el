@@ -121,7 +121,7 @@ before message."
 
 ;;
 ;; HOOK AFTER LOADING CONF (not used anymore ?)
-;;(function-to-call-after-loading-conf)
+(function-to-call-after-loading-conf)
 
 
 ;;

@@ -83,6 +83,7 @@
                                                   (windmove-right 0)))
 (global-set-key         (kbd "<C-kp-6>")        'delete-window)
 (global-set-key         (kbd "<M-kp-5>")        'make-frame-command)
+(global-set-key         (kbd "<M-S-kp-5>")      'delete-frame)
 (global-set-key         (kbd "<C-kp-5>")        'delete-frame)
 (global-set-key         (kbd "<C-kp-decimal>")  'delete-frame)
 

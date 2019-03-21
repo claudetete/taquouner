@@ -73,7 +73,7 @@
 
 ;;
 ;; do not ask confirmation when I want refresh buffer
-(setq revert-without-query '(".*"))
+;(setq revert-without-query '(".*"))
 
 ;;
 ;; remove insert shortcut, no more insertion mode

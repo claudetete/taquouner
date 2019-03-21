@@ -291,6 +291,7 @@
   (add-hook 'arduino-mode-hook 'tqnr-arduino-mode)
   (message "    Languages Arduino... Done"))
 
+(setq sh-basic-offset 2)
 
 (provide '03-languages)
 

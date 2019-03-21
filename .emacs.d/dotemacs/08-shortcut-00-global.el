@@ -178,6 +178,7 @@
 (global-set-key         (kbd "C-c ]")           'fill-paragraph)
 ;; fill region
 (global-set-key         (kbd "C-c [")           'fill-region)
+(global-set-key         (kbd "H-]")             'fill-region-as-paragraph)
 
 ;; run calc quick
 (global-set-key         (kbd "<M-kp-multiply>") 'quick-calc)

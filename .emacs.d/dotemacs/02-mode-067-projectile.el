@@ -45,21 +45,37 @@
     '(projectile-git-command "git ls-files -z --cached --recurse-submodules --exclude-standard"))
   ;; dash is found so load projectile
   (add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/projectile-master"))
+  ;; (eval-after-load "projectile"
+  ;;   '(setq projectile-mode-line
+  ;;      '(:eval (list " ["
+  ;;                (propertize (projectile-project-name)
+  ;;                  ;; color of solarized light
+  ;;                  ;; 'face '(:foreground "#8100be" :background "#93a1a1"))
+  ;;                  'face 'powerline-active1)
+  ;;                "]"))))
   (eval-after-load "projectile"
-    '(setq projectile-mode-line
-       '(:eval (list " ["
-                 (propertize (projectile-project-name)
-                   ;; color of solarized light
-                   ;; 'face '(:foreground "#8100be" :background "#93a1a1"))
-                   'face 'powerline-active1)
-                 "]"))))
+    '(setq projectile-mode-line-function '(lambda () (format " [%s]" (propertize (projectile-project-name)
+                                                                       'face 'mode-line)))))
+  ;; (defun projectile-mode-line-function-custom ()
+  ;;   (when (ignore-errors (projectile-project-root))
+  ;;     '(:eval (list " ["
+  ;;              (propertize (projectile-project-name)
+  ;;                ;; color of solarized light
+  ;;                ;; 'face '(:foreground "#8100be" :background "#93a1a1"))
+  ;;                'face 'powerline-active1)
+  ;;              "]"))))
+  ;; (eval-after-load "projectile"
+  ;;   '(setq projectile-mode-line-function 'projectile-mode-line-function-custom)
+  ;;   )
   (when (try-require 'autoload-projectile "      ")
     ;; enable projectile
     (projectile-global-mode)
+    ;; add prefix shortcut to C-c p
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     ;; add find of Synergy project
     ;;(push "_ccmwaid.inf" projectile-project-root-files-bottom-up)
-    ;; use external files indexer
-    (setq projectile-indexing-method 'alien)
+    ;; use external files indexer (old method)
+    (setq projectile-indexing-method 'hybrid)
     ;; enable cache of files index
     (setq projectile-enable-caching t)
     ;; remove "Projectile" in mode-line from "Projectile[myProject]" to "[MyProject]"
@@ -68,7 +84,14 @@
     (when tqnr-section-mode-helm
       (when (try-require 'autoload-helm-projectile "          ")
         (setq projectile-completion-system 'helm)
+
         (helm-projectile-on))
+      )
+
+    ;; ignore GNU Global file with projectile
+    (when tqnr-section-mode-gnu-global
+      (dolist (item '("GTAGS" "GRTAGS" "GPATH"))
+        (add-to-list 'projectile-globally-ignored-files item))
       )
     )
   )

@@ -181,11 +181,16 @@
     (defvar tqnr-ada-gps-build-all-command "gnat make")
     ;; Buffer name of build all project files command
     (defvar tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN ALL
+    ;; CLEAN
     ;; Command of clean all generated file
-    (defvar tqnr-ada-gps-clean-all-command "gnat clean")
+    (defvar tqnr-ada-gps-clean-command "gnat clean")
     ;; Buffer name of clean all generated command
-    (defvar tqnr-ada-gps-clean-all-buffer-name "*ada-clean-all*")
+    (defvar tqnr-ada-gps-clean-buffer-name "*ada-clean*")
+    ;; REBUILD ALL
+    ;; Command of rebuild all generated file
+    (defvar tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
+    ;; Buffer name of rebuild all generated command
+    (defvar tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
     ;; BUILD NATIVE
     ;; Command of build for native execution
     (defvar tqnr-ada-gps-build-native-command "gnat clean")
@@ -193,12 +198,9 @@
     (defvar tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
     ) ;; (progn ;; tqnr-section-function-ada
 
-  ;; RIPGREP: functions to add type support to helm ag for ripgrep
-  (defvar tqnr-section-function-ripgrep nil)
-
   ;; CALC: functions to add type support to helm ag for ripgrep
   (defvar tqnr-section-function-calc nil)
-  ) ;; (when tqnr-section-function
+  ) ;; (progn ;; tqnr-section-function
 
 ;; MODE: load extern files which are modes in plugins/
 (defvar tqnr-section-mode nil)
@@ -207,7 +209,7 @@
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
   (defvar tqnr-section-mode-helm nil)
   (progn ;; tqnr-section-mode-helm
-    ;; replace isearch by helm
+    ;; isearch by helm
     (defvar tqnr-section-mode-helm-swoop nil)
     ;; do not have default value when run helm swoop
     (defvar tqnr-section-mode-helm-swoop-without-pre-input nil)
@@ -374,12 +376,13 @@
     (defvar tqnr-profile-google-calendar-src (concat tqnr-dotemacs-path "/plugins/google"))
     (defvar tqnr-profile-google-calendar-directory "~/tmp")
     (defvar tqnr-profile-google-calendar-url "https://www.google.com/calendar/ical...")
+    ;; !!!PRIVATE!!! End
     ) ;; (progn ;; tqnr-section-mode-google-calendar
 
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (defvar tqnr-section-mode-fill-column-indicator nil)
   (progn ;; tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default is 1 (nil)
+    ;; pixel width of vertical line default 1 (nil)
     (defvar tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (defvar tqnr-profile-fill-column-indicator-vertical-line-color nil)
@@ -628,7 +631,9 @@
   ;; Helm does not like popwin...
   (defvar tqnr-section-mode-shackle nil)
 
-  ;; RIPGREP: A front-end for rg, ripgrep (faster than anything...)
+  ;; RIPGREP
+  ;; A front-end for rg, ripgrep (faster than anything...)
+  ;; use .ripgreprc to add new type
   (defvar tqnr-section-mode-ripgrep nil)
   (progn ;; tqnr-section-mode-ripgrep
     ;; List of types to add to ripgrep configuration (no .ripgrep configuration file only cli parameters)
@@ -684,6 +689,8 @@
     (defvar tqnr-section-mode-hydra-ada nil)
     ;; Use Hydra to manage outline shortcuts
     (defvar tqnr-section-mode-hydra-outline nil)
+    ;; Use Hydra to manage org shortcuts
+    (defvar tqnr-section-mode-hydra-org-mode nil)
     ) ;; (progn ;; tqnr-section-mode-hydra
 
   ;; FLYSPELL: On-the-fly spell checking
@@ -714,6 +721,15 @@
 
   ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
   (defvar tqnr-section-mode-org-jira nil)
+
+  ;; GNUPLOT: Major mode for editing gnuplot scripts
+  (defvar tqnr-section-mode-gnuplot nil)
+
+  ;; POWERSHELL: Powershell mode
+  (defvar tqnr-section-mode-powershell nil)
+
+  ;; HELPFUL: Helpful mode
+  (defvar tqnr-section-mode-helpful nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)

@@ -56,7 +56,8 @@
         '(setq ggtags-mode-line-project-name ""))
       (if tqnr-section-mode-helm
         (when (try-require 'helm-gtags "        ")
-          (add-hook 'c-mode-hook 'helm-gtags-mode))
+          (add-hook 'c-mode-hook 'helm-gtags-mode)
+          (add-hook 'ada-mode-hook 'helm-gtags-mode))
         (add-hook 'c-mode-common-hook
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)

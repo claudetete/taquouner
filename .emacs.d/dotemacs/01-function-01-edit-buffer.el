@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 6.3
+;; Version: 6.4
 ;; Created: October 2006
-;; Last-Updated: January 2018
+;; Last-Updated: February 2018
 
 ;;; Commentary:
 ;;
@@ -30,6 +30,8 @@
 ;;
 
 ;;; Change Log:
+;; 2018-02-09 (6.4)
+;;    add align regexp functions + fitnesse insertion
 ;; 2018-01-31 (6.3)
 ;;    fix cleanup and add new clean about tav + add function to delete extra space
 ;; 2017-07-21 (6.2)
@@ -174,6 +176,27 @@
       ) ;; (lambda ()
     ) ;; (add-hook 'tqnr-after-init-shortcut-hook
   ) ;; (when tqnr-function-kaneton
+
+;; FitNesse debug point: Insertion of debug point
+(when tqnr-section-mode-fitnesse
+  ;; insert fit deubg point
+  ;; !| FitnesseDebug |
+  ;; | breakPoint | etapeId            |
+  ;; | true       |  |
+  (defun fitnesse-insert-debug ()
+    "Insert a debug point."
+    (interactive)
+    (insert "\n!| FitnesseDebug |\n| breakPoint | etapeId |\n| true       |  |\n\n")
+    (indent-according-to-mode)
+    (backward-char 4))
+
+  ;; shortcuts are put in a hook to be loaded after everything else in init process
+  (add-hook 'tqnr-after-init-shortcut-hook
+    (lambda ()
+      (define-key fitnesse-mode-map     (kbd "<f11>")   'fitnesse-insert-debug)
+      ) ;; (lambda ()
+    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+  ) ;; (when tqnr-section-mode-fitnesse
 
 ;; insert a C comment to add tag for coverage
 (defun tag-insert-shortcut ()
@@ -334,6 +357,27 @@ line instead."
     (global-set-key     (kbd "M-c")     'case-capitalize)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+
+;;
+;; ALIGN
+(defun align-comma-separator (start end)
+  "Align each element separated by comma character by using space.
+When no region are selected, paragraph is the selected region."
+  (interactive (tqnr-get-paragraph-position))
+  (unless (and start end)
+    (error "The mark is not set now, so there is no region"))
+  (align-regexp start end ",\\(\\s-*\\)" 1 1 t))
+
+(defun align-regexp-repeat (start end &optional regexp)
+  "Align each element separated by REGEXP by using space.
+When no region are selected, paragraph is the selected region."
+  (interactive (tqnr-get-paragraph-position))
+  (unless (and start end)
+    (error "The mark is not set now, so there is no region"))
+  (when (not regexp)
+    (setq regexp (read-regexp "Align regexp: " (list "=>" ":=" "="))))
+  (align-regexp start end (concat "\\(\\s-*\\)" regexp) 1 1 t))
+
 
 
 (defun reverse-string (beg end)
