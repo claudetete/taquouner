@@ -33,7 +33,9 @@
 
 (when (try-require 'dumb-jump "    ")
   (when tqnr-section-mode-ripgrep
-    (setq dumb-jump-prefer-searcher 'rg))
+    (setq dumb-jump-prefer-searcher 'rg)
+    (setq dumb-jump-force-searcher 'rg)
+    )
   (when tqnr-section-mode-helm
     (setq dumb-jump-selector 'helm))
 
