@@ -1,6 +1,6 @@
 ;;; 05-display-03-color.el --- a config file for color displayed setting
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,57 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.8
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.set color in emacs]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-07-25 (2.8)
-;;    update to new conf format
-;; 2016-09-28 (2.7)
-;;    replace condition about emacs version
-;; 2015-08-21 (2.6)
-;;    remove old colorization + add custom highlight current line
-;; 2014-03-26 (2.5)
-;;    add solarized theme for Emacs 24
-;; 2013-09-10 (2.4)
-;;    add ansi color for compile window
-;; 2012-12-27 (2.3)
-;;    add/update hash for theme + add solarized + add setting color for powerline + update dot emacs path
-;; 2012-07-09 (2.2)
-;;    robustness + try disable highlight line when marked region
-;; 2012-06-12 (2.1)
-;;    separate color theme (Emacs 23) and themes (Emacs 24)
-;; 2012-06-05 (2.0)
-;;    add all themes to be set by profile value
-;; 2012-05-11 (1.9)
-;;    use color theme with terminal + renamed for MM
-;; 2012-05-02 (1.8)
-;;    move section for fixing bug fullscreen
-;; 2012-04-27 (1.7)
-;;    fix bugs about highlight current line + syntax coloration + parentheses
-;;    + etc... if color-theme is used
-;; 2012-04-26 (1.6)
-;;    add a new beta theme
-;; 2012-04-20 (1.5)
-;;    add working environment for setting color
-;; 2012-03-28 (1.4)
-;;    translate comments in English
-;; 2012-03-20 (1.3)
-;;    modify color for grep/occur matches
-;; 2011-12-02 (1.2)
-;;    add condition about theme to not use them
-;; 2011-07-09 (1.1)
-;;    add color-theme
-;; 2011-04-21 (1.1)
-;;    add test about running in graphics for background color
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

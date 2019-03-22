@@ -1,6 +1,6 @@
 ;;; 05-display-02-font.el --- a config file for font setting
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,45 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.3
 ;; Created: October 2006
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.set font in terminal or in graphical]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-09-11 (2.3)
-;;    add new font as example
-;; 2017-07-25 (2.2)
-;;    update to new conf format
-;; 2016-09-28 (2.1)
-;;    replace condition about emacs version
-;; 2015-08-21 (2.0)
-;;    do not use obsolete function to set font and size
-;; 2013-05-07 (1.9)
-;;    add antialias option for font
-;; 2012-06-26 (1.8)
-;;    simplify settings
-;; 2012-06-18 (1.7)
-;;    add condition about font
-;; 2012-06-05 (1.6)
-;;    remove all profile dependances = simplify the config
-;;    the font is chosen in profile files
-;; 2012-04-20 (1.5)
-;;    add working environment
-;; 2012-03-28 (1.4)
-;;    translate comments in English
-;; 2012-03-02 (1.3)
-;;    add some elegant font for other than simple ascii character
-;; 2011-07-09 (1.2)
-;;    add color-theme
-;; 2011-04-21 (1.1)
-;;    add test about ms-window and graphics
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

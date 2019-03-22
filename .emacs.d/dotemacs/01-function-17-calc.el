@@ -1,6 +1,6 @@
 ;;; 01-function-17-calc.el --- functions to calculate/convert units
 
-;; Copyright (c) 2018 Claude Tete
+;; Copyright (c) 2018-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,17 +21,13 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: January 2018
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; subsection comment
 ;; [SUBHEADER.functions to add type support to helm ag for ripgrep]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-01-30 (0.1)
-;;    create from scratch
 
 
 ;;; Code:

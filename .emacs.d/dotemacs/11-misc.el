@@ -1,6 +1,6 @@
 ;;; 11-misc.el --- a config file for misc settings
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.9
 ;; Created: October 2006
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -29,52 +29,6 @@
 ;; line at end of file, compression, column 78 alignment
 ;; ]]
 ;; [DEFAULT.t]
-
-;;; Change Log:
-;; 2017-09-11 (2.9)
-;;    remove dictionary settings to move in flyspell mode settings
-;; 2017-07-26 (2.8)
-;;    update to new conf format
-;; 2017-05-26 (2.7)
-;;    remove diary option about org mode compatibility
-;; 2013-05-07 (2.6)
-;;    add condition for some minor options
-;; 2013-04-12 (2.5)
-;;    no require, use autoload for ispell (it takes 7s to search aspell.exe ...)
-;; 2012-12-27 (2.4)
-;;    update dot emacs path + do not sort bookmark
-;; 2012-12-06 (2.3)
-;;    remove cygwin shell variable (only EmacsW32)
-;; 2012-07-09 (2.2)
-;;    clean up + tabs stop = width of tab + do not kill scratch buffer + more
-;;    setting for ispell
-;; 2012-06-26 (2.1)
-;;    no scratch message + size of tab + backspace on tab remove one space
-;; 2012-06-21 (2.0)
-;;    add generic browser
-;; 2012-06-15 (1.9)
-;;    add zone mode (screensaver)
-;; 2012-06-12 (1.8)
-;;    fix indentation in start message
-;; 2012-06-08 (1.7)
-;;    fix bug about fill column + warning about undo too long
-;; 2012-05-04 (1.6)
-;;    remove try about diary, add ignore case during completion, set path of
-;;    bookmarks + add Dired human size
-;; 2012-04-25 (1.5)
-;;    remove setting to remove tooltip
-;; 2012-04-19 (1.4)
-;;    add dictionary + keep Minibuffer history
-;; 2012-03-29 (1.3)
-;;    translate comments in English + calendar + diary
-;; 2011-07-25 (1.2)
-;;    add test about ms windows for Cygwin shell
-;; 2011-04-21 (1.1)
-;;    add user name + longitude latitude + calendar
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

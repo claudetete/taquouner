@@ -1,6 +1,6 @@
 ;;; 01-function-02-select-copy.el --- add some function to select or copy
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,19 +21,13 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about copying and selecting buffer text]
 ;; [SUBDEFAULT.t]
 ;;
-
-;;; Change Log:
-;; 2017-09-19 (0.2)
-;;    add shortcut to pop local mark (more easily than C-u C-SPC)
-;; 2017-07-21 (0.1)
-;;    creation from split of old functions.el
 
 
 ;;; Code:

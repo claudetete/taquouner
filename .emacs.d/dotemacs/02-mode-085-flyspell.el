@@ -1,6 +1,6 @@
 ;;; 02-mode-085-flyspell.el --- configuration of flyspell mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,16 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: September 2017
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.On-the-fly spell checking]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-09-08 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

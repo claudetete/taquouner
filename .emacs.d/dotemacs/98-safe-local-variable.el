@@ -1,7 +1,7 @@
 ;;; 98-safe-local-variable.el --- a config file about local variable
 ;;                                .dir-local.el
 
-;; Copyright (c) 2018 Claude Tete
+;; Copyright (c) 2018-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -22,17 +22,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: February 2018
-;; Last-Updated: February 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [HEADER.all customize settings from any .dir-local.el are put in customize]
 ;; [DEFAULT.t]
-
-
-;;; Change Log:
-;; 2018-02-05 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

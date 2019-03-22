@@ -1,6 +1,6 @@
 ;;; 02-mode-081-all-the-icons.el --- configuration of arduino mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: August 2017
-;; Last-Updated: August 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -30,10 +30,6 @@
 ;; M-x all-the-icons-install-fonts
 ;; ]]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-08-30 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

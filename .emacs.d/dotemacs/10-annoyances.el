@@ -1,6 +1,6 @@
 ;;; 10-annoyances.el --- a config file for all annoying things
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.2
 ;; Created: October 2006
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -30,37 +30,6 @@
 ;; tooltips
 ;; ]]
 ;; [DEFAULT.t]
-
-;;; Change Log:
-;; 2017-09-11 (2.2)
-;;    add new setting about ask to quit emacs
-;; 2017-07-26 (2.1)
-;;    update to new conf format
-;; 2013-09-10 (2.0)
-;;    remove old code
-;; 2012-07-09 (1.9)
-;;    scroll horizontally when no truncate line
-;; 2012-06-14 (1.8)
-;;    clean up
-;; 2012-06-12 (1.7)
-;;    add section for scroll line by line
-;; 2012-06-05 (1.6)
-;;    autosave and backup directory are put in profile files when
-;;    nothing is set it take the temporary system folder
-;; 2012-04-16 (1.5)
-;;    add working environment condition
-;; 2012-03-30 (1.4)
-;;    comments in English + preserve cursor
-;; 2012-03-21 (1.3)
-;;    add directory for backup file
-;; 2012-03-02 (1.2)
-;;    add confirm kill + scroll preserve + backup file
-;; 2011-07-07 (1.1)
-;;    remove shortcut Control+Middle mouse button
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

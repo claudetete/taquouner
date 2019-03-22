@@ -1,6 +1,6 @@
 ;;; 02-mode-056-auctex.el --- a config file for auctex mode
 
-;; Copyright (c) 2013-2017 Claude Tete
+;; Copyright (c) 2013-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: January 2013
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -42,12 +42,6 @@
 ;;  For All:
 ;;  - unzip .emacs.d/plugins/auctex-11.87-e24.2-msw.zip or latest in emacs
 ;;    installation folder
-
-;;; Change Log:
-;; 2017-07-24 (0.2)
-;;    update to new conf format
-;; 2013-01-25 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

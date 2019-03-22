@@ -1,6 +1,6 @@
 ;;; 01-function-00-generate-profile.el --- functions to generate profile from config file
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -37,13 +37,6 @@
 ;; generate a default profile file or with a parameter not nil init-profile.el file
 ;; ]]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-09-12 (0.2)
-;;    add default value for header and subheader (default profile is now fully
-;;    generated)
-;; 2017-07-20 (0.1)
-;;    create from scratch
 
 
 ;;; Code:

@@ -1,6 +1,6 @@
 ;;; 02-mode-061-magit.el --- configuration of magit mode
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,22 +21,13 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: July 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.use git with nice interface (do not use vc interface from emacs)]
 ;; [SUBDEFAULT.nil]
 ;;
-
-;;; Change Log:
-;; 2018-07-24 (0.3)
-;;    add link to open GitExtensions file history
-;; 2018-01-29 (0.2)
-;;    update magit version to be compatible with emacs 24 + add shortcut + add
-;;    ugly hack to open difftool
-;; 2017-07-24 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:

@@ -1,6 +1,6 @@
 ;;; 02-mode-063-hide-lines.el --- configuration of hide lines mode
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,18 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.hide lines using regexp (like narrow but with regex and not region)]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-09-14 (0.2)
-;;    modify prefix key to avoid problem with outline mode
-;; 2017-07-24 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:

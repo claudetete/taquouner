@@ -1,6 +1,6 @@
 ;;; 04-selection.el --- a config file for text selection settings
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,35 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.8
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [HEADER.selection can be kill + selection is highlight + kill->copy in read only]
 ;; [DEFAULT.t]
-
-;;; Change Log:
-;; 2017-07-25 (1.8)
-;;    update to new conf format
-;; 2017-05-26 (1.7)
-;;    add condition about emacs 25 for cua rectangle selection (bad
-;;    compatibility with undo)
-;; 2012-07-09 (1.6)
-;;    clean up
-;; 2012-05-10 (1.5)
-;;    add comment for bug with CUA
-;; 2012-04-03 (1.4)
-;;    add CUA mode only for rectangle selection...
-;; 2012-03-30 (1.3)
-;;    translate comments in English
-;; 2012-03-02 (1.2)
-;;    add else for selection with shift key
-;; 2011-04-21 (1.1)
-;;    add section for selection with shift
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch + shift selection + color (no history since)
 
 
 ;;; Code:

@@ -1,6 +1,6 @@
 ;;; 05-display-00-buffer.el --- a config file for window/buffer display setting
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.0
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;; section comment
@@ -33,32 +33,6 @@
 ;; first column in window will display buffer limit, next page will leave 5 shared line
 ;; ]]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-07-25 (2.0)
-;;    update to new conf format
-;; 2013-05-07 (1.9)
-;;    remove Completion buffer to be in same window
-;; 2013-02-05 (1.8)
-;;    toggle compile ecb window when bookmark jump
-;; 2012-08-01 (1.7)
-;;    add visual line mode
-;; 2012-07-09 (1.6)
-;;    try new handler for completion buffer
-;; 2012-06-14 (1.5)
-;;    remove misunderstanding for same-window-buffer-names option
-;; 2012-06-05 (1.4)
-;;    move transparency to interface.el
-;; 2012-05-04 (1.3)
-;;    add three possibility of transparency
-;; 2012-03-20 (1.2)
-;;    translate comments in English
-;; 2012-03-20 (1.1)
-;;    add buffer name to list of compilation window
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

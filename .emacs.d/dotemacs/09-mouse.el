@@ -1,6 +1,6 @@
 ;;; 09-mouse.el --- a config file for mouse settings
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,38 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.0
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [HEADER.smooth wheel + lazy decoration when scroll]
 ;; [DEFAULT.t]
-
-;;; Change Log:
-;; 2017-07-26 (2.0)
-;;    update to new conf format
-;; 2013-09-10 (1.9)
-;;    change options for scrolling
-;; 2013-05-23 (1.8)
-;;    add option from profile for smooth scroll (with arrows)
-;; 2013-05-07 (1.7)
-;;    change smooth scroll (to avoid all jump with cursor)
-;; 2012-07-09 (1.6)
-;;    robustness
-;; 2012-06-08 (1.5)
-;;    mouse wheel scrolls window under
-;; 2012-04-23 (1.4)
-;;    add section for mouse avoidance
-;; 2012-02-30 (1.3)
-;;    translate comments in English
-;; 2012-02-28 (1.2)
-;;    add lazy fontify when scroll
-;; 2011-04-21 (1.1)
-;;    add test about graphics
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

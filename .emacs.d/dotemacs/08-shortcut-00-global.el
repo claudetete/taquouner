@@ -1,6 +1,6 @@
 ;;; 08-shortcut-00-global.el --- a config file for global Emacs shortcut
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 4.3
 ;; Created: October 2006
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;; section comment
@@ -31,89 +31,6 @@
 ;; subsection comment
 ;; [SUBHEADER.add global shortcut (for whole Emacs)]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-09-11 (4.3)
-;;    add logical shortcut to refresh buffer + hydra condition about rectangle
-;;    shortcut
-;; 2017-07-25 (4.2)
-;;    update to new conf format
-;; 2017-05-26 (4.1)
-;;    clean up + remove essential hyper shortcut (not on all keyboard...) +
-;;    use rectangle mode and no more cua rectangle + modify shortcut to improve
-;;    org mode compatibility + add haskell shortcut
-;; 2016-09-28 (4.0)
-;;    modify align shortcut (helm/projectile conflict) + add helm/company
-;;    shortcuts + add popwin shortcut + add helm shortcut + remove bind into c
-;;    mode (helm conflict) + add elpy shortcut + undo tree shortcut
-;; 2015-08-21 (3.9)
-;;    add condition to cua-rect shortcut + add hide-lines shortcuts
-;; 2013-09-10 (3.8)
-;;    add magit shortcut
-;; 2013-05-30 (3.7)
-;;    fix bug with shortcut in ediff mode
-;; 2013-05-23 (3.6)
-;;    remove mixtab shortcut
-;; 2013-05-07 (3.5)
-;;    remove helm shortcut to close compile window
-;; 2013-04-24 (3.4)
-;;    do not use tabmix with rtrt (disable indentation in rtrt mode)
-;; 2013-04-11 (3.3)
-;;    shorcut for just-one-space-or-line + C-y M-y will not call helm-kill-ring
-;; 2013-04-08 (3.2)
-;;    add shortcut for zap to char function (default bind is used by ECB bind) +
-;;    helm mode + fix bug with ediff + more comfort for browse kill ring and
-;;    undo tree + fold dwim depend of major mode
-;; 2012-12-27 (3.1)
-;;    add alias for ps2pdf to print with color
-;; 2012-12-04 (3.0)
-;;    add compile shortcut (from shortcut-grep.el)
-;; 2012-11-29 (2.9)
-;;    wrong shortcut for copy rectangle in cua rectangle mode
-;; 2012-10-31 (2.8)
-;;    have logical shortcuts with backspace and delete
-;; 2012-10-26 (2.7)
-;;    add shortcut for insert register, fold or hide show + alias insert date
-;; 2012-10-19 (2.6)
-;;    remove home/end old shortcuts
-;; 2012-08-01 (2.5)
-;;    add shortcut to change dictionnary with ispell + move shortcut
-;; 2012-07-19 (2.4)
-;;    new shortcut for browse kill ring + add fold dwim
-;; 2012-07-09 (2.3)
-;;    new line from anywhere + hippie expand + rss reader + browse kill ring +
-;;    new aliases
-;; 2012-06-26 (2.2)
-;;    new line from anywhere on the line + folder up in dired
-;; 2012-06-21 (2.1)
-;;    join-line without space and with next line + quick calc + add condition to
-;;    open with in dired mode + comments about ediff + alias for replace-regexp
-;; 2012-06-19 (2.0)
-;;    enable shortcuts for ispell with F7
-;; 2012-06-08 (1.9)
-;;    add shortcut to (un)comment, and move by parenthesis
-;; 2012-05-29 (1.8)
-;;    add shortcuts to fill region and to change dictionary in ispell mode
-;; 2012-05-10 (1.7)
-;;    change goto line shortcut to not override the default downcase-word +
-;;    shortcut for dired plus to avoid problem with CUA selection
-;; 2012-05-03 (1.6)
-;;    add shortcut to add line without jump + give number of line + bind C-TAB
-;;    to M-TAB + remove shortcut to calendar
-;; 2012-04-20 (1.5)
-;;    add CUA mode
-;; 2012-04-03 (1.4)
-;;    add shortcut for fill-paragraph
-;; 2012-03-30 (1.3)
-;;    translate comments in English
-;; 2011-08-03 (1.2)
-;;    add shortcut for pair of parentheses
-;; 2011-07-27 (1.1)
-;;    change bind of C-cpp to align
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

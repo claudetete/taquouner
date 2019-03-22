@@ -1,6 +1,6 @@
 ;;; 02-mode-999-diminish.el --- configuration of diminish mode
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,18 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.shrink major and minor mode name in the modeline]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-01-31 (0.2)
-;;    remove a lot of minor mode
-;; 2017-07-25 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:

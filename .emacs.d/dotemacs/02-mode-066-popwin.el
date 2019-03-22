@@ -1,6 +1,6 @@
 ;;; 02-mode-066-popwin.el --- configuration of popwin mode
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,24 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.5
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.A pop-up manager for annoying buffer (have like ECB compilation buffer)]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2018-01-31 (0.5)
-;;    add magit and ada command function
-;; 2017-09-19 (0.4)
-;;    move F2 shortcut to function buffer/window
-;; 2017-09-14 (0.3)
-;;    use patch of popwin to show it only by splitting current window
-;; 2017-09-11 (0.2)
-;;    remove helm window (not very friendly with popwin, use shackle instead)
-;; 2017-07-24 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:

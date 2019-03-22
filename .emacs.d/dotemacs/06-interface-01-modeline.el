@@ -1,6 +1,6 @@
 ;;; 06-interface-01-modeline.el --- a config file for Emacs Modeline
 
-;; Copyright (c) 2012-2017 Claude Tete
+;; Copyright (c) 2012-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.4
 ;; Created: April 2012
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -31,16 +31,6 @@
 ;; [SUBDEFAULT.t]
 ;;
 ;; TODO: put all option like now but with color
-
-;;; Change Log:
-;; 2017-07-25 (0.4)
-;;    update to new conf format
-;; 2012-06-13 (0.3)
-;;    add condition for time in modeline
-;; 2012-06-05 (0.2)
-;;    add new example from hollenback
-;; 2012-04-03 (0.1)
-;;    creation from emacs-fu blog + current value
 
 
 ;;; Code:

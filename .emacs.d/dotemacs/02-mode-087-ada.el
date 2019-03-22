@@ -1,6 +1,6 @@
 ;;; 02-mode-087-ada.el --- configuration of ada mode
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,18 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: October 2017
-;; Last-Updated: February 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Ada mode for edit/navigate/compile ada source code]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-02-21 (0.2)
-;;    fix fill-column indicator set buffer locally
-;; 2017-10-25 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

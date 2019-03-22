@@ -1,6 +1,6 @@
 ;;; 02-mode-083-ripgrep.el --- configuration of ripgrep mode with helm
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: September 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -29,13 +29,6 @@
 ;; use .ripgreprc to add new type
 ;; ]]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-01-31 (0.2)
-;;    add settings to add type of file in ripgrep because there is no global
-;;    setting (like a .ripgreprc)
-;; 2017-09-01 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

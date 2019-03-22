@@ -1,6 +1,6 @@
 ;;; 02-mode-092-gnuplot.el --- configuration of gnuplot-mode
 
-;; Copyright (c) 2018 Claude Tete
+;; Copyright (c) 2018-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,16 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: March 2018
-;; Last-Updated: March 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Major mode for editing gnuplot scripts]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-03-21 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

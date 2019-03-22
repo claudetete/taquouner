@@ -1,6 +1,6 @@
 ;;; 01-function-12-magneti-marelli.el --- add some function for Magneti Marelli profile
 
-;; Copyright (c) 2010-2017 Claude Tete
+;; Copyright (c) 2010-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,22 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.4
 ;; Created: June 2010
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom functions about Magneti Marelli specific needs]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-07-21 (0.4)
-;;    update to new system of profile configuration
-;; 2012-12-27 (0.3)
-;;    update dot emacs path
-;; 2012-06-05 (0.2)
-;;    split from function.el
-;; 2010-06-10 (0.1)
-;;    history in function.el
 
 
 ;;; Code:

@@ -1,6 +1,6 @@
 ;;; 01-function-15-rtrt.el --- a config file to add some function for rtrt script
 
-;; Copyright (c) 2012-2017 Claude Tete
+;; Copyright (c) 2012-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,30 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.6
 ;; Created: March 2012
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about RTRT script .ptu file]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-07-21 (1.6)
-;;    update to new system of profile configuration
-;; 2013-04-30 (1.5)
-;;    simplify move function
-;; 2013-03-26 (1.4)
-;;    fix bug with regex to align + add function to align stub (not all...)
-;; 2013-01-18 (1.3)
-;;    fix bug with replace or align the region moves...
-;;    thanks to http://ergoemacs.org/emacs/elisp_beware_of_region_boundary_change.html
-;;    + fix align init + fix align set
-;; 2012-11-26 (1.2)
-;;    fix behaviour with align functions
-;; 2012-10-31 (1.1)
-;;    add new function to move in rtrt files
-;; 2012-07-11 (1.0)
-;;    split from functions.el
 
 
 ;;; Code:

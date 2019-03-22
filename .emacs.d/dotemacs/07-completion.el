@@ -1,6 +1,6 @@
 ;;; 07-completion.el --- a config file for completion settings
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,31 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.6
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [HEADER.enable letter case completion + dynamic completion]
 ;; [DEFAULT.t]
-
-;;; Change Log:
-;; 2017-07-25 (1.6)
-;;    update to new conf format
-;; 2012-07-11 (1.5)
-;;    setting of hippie expand by reading the manual...
-;; 2012-06-26 (1.4)
-;;    try again hippie
-;; 2012-05-10 (1.3)
-;;    fix bug with CUA rectangle selection by disable dynamic completion +
-;;    remove hippie do not work properly
-;; 2012-05-04 (1.2)
-;;    add configuration for hippie expand
-;; 2012-03-28 (1.1)
-;;    translate comments in English
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch
 
 
 

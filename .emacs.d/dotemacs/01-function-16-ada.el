@@ -1,6 +1,6 @@
 ;;; 01-function-16-ada.el --- functions to have multiple compile
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: November 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -31,12 +31,6 @@
 ;;
 ;; TODO: use local environnment to run this commands (see make-local-variable
 ;; process-environment)
-
-;;; Change Log:
-;; 2018-01-31 (0.2)
-;;    add buffer last name variable to be able to switch to last command
-;; 2017-11-21 (0.1)
-;;    create from scratch
 
 
 ;;; Code:

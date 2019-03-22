@@ -1,6 +1,6 @@
 ;;; 06-interface-02-ecb.el --- a config file for ecb display setting
 
-;; Copyright (c) 2010-2017 Claude Tete
+;; Copyright (c) 2010-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,35 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.8
 ;; Created: October 2010
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.set size, display, refresh and remove opening tips of ECB window]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-07-25 (1.8)
-;;    update to new conf format
-;; 2012-05-04 (1.7)
-;;    add section for ascii arborescence
-;; 2012-05-02 (1.6)
-;;    rename from display-ecb.el to interface-ecb.el and load after font and
-;;    fullscreen
-;; 2012-04-20 (1.5)
-;;    add working environment default
-;; 2012-03-28 (1.4)
-;;    translate comments in English
-;; 2012-03-12 (1.3)
-;;    add condition about ecb active or not
-;; 2012-07-09 (1.1)
-;;    add max size of compile window
-;; 2011-04-21 (1.1)
-;;    add delay before refresh
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2010-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

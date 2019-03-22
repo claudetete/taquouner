@@ -1,6 +1,6 @@
 ;;; 00-environment-00-package.el --- a config file for package management
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,16 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.package management]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-07-20 (0.1)
-;;    creation from environment.el
 
 
 ;;; Code:

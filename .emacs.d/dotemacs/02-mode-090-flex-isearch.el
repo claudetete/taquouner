@@ -1,6 +1,6 @@
 ;;; 02-mode-090-flex-isearch.el --- configuration of flex-isearch
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,16 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: December 2017
-;; Last-Updated: December 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Flex Isearch mode add fuzzy match when doing incremental search]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-12-15 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

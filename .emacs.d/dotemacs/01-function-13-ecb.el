@@ -1,6 +1,6 @@
 ;;; 01-function-13-ecb.el --- add some function to ecb mode
 
-;; Copyright (c) 2012-2017 Claude Tete
+;; Copyright (c) 2012-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,26 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.5
 ;; Created: June 2012
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about ecb mode]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-07-21 (1.5)
-;;    update to new system of profile configuration
-;; 2013-05-07 (1.4)
-;;    add an hook after toogle compile window
-;; 2012-07-11 (1.3)
-;;    try to fix annoying random behavior of completions buffer
-;; 2012-07-09 (1.2)
-;;    new function to show completion buffer in compile window
-;; 2012-06-20 (1.1)
-;;    add function when ecb window is hidden
-;; 2012-06-19 (1.0)
-;;    split from functions.el
 
 
 ;;; Code:

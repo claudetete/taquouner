@@ -1,6 +1,6 @@
 ;;; 01-function-14-clearcase.el --- some function for clearcase integration
 
-;; Copyright (c) 2012-2017 Claude Tete
+;; Copyright (c) 2012-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.6
 ;; Created: June 2012
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -58,25 +58,6 @@
 ;;   (global-set-key    (kbd "C-c c s")         'clearcase-config-spec-edit)
 ;;   ;; open dired for file version
 ;;   (global-set-key    (kbd "C-c c o")         'clearcase-dired-file-version)
-
-
-;;; Change Log:
-;; 2017-07-21 (1.6)
-;;    update to new system of profile configuration
-;; 2013-05-07 (1.5)
-;;    add hook when quit config spec mode
-;; 2013-04-12 (1.4)
-;;    edit of config spec (inspired by clearcase.el) + config spec mode for
-;;    color syntax
-;; 2013-01-31 (1.3)
-;;    change test clearcase file + remove async empty buffer + function name
-;;    match clearcase.el
-;; 2012-06-27 (1.2)
-;;    fix bug with directory name and find checkout
-;; 2012-06-21 (1.1)
-;;    improvement + clean up
-;; 2012-06-20 (1.0)
-;;    split from functions.el
 
 
 ;;; Code:

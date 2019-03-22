@@ -1,6 +1,6 @@
 ;;; 02-mode-075-haskell.el --- configuration of haskell mode
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,18 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.editing, debugging and developing Haskell programs]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-01-31 (0.2)
-;;    change path and load
-;; 2017-07-25 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:

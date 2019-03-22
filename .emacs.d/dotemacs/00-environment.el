@@ -1,6 +1,6 @@
 ;;; 00-environment.el --- a config file for environment settings
 
-;; Copyright (c) 2006-2018 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,67 +21,11 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 3.4
 ;; Created: October 2006
-;; Last-Updated: February 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;; [HEADER.Environment check and configuration]
 ;; [DEFAULT.t]
-
-;;; Change Log:
-;; 2018-02-06 (3.4)
-;;    fix problem about concat of path list
-;; 2018-01-31 (3.3)
-;;    fix error with garbage collection
-;; 2017-09-01 (3.2)
-;;    do reasonable settings about garbage collection + simplify path and exec
-;; 2017-05-26 (3.1)
-;;    remove useless settings about super/hyper for MS Windows
-;; 2016-09-28 (3.0)
-;;    add emacs version 25 into env variable + update package management
-;; 2015-08-21 (2.9)
-;;    add environment variable for emacs version 24.4 and 24.5
-;; 2012-12-27 (2.8)
-;;    update dot emacs path
-;; 2012-10-26 (2.7)
-;;    put start client server with configuration
-;; 2012-07-09 (2.6)
-;;    add robustness
-;; 2012-06-12 (2.5)
-;;    add version recognition + condition for packages
-;; 2012-06-08 (2.4)
-;;    add ediff path + add environment variable for cygwin error
-;; 2012-06-05 (2.3)
-;;    use profile instead of working environment and put all settings
-;;    in profile files
-;; 2012-05-28 (2.2)
-;;    modify path for cedet for AT + disable isearch+ for default
-;; 2012-05-25 (2.1)
-;;    add path for msys + new mode for default working environment
-;; 2012-05-11 (2.0)
-;;    use color-theme in terminal + change path for AT + add hyper and super
-;; 2012-05-04 (1.9)
-;;    complete default working environment + change location to avoid French
-;;    message
-;; 2012-05-03 (1.8)
-;;    change environment variable management
-;; 2012-04-20 (1.7)
-;;    add default environment
-;; 2012-04-03 (1.6)
-;;    add terminal environment to Alstom Transport
-;; 2012-03-28 (1.5)
-;;    translate comments in English
-;; 2012-03-02 (1.4)
-;;    add working environment and change "OS" message
-;; 2012-03-02 (1.3)
-;;    add/change/remove some path
-;; 2011-07-09 (1.2)
-;;    add running-in-graphical or terminal
-;; 2011-04-21 (1.1)
-;;    add running-on-ms-windows or gnu-linux
-;; 2010-10-11 (1.0)
-;;    add add path for ms windows
-;; 2010-06-11 (0.1)
-;;    creation from scratch + env test from other .emacs
 
 
 ;;; Code:

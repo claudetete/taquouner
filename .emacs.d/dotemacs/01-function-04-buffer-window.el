@@ -1,6 +1,6 @@
 ;;; 01-function-04-buffer-window.el --- add some function about buffer and window handling
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,22 +21,13 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about buffer and window handling]
 ;; [SUBDEFAULT.t]
 ;;
-
-;;; Change Log:
-;; 2018-01-31 (0.3)
-;;    rework switch special buffer to do a toggle compatible with ecb, helm,
-;;    popwin and newly ada functions
-;; 2017-09-19 (0.2)
-;;    shortcut F2 can resume helm or popwin windows regarding last opened one
-;; 2017-07-21 (0.1)
-;;    creation from split of functions.el
 
 
 ;;; Code:

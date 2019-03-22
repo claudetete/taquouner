@@ -1,6 +1,6 @@
 ;;; 03-languages.el --- a config file for programing languages
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,77 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 3.8
 ;; Created: October 2006
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [HEADER.Set style and/or indentation for multiple languages]
 ;; [DEFAULT.t]
-
-;;; Change Log:
-;; 2017-09-14 (3.8)
-;;    remove outline setting which is redundant with specific outline mode
-;;    setting
-;; 2017-09-11 (3.7)
-;;    fix C setting error + add arduino specific settings
-;; 2017-07-25 (3.6)
-;;    update to new conf format
-;; 2017-05-26 (3.5)
-;;    add flycheck hook on C mode + run perl file directly when instance
-;;    compile mode
-;; 2016-09-28 (3.4)
-;;    replace about electric-pair to add new emacs version 25
-;; 2013-05-23 (3.3)
-;;    add condition to set semantic option for c++
-;; 2013-05-07 (3.2)
-;;    fix indent options from profile
-;; 2012-12-27 (3.1)
-;;    flymake not by default in c++ mode
-;; 2012-12-04 (3.0)
-;;    compile command confirmation defined by profile
-;; 2012-11-29 (2.9)
-;;    add flymake mode
-;; 2012-10-26 (2.8)
-;;    add outline minor mode for C
-;; 2012-10-18 (2.7)
-;;    add config for C++ with Qt
-;; 2012-07-18 (2.6)
-;;    add hide show mode + use hook with lisp
-;; 2012-07-11 (2.5)
-;;    fix bug with emacs 23.x with electric pair
-;; 2012-07-09 (2.4)
-;;    electric pair for parenthesis, bracket, quote, etc
-;; 2012-06-13 (2.3)
-;;    remove unknown option
-;; 2012-06-12 (2.2)
-;;    add hook for Hide/Show mode in C mode
-;; 2012-06-08 (2.1)
-;;    redo remove compile without asking + add section to indent macro
-;; 2012-06-05 (2.0)
-;;    remove all profile dependances + use profile values + remove never used c
-;;    style
-;; 2012-05-29 (1.9)
-;;    to remove asking about command ine to compile
-;; 2012-04-20 (1.8)
-;;    add working environment default
-;; 2012-04-06 (1.7)
-;;    add Perl indent
-;; 2012-03-29 (1.6)
-;;    translate comments in English + add rtrt script indent
-;; 2012-03-02 (1.5)
-;;    add working environment condition
-;; 2011-10-21 (1.4)
-;;    add some style for C (no really used)
-;; 2011-08-02 (1.3)
-;;    add customization of c-macro variables
-;; 2011-07-09 (1.2)
-;;    rename from indentation to languages
-;; 2011-04-21 (1.1)
-;;    add hook for c-mode and indentation of case
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch + tab = x space (no history since)
 
 
 ;;; Code:

@@ -1,6 +1,6 @@
 ;;; 02-mode-000-helm.el --- configuration of helm mode
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,22 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.4
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.(fork ANYTHING) choose anything with the same nice interface]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-01-31 (0.4)
-;;    truncate more longer name + modify key to switch to swoop
-;; 2017-09-11 (0.3)
-;;    add option to enable Helm globally (by example to work in write-file)
-;; 2017-09-11 (0.2)
-;;    add swoop and flx + remove useless shortcut
-;; 2017-07-24 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:

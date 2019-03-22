@@ -1,6 +1,6 @@
 ;;; 02-mode-093-powershell.el --- configuration of powershell mode
 
-;; Copyright (c) 2018 Claude Tete
+;; Copyright (c) 2018-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,16 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: May 2018
-;; Last-Updated: May 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Powershell mode]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-05-09 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

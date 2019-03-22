@@ -1,6 +1,6 @@
 ;;; 00-environment-01-shortcut.el --- environment settings about shortcuts
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,15 +21,11 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;; [SUBHEADER.Environment shortcut to declare hook about shortcut]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-07-21 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

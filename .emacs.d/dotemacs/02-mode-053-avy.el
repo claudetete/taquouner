@@ -1,6 +1,6 @@
 ;;; 02-mode-053-avy.el --- configuration of avy mode
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,19 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.move quickly and easily with avy (replacement of ace jump)]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2018-01-31 (0.2)
-;;    add more shortcut to run avy mode (above/below) + use new function goto
-;;    word 2
-;; 2017-07-24 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:

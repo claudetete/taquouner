@@ -1,6 +1,6 @@
 ;;; 02-mode-072-smartparens.el --- configuration of smartparens mode
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,28 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.5
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.useful to have nice navigation through source code structure]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2018-01-31 (0.5)
-;;    rename path + add exception about quote in ada mode and fitnesse
-;; 2017-09-28 (0.4)
-;;    remove shortcut M-] already used by `find-matching-keyword' in
-;;    01-function-03-search.el
-;; 2017-09-19 (0.3)
-;;    add slurp and barf shortcut + additional shortcut about wrap pair or () []
-;;    and {}
-;; 2017-09-11 (0.2)
-;;    redefine shortcuts to have more rationale behaviour without thinking about
-;;    semantic expression + add <> pair in elisp to insert shortcut + add
-;;    shortcut about curly bracket and use Hyper as modifier for rewrap
-;; 2017-07-25 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
 
 
 ;;; Code:

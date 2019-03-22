@@ -1,6 +1,6 @@
 ;;; 08-shortcut-01-windows.el --- a config file for windows shortcut
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,36 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.9
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.add shortcut to manage windows]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-07-26 (1.9)
-;;    update to new conf format
-;; 2017-05-26 (1.8)
-;;    add new shortcut to delete frame (cannot remember previous one)
-;; 2013-09-10 (1.7)
-;;    add shortcut to delete window or frame
-;; 2013-04-10 (1.6)
-;;    bind myself windmove to add ignore error
-;; 2012-08-01 (1.5)
-;;    use smart resize from functions.el
-;; 2012-07-09 (1.4)
-;;    add shortcut to split windows more easily
-;; 2012-06-21 (1.3)
-;;    additional shortcut to split windows in Emacs
-;; 2012-04-17 (1.2)
-;;    remove M-s and M-arrow to switch between window
-;; 2012-03-30 (1.1)
-;;    split .emacs file
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

@@ -1,6 +1,6 @@
 ;;; 08-shortcut-99-hook.el --- a config file for shortcut hook
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,20 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.1
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.run hook for all shortcuts from the whole configuration]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-07-21 (1.1)
-;;    use hook to define binding/shortcut
-;; 2012-06-05 (1.0)
-;;    split from emacs.el
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

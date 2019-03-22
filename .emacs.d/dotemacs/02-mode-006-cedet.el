@@ -1,6 +1,6 @@
 ;;; 02-mode-006-cedet.el --- configuration of cedet mode
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,38 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.1
 ;; Created: October 2006
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER."Collection of Emacs Development Environment Tools"]
 ;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-09-11 (2.1)
-;;    fix taquouner profile variable default value
-;; 2017-07-24 (2.0)
-;;    merge from split of old mode.el
-;; 2016-09-28 (1.8)
-;;    enable semantic/ia + patch list of major mode to remove python
-;;    (manage by elpy)
-;; 2012-12-27 (1.7)
-;;    update dot emacs path
-;; 2012-06-12 (1.6)
-;;    clean up
-;; 2012-06-05 (1.5)
-;;    use require to load project
-;; 2012-03-30 (1.4)
-;;    translate comments in English
-;; 2012-03-28 (1.3)
-;;    disable idle completion and local symbol highlight
-;; 2012-03-20 (1.2)
-;;    add settings + use gnu global to locate file
-;; 2012-03-02 (1.1)
-;;    split in two settings for emacs included cedet and cedet from repository
-;;    (bzr)
-;; 2011-08-10 (1.0)
-;;    add gnu global to semantic
 
 
 ;;; Code:

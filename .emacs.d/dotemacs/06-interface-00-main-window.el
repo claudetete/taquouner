@@ -1,6 +1,6 @@
 ;;; 06-interface-00-main-window.el --- a config file for Emacs interface
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 2.6
 ;; Created: October 2006
-;; Last-Updated: September 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;; section comment
@@ -31,45 +31,6 @@
 ;; subsection comment
 ;; [SUBHEADER.modification about main window of emacs]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2017-09-11 (2.6)
-;;    fix new frame font + add setting about popup window
-;; 2017-07-25 (2.5)
-;;    update to new conf format
-;; 2016-09-28 (2.4)
-;;    add emacs version 25 to use new fullscreen function
-;; 2015-08-21 (2.3)
-;;    use new function to maximize window (frame) with emacs 24.5
-;; 2013-05-30 (2.2)
-;;    remove settings for ediff (put in mode.el)
-;; 2013-05-23 (2.1)
-;;    add window title from profile
-;; 2013-05-07 (2.0)
-;;    remove condition about os for maximize
-;; 2012-08-01 (1.9)
-;;    add condition to have transparency and maximizer
-;; 2012-07-09 (1.8)
-;;    simplify font setting + generic fullscreen
-;; 2012-06-08 (1.7)
-;;    change fring size + add ediff settings + add hook after open a new frame
-;;    (maximize)
-;; 2012-06-05 (1.6)
-;;    add transparency from display-buffer.el and use profile value
-;; 2012-05-03 (1.5)
-;;    fix bug about fullscreen and ecb
-;; 2012-04-25 (1.4)
-;;    replace setting to remove tooltip
-;; 2012-03-29 (1.3)
-;;    translate comments in English
-;; 2012-03-02 (1.2)
-;;    remove "display" in name file et section
-;; 2011-04-21 (1.1)
-;;    add test about ms-windows to set fullscreen
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

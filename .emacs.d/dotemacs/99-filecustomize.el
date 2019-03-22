@@ -1,6 +1,6 @@
 ;;; 99-filecustomize.el --- a config file for misc settings
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
 ;; Created: July 2017
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -29,11 +29,6 @@
 ;; (customize) to change settings
 ;; ]]
 ;; [DEFAULT.t]
-
-
-;;; Change Log:
-;; 2017-07-20 (0.1)
-;;    creation from old conf emacs.el
 
 
 ;;; Code:

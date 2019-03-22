@@ -1,6 +1,6 @@
 ;;; 02-mode-084-hydra.el --- configuration of hydra, new ways to bind
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,23 +21,12 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.4
 ;; Created: September 2017
-;; Last-Updated: January 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Create families of short bindings with a common prefix]
 ;; [SUBDEFAULT.t]
-
-;;; Change Log:
-;; 2018-01-31 (0.4)
-;;    fix problem when delete rectangle + macro run do not quit + add hydra for
-;;    ada commands
-;; 2017-09-19 (0.3)
-;;    use smartparens transpose instead of `tranpose-sexps'
-;; 2017-09-14 (0.2)
-;;    add shortcut about outline mode
-;; 2017-09-01 (0.1)
-;;    creation from scratch
 
 
 ;;; Code:

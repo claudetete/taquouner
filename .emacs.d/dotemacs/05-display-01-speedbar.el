@@ -1,6 +1,6 @@
 ;;; 05-display-01-speedbar.el --- a config file for speedbar setting
 
-;; Copyright (c) 2006-2017 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,7 +21,7 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 1.2
 ;; Created: October 2006
-;; Last-Updated: July 2017
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
@@ -30,16 +30,6 @@
 ;;
 ;; it's a pain because it open a new window but not integrated
 ;;
-
-;;; Change Log:
-;; 2017-07-25 (1.2)
-;;    update to new conf format
-;; 2012-03-28 (1.1)
-;;    translate comments in English
-;; 2011-03-10 (1.0)
-;;    split .emacs file
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:

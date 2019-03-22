@@ -1,6 +1,6 @@
 ;;; 01-function-01-edit-buffer.el --- add some function about edit buffer text
 
-;; Copyright (c) 2006-2018 Claude Tete
+;; Copyright (c) 2006-2019 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -21,123 +21,13 @@
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 6.4
 ;; Created: October 2006
-;; Last-Updated: February 2018
+;; Last-Updated: March 2019
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.custom function about edition of buffer text]
 ;; [SUBDEFAULT.t]
 ;;
-
-;;; Change Log:
-;; 2018-02-09 (6.4)
-;;    add align regexp functions + fitnesse insertion
-;; 2018-01-31 (6.3)
-;;    fix cleanup and add new clean about tav + add function to delete extra space
-;; 2017-07-21 (6.2)
-;;    split file into multiple files
-;; 2016-09-28 (6.1)
-;;    remove dash as symbol character + overload helm function about dir + add
-;;    reverse string + multiple key about space remover
-;; 2015-08-21 (6.0)
-;;    add new web search + function to go in symref buffer
-;; 2014-03-26 (5.9)
-;;    add function to insert tag for reqtify in source code + remove old
-;;    function of synergy
-;; 2013-09-10 (5.8)
-;;    add parameters and functions for synergy support
-;; 2013-05-07 (5.7)
-;;    condition on os detection for maximize function + do not run code for test
-;; 2013-04-11 (5.6)
-;;    add just-one-space-or-line function
-;; 2013-03-29 (5.5)
-;;    use url-hexify-string for web string + new function to indent function +
-;;    add mixtab
-;; 2013-02-05 (5.4)
-;;    add function to get region or paragraph
-;; 2012-12-27 (5.3)
-;;    update dot emacs path + add bookmark in special buffer
-;; 2012-11-30 (5.2)
-;;    add switch to special buffer function
-;; 2012-10-31 (5.1)
-;;    try to use new navigate function (inconvenient)
-;; 2012-10-26 (5.0)
-;;    add double copy/kill (bind) will put in a register
-;; 2012-10-18 (4.9)
-;;    fix bug with resize window + try fix copy/kill with clipboard system
-;; 2012-08-01 (4.8)
-;;    add function to apply macro on region with same shortcut + add smart
-;;    window resize + add change case on region with same shortcut + clean up
-;; 2012-07-11 (4.7)
-;;    add get line or region for interactive + split rtrt function file + try to
-;;    fix annoying random behavior of completions buffer + fill region
-;; 2012-07-09 (4.6)
-;;    fix wait for fullscreen and add linux support + some test
-;; 2012-06-26 (4.5)
-;;    fix bug with mark about web search + add google
-;; 2012-06-21 (4.4)
-;;    add function to open web browser with text selected in Emacs + insert date
-;;    + split ecb and clearcase function in new file +
-;; 2012-06-14 (4.3)
-;;    clean up
-;; 2012-06-12 (4.2)
-;;    change slick copy to more compatibility + add condition to eval some
-;;    functions + remove hide/show function
-;; 2012-06-08 (4.1)
-;;    add slick copy (copy when not selected) + (un)comment + scroll without
-;;    moving cursor + maximize function + some functions to test
-;; 2012-06-05 (4.0)
-;;    start to split + remove dead source code
-;; 2012-05-29 (3.9)
-;;    add function for integration with clearcase
-;; 2012-05-14 (3.8)
-;;    add function to improve tab key when hide show mode
-;; 2012-05-03 (3.7)
-;;    add function to checkout/diff/history file from clearcase + remove hippie
-;;    expand custom
-;; 2012-05-02 (3.6)
-;;    add function about isearch, macro, windows swap + comment for fix
-;;    fullscreen bug
-;; 2012-03-29 (3.5)
-;;    add function align with =
-;; 2012-03-28 (3.4)
-;;    translate comments in English and change old format
-;; 2012-03-26 (3.3)
-;;    fix bug with rtrt align
-;; 2012-03-20 (3.2)
-;;    add function for rtrt align and replace
-;; 2012-03-12 (3.1)
-;;    add conditions for each working environment
-;; 2012-03-02 (3.0)
-;;    add function occur-at-point
-;; 2011-11-03 (2.9)
-;;    add function to expand C macro per project
-;; 2011-10-27 (2.8)
-;;    change grep function per project to add list file
-;; 2011-03-10 (2.7)
-;;    add gtags function
-;; 2010-12-02 (2.6)
-;;    add dos2unix and unix2dos
-;; 2010-11-19 (2.5)
-;;    align regexp
-;; 2010-11-03 (2.4)
-;;    push line + search fault and tab
-;; 2010-09-02 (2.3)
-;;    insert tab + config
-;; 2010-08-11 (2.2)
-;;    select word + startup
-;; 2010-07-09 (2.1)
-;;    ecb
-;; 2010-06-11 (2.0)
-;;    grep
-;; 2010-06-09 (1.6)
-;;    etags
-;; 2008-04-21 (1.5)
-;;    insert header
-;; 2008-03-10 (1.0)
-;;    add printf for debug /* Kaneton :) */
-;; 2006-10-13 (0.1)
-;;    creation from scratch (no history since)
 
 
 ;;; Code:
