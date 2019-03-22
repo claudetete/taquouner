@@ -44,3 +44,4 @@
 /.emacs.d/wiki/*
 /.emacs.d/plugins/pt_windows_amd64/*
 /.emacs.d/plugins/smartparens-master/*
+/.emacs.d/plugins/projectile-master/*

@@ -51,41 +51,48 @@
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
     (defvar tqnr-profile-portable-path "e:/Users/S0070736/Portable")
+    ;; (defvar tqnr-profile-portable-git-version "2.13.1")
+    (defvar tqnr-profile-portable-git-version "2.17.0")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
         ;; (do not put path which contains gcc otherwise it will be used instead of MSYS2 one)
         ;; emacs useful binary
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ada-mode")
+        ;;(concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ada-mode")
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ripgrep-x86_64")
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/pandoc-2.0.3")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin")
+        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/bin")
+        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/universal-ctags-x64_2018-08-22")
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/cflow-mingw-master")
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/irony-mode/server/build/bin")
-        ;; GNU Emacs
-        (concat (file-name-as-directory tqnr-profile-portable-path) "emacs-25.3_1-x86_64/bin")
+        ;; gnuplot
+        "l:/FMS_Tools/GNUPLOT/gnuplot_5.3/bin"
         ;; GNAT
         ;; "E:/Users/S0070736/Portable/GNAT/2017/bin"
         ;; GNATPRO
-        (concat (file-name-as-directory tqnr-profile-portable-path) "GNATPRO_17.1/bin")
-        ;;"D:/App/GNATPRO_17.1/bin"
+        ;; (concat (file-name-as-directory tqnr-profile-portable-path) "GNATPRO_17.1/bin")
+        "l:/FMS_Tools/GNATPRO/GNATPRO_18.2/bin"
         ;; PYTHON
-        "D:/App/Python27"
-        ;; MSYS (i686)
-        (concat (file-name-as-directory tqnr-profile-portable-path) "msys32/mingw32/bin")
-        (concat (file-name-as-directory tqnr-profile-portable-path) "msys32/usr/local/bin")
-        (concat (file-name-as-directory tqnr-profile-portable-path) "msys32/usr/bin")
-        (concat (file-name-as-directory tqnr-profile-portable-path) "msys32/bin")
+        "l:/FMS_Tools/PYTHON/PYTHON_2.7.4"
         ;; GIT
-        (concat (file-name-as-directory tqnr-profile-portable-path) "Git_2.13.1/bin")
+        (concat  "l:/FMS_Tools/GIT/Git_" tqnr-profile-portable-git-version "/bin")
+        ;; MSYS (i686)
+        (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/mingw64/bin")
+        (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/usr/local/bin")
+        (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/usr/bin")
+        (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/bin")
+        ;; GITEXTENSIONS
+        (concat (file-name-as-directory tqnr-profile-portable-path) "GitExtensions")
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
-        ;; GIT linux utils (msys32 override it)
-        (concat (file-name-as-directory tqnr-profile-portable-path) "Git_2.13.1/cmd")
-        (concat (file-name-as-directory tqnr-profile-portable-path) "Git_2.13.1/mingw64/bin")
-        (concat (file-name-as-directory tqnr-profile-portable-path) "Git_2.13.1/usr/bin")
+        ;; GIT linux utils (msys64 override it)
+        (concat "l:/FMS_Tools/GIT/Git_" tqnr-profile-portable-git-version "/cmd")
+        (concat "l:/FMS_Tools/GIT/Git_" tqnr-profile-portable-git-version "/mingw64/bin")
+        (concat "l:/FMS_Tools/GIT/Git_" tqnr-profile-portable-git-version "/usr/bin")
         ;; GPS
-        "D:/App/GPS_171/bin"
+        "l:/FMS_Tools/GPS/GPS_18.2_x64/bin"
+        ;; GNU Emacs
+        (concat (file-name-as-directory tqnr-profile-portable-path) "emacs-26.1-x86_64/bin")
         ;; MS Windows usual path
         "C:/WINDOWS"
         "C:/WINDOWS/System32"
@@ -94,6 +101,9 @@
     ;;
     ;; LOCALE: languages settings about subversion and dired
     (setq tqnr-profile-lang "en_US")
+    ;; universal-ctags as backend of GNU Global
+    (setenv "GTAGSCONF" (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/share/gtags/gtags.conf"))
+    (setenv "GTAGSLABEL" "new-ctags")
     ) ;; (when tqnr-section-environment-set-path
   ;; MS WINDOWS PERFORMANCE: MS Windows specific configuration about performance
   (setq tqnr-section-environment-ms-windows-performance t)
@@ -209,20 +219,22 @@
     (setq tqnr-ada-gps-build-all-command "gnat make")
     ;; Buffer name of build all project files command
     (setq tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN ALL
+    ;; CLEAN
     ;; Command of clean all generated file
-    (setq tqnr-ada-gps-clean-all-command "gnat clean")
+    (setq tqnr-ada-gps-clean-command "gnat clean")
     ;; Buffer name of clean all generated command
-    (setq tqnr-ada-gps-clean-all-buffer-name "*ada-clean-all*")
+    (setq tqnr-ada-gps-clean-buffer-name "*ada-clean*")
+    ;; REBUILD ALL
+    ;; Command of rebuild all generated file
+    (setq tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
+    ;; Buffer name of rebuild all generated command
+    (setq tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
     ;; BUILD NATIVE
     ;; Command of build for native execution
     (setq tqnr-ada-gps-build-native-command "gnat clean")
     ;; Buffer name of native build command
     (setq tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
     ) ;; (when tqnr-section-function-ada
-
-  ;; RIPGREP: functions to add type support to helm ag for ripgrep
-  (setq tqnr-section-function-ripgrep nil)
 
   ;; CALC: functions to add type support to helm ag for ripgrep
   (setq tqnr-section-function-calc t)
@@ -288,8 +300,8 @@
     ;;   `your-emacs-path/lisp/emacs-lisp/eieio*'
     (setq tqnr-profile-cedet-path nil)
     ;; bin path of gnu global for cedet
-    (setq tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/global.exe"))
-    (setq tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/gtags.exe"))
+    (setq tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/bin/global.exe"))
+    (setq tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/bin/gtags.exe"))
     ;;
     ;; CEDET SEMANTIC: can do tag, list of function/variable..., preproc, etc
     (setq tqnr-section-mode-cedet-semantic t)
@@ -538,7 +550,7 @@
   (setq tqnr-section-mode-rainbow t)
 
   ;; EDIFF: graphical diff (## to toggle whitespace ignoring)
-  (setq tqnr-section-mode-ediff nil)
+  (setq tqnr-section-mode-ediff t)
 
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (setq tqnr-section-mode-magit t)
@@ -649,44 +661,10 @@
   ;; Helm does not like popwin...
   (setq tqnr-section-mode-shackle t)
 
-  ;; RIPGREP: A front-end for rg, ripgrep (faster than anything...)
+  ;; RIPGREP
+  ;; A front-end for rg, ripgrep (faster than anything...)
+  ;; use .ripgreprc to add new type
   (setq tqnr-section-mode-ripgrep t)
-  (when tqnr-section-mode-ripgrep
-    ;; List of types to add to ripgrep configuration (no .ripgrep configuration file only cli parameters)
-    ;; It should respect ripgrep format for --type-add parameter (extract from $ripgrep --help):
-    ;;   --type-add <TYPE>...
-    ;;   Add a new glob for a particular file type. Only one glob can be added at a time.
-    ;;   Multiple --type-add flags can be provided. Unless --type-clear is used, globs are added
-    ;;   to any existing globs defined inside of ripgrep.
-    ;;
-    ;;   Note that this MUST be passed to every invocation of ripgrep. Type settings are NOT
-    ;;   persisted.
-    ;;
-    ;;   Example: rg --type-add 'foo:*.foo' -tfoo PATTERN.
-    ;;
-    ;;   --type-add can also be used to include rules from other types with the special include
-    ;;   directive. The include directive permits specifying one or more other type names
-    ;;   (separated by a comma) that have been defined and its rules will automatically be
-    ;;   imported into the type specified. For example, to create a type called src that matches
-    ;;   C++, Python and Markdown files, one can use:
-    ;;
-    ;;   --type-add 'src:include:cpp,py,md'
-    ;;
-    ;;   Additional glob rules can still be added to the src type by using the --type-add flag
-    ;;   again:
-    ;;
-    ;;   --type-add 'src:include:cpp,py,md' --type-add 'src:*.foo'
-    ;;
-    ;;   Note that type names must consist only of Unicode letters or numbers. Punctuation
-    ;;   characters are not allowed.
-    (setq tqnr-section-mode-ripgrep-additional-type
-      (list
-        ;; Ada mode
-        ;;"ada:*.ads"
-        ;;"ada:*.adb"
-        )
-      ) ;; (setq tqnr-section-mode-ripgrep-additional-type
-    ) ;; (when tqnr-section-mode-ripgrep
 
   ;; HYDRA: Create families of short bindings with a common prefix
   (setq tqnr-section-mode-hydra t)
@@ -711,6 +689,8 @@
     (setq tqnr-section-mode-hydra-ada t)
     ;; Use Hydra to manage outline shortcuts
     (setq tqnr-section-mode-hydra-outline t)
+    ;; Use Hydra to manage org shortcuts
+    (setq tqnr-section-mode-hydra-org-mode t)
     ) ;; (when tqnr-section-mode-hydra
 
   ;; FLYSPELL: On-the-fly spell checking
@@ -741,6 +721,15 @@
 
   ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
   (setq tqnr-section-mode-org-jira t)
+
+  ;; GNUPLOT: Major mode for editing gnuplot scripts
+  (setq tqnr-section-mode-gnuplot t)
+
+  ;; POWERSHELL: Powershell mode
+  (setq tqnr-section-mode-powershell t)
+
+  ;; HELPFUL: Helpful mode
+  (setq tqnr-section-mode-helpful t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
@@ -912,7 +901,8 @@
     ;; nice can use any variant of this open source font (by example slashed zero, dot zero, empty zero)
     ;; see https://be5invis.github.io/Iosevka/ for more settings
     ;;
-    (setq tqnr-profile-font "Iosevka-8")
+    ;;(setq tqnr-profile-font "Iosevka-8")
+    (setq tqnr-profile-font "Iosevka NF-8")
     ;; ANTIALIAS: set antialiasing on font rendering
     (setq tqnr-section-display-font-antialias t)
     ) ;; (when tqnr-section-display-font
@@ -1100,6 +1090,11 @@
   ;; to disable all version control
   (setq vc-handled-backends nil)
 
+  ;; U: is thales server home, it contains a function to replace .dir-locals.el
+  (add-to-list 'load-path "u:/")
+
+  ;; load function
+  (try-require 'project-env "")
 
   ;; set only one zone program
   (setq zone-programs [ zone-pgm-putz-with-case ])
@@ -1107,8 +1102,29 @@
   ;; try to unslow emacs when open file
   (remove-hook 'find-file-hooks 'vc-find-file-hook)
 
+  ;;(setq dumb-jump-rg-cmd (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ripgrep-x86_64/rg.exe"))
+  ;; useful to let mega large project
+  (setq dumb-jump-max-find-time 30)
+
   ;; do not freeze when redisplay ?
   ;;(redisplay-dont-pause t)
+
+  ;; Scrolling.
+  ;; Good speed and allow scrolling through large images (pixel-scroll).
+  ;; Note: Scroll lags when point must be moved but increasing the number
+  ;;       of lines that point moves in pixel-scroll.el ruins large image
+  ;;       scrolling. So unfortunately I think we'll just have to live with
+  ;;       this.
+  (pixel-scroll-mode)
+  (setq pixel-dead-time 0) ; Never go back to the old scrolling behaviour.
+  (setq pixel-resolution-fine-flag t) ; Scroll by number of pixels instead of lines (t = frame-char-height pixels).
+  (setq mouse-wheel-scroll-amount '(1)) ; Distance in pixel-resolution to scroll each mouse wheel event.
+  (setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
+  (setq fast-but-imprecise-scrolling t) ; No (less) lag while scrolling lots.
+  (setq jit-lock-defer-time 0) ; Just don't even fontify if we're still catching up on user input.
+
+  ;; reduce magit slow on windows
+  (setq w32-pipe-read-delay 0)
 
   (message "### END")
   ) ; (defun function-to-call-after-loading-conf ()

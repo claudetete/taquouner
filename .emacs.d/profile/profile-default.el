@@ -252,20 +252,22 @@
     (setq tqnr-ada-gps-build-all-command "gnat make")
     ;; Buffer name of build all project files command
     (setq tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN ALL
+    ;; CLEAN
     ;; Command of clean all generated file
-    (setq tqnr-ada-gps-clean-all-command "gnat clean")
+    (setq tqnr-ada-gps-clean-command "gnat clean")
     ;; Buffer name of clean all generated command
-    (setq tqnr-ada-gps-clean-all-buffer-name "*ada-clean-all*")
+    (setq tqnr-ada-gps-clean-buffer-name "*ada-clean*")
+    ;; REBUILD ALL
+    ;; Command of rebuild all generated file
+    (setq tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
+    ;; Buffer name of rebuild all generated command
+    (setq tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
     ;; BUILD NATIVE
     ;; Command of build for native execution
     (setq tqnr-ada-gps-build-native-command "gnat clean")
     ;; Buffer name of native build command
     (setq tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
     ) ;; (when tqnr-section-function-ada
-
-  ;; RIPGREP: functions to add type support to helm ag for ripgrep
-  (setq tqnr-section-function-ripgrep nil)
 
   ;; CALC: functions to add type support to helm ag for ripgrep
   (setq tqnr-section-function-calc nil)
