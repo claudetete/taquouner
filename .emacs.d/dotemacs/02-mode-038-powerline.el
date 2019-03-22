@@ -50,8 +50,11 @@
       '("%e"
          (:eval
            (let* ((active (powerline-selected-window-active))
-                   ;; face for right and left
-                   (mode-line (if active 'mode-line 'mode-line-inactive))
+                   (face-mode-line (if active 'mode-line
+                                     'mode-line-inactive))
+                   ;; face for right and left end
+                   (face-end (if active 'powerline-active0
+                               'powerline-inactive0))
                    ;; face for between right and left and middle
                    (face-between (if active 'powerline-active1
                                    'powerline-inactive1))
@@ -59,7 +62,9 @@
                    (face-middle (if active 'powerline-active2
                                   'powerline-inactive2))
                    ;; face for highlight
-                   (face-warning 'font-lock-warning-face)
+                   ;;(face-warning `(:height 1.5 :inherit compilation-error))
+                   (face-warning `(:height 1.5 :inherit org-level-7))
+                   ;(face-warning 'font-lock-warning-face)
                    (separator-left
                      (intern (format "powerline-%s-%s"
                                powerline-default-separator
@@ -77,16 +82,16 @@
                               (concat
                                 (powerline-raw " ")
                                 (all-the-icons-octicon "lock" :face 'font-lock-warning-face :v-adjust 0.05))
-                              (powerline-raw "[RO]" face-warning)))
+                              (powerline-raw "" face-warning)))
                           ;; buffername
                           (powerline-buffer-id nil 'l)
                           ;; display * at end of buffer name when buffer was modified
                           (when (and (buffer-modified-p) buffer-file-name)
-                            (powerline-raw "*" face-warning 'l))
+                            (powerline-raw "" face-warning 'l))
 
                           ;; first separator
                           (powerline-raw " ")
-                          (funcall separator-left mode-line face-between)
+                          (funcall separator-left face-end face-between)
 
                           ;;
                           ;; LEFT MIDDLE
@@ -128,24 +133,20 @@
                           (powerline-raw "%2c" face-between 'r)
 
                           ;; fourth separator
-                          (funcall separator-right face-between mode-line)
+                          (funcall separator-right face-between face-end)
                           (powerline-raw " ")
 
                           ;;
                           ;; RIGHT
                           ;; encoding and eol indicator
                           (when buffer-file-coding-system
-                            (powerline-raw (symbol-name buffer-file-coding-system))
-                            (powerline-raw " " nil 'l)
                             (powerline-raw
                               (let* ((eol (coding-system-eol-type buffer-file-coding-system)))
                                 (cond
-                                  ((eq eol 0) "(Unix)")
-                                  ((eq eol 1) "(Dos)")
-                                  ((eq eol 2) "(Mac)")
-                                  (t ""))))
-                            ;;(powerline-raw mode-line-mule-info nil 'l)
-                            (powerline-raw " " nil 'r))
+                                  ((eq eol 0) "\\n ")
+                                  ((eq eol 1) "\\r\\n ")
+                                  ((eq eol 2) "\\r ")
+                                  (t "")))))
                           ;; position indicator
                           (powerline-raw "%6p" nil 'r)
 
@@ -156,9 +157,8 @@
                (powerline-fill face-middle (powerline-width rhs))
                (powerline-render rhs)))))))
   ;; set arrow fade as separator
-  (setq powerline-default-separator 'arrow-fade)
-  (when tqnr-section-mode-all-the-icons
-    (setq powerline-height 22))
+  (setq powerline-default-separator 'arrow)
+  (setq powerline-height 24)
   (powerline-my-theme)
   )
 

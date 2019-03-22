@@ -10,6 +10,19 @@
 ;; Keywords: mode-line
 ;; Package-Requires: ((cl-lib "0.2"))
 
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 ;;; Commentary:
 ;;
 ;; Powerline is a library for customizing the mode-line that is based on the Vim
@@ -23,12 +36,25 @@
 
 (require 'cl-lib)
 
-(defface powerline-active1 '((t (:background "grey22" :inherit mode-line)))
+(defgroup powerline nil
+  "Powerline, a prettier mode line."
+  :group 'mode-line)
+
+(defface powerline-active0 '((t (:inherit mode-line)))
+  "Powerline face 0."
+  :group 'powerline)
+
+(defface powerline-active1 '((t (:background "grey17" :foreground "white" :inherit mode-line)))
   "Powerline face 1."
   :group 'powerline)
 
-(defface powerline-active2 '((t (:background "grey40" :inherit mode-line)))
+(defface powerline-active2 '((t (:background "grey40" :foreground "white" :inherit mode-line)))
   "Powerline face 2."
+  :group 'powerline)
+
+(defface powerline-inactive0
+  '((t (:inherit mode-line-inactive)))
+  "Powerline face 0."
   :group 'powerline)
 
 (defface powerline-inactive1
@@ -68,7 +94,7 @@ utf-8."
                  (const slant)
                  (const wave)
                  (const zigzag)
-		 (const utf-8)
+                 (const utf-8)
                  (const nil)))
 
 (defcustom powerline-utf-8-separator-left #xe0b0
@@ -116,6 +142,11 @@ This is needed to make sure that text is properly aligned."
   "Display a unicode character to represent a version control system. Not always supported in GUI."
   :group 'powerline
   :type 'boolean)
+
+(defcustom powerline-narrowed-indicator "Narrow"
+  "A string to display in the mode-line when the buffer is narrowed."
+  :group 'powerline
+  :type 'string)
 
 (defun pl/create-or-get-cache ()
   "Return a frame-local hash table that acts as a memoization cache for powerline. Create one if the frame doesn't have one yet."
@@ -261,7 +292,7 @@ static char * %s[] = {
      'xpm t :ascent 'center)))
 
 (defun pl/percent-xpm
-  (height pmax pmin winend winstart width color1 color2)
+    (height pmax pmin winend winstart width color1 color2)
   "Generate percentage xpm of HEIGHT for PMAX to PMIN given WINEND and WINSTART with WIDTH and COLOR1 and COLOR2."
   (let* ((height- (1- height))
          (fillstart (round (* height- (/ (float winstart) (float pmax)))))
@@ -331,7 +362,7 @@ static char * %s[] = {
 (defmacro defpowerline (name body)
   "Create function NAME by wrapping BODY with powerline padding an propetization."
   `(defun ,name
-     (&optional face pad)
+       (&optional face pad)
      (powerline-raw ,body face pad)))
 
 (defun pl/property-substrings (str prop)
@@ -434,27 +465,30 @@ static char * %s[] = {
 
 ;;;###autoload (autoload 'powerline-narrow "powerline")
 (defpowerline powerline-narrow
-  (let (real-point-min real-point-max)
-    (save-excursion
-      (save-restriction
-        (widen)
-        (setq real-point-min (point-min) real-point-max (point-max))))
-    (when (or (/= real-point-min (point-min))
-              (/= real-point-max (point-max)))
-      (propertize "Narrow"
-                  'mouse-face 'mode-line-highlight
-                  'help-echo "mouse-1: Remove narrowing from the current buffer"
-                  'local-map (make-mode-line-mouse-map
-                              'mouse-1 'mode-line-widen)))))
+  (when ;; (buffer-narrowed-p) introduced in Emacs 24.3.
+      (/= (- (point-max) (point-min)) (buffer-size))
+    (propertize powerline-narrowed-indicator
+                'mouse-face 'mode-line-highlight
+                'help-echo "mouse-1: Remove narrowing from the current buffer"
+                'local-map (make-mode-line-mouse-map
+                            'mouse-1 'mode-line-widen))))
 
 ;;;###autoload (autoload 'powerline-vc "powerline")
 (defpowerline powerline-vc
   (when (and (buffer-file-name (current-buffer)) vc-mode)
     (if (and window-system (not powerline-gui-use-vcs-glyph))
-	(format-mode-line '(vc-mode vc-mode))
+        (format-mode-line '(vc-mode vc-mode))
       (format " %s%s"
-	      (char-to-string #xe0a0)
-	      (format-mode-line '(vc-mode vc-mode))))))
+              (char-to-string #xe0a0)
+              (format-mode-line '(vc-mode vc-mode))))))
+
+;;;###autoload (autoload 'powerline-encoding "powerline")
+(defpowerline powerline-encoding
+  (let ((buf-coding (format "%s" buffer-file-coding-system)))
+    (if (string-match "\\(dos\\|unix\\|mac\\)" buf-coding)
+        (match-string 1 buf-coding)
+      buf-coding)))
+
 
 ;;;###autoload (autoload 'powerline-buffer-size "powerline")
 (defpowerline powerline-buffer-size
@@ -474,14 +508,14 @@ static char * %s[] = {
   (powerline-raw
    (format-mode-line
     (concat " " (propertize
-		 "%b"
-		 'face face
-		 'mouse-face 'mode-line-highlight
-		 'help-echo "Buffer name\n\ mouse-1: Previous buffer\n\ mouse-3: Next buffer"
-		 'local-map (let ((map (make-sparse-keymap)))
-			      (define-key map [mode-line mouse-1] 'mode-line-previous-buffer)
-			      (define-key map [mode-line mouse-3] 'mode-line-next-buffer)
-			      map))))
+                 (format-mode-line mode-line-buffer-identification)
+                 'face face
+                 'mouse-face 'mode-line-highlight
+                 'help-echo "Buffer name\n\ mouse-1: Previous buffer\n\ mouse-3: Next buffer"
+                 'local-map (let ((map (make-sparse-keymap)))
+                              (define-key map [mode-line mouse-1] 'mode-line-previous-buffer)
+                              (define-key map [mode-line mouse-3] 'mode-line-next-buffer)
+                              map))))
    face pad))
 
 ;;;###autoload (autoload 'powerline-process "powerline")
@@ -512,14 +546,17 @@ static char * %s[] = {
 
 (add-hook 'minibuffer-exit-hook 'pl/minibuffer-exit)
 
-(defvar powerline-selected-window (frame-selected-window))
+(defvar powerline-selected-window (frame-selected-window)
+  "Selected window.")
+
 (defun powerline-set-selected-window ()
-  "sets the variable `powerline-selected-window` appropriately"
+  "Set the variable `powerline-selected-window' appropriately."
   (when (not (minibuffer-window-active-p (frame-selected-window)))
-    (setq powerline-selected-window (frame-selected-window))))
+    (setq powerline-selected-window (frame-selected-window))
+    (force-mode-line-update)))
 
 (defun powerline-unset-selected-window ()
-  "Unsets the variable `powerline-selected-window` and updates the modeline"
+  "Unset the variable `powerline-selected-window' and update the mode line."
   (setq powerline-selected-window nil)
   (force-mode-line-update))
 
@@ -534,13 +571,16 @@ static char * %s[] = {
 
 ;; Executes after the window manager requests that the user's events
 ;; be directed to a different frame.
-(defadvice handle-switch-frame
-    (after powerline-set-selected-window-after-switch-frame activate)
+(defadvice handle-switch-frame (after powerline-handle-switch-frame activate)
+  "Call `powerline-set-selected-window'."
   (powerline-set-selected-window))
 
-(defadvice select-window (after powerline-select-window activate)
-  "makes powerline aware of window changes"
-  (powerline-set-selected-window))
+(defadvice select-window (around powerline-select-window activate)
+  "Call `powerline-set-selected-window' when NORECORD is nil."
+  (prog1
+      ad-do-it
+    (unless norecord
+      (powerline-set-selected-window))))
 
 ;;;###autoload (autoload 'powerline-selected-window-active "powerline")
 (defun powerline-selected-window-active ()
