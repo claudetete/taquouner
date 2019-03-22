@@ -1,3 +1,11 @@
+2018-12-08  Stephen Leake  <stephen_leake@stephe-leake.org>
+
+	Release ada-mode 6.0.1, wisi 2.0.1; fix copyright, packaging bugs
+
+2018-12-02  Stephen Leake  <stephen_leake@stephe-leake.org>
+
+	Release ada-mode version 6.0. Release wisi version 2.0
+
 2017-10-03  Stephen Leake  <stephen_leake@stephe-leake.org>
 
 	Release Ada mode 5.3.1, wisi 1.1.6

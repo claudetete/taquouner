@@ -1,12 +1,39 @@
 GNU Emacs wisi NEWS -- history of user-visible changes.
 
-Copyright (C) 2014 Free Software Foundation, Inc.
+Copyright (C) 2018 Free Software Foundation, Inc.
 See the end of the file for license conditions.
 
 Please send wisi bug reports to bug-gnu-emacs@gnu.org, with
 'wisi' in the subject. If possible, use M-x report-emacs-bug.
 
 
+* wisi 2.0.1
+8 Dec 2018
+
+** Assign copyright in Ada files to FSF
+
+** Update user guide, include it in elpa package
+
+* wisi 2.0.0
+17 Nov 2018
+
+** Change indentation engine to compute indent directly in parser actions.
+
+** Add error correcting external process parser.
+
+** Factor out wisi-elisp-lexer.el from wisi.el, and
+   ada-wisi-elisp-parse.el from ada-wisi.el. Move elisp grammar
+   actions from wisi.el to wisi-elisp-parse.el; they are not used with
+   the process parser.
+
+** Add support for error corrections in parser; 'wisi-repair-error'
+   can apply the corrections to the buffer text.
+
+** Display marks in fringe at location of errors detected by
+   background parser.
+
+** include sources for wisitoken parser runtime, parser generator.
+
 * wisi 1.1.6
 3 Oct 2017
 

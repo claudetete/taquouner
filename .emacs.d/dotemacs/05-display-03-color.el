@@ -74,7 +74,10 @@
     (progn
       ;; add path of theme
       (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes"))
+      (add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes"))
       (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/solarized"))
+      (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/base16"))
+      (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/doom"))
       (custom-set-variables
         ;; add secure hash
         '(custom-safe-themes
@@ -85,26 +88,9 @@
                "7606cceeaa8251c5997f9ab71bf3b701a7ac4050db3ac232dc8feb9d338fa1de" ; zenburn
                default
                ))))
-      (cond
-        ;; load theme
-        ((string= tqnr-profile-color-theme "adwaita")     (load-theme 'adwaita     t))
-        ((string= tqnr-profile-color-theme "deeper-blue") (load-theme 'deeper-blue t))
-        ((string= tqnr-profile-color-theme "dichromacy")  (load-theme 'dichromacy  t))
-        ((string= tqnr-profile-color-theme "light-blue")  (load-theme 'light-blue  t))
-        ((string= tqnr-profile-color-theme "manoj-dark")  (load-theme 'manoj-dark  t))
-        ((string= tqnr-profile-color-theme "misterioso")  (load-theme 'misterioso  t))
-        ((string= tqnr-profile-color-theme "tango-dark")  (load-theme 'tango-dark  t))
-        ((string= tqnr-profile-color-theme "tango")       (load-theme 'tango       t))
-        ((string= tqnr-profile-color-theme "tsdh-dark")   (load-theme 'tsdh-dark   t))
-        ((string= tqnr-profile-color-theme "tsdh-light")  (load-theme 'tsdh-light  t))
-        ((string= tqnr-profile-color-theme "wheatgrass")  (load-theme 'wheatgrass  t))
-        ((string= tqnr-profile-color-theme "whiteboard")  (load-theme 'whiteboard  t))
-        ((string= tqnr-profile-color-theme "wombat")      (load-theme 'wombat      t))
-        ;; custom
-        ((string= tqnr-profile-color-theme "sweet") (load-theme 'sweet t))
-        ((string= tqnr-profile-color-theme "zenburn") (load-theme 'zenburn t))
-        ((string= tqnr-profile-color-theme "solarized-light") (load-theme 'solarized-light t))
-        ) ; (cond
+      ;; load theme
+      ;; use (intern "string") to access to variable using its name from string
+      (load-theme (intern tqnr-profile-color-theme) t)
       )
     ;; else tqnr-running-on-emacs-23
     (when (try-require 'color-theme "      ")

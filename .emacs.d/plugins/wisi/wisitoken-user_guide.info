@@ -1,0 +1,556 @@
+This is wisitoken-user_guide.info, produced by makeinfo version 6.3 from
+wisitoken-user_guide.texinfo.
+
+Copyright (C) 2014-2015, 2017, 2018 Stephen Leake.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU Free Documentation License,
+     Version 1.3 or any later version published by the Free Software
+     Foundation; with no Invariant Sections, no Front-Cover Texts and no
+     Back-Cover Texts.  A copy of the license is included in the section
+     entitled "GNU Free Documentation License".
+INFO-DIR-SECTION Parser generators
+START-INFO-DIR-ENTRY
+* wisitoken-bnf-generate: (wisitoken-bnf-generate).         Ada and Elisp parser generator
+END-INFO-DIR-ENTRY
+
+
+File: wisitoken-user_guide.info,  Node: Top,  Next: Overview,  Up: (dir)
+
+WisiToken User Guide
+********************
+
+Copyright (C) 2014-2015, 2017, 2018 Stephen Leake.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU Free Documentation License,
+     Version 1.3 or any later version published by the Free Software
+     Foundation; with no Invariant Sections, no Front-Cover Texts and no
+     Back-Cover Texts.  A copy of the license is included in the section
+     entitled "GNU Free Documentation License".
+
+* Menu:
+
+* Overview::
+* Common grammar problems::
+* Grammar File Syntax::
+
+
+File: wisitoken-user_guide.info,  Node: Overview,  Next: Common grammar problems,  Prev: Top,  Up: Top
+
+1 Overview
+**********
+
+WisiToken is a parser and parser generator toolkit, supporting
+generalized LR (both LALR and LR1) and packrat parsers.  The grammar can
+be expressed as either Ada source code statements, or in an EBNF file.
+The parser generator generates either Ada or elisp source (the elisp
+source assumes the Emacs wisi Gnu ELPA package).
+
+   At one point, "wisi" was short for "Wisent Indentation engine"; the
+Emacs 'wisi' package implements an indentation engine that used to be
+based on the Emacs wisent parser.  However, that parser has now been
+replaced by a generalized LALR parser with error recovery, so "wisi" is
+just a name.
+
+* Menu:
+
+* Install::
+
+
+File: wisitoken-user_guide.info,  Node: Install,  Up: Overview
+
+1.1 Install
+===========
+
+WisiToken is available as source code only.
+
+   To use the Ada runtime, you will also need to install a lexer
+generator.  WisiToken supports re2c, and other lexers can be added.
+
+   re2c is available from <http://re2c.org/>.  WisiToken uses the
+environment variable RE2C_HOME to locate re2c.
+
+
+File: wisitoken-user_guide.info,  Node: Common grammar problems,  Next: Grammar File Syntax,  Prev: Overview,  Up: Top
+
+2 Common grammar problems
+*************************
+
+LALR grammars are tricky.  Here we describe some common problems people
+run into.
+
+* Menu:
+
+* Empty choice in list::
+
+
+File: wisitoken-user_guide.info,  Node: Empty choice in list,  Up: Common grammar problems
+
+2.1 Empty choice in list
+========================
+
+Many programming languages have lists in the grammar.  For example, Ada
+has lists of declarations:
+
+     package_body
+       : PACKAGE name IS declaration_list BEGIN statement_list END SEMICOLON
+       ;
+
+     declaration_list
+       : declaration
+       | declaration_list declaration
+       ;
+
+     declaration
+       : object_declaration
+       | subprogram_declaration
+       ;; ...
+       ;
+
+   Note that the above grammar fragment does not allow an empty
+declaration_list.  But Ada does, so the question is how can we add that
+to the grammar.
+
+   There are four choices:
+
+  1. Add an empty declaration choice to declaration_list:
+
+          declaration_list
+            : ;; empty list
+            | declaration
+            | declaration_list declaration
+            ;
+     This is now redundant; since declaration_list can be empty, the
+     second choice is not needed:
+          declaration_list
+            : ;; empty list
+            | declaration_list declaration
+            ;
+
+  2. Add an empty declaration choice to declaration:
+
+          declaration
+            : ;; empty declaration
+            | object_declaration
+            | subprogram_declaration
+            ;; ...
+            ;
+
+  3. Add another rule with the empty production:
+
+          package_body
+            : PACKAGE name IS declarative_part BEGIN statement_list END SEMICOLON
+            ;
+
+          declarative_part
+            : ;; empty
+            | declaration_list
+            ;
+
+          declaration_list
+            : declaration
+            | declaration_list declaration
+            ;
+
+          declaration
+            : object_declaration
+            | subprogram_declaration
+            ;; ...
+            ;
+
+  4. Add another choice in package_body that leaves out
+     declaration_list:
+          package_body
+            : PACKAGE name IS declaration_list BEGIN statement_list END SEMICOLON
+            | PACKAGE name IS BEGIN statement_list END SEMICOLON
+            ;
+
+   Choice 1 is redundant, giving parse errors at parse time.  Consider
+the following statements, where "<empty>" is used to indicate an empty
+declaration:
+
+   1) package One is <empty> begin end ; 2) package One is package One
+is <empty> begin end ; begin end ; 3) package One is <empty> package One
+is <empty declaration> begin end ; begin end ;
+
+   In parsing 3), the second 'package' causes a shift/reduce conflict;
+shift to start the nested declaration (as in 2), reduce to the empty
+declaration.  Both are correct according to the grammar.
+
+   Choice 2 leads to a shift/reduce conflict in the production for
+package_body; implementing the wisi parser as a generalized LALR parser
+allows it to handle this option.
+
+   Choice 2 is the preferred choice for Ada, since it involves the least
+modifications to the original Ada grammar in the Ada reference manual.
+
+
+File: wisitoken-user_guide.info,  Node: Grammar File Syntax,  Prev: Common grammar problems,  Up: Top
+
+3 Grammar File Syntax
+*********************
+
+The grammar file syntax is based on Gnu bison syntax with some additions
+and deletions (*note Bison: (bison)Top.).
+
+   (The grammar is specified in the WisiToken grammar file
+'wisitoken_grammar.wy').
+
+   The top level file structure is a list of declarations and
+nonterminals.
+
+   Comments are started by ";;" and terminated by end of line.
+
+* Menu:
+
+* Declarations::
+* Nonterminals::
+* Conditional code::
+
+
+File: wisitoken-user_guide.info,  Node: Declarations,  Next: Nonterminals,  Up: Grammar File Syntax
+
+3.1 Declarations
+================
+
+The Declarations sections declares terminal tokens, conflicts, and other
+parser parameters.
+
+* Menu:
+
+* Raw Code::
+* Keywords::
+* Tokens::
+* Error recovery::
+* Other declarations::
+
+
+File: wisitoken-user_guide.info,  Node: Raw Code,  Next: Keywords,  Up: Declarations
+
+3.1.1 Raw code
+--------------
+
+%code { actions | copyright_license } [spec | body | context | pre | post]... %{ <output language code> }%
+
+   Raw code declarations contain arbitrary code, copied verbatim into
+the output.
+
+   For Elisp output, the generator adds the necessary 'require' forms
+for the elisp lexer, parser, and wisi actions; you only need to add add
+additional code if you use other actions.
+
+   For Ada output, the keywords following '%code' determine where the
+section is output.
+
+
+File: wisitoken-user_guide.info,  Node: Keywords,  Next: Tokens,  Prev: Raw Code,  Up: Declarations
+
+3.1.2 Keywords
+--------------
+
+%keyword <name> <string>
+
+example:
+%keyword SEMICOLON ";"
+
+   "Keywords" are reserved words or symbols in the target language; the
+lexers recognize them by the given string.
+
+
+File: wisitoken-user_guide.info,  Node: Tokens,  Next: Error recovery,  Prev: Keywords,  Up: Declarations
+
+3.1.3 Tokens
+------------
+
+%token < kind > name regexp
+
+example:
+%token <symbol> IDENTIFIER
+%token <punctuation> TICK "'"
+
+   The meaning of 'kind' is determined by the lexer and parser runtime.
+The syntax of the regular expression is determined by the lexer
+generator.
+
+   In the Emacs wisi lexer, the token kinds are recognized by Emacs
+syntax properties:
+
+'<punctuation>'
+     %token <punctuation> TICK "'"
+     A string of characters that have punctuation syntax, and match the
+     token string.
+
+'<symbol>'
+     %token <symbol> IDENTIFIER
+     A string of characters that have word syntax, that match no other
+     token.
+
+'<string-double>'
+     %token <string-double> STRING_LITERAL
+     A string of characters that have string syntax, with double quote
+     delimiters.
+
+'<string-single>'
+     %token <string-single> CHARACTER_LITERAL
+     A string of characters that have string syntax, with single quote
+     delimiters.
+
+'<number>'
+     %token <number> NUMERIC_LITERAL ada-wisi-number-p ada-wisi
+     A string of characters that have word syntax, recognized by the
+     function given in the third parameter.  The fourth parameter is the
+     source file for the recognizer (included via 'require').
+
+'<whitespace>'
+     %token <whitespace> WHITESPACE [ \t\n]
+     Not used by the wisi lexer; required by the Ada lexer.
+
+'<comment>'
+     %token <line_comment> COMMENT "--"[^\n]*[\n]
+     Not used by the wisi lexer; required by the Ada lexer.  The third
+     argument is the regular expression to recognize the entire comment.
+
+
+File: wisitoken-user_guide.info,  Node: Error recovery,  Next: Other declarations,  Prev: Tokens,  Up: Declarations
+
+3.1.4 Error recovery
+--------------------
+
+The parser can use error recovery algorithms when it encounters syntax
+errors; if a solution is found, the parse continues.
+
+   Error recovery uses multiple tasks to take advantage of multiple CPU
+cores.  Unfortunately, this means there is a race condition; the
+solutions found can be delivered in different orders on different runs.
+This matters because each solution results in a successful parse,
+possibly with different actions (different indentation computed, for
+example).  Which solution finally succeeds depends on which are
+terminated due to identical parser stacks, which in turn depends on the
+order they were delivered.  See
+'ada-mode/tests/ada_mode-interactive_2.adb' for an example.
+
+   Once the syntax errors are fixed, only the ambiguities in the grammar
+itself can cause a similar problem.
+
+   Several declarations set parameters for the error recovery.  If none
+of these parameters are present in the grammar file, the generated
+parser does not do error recovery.
+
+'%mckenzie_check_limit <limit>'
+     The number of tokens past the error point that must be parsed
+     successfully for a solution to be deemed successful.  Smaller
+     values give faster recovery; larger values give better solutions.
+     Too large a value risks encountering another user error, making a
+     solution impossible.  3 or 4 works well in practice.
+
+'mckenzie_check_delta_limit <limit>'
+     When error recovery is entered with multiple parsers active, once a
+     solution has been found for one parser, the other parsers are
+     allowed to check only 'mckenzie_check_delta_limit' possible
+     solutions before they fail.  This prevents long recovery times.
+
+'%mckenzie_cost_default <insert> <delete> <push back> <ignore check fail>'
+     McKenzie error recovery default costs for insert, delete, push back
+     single tokens, and for ignoring a semantic check failure; four
+     floating point numbers.
+
+     "Push back" means undo parsing; remove tokens from the parse stack
+     and put them back into the input stream.  This moves the
+     insert/delete point, allowing better solutions.
+
+     If not specified, costs are zero.  Costs can be negative; they all
+     add linearly.
+
+'%mckenzie_cost_delete <token> <cost>'
+     McKenzie error recovery delete cost for a specific token.
+
+'%mckenzie_cost_insert <token> <cost>'
+     McKenzie error recovery insert cost for a specific token.
+
+'%mckenzie_cost_limit <integer>'
+     McKenzie error recovery limit on cost of solutions; default max
+     integer.
+
+'%mckenzie_cost_push_back <token> <cost>'
+     McKenzie error recovery push back cost for a specific token.
+
+'%mckenzie_enqueue_limit <integer>'
+     McKenzie error recovery limit on possible solutions enqueued (to be
+     checked); default max integer.
+
+     The error recovery algorithm generates possible solutions based on
+     the grammar preceding the error point, by inserting, deleting, or
+     pushing back tokens.  Each possible solution is given a cost, and
+     enqueued to be checked later.  Solutions are checked in cost order
+     (lowest first).
+
+
+File: wisitoken-user_guide.info,  Node: Other declarations,  Prev: Error recovery,  Up: Declarations
+
+3.1.5 Other declarations
+------------------------
+
+'%case_insensitive'
+     If present, keywords are case insensitive in the lexer.
+
+'%conflict <conflict description>'
+     Declare a known conflict.
+
+     Example conflict declaration:
+     %conflict REDUCE/REDUCE in state abstract_limited_opt, abstract_limited_synchronized_opt on token NEW
+
+     The conflict description is output by 'wisitoken-bnf-generate' when
+     an undeclared conflict is detected.  If the user decides to not fix
+     the conflict, the description can be copied into the grammar source
+     file, so it will be ignored next time around.
+
+     Resolving conflicts in the grammar can be difficult, but leaving
+     them in can increase parse time and cause ambiguous parses.
+
+'%elisp_face <name>'
+     Declare a name for an elisp face constant.
+
+     When generating Ada code for Emacs, the elisp faces applied by
+     'wisi-face-apply' actions must be declared, so the elisp and Ada
+     code aggree on what they mean.
+
+'%elisp_indent <name>'
+     Declare a name for an elisp indent variable.
+
+     When generating Ada code for Emacs, the elisp indent variables used
+     in 'wisi-indent' actions must be declared, so the elisp and Ada
+     code aggree on what they mean.
+
+'embedded_quote_escape_doubled'
+     If present, quote characters embedded in strings are escaped by
+     doubling (as in Ada); otherwise they are escaped by preceding with
+     backslash (as in C). Default is backslash.
+
+'end_names_optional_option <name>'
+     When generating Ada code for Emacs, the name of the Ada variable
+     determining whether end block names are optional.
+
+     In the Ada language, block names can be repeated at the end; for
+     example:
+
+     Get_Inputs :
+     loop
+     ...
+     end loop Get_Inputs;
+
+     These names are optional in the Ada standard.  Making them required
+     improves error recovery; the recovery algorithm can use matching
+     names to isolate the error.
+
+'generate <generate_algorithm> <output_language> [text_rep |'
+     elisp | re2c | process | module]
+
+     '<generate_algorithm>' is one of 'LALR | LR1 | Packrat_Gen |
+     Packrat_Proc | External'
+
+     '<output_language>' is one of 'Ada | Ada_Emacs | elisp'
+
+     Declare one output source set.  Multiple sets can be declared; they
+     are all generated together.
+
+     'elisp | re2c' determine the lexer used by the generated code.
+
+     'process | module' determine the style of code generated by
+     'Ada_Emacs'; an external process executable, or an Emacs loadable
+     module.
+
+     'text_rep' determines how the parse table is represented; if
+     present, it is in a text file that is loaded at parser run time.
+     If absent, it is in the code.  For very large parse tables, such as
+     for an LR1 parser for a large language like Ada, the text
+     representation may be needed, because the Ada compiler can't handle
+     the very large number of statements that represent the parser table
+     in the code.  The text file can take a long time to read at parser
+     startup (a few seconds for the Ada language).
+
+'%no_language_runtime'
+     When generating Ada code for Emacs, '%no_language_runtime' causes
+     the generated code to not include the runtime.  Some grammars may
+     need no runtime, particularly if they are small grammars intendend
+     to test some generator feature.
+
+'%no_enum'
+     By default, the generated Ada code includes an enumeration type
+     declaring each token.  This makes the language-specific runtime
+     easier to write (without this type, tokens are identified by
+     integers).
+
+     '%no_enum' causes the generated code to not include the token
+     enumeration type.
+
+'%start'
+     The start token for the grammar.
+
+'regexp_name <name>'
+     Declare a named regular expression.  The name may then occur in
+     another regular expression.
+
+     The re2c lexer supports this usage; other lexers may not.
+
+
+File: wisitoken-user_guide.info,  Node: Nonterminals,  Next: Conditional code,  Prev: Declarations,  Up: Grammar File Syntax
+
+3.2 Nonterminals
+================
+
+The nonterminals section declares the nonterminal tokens, and the
+associated production rules and actions.
+
+   The syntax of nonterminals is:
+
+{nonterminal} : {token} ... [ %( action code )% [| {token} ... [ %(
+action code )% ] ]... ;
+
+   Each nonterminal gives the expansion of a nonterminal token into a
+list of tokens (both terminal and nonterminal); optional productions are
+separated by "|".  Each list of tokens is followed by an "action", which
+is output-language code (enclosed in '%( )%'), that will be executed
+when the production is reduced.
+
+
+File: wisitoken-user_guide.info,  Node: Conditional code,  Prev: Nonterminals,  Up: Grammar File Syntax
+
+3.3 Conditional code
+====================
+
+The elisp and elisp lexers support different regular expression syntax,
+so it is sometimes necessary to include or exclude some declarations and
+portions of rules based on the lexer.
+
+   In addition, LALR parsers can have more conflicts than LR1 parsers.
+
+   Therefore the EBNF supports '%if ... %end if':
+%if {lexer | parser} = {<lexer> | <generate_algorithm>}
+...
+%end if
+
+   The lines between '%if' and '%end if' are ignored if the current
+lexer or parser is not the one specified in the '%if' condition.
+
+   '%if ... %end if' cannot be nested.
+
+
+
+Tag Table:
+Node: Top721
+Node: Overview1366
+Node: Install2139
+Node: Common grammar problems2523
+Node: Empty choice in list2816
+Node: Grammar File Syntax5798
+Node: Declarations6355
+Node: Raw Code6675
+Node: Keywords7260
+Node: Tokens7569
+Node: Error recovery9217
+Node: Other declarations12453
+Node: Nonterminals16476
+Node: Conditional code17193
+
+End Tag Table

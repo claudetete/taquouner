@@ -1,6 +1,6 @@
 ;; wisi-compile.el --- Grammar compiler for the wisi parser, integrating Wisi OpenToken output.  -*- lexical-binding:t -*-
 ;;
-;; Copyright (C) 2012-2013, 2015-2017 Free Software Foundation, Inc.
+;; Copyright (C) 2012-2017 Free Software Foundation, Inc.
 ;;
 ;; Author: Stephen Leake <stephen_leake@member.fsf.org>
 ;;
@@ -117,7 +117,7 @@ NONTERM is the nonterminal left hand side.
 IACTN is the index of the production in the NTERM rule.
 
 The semantic action function accepts two arguments;
-- $nterm      : the nonterminal
+- wisi-nterm  : the nonterminal
 - wisi-tokens : the list of tokens to be reduced.
 
 It returns nil; it is called for the semantic side-effects only."
@@ -126,16 +126,14 @@ It returns nil; it is called for the semantic side-effects only."
 	 (action-symbol (intern name symbol-obarray)))
 
     (fset action-symbol
-	  `(lambda ($nterm wisi-tokens)
+	  `(lambda (wisi-nterm wisi-tokens)
 	     ,form
 	     nil))
     (byte-compile action-symbol)))
 
 (defun wisi-compile-grammar (grammar)
   "Compile the LALR(1) GRAMMAR; return the automaton for wisi-parse.
-GRAMMAR is a list TERMINALS NONTERMS ACTIONS GOTOS, where:
-
-TERMINALS is a list of terminal token symbols.
+GRAMMAR is a list NONTERMS ACTIONS GOTOS, where:
 
 NONTERMS is a list of productions; each production is a
 list (nonterm (tokens semantic-action) ...) where `semantic-action' is
@@ -151,10 +149,10 @@ terminal tokens. The value of each item in the alists is one of:
 
 integer - shift; gives new state
 
-(nonterm . index) - reduce by nonterm production index.
+ (nonterm . index) - reduce by nonterm production index.
 
-(integer (nonterm . index)) - a shift/reduce conflict
-((nonterm . index) (nonterm . index)) - a reduce/reduce conflict
+ (integer (nonterm . index)) - a shift/reduce conflict
+ ((nonterm . index) (nonterm . index)) - a reduce/reduce conflict
 
 The first item in the alist must have the key `default' (not a
 terminal token); it is used when no other item matches the
@@ -185,14 +183,8 @@ implement the semantic action for each nonterminal; the function
 names have the format nonterm:index."
   ;; We store named symbols for semantic actions, not just lambda
   ;; functions, so we have a name for debug trace.
-  ;;
-  ;; FIXME: TERMINALS is not used. Eliminating it requires decoupling
-  ;; from OpenToken; we'll do that in the move to FastToken.
-  ;;
-  ;; FIXME: eliminate use of semantic-lex-* in *-wy.el. Similarly
-  ;; requires decoupling from OpenToken
 
-  (let ((defs (nth 1 grammar))
+  (let ((defs (nth 0 grammar))
 	(symbol-obarray (make-vector 13 0));; for parse actions
         (byte-compile-warnings '(not free-vars)) ;; for "wisi-test-success" in test/wisi/*
 	def nonterm rhs-list rule
@@ -216,16 +208,16 @@ names have the format nonterm:index."
 	))
 
     ;; replace semantic actions in ACTIONS with symbols from symbol-obarray
-    (let ((nactions (length (nth 2 grammar)))
-	  (actions (nth 2 grammar))
+    (let ((nactions (length (nth 1 grammar)))
+	  (actions (nth 1 grammar))
 	  (i 0))
       (while (< i nactions)
 	(aset actions i
-	      (wisi-replace-actions (aref actions i) symbol-obarray (nth 1 grammar)))
+	      (wisi-replace-actions (aref actions i) symbol-obarray (nth 0 grammar)))
 	(setq i (1+ i)))
       (vector
        actions
-       (nth 3 grammar)
+       (nth 2 grammar)
        symbol-obarray)
       )))
 

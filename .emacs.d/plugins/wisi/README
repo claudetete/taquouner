@@ -1,7 +1,7 @@
-Emacs wisi package 1.1.6
+Emacs wisi package 2.0.0
 
 The wisi package provides utilities for using generalized LALR parsers
-to do indentation, fontification, and navigation. See ada-mode for an
-example of its use.
+(in elisp or external processes) to do indentation, fontification, and
+navigation. See ada-mode for an example of its use.
 
 
