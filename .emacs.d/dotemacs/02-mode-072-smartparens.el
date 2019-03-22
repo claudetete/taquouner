@@ -55,41 +55,44 @@
   ;; can be used
   ;(sp-local-pair 'fitnesse-mode "'''" "'''")
 
+  ;; to banish smartparent for org-mode (no more used, instead restricted list of shortcuts in org-mode)
+  ;; (with-eval-after-load 'org (add-to-list 'sp-ignore-modes-list #'org-mode))
   )
 
 (with-eval-after-load 'smartparens-config
   ;; (todo when no more upper hierarchy, goes to next/previous using beginning-of-defun in c-mode or sp-backward/forward-sexp)
+  (when (not (equal major-mode 'org-mode))
+    ;; move to previous on same level or upper block
+    (define-key smartparens-mode-map      (kbd "<M-up>")          #'sp-backward-sexp)
+    ;; move to next on same level or upper block
+    (define-key smartparens-mode-map      (kbd "<M-down>")        #'sp-next-sexp)
+    ;; move to upper block at begin of block
+    (define-key smartparens-mode-map      (kbd "<M-left>")        #'sp-backward-up-sexp)
+    ;; move to downer block at begin of block
+    (define-key smartparens-mode-map      (kbd "<M-right>")       #'sp-down-sexp)
 
-  ;; move to previous on same level or upper block
-  (define-key smartparens-mode-map      (kbd "<M-up>")          #'sp-backward-sexp)
-  ;; move to next on same level or upper block
-  (define-key smartparens-mode-map      (kbd "<M-down>")        #'sp-next-sexp)
-  ;; move to upper block at begin of block
-  (define-key smartparens-mode-map      (kbd "<M-left>")        #'sp-backward-up-sexp)
-  ;; move to downer block at begin of block
-  (define-key smartparens-mode-map      (kbd "<M-right>")       #'sp-down-sexp)
+    ;; move to previous on same level or upper block at end of block
+    (define-key smartparens-mode-map      (kbd "<M-S-up>")        #'sp-previous-sexp)
+    ;; move to next on same level or upper block at end of block
+    (define-key smartparens-mode-map      (kbd "<M-S-down>")      #'sp-forward-sexp)
+    ;; move to downer block at end of block
+    (define-key smartparens-mode-map      (kbd "<M-S-left>")      #'sp-backward-down-sexp)
+    ;; move to upper block at end of block
+    (define-key smartparens-mode-map      (kbd "<M-S-right>")     #'sp-up-sexp)
 
-  ;; move to previous on same level or upper block at end of block
-  (define-key smartparens-mode-map      (kbd "<M-S-up>")        #'sp-previous-sexp)
-  ;; move to next on same level or upper block at end of block
-  (define-key smartparens-mode-map      (kbd "<M-S-down>")      #'sp-forward-sexp)
-  ;; move to downer block at end of block
-  (define-key smartparens-mode-map      (kbd "<M-S-left>")      #'sp-backward-down-sexp)
-  ;; move to upper block at end of block
-  (define-key smartparens-mode-map      (kbd "<M-S-right>")     #'sp-up-sexp)
+    ;; move to beginning of expression just after special character
+    (define-key smartparens-mode-map      (kbd "<M-home>")        #'sp-beginning-of-sexp)
+    ;; move to end of expression before special character
+    (define-key smartparens-mode-map      (kbd "<M-end>")         #'sp-end-of-sexp)
 
-  ;; move to beginning of expression just after special character
-  (define-key smartparens-mode-map      (kbd "<M-home>")        #'sp-beginning-of-sexp)
-  ;; move to end of expression before special character
-  (define-key smartparens-mode-map      (kbd "<M-end>")         #'sp-end-of-sexp)
+    ;; unwrap current block or next
+    (define-key smartparens-mode-map      (kbd "<M-delete>")      #'sp-unwrap-sexp)
+    ;; unwrap downer block or previous
+    (define-key smartparens-mode-map      (kbd "<M-backspace>")   #'sp-backward-unwrap-sexp)
 
-  ;; unwrap current block or next
-  (define-key smartparens-mode-map      (kbd "<M-delete>")      #'sp-unwrap-sexp)
-  ;; unwrap downer block or previous
-  (define-key smartparens-mode-map      (kbd "<M-backspace>")   #'sp-backward-unwrap-sexp)
-
-  ;; unwrap current block or next
-  (define-key smartparens-mode-map      (kbd "<M-S-delete>")    #'sp-splice-sexp)
+    ;; unwrap current block or next
+    (define-key smartparens-mode-map      (kbd "<M-S-delete>")    #'sp-splice-sexp)
+    )
 
   ;; include next expression in current wrap
   (define-key smartparens-mode-map      (kbd "C-(")             #'sp-backward-slurp-sexp)
