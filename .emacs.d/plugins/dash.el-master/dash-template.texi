@@ -82,7 +82,7 @@ Development
 @chapter Installation
 
 It's available on @uref{http://marmalade-repo.org/,marmalade} and
-@uref{http://melpa.milkbox.net/,Melpa}; use @code{M-x
+@uref{https://melpa.org/,Melpa}; use @code{M-x
 package-install}:
 
 @table @kbd
@@ -125,7 +125,7 @@ Font lock of dash functions in emacs lisp buffers is now optional.
 Include this in your emacs settings to get syntax highlighting:
 
 @lisp
-(eval-after-load "dash" '(dash-enable-font-lock))
+(eval-after-load 'dash '(dash-enable-font-lock))
 @end lisp
 
 @node Functions
