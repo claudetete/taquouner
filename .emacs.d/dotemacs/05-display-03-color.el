@@ -78,16 +78,6 @@
       (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/solarized"))
       (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/base16"))
       (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/doom"))
-      (custom-set-variables
-        ;; add secure hash
-        '(custom-safe-themes
-           (quote
-             (
-               ;; SHA-1 hash
-               "9e82ddb6aec1178072266e7824fabe2e2cfbcef5ce62a09f98ad74e76adce201" ; sweet
-               "7606cceeaa8251c5997f9ab71bf3b701a7ac4050db3ac232dc8feb9d338fa1de" ; zenburn
-               default
-               ))))
       ;; load theme
       ;; use (intern "string") to access to variable using its name from string
       (load-theme (intern tqnr-profile-color-theme) t)
