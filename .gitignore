@@ -30,3 +30,4 @@
 /.emacs.d/plugins/projectile-master/*
 /.emacs.d/semanticdb/
 /.emacs.d/server/
+/.emacs.d/plugins/markdown-mode-2.2/*
