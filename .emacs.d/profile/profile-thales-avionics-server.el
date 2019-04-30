@@ -50,9 +50,7 @@
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-path "e:/Users/S0070736/Portable")
-    ;; (defvar tqnr-profile-portable-git-version "2.13.1")
-    (defvar tqnr-profile-portable-git-version "2.17.0")
+    (defvar tqnr-profile-portable-git-version "2.20.1")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
@@ -66,33 +64,30 @@
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/cflow-mingw-master")
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/irony-mode/server/build/bin")
         ;; gnuplot
-        "l:/FMS_Tools/GNUPLOT/gnuplot_5.3/bin"
-        ;; GNAT
-        ;; "E:/Users/S0070736/Portable/GNAT/2017/bin"
+        "k:/GNUPLOT/gnuplot_5.3/bin"
         ;; GNATPRO
-        ;; (concat (file-name-as-directory tqnr-profile-portable-path) "GNATPRO_17.1/bin")
-        "l:/FMS_Tools/GNATPRO/GNATPRO_18.2/bin"
+        "k:/GNATPRO/GNATPRO_18.2/bin"
         ;; PYTHON
-        "l:/FMS_Tools/PYTHON/PYTHON_2.7.4"
+        "k:/PYTHON/PYTHON_2.7.4"
         ;; GIT
-        (concat  "l:/FMS_Tools/GIT/Git_" tqnr-profile-portable-git-version "/bin")
+        (concat  "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
-        (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/mingw64/bin")
-        (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/usr/local/bin")
-        (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/usr/bin")
-        (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/bin")
+        "j:/MSYS/msys64/mingw64/bin"
+        "j:/MSYS/msys64/usr/local/bin"
+        "j:/MSYS/msys64/usr/bin"
+        "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        (concat (file-name-as-directory tqnr-profile-portable-path) "GitExtensions")
+        "j:/GIT_EXTENSIONS/GitExtensions_3.0.2.5232"
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
         ;; GIT linux utils (msys64 override it)
-        (concat "l:/FMS_Tools/GIT/Git_" tqnr-profile-portable-git-version "/cmd")
-        (concat "l:/FMS_Tools/GIT/Git_" tqnr-profile-portable-git-version "/mingw64/bin")
-        (concat "l:/FMS_Tools/GIT/Git_" tqnr-profile-portable-git-version "/usr/bin")
+        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/cmd")
+        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/mingw64/bin")
+        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/usr/bin")
         ;; GPS
-        "l:/FMS_Tools/GPS/GPS_18.2_x64/bin"
+        "k:/GPS/GPS_18.2_x64/bin"
         ;; GNU Emacs
-        (concat (file-name-as-directory tqnr-profile-portable-path) "emacs-26.1-x86_64/bin")
+        "j:/EMACS/emacs-26.2-x86_64/bin"
         ;; MS Windows usual path
         "C:/WINDOWS"
         "C:/WINDOWS/System32"
@@ -104,6 +99,7 @@
     ;; universal-ctags as backend of GNU Global
     (setenv "GTAGSCONF" (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/share/gtags/gtags.conf"))
     (setenv "GTAGSLABEL" "new-ctags")
+    (setenv "RIPGREP_CONFIG_PATH" "u:/.ripgreprc")
     ) ;; (when tqnr-section-environment-set-path
   ;; MS WINDOWS PERFORMANCE: MS Windows specific configuration about performance
   (setq tqnr-section-environment-ms-windows-performance t)
@@ -250,7 +246,7 @@
     ;; isearch by helm
     (setq tqnr-section-mode-helm-swoop t)
     ;; do not have default value when run helm swoop
-    (setq tqnr-section-mode-helm-swoop-without-pre-input nil)
+    (setq tqnr-section-mode-helm-swoop-without-pre-input t)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx t)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
@@ -1090,10 +1086,9 @@
   ;; to disable all version control
   (setq vc-handled-backends nil)
 
-  ;; U: is thales server home, it contains a function to replace .dir-locals.el
+  ;; U: is thales server home, it contains a function called by .dir-locals.el of some project
+  ;; then avoid ask each time it is modify
   (add-to-list 'load-path "u:/")
-
-  ;; load function
   (try-require 'project-env "")
 
   ;; set only one zone program
