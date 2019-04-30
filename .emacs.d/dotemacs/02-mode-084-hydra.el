@@ -180,10 +180,11 @@
   [_c_] Character    [_p_] Paragraph
   [_w_] Word         [_o_] Org word
   [_x_] Expression   [_e_] Org element
-  [_l_] Line         [_t_] Org table
+  [_l_] Line         [_y_] Org table
   [_s_] Sentence
 "
       ("c" transpose-chars)
+      ("t" transpose-chars)
       ("w" transpose-words)
       ("x" (if tqnr-section-mode-smartparens
              (sp-transpose-sexp)
@@ -193,7 +194,7 @@
       ("p" transpose-paragraphs)
       ("o" org-transpose-words)
       ("e" org-transpose-elements)
-      ("t" org-table-transpose-table-at-point)
+      ("y" org-table-transpose-table-at-point)
       ("q" nil nil :color blue)
       )
     ;; shortcuts are put in a hook to be loaded after everything else in init process
