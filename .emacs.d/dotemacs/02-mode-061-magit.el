@@ -96,7 +96,7 @@ Useful until magit can open difftool instead of Ediff."
         )))
 
   ;; add X shortcut in popup action to open with difftool instead of Ediff
-  (try-require 'magit-exttool)
+  (try-require 'magit-exttool "      ")
 
   ;; shortcuts are put in a hook to be loaded after everything else in init process
   (add-hook 'tqnr-after-init-shortcut-hook
@@ -128,4 +128,4 @@ Useful until magit can open difftool instead of Ediff."
 
 (provide '02-mode-061-magit)
 
-;;; 02-mode-061-magit.el ends here
+;;; 02-mode-061-magit.el ends here2
