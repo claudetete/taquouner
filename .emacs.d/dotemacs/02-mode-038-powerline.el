@@ -52,6 +52,8 @@
            (let* ((active (powerline-selected-window-active))
                    (face-mode-line (if active 'mode-line
                                      'mode-line-inactive))
+                   (mode-line-buffer-id (if active 'mode-line-buffer-id
+                                          'mode-line-buffer-id-inactive))
                    ;; face for right and left end
                    (face-end (if active 'powerline-active0
                                'powerline-inactive0))
@@ -62,9 +64,8 @@
                    (face-middle (if active 'powerline-active2
                                   'powerline-inactive2))
                    ;; face for highlight
-                   ;;(face-warning `(:height 1.5 :inherit compilation-error))
-                   (face-warning `(:height 1.5 :inherit org-level-7))
-                   ;(face-warning 'font-lock-warning-face)
+                                        ;(face-warning `(:height 1.5 :foreground ,(face-attribute 'compilation-error :foreground))))
+                   (face-warning `(:height 1.5 :foreground ,(face-foreground 'font-lock-keyword-face) :inherit face-end))
                    (separator-left
                      (intern (format "powerline-%s-%s"
                                powerline-default-separator
@@ -73,6 +74,7 @@
                      (intern (format "powerline-%s-%s"
                                powerline-default-separator
                                (cdr powerline-default-separator-dir))))
+
                    (lhs (list
                           ;;
                           ;; LEFT
@@ -80,17 +82,17 @@
                           (when (and buffer-read-only buffer-file-name)
                             (if tqnr-section-mode-all-the-icons
                               (concat
-                                (powerline-raw " ")
+                                (powerline-raw " " face-end)
                                 (all-the-icons-octicon "lock" :face 'font-lock-warning-face :v-adjust 0.05))
                               (powerline-raw "" face-warning)))
                           ;; buffername
-                          (powerline-buffer-id nil 'l)
+                          (powerline-buffer-id `(mode-line-buffer-id ,face-end) 'l)
                           ;; display * at end of buffer name when buffer was modified
                           (when (and (buffer-modified-p) buffer-file-name)
                             (powerline-raw "" face-warning 'l))
 
                           ;; first separator
-                          (powerline-raw " ")
+                          (powerline-raw " " face-end)
                           (funcall separator-left face-end face-between)
 
                           ;;
@@ -108,20 +110,10 @@
                           (powerline-minor-modes face-between 'l)
                           ;; narrow mode
                           (powerline-narrow face-between 'l)
+                          ))
 
-                          ;; second separator
-                          (powerline-raw " " face-between)
-                          (funcall separator-left face-between face-middle)
-
-                          ;;
-                          ;; MIDDLE
-                          ;; version control
-                          (powerline-vc face-middle 'r)))
                    (rhs (list
 
-                          ;; third separator
-                          (powerline-raw global-mode-string face-middle 'r)
-                          (funcall separator-right face-middle face-between)
 
                           ;;
                           ;; RIGHT MIDDLE
@@ -134,7 +126,7 @@
 
                           ;; fourth separator
                           (funcall separator-right face-between face-end)
-                          (powerline-raw " ")
+                          (powerline-raw " " face-end)
 
                           ;;
                           ;; RIGHT
@@ -146,16 +138,38 @@
                                   ((eq eol 0) "\\n ")
                                   ((eq eol 1) "\\r\\n ")
                                   ((eq eol 2) "\\r ")
-                                  (t "")))))
+                                  (t ""))) face-end))
                           ;; position indicator
-                          (powerline-raw "%6p" nil 'r)
+                          (powerline-raw "%6p" face-end 'r)
 
-                          )))
+                          ))
+
+                   (center
+                     (list
+                       ;; second separator
+                       (funcall separator-left face-between face-middle)
+                       (powerline-raw " " face-middle)
+
+                       ;;
+                       ;; MIDDLE
+                       (powerline-raw (if (eq major-mode 'ada-mode)
+                                        (ada-which-function)
+                                        (which-function))
+                         face-middle)
+
+                       ;; third separator
+                       (powerline-raw global-mode-string face-middle 'r)
+                       (powerline-raw " " face-middle)
+                       (funcall separator-right face-middle face-between)
+                       )))
              ;;(message "%s %s" separator-left (funcall 'powerline-wave-left mode-line face1))
              (concat
                (powerline-render lhs)
-               (powerline-fill face-middle (powerline-width rhs))
+               (powerline-fill-center face-between (/ (powerline-width center) 2.0))
+               (powerline-render center)
+               (powerline-fill face-between (powerline-width rhs))
                (powerline-render rhs)))))))
+
   ;; set arrow fade as separator
   (setq powerline-default-separator 'arrow)
   (setq powerline-height 24)
