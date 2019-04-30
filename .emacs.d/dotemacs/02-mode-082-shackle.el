@@ -40,8 +40,15 @@
     ;; rules to add helm
     (setq shackle-rules '(
                            ;; use 25% at bottom
+                           ;; all helm buffer
                            ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.25)
+                           ;; helm swoop buffer
+                           ("\\`\\*Helm.*?\\*\\'" :regexp t :align t :size 0.25)
                            ))
+    (when tqnr-section-mode-helm-swoop
+      ;; to be properly displayed by shackle
+      (setq helm-swoop-split-window-function 'display-buffer)
+      )
     ) ;; (when tqnr-section-mode-helm
   ;; enable shackle mode
   (shackle-mode 1)

@@ -99,9 +99,10 @@
 
       ;; Save buffer when helm-multi-swoop-edit complete
       (setq helm-multi-swoop-edit-save t)
+
+      ;; both parameter can be override when shackle is enable
       ;; If this value is t, split window inside the current window
       (setq helm-swoop-split-with-multiple-windows nil)
-
       ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
       (setq helm-swoop-split-direction 'split-window-vertically)
 
