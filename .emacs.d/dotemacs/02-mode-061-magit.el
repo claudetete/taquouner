@@ -95,8 +95,43 @@ Useful until magit can open difftool instead of Ediff."
           (async-shell-command command))
         )))
 
+;; overload magit ediff compare function to run difftool
+(defun magit-ediff-compare (revA revB fileA fileB)
+  "Compare REVA:FILEA with REVB:FILEB using Ediff.
+
+FILEA and FILEB have to be relative to the top directory of the
+repository.  If REVA or REVB is nil, then this stands for the
+working tree state.
+
+If the region is active, use the revisions on the first and last
+line of the region.  With a prefix argument, instead of diffing
+the revisions, choose a revision to view changes along, starting
+at the common ancestor of both revisions (i.e., use a \"...\"
+range)."
+  (interactive
+   (pcase-let ((`(,revA ,revB) (magit-ediff-compare--read-revisions
+                                nil current-prefix-arg)))
+     (nconc (list revA revB)
+       (magit-ediff-read-files revA revB))))
+  ;; (message (concat "magit-ediff-compare: " fileA "=" revA ", " fileB "=" revB))
+  (message (concat "git difftool --gui --no-prompt -M -C \"" revA "\" \"" revB "\" -- \"" fileA "\""))
+  (magit-run-git-async
+    "difftool" "--gui" "--no-prompt" "--find-renames" "--find-copies" revA revB "--" fileA))
+
+;; overload ediff stage file to run difftool
+(defun magit-ediff-stage (file)
+  "Stage and unstage changes to FILE using Ediff.
+FILE has to be relative to the top directory of the repository."
+  (interactive
+   (list (magit-completing-read "Selectively stage file"
+                                (magit-tracked-files) nil nil nil nil
+           (magit-current-file))))
+  (message "%s %s %s %s %s %s" "git" "difftool" "--gui" "--no-prompt" "--" file)
+  (magit-run-git-async
+    "difftool" "--gui" "--no-prompt" "--" file))
+
   ;; add X shortcut in popup action to open with difftool instead of Ediff
-  (try-require 'magit-exttool "      ")
+  ;; (try-require 'magit-exttool "      ")
 
   ;; shortcuts are put in a hook to be loaded after everything else in init process
   (add-hook 'tqnr-after-init-shortcut-hook
