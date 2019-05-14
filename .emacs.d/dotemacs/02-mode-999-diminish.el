@@ -46,6 +46,8 @@
     '(diminish 'company-mode))
   (eval-after-load 'helm-mode
     '(diminish 'helm-mode))
+  (eval-after-load 'helm-gtags-mode
+    '(diminish 'helm-gtags-mode))
   (eval-after-load 'smartparens-mode
     '(diminish 'smartparens-mode))
   (eval-after-load 'hs-minor-mode
@@ -54,6 +56,10 @@
     '(diminish 'iimage-mode))
   (eval-after-load 'pandoc-mode
     '(diminish 'pandoc-mode))
+;;  (eval-after-load 'ada-mode
+;;    '(diminish 'ada-mode))
+  (eval-after-load 'org-mode
+    '(diminish 'org-mode))
   (eval-after-load 'auto-revert-mode
     '(diminish 'auto-revert-mode))
   (add-hook 'emacs-lisp-mode-hook
