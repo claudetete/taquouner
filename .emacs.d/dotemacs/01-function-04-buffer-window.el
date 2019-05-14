@@ -362,6 +362,19 @@ middle"
     (bookmark-bmenu-list))
   )
 
+;; go to the help buffer in special window
+(defun toggle-tag-buffer ()
+  "Switch to the tag buffer."
+  (interactive)
+  (if (get-buffer "*helm gtags*")
+    (helm-resume "*helm gtags*")))
+
+(defun toggle-file-buffer ()
+  "Switch to last file buffer."
+  (interactive)
+  ;; FIXME resume last helm buffer matching a list name
+  )
+
 ;; go to the symbol reference buffer in special window
 (defun toggle-symref-buffer ()
   "Switch to the Symref buffer."
@@ -374,7 +387,7 @@ middle"
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
     ;; switch to bookmark buffer
-    (global-set-key     (kbd "M-2")     'toggle-bookmark-buffer)
+    (global-set-key     (kbd "M-2")     'toggle-tag-buffer)
     ;; switch to grep or ack buffer
     (global-set-key     (kbd "M-3")     'toggle-search-buffer)
     ;; switch to compile buffer
@@ -388,7 +401,7 @@ middle"
     (add-hook 'diff-mode-hook
       (lambda ()
         ;; switch to bookmark buffer
-        (local-set-key  (kbd "M-2")     'toggle-bookmark-buffer)
+        (local-set-key  (kbd "M-2")     'toggle-tag-buffer)
         ;; switch to grep or ack buffer
         (local-set-key  (kbd "M-3")     'toggle-search-buffer)
         ;; switch to compile buffer
@@ -429,12 +442,20 @@ session."
         ;; resume helm
         (helm-resume helm-last-buffer))))
 
+  (defun resume-helm-choice ()
+    "Will resume helm by asking which buffer to resume."
+    (interactive)
+    ;; resume helm
+    (helm-resume t))
+
 
   ;; shortcuts are put in a hook to be loaded after everything else in init process
   (add-hook 'tqnr-after-init-shortcut-hook
     (lambda ()
-      ;;  F2 resume last session of popwin or helm (F2 is already set in helm map to quit)
+      ;; F2 resume last session of popwin or helm (F2 is already set in helm map to quit)
       (global-set-key   (kbd "<f2>")    #'resume-popwin-or-helm)
+      ;; M-F2
+      (global-set-key   (kbd "<M-f2>")  #'resume-helm-choice)
       ) ;; (lambda ()
     ) ;; (add-hook 'tqnr-after-init-shortcut-hook
   )
