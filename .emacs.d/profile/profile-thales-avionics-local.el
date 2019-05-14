@@ -82,7 +82,7 @@
         (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/usr/bin")
         (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/bin")
         ;; GITEXTENSIONS
-        (concat (file-name-as-directory tqnr-profile-portable-path) "GitExtensions")
+        "j:/GIT_EXTENSIONS/GitExtensions_3.0.2.5232"
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
         ;; GIT linux utils (msys64 override it)
@@ -92,7 +92,7 @@
         ;; GPS
         "k:/GPS/GPS_18.2_x64/bin"
         ;; GNU Emacs
-        (concat (file-name-as-directory tqnr-profile-portable-path) "emacs-26.1-x86_64/bin")
+        "j:/EMACS/emacs-26.2-x86_64/bin"
         ;; MS Windows usual path
         "C:/WINDOWS"
         "C:/WINDOWS/System32"
