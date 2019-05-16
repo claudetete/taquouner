@@ -66,8 +66,8 @@
                    ;; face for highlight
                                         ;(face-warning `(:height 1.5 :foreground ,(face-attribute 'compilation-error :foreground))))
                    (face-warning `(:height 1.5
-                                    :foreground ,(face-foreground 'compilation-error)
-                                    :background ,(face-background (if active 'powerline-active0 'powerline-inactive0))
+                                    :foreground ,(face-foreground (if active 'powerline-highlight-active0 'powerline-highlight-inactive0))
+                                    :background ,(face-background (if active 'powerline-highlight-active0 'powerline-highlight-inactive0))
                                     :inherit face-end))
                    (face-buffer-id `(:foreground ,(face-foreground (if active 'powerline-active0 'powerline-inactive0))
                                       :inherit face-end))

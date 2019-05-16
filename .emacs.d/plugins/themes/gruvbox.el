@@ -388,6 +388,8 @@ Should contain 2 %s constructs to allow for theme name and directory/prefix")
      (powerline-inactive0                       (:background gruvbox-dark2 :foreground gruvbox-light4))
      (powerline-inactive1                       (:background gruvbox-dark2 :foreground gruvbox-light4))
      (powerline-inactive2                       (:background gruvbox-dark0 :foreground gruvbox-light4))
+     (powerline-highlight-active0               (:background gruvbox-dark4 :foreground gruvbox-bright_red))
+     (powerline-highlight-inactive0             (:background gruvbox-dark2 :foreground gruvbox-faded_red))
 
      ;; isearch
      (isearch                                   (:foreground gruvbox-black :background gruvbox-bright_orange))

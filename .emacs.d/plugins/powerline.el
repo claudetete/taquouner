@@ -44,6 +44,10 @@
   "Powerline face 0."
   :group 'powerline)
 
+(defface powerline-highlight-active0 '((t (:inherit mode-line)))
+  "Powerline face 0."
+  :group 'powerline)
+
 (defface powerline-active1 '((t (:background "grey17" :foreground "white" :inherit mode-line)))
   "Powerline face 1."
   :group 'powerline)
@@ -53,6 +57,11 @@
   :group 'powerline)
 
 (defface powerline-inactive0
+  '((t (:inherit mode-line-inactive)))
+  "Powerline face 0."
+  :group 'powerline)
+
+(defface powerline-highlight-inactive0
   '((t (:inherit mode-line-inactive)))
   "Powerline face 0."
   :group 'powerline)

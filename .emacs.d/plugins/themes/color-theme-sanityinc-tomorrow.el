@@ -1170,6 +1170,8 @@ names to which it refers are bound."
       ;; Powerline
       (powerline-active0 (:foreground ,contrast-bg :background ,green))
       (powerline-inactive0 (:foreground ,contrast-bg :background ,comment))
+      (powerline-highlight-active0 (:foreground ,red :background ,green))
+      (powerline-highlight-inactive0 (:foreground ,red :background ,comment))
       (powerline-active1 (:foreground ,foreground :background ,highlight))
       (powerline-inactive1 (:foreground ,foreground :background ,highlight))
       (powerline-active2 (:foreground ,foreground :background ,low-contrast-bg))
