@@ -52,7 +52,7 @@
     ;; PATH environment variable concat with current PATH
     (defvar tqnr-profile-portable-path "d:/tools")
     ;; (defvar tqnr-profile-portable-git-version "2.13.1")
-    (defvar tqnr-profile-portable-git-version "2.17.0")
+    (defvar tqnr-profile-portable-git-version "2.20.1")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
@@ -75,7 +75,7 @@
         ;; PYTHON
         "k:/PYTHON/PYTHON_2.7.4"
         ;; GIT
-        (concat  "k:/GIT/Git_" tqnr-profile-portable-git-version "/bin")
+        (concat  "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
         (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/mingw64/bin")
         (concat (file-name-as-directory tqnr-profile-portable-path) "msys64/usr/local/bin")
@@ -86,9 +86,9 @@
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
         ;; GIT linux utils (msys64 override it)
-        (concat "k:/GIT/Git_" tqnr-profile-portable-git-version "/cmd")
-        (concat "k:/GIT/Git_" tqnr-profile-portable-git-version "/mingw64/bin")
-        (concat "k:/GIT/Git_" tqnr-profile-portable-git-version "/usr/bin")
+        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/cmd")
+        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/mingw64/bin")
+        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/usr/bin")
         ;; GPS
         "k:/GPS/GPS_18.2_x64/bin"
         ;; GNU Emacs
@@ -104,6 +104,7 @@
     ;; universal-ctags as backend of GNU Global
     (setenv "GTAGSCONF" (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/share/gtags/gtags.conf"))
     (setenv "GTAGSLABEL" "new-ctags")
+    (setenv "RIPGREP_CONFIG_PATH" "u:/.ripgreprc")
     ) ;; (when tqnr-section-environment-set-path
   ;; MS WINDOWS PERFORMANCE: MS Windows specific configuration about performance
   (setq tqnr-section-environment-ms-windows-performance t)
@@ -250,7 +251,7 @@
     ;; isearch by helm
     (setq tqnr-section-mode-helm-swoop t)
     ;; do not have default value when run helm swoop
-    (setq tqnr-section-mode-helm-swoop-without-pre-input nil)
+    (setq tqnr-section-mode-helm-swoop-without-pre-input t)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx t)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
@@ -1092,7 +1093,8 @@
   ;; to disable all version control
   (setq vc-handled-backends nil)
 
-  ;; U: is thales server home, it contains a function to replace .dir-locals.el
+  ;; U: is thales server home, it contains a function called by .dir-locals.el of some project
+  ;; then avoid ask each time it is modify
   (add-to-list 'load-path "u:/")
 
   ;; load function
