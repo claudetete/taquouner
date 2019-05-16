@@ -72,7 +72,7 @@ Also bind `class' to ((class color) (min-colors 89))."
                    badger-colors-alist))
      ,@body))
 
-(badger/with-color-variables 
+(badger/with-color-variables
   (custom-theme-set-faces
    'badger
 
@@ -81,11 +81,11 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(link ((t (:bold t :foreground ,badger-blue :underline t :weight bold))))
    ;; `(link-visited ((t (:foreground ,badger-salmon-2 :underline t :weight normal))))
 
-   ;; ordinary text. Its background color is used as the frame's background color. 
+   ;; ordinary text. Its background color is used as the frame's background color.
    `(default ((t (:foreground ,badger-fg :background ,badger-bg))))
 
    ;;The :background attribute of this face specifies the color of the text cursor
-   `(cursor ((t (:background ,badger-salmon)))) 
+   `(cursor ((t (:background ,badger-salmon))))
 
    ;; The face for displaying control characters and escape sequences
    `(escape-glyph ((t (:foreground ,badger-salmon :bold t))))
@@ -94,24 +94,24 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(fringe ((t (:foreground ,badger-fg :background ,"black"))))
 
    ;; fixed line displayed at the top of the emacs window, not in XEmacs
-   ;; `(header-line ((t (:foreground ,badger-salmon 
+   ;; `(header-line ((t (:foreground ,badger-salmon
    ;;                                :background ,"black"
    ;;                                :box (:line-width -1 :style released-button)))))
 
-   ;;text highlighting in various contexts, when the mouse cursor is moved over a hyperlink. 
+   ;;text highlighting in various contexts, when the mouse cursor is moved over a hyperlink.
    `(highlight ((t (:background ,badger-hl))))
 
-   ;; “lazy matches” for Isearch and Query Replace (matches other than the current one). 
+   ;; “lazy matches” for Isearch and Query Replace (matches other than the current one).
    `(lazy-highlight ((t (:background ,badger-yellow :foreground ,"black" :weight extra-bold))))
 
-   ;; This face is used to highlight the current Isearch match 
+   ;; This face is used to highlight the current Isearch match
    `(isearch ((t (:background ,badger-succ :foreground ,"black" :weight extra-bold))))
 
-   
-   `(success ((t (:foreground ,badger-link :weight bold))))
-   `(warning ((t (:foreground ,badger-pink :weight bold)))) 
 
-   ;; This face is used for displaying an active region 
+   `(success ((t (:foreground ,badger-link :weight bold))))
+   `(warning ((t (:foreground ,badger-pink :weight bold))))
+
+   ;; This face is used for displaying an active region
    `(region ((t (:background ,"black"))))
 
    `(show-paren-match-face ((t (:background ,badger-lime :foreground ,"black" ))))
@@ -131,7 +131,7 @@ Also bind `class' to ((class color) (min-colors 89))."
 
    ;; linum
    `(linum ((t (:foreground ,badger-charcoal :background ,"black"))))
-   
+
 
    ;; >>>>> font-lock
    `(font-lock-warning-face ((t (:foreground ,badger-yellow :weight bold))))
@@ -146,9 +146,9 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(font-lock-preprocessor-face ((t (:foreground ,badger-sand))))
    `(font-lock-string-face ((t (:foreground ,badger-green))))
  ;;  `(font-lock-doc-face ((t (:foreground ,badger-green))))
-   
 
-   ;; >>>>> eshell 
+
+   ;; >>>>> eshell
    `(eshell-prompt ((t (:foreground ,badger-lime))))
    `(eshell-ls-archive ((t (:foreground ,badger-orange :weight bold))))
    `(eshell-ls-backup ((t (:inherit font-lock-comment-face))))
@@ -165,13 +165,13 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(org-document-info-keyword ((t (:foreground ,badger-olive))))
    `(org-document-title ((t (:foreground ,badger-salmon :height 1.50))))
    `(org-archived ((t (:foreground ,badger-fg :weight bold))))
-   `(org-checkbox ((t (:foreground ,badger-fg+1 :foreground ,badger-olive 
+   `(org-checkbox ((t (:foreground ,badger-fg+1 :foreground ,badger-olive
                                    :box (:line-width 1 :style released-button)))))
    `(org-done ((t (:foreground ,badger-lime :strike-through t))))
    `(org-todo ((t (:foreground ,badger-red))))
    `(org-formula ((t (:foreground ,badger-violet))))
    `(org-headline-done ((t (:strike-through t :foreground ,badger-charcoal))))
-   `(org-hide ((t (:foreground ,badger-bg)))) 
+   `(org-hide ((t (:foreground ,badger-bg))))
    `(org-level-1 ((t (:foreground ,badger-blue))))
    `(org-level-2 ((t (:foreground ,badger-violet))))
    `(org-level-3 ((t (:foreground ,badger-orange))))
@@ -181,7 +181,7 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(org-level-7 ((t (:foreground ,badger-brown))))
    `(org-level-8 ((t (:foreground ,badger-teal))))
    `(org-link ((t (:foreground ,badger-link :underline t))))
-   
+
    `(org-agenda-date ((t (:foreground ,badger-blue))))
    `(org-deadline-announce ((t (:foreground ,badger-dull-red))))
    `(org-date ((t (:foreground ,badger-link :underline t))))
@@ -204,11 +204,11 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(org-footnote ((t (:foreground ,badger-link :underline t))))
    `(org-code ((t (:foreground ,badger-olive))))
    `(org-verbatim ((t (:inherit org-code))))
-   
+
    ;; >>>>> elpy and ipython
    `(highlight-indentation-face ((t (:background ,badger-bg))))
    `(comint-highlight-prompt ((t (:inherit eshell-prompt))))
-   
+
    ;; >>>>> auto-complete and popup
    `(ac-candidate-face ((t (:background ,badger-sand :foreground ,"black"))))
    `(ac-selection-face ((t (:background ,badger-violet :foreground ,"black"))))
@@ -222,7 +222,7 @@ Also bind `class' to ((class color) (min-colors 89))."
    `(sml/folder ((t (:foreground ,badger-charcoal))))
    `(sml/filename ((t (:foreground ,badger-salmon :weight normal))))
    `(sml/prefix   ((t (:foreground ,badger-salmon :weight normal))))
-   `(sml/line-number ((t (:foreground ,badger-blue :weight normal))))  
+   `(sml/line-number ((t (:foreground ,badger-blue :weight normal))))
    `(sml/col-number ((t (:foreground ,badger-green :weight normal))))
    `(sml/read-only ((t (:foreground ,badger-charcoal))))
    `(sml/outside-modified ((t (:foreground ,badger-red))))
@@ -238,7 +238,7 @@ Also bind `class' to ((class color) (min-colors 89))."
 
    `(flyspell-incorrect ((t (:underline (:color ,badger-red :style wave)))))
    `(flyspell-duplicate ((t (:underline (:color ,badger-yellow :style wave)))))
-   
+
    ))
 
 
@@ -256,4 +256,3 @@ Also bind `class' to ((class color) (min-colors 89))."
 
 
 ;;; badger-theme.el ends here
-    

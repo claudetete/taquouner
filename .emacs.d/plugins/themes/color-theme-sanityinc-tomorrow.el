@@ -102,6 +102,19 @@ executed."
                  (aqua . "#66cccc")
                  (blue . "#6699cc")
                  (purple . "#cc99cc")))
+    (dark . ((background . "#1d1d1d")
+                 (alt-background . "#22a222a222a2")
+                 (current-line . "#282828")
+                 (selection . "#323232")
+                 (foreground . "#cccccc")
+                 (comment . "#969696")
+                 (red . "#f2777a")
+                 (orange . "#f99157")
+                 (yellow . "#ffcc66")
+                 (green . "#99cc99")
+                 (aqua . "#66cccc")
+                 (blue . "#6699cc")
+                 (purple . "#cc99cc")))
     (blue . ((background . "#002451")
              (alt-background . "#00002c2c5fdf")
              (current-line . "#00346e")
@@ -115,7 +128,7 @@ executed."
              (aqua . "#99ffff")
              (blue . "#bbdaff")
              (purple . "#ebbbff")))
-    (bright . ((background . "#000000")
+    (bright . ((background . "#1d1d1d")
                (alt-background . "#151515151515")
                (current-line . "#2a2a2a")
                (selection . "#424242")
@@ -1155,8 +1168,12 @@ names to which it refers are bound."
       (nswbuff-special-buffers-face (:foreground ,purple :bold nil :underline nil))
 
       ;; Powerline
+      (powerline-active0 (:foreground ,contrast-bg :background ,green))
+      (powerline-inactive0 (:foreground ,contrast-bg :background ,comment))
       (powerline-active1 (:foreground ,foreground :background ,highlight))
-      (powerline-active2 (:foreground ,foreground :background ,contrast-bg))
+      (powerline-inactive1 (:foreground ,foreground :background ,highlight))
+      (powerline-active2 (:foreground ,foreground :background ,low-contrast-bg))
+      (powerline-inactive2 (:foreground ,foreground :background ,low-contrast-bg))
 
       ;; Powerline-evil
       (powerline-evil-base-face (:inherit mode-line :foreground ,background))
@@ -1282,6 +1299,10 @@ names to which it refers are bound."
       (cscope-function-face (:foreground ,blue))
       (cscope-line-number-face (:foreground ,red))
       (cscope-separator-face (:bold t :overline t :underline t :foreground ,purple))
+
+      ;; yascroll
+      (yascroll:thumb-text-area (:background ,green))
+      (yascroll:thumb-fringe (:foreground ,green :background ,green))
 
       ;; ztree
       (ztreep-arrow-face (:foreground ,highlight))
@@ -1414,6 +1435,12 @@ are bound."
   "Apply the tomorrow blue theme."
   (interactive)
   (color-theme-sanityinc-tomorrow 'blue))
+
+;;;###autoload
+(defun color-theme-sanityinc-tomorrow-dark ()
+  "Apply the tomorrow dark theme."
+  (interactive)
+  (color-theme-sanityinc-tomorrow 'dark))
 
 
 (provide 'color-theme-sanityinc-tomorrow)

@@ -35,6 +35,9 @@
 (when (try-require 'yascroll "    ")
   (global-yascroll-bar-mode t)
 
+  ;; (set-face-background 'yascroll:thumb-text-area (face-background (if active 'powerline-active0 'powerline-inactive0)))
+  ;; (set-face-background 'yascroll:thumb-fringe (face-background (if active 'powerline-active0 'powerline-inactive0)))
+  ;; (set-face-foreground 'yascroll:thumb-fringe (face-background (if active 'powerline-active0 'powerline-inactive0)))
   ;; [VARCOMMENT.time before hide scroll-bar (nil to always show)]
   ;; [VARIABLE.tqnr-profile-yascroll-delay-to-hide nil]
   (setq yascroll:delay-to-hide tqnr-profile-yascroll-delay-to-hide))

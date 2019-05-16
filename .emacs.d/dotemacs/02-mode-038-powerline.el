@@ -65,7 +65,18 @@
                                   'powerline-inactive2))
                    ;; face for highlight
                                         ;(face-warning `(:height 1.5 :foreground ,(face-attribute 'compilation-error :foreground))))
-                   (face-warning `(:height 1.5 :foreground ,(face-foreground 'font-lock-keyword-face) :inherit face-end))
+                   (face-warning `(:height 1.5
+                                    :foreground ,(face-foreground 'compilation-error)
+                                    :background ,(face-background (if active 'powerline-active0 'powerline-inactive0))
+                                    :inherit face-end))
+                   (face-buffer-id `(:foreground ,(face-foreground (if active 'powerline-active0 'powerline-inactive0))
+                                      :inherit face-end))
+                   (face-function `(:foreground ,(face-background (if active 'powerline-active0 'powerline-inactive0))
+                                     :background ,(face-background (if active 'powerline-active2 'powerline-inactive2))
+                                     :inherit face-middle))
+                   (face-project `(:foreground ,(face-background (if active 'powerline-active0 'powerline-inactive0))
+                                     :background ,(face-background (if active 'powerline-active1 'powerline-inactive1))
+                                     :inherit face-between))
                    (separator-left
                      (intern (format "powerline-%s-%s"
                                powerline-default-separator
@@ -86,7 +97,7 @@
                                 (all-the-icons-octicon "lock" :face 'font-lock-warning-face :v-adjust 0.05))
                               (powerline-raw "" face-warning)))
                           ;; buffername
-                          (powerline-buffer-id `(mode-line-buffer-id ,face-end) 'l)
+                          (powerline-buffer-id `(face-buffer-id ,face-end) 'l)
                           ;; display * at end of buffer name when buffer was modified
                           (when (and (buffer-modified-p) buffer-file-name)
                             (powerline-raw "" face-warning 'l))
@@ -107,7 +118,10 @@
                           ;; process
                           (powerline-process face-between)
                           ;; minor mode
-                          (powerline-minor-modes face-between 'l)
+                          ;;(powerline-minor-modes face-between 'l)
+                          (powerline-raw " [" face-between)
+                          (powerline-raw (projectile-project-name) face-project)
+                          (powerline-raw "]" face-between)
                           ;; narrow mode
                           (powerline-narrow face-between 'l)
                           ))
@@ -155,7 +169,7 @@
                        (powerline-raw (if (eq major-mode 'ada-mode)
                                         (ada-which-function)
                                         (which-function))
-                         face-middle)
+                         face-function)
 
                        ;; third separator
                        (powerline-raw global-mode-string face-middle 'r)

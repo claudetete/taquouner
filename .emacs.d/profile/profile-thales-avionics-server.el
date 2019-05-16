@@ -916,7 +916,76 @@
     ;; COLOR THEME: set color by color-theme mode (or manual settings nil)
     (setq tqnr-section-display-color-theme t)
     ;; theme to be used, do not use it with terminal
-    (setq tqnr-profile-color-theme "solarized-light")
+    ;; (setq tqnr-profile-color-theme "solarized-light") ;; nice light theme
+    ;;(setq tqnr-profile-color-theme "base16-atlas") ;; too blue + low contrast
+    ;;(setq tqnr-profile-color-theme "base16-chalk") ;; comment to dark and ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-circus") ;; comment to dark and ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-classic-dark") ;; nice but a little too low constrast + ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-darktooth") ;; nice but too low contrast specialy function color
+    ;; (setq tqnr-profile-color-theme "base16-default-dark") ;; very nice but ada too purple/blue (maybe switch some color)
+    ;;(setq tqnr-profile-color-theme "base16-dracula") ;; too pinky
+    ;; (setq tqnr-profile-color-theme "base16-eighties") ;; very nice but ada too purple/blue (maybe switch some color)
+    ;;(setq tqnr-profile-color-theme "base16-ia-dark") ;; nice but comment start not same color than rest of comment + ada too purple/blue (maybe switch some color)
+    ;;(setq tqnr-profile-color-theme "base16-material-darker") ;; very nice but comment a little too low contrast and ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-mocha") ;; too low contrast
+    ;;(setq tqnr-profile-color-theme "base16-monokai") ;; nice, vivid color but background too dirty and ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-oceanicnext") ;; nice but background too blue + ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-ocean") ;; too low contrast and too blue
+    ;;(setq tqnr-profile-color-theme "base16-onedark") ;; nice but comment hard to read + ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-railscasts") ;; nice even with ada purple/blue
+    ;; (setq tqnr-profile-color-theme "base16-snazzy") ;; nice vivid colors but start of comment not same color + ada too pink/cyan
+    ;;(setq tqnr-profile-color-theme "base16-solarflare") ;; nice color but selection unreadable + ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-spacemacs") ;; color too vivid then hard to read + ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-tomorrow-night") ;; nice but low constrast + start of comment not same color + ada purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-tomorrow") ;; light theme
+    ;;(setq tqnr-profile-color-theme "base16-twilight") ;; too low contrast
+    ;;(setq tqnr-profile-color-theme "base16-woodland") ;; nice but start of comment not same color + ada purple/blue
+    ;;(setq tqnr-profile-color-theme "base16-zenburn") ;; nice but a little too low contrast + ada pink/cyan
+    ;;(setq tqnr-profile-color-theme "doom-dracula") ;; nice but background/comment too blue
+    ;;(setq tqnr-profile-color-theme "doom-molokai") ;; nice but a little pinky
+    ;;(setq tqnr-profile-color-theme "doom-nord") ;; blueish and too low contrast
+    ;; (setq tqnr-profile-color-theme "doom-nova") ;; nice even with ada purple/blue, modeline to revise
+    ;;(setq tqnr-profile-color-theme "doom-one") ;; nice but too low contrast and ada too purple/blue
+    ;;(setq tqnr-profile-color-theme "doom-opera") ;; nice need more vivid + selection not distinguishable + some background change (example parenthesis match) + ada not too purple/blue !
+    ;;(setq tqnr-profile-color-theme "doom-peacock") ;; nice but some purple in modeline... + pink in helm
+    ;;(setq tqnr-profile-color-theme "doom-tomorrow-night") ;; too low contrast an ada too purple/blue + some background change (example parenthesis match)
+    ;;(setq tqnr-profile-color-theme "atom-one-dark") ;; nice but a little too blueish
+    ;;(setq tqnr-profile-color-theme "badger") ;; nice but remove bold and need update for a lot of package
+    ;;(setq tqnr-profile-color-theme "challenger-deep") ;; nice but wrong background and powerline
+    ;; (setq tqnr-profile-color-theme "colorsarenice-dark") ;; very nice still too much purple/pink in ada
+    ;;(setq tqnr-profile-color-theme "flatland-black") ;; like default dark color but with MS Windows XP colors
+    ;;(setq tqnr-profile-color-theme "flatland") ;; like default dark color but with MS Windows XP colors
+    ;; (setq tqnr-profile-color-theme "gruvbox-dark-hard") ;; very nice color but wrong powerline color
+    ;; (setq tqnr-profile-color-theme "gruvbox-dark-medium") ;; very nice color but wrong powerline color
+    ;;(setq tqnr-profile-color-theme "gruvbox-dark-soft") ;; nice color but too low contrast (background not dark enough)
+    ;;(setq tqnr-profile-color-theme "jazz") ;; nice color but too low contrast and too dark (but ada not purple/blue/pink)
+    ;;(setq tqnr-profile-color-theme "labburn") ;; like zenburn too low contrast (but add not purple/blue/pink)
+    ;;(setq tqnr-profile-color-theme "matrix") ;; almost only green (ada is like without syntax color)
+    ;;(setq tqnr-profile-color-theme "molokai") ;; vivid color, comment color near background (ada too cyan/pink) (powerline ok)
+    ;;(setq tqnr-profile-color-theme "monokai") ;; vivid color, pink too saturated (ada pink/green/cyan) (ugly powerline color)
+    ;;(setq tqnr-profile-color-theme "mustard") ;; nice gradation of yellow but use underline...
+    ;;(setq tqnr-profile-color-theme "obsidian") ;; too blueish with bold and without color for function (ada only green and white)
+    ;; (setq tqnr-profile-color-theme "railscasts-reloaded") ;; nice gradation of brown (powerline not link to brownish)
+    ;;(setq tqnr-profile-color-theme "railscasts") ;; better gradation of brown (powerline not link to brownish)
+    ;;(setq tqnr-profile-color-theme "rippedcasts") ;; same than railcasts (wrong cursor and powerline colors)
+    ;; (setq tqnr-profile-color-theme "sanityinc-tomorrow-bright") ;; nice very color dark background (ada not purple/blue/pink)
+    ;; (setq tqnr-profile-color-theme "sanityinc-tomorrow-eighties") ;; very nice color a little too low contrast
+    (setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; almost perfect (need to custom powerline color)
+    ;; (setq tqnr-profile-color-theme "smyx") ;; nice color but box and bold are used (need to custom powerline color)
+    ;;(setq tqnr-profile-color-theme "spolsky") ;; nice colorful but too light on mode support
+    ;;(setq tqnr-profile-color-theme "tango-2") ;; nice tango color (powerline color to revise) and too light on mode support
+    ;;(setq tqnr-profile-color-theme "tangotango") ;; nice tango color, bold... and too light on mode support
+    ;;(setq tqnr-profile-color-theme "warm-night") ;; low contrast and fade color but use bold and box
+    ;;(setq tqnr-profile-color-theme "wilson") ;; nice but sad color like an raining day
+    ;;(setq tqnr-profile-color-theme "yoshi") ;; nice low contrast and fade color but light mode support (wrong powerline)
+    ;;(setq tqnr-profile-color-theme "zen-and-art") ;; nice color but comment too dark and very light mode support
+    ;;(setq tqnr-profile-color-theme "zenburn") ;; well known low contrast and good color (powerline not very readable)
+
+    ;; useful to not have bold or italic in doom theme
+    (custom-set-variables
+      '(doom-themes-enable-bold nil)
+      '(doom-themes-enable-italic nil)
+      )
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq tqnr-section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted

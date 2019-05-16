@@ -719,8 +719,10 @@ return the actual color value.  Otherwise return the value unchanged."
      (popup-menu-selection-face                    :foreground base00 :background base0C)
 
 ;;;; powerline
+     (powerline-active0                            :foreground base00 :background base01)
      (powerline-active1                            :foreground base09 :background base00)
      (powerline-active2                            :foreground base08 :background base01)
+     (powerline-inactive0                          :foreground base09 :background base00)
      (powerline-inactive1                          :foreground base06 :background base01)
      (powerline-inactive2                          :foreground base07 :background base02)
 
