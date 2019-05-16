@@ -44,29 +44,20 @@
   (defun magit-difftool-buffer-file ()
     "Open git difftool to compare with HEAD (no commited changes)."
     (interactive)
-    (-if-let (file (magit-file-relative-name))
-      (magit-run-async-command
-        (concat "git difftool " (or magit-buffer-refname
-                                  (magit-get-current-branch)
-                                  "HEAD")
-          " --no-prompt -- " file) t t)
-      (user-error "Buffer isn't visiting a file")))
-
-  (defun magit-difftool-buffer-file ()
-    "Open git difftool to compare with HEAD (no commited changes)."
-    (interactive)
-    (-if-let (file (magit-file-relative-name))
-      (magit-run-async-command (concat "git difftool HEAD --no-prompt -- " file) t nil)
-      (user-error "Buffer isn't visiting a file")))
+    (magit-with-toplevel
+      (-if-let (file (magit-file-relative-name))
+        (magit-run-git-async "difftool" "--gui" "--no-prompt" "HEAD" "--" file)
+        (user-error "Buffer isn't visiting a file"))))
 
   (defun magit-file-history-external ()
     "Open GUI of git filehistory (need to have GitExtensions in PATH).
 Useful until magit can open difftool instead of Ediff."
     (interactive)
     ;; get absolute file path of current file
-    (-if-let (file (concat (file-name-as-directory (magit-toplevel)) (magit-file-relative-name)))
-      (magit-run-async-command (concat "gitex.cmd filehistory " file) t)
-      (user-error "Buffer isn't visiting a file")))
+    (magit-with-toplevel
+      (-if-let (file (concat (file-name-as-directory (magit-toplevel)) (magit-file-relative-name)))
+        (magit-run-async-command (concat "GitExtensions.exe filehistory " file) t)
+        (user-error "Buffer isn't visiting a file"))))
 
   (defvar magit-async-command-buffer "*magit async*")
   ;; run an asynchronous command to call command

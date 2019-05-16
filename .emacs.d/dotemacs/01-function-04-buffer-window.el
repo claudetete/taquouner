@@ -332,10 +332,18 @@ middle"
 (defun toggle-vc-buffer ()
   "Switch to the vc or vc diff buffer."
   (interactive)
-  ;; when vc diff buffer already exist
-  (if (get-buffer "*vc-diff*")
-    (toggle-special-buffer "*vc-diff*")
-    (toggle-special-buffer "*vc*"))
+  (let ((magit-status-buffer (if tqnr-section-mode-projectile
+                               (concat "magit: " (projectile-project-name))
+                               "")))
+    (message (concat "=" magit-status-buffer "="))
+    (if (get-buffer magit-status-buffer)
+      (toggle-special-buffer magit-status-buffer)
+      ;; when vc diff buffer already exist
+      (if (get-buffer "*vc-diff*")
+        (toggle-special-buffer "*vc-diff*")
+        (toggle-special-buffer "*vc*"))
+      )
+    )
   )
 
 ;; go to the occur buffer in special window
@@ -372,6 +380,20 @@ middle"
 (defun toggle-file-buffer ()
   "Switch to last file buffer."
   (interactive)
+  (when helm-buffers
+    (let ((candidates
+            (remove-if
+              #'(lambda (buffer)
+                  (not (member buffer '("*helm find files*"
+                                        "*helm buffers*"
+                                        "*helm projectile*"))))
+              helm-buffers))
+           (buffer))
+      (setq buffer (helm :sources (helm-build-sync-source "Resume helm buffer"
+                                    :candidates candidates)
+                     :resume 'noresume
+                     :buffer "*helm resume*"))
+      (helm-resume buffer)))
   ;; FIXME resume last helm buffer matching a list name
   )
 
@@ -386,8 +408,10 @@ middle"
 ;; shortcuts are put in a hook to be loaded after everything else in init process
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
-    ;; switch to bookmark buffer
+    ;; switch to tag buffer
     (global-set-key     (kbd "M-2")     'toggle-tag-buffer)
+    ;; switch to file buffer
+    (global-set-key     (kbd "M-@")   'toggle-file-buffer)
     ;; switch to grep or ack buffer
     (global-set-key     (kbd "M-3")     'toggle-search-buffer)
     ;; switch to compile buffer
@@ -400,8 +424,10 @@ middle"
     ;; the previous global-set-key are unset in diff mode ???
     (add-hook 'diff-mode-hook
       (lambda ()
-        ;; switch to bookmark buffer
+        ;; switch to tag buffer
         (local-set-key  (kbd "M-2")     'toggle-tag-buffer)
+        ;; switch to file buffer
+        (local-set-key  (kbd "M-S-2")   'toggle-file-buffer)
         ;; switch to grep or ack buffer
         (local-set-key  (kbd "M-3")     'toggle-search-buffer)
         ;; switch to compile buffer
