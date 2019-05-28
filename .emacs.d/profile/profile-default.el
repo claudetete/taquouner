@@ -26,43 +26,6 @@
 ;;; Commentary:
 ;; Default profile loaded by init.el
 
-;;; Change Log:
-;; 2018-02-01 (1.7)
-;;    add ada mode and command functions, fitnesse, pandoc, jira + fill column,
-;;    ripgrep settings
-;; 2017-09-14 (1.6)
-;;    rationalize outline mode setting
-;; 2017-07-28 (1.5)
-;;    update to new conf format
-;; 2017-05-30 (1.4)
-;;    add markdown mode
-;; 2017-05-26 (1.3)
-;;    add irony mode
-;; 2017-01-20 (1.2)
-;;    add new option about org mode
-;; 2016-09-28 (1.1)
-;;    update with new mode/variable
-;; 2014-03-26 (1.0)
-;;    move synergy mode
-;; 2013-04-10 (0.9)
-;;    add helm mode
-;; 2012-12-27 (0.8)
-;;    function to add settings after all this configuration
-;; 2012-12-05 (0.7)
-;;    reorganize the file (like emacs.el)
-;; 2012-10-26 (0.6)
-;;    some clean up + add new mode and setting
-;; 2012-08-01 (0.5)
-;;    fix setting errors
-;; 2012-06-26 (0.4)
-;;    simplify font settings
-;; 2012-06-13 (0.3)
-;;    new modes
-;; 2012-06-12 (0.2)
-;;    add new section and option
-;; 2012-06-04 (0.1)
-;;    creation from scratch
-
 ;;; Code:
 ;; load private variable
 (try-require 'profile-default-private "    ")
@@ -476,7 +439,7 @@
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (setq tqnr-section-mode-fill-column-indicator nil)
   (when tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default is 1 (nil)
+    ;; pixel width of vertical line default 1 (nil)
     (setq tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (setq tqnr-profile-fill-column-indicator-vertical-line-color nil)
@@ -618,10 +581,6 @@
 
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (setq tqnr-section-mode-magit nil)
-  (when tqnr-section-mode-magit
-    ;; path to git executable
-    (setq tqnr-profile-magit-exec "git")
-    ) ;; (when tqnr-section-mode-magit
 
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from emacs)
   (setq tqnr-section-mode-synergy nil)
@@ -725,38 +684,10 @@
   ;; Helm does not like popwin...
   (setq tqnr-section-mode-shackle nil)
 
-  ;; RIPGREP: A front-end for rg, ripgrep (faster than anything...)
+  ;; RIPGREP
+  ;; A front-end for rg, ripgrep (faster than anything...)
+  ;; use .ripgreprc to add new type
   (setq tqnr-section-mode-ripgrep nil)
-  (when tqnr-section-mode-ripgrep
-    ;; List of types to add to ripgrep configuration (no .ripgrep configuration file only cli parameters)
-    ;; It should respect ripgrep format for --type-add parameter (extract from $ripgrep --help):
-    ;;   --type-add <TYPE>...
-    ;;   Add a new glob for a particular file type. Only one glob can be added at a time.
-    ;;   Multiple --type-add flags can be provided. Unless --type-clear is used, globs are added
-    ;;   to any existing globs defined inside of ripgrep.
-    ;;
-    ;;   Note that this MUST be passed to every invocation of ripgrep. Type settings are NOT
-    ;;   persisted.
-    ;;
-    ;;   Example: rg --type-add 'foo:*.foo' -tfoo PATTERN.
-    ;;
-    ;;   --type-add can also be used to include rules from other types with the special include
-    ;;   directive. The include directive permits specifying one or more other type names
-    ;;   (separated by a comma) that have been defined and its rules will automatically be
-    ;;   imported into the type specified. For example, to create a type called src that matches
-    ;;   C++, Python and Markdown files, one can use:
-    ;;
-    ;;   --type-add 'src:include:cpp,py,md'
-    ;;
-    ;;   Additional glob rules can still be added to the src type by using the --type-add flag
-    ;;   again:
-    ;;
-    ;;   --type-add 'src:include:cpp,py,md' --type-add 'src:*.foo'
-    ;;
-    ;;   Note that type names must consist only of Unicode letters or numbers. Punctuation
-    ;;   characters are not allowed.
-    (setq tqnr-section-mode-ripgrep-additional-type '())
-    ) ;; (when tqnr-section-mode-ripgrep
 
   ;; HYDRA: Create families of short bindings with a common prefix
   (setq tqnr-section-mode-hydra t)
@@ -778,9 +709,13 @@
     ;; Use Hydra to manage smartparens shortcuts
     (setq tqnr-section-mode-hydra-smartparens t)
     ;; Use Hydra to manage ada compile shortcuts
-    (setq tqnr-section-mode-hydra-ada nil)
+    (setq tqnr-section-mode-hydra-ada t)
     ;; Use Hydra to manage outline shortcuts
     (setq tqnr-section-mode-hydra-outline nil)
+    ;; Use Hydra to manage org shortcuts
+    (setq tqnr-section-mode-hydra-org-mode t)
+    ;; Use Hydra to manage special buffer toggle shortcuts
+    (setq tqnr-section-mode-hydra-special-buffer t)
     ) ;; (when tqnr-section-mode-hydra
 
   ;; FLYSPELL: On-the-fly spell checking
@@ -811,6 +746,24 @@
 
   ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
   (setq tqnr-section-mode-org-jira nil)
+
+  ;; GNUPLOT: Major mode for editing gnuplot scripts
+  (setq tqnr-section-mode-gnuplot nil)
+
+  ;; POWERSHELL: Powershell mode
+  (setq tqnr-section-mode-powershell nil)
+
+  ;; HELPFUL: Helpful mode
+  (setq tqnr-section-mode-helpful nil)
+
+  ;; IALIGN: ialign package
+  (setq tqnr-section-mode-ialign nil)
+
+  ;; REALGUD: realgud mode
+  (setq tqnr-section-mode-realgud nil)
+
+  ;; MOVE TEXT: realgud mode
+  (setq tqnr-section-mode-move-text nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)

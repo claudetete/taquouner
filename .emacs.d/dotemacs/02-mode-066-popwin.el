@@ -73,8 +73,8 @@
   (push '("*haskell*" :stick t) popwin:special-display-config)
   (push '("*debug:haskell*" :stick t) popwin:special-display-config)
   (push '("*magit async*" :height 3) popwin:special-display-config)
-  (push '("\\s-*\\*magit.*\\*\\s-*" :regexp t :stick t) popwin:special-display-config)
-  (push '("\\s-*magit-process:.*" :regexp t :stick t) popwin:special-display-config)
+  (push '("\\s-*\\*magit.*\\*\\s-*" :regexp t :height 0.3 :stick t) popwin:special-display-config)
+  (push '("\\s-*magit-process:.*" :regexp t :height 0.3 :stick t) popwin:special-display-config)
   (push '("\\s-*magit:.*" :regexp t :height 0.3 :stick t) popwin:special-display-config)
   (push '(tqnr-ada-gps-build-buffer-name :stick t) popwin:special-display-config)
   (push '(tqnr-ada-gps-check-buffer-name :stick t) popwin:special-display-config)
@@ -83,6 +83,7 @@
   (push '(tqnr-ada-gps-clean-all-buffer-name :stick t) popwin:special-display-config)
   (push '(tqnr-ada-gps-build-native-buffer-name :stick t) popwin:special-display-config)
   (push '("\\s-*\\*helpful.*\\*\\s-*" :regexp t :stick t) popwin:special-display-config)
+  (push '("\\s-*\\*i?pdb.*\\*\\s-*" :regexp t :stick t) popwin:special-display-config)
   )
 
 

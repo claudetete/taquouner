@@ -73,8 +73,7 @@
         "C:/WINDOWS"
         "C:/WINDOWS/System32"
         )
-      )
-
+      ) ;; (setq tqnr-profile-path
     ;;
     ;; LOCALE: languages settings about subversion and dired
     (setq tqnr-profile-lang "en_US")
@@ -192,20 +191,22 @@
     (setq tqnr-ada-gps-build-all-command "gnat make")
     ;; Buffer name of build all project files command
     (setq tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN ALL
+    ;; CLEAN
     ;; Command of clean all generated file
-    (setq tqnr-ada-gps-clean-all-command "gnat clean")
+    (setq tqnr-ada-gps-clean-command "gnat clean")
     ;; Buffer name of clean all generated command
-    (setq tqnr-ada-gps-clean-all-buffer-name "*ada-clean-all*")
+    (setq tqnr-ada-gps-clean-buffer-name "*ada-clean*")
+    ;; REBUILD ALL
+    ;; Command of rebuild all generated file
+    (setq tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
+    ;; Buffer name of rebuild all generated command
+    (setq tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
     ;; BUILD NATIVE
     ;; Command of build for native execution
     (setq tqnr-ada-gps-build-native-command "gnat clean")
     ;; Buffer name of native build command
     (setq tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
     ) ;; (when tqnr-section-function-ada
-
-  ;; RIPGREP: functions to add type support to helm ag for ripgrep
-  (setq tqnr-section-function-ripgrep nil)
 
   ;; CALC: functions to add type support to helm ag for ripgrep
   (setq tqnr-section-function-calc nil)
@@ -383,7 +384,7 @@
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (setq tqnr-section-mode-fill-column-indicator nil)
   (when tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default is 1 (nil)
+    ;; pixel width of vertical line default 1 (nil)
     (setq tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (setq tqnr-profile-fill-column-indicator-vertical-line-color nil)
@@ -525,10 +526,6 @@
 
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (setq tqnr-section-mode-magit nil)
-  (when tqnr-section-mode-magit
-    ;; path to git executable
-    (setq tqnr-profile-magit-exec "git")
-    ) ;; (when tqnr-section-mode-magit
 
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from emacs)
   (setq tqnr-section-mode-synergy nil)
@@ -541,9 +538,7 @@
     (setq tqnr-profile-synergy-server "")
     ;; command line to modify history output
     ;; by example: '("|" "sed" "s/login/readable_name/")
-    (setq tqnr-profile-synergy-history-filter
-      '(
-         ))
+    (setq tqnr-profile-synergy-history-filter '())
     ;; external tool to do diff with synergy
     (setq tqnr-profile-synergy-diff-external-command "BCompare.exe")
     ;; command line parameter to external tool to do diff
@@ -634,38 +629,10 @@
   ;; Helm does not like popwin...
   (setq tqnr-section-mode-shackle t)
 
-  ;; RIPGREP: A front-end for rg, ripgrep (faster than anything...)
-  (setq tqnr-section-mode-ripgrep t)
-  (when tqnr-section-mode-ripgrep
-    ;; List of types to add to ripgrep configuration (no .ripgrep configuration file only cli parameters)
-    ;; It should respect ripgrep format for --type-add parameter (extract from $ripgrep --help):
-    ;;   --type-add <TYPE>...
-    ;;   Add a new glob for a particular file type. Only one glob can be added at a time.
-    ;;   Multiple --type-add flags can be provided. Unless --type-clear is used, globs are added
-    ;;   to any existing globs defined inside of ripgrep.
-    ;;
-    ;;   Note that this MUST be passed to every invocation of ripgrep. Type settings are NOT
-    ;;   persisted.
-    ;;
-    ;;   Example: rg --type-add 'foo:*.foo' -tfoo PATTERN.
-    ;;
-    ;;   --type-add can also be used to include rules from other types with the special include
-    ;;   directive. The include directive permits specifying one or more other type names
-    ;;   (separated by a comma) that have been defined and its rules will automatically be
-    ;;   imported into the type specified. For example, to create a type called src that matches
-    ;;   C++, Python and Markdown files, one can use:
-    ;;
-    ;;   --type-add 'src:include:cpp,py,md'
-    ;;
-    ;;   Additional glob rules can still be added to the src type by using the --type-add flag
-    ;;   again:
-    ;;
-    ;;   --type-add 'src:include:cpp,py,md' --type-add 'src:*.foo'
-    ;;
-    ;;   Note that type names must consist only of Unicode letters or numbers. Punctuation
-    ;;   characters are not allowed.
-    (setq tqnr-section-mode-ripgrep-additional-type '())
-    ) ;; (when tqnr-section-mode-ripgrep
+  ;; RIPGREP
+  ;; A front-end for rg, ripgrep (faster than anything...)
+  ;; use .ripgreprc to add new type
+  (setq tqnr-section-mode-ripgrep nil)
 
   ;; HYDRA: Create families of short bindings with a common prefix
   (setq tqnr-section-mode-hydra t)
@@ -690,6 +657,10 @@
     (setq tqnr-section-mode-hydra-ada nil)
     ;; Use Hydra to manage outline shortcuts
     (setq tqnr-section-mode-hydra-outline t)
+    ;; Use Hydra to manage org shortcuts
+    (setq tqnr-section-mode-hydra-org-mode t)
+    ;; Use Hydra to manage special buffer toggle shortcuts
+    (setq tqnr-section-mode-hydra-special-buffer t)
     ) ;; (when tqnr-section-mode-hydra
 
   ;; FLYSPELL: On-the-fly spell checking
@@ -721,6 +692,24 @@
   ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
   (setq tqnr-section-mode-org-jira nil)
 
+  ;; GNUPLOT: Major mode for editing gnuplot scripts
+  (setq tqnr-section-mode-gnuplot nil)
+
+  ;; POWERSHELL: Powershell mode
+  (setq tqnr-section-mode-powershell nil)
+
+  ;; HELPFUL: Helpful mode
+  (setq tqnr-section-mode-helpful nil)
+
+  ;; IALIGN: ialign package
+  (setq tqnr-section-mode-ialign nil)
+
+  ;; REALGUD: realgud mode
+  (setq tqnr-section-mode-realgud nil)
+
+  ;; MOVE TEXT: realgud mode
+  (setq tqnr-section-mode-move-text nil)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
   ) ;; (when tqnr-section-mode
@@ -747,7 +736,7 @@
          "t_u64"
          "t_i64"
          )
-      )
+      ) ;; (setq tqnr-profile-c-extra-types
     ;; Compile mode without ask
     (setq tqnr-profile-c-ask-before-compile t)
     ;; INDENT PREPROCESSOR: make a #define be align with C code

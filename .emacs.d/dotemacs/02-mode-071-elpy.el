@@ -39,7 +39,7 @@
 ;;; Code:
 ;; must be install from list of packages
 (elpy-enable)
-(elpy-use-ipython)
+;;(elpy-use-ipython)
 
 ;;(setq python-shell-interpreter "C:/WinPython27/python-2.7.10/Scripts/ipython.exe")
 ;;(setq python-shell-interpreter-args "")

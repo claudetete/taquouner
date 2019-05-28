@@ -524,10 +524,6 @@
 
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (defvar tqnr-section-mode-magit nil)
-  (progn ;; tqnr-section-mode-magit
-    ;; path to git executable
-    (defvar tqnr-profile-magit-exec "git")
-    ) ;; (progn ;; tqnr-section-mode-magit
 
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from emacs)
   (defvar tqnr-section-mode-synergy nil)
@@ -635,36 +631,6 @@
   ;; A front-end for rg, ripgrep (faster than anything...)
   ;; use .ripgreprc to add new type
   (defvar tqnr-section-mode-ripgrep nil)
-  (progn ;; tqnr-section-mode-ripgrep
-    ;; List of types to add to ripgrep configuration (no .ripgrep configuration file only cli parameters)
-    ;; It should respect ripgrep format for --type-add parameter (extract from $ripgrep --help):
-    ;;   --type-add <TYPE>...
-    ;;   Add a new glob for a particular file type. Only one glob can be added at a time.
-    ;;   Multiple --type-add flags can be provided. Unless --type-clear is used, globs are added
-    ;;   to any existing globs defined inside of ripgrep.
-    ;;
-    ;;   Note that this MUST be passed to every invocation of ripgrep. Type settings are NOT
-    ;;   persisted.
-    ;;
-    ;;   Example: rg --type-add 'foo:*.foo' -tfoo PATTERN.
-    ;;
-    ;;   --type-add can also be used to include rules from other types with the special include
-    ;;   directive. The include directive permits specifying one or more other type names
-    ;;   (separated by a comma) that have been defined and its rules will automatically be
-    ;;   imported into the type specified. For example, to create a type called src that matches
-    ;;   C++, Python and Markdown files, one can use:
-    ;;
-    ;;   --type-add 'src:include:cpp,py,md'
-    ;;
-    ;;   Additional glob rules can still be added to the src type by using the --type-add flag
-    ;;   again:
-    ;;
-    ;;   --type-add 'src:include:cpp,py,md' --type-add 'src:*.foo'
-    ;;
-    ;;   Note that type names must consist only of Unicode letters or numbers. Punctuation
-    ;;   characters are not allowed.
-    (defvar tqnr-section-mode-ripgrep-additional-type '())
-    ) ;; (progn ;; tqnr-section-mode-ripgrep
 
   ;; HYDRA: Create families of short bindings with a common prefix
   (defvar tqnr-section-mode-hydra nil)
@@ -691,6 +657,8 @@
     (defvar tqnr-section-mode-hydra-outline nil)
     ;; Use Hydra to manage org shortcuts
     (defvar tqnr-section-mode-hydra-org-mode nil)
+    ;; Use Hydra to manage special buffer toggle shortcuts
+    (defvar tqnr-section-mode-hydra-special-buffer nil)
     ) ;; (progn ;; tqnr-section-mode-hydra
 
   ;; FLYSPELL: On-the-fly spell checking
@@ -730,6 +698,15 @@
 
   ;; HELPFUL: Helpful mode
   (defvar tqnr-section-mode-helpful nil)
+
+  ;; IALIGN: ialign package
+  (defvar tqnr-section-mode-ialign nil)
+
+  ;; REALGUD: realgud mode
+  (defvar tqnr-section-mode-realgud nil)
+
+  ;; MOVE TEXT: realgud mode
+  (defvar tqnr-section-mode-move-text nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)

@@ -68,7 +68,8 @@
         ;; GNATPRO
         "k:/GNATPRO/GNATPRO_18.2/bin"
         ;; PYTHON
-        "k:/PYTHON/PYTHON_2.7.4"
+        "j:/PYTHON/PYTHON_3.6.6"
+        "j:/PYTHON/PYTHON_3.6.6/Scripts"
         ;; GIT
         (concat  "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
@@ -119,13 +120,13 @@
   (setq tqnr-section-environment-server t)
 
   ;; PACKAGE: package management
-  (setq tqnr-section-environment-package nil)
+  (setq tqnr-section-environment-package t)
   (when tqnr-section-environment-package
     ;; PROXY: proxy setting about package management
     (setq tqnr-profile-environment-elpa-proxy-http nil)
     (setq tqnr-profile-environment-elpa-proxy-https nil)
     ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
-    (setq tqnr-profile-environment-elpa-package-list '())
+    (setq tqnr-profile-environment-elpa-package-list '(elpy))
     ) ;; (when tqnr-section-environment-package
 
   ;; SHORTCUT: Environment shortcut to declare hook about shortcut
@@ -408,7 +409,7 @@
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (setq tqnr-section-mode-fill-column-indicator t)
   (when tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default is 1 (nil)
+    ;; pixel width of vertical line default 1 (nil)
     (setq tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (setq tqnr-profile-fill-column-indicator-vertical-line-color nil)
@@ -550,10 +551,6 @@
 
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
   (setq tqnr-section-mode-magit t)
-  (when tqnr-section-mode-magit
-    ;; path to git executable
-    (setq tqnr-profile-magit-exec "git")
-    ) ;; (when tqnr-section-mode-magit
 
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from emacs)
   (setq tqnr-section-mode-synergy nil)
@@ -611,7 +608,7 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'elpy t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
-  (setq tqnr-section-mode-elpy nil)
+  (setq tqnr-section-mode-elpy t)
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens t)
@@ -687,6 +684,8 @@
     (setq tqnr-section-mode-hydra-outline t)
     ;; Use Hydra to manage org shortcuts
     (setq tqnr-section-mode-hydra-org-mode t)
+    ;; Use Hydra to manage special buffer toggle shortcuts
+    (setq tqnr-section-mode-hydra-special-buffer t)
     ) ;; (when tqnr-section-mode-hydra
 
   ;; FLYSPELL: On-the-fly spell checking
@@ -726,6 +725,15 @@
 
   ;; HELPFUL: Helpful mode
   (setq tqnr-section-mode-helpful t)
+
+  ;; IALIGN: ialign package
+  (setq tqnr-section-mode-ialign t)
+
+  ;; REALGUD: realgud mode
+  (setq tqnr-section-mode-realgud t)
+
+  ;; MOVE TEXT: realgud mode
+  (setq tqnr-section-mode-move-text t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
