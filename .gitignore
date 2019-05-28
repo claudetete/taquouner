@@ -31,3 +31,9 @@
 /.emacs.d/semanticdb/
 /.emacs.d/server/
 /.emacs.d/plugins/markdown-mode-2.2/*
+/.emacs.d/plugins/realgud/*
+__pycache__
+
+
+# temporary
+/.emacs.d/elpa/*
