@@ -1,4 +1,4 @@
-;;; 02-mode-097-move-text.el --- configuration of mvoe-text mode
+;;; 02-mode-098-groovy.el --- configuration of groovy mode
 
 ;; Copyright (c) 2019 Claude Tete
 ;;
@@ -20,27 +20,27 @@
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
-;; Created: May 2019
-;; Last-Updated: May 2019
+;; Created: August 2019
+;; Last-Updated: August 2019
 
 ;;; Commentary:
 ;;
-;; [SUBHEADER.realgud mode]
+;; [SUBHEADER.groovy mode]
 ;; [SUBDEFAULT.nil]
 
 
 ;;; Code:
-(when (try-require 'move-text "    ")
-
+(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/groovy-emacs-modes-master/"))
+(when (try-require 'groovy-mode "    ")
+  ;; set groovy-mode for jenkins file
+  (add-to-list 'auto-mode-alist '("\\.jf\\'" . groovy-mode))
   ;; shortcuts are put in a hook to be loaded after everything else in init process
   (add-hook 'tqnr-after-init-shortcut-hook
     (lambda ()
-      (global-set-key (kbd "<C-M-S-up>")        #'move-text-up)
-      (global-set-key (kbd "<C-M-S-down>")      #'move-text-down)
       ) ;; (lambda ()
     ) ;; (add-hook 'tqnr-after-init-shortcut-hook
   )
 
-(provide '02-mode-097-move-text)
+(provide '02-mode-098-groovy)
 
-;;; 02-mode-097-move-text.el ends here
+;;; 02-mode-098-groovy.el ends here
