@@ -1,6 +1,6 @@
 ;;; profile-thales-avionics-server.el --- a config file for profile
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -50,7 +50,7 @@
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-git-version "2.20.1")
+    (defvar tqnr-profile-portable-git-version "2.24.0")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
@@ -78,7 +78,7 @@
         "j:/MSYS/msys64/usr/bin"
         "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        "j:/GIT_EXTENSIONS/GitExtensions_3.0.2.5232"
+        "j:/GIT_EXTENSIONS/GitExtensions_3.2.1.6628"
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
         ;; GIT linux utils (msys64 override it)
@@ -86,9 +86,9 @@
         (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/mingw64/bin")
         (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/usr/bin")
         ;; GPS
-        "k:/GPS/GPS_18.2_x64/bin"
+        "k:/GPS/GPS_20.0_x64/bin"
         ;; GNU Emacs
-        "j:/EMACS/emacs-26.2-x86_64/bin"
+        "j:/EMACS/emacs-26.3-x86_64/bin"
         ;; MS Windows usual path
         "C:/WINDOWS"
         "C:/WINDOWS/System32"
@@ -409,7 +409,7 @@
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (setq tqnr-section-mode-fill-column-indicator t)
   (when tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default 1 (nil)
+    ;; pixel width of vertical line default is 1 (nil)
     (setq tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (setq tqnr-profile-fill-column-indicator-vertical-line-color nil)
@@ -429,7 +429,7 @@
   (setq tqnr-section-mode-muse nil)
 
   ;; UNDO TREE: replace the undo built in function
-  (setq tqnr-section-mode-undo-tree t)
+  (setq tqnr-section-mode-undo-tree nil)
 
   ;; CSV: parse/edit/sort CSV file
   (setq tqnr-section-mode-csv t)
@@ -734,6 +734,21 @@
 
   ;; MOVE TEXT: realgud mode
   (setq tqnr-section-mode-move-text t)
+
+  ;; GROOVY: groovy mode
+  (setq tqnr-section-mode-groovy t)
+
+  ;; UNDO FU: replace the undo built in function without same problem than undo-tree
+  (setq tqnr-section-mode-undo-fu t)
+
+  ;; UNDO FU SESSION: Save & recover undo steps between Emacs sessions
+  (setq tqnr-section-mode-undo-fu-session t)
+  (when tqnr-section-mode-undo-fu-session
+    ;; set undo fu session directory where every undo will be stored
+    (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
+    ;; set org directory where every org file will goes
+    (setq tqnr-profile-undo-fu-session-file-limit 1024)
+    ) ;; (when tqnr-section-mode-undo-fu-session
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
@@ -1197,6 +1212,9 @@
 
   ;; reduce magit slow on windows
   (setq w32-pipe-read-delay 0)
+
+  ;; needed to avoid error in colors
+  (powerline-reset)
 
   (message "### END")
   ) ; (defun function-to-call-after-loading-conf ()

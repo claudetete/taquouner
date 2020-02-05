@@ -34,6 +34,11 @@
 (when (try-require 'groovy-mode "    ")
   ;; set groovy-mode for jenkins file
   (add-to-list 'auto-mode-alist '("\\.jf\\'" . groovy-mode))
+  (setq groovy-indent-offset 2)
+  (add-hook 'groovy-mode-hook
+    (lambda ()
+      (c-set-offset 'arglist-intro 2)
+      (c-set-offset 'label 2)))
   ;; shortcuts are put in a hook to be loaded after everything else in init process
   (add-hook 'tqnr-after-init-shortcut-hook
     (lambda ()

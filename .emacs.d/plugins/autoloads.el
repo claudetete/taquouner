@@ -1,6 +1,6 @@
 ;;; autoloads.el --- a script file to generate autoload files
 
-;; Copyright (c) 2013-2017 Claude Tete
+;; Copyright (c) 2013-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,31 +20,13 @@
 
 ;; Keywords: config, autoload, generated, load
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.7
 ;; Created: April 2013
-;; Last-Updated: July 2017
+;; Last-Updated: February 2020
 
 ;;; Commentary:
 ;;
 ;;  must be run before using emacs:
 ;;  emacs -Q -l autoloads.el -f autoloads
-
-;;; Change Log:
-;; 2017-08-01 (0.7)
-;;    add missing helm extension
-;; 2017-05-30 (0.6)
-;;    add markdown mode
-;; 2016-09-28 (0.5)
-;;    add platinium search, fold dwim, ack, ps2pdf, synergy, hide lines, helm...
-;; 2015-10-21 (0.4)
-;;    add ggtags
-;; 2013-05-17 (0.3)
-;;    add rainbow mode
-;; 2013-05-07 (0.2)
-;;    fix error with diff mode
-;; 2013-04-12 (0.1)
-;;    creation from scratch
-
 
 ;;; Code:
 
@@ -133,6 +115,10 @@
     (concat autoloads-location "projectile-master/autoload-projectile.el"))
   ;; HELM PROJECTILE
   (update-file-autoloads "helm-projectile.el"        t (concat autoloads-location "autoload-helm-projectile.el"))
+  ;; UNDO FU
+  (update-file-autoloads "undo-fu.el"                t (concat autoloads-location "autoload-undo-fu.el"))
+  ;; UNDO FU SESSION
+  (update-file-autoloads "undo-fu-session.el"        t (concat autoloads-location "autoload-undo-fu-session.el"))
 
   ;; quit emacs
   (kill-emacs)

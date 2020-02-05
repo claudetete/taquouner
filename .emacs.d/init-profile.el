@@ -708,6 +708,21 @@
   ;; MOVE TEXT: realgud mode
   (defvar tqnr-section-mode-move-text nil)
 
+  ;; GROOVY: groovy mode
+  (defvar tqnr-section-mode-groovy nil)
+
+  ;; UNDO FU: replace the undo built in function without same problem than undo-tree
+  (defvar tqnr-section-mode-undo-fu nil)
+
+  ;; UNDO FU SESSION: Save & recover undo steps between Emacs sessions
+  (defvar tqnr-section-mode-undo-fu-session nil)
+  (progn ;; tqnr-section-mode-undo-fu-session
+    ;; set undo fu session directory where every undo will be stored
+    (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
+    ;; set org directory where every org file will goes
+    (setq tqnr-profile-undo-fu-session-file-limit 1024)
+    ) ;; (progn ;; tqnr-section-mode-undo-fu-session
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
   ) ;; (progn ;; tqnr-section-mode

@@ -1,6 +1,6 @@
 ;;; profile-magneti-marelli.el --- a config file for profile
 
-;; Copyright (c) 2012-2018 Claude Tete
+;; Copyright (c) 2012-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -735,6 +735,21 @@
 
   ;; MOVE TEXT: realgud mode
   (setq tqnr-section-mode-move-text nil)
+
+  ;; GROOVY: groovy mode
+  (setq tqnr-section-mode-groovy nil)
+
+  ;; UNDO FU: replace the undo built in function without same problem than undo-tree
+  (setq tqnr-section-mode-undo-fu nil)
+
+  ;; UNDO FU SESSION: Save & recover undo steps between Emacs sessions
+  (setq tqnr-section-mode-undo-fu-session nil)
+  (when tqnr-section-mode-undo-fu-session
+    ;; set undo fu session directory where every undo will be stored
+    (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
+    ;; set org directory where every org file will goes
+    (setq tqnr-profile-undo-fu-session-file-limit 1024)
+    ) ;; (when tqnr-section-mode-undo-fu-session
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)

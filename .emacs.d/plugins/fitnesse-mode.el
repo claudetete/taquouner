@@ -163,6 +163,7 @@
   (set (make-local-variable 'outline-regexp) 'fitnesse-mode-outline-regexp)
   ;; show image using builtin iimage mode
   (iimage-mode t)
+  ;(set-buffer-file-coding-system "utf-8")
   ;; run history mode hook
   (run-hooks 'text-mode-hook 'fitnesse-mode-hook))
 
@@ -208,6 +209,8 @@
 ;; associate context.txt files to fitnesse-mode
 (add-to-list 'auto-mode-alist '("content\\.txt\\'" . fitnesse-mode))
 
+;; force open FitNesse files with utf-8 coding
+(modify-coding-system-alist 'file "content\\.txt\\'" 'utf-8)
 
 (provide 'fitnesse-mode)
 
