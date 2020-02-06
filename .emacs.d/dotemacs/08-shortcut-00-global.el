@@ -56,13 +56,13 @@
 ;; add a new line whitout jump on it
 (global-set-key         (kbd "<S-return>")      'open-line)
 ;; join next line with the current and remove space between except one
-(global-set-key         (kbd "<H-return>")      (lambda ()
-                                                  (interactive)
-                                                  (move-end-of-line nil)
-                                                  (next-line)
-                                                  (join-line)
-                                                  (just-one-space 0)
-                                                  ))
+(global-set-key         (kbd "<C-S-return>")      (lambda ()
+                                                    (interactive)
+                                                    (move-end-of-line nil)
+                                                    (next-line)
+                                                    (join-line)
+                                                    (just-one-space 0)
+                                                    ))
 ;; new line but from anywhere on the previous line
 (global-set-key         (kbd "<M-return>")      (lambda ()
                                                   (interactive)

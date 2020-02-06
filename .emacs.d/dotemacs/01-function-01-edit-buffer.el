@@ -67,6 +67,53 @@
     ) ;; (add-hook 'tqnr-after-init-shortcut-hook
   ) ;; (when tqnr-function-kaneton
 
+(if (string-match-p tqnr-profile-name "thales")
+  (defun llt_build_chain_insert_root ()
+    (interactive)
+    (if (region-active-p) (delete-region (region-beginning) (region-end)))
+    (insert "\n"
+      "if not defined P_GIT (\n"
+      "    echo \"ERREUR - Positionner la variable P_GIT\"\n"
+      "    pause\n"
+      "    exit /B\n"
+      ")\n"
+      "\n"
+      "REM Extract current path\n"
+      "SET CURRENT_PATH=%~dp0\n"
+      "REM make sure it will run makefile next to this script\n"
+      "CD %CURRENT_PATH%\n"
+      "REM get root path of repository (path from makefile)\n"
+      "SET VIEWROOT_PATH=%CURRENT_PATH%" (shell-command-to-string "pwd |  sed \"s=$(git rev-parse --show-toplevel)/==\" | sed \"s=[^/]*=..=g\" | sed \"s=/=\\\\\\=g\"")
+      ))
+
+  (defun llt_build_chain_insert_make ()
+    (interactive)
+    (if (region-active-p) (delete-region (region-beginning) (region-end)))
+    (insert "%P_GIT%\\bash.exe %VIEWROOT_PATH%\\build_chain\\%PLATFORM%\\make_with_env"))
+
+
+  (defun insert-pragma-annotate ()
+    "Insert a pragma annotate exempt on."
+    (interactive)
+    (beginning-of-line)
+    (open-line 1)
+    (insert "      pragma Annotate (gnatcheck, Exempt_On, \"Forbidden_Pragmas\", \"Handling of invalid value due to IRS design\");")
+    (next-line 2)
+    (beginning-of-line)
+    (open-line 1)
+    (insert "      pragma Annotate (gnatcheck, Exempt_Off, \"Forbidden_Pragmas\");")
+    )
+
+  ;; shortcuts are put in a hook to be loaded after everything else in init process
+  (add-hook 'tqnr-after-init-shortcut-hook
+    (lambda ()
+      ;; insert printf or ifdef for debug (used in epita kaneton project)
+      (global-set-key         (kbd "<f9>")           'insert-pragma-annotate)
+      (global-set-key         (kbd "<S-f9>")         'llt_build_chain_insert_make)
+      ) ;; (lambda ()
+    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+  )
+
 ;; FitNesse debug point: Insertion of debug point
 (when tqnr-section-mode-fitnesse
   ;; insert fit deubg point
@@ -88,32 +135,34 @@
     ) ;; (add-hook 'tqnr-after-init-shortcut-hook
   ) ;; (when tqnr-section-mode-fitnesse
 
-;; insert a C comment to add tag for coverage
-(defun tag-insert-shortcut ()
-  "Insert a tag for coverage."
-  (interactive)
-  (let (my-module (my-buffer buffer-file-name))
-    (when (string-match "/\\(...\\)[^/]*$" my-buffer)
-      (setq my-module (upcase (match-string 1 my-buffer)))
-      (beginning-of-line)
-      (insert " /* -------------------------- */")
-      (indent-according-to-mode)
-      (insert "\n /* [COV.TAMBORIM_SDD_" my-module "_] */")
-      (indent-according-to-mode)
-      (insert "\n /* -------------------------- */")
-      (indent-according-to-mode)
-      (insert "\n")
-      (search-backward my-module)
-      (forward-char 4)
-      )))
+(if (string-match-p tqnr-profile-name "sagem")
+  ;; insert a C comment to add tag for coverage
+  (defun tag-insert-shortcut ()
+    "Insert a tag for coverage."
+    (interactive)
+    (let (my-module (my-buffer buffer-file-name))
+      (when (string-match "/\\(...\\)[^/]*$" my-buffer)
+        (setq my-module (upcase (match-string 1 my-buffer)))
+        (beginning-of-line)
+        (insert " /* -------------------------- */")
+        (indent-according-to-mode)
+        (insert "\n /* [COV.TAMBORIM_SDD_" my-module "_] */")
+        (indent-according-to-mode)
+        (insert "\n /* -------------------------- */")
+        (indent-according-to-mode)
+        (insert "\n")
+        (search-backward my-module)
+        (forward-char 4)
+        )))
 
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    ;; insert tag about coverage design document
-    (global-set-key         (kbd "<f9>")              'tag-insert-shortcut)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+  ;; shortcuts are put in a hook to be loaded after everything else in init process
+  (add-hook 'tqnr-after-init-shortcut-hook
+    (lambda ()
+      ;; insert tag about coverage design document
+      (global-set-key         (kbd "<f9>")              'tag-insert-shortcut)
+      ) ;; (lambda ()
+    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+  )
 
 ;;
 ;;
@@ -178,7 +227,7 @@ line instead."
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
     ;; (un)comment region
-    (global-set-key         (kbd "H-/")             'comment-or-uncomment-region)
+    (global-set-key         (kbd "C-c C-;")             'comment-or-uncomment-region)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

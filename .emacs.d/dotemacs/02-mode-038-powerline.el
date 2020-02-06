@@ -67,19 +67,17 @@
                    (face-warning `(:height 1.5
                                     :foreground ,(face-foreground (if active 'powerline-highlight-active0 'powerline-highlight-inactive0))
                                     :background ,(face-background (if active 'powerline-highlight-active0 'powerline-highlight-inactive0))))
-                   (face-buffer-id `(:foreground ,(face-foreground (if active 'powerline-active0 'powerline-inactive0))
-                                      :inherit ,face-end))
-                   (face-function `(:foreground ,(face-foreground (if active 'font-lock-function-name-face 'powerline-inactive2))
+                   (face-function `(:foreground ,(face-foreground (if active 'font-lock-function-name-face 'powerline-inactive0))
                                      :background ,(face-background (if active 'powerline-active2 'powerline-inactive2))))
                    (face-project `(:foreground ,(face-background (if active 'powerline-active0 'powerline-inactive0))
                                      :background ,(face-background (if active 'powerline-active1 'powerline-inactive1))))
                    (separator-left
                      (intern (format "powerline-%s-%s"
-                               powerline-default-separator
+                               (powerline-current-separator)
                                (car powerline-default-separator-dir))))
                    (separator-right
                      (intern (format "powerline-%s-%s"
-                               powerline-default-separator
+                               (powerline-current-separator)
                                (cdr powerline-default-separator-dir))))
 
                    (lhs (list
@@ -93,7 +91,7 @@
                                 (all-the-icons-octicon "lock" :face 'font-lock-warning-face :v-adjust 0.05))
                               (powerline-raw "" face-warning)))
                           ;; buffername
-                          (powerline-buffer-id face-buffer-id 'l)
+                          (powerline-buffer-id face-end 'l)
                           ;; display * at end of buffer name when buffer was modified
                           (when (and (buffer-modified-p) buffer-file-name)
                             (powerline-raw "" face-warning 'l))

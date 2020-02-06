@@ -83,6 +83,7 @@
       (add-hook 'tqnr-after-init-shortcut-hook
         (lambda ()
           (global-set-key   (kbd "<C-return>")    'hydra-rectangle/body)
+          (global-set-key   (kbd "C-x SPC")       'hydra-rectangle/body)
           ) ;; (lambda ()
         ) ;; (add-hook 'tqnr-after-init-shortcut-hook
       ) ;; (when (try-require 'rect "        ")

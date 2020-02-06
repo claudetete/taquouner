@@ -243,8 +243,8 @@ middle"
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
     ;; scroll while keeping cursor position
-    (global-set-key     (kbd "<H-down>")        'scroll-down-keep-cursor)
-    (global-set-key     (kbd "<H-up>")          'scroll-up-keep-cursor)
+    (global-set-key     (kbd "<C-S-prior>")          'scroll-up-keep-cursor)
+    (global-set-key     (kbd "<C-S-next>")        'scroll-down-keep-cursor)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

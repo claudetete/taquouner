@@ -36,7 +36,7 @@
   )
 
 (with-eval-after-load 'fitnesse-mode
-  (define-key fitnesse-mode-map         (kbd "H-i")     'iimage-mode)
+  (define-key fitnesse-mode-map         (kbd "C-M-S-i")     'iimage-mode)
   )
 
 
