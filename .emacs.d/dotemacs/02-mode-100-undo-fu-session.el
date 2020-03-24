@@ -43,6 +43,6 @@
   )
 
 
-(provide '02-mode-099-undo-fu)
+(provide '02-mode-100-undo-fu-session)
 
-;;; 02-mode-099-undo-fu.el ends here
+;;; 02-mode-100-undo-fu-session.el ends here
