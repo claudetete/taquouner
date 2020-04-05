@@ -1,6 +1,6 @@
 ;;; 02-mode-023-clearcase.el --- configuration of clearcase mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,27 +30,21 @@
 
 
 ;;; Code:
+(use-package clearcase
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/clearcase.el"))
 
-(setq clearcase-mode nil)
+  :bind
+  ;; ediff with previous (can open a new frame before with C-x 5 2)
+  ("C-x v `" . clearcase-ediff-pred-current-buffer)
+  ;; ediff with named version
+  ("C-x v 1" . clearcase-ediff-named-version-current-buffer)
+  ) ;; (use-package  clearcase
+
 ;; toggle compile window when quit config spec mode
 (when tqnr-section-mode-cedet-ecb
-  (add-hook 'clearcase-config-spec-quit-hook 'ecb-toggle-compile))
-
-;; [VARCOMMENT.ClearCase Emacs integration]
-;; [VARIABLE.tqnr-section-mode-clearcase-el nil]
-(when tqnr-section-mode-clearcase-el
-  (try-require 'clearcase "    ")
-
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      ;; ediff with previous (can open a new frame before with C-x 5 2)
-      (global-set-key   (kbd "C-x v `")         'clearcase-ediff-pred-current-buffer)
-      ;; ediff with named version
-      (global-set-key   (kbd "C-x v 1")         'clearcase-ediff-named-version-current-buffer)
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  )
+  (use-package clearcase
+    :hook
+    (clearcase-config-spec-quit-hook . ecb-toggle-compile)))
 
 
 (provide '02-mode-023-clearcase)

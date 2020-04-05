@@ -52,7 +52,13 @@
     ;; PATH environment variable concat with current PATH
     (setq tqnr-profile-path
       (list
-        (file-name-as-directory tqnr-dotemacs-path) "plugins/pt_linux_amd64"
+         "/usr/local/sbin"
+         "/usr/local/bin"
+         "/usr/bin"
+         "/usr/lib/jvm/default/bin"
+         "/usr/bin/site_perl"
+         "/usr/bin/vendor_perl"
+         "/usr/bin/core_perl"
         )
       ) ;; (setq tqnr-profile-path
     ;;
@@ -77,13 +83,15 @@
   (setq tqnr-section-environment-server nil)
 
   ;; PACKAGE: package management
-  (setq tqnr-section-environment-package nil)
+  (setq tqnr-section-environment-package t)
   (when tqnr-section-environment-package
     ;; PROXY: proxy setting about package management
-    (setq tqnr-profile-environment-elpa-proxy-http nil)
-    (setq tqnr-profile-environment-elpa-proxy-https nil)
+    (setq tqnr-profile-environment-package-proxy-http nil)
+    (setq tqnr-profile-environment-package-proxy-https nil)
+    ;; LOCAL PATH: proxy setting about package management
+    (setq tqnr-profile-environment-package-local-path "~/project/emacs-package-archives")
     ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
-    (setq tqnr-profile-environment-elpa-package-list '())
+    (setq tqnr-profile-environment-package-list '())
     ) ;; (when tqnr-section-environment-package
 
   ;; SHORTCUT: Environment shortcut to declare hook about shortcut
@@ -198,6 +206,9 @@
 (setq tqnr-section-mode t)
 (when tqnr-section-mode
 
+  ;; USE-PACKAGE: Package configuration with simple and tidy macro
+  (setq tqnr-section-mode-use-package t)
+
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
   (setq tqnr-section-mode-helm t)
   (when tqnr-section-mode-helm
@@ -226,9 +237,6 @@
     ;; enable Helm everywhere when asking file
     (setq tqnr-section-mode-helm-global t)
     ) ;; (when tqnr-section-mode-helm
-
-  ;; VECTRA: man and doc in emacs (never used)
-  (setq tqnr-section-mode-vectra nil)
 
   ;; HOME END: add some useful function to home and end keys
   (setq tqnr-section-mode-home-end t)
@@ -507,7 +515,7 @@
   (setq tqnr-section-mode-ediff nil)
 
   ;; MAGIT: use git with nice interface (do not use vc interface from emacs)
-  (setq tqnr-section-mode-magit nil)
+  (setq tqnr-section-mode-magit t)
 
   ;; SYNERGY: use synergy without java client GUI (do not use vc interface from emacs)
   (setq tqnr-section-mode-synergy nil)
@@ -568,7 +576,7 @@
   (setq tqnr-section-mode-elpy nil)
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
-  (setq tqnr-section-mode-smartparens nil)
+  (setq tqnr-section-mode-smartparens t)
 
   ;; PLANTUML: generate uml diagram from text
   (setq tqnr-section-mode-plantuml nil)
@@ -614,7 +622,7 @@
   ;; RIPGREP
   ;; A front-end for rg, ripgrep (faster than anything...)
   ;; use .ripgreprc to add new type
-  (setq tqnr-section-mode-ripgrep nil)
+  (setq tqnr-section-mode-ripgrep t)
 
   ;; HYDRA: Create families of short bindings with a common prefix
   (setq tqnr-section-mode-hydra t)
@@ -681,16 +689,16 @@
   (setq tqnr-section-mode-powershell nil)
 
   ;; HELPFUL: Helpful mode
-  (setq tqnr-section-mode-helpful nil)
+  (setq tqnr-section-mode-helpful t)
 
   ;; IALIGN: ialign package
-  (setq tqnr-section-mode-ialign nil)
+  (setq tqnr-section-mode-ialign t)
 
   ;; REALGUD: realgud mode
   (setq tqnr-section-mode-realgud nil)
 
   ;; MOVE TEXT: realgud mode
-  (setq tqnr-section-mode-move-text nil)
+  (setq tqnr-section-mode-move-text t)
 
   ;; GROOVY: groovy mode
   (setq tqnr-section-mode-groovy nil)
@@ -699,13 +707,19 @@
   (setq tqnr-section-mode-undo-fu t)
 
   ;; UNDO FU SESSION: Save & recover undo steps between Emacs sessions
-  (setq tqnr-section-mode-undo-fu-session t)
+  (setq tqnr-section-mode-undo-fu-session nil)
   (when tqnr-section-mode-undo-fu-session
     ;; set undo fu session directory where every undo will be stored
     (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
     ;; set org directory where every org file will goes
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
+
+  (setq tqnr-section-mode-basic t)
+
+  (setq tqnr-section-mode-a t)
+
+  (setq tqnr-section-mode-f t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
@@ -877,7 +891,7 @@
     ;; nice can use any variant of this open source font (by example slashed zero, dot zero, empty zero)
     ;; see https://be5invis.github.io/Iosevka/ for more settings
     ;;
-    (setq tqnr-profile-font "Monaco-8")
+    (setq tqnr-profile-font "Iosevka Term-9")
     ;; ANTIALIAS: set antialiasing on font rendering
     (setq tqnr-section-display-font-antialias t)
     ) ;; (when tqnr-section-display-font
@@ -895,7 +909,9 @@
     ;; COLOR THEME: set color by color-theme mode (or manual settings nil)
     (setq tqnr-section-display-color-theme t)
     ;; theme to be used, do not use it with terminal
-    (setq tqnr-profile-color-theme "solarized-light")
+    ;;(setq tqnr-profile-color-theme "solarized-light")
+    ;;(setq tqnr-profile-color-theme "gruvbox-dark-hard")
+    (setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; almost perfect (need to custom powerline color)
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq tqnr-section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
@@ -997,13 +1013,13 @@
 (setq tqnr-section-annoyances t)
 (when tqnr-section-annoyances
   ;; ask confirmation to quit Emacs
-  (setq tqnr-section-annoyances-comfirm-quit nil)
+  (setq tqnr-section-annoyances-comfirm-quit t)
   ;;
   ;; TRUNCATE LINE: whole line not visible (need to scroll right)
-  (setq tqnr-section-annoyances-truncate-line nil)
+  (setq tqnr-section-annoyances-truncate-line t)
   ;;
   ;; SCROLL PRESERVE CURSOR POSITION: when wheel scroll the cursor do not move
-  (setq tqnr-section-annoyances-scroll-preserve-cursor-position nil)
+  (setq tqnr-section-annoyances-scroll-preserve-cursor-position t)
   ;;
   ;; NO BACKUP FILE: turn off backup files
   (setq tqnr-section-annoyances-no-backup-file t)
@@ -1062,6 +1078,21 @@
 ;; this function will be call at the end after all configuration, it can be use
 ;; to override some settings or add settings without modify the configuration
 (defun function-to-call-after-loading-conf ()
+  ;; Scrolling.
+  ;; Good speed and allow scrolling through large images (pixel-scroll).
+  ;; Note: Scroll lags when point must be moved but increasing the number
+  ;;       of lines that point moves in pixel-scroll.el ruins large image
+  ;;       scrolling. So unfortunately I think we'll just have to live with
+  ;;       this.
+  (pixel-scroll-mode)
+  (setq pixel-dead-time 0) ; Never go back to the old scrolling behaviour.
+  (setq pixel-resolution-fine-flag t) ; Scroll by number of pixels instead of lines (t = frame-char-height pixels).
+  (setq mouse-wheel-scroll-amount '(1)) ; Distance in pixel-resolution to scroll each mouse wheel event.
+  (setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
+  (setq fast-but-imprecise-scrolling t) ; No (less) lag while scrolling lots.
+  (setq jit-lock-defer-time 0) ; Just don't even fontify if we're still catching up on user input.
+  ;; needed to avoid error in colors
+  (powerline-reset)
   ) ; (defun function-to-call-after-loading-conf ()
 
 

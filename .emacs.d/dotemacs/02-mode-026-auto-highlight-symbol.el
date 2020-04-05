@@ -1,6 +1,6 @@
 ;;; 02-mode-026-auto-highlight-symbol.el --- configuration of auytohighlight symbol mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,18 +30,40 @@
 
 
 ;;; Code:
+
+;; try highlight-thing
+;; (use-package highlight-thing
+;;   :init
+;;   (global-highlight-thing-mode)
+
+;;   :config
+;;   ;; highlight only words
+;;   (setq highlight-thing-what-thing 'word)
+;;   ;; increase idle time to display highlight
+;;   (setq highlight-thing-delay-seconds 2.2)
+;;   ;; case-sensitive
+;;   (setq highlight-thing-case-sensitive-p t)
+;;   ;; highlight a given thing only if it is 15 lines above or below point when
+;;   ;; in a buffer that has more than 5000 "characters", no such restriction
+;;   ;; would apply to buffers with less characters
+;;   (setq highlight-thing-limit-to-region-in-large-buffers-p t
+;;         highlight-thing-narrow-region-lines 35
+;;         highlight-thing-large-buffer-limit 5000)
+;;   )
+
 ;; after some idle time the symbol at point will be highlighted in display area
 ;; autoload file are generate by autoload.el
-(when (try-require 'autoload-auto-highlight-symbol "    ")
+(use-package auto-highlight-symbol
+  :init
   ;; active the mode
   (global-auto-highlight-symbol-mode t)
-  (custom-set-variables
-    ;; do not ignore case
-    '(ahs-case-fold-search nil)
-    ;; increase idle time to display highlight
-    '(ahs-idle-interval 2.2)
-    )
-  )
+
+  :custom
+  ;; do not ignore case
+  (ahs-case-fold-search nil)
+  ;; increase idle time to display highlight
+  (ahs-idle-interval 2.2)
+  ) ;; (use-package auto-highlight-symbol
 
 
 (provide '02-mode-026-auto-highlight-symbol)

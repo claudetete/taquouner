@@ -37,3 +37,6 @@ __pycache__
 
 # temporary
 /.emacs.d/elpa/*
+/.emacs.d/plugins/elpa/*
+/.emacs.d/plugins/elpa/*
+/.emacs.d/undo/*

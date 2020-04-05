@@ -1,6 +1,6 @@
-;;; 02-mode-001-vectra.el --- configuration of vectra mode
+;;; 02-mode-000-use-package.el --- configuration of use-package
 
-;; Copyright (c) 2017 Claude Tete
+;; Copyright (c) 2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,25 +20,23 @@
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
 ;; Version: 0.1
-;; Created: July 2017
-;; Last-Updated: July 2017
+;; Created: April 2020
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
-;; [SUBHEADER.man and doc in emacs (never used)]
-;; [SUBDEFAULT.nil]
-
-;;; Change Log:
-;; 2017-07-24 (0.1)
-;;    creation from split of old mode.el (see 02-mode.el for history)
+;; [SUBHEADER.Package configuration with simple and tidy macro (mandatory)]
+;; [SUBDEFAULT.t]
 
 
 ;;; Code:
+(eval-when-compile
+  (add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/use-package"))
+  (when (try-require 'use-package "      ")
+    (when (try-require 'use-package-ensure "        ")
+      (setq use-package-always-ensure t))))
 
-;;
-(try-require 'vectra "    ")
 
+(provide '02-mode-000-use-package)
 
-(provide '02-mode-001-vectra)
-
-;;; 02-mode-001-vectra.el ends here
+;;; 02-mode-000-use-package.el ends here

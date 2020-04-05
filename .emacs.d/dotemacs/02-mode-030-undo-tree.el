@@ -1,6 +1,6 @@
 ;;; 02-mode-030-undo-tree.el --- configuration of undo tree mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,59 +19,53 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.replace the undo built in function]
 ;; [SUBDEFAULT.t]
+;; deprecated, replaced by undo-fu (without tree visual)
 
 
 ;;; Code:
-(when (try-require 'autoload-undo-tree "    ")
+(use-package undo-tree
+  :bind
+  ("C-_"   . undo-tree-undo)
+  ("M-_"   . undo-tree-redo)
+  ("C-M-_" . undo-tree-visualize)
+
+  :bind (:map undo-tree-visualizer-mode-map
+          ;; enter and 'q' key will quit undo tree
+          ("RET" . (lambda ()
+                     (interactive)
+                     (undo-tree-visualizer-quit)
+                     (when section-mode-cedet-ecb
+                       (ecb-toggle-compile))))
+          ("q" . (lambda ()
+                   (interactive)
+                   (undo-tree-visualizer-quit)
+                   (when section-mode-cedet-ecb
+                     (ecb-toggle-compile))))
+          ;; page up/down will undo/redo 10 times
+          ("<prior>" . (lambda ()
+                         (interactive)
+                         (cl-loop repeat 10 do
+                           (undo-tree-visualize-undo))))
+          ("<next>" . (lambda ()
+                        (interactive)
+                        (cl-loop repeat 10 do
+                          (undo-tree-visualize-redo))))
+          ;; inverse C-up/down
+          ("<C-up>" . undo-tree-visualize-undo-to-x)
+          ("<C-down>" . undo-tree-visualize-redo-to-x)
+          )
+
+  :init
   ;; enable globally in all mode
   (global-undo-tree-mode t)
-  )
-
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    (global-set-key     (kbd "C-_")             'undo-tree-undo)
-    (global-set-key     (kbd "M-_")             'undo-tree-redo)
-    (global-set-key     (kbd "C-M-_")           'undo-tree-visualize)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-
-
-(add-hook 'undo-tree-visualizer-mode-hook
-  (lambda ()
-    ;; enter and 'q' key will quit undo tree
-    (local-set-key      (kbd "RET")             (lambda ()
-                                                  (interactive)
-                                                  (undo-tree-visualizer-quit)
-                                                  (when section-mode-cedet-ecb
-                                                    (ecb-toggle-compile))))
-    (local-set-key      (kbd "q")               (lambda ()
-                                                  (interactive)
-                                                  (undo-tree-visualizer-quit)
-                                                  (when section-mode-cedet-ecb
-                                                    (ecb-toggle-compile))))
-    ;; page up/down will undo/redo 10 times
-    (local-set-key      (kbd "<prior>")         (lambda ()
-                                                  (interactive)
-                                                  (cl-loop repeat 10 do
-                                                    (undo-tree-visualize-undo))))
-    (local-set-key      (kbd "<next>")          (lambda ()
-                                                  (interactive)
-                                                  (cl-loop repeat 10 do
-                                                    (undo-tree-visualize-redo))))
-    ;; inverse C-up/down
-    (local-set-key      (kbd "<C-up>")          'undo-tree-visualize-undo-to-x)
-    (local-set-key      (kbd "<C-down>")        'undo-tree-visualize-redo-to-x)
-    )
   )
 
 

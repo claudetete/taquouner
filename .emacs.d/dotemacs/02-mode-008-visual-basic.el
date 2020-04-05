@@ -1,6 +1,6 @@
 ;;; 02-mode-008-visual-basic.el --- configuration of vba mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -34,9 +34,8 @@
 ;;
 ;;; VISUAL BASIC
 ;; syntax color for sources in VB and VBA
-(autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
-(setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\)$" .
-                                  visual-basic-mode)) auto-mode-alist))
+(use-package visual-basic-mode
+  :mode "\\.\\(frm\\|bas\\|cls\\)\\'")
 
 
 (provide '02-mode-008-visual-basic)

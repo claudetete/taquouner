@@ -1,6 +1,6 @@
 ;;; 02-mode-002-home-end.el --- configuration of home/end keys mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -32,19 +32,15 @@
 ;;; Code:
 ;; to add features to home/end key (two push will get you at the end/start
 ;; of display) (three push will get you at the end/start of buffer)
-(try-require 'pc-keys "    ")
-
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
+(use-package pc-keys
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/pc-keys.el"))
+  :bind
     ;; bind home with new features
-    (global-set-key     (kbd "<home>")  'pc-keys-home)
+    ("<home>" . pc-keys-home)
 
     ;; bind home with new features
-    (global-set-key     (kbd "<end>")   'pc-keys-end)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+    ("<end>" . pc-keys-end)
+  ) ;; (use-package pc-keys
 
 
 (provide '02-mode-002-home-end)

@@ -1,6 +1,6 @@
 ;;; 02-mode-039-nyan.el --- configuration of nyan mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,16 +30,18 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-nyan-mode "    ")
+(use-package nyan-mode
+  :init
   ;; start nyan mode
   (nyan-mode t)
 
-  ;; to have wave in rainbow
-  (setq nyan-wavy-trail 1)
-
   ;; to have animation
   (nyan-start-animation)
-  )
+
+  :config
+  ;; to have wave in rainbow
+  (setq nyan-wavy-trail 1)
+  ) ;; (use-package nyan-mode
 
 
 (provide '02-mode-039-nyan)

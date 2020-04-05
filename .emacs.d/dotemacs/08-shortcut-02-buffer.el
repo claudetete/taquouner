@@ -1,6 +1,6 @@
 ;;; 08-shortcut-02-buffer.el --- a config file for buffer shortcut
 
-;; Copyright (c) 2006-2019 Claude Tete
+;; Copyright (c) 2006-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 2.2
+;; Version: 2.3
 ;; Created: October 2006
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -31,10 +31,13 @@
 
 ;;; Code:
 ;; close the current buffer
+;; M-` can be used by cinnamon desktop, to disable:
+;; $ gsettings set org.cinnamon.desktop.keybindings.wm switch-group []
 (global-set-key         (kbd "M-`")             'kill-this-buffer)
 ;;
-;; show a list of buffers in a new window
-(global-set-key         (kbd "C-x C-b")         'electric-buffer-list)
+;; show a list of buffers in a new window (overrided when helm-buffer-list is used)
+(when (not tqnr-section-mode-helm-buffers-list)
+  (global-set-key         (kbd "C-x C-b")         'electric-buffer-list))
 
 ;; show the window of bookmark
 (global-set-key         (kbd "C-c C-b")         'bookmark-bmenu-list)

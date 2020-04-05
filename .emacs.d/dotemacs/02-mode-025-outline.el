@@ -1,6 +1,6 @@
 ;;; 02-mode-025-outline.el --- configuration of outline mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,23 +30,20 @@
 
 
 ;;; Code:
-(outline-minor-mode 1)
+(use-package outline
+  :init
+  (outline-minor-mode 1)
 
-;; [VARCOMMENT.HIDE ALL AT START: hide all when opening file]
-;; [VARIABLE.tqnr-section-mode-outline-hide-all-at-start nil]
-(when tqnr-section-mode-outline-hide-all-at-start
-  (hide-sublevels 1))
+  ;; [VARCOMMENT.HIDE ALL AT START: hide all when opening file]
+  ;; [VARIABLE.tqnr-section-mode-outline-hide-all-at-start nil]
+  (when tqnr-section-mode-outline-hide-all-at-start
+    (hide-sublevels 1)))
 
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    (when (not tqnr-section-mode-hydra-outline)
-      ;; bind toggle hide/show block
-      (global-set-key     (kbd "C-c h")   'outline-toggle-children)
-      ) ;; (when (not tqnr-section-mode-hydra-outline)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+(when (not tqnr-section-mode-hydra-outline)
+  (use-package outline
+    :bind
+    ;; bind toggle hide/show block
+    ("C-c h" . outline-toggle-children)))
 
 
 (provide '02-mode-025-outline)

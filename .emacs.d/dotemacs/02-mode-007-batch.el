@@ -1,6 +1,6 @@
 ;;; 02-mode-007-batch.el --- configuration of batch mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,9 +30,8 @@
 
 
 ;;; Code:
-
-(autoload 'batch-mode "batch-mode" "Load batch-mode")
-(add-to-list 'auto-mode-alist '("\\.bat\\'" . batch-mode))
+(use-package batch-mode
+  :mode "\\.bat\\'")
 
 
 (provide '02-mode-007-batch)

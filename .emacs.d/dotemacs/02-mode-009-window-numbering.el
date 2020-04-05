@@ -1,6 +1,6 @@
 ;;; 02-mode-009-window-numbering.el --- configuration of window numbering mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,8 +30,8 @@
 
 
 ;;; Code:
-
-(when (try-require 'window-numbering "    ")
+(use-package window-numbering
+  :init
   (window-numbering-mode 1))
 
 

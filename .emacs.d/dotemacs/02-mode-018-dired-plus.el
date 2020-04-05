@@ -1,6 +1,6 @@
 ;;; 02-mode-018-dired-plus.el --- configuration of dired+ mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,26 +30,22 @@
 
 
 ;;; Code:
+(use-package dired+
+  :bind (:map dired-mode-map
+          ;; open with default associated application
+          ("H-RET" . dired-w32-browser)
+          ;; was dired-advertised-find-file
+          ("RET" . dired-find-alternate-file)
+          ;; was dired-up-directory
+          ("[" . (lambda () (interactive) (find-alternate-file "..")))
+          ;;("[" . dired-up-directory)
+          ;; edit buffer of dired to modify filename by example (C-x C-s or C-c C-c to apply modification)
+          ("C-c C-e" . dired-toggle-read-only)
+          )
 
-;; (when (try-require 'autoload-dired+ "    ")
-;;   ;; to have only one dired buffer by dired instance
-;;   (toggle-diredp-find-file-reuse-dir t)
-;;   )
-
-
-(eval-after-load "dired"
-  '(progn
-     ;; open with default associated application
-     (define-key dired-mode-map         (kbd "H-RET")           'dired-w32-browser)
-     ;; was dired-advertised-find-file
-     (define-key dired-mode-map         (kbd "RET")             'dired-find-alternate-file)
-     ;; was dired-up-directory
-     (define-key dired-mode-map         (kbd "[")               (lambda () (interactive) (find-alternate-file "..")))
-     ;;(define-key dired-mode-map         (kbd "[")               'dired-up-directory)
-     ;; edit buffer of dired to modify filename by example (C-x C-s or C-c C-c to apply modification)
-     (define-key dired-mode-map         (kbd "C-c C-e")         'dired-toggle-read-only)
-     )
-  )
+  :init
+  ;; to have only one dired buffer by dired instance
+  (toggle-diredp-find-file-reuse-dir t))
 
 
 (provide '02-mode-018-dired-plus)

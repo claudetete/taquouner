@@ -1,6 +1,6 @@
 ;;; 02-mode-003-doxymacs.el --- configuration of doxymacs mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,15 +30,14 @@
 
 
 ;;; Code:
-
-;;
-(when (try-require 'doxymacs "      ")
-  (add-hook 'c-mode-common-hook 'doxymacs-mode)
+(use-package doxymacs
+  :hook (c-mode-common-hook . doxymacs-mode)
+  :config
   (defvar doxymacs-doxygen-style "JavaDoc")
   (defun my-doxymacs-font-lock-hook ()
     (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
       (doxymacs-font-lock)))
-  (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook))
+  (add-hook 'font-lock-mode-hook #'my-doxymacs-font-lock-hook))
 
 
 (provide '02-mode-003-doxymacs)

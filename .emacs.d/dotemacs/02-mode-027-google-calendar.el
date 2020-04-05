@@ -1,6 +1,6 @@
 ;;; 02-mode-027-google-calendar.el --- configuration of google calendar mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,34 +19,18 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.to import Google calendar]
 ;; [SUBDEFAULT.nil]
+;; to be deleted
 
 
 ;;; Code:
-;; can import google calendar in Emacs calendar
-(when (try-require 'icalendar "    ")
-  (when (try-require 'google-calendar "    ")
-    ;; [VARCOMMENT.!!!PRIVATE!!! all theses variable should be put in private file of profile]
-    ;; [VARIABLE.tqnr-profile-google-calendar-user "name@email.com"]
-    (setq google-calendar-user           tqnr-profile-google-calendar-user)
-    ;; [VARIABLE.tqnr-profile-google-calendar-src (concat tqnr-dotemacs-path "/plugins/google")]
-    (setq google-calendar-code-directory tqnr-profile-google-calendar-src)
-    ;; [VARIABLE.tqnr-profile-google-calendar-directory "~/tmp"]
-    (setq google-calendar-directory      tqnr-profile-google-calendar-directory)
-    ;; [VARIABLE.tqnr-profile-google-calendar-url "https://www.google.com/calendar/ical..."]
-    (setq google-calendar-url            tqnr-profile-google-calendar-url)
-    ;; [COMMENT.!!!PRIVATE!!! End]
-
-    (setq google-calendar-auto-update    t)
-    (google-calendar-download)
-    ))
 
 
 (provide '02-mode-027-google-calendar)

@@ -1,6 +1,6 @@
 ;;; 02-mode-034-dired-sort.el --- configuration of dired sort mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,22 +30,21 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-dired-sort-menu "    ")
-  (custom-set-variables
-    ;; dired is allow to delete recursively folder
-    '(dired-recursive-copies t)
-    '(dired-recursive-deletes t)
-    ;; set a profile of sorting
-    '(dired-sort-menu-saved-config
-       (quote (
-                (dired-actual-switches . "-alh")
-                (ls-lisp-ignore-case . t)
-                (ls-lisp-dirs-first . t))))
-    ;; set this profile by default
-    '(ls-lisp-dirs-first t)
-    '(ls-lisp-ignore-case t)
-    )
-  )
+(use-package dired-sort-menu
+  :custom
+  ;; dired is allow to delete recursively folder
+  (dired-recursive-copies t)
+  (dired-recursive-deletes t)
+  ;; set a profile of sorting
+  (dired-sort-menu-saved-config
+    (quote (
+             (dired-actual-switches . "-alh")
+             (ls-lisp-ignore-case . t)
+             (ls-lisp-dirs-first . t))))
+  ;; set this profile by default
+  (ls-lisp-dirs-first t)
+  (ls-lisp-ignore-case t)
+  ) ;; (use-package dired-sort-menu
 
 
 (provide '02-mode-034-dired-sort)

@@ -3,7 +3,8 @@
 ;;; Code:
 
 
-;;;### (autoloads nil "company" "company.el" (21751 14762 0 0))
+;;;### (autoloads nil "company" "company.el" (24199 10314 943323
+;;;;;;  368000))
 ;;; Generated autoloads from company.el
 
 (autoload 'company-mode "company" "\
@@ -54,6 +55,8 @@ Company mode is enabled in all buffers where
 See `company-mode' for more information on Company mode.
 
 \(fn &optional ARG)" t nil)
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "company" '("company-")))
 
 ;;;***
 

@@ -1,6 +1,6 @@
 ;;; 02-mode-029-muse.el --- configuration of muse mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,36 +19,18 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.muse mode to have nice doc]
 ;; [SUBDEFAULT.nil]
+;; to be deleted (replaced by org-mode or auctex with beamer)
 
 
 ;;; Code:
-
-(add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/muse-3.20/bin"))
-
-(try-require 'muse-mode "    ")     ; load authoring mode
-
-(try-require 'muse-html "    ")     ; load publishing styles I use
-(try-require 'muse-latex "    ")
-
-(muse-derive-style "my-slides-pdf" "slides-pdf"
-  :header (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/muse/header.tex")
-  :footer  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/muse/footer.tex")
-  )
-
-(muse-derive-style "my-slides" "slides"
-  :header (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/muse/header.tex")
-  :footer  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/muse/footer.tex")
-  )
-
-(try-require 'muse-project "    ")  ; publish files in projects
 
 
 (provide '02-mode-029-muse)

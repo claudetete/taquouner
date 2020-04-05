@@ -96,7 +96,6 @@ moving point or mark as little as possible."
       (setq start (point)))
 
     (while try-list
-      (org-save-outline-visibility t ; dirty fix about https://github.com/magnars/expand-region.el/issues/241
         (save-mark-and-excursion
           (ignore-errors
             (funcall (car try-list))
@@ -105,7 +104,7 @@ moving point or mark as little as possible."
               (setq best-start (point))
               (setq best-end (mark))
               (when (and er--show-expansion-message (not (minibufferp)))
-                (message "%S" (car try-list)))))))
+                (message "%S" (car try-list))))))
       (setq try-list (cdr try-list)))
 
     (setq deactivate-mark nil)
