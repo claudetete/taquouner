@@ -35,7 +35,7 @@
 ;; customize modification (made by Emacs interface) are put in tqrn-custom.el
 (setq custom-file (concat (file-name-as-directory dotemacs-path) "dotemacs/tqnr-custom.el"))
 ;; load it to apply modification in it
-(try-require 'tqnr-custom "  ")
+(try-require 'tqnr-custom "    ")
 
 
 (provide '99-filecustomize)

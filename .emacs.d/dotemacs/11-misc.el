@@ -158,7 +158,7 @@
     (setq european-calendar-style 't)
 
     ;; load French holidays
-    (when (try-require 'french-holidays "      ")
+    (when (try-require 'french-holidays "        ")
       (setq calendar-holidays holiday-french-holidays))
 
 

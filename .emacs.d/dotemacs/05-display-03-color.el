@@ -39,7 +39,7 @@
 ;; [VARIABLE.tqnr-section-display-color-parentheses-mode t]
 (when tqnr-section-display-color-parentheses-mode (message "      Parentheses Mode...")
   ;; highlight parentheses at point
-  (when (try-require 'paren "      ")
+  (when (try-require 'paren "        ")
     (show-paren-mode t)
     (setq show-paren-ring-bell-on-mismatch t))
   (message "      Parentheses Mode... Done"))
@@ -51,7 +51,7 @@
 ;; [VARIABLE.tqnr-section-display-color-parentheses-visible t]
 (when tqnr-section-display-color-parentheses-visible (message "      Matched Parentheses display in Minibuffer...")
   ;; show complementary parenthesis (if not displayed) in mode-line
-  (when (try-require 'mic-paren "      ")
+  (when (try-require 'mic-paren "        ")
     (paren-activate))
   (message "      Matched Parentheses display in Minibuffer... Done"))
 
@@ -61,7 +61,7 @@
 (when tqnr-section-display-color-parentheses-highlight (message "      Parentheses Highlight Mode...")
   ;; display parentheses in same color when they match else in and other
   ;; color
-  (try-require 'highlight-parentheses "      ")
+  (try-require 'highlight-parentheses "        ")
   (message "      Parentheses Highlight Mode... Done"))
 
 ;;
@@ -83,7 +83,7 @@
       (load-theme (intern tqnr-profile-color-theme) t)
       )
     ;; else tqnr-running-on-emacs-23
-    (when (try-require 'color-theme "      ")
+    (when (try-require 'color-theme "        ")
       ;; color theme is applied everywhere
       (setq color-theme-is-global t)
       ;; color theme can be cumulated
@@ -194,31 +194,31 @@
         ((string= tqnr-profile-color-theme "xp") (color-theme-xp))
 
         ;; load custom color theme
-        ((string= tqnr-profile-color-theme "billc") (try-require 'color-theme-billc "      ")
+        ((string= tqnr-profile-color-theme "billc") (try-require 'color-theme-billc "        ")
           (color-theme-billc))
-        ((string= tqnr-profile-color-theme "blackboard") (try-require 'color-theme-blackboard "      ")
+        ((string= tqnr-profile-color-theme "blackboard") (try-require 'color-theme-blackboard "        ")
           (color-theme-blackboard))
-        ((string= tqnr-profile-color-theme "desert") (try-require 'color-theme-desert "      ")
+        ((string= tqnr-profile-color-theme "desert") (try-require 'color-theme-desert "        ")
           (color-theme-desert))
-        ((string= tqnr-profile-color-theme "empty-void") (try-require 'color-theme-empty-void "      ")
+        ((string= tqnr-profile-color-theme "empty-void") (try-require 'color-theme-empty-void "        ")
           (color-theme-empty-void))
-        ((string= tqnr-profile-color-theme "hober2") (try-require 'color-theme-hober2 "      ")
+        ((string= tqnr-profile-color-theme "hober2") (try-require 'color-theme-hober2 "        ")
           (color-theme-hober2))
-        ((string= tqnr-profile-color-theme "inkpot") (try-require 'color-theme-inkpot "      ")
+        ((string= tqnr-profile-color-theme "inkpot") (try-require 'color-theme-inkpot "        ")
           (color-theme-inkpot))
-        ((string= tqnr-profile-color-theme "mac-classic") (try-require 'color-theme-mac-classic "      ")
+        ((string= tqnr-profile-color-theme "mac-classic") (try-require 'color-theme-mac-classic "        ")
           (color-theme-mac-classic))
-        ((string= tqnr-profile-color-theme "tango") (try-require 'color-theme-tango "      ")
+        ((string= tqnr-profile-color-theme "tango") (try-require 'color-theme-tango "        ")
           (color-theme-tango))
-        ((string= tqnr-profile-color-theme "tangotango") (try-require 'color-theme-tangotango "      ")
+        ((string= tqnr-profile-color-theme "tangotango") (try-require 'color-theme-tangotango "        ")
           (color-theme-tangotango))
-        ((string= tqnr-profile-color-theme "zenburn") (try-require 'color-theme-zenburn "      ")
+        ((string= tqnr-profile-color-theme "zenburn") (try-require 'color-theme-zenburn "        ")
           (color-theme-zenburn)) ; ok
-        ((string= tqnr-profile-color-theme "solarized") (try-require 'color-theme-solarized "      ")
+        ((string= tqnr-profile-color-theme "solarized") (try-require 'color-theme-solarized "        ")
           (color-theme-solarized))
-        ((string= tqnr-profile-color-theme "clt") (try-require 'color-theme-clt "      ")
+        ((string= tqnr-profile-color-theme "clt") (try-require 'color-theme-clt "        ")
           (color-theme-clt))
-        ((string= tqnr-profile-color-theme "sweet") (try-require 'color-theme-sweet "      ")
+        ((string= tqnr-profile-color-theme "sweet") (try-require 'color-theme-sweet "        ")
           (color-theme-sweet)) ; ok
         ) ; (cond
       ;; Choose what theme you want with "Global Menu"->"Tools"->"Color Theme"
@@ -236,7 +236,7 @@
 ;; [VARIABLE.tqnr-section-display-color-ansi-color-compile t]
 (when tqnr-section-display-color-ansi-color-compile (message "      Ansi color for Compile...")
   ;; thanks to http://stackoverflow.com/a/3072831
-  (try-require 'ansi-color "      ")
+  (try-require 'ansi-color "        ")
   ;; define a function to colorize compile buffer
   (defun colorize-compilation-buffer ()
     ;; set to write to add color
