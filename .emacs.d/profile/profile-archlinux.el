@@ -715,11 +715,7 @@
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
 
-  (setq tqnr-section-mode-basic t)
-
-  (setq tqnr-section-mode-a t)
-
-  (setq tqnr-section-mode-f t)
+  (setq tqnr-section-mode-header2 t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)

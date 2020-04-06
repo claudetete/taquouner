@@ -727,6 +727,9 @@
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (progn ;; tqnr-section-mode-undo-fu-session
 
+  ;; HEADER2: Create/Update header of files
+  (defvar tqnr-section-mode-header2 nil)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
   ) ;; (progn ;; tqnr-section-mode
@@ -1034,6 +1037,7 @@
   ;; !!!PRIVATE!!! all theses variable should be put in private file of profile
   ;; USERNAME: define user name
   (defvar tqnr-profile-username "")
+  (defvar tqnr-profile-login "")
   ;; !!!PRIVATE!!! End
   ;;
   ;; SPACE: remove useless space at the end of line

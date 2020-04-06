@@ -1,27 +1,27 @@
 ;;; 02-mode-066-popwin.el --- configuration of popwin mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.5
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.6
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,9 +30,11 @@
 
 
 ;;; Code:
-(when (try-require 'popwin "    ")
+(use-package popwin
+  :init
   (popwin-mode 1)
 
+  :config
   (push '(compilation-mode :noselect t :stick t) popwin:special-display-config)
   (push '("*Shell Command Output*" :stick t) popwin:special-display-config)
   (push '(dired-mode :stick t) popwin:special-display-config)
@@ -84,7 +86,7 @@
   (push '(tqnr-ada-gps-build-native-buffer-name :stick t) popwin:special-display-config)
   (push '("\\s-*\\*helpful.*\\*\\s-*" :regexp t :stick t) popwin:special-display-config)
   (push '("\\s-*\\*i?pdb.*\\*\\s-*" :regexp t :stick t) popwin:special-display-config)
-  )
+  ) ;; (use-package popwin
 
 
 (provide '02-mode-066-popwin)

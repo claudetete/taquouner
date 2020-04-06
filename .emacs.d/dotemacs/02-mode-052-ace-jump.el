@@ -1,27 +1,27 @@
 ;;; 02-mode-052-ace-jump.el --- configuration of ace jump mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -32,25 +32,23 @@
 
 
 ;;; Code:
-(autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
-;; to enable jump back
-(autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back:-)" t)
-(eval-after-load "ace-jump-mode" '(ace-jump-mode-enable-mark-sync))
-;; to enable only in the current window
-(eval-after-load "ace-jump-mode" '(setq ace-jump-mode-scope 'window))
+(use-package ace-jump-mode
+  :bind
+  ("<f12>"   . ace-jump-mode)
+  ;; can also use <C-u f9>
+  ("<M-f12>" . ace-jump-char-mode)
+  ;; can also use <C-u C-u f9>
+  ("<C-f12>" . ace-jump-line-mode)
+  ("<S-f12>" . ace-jump-mode-pop-mark)
 
+  :init
+  ;; to enable jump back
+  (autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back:-)" t)
 
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    (global-set-key     (kbd "<f12>")           'ace-jump-mode)
-    ;; can also use <C-u f9>
-    (global-set-key     (kbd "<M-f12>")         'ace-jump-char-mode)
-    ;; can also use <C-u C-u f9>
-    (global-set-key     (kbd "<C-f12>")         'ace-jump-line-mode)
-    (global-set-key     (kbd "<S-f12>")         'ace-jump-mode-pop-mark)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+  :config
+  (ace-jump-mode-enable-mark-sync)
+  ;; to enable only in the current window
+  (setq ace-jump-mode-scope 'window))
 
 
 (provide '02-mode-052-ace-jump)
