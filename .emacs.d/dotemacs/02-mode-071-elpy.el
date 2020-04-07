@@ -41,8 +41,7 @@
   :defer t
 
   :init
-  ;; make sure it is loaded only when first python file is open
-  (advice-add 'python-mode :before 'elpy-enable)
+  (elpy-enable)
 
   :config
   (local-unset-key            (kbd "M-TAB"))

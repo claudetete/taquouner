@@ -212,7 +212,7 @@
   ;; TRY
   ;; Diary (by Marc Tommasi)
 ;;  (setq view-diary-entries-initially t
-;;    diary-file (concat (file-name-as-directory dotemacs-path) "diary")
+;;    diary-file (concat (file-name-as-directory tqnr-dotemacs-path) "diary")
 ;;    mark-diary-entries-in-calendar t
 ;;    number-of-diary-entries 7)
 ;;
@@ -245,7 +245,7 @@
 ;; [SUBSECTION.tqnr-section-misc-bookmark t]
 (when tqnr-section-misc-bookmark (message "    Bookmarks...")
   ;; where to save the bookmarks
-  (setq bookmark-default-file (concat (file-name-as-directory dotemacs-path) "bookmarks"))
+  (setq bookmark-default-file (concat (file-name-as-directory tqnr-dotemacs-path) "bookmarks"))
   ;;
   ;; each command that sets a bookmark will also save your bookmarks
   (setq bookmark-save-flag 1)

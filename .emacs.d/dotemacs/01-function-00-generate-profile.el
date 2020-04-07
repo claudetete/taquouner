@@ -562,7 +562,7 @@
   "list of .el files in dotemacs directory"
   (interactive)
   (let ((dotemacs-files (directory-files
-                          (concat (file-name-as-directory dotemacs-path) "dotemacs/")
+                          (concat (file-name-as-directory tqnr-dotemacs-path) "dotemacs/")
                           t
                           ".el$")))
     (setq tqnr-profile-is-init is-init)

@@ -573,7 +573,7 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'elpy t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
-  (setq tqnr-section-mode-elpy nil)
+  (setq tqnr-section-mode-elpy t)
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens t)
@@ -907,7 +907,8 @@
     ;; theme to be used, do not use it with terminal
     ;;(setq tqnr-profile-color-theme "solarized-light")
     ;;(setq tqnr-profile-color-theme "gruvbox-dark-hard")
-    (setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; almost perfect (need to custom powerline color)
+    ;;(setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; almost perfect (need to custom powerline color)
+    (setq tqnr-profile-color-theme nil) ;; use custom theme see function-to-call-after-loading-conf
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq tqnr-section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
@@ -1087,8 +1088,27 @@
   (setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
   (setq fast-but-imprecise-scrolling t) ; No (less) lag while scrolling lots.
   (setq jit-lock-defer-time 0) ; Just don't even fontify if we're still catching up on user input.
-  ;; needed to avoid error in colors
-  (powerline-reset)
+
+  ;; configure theme
+  (let ((theme-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/color-theme-sanityinc-tomorrow")))
+    ;; load theme file
+    (add-to-list 'load-path theme-path)
+    (when (try-require 'color-theme-sanityinc-tomorrow "    ")
+      ;; declare new face for powerline, to have highlight in powerline
+      (defface powerline-highlight-active0 '((t (:inherit mode-line)))
+        "Powerline face 0."
+        :group 'powerline)
+      (defface powerline-highlight-inactive0
+        '((t (:inherit mode-line-inactive)))
+        "Powerline face 0."
+        :group 'powerline)
+
+      ;; load theme color
+      (add-to-list 'custom-theme-load-path theme-path)
+      (load-theme 'sanityinc-tomorrow-dark t)
+      ;; needed to avoid error in colors
+      (powerline-reset)))
+
   ) ; (defun function-to-call-after-loading-conf ()
 
 

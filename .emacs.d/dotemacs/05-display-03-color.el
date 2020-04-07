@@ -72,17 +72,18 @@
 ;; [VARCOMMENT.COLOR THEME: set color by color-theme mode (or manual settings nil)]
 ;; [VARIABLE.tqnr-section-display-color-theme t]
 (when tqnr-section-display-color-theme (message "      Color Theme...")
-  ;; [VARCOMMENT.theme to be used, do not use it with terminal]
-  ;; [VARIABLE.tqnr-profile-color-theme "zenburn"]
-  ;; add path of theme
-  (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes"))
-  (add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes"))
-  (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/solarized"))
-  (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/base16"))
-  (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/doom"))
-  ;; load theme
-  ;; use (intern "string") to access to variable using its name from string
-  (load-theme (intern tqnr-profile-color-theme) t)
+  (when tqnr-profile-color-theme
+    ;; [VARCOMMENT.theme to be used, do not use it with terminal]
+    ;; [VARIABLE.tqnr-profile-color-theme "zenburn"]
+    ;; add path of theme
+    (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes"))
+    (add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes"))
+    (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/solarized"))
+    (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/base16"))
+    (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/doom"))
+    ;; load theme
+    ;; use (intern "string") to access to variable using its name from string
+    (load-theme (intern tqnr-profile-color-theme) t))
   (message "      Color Theme... Done")
   ) ; if section-display-color-theme
 
