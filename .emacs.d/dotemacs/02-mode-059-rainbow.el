@@ -1,4 +1,4 @@
-;;; 02-mode-059-rainbow.el --- configuration of rainbow mode
+;;; 02-mode-059-rainbow.el --- configuration of rainbow mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

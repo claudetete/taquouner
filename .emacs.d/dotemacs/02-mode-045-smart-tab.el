@@ -1,4 +1,4 @@
-;;; 02-mode-045-smart-tab.el --- configuration of smart tab mode
+;;; 02-mode-045-smart-tab.el --- configuration of smart tab mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

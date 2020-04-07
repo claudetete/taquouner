@@ -1,4 +1,4 @@
-;;; 02-mode-081-all-the-icons.el --- configuration of arduino mode
+;;; 02-mode-081-all-the-icons.el --- configuration of arduino mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

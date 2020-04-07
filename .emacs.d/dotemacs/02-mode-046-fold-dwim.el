@@ -1,4 +1,4 @@
-;;; 02-mode-046-fold-dwim.el --- configuration of fold dwim mode
+;;; 02-mode-046-fold-dwim.el --- configuration of fold dwim mode-*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

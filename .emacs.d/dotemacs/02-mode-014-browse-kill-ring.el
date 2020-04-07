@@ -1,4 +1,4 @@
-;;; 02-mode-014-browse-kill-ring.el --- configuration of browse kill ring mode
+;;; 02-mode-014-browse-kill-ring.el --- configuration of browse kill ring mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

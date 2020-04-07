@@ -1,4 +1,4 @@
-;;; 05-display-03-color.el --- a config file for color displayed setting
+;;; 05-display-03-color.el --- a config file for color displayed setting -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

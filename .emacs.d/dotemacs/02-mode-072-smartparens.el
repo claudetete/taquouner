@@ -1,4 +1,4 @@
-;;; 02-mode-072-smartparens.el --- configuration of smartparens mode
+;;; 02-mode-072-smartparens.el --- configuration of smartparens mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

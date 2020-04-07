@@ -1,4 +1,4 @@
-;;; 02-mode-054-diredful.el --- configuration of diredful mode
+;;; 02-mode-054-diredful.el --- configuration of diredful mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

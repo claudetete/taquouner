@@ -1,4 +1,4 @@
-;;; 02-mode-065-platinum-searcher.el --- configuration of platinum searcher mode
+;;; 02-mode-065-platinum-searcher.el --- configuration of platinum searcher mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

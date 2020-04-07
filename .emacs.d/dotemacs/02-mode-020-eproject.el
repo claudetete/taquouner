@@ -1,4 +1,4 @@
-;;; 02-mode-020-eproject.el --- configuration of eproject mode
+;;; 02-mode-020-eproject.el --- configuration of eproject mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 01-function-00-generate-profile.el --- functions to generate profile from config file
+;;; 01-function-00-generate-profile.el --- functions to generate profile from config file -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

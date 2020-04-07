@@ -1,4 +1,4 @@
-;;; 05-display-00-buffer.el --- a config file for window/buffer display setting
+;;; 05-display-00-buffer.el --- a config file for window/buffer display setting -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

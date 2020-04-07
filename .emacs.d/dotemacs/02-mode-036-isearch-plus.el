@@ -1,4 +1,4 @@
-;;; 02-mode-036-isearch-plus.el --- configuration of isearch+ mode
+;;; 02-mode-036-isearch-plus.el --- configuration of isearch+ mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

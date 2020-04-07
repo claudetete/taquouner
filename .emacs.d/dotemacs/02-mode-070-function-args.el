@@ -1,4 +1,4 @@
-;;; 02-mode-070-function-args.el --- configuration of function args mode
+;;; 02-mode-070-function-args.el --- configuration of function args mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

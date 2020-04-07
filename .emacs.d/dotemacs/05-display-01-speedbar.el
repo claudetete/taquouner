@@ -1,4 +1,4 @@
-;;; 05-display-01-speedbar.el --- a config file for speedbar setting
+;;; 05-display-01-speedbar.el --- a config file for speedbar setting -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

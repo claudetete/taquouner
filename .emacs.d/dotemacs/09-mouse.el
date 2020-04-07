@@ -1,4 +1,4 @@
-;;; 09-mouse.el --- a config file for mouse settings
+;;; 09-mouse.el --- a config file for mouse settings -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

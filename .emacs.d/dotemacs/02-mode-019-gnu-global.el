@@ -1,4 +1,4 @@
-;;; 02-mode-019-gnu-global.el --- configuration of gnu global mode
+;;; 02-mode-019-gnu-global.el --- configuration of gnu global mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

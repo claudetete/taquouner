@@ -1,4 +1,4 @@
-;;; 02-mode-039-nyan.el --- configuration of nyan mode
+;;; 02-mode-039-nyan.el --- configuration of nyan mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

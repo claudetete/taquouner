@@ -1,4 +1,4 @@
-;;; 02-mode-095-ialign.el --- configuration of ialign mode
+;;; 02-mode-095-ialign.el --- configuration of ialign mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2019-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-002-home-end.el --- configuration of home/end keys mode
+;;; 02-mode-002-home-end.el --- configuration of home/end keys mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

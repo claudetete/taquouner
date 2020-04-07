@@ -1,4 +1,4 @@
-;;; 02-mode-016-mm-dbc.el --- configuration of CAN dbc mode
+;;; 02-mode-016-mm-dbc.el --- configuration of CAN dbc mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

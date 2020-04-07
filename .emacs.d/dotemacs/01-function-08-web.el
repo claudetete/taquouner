@@ -1,4 +1,4 @@
-;;; 01-function-08-web.el --- add some function about web browser interface
+;;; 01-function-08-web.el --- add some function about web browser interface -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

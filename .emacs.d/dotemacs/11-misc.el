@@ -1,4 +1,4 @@
-;;; 11-misc.el --- a config file for misc settings
+;;; 11-misc.el --- a config file for misc settings -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

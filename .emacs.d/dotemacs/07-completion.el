@@ -1,4 +1,4 @@
-;;; 07-completion.el --- a config file for completion settings
+;;; 07-completion.el --- a config file for completion settings -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-055-ps2pdf.el --- configuration of ps2pdf mode
+;;; 02-mode-055-ps2pdf.el --- configuration of ps2pdf mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

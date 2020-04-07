@@ -1,4 +1,4 @@
-;;; 02-mode-098-groovy.el --- configuration of groovy mode
+;;; 02-mode-098-groovy.el --- configuration of groovy mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2019-2020 Claude Tete
 ;;

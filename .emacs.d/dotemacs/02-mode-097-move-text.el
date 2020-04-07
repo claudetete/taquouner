@@ -1,4 +1,4 @@
-;;; 02-mode-097-move-text.el --- configuration of mvoe-text mode
+;;; 02-mode-097-move-text.el --- configuration of mvoe-text mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2019-2020 Claude Tete
 ;;

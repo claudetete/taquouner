@@ -1,4 +1,4 @@
-;;; 03-languages.el --- a config file for programing languages
+;;; 03-languages.el --- a config file for programing languages -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

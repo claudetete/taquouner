@@ -1,4 +1,4 @@
-;;; 08-shortcut-04-etag.el --- a config file for tags shortcut
+;;; 08-shortcut-04-etag.el --- a config file for tags shortcut -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-075-haskell.el --- configuration of haskell mode
+;;; 02-mode-075-haskell.el --- configuration of haskell mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

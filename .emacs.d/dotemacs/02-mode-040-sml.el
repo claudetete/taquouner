@@ -1,4 +1,4 @@
-;;; 02-mode-040-sml.el --- configuration of sml modeline mode
+;;; 02-mode-040-sml.el --- configuration of sml modeline mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

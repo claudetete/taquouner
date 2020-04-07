@@ -1,4 +1,4 @@
-;;; 02-mode-086-dumb-jump.el --- configuration of dumb jump mode
+;;; 02-mode-086-dumb-jump.el --- configuration of dumb jump mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

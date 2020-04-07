@@ -1,4 +1,4 @@
-;;; 02-mode-033-diff-color.el --- configuration of diff color mode
+;;; 02-mode-033-diff-color.el --- configuration of diff color mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

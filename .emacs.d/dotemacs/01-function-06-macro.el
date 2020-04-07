@@ -1,4 +1,4 @@
-;;; 01-function-06-macro.el --- add some function about macro management
+;;; 01-function-06-macro.el --- add some function about macro management -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

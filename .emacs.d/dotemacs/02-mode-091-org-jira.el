@@ -1,4 +1,4 @@
-;;; 02-mode-091-org-jira.el --- configuration of org jira
+;;; 02-mode-091-org-jira.el --- configuration of org jira -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2018-2020 Claude Tete
 ;;

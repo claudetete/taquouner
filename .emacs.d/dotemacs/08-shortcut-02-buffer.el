@@ -1,4 +1,4 @@
-;;; 08-shortcut-02-buffer.el --- a config file for buffer shortcut
+;;; 08-shortcut-02-buffer.el --- a config file for buffer shortcut -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2020 Claude Tete
 ;;

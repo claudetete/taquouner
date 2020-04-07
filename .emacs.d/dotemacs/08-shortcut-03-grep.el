@@ -1,4 +1,4 @@
-;;; 08-shortcut-03-grep.el --- a config file for grep shortcut
+;;; 08-shortcut-03-grep.el --- a config file for grep shortcut -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

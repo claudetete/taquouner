@@ -1,4 +1,4 @@
-;;; 02-mode-021-rtrt-script.el --- configuration of rtrt script mode
+;;; 02-mode-021-rtrt-script.el --- configuration of rtrt script mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

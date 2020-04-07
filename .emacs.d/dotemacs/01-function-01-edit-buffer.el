@@ -1,4 +1,4 @@
-;;; 01-function-01-edit-buffer.el --- add some function about edit buffer text
+;;; 01-function-01-edit-buffer.el --- add some function about edit buffer text -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2020 Claude Tete
 ;;

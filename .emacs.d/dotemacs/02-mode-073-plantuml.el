@@ -1,4 +1,4 @@
-;;; 02-mode-073-plantuml.el --- configuration of plantuml mode
+;;; 02-mode-073-plantuml.el --- configuration of plantuml mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

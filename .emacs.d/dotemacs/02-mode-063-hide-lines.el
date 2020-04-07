@@ -1,4 +1,4 @@
-;;; 02-mode-063-hide-lines.el --- configuration of hide lines mode
+;;; 02-mode-063-hide-lines.el --- configuration of hide lines mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

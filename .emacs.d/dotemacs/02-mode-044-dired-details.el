@@ -1,4 +1,4 @@
-;;; 02-mode-044-dired-details.el --- configuration of dired details mode
+;;; 02-mode-044-dired-details.el --- configuration of dired details mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

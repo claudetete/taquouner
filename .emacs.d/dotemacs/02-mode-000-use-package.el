@@ -1,4 +1,4 @@
-;;; 02-mode-000-use-package.el --- configuration of use-package
+;;; 02-mode-000-use-package.el --- configuration of use-package -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2020 Claude Tete
 ;;

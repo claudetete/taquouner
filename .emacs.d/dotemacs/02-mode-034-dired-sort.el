@@ -1,4 +1,4 @@
-;;; 02-mode-034-dired-sort.el --- configuration of dired sort mode
+;;; 02-mode-034-dired-sort.el --- configuration of dired sort mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

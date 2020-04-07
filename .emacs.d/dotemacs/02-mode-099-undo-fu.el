@@ -1,4 +1,4 @@
-;;; 02-mode-099-undo-fu.el --- configuration of undo fu mode
+;;; 02-mode-099-undo-fu.el --- configuration of undo fu mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2020 Claude Tete
 ;;

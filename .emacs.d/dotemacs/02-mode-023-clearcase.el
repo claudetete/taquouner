@@ -1,4 +1,4 @@
-;;; 02-mode-023-clearcase.el --- configuration of clearcase mode
+;;; 02-mode-023-clearcase.el --- configuration of clearcase mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

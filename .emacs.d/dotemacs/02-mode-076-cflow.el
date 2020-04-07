@@ -1,4 +1,4 @@
-;;; 02-mode-076-cflow.el --- configuration of cflow mode
+;;; 02-mode-076-cflow.el --- configuration of cflow mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

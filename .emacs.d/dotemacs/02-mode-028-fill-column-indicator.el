@@ -1,4 +1,4 @@
-;;; 02-mode-028-fill-column-indicator.el --- configuration of fill column indicator mode
+;;; 02-mode-028-fill-column-indicator.el --- configuration of fill column indicator mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

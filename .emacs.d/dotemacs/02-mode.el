@@ -1,4 +1,4 @@
-;;; 02-mode.el --- configuration of mode
+;;; 02-mode.el --- configuration of mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-094-helpful.el --- configuration of helpful mode
+;;; 02-mode-094-helpful.el --- configuration of helpful mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2018-2020 Claude Tete
 ;;

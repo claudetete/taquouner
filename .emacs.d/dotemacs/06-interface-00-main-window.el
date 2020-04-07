@@ -1,4 +1,4 @@
-;;; 06-interface-00-main-window.el --- a config file for Emacs interface
+;;; 06-interface-00-main-window.el --- a config file for Emacs interface -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

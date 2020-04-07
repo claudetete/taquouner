@@ -1,4 +1,4 @@
-;;; 02-mode-010-cwarn.el --- configuration of C warning mode
+;;; 02-mode-010-cwarn.el --- configuration of C warning mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

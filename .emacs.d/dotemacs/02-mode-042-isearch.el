@@ -1,4 +1,4 @@
-;;; 02-mode-042-isearch.el --- configuration of isearch mode
+;;; 02-mode-042-isearch.el --- configuration of isearch mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

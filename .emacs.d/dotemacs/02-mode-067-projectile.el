@@ -1,4 +1,4 @@
-;;; 02-mode-067-projectile.el --- configuration of projectile mode
+;;; 02-mode-067-projectile.el --- configuration of projectile mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

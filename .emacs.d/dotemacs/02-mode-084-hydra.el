@@ -1,4 +1,4 @@
-;;; 02-mode-084-hydra.el --- configuration of hydra, new ways to bind
+;;; 02-mode-084-hydra.el --- configuration of hydra, new ways to bind -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

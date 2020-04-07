@@ -1,4 +1,4 @@
-;;; 05-display-02-font.el --- a config file for font setting
+;;; 05-display-02-font.el --- a config file for font setting -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

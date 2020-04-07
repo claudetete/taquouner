@@ -1,4 +1,4 @@
-;;; 02-mode-001-helm.el --- configuration of helm mode
+;;; 02-mode-001-helm.el --- configuration of helm mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

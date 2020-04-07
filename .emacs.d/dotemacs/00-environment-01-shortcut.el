@@ -1,4 +1,4 @@
-;;; 00-environment-01-shortcut.el --- environment settings about shortcuts
+;;; 00-environment-01-shortcut.el --- environment settings about shortcuts -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

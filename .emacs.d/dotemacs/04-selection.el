@@ -1,4 +1,4 @@
-;;; 04-selection.el --- a config file for text selection settings
+;;; 04-selection.el --- a config file for text selection settings -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

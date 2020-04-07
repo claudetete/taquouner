@@ -1,4 +1,4 @@
-;;; 02-mode-047-dired-lis.el --- configuration of dired lis mode
+;;; 02-mode-047-dired-lis.el --- configuration of dired lis mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-090-flex-isearch.el --- configuration of flex-isearch
+;;; 02-mode-090-flex-isearch.el --- configuration of flex-isearch -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

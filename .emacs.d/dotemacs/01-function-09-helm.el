@@ -1,4 +1,4 @@
-;;; 01-function-09-helm.el --- add some function about helm mode
+;;; 01-function-09-helm.el --- add some function about helm mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

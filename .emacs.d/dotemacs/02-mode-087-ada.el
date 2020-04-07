@@ -1,4 +1,4 @@
-;;; 02-mode-087-ada.el --- configuration of ada mode
+;;; 02-mode-087-ada.el --- configuration of ada mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-003-doxymacs.el --- configuration of doxymacs mode
+;;; 02-mode-003-doxymacs.el --- configuration of doxymacs mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

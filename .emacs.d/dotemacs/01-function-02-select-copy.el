@@ -1,4 +1,4 @@
-;;; 01-function-02-select-copy.el --- add some function to select or copy
+;;; 01-function-02-select-copy.el --- add some function to select or copy -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

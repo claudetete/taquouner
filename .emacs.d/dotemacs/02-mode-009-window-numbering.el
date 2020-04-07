@@ -1,4 +1,4 @@
-;;; 02-mode-009-window-numbering.el --- configuration of window numbering mode
+;;; 02-mode-009-window-numbering.el --- configuration of window numbering mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-048-nxhtml.el.el --- configuration of nXhtml mode
+;;; 02-mode-048-nxhtml.el.el --- configuration of nXhtml mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

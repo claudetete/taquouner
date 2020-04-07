@@ -1,4 +1,4 @@
-;;; 02-mode-026-auto-highlight-symbol.el --- configuration of auytohighlight symbol mode
+;;; 02-mode-026-auto-highlight-symbol.el --- configuration of auytohighlight symbol mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

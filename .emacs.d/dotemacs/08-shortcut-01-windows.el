@@ -1,4 +1,4 @@
-;;; 08-shortcut-01-windows.el --- a config file for windows shortcut
+;;; 08-shortcut-01-windows.el --- a config file for windows shortcut -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

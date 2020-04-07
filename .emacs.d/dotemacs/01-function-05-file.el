@@ -1,4 +1,4 @@
-;;; 01-function-05-file.el --- add some function about file management
+;;; 01-function-05-file.el --- add some function about file management -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

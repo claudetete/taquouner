@@ -1,4 +1,4 @@
-;;; 06-interface-02-ecb.el --- a config file for ecb display setting
+;;; 06-interface-02-ecb.el --- a config file for ecb display setting -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2010-2019 Claude Tete
 ;;

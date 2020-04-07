@@ -1,4 +1,4 @@
-;;; 02-mode-066-popwin.el --- configuration of popwin mode
+;;; 02-mode-066-popwin.el --- configuration of popwin mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

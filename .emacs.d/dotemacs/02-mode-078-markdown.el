@@ -1,4 +1,4 @@
-;;; 02-mode-078-markdown.el --- configuration of markdown mode
+;;; 02-mode-078-markdown.el --- configuration of markdown mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

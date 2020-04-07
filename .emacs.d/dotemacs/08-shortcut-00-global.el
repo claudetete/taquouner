@@ -1,4 +1,4 @@
-;;; 08-shortcut-00-global.el --- a config file for global Emacs shortcut
+;;; 08-shortcut-00-global.el --- a config file for global Emacs shortcut -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

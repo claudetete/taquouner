@@ -1,4 +1,4 @@
-;;; 01-function-14-clearcase.el --- some function for clearcase integration
+;;; 01-function-14-clearcase.el --- some function for clearcase integration -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2012-2019 Claude Tete
 ;;

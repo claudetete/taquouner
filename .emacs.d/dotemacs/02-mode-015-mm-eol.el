@@ -1,4 +1,4 @@
-;;; 02-mode-015-mm-eol.el --- configuration of magneti marelli eol mode
+;;; 02-mode-015-mm-eol.el --- configuration of magneti marelli eol mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

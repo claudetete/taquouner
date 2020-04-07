@@ -1,4 +1,4 @@
-;;; 01-function-13-ecb.el --- add some function to ecb mode
+;;; 01-function-13-ecb.el --- add some function to ecb mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2012-2019 Claude Tete
 ;;

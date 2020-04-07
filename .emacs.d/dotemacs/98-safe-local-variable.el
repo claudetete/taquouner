@@ -1,4 +1,4 @@
-;;; 98-safe-local-variable.el --- a config file about local variable
+;;; 98-safe-local-variable.el --- a config file about local variable -*- lexical-binding: t -*-
 ;;                                .dir-local.el
 
 ;; Copyright (c) 2018-2019 Claude Tete

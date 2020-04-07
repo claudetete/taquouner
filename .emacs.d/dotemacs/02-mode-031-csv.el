@@ -1,4 +1,4 @@
-;;; 02-mode-031-csv.el --- configuration of CSV file mode
+;;; 02-mode-031-csv.el --- configuration of CSV file mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 01-function-10-auctex.el --- add some function about auctex
+;;; 01-function-10-auctex.el --- add some function about auctex -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

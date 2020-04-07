@@ -1,4 +1,4 @@
-;;; 02-mode-018-dired-plus.el --- configuration of dired+ mode
+;;; 02-mode-018-dired-plus.el --- configuration of dired+ mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

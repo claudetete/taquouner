@@ -1,4 +1,4 @@
-;;; 01-function-04-buffer-window.el --- add some function about buffer and window handling
+;;; 01-function-04-buffer-window.el --- add some function about buffer and window handling -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

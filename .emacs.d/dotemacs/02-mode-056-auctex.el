@@ -1,4 +1,4 @@
-;;; 02-mode-056-auctex.el --- a config file for auctex mode
+;;; 02-mode-056-auctex.el --- a config file for auctex mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2013-2020 Claude Tete
 ;;

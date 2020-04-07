@@ -1,4 +1,4 @@
-;;; 01-function-16-ada.el --- functions to have multiple compile
+;;; 01-function-16-ada.el --- functions to have multiple compile -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-050-mru-yank.el --- configuration of MRU yank mode
+;;; 02-mode-050-mru-yank.el --- configuration of MRU yank mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

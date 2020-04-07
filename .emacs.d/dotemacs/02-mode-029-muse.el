@@ -1,4 +1,4 @@
-;;; 02-mode-029-muse.el --- configuration of muse mode
+;;; 02-mode-029-muse.el --- configuration of muse mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

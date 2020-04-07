@@ -1,4 +1,4 @@
-;;; 08-shortcut-05-semantic.el --- a config file for semantic mode shortcut
+;;; 08-shortcut-05-semantic.el --- a config file for semantic mode shortcut -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2010-2019 Claude Tete
 ;;

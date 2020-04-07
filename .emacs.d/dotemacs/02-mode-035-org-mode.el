@@ -1,4 +1,4 @@
-;;; 02-mode-035-org-mode.el --- configuration of org mode
+;;; 02-mode-035-org-mode.el --- configuration of org mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-049-fastnav.el --- configuration of mode
+;;; 02-mode-049-fastnav.el --- configuration of mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

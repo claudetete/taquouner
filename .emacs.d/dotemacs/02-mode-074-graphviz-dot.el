@@ -1,4 +1,4 @@
-;;; 02-mode-074-graphviz-dot.el --- configuration of graphviz dot mode
+;;; 02-mode-074-graphviz-dot.el --- configuration of graphviz dot mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

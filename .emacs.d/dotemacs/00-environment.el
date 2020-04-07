@@ -1,4 +1,4 @@
-;;; 00-environment.el --- a config file for environment settings
+;;; 00-environment.el --- a config file for environment settings -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-030-undo-tree.el --- configuration of undo tree mode
+;;; 02-mode-030-undo-tree.el --- configuration of undo tree mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

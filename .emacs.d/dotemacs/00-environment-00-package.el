@@ -1,4 +1,4 @@
-;;; 00-environment-00-package.el --- a config file for package management
+;;; 00-environment-00-package.el --- a config file for package management -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

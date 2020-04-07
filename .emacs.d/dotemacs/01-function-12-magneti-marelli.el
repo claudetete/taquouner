@@ -1,4 +1,4 @@
-;;; 01-function-12-magneti-marelli.el --- add some function for Magneti Marelli profile
+;;; 01-function-12-magneti-marelli.el --- add some function for Magneti Marelli profile -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2010-2019 Claude Tete
 ;;

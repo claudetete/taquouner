@@ -1,4 +1,4 @@
-;;; 08-shortcut-99-hook.el --- a config file for shortcut hook
+;;; 08-shortcut-99-hook.el --- a config file for shortcut hook -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

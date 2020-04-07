@@ -1,4 +1,4 @@
-;;; 02-mode-022-vc-clearcase.el --- configuration of vc clearcase mode
+;;; 02-mode-022-vc-clearcase.el --- configuration of vc clearcase mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

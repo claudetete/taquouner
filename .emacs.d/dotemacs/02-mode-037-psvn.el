@@ -1,4 +1,4 @@
-;;; 02-mode-037-psvn.el --- configuration of psvn mode
+;;; 02-mode-037-psvn.el --- configuration of psvn mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

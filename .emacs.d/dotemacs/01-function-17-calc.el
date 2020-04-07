@@ -1,4 +1,4 @@
-;;; 01-function-17-calc.el --- functions to calculate/convert units
+;;; 01-function-17-calc.el --- functions to calculate/convert units -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2018-2019 Claude Tete
 ;;

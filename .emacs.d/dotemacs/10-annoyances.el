@@ -1,4 +1,4 @@
-;;; 10-annoyances.el --- a config file for all annoying things
+;;; 10-annoyances.el --- a config file for all annoying things -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;

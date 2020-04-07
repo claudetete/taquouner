@@ -1,4 +1,4 @@
-;;; 02-mode-058-smart-forward.el --- configuration of smart forward mode
+;;; 02-mode-058-smart-forward.el --- configuration of smart forward mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

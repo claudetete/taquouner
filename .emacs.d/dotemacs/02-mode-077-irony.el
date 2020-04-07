@@ -1,4 +1,4 @@
-;;; 02-mode-077-irony.el --- configuration of irony mode
+;;; 02-mode-077-irony.el --- configuration of irony mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

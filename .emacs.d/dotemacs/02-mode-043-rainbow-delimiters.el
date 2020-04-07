@@ -1,4 +1,4 @@
-;;; 02-mode-043-rainbow-delimiters.el --- configuration of rainbow delimiters mode
+;;; 02-mode-043-rainbow-delimiters.el --- configuration of rainbow delimiters mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

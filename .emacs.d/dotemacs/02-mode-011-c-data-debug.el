@@ -1,4 +1,4 @@
-;;; 02-mode-011-c-data-debug.el --- configuration of C data debug mode
+;;; 02-mode-011-c-data-debug.el --- configuration of C data debug mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

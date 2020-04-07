@@ -1,4 +1,4 @@
-;;; 02-mode-041-dired.el --- configuration of dired mode
+;;; 02-mode-041-dired.el --- configuration of dired mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2019 Claude Tete
 ;;

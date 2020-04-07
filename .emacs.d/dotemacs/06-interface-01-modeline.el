@@ -1,4 +1,4 @@
-;;; 06-interface-01-modeline.el --- a config file for Emacs Modeline
+;;; 06-interface-01-modeline.el --- a config file for Emacs Modeline -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2012-2019 Claude Tete
 ;;

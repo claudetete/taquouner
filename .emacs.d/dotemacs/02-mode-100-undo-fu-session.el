@@ -1,4 +1,4 @@
-;;; 02-mode-100-undo-fu-session.el --- configuration of undo fu session mode
+;;; 02-mode-100-undo-fu-session.el --- configuration of undo fu session mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2020 Claude Tete
 ;;

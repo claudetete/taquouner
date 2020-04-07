@@ -1,4 +1,4 @@
-;;; 01-function-15-rtrt.el --- a config file to add some function for rtrt script
+;;; 01-function-15-rtrt.el --- a config file to add some function for rtrt script -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2012-2019 Claude Tete
 ;;

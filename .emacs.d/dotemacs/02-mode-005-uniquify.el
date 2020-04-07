@@ -1,4 +1,4 @@
-;;; 02-mode-005-uniquify.el --- configuration of uniquify mode
+;;; 02-mode-005-uniquify.el --- configuration of uniquify mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

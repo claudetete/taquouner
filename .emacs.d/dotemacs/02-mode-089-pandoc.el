@@ -1,4 +1,4 @@
-;;; 02-mode-089-pandoc.el --- configuration of pandoc-mode
+;;; 02-mode-089-pandoc.el --- configuration of pandoc-mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-088-fitnesse.el --- configuration of fitnesse-mode
+;;; 02-mode-088-fitnesse.el --- configuration of fitnesse-mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-006-cedet.el --- configuration of cedet mode
+;;; 02-mode-006-cedet.el --- configuration of cedet mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2020 Claude Tete
 ;;

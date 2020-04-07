@@ -1,4 +1,4 @@
-;;; 02-mode-096-realgud.el --- configuration of realgud mode
+;;; 02-mode-096-realgud.el --- configuration of realgud mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2019-2020 Claude Tete
 ;;

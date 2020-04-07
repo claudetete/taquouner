@@ -1,4 +1,4 @@
-;;; 02-mode-053-avy.el --- configuration of avy mode
+;;; 02-mode-053-avy.el --- configuration of avy mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

@@ -1,4 +1,4 @@
-;;; 02-mode-093-powershell.el --- configuration of powershell mode
+;;; 02-mode-093-powershell.el --- configuration of powershell mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2018-2020 Claude Tete
 ;;

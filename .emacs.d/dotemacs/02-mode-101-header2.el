@@ -1,4 +1,4 @@
-;;; 02-mode-101-header2.el --- configuration of header2 mode
+;;; 02-mode-101-header2.el --- configuration of header2 mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2020 Claude Tete
 ;;
@@ -19,7 +19,7 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: April 2020
 ;; Last-Updated: April 2020
 
@@ -38,6 +38,17 @@
   (setq header-date-format "%B %Y")
   (setq header-copyright-notice "Copyright (c) \n")
 
+  ;; from header2.el to add lexical-binding
+  (defsubst header-title2 ()
+    "Insert buffer's file name and leave room for a description."
+    (insert (concat comment-start
+              (and (= 1 (length comment-start))  header-prefix-string)
+              (if (buffer-file-name)
+                (file-name-nondirectory (buffer-file-name))
+                (buffer-name))
+              " ---  " "-*- lexical-binding: t -*-\n"))
+    (setq return-to  (1- (point))))
+
   (defsubst header-empty-line ()
     "Insert an empty line (not a comment)"
     (insert "\n"))
@@ -50,10 +61,10 @@
     "Insert an empty line (not a comment)"
     (insert (concat header-prefix-string "This file is NOT part of GNU Emacs.\n")))
 
-(defun header-copyright2 ()
-  "Insert `header-copyright-notice', unless nil."
-  (when header-copyright-notice
-    (insert (concat header-prefix-string header-copyright-notice))))
+  (defun header-copyright2 ()
+    "Insert `header-copyright-notice', unless nil."
+    (when header-copyright-notice
+      (insert (concat header-prefix-string header-copyright-notice))))
 
   ;; from header2.el to remove section start
   (defsubst header-commentary2 ()
@@ -66,7 +77,7 @@
     (insert (concat comment-start header-prefix-string "Code:" (nonempty-comment-end) "\n\n\n")))
 
   (setq make-header-hook '(
-                            header-title                ; ;;; filename.el --- Short description
+                            header-title2               ; ;;; filename.el --- Short description -*- lexical-binding: t -*-
                             header-empty-line           ;
                             header-copyright2           ; ;; Copyright (c) YEAR User Name
                             header-blank                ; ;;

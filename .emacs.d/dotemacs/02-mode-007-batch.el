@@ -1,4 +1,4 @@
-;;; 02-mode-007-batch.el --- configuration of batch mode
+;;; 02-mode-007-batch.el --- configuration of batch mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;

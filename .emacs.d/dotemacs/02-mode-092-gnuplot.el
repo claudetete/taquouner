@@ -1,4 +1,4 @@
-;;; 02-mode-092-gnuplot.el --- configuration of gnuplot-mode
+;;; 02-mode-092-gnuplot.el --- configuration of gnuplot-mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2018-2020 Claude Tete
 ;;
