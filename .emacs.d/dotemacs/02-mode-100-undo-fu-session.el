@@ -30,9 +30,11 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-undo-fu-session "    ")
+(use-package undo-fu-session
+  :init
   (global-undo-fu-session-mode)
 
+  :config
   ;; [VARCOMMENT.set undo fu session directory where every undo will be stored]
   ;; [VARIABLE.tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo")]
   (setq undo-fu-session-directory tqnr-profile-undo-fu-session-directory)
@@ -40,7 +42,7 @@
   ;; [VARCOMMENT.set org directory where every org file will goes]
   ;; [VARIABLE.tqnr-profile-undo-fu-session-file-limit 1024]
   (setq undo-fu-session-file-limit tqnr-profile-undo-fu-session-file-limit)
-  )
+  ) ;; (use-package undo-fu-session
 
 
 (provide '02-mode-100-undo-fu-session)

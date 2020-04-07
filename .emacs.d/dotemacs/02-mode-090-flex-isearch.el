@@ -1,6 +1,6 @@
 ;;; 02-mode-090-flex-isearch.el --- configuration of flex-isearch
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: December 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,21 +30,16 @@
 
 
 ;;; Code:
+(use-package flex-isearch
+  :bind
+  ("C-S-s" . flx-isearch-forward)
+  ("C-S-r" . flx-isearch-backward)
 
-(when (try-require 'flex-isearch "    ")
-  (setq flex-isearch-auto "Never")
+  :init
   (global-flex-isearch-mode t)
-  )
-
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    (global-set-key (kbd "C-S-s") #'flx-isearch-forward)
-    (global-set-key (kbd "C-S-r") #'flx-isearch-backward)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-)
+  :config
+  (setq flex-isearch-auto "Never")
+  ) ;; (use-package flex-isearch
 
 
 (provide '02-mode-090-flex-isearch)

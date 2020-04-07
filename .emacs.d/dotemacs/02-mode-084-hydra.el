@@ -1,6 +1,6 @@
 ;;; 02-mode-084-hydra.el --- configuration of hydra, new ways to bind
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.4
+;; Version: 0.5
 ;; Created: September 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,19 +30,26 @@
 
 
 ;;; Code:
+;;
+;; RECTANGLE
+;;
+;; [VARCOMMENT.Use Hydra to manage rectangle shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-rectangle t]
+(when tqnr-section-mode-hydra-rectangle
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("<C-return>" . hydra-rectangle/body)
+    ("C-x SPC"    . hydra-rectangle/body)
 
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/hydra-master"))
-
-(when (try-require 'hydra "      ")
-
-  ;;
-  ;; RECTANGLE
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage rectangle shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-rectangle t]
-  (when tqnr-section-mode-hydra-rectangle
+    :config
     ;; docstring inspired by https://oremacs.com/2015/04/15/hydra-idle-hint/
-    (when (try-require 'rect "        ")
+    (use-package rect
+      ;; make sure it is loaded and custom without searched in package list
+      ;; it is not listed as built-in package
+      :ensure nil
+
+      :config
       (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
                                   :color pink
                                   :hint nil
@@ -79,28 +86,30 @@
                (rectangle-mark-mode 1)) "Reset")
         ("q" nil "Quit" :color blue)
         )
-      ;; shortcuts are put in a hook to be loaded after everything else in init process
-      (add-hook 'tqnr-after-init-shortcut-hook
-        (lambda ()
-          (global-set-key   (kbd "<C-return>")    'hydra-rectangle/body)
-          (global-set-key   (kbd "C-x SPC")       'hydra-rectangle/body)
-          ) ;; (lambda ()
-        ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-      ) ;; (when (try-require 'rect "        ")
-    ) ;; (when tqnr-section-mode-hydra-rectangle
+      ) ;; (use-package rect
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-rectangle
 
 
-  ;;
-  ;; DISPLAY
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage windows/frame/buffer shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-display t]
-  (when tqnr-section-mode-hydra-display
+;;
+;; DISPLAY
+;;
+;; [VARCOMMENT.Use Hydra to manage windows/frame/buffer shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-display t]
+(when tqnr-section-mode-hydra-display
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("<M-kp-divide>" . hydra-display/body)
+    ("M-z"           . hydra-display/body)
+
+    :config
     ;; need to unbind them to be able to bind them into hydra
     (define-key hydra-base-map    (kbd "<kp-0>")        nil)
     (define-key hydra-base-map    (kbd "<kp-2>")        nil)
     (define-key hydra-base-map    (kbd "<kp-6>")        nil)
     (define-key hydra-base-map    (kbd "<kp-subtract>") nil)
+
     (defhydra hydra-display (:exit t
                               :color pink
                               :hint nil)
@@ -151,27 +160,28 @@
       ("<prior>" (when tqnr-section-function-buffer-window
                    (scroll-down-keep-cursor)) "Scroll Up" :color red)
       )
+
     ;; rebind them after definition
     (define-key hydra-base-map    (kbd "<kp-0>")          'hydra--digit-argument)
     (define-key hydra-base-map    (kbd "<kp-2>")          'hydra--digit-argument)
     (define-key hydra-base-map    (kbd "<kp-6>")          'hydra--digit-argument)
     (define-key hydra-base-map    (kbd "<kp-subtract>")   'hydra--negative-argument)
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key   (kbd "<M-kp-divide>") 'hydra-display/body)
-        (global-set-key   (kbd "M-z")           'hydra-display/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-display
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-display
 
 
-  ;;
-  ;; TRANSPOSE
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage transpose shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-transpose t]
-  (when tqnr-section-mode-hydra-transpose
+;;
+;; TRANSPOSE
+;;
+;; [VARCOMMENT.Use Hydra to manage transpose shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-transpose t]
+(when tqnr-section-mode-hydra-transpose
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("C-t" . hydra-transpose/body)
+
+    :config
     (defhydra hydra-transpose (:color red
                                 :hint nil)
     "
@@ -198,21 +208,22 @@
       ("y" org-table-transpose-table-at-point)
       ("q" nil nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key   (kbd "C-t") 'hydra-transpose/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-transpose
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-transpose
 
 
-  ;;
-  ;; HELP/WEB
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage help/web shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-help-web t]
-  (when tqnr-section-mode-hydra-help-web
+;;
+;; HELP/WEB
+;;
+;; [VARCOMMENT.Use Hydra to manage help/web shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-help-web t]
+(when tqnr-section-mode-hydra-help-web
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("C-?" . hydra-help-web/body)
+
+    :config
     (defhydra hydra-help-web (:color pink
                                :hint nil)
     "
@@ -261,21 +272,22 @@
       ;; Quit
       ("q" nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key   (kbd "C-?") 'hydra-help-web/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-help
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-help
 
 
-  ;;
-  ;; MACRO
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage macro shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-macro t]
-  (when tqnr-section-mode-hydra-macro
+;;
+;; MACRO
+;;
+;; [VARCOMMENT.Use Hydra to manage macro shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-macro t]
+(when tqnr-section-mode-hydra-macro
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("<f8>" . hydra-macro/body)
+
+    :config
     (defhydra hydra-macro (:color pink
                             :hint nil
                             :pre (when defining-kbd-macro
@@ -302,21 +314,22 @@
       ("<H-down>" kmacro-cycle-ring-next)
       ("q" nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key   (kbd "<f8>")    'hydra-macro/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-macro
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-macro
 
 
-  ;;
-  ;; SPELLING
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage spelling shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-spelling t]
-  (when tqnr-section-mode-hydra-spelling
+;;
+;; SPELLING
+;;
+;; [VARCOMMENT.Use Hydra to manage spelling shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-spelling t]
+(when tqnr-section-mode-hydra-spelling
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("<f7>" . hydra-spelling/body)
+
+    :config
     (defhydra hydra-spelling (:color pink
                                :hint nil)
       "
@@ -341,21 +354,22 @@
       ;;
       ("q" nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key   (kbd "<f7>")    'hydra-spelling/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-spelling
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-spelling
 
 
-  ;;
-  ;; SEARCH
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage search shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-search t]
-  (when tqnr-section-mode-hydra-search
+;;
+;; SEARCH
+;;
+;; [VARCOMMENT.Use Hydra to manage search shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-search t]
+(when tqnr-section-mode-hydra-search
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("<f3>" . hydra-search/body)
+
+    :config
     (defhydra hydra-search (:color pink
                              :hint nil)
       "
@@ -424,21 +438,22 @@
       ;;
       ("q" nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key   (kbd "<f3>")    'hydra-search/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-macro
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-macro
 
 
-  ;;
-  ;; SMARTPARENS
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage smartparens shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-smartparens t]
-  (when (and tqnr-section-mode-hydra-smartparens tqnr-section-mode-smartparens)
+;;
+;; SMARTPARENS
+;;
+;; [VARCOMMENT.Use Hydra to manage smartparens shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-smartparens t]
+(when (and tqnr-section-mode-hydra-smartparens tqnr-section-mode-smartparens)
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("C-c s" . hydra-smartparens/body)
+
+    :config
     (defhydra hydra-smartparens (:color pink
                                   :hint nil)
       "
@@ -470,21 +485,22 @@
       ;;
       ("q" nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key         (kbd "C-c s")   'hydra-smartparens/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-spelling
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-spelling
 
 
-  ;;
-  ;; ADA
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage ada compile shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-ada t]
-  (when (and tqnr-section-mode-hydra-ada tqnr-section-mode-ada tqnr-section-function-ada)
+;;
+;; ADA
+;;
+;; [VARCOMMENT.Use Hydra to manage ada compile shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-ada t]
+(when (and tqnr-section-mode-hydra-ada tqnr-section-mode-ada tqnr-section-function-ada)
+  (use-package hydra
+    :pin melpa
+    :bind (:map ada-mode-map
+            ("<f10>" . hydra-ada/body))
+
+    :config
     (defhydra hydra-ada (:color pink
                           :hint nil)
       "
@@ -505,23 +521,22 @@
       ;;
       ("q" nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (with-eval-after-load "ada-mode"
-          (define-key ada-mode-map      (kbd "<f10>")   'hydra-ada/body)
-          ) ;; (with-eval-after-load "ada-mode"
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-spelling
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-spelling
 
 
-  ;;
-  ;; OUTLINE
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage outline shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-outline nil]
-  (when (and tqnr-section-mode-hydra-outline tqnr-section-mode-outline)
+;;
+;; OUTLINE
+;;
+;; [VARCOMMENT.Use Hydra to manage outline shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-outline nil]
+(when (and tqnr-section-mode-hydra-outline tqnr-section-mode-outline)
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("C-c h" . hydra-outline/body)
+
+    :config
     (defhydra hydra-outline (:color pink :hint nil)
       "
 ^Hide^             ^Show^           ^Move
@@ -553,24 +568,22 @@ _d_: subtree
       ("f" outline-forward-same-level)        ; Forward - same level
       ("b" outline-backward-same-level)       ; Backward - same level
       ("z" nil "leave"))
-
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key   (kbd "C-c h")    'hydra-outline/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-outline
-
-  ) ;; (when (try-require 'hydra "      ")
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-outline
 
 
-  ;;
-  ;; ORG MOTION/HINT
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage org shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-org-mode t]
-  (when (and tqnr-section-mode-hydra-org-mode tqnr-section-mode-org-mode)
+;;
+;; ORG MOTION/HINT
+;;
+;; [VARCOMMENT.Use Hydra to manage org shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-org-mode t]
+(when (and tqnr-section-mode-hydra-org-mode tqnr-section-mode-org-mode)
+  (use-package hydra
+    :pin melpa
+    :bind (:map org-mode-map
+            ("C-c C-J" . hydra-org-mode/body))
+
+    :config
     (defhydra hydra-org-mode (:color pink
                                :hint nil)
       "
@@ -593,23 +606,22 @@ _d_: subtree
       ;;
       ("q" nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (with-eval-after-load "org-mode"
-          (define-key org-mode-map      (kbd "C-c C-J")         'hydra-org-mode/body)
-          ) ;; (with-eval-after-load "org-mode"
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-mode-hydra-spelling
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-mode-hydra-spelling
 
 
-  ;;
-  ;; TOGGLE SPECIAL BUFFER
-  ;;
-  ;; [VARCOMMENT.Use Hydra to manage special buffer toggle shortcuts]
-  ;; [VARIABLE.tqnr-section-mode-hydra-special-buffer t]
-  (when tqnr-section-function-buffer-window
+;;
+;; TOGGLE SPECIAL BUFFER
+;;
+;; [VARCOMMENT.Use Hydra to manage special buffer toggle shortcuts]
+;; [VARIABLE.tqnr-section-mode-hydra-special-buffer t]
+(when tqnr-section-function-buffer-window
+  (use-package hydra
+    :pin melpa
+    :bind
+    ("M-1" . hydra-special-buffer/body)
+
+    :config
     (defhydra hydra-special-buffer (:color blue
                                      :hint nil)
     "
@@ -629,13 +641,8 @@ _d_: subtree
       ("h" toggle-help-buffer)
       ("q" nil nil :color blue)
       )
-    ;; shortcuts are put in a hook to be loaded after everything else in init process
-    (add-hook 'tqnr-after-init-shortcut-hook
-      (lambda ()
-        (global-set-key   (kbd "M-1") 'hydra-special-buffer/body)
-        ) ;; (lambda ()
-      ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-    ) ;; (when tqnr-section-function-buffer-window
+    ) ;; (use-package hydra
+  ) ;; (when tqnr-section-function-buffer-window
 
 
 ;;
@@ -892,7 +899,6 @@ _d_: subtree
 ;; U+25ED	◭	e2 97 ad	UP-POINTING TRIANGLE WITH LEFT HALF BLACK
 ;; U+25EE	◮	e2 97 ae	UP-POINTING TRIANGLE WITH RIGHT HALF BLACK
 ;; U+25EF	◯	e2 97 af	LARGE CIRCLE
-
 
 
 (provide '02-mode-084-hydra)

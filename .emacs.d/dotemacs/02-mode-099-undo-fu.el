@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: February 2020
-;; Last-Updated: February 2020
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,18 +30,12 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-undo-fu "    ")
-  )
-
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    (global-set-key     (kbd "C-_")     #'undo-fu-only-undo)
-    (global-set-key     (kbd "M-_")     #'undo-fu-only-redo)
-    (global-set-key     (kbd "C-M-_")   #'undo-fu-only-redo-all)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+(use-package undo-fu
+  :bind
+  ("C-_"   . undo-fu-only-undo)
+  ("M-_"   . undo-fu-only-redo)
+  ("C-M-_" . undo-fu-only-redo-all)
+  ) ;; (use-package undo-fu
 
 
 (provide '02-mode-099-undo-fu)

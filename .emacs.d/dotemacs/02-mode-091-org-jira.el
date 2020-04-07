@@ -1,6 +1,6 @@
 ;;; 02-mode-091-org-jira.el --- configuration of org jira
 
-;; Copyright (c) 2018-2019 Claude Tete
+;; Copyright (c) 2018-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,21 +19,21 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: January 2018
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
-;; [SUBHEADER.Flex Isearch mode add fuzzy match when doing incremental search]
+;; [SUBHEADER.Sync JIRA issues with org-mode issues]
 ;; [SUBDEFAULT.nil]
 
 
 ;;; Code:
+(use-package org-jira
+  :config
+  (setq jiralib-url "http://jiratav2.fr.thav.thales:8080"))
 
-(when (try-require 'org-jira "    ")
-  (setq jiralib-url "http://jiratav2.fr.thav.thales:8080")
-  )
 
 (provide '02-mode-091-org-jira)
 

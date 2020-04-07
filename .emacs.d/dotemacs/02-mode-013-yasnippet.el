@@ -31,6 +31,8 @@
 
 ;;; Code:
 (use-package yasnippet
+  :pin melpa
+
   :bind
   ("C-c C-e" 'yas/expand)
 

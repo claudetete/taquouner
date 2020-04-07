@@ -1,6 +1,6 @@
 ;;; 02-mode-079-easy-kill.el --- configuration of easy kill mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,7 +30,10 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-easy-kill "    ")
+(use-package easy-kill
+  :pin melpa
+
+  :config
   ;; remap shortcut of M-w to easy-kill function
   ;; M-w: alone saves in the order of active region, url, email and finally current line
   ;; M-w w: save word at point
@@ -42,7 +45,7 @@
   ;; M-w b: save buffer-file-name or default-directory. - changes the kill to
   ;;        the directory name, + to full name and 0 to basename.
   (global-set-key [remap kill-ring-save] 'easy-kill)
-  )
+  ) ;; (use-package easy-kill
 
 
 (provide '02-mode-079-easy-kill)

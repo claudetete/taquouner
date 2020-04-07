@@ -1,6 +1,6 @@
 ;;; 02-mode-096-realgud.el --- configuration of realgud mode
 
-;; Copyright (c) 2019 Claude Tete
+;; Copyright (c) 2019-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: May 2019
-;; Last-Updated: May 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,20 +30,16 @@
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/realgud/"))
-(when (try-require 'realgud "    ")
+(use-package realgud
+  :pin melpa
 
+  :config
   ;; to work with pdb
   (setq realgud:pdb-command-name "python -m pdb")
   ;; to work with ipdb
   (setq realgud:ipdb-command-name "python -m ipdb")
+  ) ;; (use-package realgud
 
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  )
 
 (provide '02-mode-096-realgud)
 

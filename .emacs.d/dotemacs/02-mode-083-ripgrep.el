@@ -1,6 +1,6 @@
 ;;; 02-mode-083-ripgrep.el --- configuration of ripgrep mode with helm
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: September 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -36,24 +36,16 @@
   ;; (setq helm-grep-ag-command "rg --color=always --colors 'match:fg:black' --colors 'match:bg:yellow' --smart-case --no-heading --line-number %s %s %s")
   ;; (setq helm-grep-ag-pipe-cmd-switches '("--colors 'match:fg:black'" "--colors 'match:bg:yellow'")))
 
-  (try-require 'autoload-helm-ag "      ")
-  (custom-set-variables
+  (use-package helm-ag
+    :bind
+    ("<M-f3>" . helm-do-ag)
+
+    :custom
     ;; use thing at point to get default value
-    '(helm-ag-insert-at-point 'symbol)
+    (helm-ag-insert-at-point 'symbol)
     ;; use ripgrep search with helm-ag mode
-    '(helm-ag-base-command "rg --smart-case --no-heading --line-number"))
-
-
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      (global-set-key   (kbd "<M-f3>")  'helm-do-ag)
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  )
-
-
-
+    (helm-ag-base-command "rg --smart-case --no-heading --line-number"))
+  ) ;; (when tqnr-section-mode-helm
 
 
 (provide '02-mode-083-ripgrep)

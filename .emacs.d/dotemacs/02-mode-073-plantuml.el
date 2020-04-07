@@ -1,6 +1,6 @@
 ;;; 02-mode-073-plantuml.el --- configuration of plantuml mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,11 +30,13 @@
 
 
 ;;; Code:
-(when (try-require 'plantuml-mode "    ")
+(use-package plantuml-mode
+  :mode "\\.puml\\'"
+
+  :config
   ;; define path to plantuml executable
   (setq plantuml-jar-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/plantuml.jar"))
-  (add-to-list 'auto-mode-alist '("\\.\\(puml\\)$" . plantuml-mode))
-  )
+  ) ;; (use-package plantuml-mode
 
 
 (provide '02-mode-073-plantuml)

@@ -1,6 +1,6 @@
 ;;; 02-mode-097-move-text.el --- configuration of mvoe-text mode
 
-;; Copyright (c) 2019 Claude Tete
+;; Copyright (c) 2019-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: May 2019
-;; Last-Updated: May 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,16 +30,12 @@
 
 
 ;;; Code:
-(when (try-require 'move-text "    ")
+(use-package move-text
+  :bind
+  ("<C-M-S-up>"   . move-text-up)
+  ("<C-M-S-down>" . move-text-down)
+  ) ;; (use-package move-text
 
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      (global-set-key (kbd "<C-M-S-up>")        #'move-text-up)
-      (global-set-key (kbd "<C-M-S-down>")      #'move-text-down)
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  )
 
 (provide '02-mode-097-move-text)
 

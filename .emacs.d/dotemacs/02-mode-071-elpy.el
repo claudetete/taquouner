@@ -1,6 +1,6 @@
 ;;; 02-mode-071-elpy.el --- configuration of elpy mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -37,50 +37,57 @@
 
 
 ;;; Code:
-;; must be install from list of packages
-(elpy-enable)
-;;(elpy-use-ipython)
+(use-package elpy
+  :defer t
 
-;;(setq python-shell-interpreter "C:/WinPython27/python-2.7.10/Scripts/ipython.exe")
-;;(setq python-shell-interpreter-args "")
-;;(setq python-shell-interpreter-args "-i")
+  :init
+  ;; make sure it is loaded only when first python file is open
+  (advice-add 'python-mode :before 'elpy-enable)
 
-;; use flycheck not flymake with elpy
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
+  :config
+  (local-unset-key            (kbd "M-TAB"))
+  ;;(elpy-use-ipython)
 
-;; enable autopep8 formatting on save
-;;(require 'py-autopep8)
-;;(setq py-autopep8-options '("--ignore=E22,E224,E501"))
-;;(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  ;;(setq python-shell-interpreter "C:/WinPython27/python-2.7.10/Scripts/ipython.exe")
+  ;;(setq python-shell-interpreter-args "")
+  ;;(setq python-shell-interpreter-args "-i")
 
-;; found at https://github.com/jorgenschaefer/elpy/issues/733
-(setq python-shell-unbuffered nil)
+  ;; use flycheck not flymake with elpy
+  (use-package flycheck
+    :config
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    :hook
+    (elpy-mode-hook flycheck-mode))
 
-;; add customize compile command line to execute current python file
-;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
-(add-hook 'elpy-mode-hook
-  (lambda ()
-    (set (make-local-variable 'compile-command)
-      (concat "python " (shell-quote-argument buffer-file-name)))))
+  ;; enable autopep8 formatting on save
+  ;;(require 'py-autopep8)
+  ;;(setq py-autopep8-options '("--ignore=E22,E224,E501"))
+  ;;(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
+  ;; found at https://github.com/jorgenschaefer/elpy/issues/733
+  (setq python-shell-unbuffered nil)
 
-(add-hook 'elpy-mode-hook
-  (lambda ()
-    (local-unset-key            (kbd "M-TAB"))
-    (define-key elpy-mode-map   (kbd "<C-M-prior>")     'backward-page)
-    (define-key elpy-mode-map   (kbd "<C-M-next>")      'forward-page)
-    ;; remap C-up/down to move from empty line to empty line (like any other mode)
-    (define-key elpy-mode-map   (kbd "<C-up>")          'backward-paragraph)
-    (define-key elpy-mode-map   (kbd "<C-down>")        'forward-paragraph)
-    ;; remap M-up/down to move from block to block (useful because python do
-    ;; not use {} for block so cannot use the trick about go to matched
-    ;; keyword/character)
-    (define-key elpy-mode-map   (kbd "<M-up>")          'elpy-nav-backward-block)
-    (define-key elpy-mode-map   (kbd "<M-down>")        'elpy-nav-forward-block)
-    )
-  )
+  ;; add customize compile command line to execute current python file
+  ;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
+  :hook
+  (elpy-mode-hook
+    (lambda ()
+      (set (make-local-variable 'compile-command)
+        (concat "python " (shell-quote-argument buffer-file-name)))))
+
+  :bind (:map elpy-mode-map
+          ("<C-M-prior>" . backward-page)
+          ("<C-M-next>"  . forward-page)
+          ;; remap C-up/down to move from empty line to empty line (like any other mode)
+          ("<C-up>"      . backward-paragraph)
+          ("<C-down>"    . forward-paragraph)
+          ;; remap M-up/down to move from block to block (useful because python do
+          ;; not use {} for block so cannot use the trick about go to matched
+          ;; keyword/character)
+          ("<M-up>"      . elpy-nav-backward-block)
+          ("<M-down>"    . elpy-nav-forward-block)
+          )
+  ) ;; (use-package elpy
 
 
 (provide '02-mode-071-elpy)

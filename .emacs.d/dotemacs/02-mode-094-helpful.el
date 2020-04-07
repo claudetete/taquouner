@@ -1,6 +1,6 @@
 ;;; 02-mode-094-helpful.el --- configuration of helpful mode
 
-;; Copyright (c) 2018-2019 Claude Tete
+;; Copyright (c) 2018-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: December 2018
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,26 +30,22 @@
 
 
 ;;; Code:
+(use-package helpful
+  :bind
+  ;; Note that the built-in `describe-function' includes both functions
+  ;; and macros. `helpful-function' is functions only, so we provide
+  ;; `helpful-callable' as a drop-in replacement.
+  ("C-h f" . helpful-callable)
+  ("C-h v" . helpful-variable)
+  ("C-h k" . helpful-key)
 
-(when (try-require 'helpful "    ")
+  :config
   ;; add some source code example to helpful
-  (when (try-require 'elisp-demos "      ")
-    (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
-    )
+  (use-package elisp-demos
+    :config
+    (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
+  ) ;; (use-package helpful
 
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      ;; Note that the built-in `describe-function' includes both functions
-      ;; and macros. `helpful-function' is functions only, so we provide
-      ;; `helpful-callable' as a drop-in replacement.
-      (global-set-key (kbd "C-h f") #'helpful-callable)
-
-      (global-set-key (kbd "C-h v") #'helpful-variable)
-      (global-set-key (kbd "C-h k") #'helpful-key)
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  )
 
 (provide '02-mode-094-helpful)
 

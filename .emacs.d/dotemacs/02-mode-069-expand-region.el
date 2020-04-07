@@ -1,6 +1,6 @@
 ;;; 02-mode-069-expand-region.el --- configuration of expand region mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,22 +30,19 @@
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/expand-region"))
-(when (try-require 'expand-region "    ")
+(use-package expand-region
+  :pin melpa
+
+  :bind
+  ;; M-s then s, s, etc to expand selection region
+  ("M-s" . er/expand-region)
+  ;; M-S to contract expanded selection region
+  ("M-S" . er/contract-region)
+
+  :config
   ;; do not use fast key to expand/contract (bind by default to 's' and '-')
   (setq expand-region-fast-keys-enabled nil)
   )
-
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    ;; M-s then s, s, etc to expand selection region
-    (global-set-key     (kbd "M-s")     'er/expand-region)
-    ;; M-S to contract expanded selection region
-    (global-set-key     (kbd "M-S")     'er/contract-region)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 
 
 (provide '02-mode-069-expand-region)

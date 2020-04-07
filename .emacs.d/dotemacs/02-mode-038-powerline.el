@@ -45,9 +45,8 @@
 ;; use new powerline mode
 ;; see
 (use-package powerline
-  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/powerline.el"))
-
   :config
+  (which-function-mode)
   (defun powerline-my-theme ()
     "Setup a mode-line."
     (interactive)
@@ -55,10 +54,10 @@
       '("%e"
          (:eval
            (let* ((active (powerline-selected-window-active))
-                   (face-mode-line (if active 'mode-line
-                                     'mode-line-inactive))
-                   (mode-line-buffer-id (if active 'mode-line-buffer-id
-                                          'mode-line-buffer-id-inactive))
+                   ;; (face-mode-line (if active 'mode-line
+                   ;;                   'mode-line-inactive))
+                   ;; (mode-line-buffer-id (if active 'mode-line-buffer-id
+                   ;;                        'mode-line-buffer-id-inactive))
                    ;; face for right and left end
                    (face-end (if active 'powerline-active0
                                'powerline-inactive0))
@@ -168,7 +167,7 @@
                        (powerline-raw (if (eq major-mode 'ada-mode)
                                         (ada-which-function)
                                         (which-function))
-                         face-function)
+                        face-function)
 
                        ;; third separator
                        (powerline-raw global-mode-string face-middle 'r)

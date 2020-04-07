@@ -1,6 +1,6 @@
 ;;; 02-mode-088-fitnesse.el --- configuration of fitnesse-mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: November 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,14 +30,12 @@
 
 
 ;;; Code:
+(use-package fitnesse-mode
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/fitnesse-mode.el"))
 
-(when (try-require 'fitnesse-mode "    ")
-  ;; nothing to set
-  )
-
-(with-eval-after-load 'fitnesse-mode
-  (define-key fitnesse-mode-map         (kbd "C-M-S-i")     'iimage-mode)
-  )
+  :bind (:map fitnesse-mode-map
+          ("C-M-S-i" . iimage-mode))
+  ) ;; (use-package fitnesse-mode
 
 
 (provide '02-mode-088-fitnesse)

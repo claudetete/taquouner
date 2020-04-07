@@ -1,6 +1,6 @@
 ;;; 02-mode-078-markdown.el --- configuration of markdown mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,20 +30,19 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-markdown-mode "    ")
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(use-package markdown-mode
+  :mode "\\.markdown\\'")
 
-  ;; [[VARCOMMENT.to enable markdown mode with github flavoured for all .md files and not
-  ;; only for README.md
-  ;; ]]
-  ;; [VARIABLE.tqnr-section-mode-markdown-github t]
-  (if tqnr-section-mode-markdown-github
-    (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
-    (progn
-      (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-      (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
-    )
-  )
+;; [[VARCOMMENT.to enable markdown mode with github flavoured for all .md files and not
+;; only for README.md
+;; ]]
+;; [VARIABLE.tqnr-section-mode-markdown-github t]
+(if tqnr-section-mode-markdown-github
+  (use-package markdown-mode :mode ("\\.md\\'" . gfm-mode))
+  (use-package markdown-mode
+    :mode
+    ("\\.md\\'" . markdown-mode)
+    ("README\\.md\\'" . gfm-mode)))
 
 
 (provide '02-mode-078-markdown)

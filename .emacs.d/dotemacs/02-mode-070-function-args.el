@@ -1,6 +1,6 @@
 ;;; 02-mode-070-function-args.el --- configuration of function args mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,10 +30,9 @@
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/function-args"))
-(when (try-require 'function-args "    ")
-  (fa-config-default)
-  )
+(use-package function-args
+  :config
+  (fa-config-default))
 
 
 (provide '02-mode-070-function-args)

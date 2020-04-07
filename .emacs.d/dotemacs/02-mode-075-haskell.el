@@ -1,6 +1,6 @@
 ;;; 02-mode-075-haskell.el --- configuration of haskell mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,21 +30,29 @@
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/haskell-mode-master/"))
-(when (try-require 'autoload-haskell-mode-autoloads "    ")
-  ;; add info/help in emacs
-  (add-to-list 'Info-default-directory-list (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/haskell-mode-master/"))
+(use-package haskell-mode
+  :bind (:map
+          ("<S-f10>" . haskell-process-load-or-reload)
+          ("<M-f10>" . haskell-interactive-bring)
+          ;; ("C-c C-t" . haskell-process-do-type)
+          ;; ("C-c C-i" . haskell-process-do-info)
+          ;; ("C-c C-c" . haskell-process-cabal-build)
+          ;; ("C-c C-k" . haskell-interactive-mode-clear)
+          ;; ("C-c c"   . haskell-process-cabal)
+          )
+
+  :config
   ;; enable interactive mode with a prompt
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (custom-set-variables
-    ;; remove suggest import line from ghc output
-    '(haskell-process-suggest-remove-import-lines t)
-    ;; autoload module that have already been loaded
-    '(haskell-process-auto-import-loaded-modules t)
-    ;; enable debug log
-    '(haskell-process-log t)
-    )
-  )
+
+  :custom
+  ;; remove suggest import line from ghc output
+  (haskell-process-suggest-remove-import-lines t)
+  ;; autoload module that have already been loaded
+  (haskell-process-auto-import-loaded-modules t)
+  ;; enable debug log
+  (haskell-process-log t)
+  ) ;; (use-package haskell-mode
 
 
 (eval-after-load "haskell-mode"

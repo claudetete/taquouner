@@ -1,6 +1,6 @@
 ;;; 02-mode-092-gnuplot.el --- configuration of gnuplot-mode
 
-;; Copyright (c) 2018-2019 Claude Tete
+;; Copyright (c) 2018-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: March 2018
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,14 +30,15 @@
 
 
 ;;; Code:
-
-(when (try-require 'gnuplot-mode "    ")
+(use-package gnuplot-mode
+  :config
   ;; specify the gnuplot executable (if other than "gnuplot")
   (setq gnuplot-program "gnuplot")
 
   ;; set gnuplot arguments (if other than "-persist")
   (setq gnuplot-flags "-persist -pointsize 2")
-  )
+  ) ;; (use-package gnuplot-mode
+
 
 (provide '02-mode-092-gnuplot)
 

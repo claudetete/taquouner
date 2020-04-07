@@ -1,6 +1,6 @@
 ;;; 02-mode-082-shackle.el --- configuration of arduino mode
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: August 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -33,7 +33,12 @@
 
 
 ;;; Code:
-(when (try-require 'shackle "    ")
+(use-package shackle
+  :init
+  ;; enable shackle mode
+  (shackle-mode 1)
+
+  :config
   (when tqnr-section-mode-helm
     ;; make helm play nice with popup
     (setq helm-display-function 'pop-to-buffer)
@@ -50,9 +55,7 @@
       (setq helm-swoop-split-window-function 'display-buffer)
       )
     ) ;; (when tqnr-section-mode-helm
-  ;; enable shackle mode
-  (shackle-mode 1)
-  ) ;; (when (try-require 'shackle "    ")
+  ) ;; (use-package shackle
 
 
 (provide '02-mode-082-shackle)
