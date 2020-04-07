@@ -55,8 +55,10 @@
   (use-package flycheck
     :config
     (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (setq elpy-modules (delq 'elpy-module-yasnippet elpy-modules))
+
     :hook
-    (elpy-mode-hook flycheck-mode))
+    (elpy-mode-hook . flycheck-mode))
 
   ;; enable autopep8 formatting on save
   ;;(require 'py-autopep8)
@@ -69,7 +71,7 @@
   ;; add customize compile command line to execute current python file
   ;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
   :hook
-  (elpy-mode-hook
+  (elpy-mode-hook .
     (lambda ()
       (set (make-local-variable 'compile-command)
         (concat "python " (shell-quote-argument buffer-file-name)))))
