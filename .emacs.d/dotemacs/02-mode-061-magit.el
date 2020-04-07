@@ -142,9 +142,6 @@ FILE has to be relative to the top directory of the repository."
     (message "%s %s %s %s %s %s" "git" "difftool" "--gui" "--no-prompt" "--" file)
     (magit-run-git-async
       "difftool" "--gui" "--no-prompt" "--" file))
-
-  ;; add X shortcut in popup action to open with difftool instead of Ediff
-  ;; (try-require 'magit-exttool "      ")
   ) ;; (use-package magit
 
 

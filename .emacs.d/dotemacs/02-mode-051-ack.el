@@ -32,53 +32,6 @@
 
 ;;; Code:
 
-;;
-;; search with ack (no more grep)
-;; need a patched ack (patch from https://github.com/blixtor/ack/commit/e9ee7ff0e32da86011418dcb9d52c25b1b6d8bdb by blixtor)
-;; the ack-standalone present in .emacs.d/plugins/ folder is already patched
-
-;; [VARCOMMENT.Full-ack mode to interface ack with emacs]
-;; [VARIABLE.tqnr-section-mode-ack-full nil]
-(when tqnr-section-mode-ack-full
-  (autoload 'ack-same "full-ack" nil t)
-  (autoload 'ack "full-ack" nil t)
-  (autoload 'ack-find-same-file "full-ack" nil t)
-  (autoload 'ack-find-file "full-ack" nil t)
-
-  (setq ack-executable (concat "perl " (file-name-as-directory tqnr-dotemacs-path) "plugins/ack-standalone"))
-  (setq ack-prompt-for-directory t)
-  )
-
-;; [VARCOMMENT.ack and half mode to interface ack with emacs]
-;; [VARIABLE.tqnr-section-mode-ack-and-half nil]
-(when tqnr-section-mode-ack-and-half
-  (autoload 'ack-and-a-half-same "ack-and-a-half" nil t)
-  (autoload 'ack-and-a-half "ack-and-a-half" nil t)
-  (autoload 'ack-and-a-half-find-file-same "ack-and-a-half" nil t)
-  (autoload 'ack-and-a-half-find-file "ack-and-a-half" nil t)
-  (defalias 'ack 'ack-and-a-half)
-  (defalias 'ack-same 'ack-and-a-half-same)
-  (defalias 'ack-find-file 'ack-and-a-half-find-file)
-  (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
-  )
-
-;; [VARCOMMENT.ack-emacs mode to interface ack with emacs]
-;; [VARIABLE.tqnr-section-mode-ack-emacs nil]
-(when tqnr-section-mode-ack-emacs
-  (try-require 'autoload-ack-emacs "    ")
-  (setq ack-command (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ack-standalone"))
-
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      ;; run ack with thing at point
-      (global-set-key   (kbd "<C-f3>")  'ack)
-      ;; run ack with thing at point but only with same file type
-      (global-set-key   (kbd "<M-f3>")  'ack-same)
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  )
-
 
 (provide '02-mode-051-ack)
 

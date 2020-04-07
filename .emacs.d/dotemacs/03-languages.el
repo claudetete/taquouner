@@ -95,9 +95,10 @@
   ;; [VARIABLE.tqnr-section-languages-c-flymake nil]
   (when tqnr-section-languages-c-flymake
     ;; auto syntax check
-    (try-require 'flymake "      ")
-    (try-require 'flymake-clang-c "      ")
-    (add-hook 'c-mode-hook 'flymake-clang-c-load)
+    (use-package flymake)
+    ;; use flymake-cppcheck instead
+    ;;(try-require 'flymake-clang-c "      ")
+    ;;(add-hook 'c-mode-hook 'flymake-clang-c-load)
     )
 
   ;; [VARCOMMENT.FLYCHECK: verification error/warning in source code on the fly]

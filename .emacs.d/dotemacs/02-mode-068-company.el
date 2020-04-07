@@ -39,25 +39,21 @@
   :config
   (setq company-backends (delete 'company-semantic company-backends))
   (when tqnr-section-mode-helm
-    (use-package helm-company))
+    (use-package helm-company
+      :bind (
+              ;; use company even when helm is not used
+              ("C-/" . company-complete)
+              :map company-mode-map
+              ;; use helm with company mode
+              ("C-/" . helm-company)
+              :map company-active-map
+              ("C-/" . helm-company))
+      ))
 
   ;; when irony mode is used
   (when tqnr-section-mode-irony
     (add-to-list 'company-backends 'company-irony))
   ) ;; (use-package company
-
-(if tqnr-section-mode-helm
-  (use-package helm-company
-    :bind (
-            ;; use company even when helm is not used
-            ("C-/" . company-complete)
-            :map company-mode-map
-            ;; use helm with company mode
-            ("C-/" . helm-company)
-            :map company-active-map
-            ("C-/" . helm-company))
-    ) ;; (use-package helm-company
-  ) ;; (if tqnr-section-mode-helm
 
 
 (provide '02-mode-068-company)

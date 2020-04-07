@@ -160,9 +160,10 @@
     (setq european-calendar-style 't)
 
     ;; load French holidays
-    (when (try-require 'french-holidays "        ")
-      (setq calendar-holidays holiday-french-holidays))
-
+    (when (use-package french-holidays
+            :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/french-holidays.el"))
+            :config
+            (setq calendar-holidays holiday-french-holidays)))
 
     (custom-set-variables
       ;; set display date in European format

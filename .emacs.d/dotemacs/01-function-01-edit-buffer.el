@@ -193,23 +193,6 @@
        (list (region-beginning) (region-end))
        (list (line-beginning-position) (line-beginning-position 2)))))
 
-;;
-;; MUSE
-;; run muse mode (by Claude TETE)
-(defun mymuse-mode ()
-  "Start muse mode."
-  (interactive)
-  (add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/muse-3.20/bin"))
-  (try-require 'muse-mode "    ")     ; load authoring mode
-  (try-require 'muse-html "    ")     ; load publishing styles I use
-  (try-require 'muse-latex "    ")
-  ;;
-  (muse-derive-style "my-slides-pdf" "slides-pdf"
-    :header (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/muse/header.tex")
-    :footer  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/muse/footer.tex")
-    )
-;  (muse-mode t)
-  )
 
 ;;
 ;; (UN)COMMENT LINE
