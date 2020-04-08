@@ -1,27 +1,27 @@
-;;; 02-mode-075-haskell.el --- configuration of haskell mode
+;;; 02-mode-075-haskell.el --- configuration of haskell mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,21 +30,29 @@
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/haskell-mode-master/"))
-(when (try-require 'autoload-haskell-mode-autoloads "    ")
-  ;; add info/help in emacs
-  (add-to-list 'Info-default-directory-list (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/haskell-mode-master/"))
+(use-package haskell-mode
+  :bind (:map
+          ("<S-f10>" . haskell-process-load-or-reload)
+          ("<M-f10>" . haskell-interactive-bring)
+          ;; ("C-c C-t" . haskell-process-do-type)
+          ;; ("C-c C-i" . haskell-process-do-info)
+          ;; ("C-c C-c" . haskell-process-cabal-build)
+          ;; ("C-c C-k" . haskell-interactive-mode-clear)
+          ;; ("C-c c"   . haskell-process-cabal)
+          )
+
+  :config
   ;; enable interactive mode with a prompt
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (custom-set-variables
-    ;; remove suggest import line from ghc output
-    '(haskell-process-suggest-remove-import-lines t)
-    ;; autoload module that have already been loaded
-    '(haskell-process-auto-import-loaded-modules t)
-    ;; enable debug log
-    '(haskell-process-log t)
-    )
-  )
+
+  :custom
+  ;; remove suggest import line from ghc output
+  (haskell-process-suggest-remove-import-lines t)
+  ;; autoload module that have already been loaded
+  (haskell-process-auto-import-loaded-modules t)
+  ;; enable debug log
+  (haskell-process-log t)
+  ) ;; (use-package haskell-mode
 
 
 (eval-after-load "haskell-mode"

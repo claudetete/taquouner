@@ -1,27 +1,27 @@
-;;; 02-mode-003-doxymacs.el --- configuration of doxymacs mode
+;;; 02-mode-003-doxymacs.el --- configuration of doxymacs mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,15 +30,14 @@
 
 
 ;;; Code:
-
-;;
-(when (try-require 'doxymacs "      ")
-  (add-hook 'c-mode-common-hook 'doxymacs-mode)
+(use-package doxymacs
+  :hook (c-mode-common-hook . doxymacs-mode)
+  :config
   (defvar doxymacs-doxygen-style "JavaDoc")
   (defun my-doxymacs-font-lock-hook ()
     (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
       (doxymacs-font-lock)))
-  (add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook))
+  (add-hook 'font-lock-mode-hook #'my-doxymacs-font-lock-hook))
 
 
 (provide '02-mode-003-doxymacs)

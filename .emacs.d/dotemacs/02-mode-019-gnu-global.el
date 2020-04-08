@@ -1,27 +1,27 @@
-;;; 02-mode-019-gnu-global.el --- configuration of gnu global mode
+;;; 02-mode-019-gnu-global.el --- configuration of gnu global mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.4
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,87 +30,53 @@
 
 
 ;;; Code:
-;; [VARCOMMENT.gtags interface (use modified gtags.el)]
-;; [VARIABLE.tqnr-section-mode-gnu-global-gtags nil]
-(if tqnr-section-mode-gnu-global-gtags
-  (when (try-require 'autoload-gtags "      ")
-    (autoload 'gtags-mode "gtags" "" t)
-    (defun gtags-c-mode ()
-      (gtags-mode 1)
-      (setq gtags-select-buffer-single t))
-    (gtags-mode t) ; only for diminish mode
-    (add-hook 'c-mode-common-hook 'gtags-c-mode)
-    (add-hook 'emacs-lisp-mode-hook 'gtags-c-mode))
+;; [VARCOMMENT.ggtags interface]
+;; [VARIABLE.tqnr-section-mode-gnu-global-ggtags nil]
+(use-package ggtags
+  :bind
+  ;; find all references (regexp)
+  ("C-M-=" . gtags-find-with-grep-symbol-assigned)
 
-  ;; [VARCOMMENT.ggtags interface]
-  ;; [VARIABLE.tqnr-section-mode-gnu-global-ggtags nil]
-  (when tqnr-section-mode-gnu-global-ggtags
-    (when (try-require 'autoload-ggtags "      ")
-      (eval-after-load "ggtags"
-        '(setq ggtags-mode-line-project-name ""))
-      (if tqnr-section-mode-helm
-        (when (try-require 'helm-gtags "        ")
-          (add-hook 'c-mode-hook 'helm-gtags-mode)
-          (add-hook 'ada-mode-hook 'helm-gtags-mode))
-        (add-hook 'c-mode-common-hook
-          (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-              (ggtags-mode 1))))))
-    )
+  :config
+  (setq ggtags-mode-line-project-name "")
   )
 
+(if tqnr-section-mode-helm
+  (use-package helm-gtags
+    :bind (:map helm-gtags-mode-map
+            ("C-M-." . helm-gtags-find-pattern)
+            ("M-."   . helm-gtags-dwim)
+            ("C->"   . helm-gtags-dwim)
+            ("C-<"   . helm-gtags-pop-stack)
+            ("C-."   . helm-gtags-find-rtag)
+            ("C-M-," . helm-gtags-update-tags)
+            ("<f3>"  . helm-gtags-next-history)
+            )
 
+    :hook
+    (c-mode-hook        . helm-gtags-mode)
+    (ada-mode-hook      . 'helm-gtags-mode)
+    (c-mode-common-hook .
+      (lambda ()
+        (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+          (ggtags-mode 1)))))
 
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    (if tqnr-section-mode-cedet-ecb
-      (progn
-        (define-key gtags-select-mode-map       (kbd "RET")             (lambda ()
-                                                                          (interactive)
-                                                                          (gtags-select-tag)
-                                                                          (ecb-toggle-compile)
-                                                                          ))
-        (define-key gtags-select-mode-map       (kbd "<kp-enter>")      (lambda ()
-                                                                          (interactive)
-                                                                          (gtags-select-tag)
-                                                                          (ecb-toggle-compile)
-                                                                          ))
-        ) ;; (progn ;; (if tqnr-section-mode-cedet-ecb
+  (use-package ggtags
+    :bind
+    ;; find tag
+    ("M-." . ggtags-find-tag-dwim)
+    ("C->" . ggtags-find-tag-dwim)
+    ("M->" . semantic-goto-definition)
 
-      (if tqnr-section-mode-helm ;; else tqnr-section-mode-cedet-ecb
-        (with-eval-after-load "helm-gtags"
-          (define-key helm-gtags-mode-map       (kbd "C-M-.")   'helm-gtags-find-pattern)
-          (define-key helm-gtags-mode-map       (kbd "M-.")     'helm-gtags-dwim)
-          (define-key helm-gtags-mode-map       (kbd "C->")     'helm-gtags-dwim)
-          (define-key helm-gtags-mode-map       (kbd "C-<")     'helm-gtags-pop-stack)
-          (define-key helm-gtags-mode-map       (kbd "C-.")     'helm-gtags-find-rtag)
-          (define-key helm-gtags-mode-map       (kbd "C-M-,")   'helm-gtags-update-tags)
-          (define-key helm-gtags-mode-map       (kbd "<f3>")    'helm-gtags-next-history)
-          )
-
-        (progn ;; else tqnr-section-mode-helm
-          ;; find tag
-          (global-set-key       (kbd "M-.")                     'ggtags-find-tag-dwim)
-          (global-set-key       (kbd "C->")                     'ggtags-find-tag-dwim)
-          (global-set-key       (kbd "M->")                     'semantic-goto-definition)
-
-          ;; go back after find tag
-          (global-set-key       (kbd "M-*")                     'ggtags-navigation-mode-abort)
-          (global-set-key       (kbd "M-<kp-multiply>")         'ggtags-navigation-mode-abort)
-          (global-set-key       (kbd "C-<")                     'ggtags-navigation-mode-abort)
-          (global-set-key       (kbd "M-<")                     'semantic-pop-tag-mark)
-
-          ;; find all references (regexp)
-          (global-set-key       (kbd "C-M-.")                   'ggtags-find-reference)
-          ) ;; (progn ;; else tqnr-section-mode-helm
-        ) ;; (if tqnr-section-mode-helm ;; else tqnr-section-mode-cedet-ecb
-      ) ;; (if tqnr-section-mode-cedet-ecb
+    ;; go back after find tag
+    ("M-*"             . ggtags-navigation-mode-abort)
+    ("M-<kp-multiply>" . ggtags-navigation-mode-abort)
+    ("C-<"             . ggtags-navigation-mode-abort)
+    ("M-<"             . semantic-pop-tag-mark)
 
     ;; find all references (regexp)
-    (global-set-key     (kbd "C-M-=")           'gtags-find-with-grep-symbol-assigned)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+    ("C-M-." . ggtags-find-reference))
+  ) ;; (if tqnr-section-mode-helm
 
 
 (provide '02-mode-019-gnu-global)

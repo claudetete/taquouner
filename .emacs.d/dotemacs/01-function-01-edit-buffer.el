@@ -1,27 +1,27 @@
-;;; 01-function-01-edit-buffer.el --- add some function about edit buffer text
+;;; 01-function-01-edit-buffer.el --- add some function about edit buffer text -*- lexical-binding: t -*-
 
-;; Copyright (c) 2006-2019 Claude Tete
+;; Copyright (c) 2006-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 6.4
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 6.5
 ;; Created: October 2006
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -193,23 +193,6 @@
        (list (region-beginning) (region-end))
        (list (line-beginning-position) (line-beginning-position 2)))))
 
-;;
-;; MUSE
-;; run muse mode (by Claude TETE)
-(defun mymuse-mode ()
-  "Start muse mode."
-  (interactive)
-  (add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/muse-3.20/bin"))
-  (try-require 'muse-mode "    ")     ; load authoring mode
-  (try-require 'muse-html "    ")     ; load publishing styles I use
-  (try-require 'muse-latex "    ")
-  ;;
-  (muse-derive-style "my-slides-pdf" "slides-pdf"
-    :header (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/muse/header.tex")
-    :footer  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/muse/footer.tex")
-    )
-;  (muse-mode t)
-  )
 
 ;;
 ;; (UN)COMMENT LINE
@@ -228,6 +211,28 @@ line instead."
   (lambda ()
     ;; (un)comment region
     (global-set-key         (kbd "C-c C-;")             'comment-or-uncomment-region)
+    ) ;; (lambda ()
+  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+
+(defun comment-add-block-end ()
+  "Add comment at end of a block"
+  (interactive)
+  (save-excursion
+    (let (line bol eol)
+      (save-excursion
+        (find-matching-keyword)
+        (beginning-of-line)
+        (setq bol (point))
+        (end-of-line)
+        (setq eol (point))
+        (setq line (buffer-substring bol eol)))
+      (insert " ;; ")
+      (insert line))))
+;; shortcuts are put in a hook to be loaded after everything else in init process
+(add-hook 'tqnr-after-init-shortcut-hook
+  (lambda ()
+    ;; insert tag about coverage design document
+    (global-set-key (kbd "C-c M-;") #'comment-add-block-end)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

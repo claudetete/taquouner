@@ -1,27 +1,27 @@
-;;; 02-mode-028-fill-column-indicator.el --- configuration of fill column indicator mode
+;;; 02-mode-028-fill-column-indicator.el --- configuration of fill column indicator mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,11 +30,8 @@
 
 
 ;;; Code:
-(when (try-require 'fill-column-indicator)
-  ;; do not enable truncate-line when not wanted
-  (when tqnr-section-annoyances-truncate-line
-    (custom-set-variables
-      '(fci-handle-truncate-lines nil)))
+(use-package fill-column-indicator
+  :config
   ;; [VARCOMMENT.pixel width of vertical line default 1 (nil)]
   ;; [VARIABLE.tqnr-profile-fill-column-indicator-vertical-line-width nil]
   (when tqnr-profile-fill-column-indicator-vertical-line-width
@@ -55,25 +52,37 @@
   ;; [VARIABLE.tqnr-profile-fill-column-indicator-vertical-line-position nil]
   (when tqnr-profile-fill-column-indicator-vertical-line-position
     (setq fci-rule-column tqnr-profile-fill-column-indicator-vertical-line-position))
+  ) ;; (use-package fill-column-indicator
 
-  ;; [VARCOMMENT.enable vertical line in C mode]
-  ;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-c nil]
-  (when tqnr-profile-fill-column-indicator-mode-c
-    (add-hook 'c-mode-hook 'fci-mode))
-  ;; [VARCOMMENT.enable vertical line in C++ mode]
-  ;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-c++ nil]
-  (when tqnr-profile-fill-column-indicator-mode-c++
-    (add-hook 'c++-mode-hook 'fci-mode))
-  ;; [VARCOMMENT.enable vertical line in ADA mode]
-  ;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-ada nil]
-  (when tqnr-profile-fill-column-indicator-mode-ada
-    (add-hook 'ada-mode-hook 'fci-mode))
+;; [VARCOMMENT.enable vertical line in C mode]
+;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-c nil]
+(when tqnr-profile-fill-column-indicator-mode-c
+  (use-package fill-column-indicator
+    :hook (c-mode-hook . fci-mode)))
 
-  ;; [VARCOMMENT.enable vertical line in all mode]
-  ;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-all nil]
-  (when tqnr-profile-fill-column-indicator-mode-all
-    (add-hook 'after-change-major-mode-hook 'fci-mode))
-  )
+;; [VARCOMMENT.enable vertical line in C++ mode]
+;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-c++ nil]
+(when tqnr-profile-fill-column-indicator-mode-c++
+  (use-package fill-column-indicator
+    :hook (c++-mode-hook . fci-mode)))
+
+;; [VARCOMMENT.enable vertical line in ADA mode]
+;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-ada nil]
+(when tqnr-profile-fill-column-indicator-mode-ada
+  (use-package fill-column-indicator
+    :hook (ada-mode-hook . fci-mode)))
+
+;; [VARCOMMENT.enable vertical line in all mode]
+;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-all nil]
+(when tqnr-profile-fill-column-indicator-mode-all
+  (use-package fill-column-indicator
+    :hook (after-change-major-mode-hook . fci-mode)))
+
+;; do not enable truncate-line when not wanted
+(when tqnr-section-annoyances-truncate-line
+  (use-package fill-column-indicator
+    :custom
+    (fci-handle-truncate-lines nil)))
 
 
 (provide '02-mode-028-fill-column-indicator)

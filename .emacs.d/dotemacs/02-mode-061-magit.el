@@ -1,27 +1,27 @@
-;;; 02-mode-061-magit.el --- configuration of magit mode
+;;; 02-mode-061-magit.el --- configuration of magit mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.3
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.4
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -31,10 +31,32 @@
 
 
 ;;; Code:
-;; under windows you can use msys make (after edit of Makefile) to install magit
-;; dash is a dependency of projectile
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/magit-master/lisp"))
-(when (try-require 'magit "    ")
+;;(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/magit-master/lisp"))
+(use-package magit
+  :bind
+  ;; git status (entry point of magit) then 'h' to popup help
+  ("C-c g g"   . magit-status)
+  ;; git fetch
+  ("C-c g f"   . magit-fetch-popup)
+  ;; git stash
+  ("C-c g s"   . magit-stash-popup)
+  ;; git push
+  ("C-c g p"   . magit-push-popup)
+  ;; git pull
+  ("C-c g u"   . magit-pull-popup)
+  ;; git merge
+  ("C-c g m"   . magit-merge-popup)
+  ;; magit dispatch
+  ("C-c g SPC" . magit-dispatch-popup)
+  ;; magit diff
+  ("C-c g ="   . magit-difftool-buffer-file)
+  ;; magit file/buffer
+  ("C-c g b"   . magit-file-popup)
+  ;; magit fil history with external tool
+  ("C-c g l"   . magit-file-history-external)
+  ("C-c g h"   . magit-file-history-external)
+
+  :config
   (setq magit-commit-all-when-nothing-staged t)
   (setq magit-process-popup-time 1)
 
@@ -86,9 +108,9 @@ Useful until magit can open difftool instead of Ediff."
           (async-shell-command command))
         )))
 
-;; overload magit ediff compare function to run difftool
-(defun magit-ediff-compare (revA revB fileA fileB)
-  "Compare REVA:FILEA with REVB:FILEB using Ediff.
+  ;; overload magit ediff compare function to run difftool
+  (defun magit-ediff-compare (revA revB fileA fileB)
+    "Compare REVA:FILEA with REVB:FILEB using Ediff.
 
 FILEA and FILEB have to be relative to the top directory of the
 repository.  If REVA or REVB is nil, then this stands for the
@@ -99,58 +121,29 @@ line of the region.  With a prefix argument, instead of diffing
 the revisions, choose a revision to view changes along, starting
 at the common ancestor of both revisions (i.e., use a \"...\"
 range)."
-  (interactive
-   (pcase-let ((`(,revA ,revB) (magit-ediff-compare--read-revisions
-                                nil current-prefix-arg)))
-     (nconc (list revA revB)
-       (magit-ediff-read-files revA revB))))
-  ;; (message (concat "magit-ediff-compare: " fileA "=" revA ", " fileB "=" revB))
-  (message (concat "git difftool --gui --no-prompt -M -C \"" revA "\" \"" revB "\" -- \"" fileA "\""))
-  (magit-run-git-async
-    "difftool" "--gui" "--no-prompt" "--find-renames" "--find-copies" revA revB "--" fileA))
+    (interactive
+      (pcase-let ((`(,revA ,revB) (magit-ediff-compare--read-revisions
+                                    nil current-prefix-arg)))
+        (nconc (list revA revB)
+          (magit-ediff-read-files revA revB))))
+    ;; (message (concat "magit-ediff-compare: " fileA "=" revA ", " fileB "=" revB))
+    (message (concat "git difftool --gui --no-prompt -M -C \"" revA "\" \"" revB "\" -- \"" fileA "\""))
+    (magit-run-git-async
+      "difftool" "--gui" "--no-prompt" "--find-renames" "--find-copies" revA revB "--" fileA))
 
-;; overload ediff stage file to run difftool
-(defun magit-ediff-stage (file)
-  "Stage and unstage changes to FILE using Ediff.
+  ;; overload ediff stage file to run difftool
+  (defun magit-ediff-stage (file)
+    "Stage and unstage changes to FILE using Ediff.
 FILE has to be relative to the top directory of the repository."
-  (interactive
-   (list (magit-completing-read "Selectively stage file"
-                                (magit-tracked-files) nil nil nil nil
-           (magit-current-file))))
-  (message "%s %s %s %s %s %s" "git" "difftool" "--gui" "--no-prompt" "--" file)
-  (magit-run-git-async
-    "difftool" "--gui" "--no-prompt" "--" file))
+    (interactive
+      (list (magit-completing-read "Selectively stage file"
+              (magit-tracked-files) nil nil nil nil
+              (magit-current-file))))
+    (message "%s %s %s %s %s %s" "git" "difftool" "--gui" "--no-prompt" "--" file)
+    (magit-run-git-async
+      "difftool" "--gui" "--no-prompt" "--" file))
+  ) ;; (use-package magit
 
-  ;; add X shortcut in popup action to open with difftool instead of Ediff
-  ;; (try-require 'magit-exttool "      ")
-
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      ;; git status (entry point of magit) then 'h' to popup help
-      (global-set-key   (kbd "C-c g g")         'magit-status)
-      ;; git fetch
-      (global-set-key   (kbd "C-c g f")         'magit-fetch-popup)
-      ;; git stash
-      (global-set-key   (kbd "C-c g s")         'magit-stash-popup)
-      ;; git push
-      (global-set-key   (kbd "C-c g p")         'magit-push-popup)
-      ;; git pull
-      (global-set-key   (kbd "C-c g u")         'magit-pull-popup)
-      ;; git merge
-      (global-set-key   (kbd "C-c g m")         'magit-merge-popup)
-      ;; magit dispatch
-      (global-set-key   (kbd "C-c g SPC")       'magit-dispatch-popup)
-      ;; magit diff
-      (global-set-key   (kbd "C-c g =")         'magit-difftool-buffer-file)
-      ;; magit file/buffer
-      (global-set-key   (kbd "C-c g b")         'magit-file-popup)
-      ;; magit fil history with external tool
-      (global-set-key   (kbd "C-c g l")         'magit-file-history-external)
-      (global-set-key   (kbd "C-c g h")         'magit-file-history-external)
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  )
 
 (provide '02-mode-061-magit)
 

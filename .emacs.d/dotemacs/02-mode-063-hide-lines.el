@@ -1,27 +1,27 @@
-;;; 02-mode-063-hide-lines.el --- configuration of hide lines mode
+;;; 02-mode-063-hide-lines.el --- configuration of hide lines mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.2
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,22 +30,15 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-hide-lines "    ")
-  ;; can hide incrementaly
-  (try-require 'autoload-hidesearch "    "))
-
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    ;; hide match
-    (global-set-key     (kbd "C-c l h")         'hide-lines-matching)
-    ;; hide not match
-    (global-set-key     (kbd "C-c l n")         'hide-lines-not-matching)
-    ;; show all
-    (global-set-key     (kbd "C-c l s")         'hide-lines-show-all)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+(use-package hide-lines
+  :bind
+  ;; hide match
+  ("C-c l h" . hide-lines-matching)
+  ;; hide not match
+  ("C-c l n" . hide-lines-not-matching)
+  ;; show all
+  ("C-c l s" . hide-lines-show-all)
+  ) ;; (use-package hide-lines
 
 
 (provide '02-mode-063-hide-lines)

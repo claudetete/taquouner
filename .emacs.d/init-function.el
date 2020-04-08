@@ -88,8 +88,8 @@ and print \"  00 Tata..Done\" then \"02 Toto Titi..Done\"."
           ;; (symbol-value) returns variable value name
           (if (and (symbol-value (intern-soft symbol-section)) (symbol-value (intern-soft symbol-full)))
             ;; try to load filename
-            (try-require (intern filename) "  ")
-            (message (concat "  ## " symbol-full " not set")))
+            (try-require (intern filename) "    ")
+            (message (concat "    ## " symbol-full " not set")))
           ;; print that subsection loading is done
           (require-print-end subsection "  "))
         ;; try to load only if enabled

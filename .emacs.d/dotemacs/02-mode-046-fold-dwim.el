@@ -1,27 +1,27 @@
-;;; 02-mode-046-fold-dwim.el --- configuration of fold dwim mode
+;;; 02-mode-046-fold-dwim.el --- configuration of fold dwim mode-*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,33 +30,25 @@
 
 
 ;;; Code:
-(try-require 'autoload-fold-dwim "    ")
+(use-package fold-dwim
+  :bind  (
+           ;; only in C mode
+           :map c-mode-map
+           ;; show/hide block
+           ("<H-left>"  . fold-dwim-toggle)
+           ("<H-right>" . fold-dwim-toggle)
+           ;; hide all
+           ("<H-up>"    . fold-dwim-hide-all)
+           ;; show all
+           ("<H-down>"  . fold-dwim-show-all)
 
-
-;; only in C mode
-(add-hook 'c-mode-hook
-  (lambda ()
-    ;; show/hide block
-    (local-set-key      (kbd "<H-left>")        'fold-dwim-toggle)
-    (local-set-key      (kbd "<H-right>")       'fold-dwim-toggle)
-    ;; hide all
-    (local-set-key      (kbd "<H-up>")          'fold-dwim-hide-all)
-    ;; show all
-    (local-set-key      (kbd "<H-down>")        'fold-dwim-show-all)
-    )
-  )
-
-;; only when rtrt is used
-(when tqnr-section-mode-rtrt-script
-  (add-hook 'rtrt-script-mode-hook
-    (lambda ()
-      ;; hide all
-      (local-set-key    (kbd "<H-prior>")       'fold-dwim-hide-all)
-      ;; show all
-      (local-set-key    (kbd "<H-next>")        'fold-dwim-show-all)
-      )
-    )
-  )
+           :map rtrt-script-mode-map
+           ;; hide all
+           ("<H-prior>" . fold-dwim-hide-all)
+           ;; show all
+           ("<H-next>"  . fold-dwim-show-all)
+           )
+  ) ;; (use-package fold-dwim
 
 
 (provide '02-mode-046-fold-dwim)

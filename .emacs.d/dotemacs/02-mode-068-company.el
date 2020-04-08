@@ -1,27 +1,27 @@
-;;; 02-mode-068-company.el --- configuration of company mode
+;;; 02-mode-068-company.el --- configuration of company mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -32,34 +32,28 @@
 
 
 ;;; Code:
-(add-to-list 'load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/elpa/company-20160325.1650"))
-(when (try-require 'company "    ")
+(use-package company
+  :hook
+  (after-init-hook . global-company-mode)
+
+  :config
   (setq company-backends (delete 'company-semantic company-backends))
-  (add-hook 'after-init-hook 'global-company-mode)
   (when tqnr-section-mode-helm
-    (try-require 'autoload-helm-company "      "))
+    (use-package helm-company
+      :bind (
+              ;; use company even when helm is not used
+              ("C-/" . company-complete)
+              :map company-mode-map
+              ;; use helm with company mode
+              ("C-/" . helm-company)
+              :map company-active-map
+              ("C-/" . helm-company))
+      ))
 
   ;; when irony mode is used
   (when tqnr-section-mode-irony
-    (eval-after-load 'company
-      '(add-to-list 'company-backends 'company-irony))
-    )
-
-
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      (if tqnr-section-mode-helm
-        (eval-after-load 'company
-          '(progn
-             ;; use helm with company mode
-             (define-key company-mode-map     (kbd "C-/")     'helm-company)
-             (define-key company-active-map   (kbd "C-/")     'helm-company)))
-        ;; use company even when helm is not used
-        (global-set-key     (kbd "C-/")             'company-complete))
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-  )
+    (add-to-list 'company-backends 'company-irony))
+  ) ;; (use-package company
 
 
 (provide '02-mode-068-company)

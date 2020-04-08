@@ -1,6 +1,6 @@
 ;;; init-profile.el --- a config file for profile
 
-;; Copyright (c) 2017-2018 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,14 +19,16 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.5
+;; Version: 0.6
 ;; Created: July 2017
-;; Last-Updated: January 2018
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
 
 ;;; Change Log:
+;; 2020-04-05 (0.6)
+;;    add use-package
 ;; 2018-01-31 (0.5)
 ;;    add ada function, ripgrep, hydra ada, ada mode, pandoc, fitnesse, flex isearch + reuse/adapt
 ;;    fill column indicator
@@ -88,10 +90,12 @@
   (defvar tqnr-section-environment-package nil)
   (progn ;; tqnr-section-environment-package
     ;; PROXY: proxy setting about package management
-    (defvar tqnr-profile-environment-elpa-proxy-http nil)
-    (defvar tqnr-profile-environment-elpa-proxy-https nil)
+    (defvar tqnr-profile-environment-package-proxy-http nil)
+    (defvar tqnr-profile-environment-package-proxy-https nil)
+    ;; LOCAL PATH: proxy setting about package management
+    (defvar tqnr-profile-environment-package-local-path nil)
     ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
-    (defvar tqnr-profile-environment-elpa-package-list '())
+    (defvar tqnr-profile-environment-package-list '())
     ) ;; (progn ;; tqnr-section-environment-package
 
   ;; SHORTCUT: Environment shortcut to declare hook about shortcut
@@ -206,6 +210,9 @@
 (defvar tqnr-section-mode nil)
 (progn ;; tqnr-section-mode
 
+  ;; USE-PACKAGE: Package configuration with simple and tidy macro
+  (defvar tqnr-section-mode-use-package nil)
+
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
   (defvar tqnr-section-mode-helm nil)
   (progn ;; tqnr-section-mode-helm
@@ -234,9 +241,6 @@
     ;; enable Helm everywhere when asking file
     (defvar tqnr-section-mode-helm-global nil)
     ) ;; (progn ;; tqnr-section-mode-helm
-
-  ;; VECTRA: man and doc in emacs (never used)
-  (defvar tqnr-section-mode-vectra nil)
 
   ;; HOME END: add some useful function to home and end keys
   (defvar tqnr-section-mode-home-end nil)
@@ -723,6 +727,9 @@
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (progn ;; tqnr-section-mode-undo-fu-session
 
+  ;; HEADER2: Create/Update header of files
+  (defvar tqnr-section-mode-header2 nil)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
   ) ;; (progn ;; tqnr-section-mode
@@ -1030,6 +1037,7 @@
   ;; !!!PRIVATE!!! all theses variable should be put in private file of profile
   ;; USERNAME: define user name
   (defvar tqnr-profile-username "")
+  (defvar tqnr-profile-login "")
   ;; !!!PRIVATE!!! End
   ;;
   ;; SPACE: remove useless space at the end of line

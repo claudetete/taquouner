@@ -1,4 +1,4 @@
-;;; 11-misc.el --- a config file for misc settings
+;;; 11-misc.el --- a config file for misc settings -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2006-2019 Claude Tete
 ;;
@@ -6,19 +6,19 @@
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
+;; Author: Claude Tete <claude.tete@gmail.com>
 ;; Version: 2.9
 ;; Created: October 2006
 ;; Last-Updated: March 2019
@@ -35,8 +35,10 @@
 ;; [[VARCOMMENT.!!!PRIVATE!!! all theses variable should be put in private file of profile
 ;; USERNAME: define user name
 ;; ]]
-;; [VARIABLE.tqnr-profile-username "your beautiful name"]
+;; [VARIABLE.tqnr-profile-username "your beautiful name <address@mail.com>"]
+;; [VARIABLE.tqnr-profile-login "your beautiful name"]
 (setq user-full-name tqnr-profile-username)
+(setq user-login-name tqnr-profile-login)
 ;; [COMMENT.!!!PRIVATE!!! End]
 
 ;; use compression
@@ -158,9 +160,10 @@
     (setq european-calendar-style 't)
 
     ;; load French holidays
-    (when (try-require 'french-holidays "      ")
-      (setq calendar-holidays holiday-french-holidays))
-
+    (when (use-package french-holidays
+            :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/french-holidays.el"))
+            :config
+            (setq calendar-holidays holiday-french-holidays)))
 
     (custom-set-variables
       ;; set display date in European format
@@ -209,7 +212,7 @@
   ;; TRY
   ;; Diary (by Marc Tommasi)
 ;;  (setq view-diary-entries-initially t
-;;    diary-file (concat (file-name-as-directory dotemacs-path) "diary")
+;;    diary-file (concat (file-name-as-directory tqnr-dotemacs-path) "diary")
 ;;    mark-diary-entries-in-calendar t
 ;;    number-of-diary-entries 7)
 ;;
@@ -242,7 +245,7 @@
 ;; [SUBSECTION.tqnr-section-misc-bookmark t]
 (when tqnr-section-misc-bookmark (message "    Bookmarks...")
   ;; where to save the bookmarks
-  (setq bookmark-default-file (concat (file-name-as-directory dotemacs-path) "bookmarks"))
+  (setq bookmark-default-file (concat (file-name-as-directory tqnr-dotemacs-path) "bookmarks"))
   ;;
   ;; each command that sets a bookmark will also save your bookmarks
   (setq bookmark-save-flag 1)

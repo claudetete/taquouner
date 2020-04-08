@@ -1,4 +1,4 @@
-;;; 02-mode-099-undo-fu.el --- configuration of undo fu mode
+;;; 02-mode-099-undo-fu.el --- configuration of undo fu mode -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2020 Claude Tete
 ;;
@@ -6,22 +6,22 @@
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.2
 ;; Created: February 2020
-;; Last-Updated: February 2020
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,18 +30,12 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-undo-fu "    ")
-  )
-
-
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    (global-set-key     (kbd "C-_")     #'undo-fu-only-undo)
-    (global-set-key     (kbd "M-_")     #'undo-fu-only-redo)
-    (global-set-key     (kbd "C-M-_")   #'undo-fu-only-redo-all)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+(use-package undo-fu
+  :bind
+  ("C-_"   . undo-fu-only-undo)
+  ("M-_"   . undo-fu-only-redo)
+  ("C-M-_" . undo-fu-only-redo-all)
+  ) ;; (use-package undo-fu
 
 
 (provide '02-mode-099-undo-fu)

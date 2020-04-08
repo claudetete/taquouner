@@ -1,27 +1,27 @@
-;;; 02-mode-014-browse-kill-ring.el --- configuration of browse kill ring mode
+;;; 02-mode-014-browse-kill-ring.el --- configuration of browse kill ring mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.2
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -30,7 +30,17 @@
 
 
 ;;; Code:
-(when (try-require 'autoload-browse-kill-ring "    ")
+(use-package browse-kill-ring
+  :bind (:map browse-kill-ring-mode-map
+          ;; move next and previous with arrow
+          ("<up>" . browse-kill-ring-previous)
+          ("<down>" . browse-kill-ring-forward)
+          ;; quit not only with q but also with C-g or F2 with ecb
+          ("C-g" . browse-kill-ring-quit)
+          ("<escape>" . browse-kill-ring-quit)
+          ("<return>" . browse-kill-ring-insert-move-and-quit))
+
+  :config
   ;; all settings from Fabrice Niessen
   ;; string separating entries in the `separated' style
   (setq browse-kill-ring-separator
@@ -46,20 +56,10 @@
   (setq browse-kill-ring-no-duplicates t)
   )
 
-
-(add-hook 'browse-kill-ring-hook
-  (lambda ()
-    ;; move next and previous with arrow
-    (local-set-key      (kbd "<up>")            'browse-kill-ring-previous)
-    (local-set-key      (kbd "<down>")          'browse-kill-ring-forward)
-    ;; quit not only with q but also with C-g or F2 with ecb
-    (local-set-key      (kbd "C-g")             'browse-kill-ring-quit)
-    (when tqnr-section-mode-cedet-ecb
-      (local-set-key    (kbd "<f2>")            'browse-kill-ring-quit))
-    (local-set-key      (kbd "<escape>")        'browse-kill-ring-quit)
-    (local-set-key      (kbd "<return>")        'browse-kill-ring-insert-move-and-quit)
-    )
-  )
+(when tqnr-section-mode-cedet-ecb
+  (use-package browse-kill-ring
+    :bind (:map browse-kill-ring-mode-map
+            ("<f2>" . browse-kill-ring-quit))))
 
 
 (provide '02-mode-014-browse-kill-ring)

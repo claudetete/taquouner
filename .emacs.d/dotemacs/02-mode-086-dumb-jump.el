@@ -1,27 +1,27 @@
-;;; 02-mode-086-dumb-jump.el --- configuration of dumb jump mode
+;;; 02-mode-086-dumb-jump.el --- configuration of dumb jump mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+;; the Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 ;;
 
-;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Author: Claude Tete <claude.tete@gmail.com>
+;; Version: 0.2
 ;; Created: September 2017
-;; Last-Updated: March 2019
+;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
@@ -31,27 +31,24 @@
 
 ;;; Code:
 
-(when (try-require 'dumb-jump "    ")
+(use-package dumb-jump
+  :bind
+  ;; run ispell (dictionary) (set language in `section-misc')
+  ("M-," . dumb-jump-go)
+  ;;("M-g o" . dumb-jump-go-other-window)
+  ;;("M-g j" . dumb-jump-go)
+  ;;("M-g i" . dumb-jump-go-prompt)
+  ;;("M-g x" . dumb-jump-go-prefer-external)
+  ;;("M-g z" . dumb-jump-go-prefer-external-other-window)
+
+  :config
   (when tqnr-section-mode-ripgrep
     (setq dumb-jump-prefer-searcher 'rg)
-    (setq dumb-jump-force-searcher 'rg)
-    )
+    (setq dumb-jump-force-searcher 'rg))
   (when tqnr-section-mode-helm
     (setq dumb-jump-selector 'helm))
+  ) ;; (use-package dumb-jump
 
-;; shortcuts are put in a hook to be loaded after everything else in init process
-(add-hook 'tqnr-after-init-shortcut-hook
-  (lambda ()
-    ;; run ispell (dictionary) (set language in `section-misc')
-    (global-set-key         (kbd "M-,")             'dumb-jump-go)
-    ;;("M-g o" . dumb-jump-go-other-window)
-    ;;("M-g j" . dumb-jump-go)
-    ;;("M-g i" . dumb-jump-go-prompt)
-    ;;("M-g x" . dumb-jump-go-prefer-external)
-    ;;("M-g z" . dumb-jump-go-prefer-external-other-window)
-    ) ;; (lambda ()
-  ) ;; (add-hook 'tqnr-after-init-shortcut-hook
-)
 
 (provide '02-mode-086-dumb-jump)
 

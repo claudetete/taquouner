@@ -42,7 +42,6 @@
 (message "# Taquouner, GNU Emacs configuration  #")
 (message "#######################################\n")
 
-(setq dotemacs-path tqnr-dotemacs-path)
 
 ;; increase the size of the log *Messages*
 (custom-set-variables

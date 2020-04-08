@@ -1,6 +1,6 @@
-;;; 02-mode-054-diredful.el --- configuration of diredful mode -*- lexical-binding: t -*-
+;;; 02-mode-000-use-package.el --- configuration of use-package -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,23 +19,24 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
-;; Created: July 2017
+;; Version: 0.1
+;; Created: April 2020
 ;; Last-Updated: April 2020
 
 ;;; Commentary:
 ;;
-;; [SUBHEADER.color dired buffer]
-;; [SUBDEFAULT.nil]
+;; [SUBHEADER.Package configuration with simple and tidy macro (mandatory)]
+;; [SUBDEFAULT.t]
 
 
 ;;; Code:
-(use-package diredful
-  :custom
-  ;; set file conf path must be set before load diredful
-  (diredful-init-file (concat (file-name-as-directory tqnr-dotemacs-path) "dotemacs/diredful-conf.el")))
+(eval-when-compile
+  (add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/use-package"))
+  (when (try-require 'use-package "      ")
+    (when (try-require 'use-package-ensure "        ")
+      (setq use-package-always-ensure t))))
 
 
-(provide '02-mode-054-diredful)
+(provide '02-mode-000-use-package)
 
-;;; 02-mode-054-diredful.el ends here
+;;; 02-mode-000-use-package.el ends here
