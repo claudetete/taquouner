@@ -1077,14 +1077,6 @@
     ;; load theme file
     (add-to-list 'load-path theme-path)
     (when (try-require 'color-theme-sanityinc-tomorrow "    ")
-      ;; declare new face for powerline, to have highlight in powerline
-      (defface powerline-highlight-active0 '((t (:inherit mode-line)))
-        "Powerline face 0."
-        :group 'powerline)
-      (defface powerline-highlight-inactive0
-        '((t (:inherit mode-line-inactive)))
-        "Powerline face 0."
-        :group 'powerline)
 
       ;; load theme color
       (add-to-list 'custom-theme-load-path theme-path)

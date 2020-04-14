@@ -1,4 +1,5 @@
 ;;; profile-thales-avionics-local.el --- a config file for profile
+;;; profile-thales-avionics-local.el --- a config file for profile
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;
@@ -50,8 +51,7 @@
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-path "d:/tools")
-    (defvar tqnr-profile-portable-git-version "2.23.0")
+    (defvar tqnr-profile-portable-git-version "2.26.0")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
@@ -69,7 +69,8 @@
         ;; GNATPRO
         "k:/GNATPRO/GNATPRO_18.2/bin"
         ;; PYTHON
-        "k:/PYTHON/PYTHON_2.7.4"
+        "j:/PYTHON/py"
+        "j:/PYTHON/PYTHON_3.6.6"
         ;; GIT
         (concat  "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
@@ -78,7 +79,7 @@
 	"j:/MSYS/msys64/usr/bin"
         "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        "j:/GIT_EXTENSIONS/GitExtensions_3.0.2.5232"
+        "j:/GIT_EXTENSIONS/GitExtensions_3.3.1.7897"
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
         ;; GIT linux utils (msys64 override it)
@@ -86,7 +87,7 @@
         (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/mingw64/bin")
         (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/usr/bin")
         ;; GPS
-        "k:/GPS/GPS_18.2_x64/bin"
+        "k:/GPS/GPS_21.0w-20191210/bin"
         ;; GNU Emacs
         "j:/EMACS/emacs-26.3-x86_64/bin"
         ;; MS Windows usual path
@@ -123,10 +124,12 @@
   (setq tqnr-section-environment-package t)
   (when tqnr-section-environment-package
     ;; PROXY: proxy setting about package management
-    (setq tqnr-profile-environment-elpa-proxy-http nil)
-    (setq tqnr-profile-environment-elpa-proxy-https nil)
+    (setq tqnr-profile-environment-package-proxy-http nil)
+    (setq tqnr-profile-environment-package-proxy-https nil)
+    ;; LOCAL PATH: proxy setting about package management
+    (setq tqnr-profile-environment-package-local-path "j:/EMACS/emacs-package-archives")
     ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
-    (setq tqnr-profile-environment-elpa-package-list '(elpy))
+    (setq tqnr-profile-environment-package-list '())
     ) ;; (when tqnr-section-environment-package
 
   ;; SHORTCUT: Environment shortcut to declare hook about shortcut
@@ -241,6 +244,9 @@
 (setq tqnr-section-mode t)
 (when tqnr-section-mode
 
+  ;; USE PACKAGE: Package configuration with simple and tidy macro (mandatory)
+  (setq tqnr-section-mode-use-package t)
+
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
   (setq tqnr-section-mode-helm t)
   (when tqnr-section-mode-helm
@@ -270,9 +276,6 @@
     (setq tqnr-section-mode-helm-global t)
     ) ;; (when tqnr-section-mode-helm
 
-  ;; VECTRA: man and doc in emacs (never used)
-  (setq tqnr-section-mode-vectra nil)
-
   ;; HOME END: add some useful function to home and end keys
   (setq tqnr-section-mode-home-end t)
 
@@ -290,12 +293,6 @@
   ;; CEDET: "Collection of Emacs Development Environment Tools"
   (setq tqnr-section-mode-cedet t)
   (when tqnr-section-mode-cedet
-    ;; if you want to use emacs included CEDET set to nil
-    ;; otherwise set the path of cedet.el and you need to remove:
-    ;;   `your-emacs-path/lisp/cedet'
-    ;;   `your-emacs-path/lisp/speedbar.*'
-    ;;   `your-emacs-path/lisp/emacs-lisp/eieio*'
-    (setq tqnr-profile-cedet-path nil)
     ;; bin path of gnu global for cedet
     (setq tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/bin/global.exe"))
     (setq tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/bin/gtags.exe"))
@@ -362,8 +359,6 @@
   ;; GNU GLOBAL: Tag management mode
   (setq tqnr-section-mode-gnu-global t)
   (when tqnr-section-mode-gnu-global
-    ;; gtags interface (use modified gtags.el)
-    (setq tqnr-section-mode-gnu-global-gtags nil)
     ;; ggtags interface
     (setq tqnr-section-mode-gnu-global-ggtags t)
     ) ;; (when tqnr-section-mode-gnu-global
@@ -376,19 +371,9 @@
 
   ;; VC CLEARCASE: vc ClearCase mode (not used)
   (setq tqnr-section-mode-vc-clearcase nil)
-  (when tqnr-section-mode-vc-clearcase
-    ;; path to version tree executable
-    (setq tqnr-profile-clearcase-vtree nil)
-    ;; path to cleartool executable
-    (setq tqnr-profile-cleartool nil)
-    ) ;; (when tqnr-section-mode-vc-clearcase
 
   ;; CLEARCASE: ClearCase mode
   (setq tqnr-section-mode-clearcase nil)
-  (when tqnr-section-mode-clearcase
-    ;; ClearCase Emacs integration
-    (setq tqnr-section-mode-clearcase-el nil)
-    ) ;; (when tqnr-section-mode-clearcase
 
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq tqnr-section-mode-autohotkey t)
@@ -468,7 +453,7 @@
   ;; NYAN: add bar in modeline given position in buffer
   (setq tqnr-section-mode-nyan nil)
 
-  ;; SML: show position in a scollbar
+  ;; SML: show position in modeline as a scrollbar
   (setq tqnr-section-mode-sml nil)
 
   ;; DIRED: change option to command ls for dired mode
@@ -503,14 +488,6 @@
 
   ;; ACK: search with ack (no more grep) (need perl interpreter)
   (setq tqnr-section-mode-ack nil)
-  (when tqnr-section-mode-ack
-    ;; Full-ack mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-full nil)
-    ;; ack and half mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-and-half nil)
-    ;; ack-emacs mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-emacs t)
-    ) ;; (when tqnr-section-mode-ack
 
   ;; ACE JUMP
   ;; move quickly and easily with ace jump
@@ -714,7 +691,7 @@
   ;; FLEX ISEARCH: Flex Isearch mode add fuzzy match when doing incremental search
   (setq tqnr-section-mode-flex-isearch nil)
 
-  ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
+  ;; ORG JIRA: Sync JIRA issues with org-mode issues
   (setq tqnr-section-mode-org-jira t)
 
   ;; GNUPLOT: Major mode for editing gnuplot scripts
@@ -742,13 +719,19 @@
   (setq tqnr-section-mode-undo-fu t)
 
   ;; UNDO FU SESSION: Save & recover undo steps between Emacs sessions
-  (setq tqnr-section-mode-undo-fu-session t)
+  (setq tqnr-section-mode-undo-fu-session nil)
   (when tqnr-section-mode-undo-fu-session
     ;; set undo fu session directory where every undo will be stored
     (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
     ;; set org directory where every org file will goes
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
+
+  ;; HEADER2: Create/Update header of files
+  (setq tqnr-section-mode-header2 t)
+
+  ;; LSP MODE: Lsp mode
+  (setq tqnr-section-mode-lsp-mode nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
@@ -941,7 +924,13 @@
     ;; theme to be used, do not use it with terminal
     ;; (setq tqnr-profile-color-theme "solarized-light")
     ;;(setq tqnr-profile-color-theme "labburn")
-    (setq tqnr-profile-color-theme "gruvbox-dark-hard")
+    ;;(setq tqnr-profile-color-theme "gruvbox-dark-hard")
+    (setq tqnr-profile-color-theme nil)
+    ;; useful to not have bold or italic in doom theme
+    (custom-set-variables
+      '(doom-themes-enable-bold nil)
+      '(doom-themes-enable-italic nil)
+      )
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq tqnr-section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
@@ -1146,6 +1135,9 @@
   ;; reduce magit slow on windows
   (setq w32-pipe-read-delay 0)
 
+  ;; load theme color
+  (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/color-theme-sanityinc-tomorrow"))
+  (load-theme 'gruvbox t)
   ;; needed to avoid error in colors
   (powerline-reset)
 

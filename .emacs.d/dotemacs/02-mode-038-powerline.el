@@ -47,6 +47,16 @@
 (use-package powerline
   :config
   (which-function-mode)
+
+  ;; declare new face for powerline, to have highlight in powerline
+  (defface powerline-highlight-active0 '((t (:inherit mode-line)))
+    "Powerline face 0."
+    :group 'powerline)
+  (defface powerline-highlight-inactive0
+    '((t (:inherit mode-line-inactive)))
+    "Powerline face 0."
+    :group 'powerline)
+  
   (defun powerline-my-theme ()
     "Setup a mode-line."
     (interactive)
