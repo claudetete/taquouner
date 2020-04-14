@@ -30,11 +30,16 @@
 
 
 ;;; Code:
-(eval-when-compile
-  (add-to-list 'load-path  (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/use-package"))
-  (when (try-require 'use-package "      ")
-    (when (try-require 'use-package-ensure "        ")
-      (setq use-package-always-ensure t))))
+(when tqnr-section-environment-package
+  (setq package-list '(use-package))
+
+  (mapc #'(lambda (package)
+            (unless (package-installed-p package)
+              (package-install package)))
+    package-list)
+    
+  (when (try-require 'use-package-ensure "      ")
+    (setq use-package-always-ensure t)))
 
 
 (provide '02-mode-000-use-package)

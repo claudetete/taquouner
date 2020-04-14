@@ -37,7 +37,7 @@
   ;; [VARIABLE.tqnr-profile-environment-package-proxy-http nil]
   ;; [VARIABLE.tqnr-profile-environment-package-proxy-https nil]
   (when tqnr-profile-environment-package-proxy-http
-    ;; add to load path the profile directory
+    ;; set proxy
     (require 'url) ; need to have url-proxy-services defined
     ;; backquot instead of quote will allow use of comma to evaluate symbol after
     ;; example:
@@ -59,7 +59,6 @@
       (add-to-list 'package-archives `("org" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "org")))
       (add-to-list 'package-archives `("emacswiki" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "emacswiki")))
       ) ;; (when tqnr-profile-environment-package-local-path
-    ;; set proxy
     ;; set path where put all packages
     (setq package-user-dir (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/elpa"))
     ;; init package
