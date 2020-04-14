@@ -210,7 +210,7 @@
 (defvar tqnr-section-mode nil)
 (progn ;; tqnr-section-mode
 
-  ;; USE-PACKAGE: Package configuration with simple and tidy macro
+  ;; USE PACKAGE: Package configuration with simple and tidy macro
   (defvar tqnr-section-mode-use-package nil)
 
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
@@ -259,12 +259,6 @@
   ;; CEDET: "Collection of Emacs Development Environment Tools"
   (defvar tqnr-section-mode-cedet nil)
   (progn ;; tqnr-section-mode-cedet
-    ;; if you want to use emacs included CEDET set to nil
-    ;; otherwise set the path of cedet.el and you need to remove:
-    ;;   `your-emacs-path/lisp/cedet'
-    ;;   `your-emacs-path/lisp/speedbar.*'
-    ;;   `your-emacs-path/lisp/emacs-lisp/eieio*'
-    (defvar tqnr-profile-cedet-path nil)
     ;; bin path of gnu global for cedet
     (defvar tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/global.exe"))
     (defvar tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/gtags.exe"))
@@ -331,8 +325,6 @@
   ;; GNU GLOBAL: Tag management mode
   (defvar tqnr-section-mode-gnu-global nil)
   (progn ;; tqnr-section-mode-gnu-global
-    ;; gtags interface (use modified gtags.el)
-    (defvar tqnr-section-mode-gnu-global-gtags nil)
     ;; ggtags interface
     (defvar tqnr-section-mode-gnu-global-ggtags nil)
     ) ;; (progn ;; tqnr-section-mode-gnu-global
@@ -345,19 +337,9 @@
 
   ;; VC CLEARCASE: vc ClearCase mode (not used)
   (defvar tqnr-section-mode-vc-clearcase nil)
-  (progn ;; tqnr-section-mode-vc-clearcase
-    ;; path to version tree executable
-    (defvar tqnr-profile-clearcase-vtree nil)
-    ;; path to cleartool executable
-    (defvar tqnr-profile-cleartool nil)
-    ) ;; (progn ;; tqnr-section-mode-vc-clearcase
 
   ;; CLEARCASE: ClearCase mode
   (defvar tqnr-section-mode-clearcase nil)
-  (progn ;; tqnr-section-mode-clearcase
-    ;; ClearCase Emacs integration
-    (defvar tqnr-section-mode-clearcase-el nil)
-    ) ;; (progn ;; tqnr-section-mode-clearcase
 
   ;; AUTOHOTKEY: AutoHotKey mode
   (defvar tqnr-section-mode-autohotkey nil)
@@ -374,14 +356,6 @@
 
   ;; GOOGLE CALENDAR: to import Google calendar
   (defvar tqnr-section-mode-google-calendar nil)
-  (progn ;; tqnr-section-mode-google-calendar
-    ;; !!!PRIVATE!!! all theses variable should be put in private file of profile
-    (defvar tqnr-profile-google-calendar-user "name@email.com")
-    (defvar tqnr-profile-google-calendar-src (concat tqnr-dotemacs-path "/plugins/google"))
-    (defvar tqnr-profile-google-calendar-directory "~/tmp")
-    (defvar tqnr-profile-google-calendar-url "https://www.google.com/calendar/ical...")
-    ;; !!!PRIVATE!!! End
-    ) ;; (progn ;; tqnr-section-mode-google-calendar
 
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (defvar tqnr-section-mode-fill-column-indicator nil)
@@ -445,7 +419,7 @@
   ;; NYAN: add bar in modeline given position in buffer
   (defvar tqnr-section-mode-nyan nil)
 
-  ;; SML: show position in a scollbar
+  ;; SML: show position in modeline as a scrollbar
   (defvar tqnr-section-mode-sml nil)
 
   ;; DIRED: change option to command ls for dired mode
@@ -480,14 +454,6 @@
 
   ;; ACK: search with ack (no more grep) (need perl interpreter)
   (defvar tqnr-section-mode-ack nil)
-  (progn ;; tqnr-section-mode-ack
-    ;; Full-ack mode to interface ack with emacs
-    (defvar tqnr-section-mode-ack-full nil)
-    ;; ack and half mode to interface ack with emacs
-    (defvar tqnr-section-mode-ack-and-half nil)
-    ;; ack-emacs mode to interface ack with emacs
-    (defvar tqnr-section-mode-ack-emacs nil)
-    ) ;; (progn ;; tqnr-section-mode-ack
 
   ;; ACE JUMP
   ;; move quickly and easily with ace jump
@@ -691,7 +657,7 @@
   ;; FLEX ISEARCH: Flex Isearch mode add fuzzy match when doing incremental search
   (defvar tqnr-section-mode-flex-isearch nil)
 
-  ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
+  ;; ORG JIRA: Sync JIRA issues with org-mode issues
   (defvar tqnr-section-mode-org-jira nil)
 
   ;; GNUPLOT: Major mode for editing gnuplot scripts
@@ -729,6 +695,9 @@
 
   ;; HEADER2: Create/Update header of files
   (defvar tqnr-section-mode-header2 nil)
+
+  ;; LSP MODE: Lsp mode
+  (defvar tqnr-section-mode-lsp-mode nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)

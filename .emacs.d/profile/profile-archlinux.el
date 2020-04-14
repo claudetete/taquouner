@@ -52,13 +52,14 @@
     ;; PATH environment variable concat with current PATH
     (setq tqnr-profile-path
       (list
-         "/usr/local/sbin"
-         "/usr/local/bin"
-         "/usr/bin"
-         "/usr/lib/jvm/default/bin"
-         "/usr/bin/site_perl"
-         "/usr/bin/vendor_perl"
-         "/usr/bin/core_perl"
+        "~/bin"
+        "/usr/local/sbin"
+        "/usr/local/bin"
+        "/usr/bin"
+        "/usr/lib/jvm/default/bin"
+        "/usr/bin/site_perl"
+        "/usr/bin/vendor_perl"
+        "/usr/bin/core_perl"
         )
       ) ;; (setq tqnr-profile-path
     ;;
@@ -159,7 +160,7 @@
   (setq tqnr-section-function-rtrt nil)
 
   ;; ADA: functions to have multiple compile mode in ada
-  (setq tqnr-section-function-ada nil)
+  (setq tqnr-section-function-ada t)
   (when tqnr-section-function-ada
     ;; BUILD
     ;; Command of build one file in ada
@@ -206,7 +207,7 @@
 (setq tqnr-section-mode t)
 (when tqnr-section-mode
 
-  ;; USE-PACKAGE: Package configuration with simple and tidy macro
+  ;; USE PACKAGE: Package configuration with simple and tidy macro (mandatory)
   (setq tqnr-section-mode-use-package t)
 
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
@@ -214,8 +215,6 @@
   (when tqnr-section-mode-helm
     ;; isearch by helm
     (setq tqnr-section-mode-helm-swoop t)
-    ;; do not have default value when run helm swoop
-    (setq tqnr-section-mode-helm-swoop-without-pre-input t)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx t)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
@@ -255,12 +254,6 @@
   ;; CEDET: "Collection of Emacs Development Environment Tools"
   (setq tqnr-section-mode-cedet t)
   (when tqnr-section-mode-cedet
-    ;; if you want to use emacs included CEDET set to nil
-    ;; otherwise set the path of cedet.el and you need to remove:
-    ;;   `your-emacs-path/lisp/cedet'
-    ;;   `your-emacs-path/lisp/speedbar.*'
-    ;;   `your-emacs-path/lisp/emacs-lisp/eieio*'
-    (setq tqnr-profile-cedet-path nil)
     ;; bin path of gnu global for cedet
     (setq tqnr-profile-gnu-global "global")
     (setq tqnr-profile-gnu-global-gtags "gtags")
@@ -327,8 +320,6 @@
   ;; GNU GLOBAL: Tag management mode
   (setq tqnr-section-mode-gnu-global t)
   (when tqnr-section-mode-gnu-global
-    ;; gtags interface (use modified gtags.el)
-    (setq tqnr-section-mode-gnu-global-gtags nil)
     ;; ggtags interface
     (setq tqnr-section-mode-gnu-global-ggtags t)
     ) ;; (when tqnr-section-mode-gnu-global
@@ -341,19 +332,9 @@
 
   ;; VC CLEARCASE: vc ClearCase mode (not used)
   (setq tqnr-section-mode-vc-clearcase nil)
-  (when tqnr-section-mode-vc-clearcase
-    ;; path to version tree executable
-    (setq tqnr-profile-clearcase-vtree "clearvtree.exe")
-    ;; path to cleartool executable
-    (setq tqnr-profile-cleartool "cleartool.exe")
-    ) ;; (when tqnr-section-mode-vc-clearcase
 
   ;; CLEARCASE: ClearCase mode
   (setq tqnr-section-mode-clearcase nil)
-  (when tqnr-section-mode-clearcase
-    ;; ClearCase Emacs integration
-    (setq tqnr-section-mode-clearcase-el nil)
-    ) ;; (when tqnr-section-mode-clearcase
 
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq tqnr-section-mode-autohotkey t)
@@ -385,7 +366,7 @@
     ;; enable vertical line in C++ mode
     (setq tqnr-profile-fill-column-indicator-mode-c++ nil)
     ;; enable vertical line in ADA mode
-    (setq tqnr-profile-fill-column-indicator-mode-ada nil)
+    (setq tqnr-profile-fill-column-indicator-mode-ada t)
     ;; enable vertical line in all mode
     (setq tqnr-profile-fill-column-indicator-mode-all nil)
     ) ;; (when tqnr-section-mode-fill-column-indicator
@@ -433,7 +414,7 @@
   ;; NYAN: add bar in modeline given position in buffer
   (setq tqnr-section-mode-nyan nil)
 
-  ;; SML: show position in a scollbar
+  ;; SML: show position in modeline as a scrollbar
   (setq tqnr-section-mode-sml nil)
 
   ;; DIRED: change option to command ls for dired mode
@@ -468,14 +449,6 @@
 
   ;; ACK: search with ack (no more grep) (need perl interpreter)
   (setq tqnr-section-mode-ack nil)
-  (when tqnr-section-mode-ack
-    ;; Full-ack mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-full nil)
-    ;; ack and half mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-and-half nil)
-    ;; ack-emacs mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-emacs nil)
-    ) ;; (when tqnr-section-mode-ack
 
   ;; ACE JUMP
   ;; move quickly and easily with ace jump
@@ -668,7 +641,7 @@
   (setq tqnr-section-mode-dumb-jump nil)
 
   ;; ADA: Ada mode for edit/navigate/compile ada source code
-  (setq tqnr-section-mode-ada nil)
+  (setq tqnr-section-mode-ada t)
 
   ;; FITNESSE: FitNesse MarkUp files syntax highlight
   (setq tqnr-section-mode-fitnesse nil)
@@ -679,7 +652,7 @@
   ;; FLEX ISEARCH: Flex Isearch mode add fuzzy match when doing incremental search
   (setq tqnr-section-mode-flex-isearch nil)
 
-  ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
+  ;; ORG JIRA: Sync JIRA issues with org-mode issues
   (setq tqnr-section-mode-org-jira nil)
 
   ;; GNUPLOT: Major mode for editing gnuplot scripts
@@ -715,7 +688,11 @@
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
 
+  ;; HEADER2: Create/Update header of files
   (setq tqnr-section-mode-header2 t)
+
+  ;; LSP MODE: Lsp mode
+  (setq tqnr-section-mode-lsp-mode t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)

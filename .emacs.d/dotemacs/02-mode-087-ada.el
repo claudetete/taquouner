@@ -60,8 +60,6 @@
   ) ;; (use-package ada-mode
 
 
-(use-package ada-ref-man)
-
 ;; see shortcut for build/check/clean in 01-function-16-ada.el no other function are currently customized
 
 
