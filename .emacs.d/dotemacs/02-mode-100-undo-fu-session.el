@@ -39,7 +39,7 @@
   ;; [VARIABLE.tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo")]
   (setq undo-fu-session-directory tqnr-profile-undo-fu-session-directory)
 
-  ;; [VARCOMMENT.set org directory where every org file will goes]
+  ;; [VARCOMMENT.set file size limit about session save file]
   ;; [VARIABLE.tqnr-profile-undo-fu-session-file-limit 1024]
   (setq undo-fu-session-file-limit tqnr-profile-undo-fu-session-file-limit)
   ) ;; (use-package undo-fu-session

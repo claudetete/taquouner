@@ -127,12 +127,8 @@
     (indent-according-to-mode)
     (backward-char 4))
 
-  ;; shortcuts are put in a hook to be loaded after everything else in init process
-  (add-hook 'tqnr-after-init-shortcut-hook
-    (lambda ()
-      (define-key fitnesse-mode-map     (kbd "<f11>")   'fitnesse-insert-debug)
-      ) ;; (lambda ()
-    ) ;; (add-hook 'tqnr-after-init-shortcut-hook
+  (with-eval-after-load "fitnesse-mode"
+    (define-key fitnesse-mode-map (kbd "<f11>") 'fitnesse-insert-debug))
   ) ;; (when tqnr-section-mode-fitnesse
 
 (if (string-match-p tqnr-profile-name "sagem")

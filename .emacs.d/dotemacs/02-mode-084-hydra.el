@@ -497,8 +497,6 @@
 (when (and tqnr-section-mode-hydra-ada tqnr-section-mode-ada tqnr-section-function-ada)
   (use-package hydra
     :pin melpa
-    :bind (:map ada-mode-map
-            ("<f10>" . hydra-ada/body))
 
     :config
     (defhydra hydra-ada (:color pink
@@ -521,6 +519,9 @@
       ;;
       ("q" nil :color blue)
       )
+    (with-eval-after-load "ada-mode"
+      (define-key ada-mode-map (kbd "<f10>") 'hydra-ada/body)
+      ) ;; (with-eval-after-load "ada-mode"
     ) ;; (use-package hydra
   ) ;; (when tqnr-section-mode-hydra-spelling
 
@@ -580,8 +581,6 @@ _d_: subtree
 (when (and tqnr-section-mode-hydra-org-mode tqnr-section-mode-org-mode)
   (use-package hydra
     :pin melpa
-    :bind (:map org-mode-map
-            ("C-c C-J" . hydra-org-mode/body))
 
     :config
     (defhydra hydra-org-mode (:color pink
@@ -606,6 +605,10 @@ _d_: subtree
       ;;
       ("q" nil :color blue)
       )
+      
+    (with-eval-after-load "org-mode"
+      (define-key org-mode-map      (kbd "C-c C-J")   'hydra-org-mode/body)
+      ) ;; (with-eval-after-load "ada-mode"
     ) ;; (use-package hydra
   ) ;; (when tqnr-section-mode-hydra-spelling
 

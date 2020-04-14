@@ -87,6 +87,7 @@
           ("C-c <up>"   . org-goto)
           ("C-c <down>" . org-goto)
           )
+  ) ;; (use-package org
 
 
 (provide '02-mode-035-org-mode)

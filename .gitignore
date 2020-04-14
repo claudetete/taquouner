@@ -32,6 +32,7 @@
 /.emacs.d/server/
 /.emacs.d/plugins/markdown-mode-2.2/*
 /.emacs.d/plugins/realgud/*
+/.emacs.d/undo
 __pycache__
 
 

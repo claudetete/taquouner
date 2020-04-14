@@ -36,6 +36,11 @@
   :hook
   (ada-mode-hook . my-ada-mode-hook)
 
+  :bind (:map ada-mode-map
+          ;; move
+          ("<C-S-up>"   . backward-sexp)
+          ("<C-S-down>" . forward-sexp))
+
   :config
   (setq ada-build-run-cmd "./${main}.exe")
 
