@@ -215,6 +215,8 @@
   (when tqnr-section-mode-helm
     ;; isearch by helm
     (setq tqnr-section-mode-helm-swoop t)
+    ;; do not have default value when run helm swoop
+    (setq tqnr-section-mode-helm-swoop-without-pre-input t)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx t)
     ;; replace yank-pop or browse kill ring by helm-kill-ring

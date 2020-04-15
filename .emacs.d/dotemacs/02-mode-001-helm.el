@@ -142,6 +142,8 @@
     (setq helm-swoop-use-fuzzy-match t)
     ) ;; (use-package helm-swoop
 
+  ;; [VARCOMMENT.do not have default value when run helm swoop]
+  ;; [VARIABLE.tqnr-section-mode-helm-swoop-without-pre-input nil]
   (if tqnr-section-mode-helm-swoop-without-pre-input
     (use-package helm-swoop :bind ("C-S-s" . helm-swoop-without-pre-input))
     (use-package helm-swoop :bind ("C-S-s" . helm-swoop)))

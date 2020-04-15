@@ -81,10 +81,12 @@
   (setq tqnr-section-environment-package nil)
   (when tqnr-section-environment-package
     ;; PROXY: proxy setting about package management
-    (setq tqnr-profile-environment-elpa-proxy-http nil)
-    (setq tqnr-profile-environment-elpa-proxy-https nil)
+    (setq tqnr-profile-environment-package-proxy-http nil)
+    (setq tqnr-profile-environment-package-proxy-https nil)
+    ;; LOCAL PATH: proxy setting about package management
+    (setq tqnr-profile-environment-package-local-path "~/emacs-package-archives")
     ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
-    (setq tqnr-profile-environment-elpa-package-list '())
+    (setq tqnr-profile-environment-package-list '())
     ) ;; (when tqnr-section-environment-package
 
   ;; SHORTCUT: Environment shortcut to declare hook about shortcut
@@ -199,6 +201,9 @@
 (setq tqnr-section-mode t)
 (when tqnr-section-mode
 
+  ;; USE PACKAGE: Package configuration with simple and tidy macro (mandatory)
+  (setq tqnr-section-mode-use-package t)
+
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
   (setq tqnr-section-mode-helm nil)
   (when tqnr-section-mode-helm
@@ -228,9 +233,6 @@
     (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
 
-  ;; VECTRA: man and doc in emacs (never used)
-  (setq tqnr-section-mode-vectra nil)
-
   ;; HOME END: add some useful function to home and end keys
   (setq tqnr-section-mode-home-end t)
 
@@ -248,12 +250,6 @@
   ;; CEDET: "Collection of Emacs Development Environment Tools"
   (setq tqnr-section-mode-cedet t)
   (when tqnr-section-mode-cedet
-    ;; if you want to use emacs included CEDET set to nil
-    ;; otherwise set the path of cedet.el and you need to remove:
-    ;;   `your-emacs-path/lisp/cedet'
-    ;;   `your-emacs-path/lisp/speedbar.*'
-    ;;   `your-emacs-path/lisp/emacs-lisp/eieio*'
-    (setq tqnr-profile-cedet-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/cedet-1.1/common/cedet.elc"))
     ;; bin path of gnu global for cedet
     (setq tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/global.exe"))
     (setq tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/gtags.exe"))
@@ -363,8 +359,6 @@
   ;; GNU GLOBAL: Tag management mode
   (setq tqnr-section-mode-gnu-global t)
   (when tqnr-section-mode-gnu-global
-    ;; gtags interface (use modified gtags.el)
-    (setq tqnr-section-mode-gnu-global-gtags t)
     ;; ggtags interface
     (setq tqnr-section-mode-gnu-global-ggtags nil)
     ) ;; (when tqnr-section-mode-gnu-global
@@ -377,19 +371,9 @@
 
   ;; VC CLEARCASE: vc ClearCase mode (not used)
   (setq tqnr-section-mode-vc-clearcase nil)
-  (when tqnr-section-mode-vc-clearcase
-    ;; path to version tree executable
-    (setq tqnr-profile-clearcase-vtree "clearvtree.exe")
-    ;; path to cleartool executable
-    (setq tqnr-profile-cleartool "cleartool.exe")
-    ) ;; (when tqnr-section-mode-vc-clearcase
 
   ;; CLEARCASE: ClearCase mode
   (setq tqnr-section-mode-clearcase nil)
-  (when tqnr-section-mode-clearcase
-    ;; ClearCase Emacs integration
-    (setq tqnr-section-mode-clearcase-el nil)
-    ) ;; (when tqnr-section-mode-clearcase
 
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq tqnr-section-mode-autohotkey t)
@@ -410,7 +394,7 @@
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (setq tqnr-section-mode-fill-column-indicator nil)
   (when tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default 1 (nil)
+    ;; pixel width of vertical line default is 1 (nil)
     (setq tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (setq tqnr-profile-fill-column-indicator-vertical-line-color nil)
@@ -469,7 +453,7 @@
   ;; NYAN: add bar in modeline given position in buffer
   (setq tqnr-section-mode-nyan nil)
 
-  ;; SML: show position in a scollbar
+  ;; SML: show position in modeline as a scrollbar
   (setq tqnr-section-mode-sml nil)
 
   ;; DIRED: change option to command ls for dired mode
@@ -504,14 +488,6 @@
 
   ;; ACK: search with ack (no more grep) (need perl interpreter)
   (setq tqnr-section-mode-ack nil)
-  (when tqnr-section-mode-ack
-    ;; Full-ack mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-full nil)
-    ;; ack and half mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-and-half nil)
-    ;; ack-emacs mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-emacs nil)
-    ) ;; (when tqnr-section-mode-ack
 
   ;; ACE JUMP
   ;; move quickly and easily with ace jump
@@ -715,7 +691,7 @@
   ;; FLEX ISEARCH: Flex Isearch mode add fuzzy match when doing incremental search
   (setq tqnr-section-mode-flex-isearch nil)
 
-  ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
+  ;; ORG JIRA: Sync JIRA issues with org-mode issues
   (setq tqnr-section-mode-org-jira nil)
 
   ;; GNUPLOT: Major mode for editing gnuplot scripts
@@ -750,6 +726,12 @@
     ;; set org directory where every org file will goes
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
+
+  ;; HEADER2: Create/Update header of files
+  (setq tqnr-section-mode-header2 nil)
+
+  ;; LSP MODE: Lsp mode
+  (setq tqnr-section-mode-lsp-mode nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)

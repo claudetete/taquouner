@@ -122,10 +122,12 @@
   (setq tqnr-section-environment-package nil)
   (when tqnr-section-environment-package
     ;; PROXY: proxy setting about package management
-    (setq tqnr-profile-environment-elpa-proxy-http nil)
-    (setq tqnr-profile-environment-elpa-proxy-https nil)
+    (setq tqnr-profile-environment-package-proxy-http nil)
+    (setq tqnr-profile-environment-package-proxy-https nil)
+    ;; LOCAL PATH: proxy setting about package management
+    (setq tqnr-profile-environment-package-local-path "~/emacs-package-archives")
     ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
-    (setq tqnr-profile-environment-elpa-package-list '())
+    (setq tqnr-profile-environment-package-list '())
     ) ;; (when tqnr-section-environment-package
 
   ;; SHORTCUT: Environment shortcut to declare hook about shortcut
@@ -271,7 +273,6 @@
     ;; enable Helm everywhere when asking file
     (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
-
   ;; HOME END: add some useful function to home and end keys
   (setq tqnr-section-mode-home-end t)
 
@@ -289,12 +290,6 @@
   ;; CEDET: "Collection of Emacs Development Environment Tools"
   (setq tqnr-section-mode-cedet nil)
   (when tqnr-section-mode-cedet
-    ;; if you want to use emacs included CEDET set to nil
-    ;; otherwise set the path of cedet.el and you need to remove:
-    ;;   `your-emacs-path/lisp/cedet'
-    ;;   `your-emacs-path/lisp/speedbar.*'
-    ;;   `your-emacs-path/lisp/emacs-lisp/eieio*'
-    (setq tqnr-profile-cedet-path nil)
     ;; bin path of gnu global for cedet
     (setq tqnr-profile-gnu-global (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/global.exe"))
     (setq tqnr-profile-gnu-global-gtags (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_656wb/bin/gtags.exe"))
@@ -427,7 +422,7 @@
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (setq tqnr-section-mode-fill-column-indicator nil)
   (when tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default 1 (nil)
+    ;; pixel width of vertical line default is 1 (nil)
     (setq tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (setq tqnr-profile-fill-column-indicator-vertical-line-color nil)

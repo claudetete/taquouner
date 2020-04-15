@@ -734,7 +734,7 @@
   (setq tqnr-section-mode-lsp-mode nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
-  (setq tqnr-section-mode-diminish t)
+  (setq tqnr-section-mode-diminish nil)
   ) ;; (when tqnr-section-mode
 
 ;; LANGUAGES: Set style and/or indentation for multiple languages
