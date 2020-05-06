@@ -26,7 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.replace the undo built in function]
-;; [SUBDEFAULT.t]
+;; [SUBDEFAULT.nil]
 ;; deprecated, replaced by undo-fu (without tree visual)
 
 

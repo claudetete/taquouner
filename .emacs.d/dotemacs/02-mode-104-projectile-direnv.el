@@ -1,4 +1,4 @@
-;;; 02-mode-099-undo-fu.el --- configuration of undo fu mode -*- lexical-binding: t -*-
+;;; 02-mode-104-projectile-direnv.el --- configuration of projectile-direnv -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2020 Claude Tete
 ;;
@@ -19,25 +19,32 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
-;; Created: February 2020
-;; Last-Updated: April 2020
+;; Version: 0.1
+;; Created: May 2020
+;; Last-Updated: May 2020
 
 ;;; Commentary:
 ;;
-;; [SUBHEADER.replace the undo built in function without same problem than undo-tree]
-;; [SUBDEFAULT.t]
+;; [SUBHEADER.Projectile direnv mode to set environment variable as found in direnv config]
+;; [SUBDEFAULT.nil]
 
 
 ;;; Code:
-(use-package undo-fu
-  :bind
-  ("C-_"   . undo-fu-only-undo)
-  ("M-_"   . undo-fu-only-redo)
-  ("C-M-_" . undo-fu-only-redo-all)
-  ) ;; (use-package undo-fu
+(when tqnr-section-mode-projectile
+  (use-package projectile-direnv
+    :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/projectile-direnv.el"))
+
+    :init
+    (projectile-direnv-global-mode t)
+
+    :config
+    (setq projectile-direnv-make-local t)
+    (setq projectile-direnv-exec-path-mandatory exec-path-init)
+
+    ) ;; (use-package projectile-direnv
+  ) ;; (when tqnr-section-mode-projectile
 
 
-(provide '02-mode-099-undo-fu)
+(provide '02-mode-104-projectile-direnv)
 
-;;; 02-mode-099-undo-fu.el ends here
+;;; 02-mode-104-projectile-direnv.el ends here

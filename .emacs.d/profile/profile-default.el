@@ -240,6 +240,9 @@
 (setq tqnr-section-mode t)
 (when tqnr-section-mode
 
+  ;; USE PACKAGE: Package configuration with simple and tidy macro (mandatory)
+  (setq tqnr-section-mode-use-package t)
+
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
   (setq tqnr-section-mode-helm nil)
   (when tqnr-section-mode-helm
@@ -268,9 +271,6 @@
     ;; enable Helm everywhere when asking file
     (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
-
-  ;; VECTRA: man and doc in emacs (never used)
-  (setq tqnr-section-mode-vectra nil)
 
   ;; HOME END: add some useful function to home and end keys
   (setq tqnr-section-mode-home-end t)
@@ -392,8 +392,6 @@
   ;; GNU GLOBAL: Tag management mode
   (setq tqnr-section-mode-gnu-global nil)
   (when tqnr-section-mode-gnu-global
-    ;; gtags interface (use modified gtags.el)
-    (setq tqnr-section-mode-gnu-global-gtags nil)
     ;; ggtags interface
     (setq tqnr-section-mode-gnu-global-ggtags nil)
     ) ;; (when tqnr-section-mode-gnu-global
@@ -406,19 +404,9 @@
 
   ;; VC CLEARCASE: vc ClearCase mode (not used)
   (setq tqnr-section-mode-vc-clearcase nil)
-  (when tqnr-section-mode-vc-clearcase
-    ;; path to version tree executable
-    (setq tqnr-profile-clearcase-vtree "clearvtree.exe")
-    ;; path to cleartool executable
-    (setq tqnr-profile-cleartool "cleartool.exe")
-    ) ;; (when tqnr-section-mode-vc-clearcase
 
   ;; CLEARCASE: ClearCase mode
   (setq tqnr-section-mode-clearcase nil)
-  (when tqnr-section-mode-clearcase
-    ;; ClearCase Emacs integration
-    (setq tqnr-section-mode-clearcase-el nil)
-    ) ;; (when tqnr-section-mode-clearcase
 
   ;; AUTOHOTKEY: AutoHotKey mode
   (setq tqnr-section-mode-autohotkey t)
@@ -498,7 +486,7 @@
   ;; NYAN: add bar in modeline given position in buffer
   (setq tqnr-section-mode-nyan nil)
 
-  ;; SML: show position in a scollbar
+  ;; SML: show position in modeline as a scrollbar
   (setq tqnr-section-mode-sml nil)
 
   ;; DIRED: change option to command ls for dired mode
@@ -533,14 +521,6 @@
 
   ;; ACK: search with ack (no more grep) (need perl interpreter)
   (setq tqnr-section-mode-ack nil)
-  (when tqnr-section-mode-ack
-    ;; Full-ack mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-full nil)
-    ;; ack and half mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-and-half nil)
-    ;; ack-emacs mode to interface ack with emacs
-    (setq tqnr-section-mode-ack-emacs nil)
-    ) ;; (when tqnr-section-mode-ack
 
   ;; ACE JUMP
   ;; move quickly and easily with ace jump
@@ -744,7 +724,7 @@
   ;; FLEX ISEARCH: Flex Isearch mode add fuzzy match when doing incremental search
   (setq tqnr-section-mode-flex-isearch nil)
 
-  ;; ORG JIRA: Flex Isearch mode add fuzzy match when doing incremental search
+  ;; ORG JIRA: Sync JIRA issues with org-mode issues
   (setq tqnr-section-mode-org-jira nil)
 
   ;; GNUPLOT: Major mode for editing gnuplot scripts
@@ -779,6 +759,18 @@
     ;; set org directory where every org file will goes
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
+
+  ;; HEADER2: Create/Update header of files
+  (setq tqnr-section-mode-header2 nil)
+
+  ;; LSP MODE: Lsp mode
+  (setq tqnr-section-mode-lsp-mode nil)
+
+  ;; LUA MODE: Lua mode
+  (setq tqnr-section-mode-lua-mode nil)
+
+  ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
+  (setq tqnr-section-mode-projectile-direnv nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)

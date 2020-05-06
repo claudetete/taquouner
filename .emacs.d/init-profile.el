@@ -699,6 +699,12 @@
   ;; LSP MODE: Lsp mode
   (defvar tqnr-section-mode-lsp-mode nil)
 
+  ;; LUA MODE: Lua mode
+  (defvar tqnr-section-mode-lua-mode nil)
+
+  ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
+  (defvar tqnr-section-mode-projectile-direnv nil)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
   ) ;; (progn ;; tqnr-section-mode

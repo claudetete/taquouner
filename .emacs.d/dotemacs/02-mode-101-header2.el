@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: April 2020
-;; Last-Updated: April 2020
+;; Last-Updated: May 2020
 
 ;;; Commentary:
 ;;
@@ -123,9 +123,9 @@
       (insert (format "%0d.%0d" v-major (1+ v-minor)))))
 
   (setq file-header-update-alist ())
-  (register-file-header-action "Copyright (c)[ ]*" #'header-update-copyright)
-  (register-file-header-action "Version[ \t]*:[ ]*" #'header-update-version)
-  (register-file-header-action "Last-Updated[ \t]*:[ ]*" 'update-last-modified-date)
+  (register-file-header-action "Copyright (c) " #'header-update-copyright)
+  (register-file-header-action "Version[ \t]*: " #'header-update-version)
+  (register-file-header-action "Last-Updated[ \t]*: " 'update-last-modified-date)
 
   ;; override header2.el to remove call of end-of-line
   (defun header-multiline ()

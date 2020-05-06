@@ -1,6 +1,6 @@
 ;;; 00-environment.el --- a config file for environment settings -*- lexical-binding: t -*-
 
-;; Copyright (c) 2006-2019 Claude Tete
+;; Copyright (c) 2006-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 3.4
+;; Version: 3.5
 ;; Created: October 2006
-;; Last-Updated: March 2019
+;; Last-Updated: May 2020
 
 ;;; Commentary:
 ;; [HEADER.Environment check and configuration]
@@ -186,6 +186,7 @@
   ;; need to use (list ) instead of '() to be able to use variable in it see https://stackoverflow.com/questions/24188100/using-mapconcat-to-concatenate-a-list-containing-a-variable
   (setenv "PATH" (concat (mapconcat 'identity tqnr-profile-path ";") ";" (getenv "PATH")))
   ;; emacs can also search in this path exec for external tool
+  (defvar exec-path-init exec-path)
   (setq exec-path (append tqnr-profile-path exec-path))
   ;; [COMMENT.]
   ;; [VARCOMMENT.LOCALE: languages settings about subversion and dired]

@@ -694,6 +694,12 @@
   ;; LSP MODE: Lsp mode
   (setq tqnr-section-mode-lsp-mode t)
 
+  ;; LUA MODE: Lua mode
+  (setq tqnr-section-mode-lua-mode t)
+
+  ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
+  (setq tqnr-section-mode-projectile-direnv t)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
   ) ;; (when tqnr-section-mode
@@ -1083,6 +1089,7 @@
       ;; load theme color
       (add-to-list 'custom-theme-load-path theme-path)
       (load-theme 'sanityinc-tomorrow-dark t)
+      (setq powerline-height 27)
       ;; needed to avoid error in colors
       (powerline-reset)))
 
