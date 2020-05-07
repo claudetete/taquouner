@@ -1,5 +1,4 @@
 ;;; profile-thales-avionics-local.el --- a config file for profile
-;;; profile-thales-avionics-local.el --- a config file for profile
 
 ;; Copyright (c) 2017-2020 Claude Tete
 ;;
@@ -736,6 +735,12 @@
 
   ;; LSP MODE: Lsp mode
   (setq tqnr-section-mode-lsp-mode nil)
+
+  ;; LUA MODE: Lua mode
+  (setq tqnr-section-mode-lua-mode nil)
+
+  ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
+  (setq tqnr-section-mode-projectile-direnv t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)

@@ -273,6 +273,7 @@
     ;; enable Helm everywhere when asking file
     (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
+
   ;; HOME END: add some useful function to home and end keys
   (setq tqnr-section-mode-home-end t)
 
@@ -614,6 +615,10 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
   (setq tqnr-section-mode-elpy nil)
+  (when tqnr-section-mode-elpy
+    ;; override path for created elpy virtualenv (should have rights to execute)
+    (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
+    )
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens nil)

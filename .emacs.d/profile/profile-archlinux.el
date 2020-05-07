@@ -549,6 +549,10 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
   (setq tqnr-section-mode-elpy t)
+  (when tqnr-section-mode-elpy
+    ;; override path for created elpy virtualenv (should have rights to execute)
+    (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
+    )
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens t)

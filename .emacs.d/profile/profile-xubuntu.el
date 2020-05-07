@@ -542,6 +542,10 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
   (setq tqnr-section-mode-elpy nil)
+  (when tqnr-section-mode-elpy
+    ;; override path for created elpy virtualenv (should have rights to execute)
+    (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
+    )
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens nil)
@@ -688,6 +692,12 @@
 
   ;; LSP MODE: Lsp mode
   (setq tqnr-section-mode-lsp-mode nil)
+
+  ;; LUA MODE: Lua mode
+  (setq tqnr-section-mode-lua-mode nil)
+
+  ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
+  (setq tqnr-section-mode-projectile-direnv nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
