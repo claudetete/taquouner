@@ -66,7 +66,7 @@
   ;; set with max value
   (setq scroll-conservatively most-positive-fixnum)
   ;; do nothing ?
-  ;;(setq auto-window-vscroll nil)
+  (setq auto-window-vscroll nil)
 
   ;; do not work under ms window and small font (100 lines by window)
   ;;(when (try-require 'smooth-scrolling)

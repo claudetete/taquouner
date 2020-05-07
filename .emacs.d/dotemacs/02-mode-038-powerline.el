@@ -56,7 +56,21 @@
     '((t (:inherit mode-line-inactive)))
     "Powerline face 0."
     :group 'powerline)
-  
+  (defface powerline-highlight-active1 '((t (:inherit mode-line)))
+    "Powerline face 0."
+    :group 'powerline)
+  (defface powerline-highlight-inactive1
+    '((t (:inherit mode-line-inactive)))
+    "Powerline face 0."
+    :group 'powerline)
+  (defface powerline-highlight-active2 '((t (:inherit mode-line)))
+    "Powerline face 0."
+    :group 'powerline)
+  (defface powerline-highlight-inactive2
+    '((t (:inherit mode-line-inactive)))
+    "Powerline face 0."
+    :group 'powerline)
+
   (defun powerline-my-theme ()
     "Setup a mode-line."
     (interactive)
@@ -79,12 +93,18 @@
                                   'powerline-inactive2))
                    ;; face for highlight
                    (face-warning `(:height 1.5
-                                    :foreground ,(face-foreground (if active 'powerline-highlight-active0 'powerline-highlight-inactive0))
-                                    :background ,(face-background (if active 'powerline-highlight-active0 'powerline-highlight-inactive0))))
-                   (face-function `(:foreground ,(face-foreground (if active 'font-lock-function-name-face 'powerline-inactive0))
-                                     :background ,(face-background (if active 'powerline-active2 'powerline-inactive2))))
-                   (face-project `(:foreground ,(face-background (if active 'powerline-active0 'powerline-inactive0))
-                                     :background ,(face-background (if active 'powerline-active1 'powerline-inactive1))))
+                                    :foreground ,(face-foreground (if active 'powerline-highlight-active0
+                                                                    'powerline-highlight-inactive0))
+                                    :background ,(face-background (if active 'powerline-highlight-active0
+                                                                    'powerline-highlight-inactive0))))
+                   ;; (face-project `(:foreground ,(face-background (if active 'powerline-highlight-active1 'powerline-inactive1))
+                   ;;                   :background ,(face-background (if active 'powerline-highlight-active1 'powerline-inactive1))))
+                   (face-project (if active 'powerline-highlight-active1
+                                    'powerline-highlight-inactive1))
+                   ;; (face-function `(:foreground ,(face-foreground (if active 'font-lock-function-name-face 'powerline-inactive2))
+                   ;;                   :background ,(face-background (if active 'powerline-active2 'powerline-inactive2))))
+                   (face-function (if active 'powerline-highlight-active2
+                                    'powerline-highlight-inactive2))
                    (separator-left
                      (intern (format "powerline-%s-%s"
                                (powerline-current-separator)

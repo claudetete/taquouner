@@ -68,6 +68,11 @@
   ;; found at https://github.com/jorgenschaefer/elpy/issues/733
   (setq python-shell-unbuffered nil)
 
+  ;; [VARCOMMENT.override path for created elpy virtualenv (should have rights to execute)]
+  ;; [VARIABLE.tqnr-section-mode-elpy-rpc-virtualenv-path nil]
+  (when tqnr-section-mode-elpy-rpc-virtualenv-path
+    (setq elpy-rpc-virtualenv-path tqnr-section-mode-elpy-rpc-virtualenv-path))
+
   ;; add customize compile command line to execute current python file
   ;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
   :hook

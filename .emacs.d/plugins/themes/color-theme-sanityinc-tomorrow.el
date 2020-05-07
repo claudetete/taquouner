@@ -1345,9 +1345,13 @@ names to which it refers are bound."
       (powerline-highlight-inactive0 (:foreground ,red :background ,comment))
       (powerline-active1 (:foreground ,foreground :background ,highlight))
       (powerline-inactive1 (:foreground ,foreground :background ,highlight))
+      (powerline-highlight-active1 (:foreground ,orange :background ,highlight))
+      (powerline-highlight-inactive1 (:foreground ,foreground :background ,highlight))
       (powerline-active2 (:foreground ,foreground :background ,low-contrast-bg))
       (powerline-inactive2 (:foreground ,foreground :background ,low-contrast-bg))
-      
+      (powerline-highlight-active2 (:foreground ,orange :background ,low-contrast-bg))
+      (powerline-highlight-inactive2 (:foreground ,foreground :background ,low-contrast-bg))
+
       ;; Powerline-evil
       (powerline-evil-base-face (:inherit mode-line :foreground ,background))
       (powerline-evil-emacs-face (:inherit powerline-evil-base-face :background ,purple))
@@ -1512,8 +1516,8 @@ names to which it refers are bound."
       (cscope-separator-face (:bold t :overline t :underline t :foreground ,purple))
 
       ;; yascroll
-      (yascroll:thumb-text-area (:background ,green))
-      (yascroll:thumb-fringe (:foreground ,green :background ,green))
+      (yascroll:thumb-text-area (:background ,foreground))
+      (yascroll:thumb-fringe (:foreground ,foreground :background ,foreground))
 
       ;; ztree
       (ztreep-arrow-face (:foreground ,highlight))

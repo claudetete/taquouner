@@ -387,13 +387,17 @@ Should contain 2 %s constructs to allow for theme name and directory/prefix")
 
      ;; powerline
      (powerline-active0                         (:background gruvbox-bright_yellow :foreground gruvbox-dark0_hard))
+     (powerline-highlight-active0               (:background gruvbox-bright_yellow :foreground gruvbox-bright_red))
      (powerline-active1                         (:background gruvbox-dark2 :foreground gruvbox-light0))
+     (powerline-highlight-active1               (:background gruvbox-dark2 :foreground gruvbox-bright_yellow))
      (powerline-active2                         (:background gruvbox-dark0 :foreground gruvbox-light0))
-     (powerline-highlight-active0               (:background gruvbox-dark4 :foreground gruvbox-bright_red))
-     (powerline-inactive0                       (:background gruvbox-faded_yellow :foreground gruvbox-dark0))
+     (powerline-highlight-active2               (:background gruvbox-dark0 :foreground gruvbox-bright_yellow))
+     (powerline-inactive0                       (:background gruvbox-light2 :foreground gruvbox-dark0_hard))
+     (powerline-highlight-inactive0             (:background gruvbox-light2 :foreground gruvbox-dark0_hard))
      (powerline-inactive1                       (:background gruvbox-dark2 :foreground gruvbox-light2))
+     (powerline-highlight-inactive1             (:background gruvbox-dark2 :foreground gruvbox-light2))
      (powerline-inactive2                       (:background gruvbox-dark0 :foreground gruvbox-light2))
-     (powerline-highlight-inactive0             (:background gruvbox-dark2 :foreground gruvbox-faded_red))
+     (powerline-highlight-inactive2             (:background gruvbox-dark0 :foreground gruvbox-light2))
 
      ;; isearch
      (isearch                                   (:foreground gruvbox-black :background gruvbox-bright_orange))
@@ -765,6 +769,9 @@ Should contain 2 %s constructs to allow for theme name and directory/prefix")
      (gnus-cite-11                (:foreground gruvbox-faded_orange))
      (gnus-signature              (:foreground gruvbox-faded_orange))
      (gnus-x-face                 (:background gruvbox-dark4 :foreground gruvbox-light0))
+
+     (yascroll:thumb-text-area (:background gruvbox-bright_yellow))
+     (yascroll:thumb-fringe    (:foreground gruvbox-bright_yellow :background gruvbox-bright_yellow))
 
      ),@body))
 

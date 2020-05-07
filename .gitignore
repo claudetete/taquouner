@@ -41,3 +41,5 @@ __pycache__
 /.emacs.d/plugins/elpa/*
 /.emacs.d/plugins/elpa/*
 /.emacs.d/undo/*
+
+/.emacs.d/elpy/*

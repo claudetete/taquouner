@@ -44,7 +44,7 @@
   (push "*vc*" popwin:special-display-config)
   (push "*vc-diff*" popwin:special-display-config)
   (push '("*Apropos*" :stick t) popwin:special-display-config)
-  (push '("*Occur*" :stick t :inside t) popwin:special-display-config)
+  (push '("*Occur*" :stick t) popwin:special-display-config)
   (push "*shell*" popwin:special-display-config)
   (push '("*Help*" :stick t) popwin:special-display-config)
   (push '("*Backtrace*" :stick t) popwin:special-display-config)

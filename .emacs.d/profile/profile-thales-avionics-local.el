@@ -586,6 +586,10 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
   (setq tqnr-section-mode-elpy t)
+  (when tqnr-section-mode-elpy
+    ;; override path for created elpy virtualenv (should have rights to execute)
+    (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
+    )
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens t)
@@ -924,8 +928,7 @@
     ;; theme to be used, do not use it with terminal
     ;; (setq tqnr-profile-color-theme "solarized-light")
     ;;(setq tqnr-profile-color-theme "labburn")
-    ;;(setq tqnr-profile-color-theme "gruvbox-dark-hard")
-    (setq tqnr-profile-color-theme nil)
+    (setq tqnr-profile-color-theme "gruvbox-dark-hard")
     ;; useful to not have bold or italic in doom theme
     (custom-set-variables
       '(doom-themes-enable-bold nil)
@@ -1135,9 +1138,6 @@
   ;; reduce magit slow on windows
   (setq w32-pipe-read-delay 0)
 
-  ;; load theme color
-  (add-to-list 'custom-theme-load-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/color-theme-sanityinc-tomorrow"))
-  (load-theme 'gruvbox t)
   ;; needed to avoid error in colors
   (powerline-reset)
 

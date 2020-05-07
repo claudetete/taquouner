@@ -204,6 +204,7 @@
   (when (and tqnr-section-environment-os-recognition tqnr-running-on-ms-windows)
     (setenv "CYGWIN" "nodosfilewarning")
     (setq w32-get-true-file-attributes nil)
+    (setq inhibit-compacting-font-caches t)
     )
   (if (>= emacs-major-version 25)
     ;;
