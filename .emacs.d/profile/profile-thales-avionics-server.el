@@ -718,7 +718,7 @@
   (setq tqnr-section-mode-undo-fu t)
 
   ;; UNDO FU SESSION: Save & recover undo steps between Emacs sessions
-  (setq tqnr-section-mode-undo-fu-session t)
+  (setq tqnr-section-mode-undo-fu-session nil)
   (when tqnr-section-mode-undo-fu-session
     ;; set undo fu session directory where every undo will be stored
     (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
