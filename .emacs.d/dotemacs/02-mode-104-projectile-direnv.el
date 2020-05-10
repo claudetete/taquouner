@@ -34,10 +34,8 @@
   (use-package projectile-direnv
     :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/projectile-direnv.el"))
 
-    :init
-    (projectile-direnv-global-mode t)
-
     :config
+    (projectile-direnv-global-mode t)
     (setq projectile-direnv-make-local t)
     (setq projectile-direnv-exec-path-mandatory exec-path-init)
 

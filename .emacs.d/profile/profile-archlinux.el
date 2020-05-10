@@ -707,7 +707,7 @@
   (setq tqnr-section-mode-projectile-direnv t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
-  (setq tqnr-section-mode-diminish t)
+  (setq tqnr-section-mode-diminish nil)
   ) ;; (when tqnr-section-mode
 
 ;; LANGUAGES: Set style and/or indentation for multiple languages
@@ -897,7 +897,7 @@
     ;;(setq tqnr-profile-color-theme "solarized-light")
     ;;(setq tqnr-profile-color-theme "gruvbox-dark-hard")
     ;;(setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; almost perfect (need to custom powerline color)
-    (setq tqnr-profile-color-theme nil) ;; use custom theme see function-to-call-after-loading-conf
+    (setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; use custom theme see function-to-call-after-loading-conf
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq tqnr-section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
