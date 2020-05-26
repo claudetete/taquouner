@@ -125,7 +125,7 @@
     (setq tqnr-profile-environment-package-proxy-http nil)
     (setq tqnr-profile-environment-package-proxy-https nil)
     ;; LOCAL PATH: proxy setting about package management
-    (setq tqnr-profile-environment-package-local-path "~/emacs-package-archives")
+    (setq tqnr-profile-environment-package-local-path nil)
     ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
     (setq tqnr-profile-environment-package-list '())
     ) ;; (when tqnr-section-environment-package
@@ -618,7 +618,7 @@
   (when tqnr-section-mode-elpy
     ;; override path for created elpy virtualenv (should have rights to execute)
     (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
-    )
+    ) ;; (when tqnr-section-mode-elpy
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens nil)
@@ -756,7 +756,7 @@
   (when tqnr-section-mode-undo-fu-session
     ;; set undo fu session directory where every undo will be stored
     (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
-    ;; set org directory where every org file will goes
+    ;; set file size limit about session save file
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
 

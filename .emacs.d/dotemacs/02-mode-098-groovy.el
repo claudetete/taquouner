@@ -37,7 +37,7 @@
   :config
   (setq groovy-indent-offset 2)
 
-  :hook (groovy-mode-hook .
+  :hook (groovy-mode .
           (lambda ()
             (c-set-offset 'arglist-intro 2)
             (c-set-offset 'label 2)))

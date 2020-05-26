@@ -31,7 +31,7 @@
 
 ;;; Code:
 (use-package doxymacs
-  :hook (c-mode-common-hook . doxymacs-mode)
+  :hook (c-mode-common . doxymacs-mode)
   :config
   (defvar doxymacs-doxygen-style "JavaDoc")
   (defun my-doxymacs-font-lock-hook ()

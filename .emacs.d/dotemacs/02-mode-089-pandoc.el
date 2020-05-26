@@ -33,7 +33,7 @@
 
 ;;; Code:
 (use-package pandoc-mode
-  :hook fitnesse-mode-hook)
+  :hook fitnesse-mode)
 
 
 (provide '02-mode-089-pandoc)

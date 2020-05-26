@@ -32,7 +32,7 @@
 ;;; Code:
 (use-package fill-column-indicator
   :config
-  ;; [VARCOMMENT.pixel width of vertical line default 1 (nil)]
+  ;; [VARCOMMENT.pixel width of vertical line default is 1 (nil)]
   ;; [VARIABLE.tqnr-profile-fill-column-indicator-vertical-line-width nil]
   (when tqnr-profile-fill-column-indicator-vertical-line-width
     (setq fci-rule-width tqnr-profile-fill-column-indicator-vertical-line-width))
@@ -58,25 +58,25 @@
 ;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-c nil]
 (when tqnr-profile-fill-column-indicator-mode-c
   (use-package fill-column-indicator
-    :hook (c-mode-hook . fci-mode)))
+    :hook (c-mode . fci-mode)))
 
 ;; [VARCOMMENT.enable vertical line in C++ mode]
 ;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-c++ nil]
 (when tqnr-profile-fill-column-indicator-mode-c++
   (use-package fill-column-indicator
-    :hook (c++-mode-hook . fci-mode)))
+    :hook (c++-mode . fci-mode)))
 
 ;; [VARCOMMENT.enable vertical line in ADA mode]
 ;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-ada nil]
 (when tqnr-profile-fill-column-indicator-mode-ada
   (use-package fill-column-indicator
-    :hook (ada-mode-hook . fci-mode)))
+    :hook (ada-mode . fci-mode)))
 
 ;; [VARCOMMENT.enable vertical line in all mode]
 ;; [VARIABLE.tqnr-profile-fill-column-indicator-mode-all nil]
 (when tqnr-profile-fill-column-indicator-mode-all
   (use-package fill-column-indicator
-    :hook (after-change-major-mode-hook . fci-mode)))
+    :hook (after-change-major-mode . fci-mode)))
 
 ;; do not enable truncate-line when not wanted
 (when tqnr-section-annoyances-truncate-line

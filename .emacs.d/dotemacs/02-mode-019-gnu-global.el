@@ -54,9 +54,9 @@
             )
 
     :hook
-    (c-mode-hook        . helm-gtags-mode)
-    (ada-mode-hook      . 'helm-gtags-mode)
-    (c-mode-common-hook .
+    (c-mode        . helm-gtags-mode)
+    (ada-mode      . helm-gtags-mode)
+    (c-mode-common .
       (lambda ()
         (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
           (ggtags-mode 1)))))

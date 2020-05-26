@@ -82,7 +82,7 @@
   (use-package helm
     :hook
     ;; quit helm when hide compile window
-    (ecb-toggle-compile-hide-hook . helm-keyboard-quit)))
+    (ecb-toggle-compile-hide . helm-keyboard-quit)))
 
 
 (when (and tqnr-section-mode-helm-bookmark tqnr-section-mode-helm-find-files)
@@ -211,8 +211,8 @@
 (when tqnr-section-mode-helm-bookmark
   (use-package helm
     :hook
-    (c-mode-common-hook . (lambda () (local-unset-key (kbd "C-c C-b"))))
-    (ada-mode-hook      . (lambda () (local-unset-key (kbd "C-c C-b"))))
+    (c-mode-common . (lambda () (local-unset-key (kbd "C-c C-b"))))
+    (ada-mode      . (lambda () (local-unset-key (kbd "C-c C-b"))))
     :bind
     ;; override bookmark-bmenu-list from 08-shortcut-02-buffer
     ("C-c C-b" . helm-bookmarks)

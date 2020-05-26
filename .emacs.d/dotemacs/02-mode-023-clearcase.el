@@ -44,7 +44,7 @@
 (when tqnr-section-mode-cedet-ecb
   (use-package clearcase
     :hook
-    (clearcase-config-spec-quit-hook . ecb-toggle-compile)))
+    (clearcase-config-spec-quit . ecb-toggle-compile)))
 
 
 (provide '02-mode-023-clearcase)

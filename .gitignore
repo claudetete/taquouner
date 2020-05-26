@@ -43,3 +43,4 @@ __pycache__
 /.emacs.d/undo/*
 
 /.emacs.d/elpy/*
+/.emacs.d/plugins/ada-mode*

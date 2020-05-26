@@ -552,6 +552,10 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
   (defvar tqnr-section-mode-elpy nil)
+  (progn ;; tqnr-section-mode-elpy
+    ;; override path for created elpy virtualenv (should have rights to execute)
+    (defvar tqnr-section-mode-elpy-rpc-virtualenv-path nil)
+    ) ;; (progn ;; tqnr-section-mode-elpy
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (defvar tqnr-section-mode-smartparens nil)
@@ -689,7 +693,7 @@
   (progn ;; tqnr-section-mode-undo-fu-session
     ;; set undo fu session directory where every undo will be stored
     (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
-    ;; set org directory where every org file will goes
+    ;; set file size limit about session save file
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (progn ;; tqnr-section-mode-undo-fu-session
 

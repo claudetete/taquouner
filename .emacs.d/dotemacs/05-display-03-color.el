@@ -107,7 +107,7 @@
       ;; set read only
       (toggle-read-only))
     ;; add this function to compile buffer filter hook
-    :hook (compilation-filter-hook . colorize-compilation-buffer))
+    :hook (compilation-filter . colorize-compilation-buffer))
   (message "      Ansi color for Compile... Done"))
 
 

@@ -182,20 +182,20 @@
     :hook
     ;; hides the extra compile-window directly after the start of ECB
     ;; function from EmacsWiki was not working so I modify it
-    (ecb-activate-hook . (lambda ()
+    (ecb-activate . (lambda ()
        (when (equal 'visible (ecb-compile-window-state))
          (ecb-toggle-compile-window -1))))
     ;; unset hide before show when the ecb window is hidden and after a redraw
-    (ecb-hide-ecb-windows-after-hook . (lambda () (setq ecb-hidden-before nil)))
-    (ecb-redraw-layout-after-hook . (lambda () (setq ecb-hidden-before nil)))
+    (ecb-hide-ecb-windows-after . (lambda () (setq ecb-hidden-before nil)))
+    (ecb-redraw-layout-after . (lambda () (setq ecb-hidden-before nil)))
     ;; let ecb take control of opening of compile window
-    (ecb-activate-hook .
+    (ecb-activate .
       (lambda ()
         (let ((compwin-buffer (ecb-get-compile-window-buffer)))
           (if (not (and compwin-buffer
                      (ecb-compilation-buffer-p compwin-buffer)))
             (ecb-toggle-compile-window -1)))))
-    (compilation-filter-hook .
+    (compilation-filter .
         (lambda ()
           (ecb-goto-window-compilation)
           (end-of-buffer)))

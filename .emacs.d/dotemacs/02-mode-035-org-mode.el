@@ -63,13 +63,15 @@
     (setq initial-buffer-choice org-default-notes-file)
     )
 
+  ;; make sure shift is not bind in org mode
+  (setq org-support-shift-select 'always)
+
   :hook
   ;; Make windmove work in org-mode:
-  (org-shiftup-final-hook    . windmove-up)
-  (org-shiftleft-final-hook  . windmove-left)
-  (org-shiftdown-final-hook  . windmove-down)
-  (org-shiftright-final-hook . windmove-right)
-
+  (org-shiftup-final    . windmove-up)
+  (org-shiftleft-final  . windmove-left)
+  (org-shiftdown-final  . windmove-down)
+  (org-shiftright-final . windmove-right)
 
   :bind (
           ;; to add from everywhere a note/todo into default org file `org-default-notes-file'

@@ -37,7 +37,7 @@
 
   :hook
   ;; enable this mode in programming mode
-  (prog-mode-hook . rainbow-delimiters-mode)
+  (prog-mode . rainbow-delimiters-mode)
   ) ;; (use-package rainbow-delimiters
 
 

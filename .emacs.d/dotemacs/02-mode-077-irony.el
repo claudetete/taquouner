@@ -66,8 +66,8 @@
 (use-package irony
   :hook
   ;; install from list of packages
-  (c++-mode-hook c-mode-hook objc-mode-hook)
-  (irony-mode-hook . irony-cdb-autosetup-compile-options)
+  (c++-mode c-mode-hook objc-mode-hook)
+  (irony-mode . irony-cdb-autosetup-compile-options)
 
   :config
   (eval-after-load 'flycheck

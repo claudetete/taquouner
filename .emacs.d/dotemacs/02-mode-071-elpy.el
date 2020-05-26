@@ -58,7 +58,7 @@
     (setq elpy-modules (delq 'elpy-module-yasnippet elpy-modules))
 
     :hook
-    (elpy-mode-hook . flycheck-mode))
+    (elpy-mode . flycheck-mode))
 
   ;; enable autopep8 formatting on save
   ;;(require 'py-autopep8)
@@ -69,14 +69,14 @@
   (setq python-shell-unbuffered nil)
 
   ;; [VARCOMMENT.override path for created elpy virtualenv (should have rights to execute)]
-  ;; [VARIABLE.tqnr-section-mode-elpy-rpc-virtualenv-path nil]
+  ;; [VARIABLE.tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy")]
   (when tqnr-section-mode-elpy-rpc-virtualenv-path
     (setq elpy-rpc-virtualenv-path tqnr-section-mode-elpy-rpc-virtualenv-path))
 
   ;; add customize compile command line to execute current python file
   ;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
   :hook
-  (elpy-mode-hook .
+  (elpy-mode .
     (lambda ()
       (set (make-local-variable 'compile-command)
         (concat "python " (shell-quote-argument buffer-file-name)))))

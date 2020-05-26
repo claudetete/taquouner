@@ -34,7 +34,7 @@
 ;;; Code:
 (use-package company
   :hook
-  (after-init-hook . global-company-mode)
+  (after-init . global-company-mode)
 
   :config
   (setq company-backends (delete 'company-semantic company-backends))

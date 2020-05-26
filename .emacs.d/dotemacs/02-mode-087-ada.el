@@ -34,7 +34,7 @@
   ;; Mode hooks execute before local variables are processed, so your hooks cannot respond to local vars at that point in time
   ;; Use the regular major mode hook to add a buffer-local hack-local-variables-hook (https://www.emacswiki.org/emacs/LocalVariables)
   :hook
-  (ada-mode-hook . my-ada-mode-hook)
+  (ada-mode . my-ada-mode-hook)
 
   :bind (:map ada-mode-map
           ;; move
