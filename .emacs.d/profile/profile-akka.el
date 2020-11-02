@@ -83,6 +83,10 @@
   ;; EXECUTABLE: Set path of some exe
   (setq tqnr-section-environment-executable t)
   (when tqnr-section-environment-executable
+    ;; shell program
+    (setq tqnr-profile-shell-program "bash")
+    ;; shell program arguments
+    (setq tqnr-profile-shell-arguments "-lc")
     ;; diff program
     (setq tqnr-profile-ediff-diff-program "diff")
     (setq tqnr-profile-ediff-diff3-program "diff3")
@@ -229,6 +233,8 @@
     (setq tqnr-section-mode-helm-swoop t)
     ;; do not have default value when run helm swoop
     (setq tqnr-section-mode-helm-swoop-without-pre-input t)
+    ;; compile by helm
+    (setq tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx t)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
@@ -307,8 +313,8 @@
   ;; (ex: set in test, semi colon after test...)
   (setq tqnr-section-mode-cwarn nil)
 
-  ;; C DATA DEBUG: ?? (never manage to make it work)
-  (setq tqnr-section-mode-c-data-debug nil)
+  ;; SWIPER: Isearch alternative with fuzzy using ivy
+  (setq tqnr-section-mode-swiper nil)
 
   ;; ICOMPLETION: more completion in minibuffer
   (setq tqnr-section-mode-icompletion nil)
@@ -338,8 +344,8 @@
     (setq tqnr-section-mode-gnu-global-ggtags t)
     ) ;; (when tqnr-section-mode-gnu-global
 
-  ;; EPROJECT: (grischka): project management mode (never used)
-  (setq tqnr-section-mode-eproject nil)
+  ;; COUNSEL COMPILE: Use ivy to select a compile command.
+  (setq tqnr-section-mode-counsel-compile nil)
 
   ;; RTRT SCRIPT: rtrt script mode (syntax coloration)
   (setq tqnr-section-mode-rtrt-script nil)
@@ -369,7 +375,7 @@
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (setq tqnr-section-mode-fill-column-indicator nil)
   (when tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default 1 (nil)
+    ;; pixel width of vertical line default is 1 (nil)
     (setq tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (setq tqnr-profile-fill-column-indicator-vertical-line-color nil)
@@ -564,7 +570,7 @@
   (when tqnr-section-mode-elpy
     ;; override path for created elpy virtualenv (should have rights to execute)
     (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
-    )
+    ) ;; (when tqnr-section-mode-elpy
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens t)
@@ -702,7 +708,7 @@
   (when tqnr-section-mode-undo-fu-session
     ;; set undo fu session directory where every undo will be stored
     (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
-    ;; set org directory where every org file will goes
+    ;; set file size limit about session save file
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
 

@@ -38,6 +38,7 @@
     (projectile-direnv-global-mode t)
     (setq projectile-direnv-make-local t)
     (setq projectile-direnv-exec-path-mandatory exec-path-init)
+    (setq projectile-direnv-compile-env t)
 
     ) ;; (use-package projectile-direnv
   ) ;; (when tqnr-section-mode-projectile

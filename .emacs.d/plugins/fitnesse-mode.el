@@ -1,6 +1,6 @@
 ;;; fitnesse-mode.el --- a mode to edit FitNesse MarkUp files
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2020 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -20,9 +20,9 @@
 
 ;; Keywords: fitnesse, markup, fit, wiki
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 0.1
+;; Version: 0.2
 ;; Created: November 2017
-;; Last-Updated: November 2017
+;; Last-Updated: October 2020
 
 ;;; Commentary:
 ;;
@@ -34,6 +34,8 @@
 
 
 ;;; Change Log:
+;; 2020-10-15 (0.2)
+;     add call of external formater
 ;; 2017-11-29 (0.1)
 ;;    from scratch
 
@@ -53,6 +55,31 @@
   :type 'string
   :group 'fitnesse)
 
+(defcustom fitnesse-pretty-print-executable nil
+  "FitNesse pretty print tool path."
+  :type 'string
+  :group 'fitnesse)
+
+(defcustom fitnesse-server-url nil
+  "FitNesse server url."
+  :type 'string
+  :group 'fitnesse)
+
+(defcustom fitnesse-server-port nil
+  "FitNesse server port."
+  :type 'string
+  :group 'fitnesse)
+
+(defcustom fitnesse-translate-executable nil
+  "FitNesse translate name tool path."
+  :type 'string
+  :group 'fitnesse)
+
+(defcustom fitnesse-translate-flags nil
+  "FitNesse translate name tool flags."
+  :type 'string
+  :group 'fitnesse)
+
 ;;
 ;;;
 ;;;; VARIABLES
@@ -65,9 +92,11 @@
   nil
   (progn
     (setq fitnesse-mode-map (make-sparse-keymap))
-    (define-key fitnesse-mode-map (kbd "<M-up>") #'fitnesse-up-section)
+    (define-key fitnesse-mode-map (kbd "<M-up>")   #'fitnesse-up-section)
     (define-key fitnesse-mode-map (kbd "<M-down>") #'fitnesse-down-section)
-    (define-key fitnesse-mode-map (kbd "C-c a a") #'fitnesse-align)
+    (define-key fitnesse-mode-map (kbd "C-c a a")  #'fitnesse-align)
+    (define-key fitnesse-mode-map (kbd "<f11>")    #'fitnesse-insert-debug)
+    (define-key fitnesse-mode-map (kbd "<S-f11>")  #'fitnesse-insert-get-leg-data)
     ))
 
 ;; outline support
@@ -83,7 +112,7 @@
        (1 font-lock-comment-face nil t))
     ;; collapsable section start
     '("^\\s-*\\(!\\*+[><]?\\)\\s-*\\(.*\\)\\s-*$"
-       (1 font-lock-keyword-face nil t) (2 font-lock-function-name-face nil t))
+       (1 font-lock-keyword-face nil t) (2 font-lock-string-face nil t))
     ;; collapsable section end
     '("^\\s-*\\(\\*+!\\)"
        (1 font-lock-keyword-face nil t))
@@ -92,13 +121,19 @@
        (1 font-lock-keyword-face nil t))
     ;; headers
     '("^\\s-*\\(![1-9]\\)\\(.*\\)$"
-       (1 font-lock-keyword-face nil t) (2 font-lock-function-name-face nil t))
+       (1 font-lock-keyword-face nil t) (2 font-lock-string-face nil t))
     ;; image
     '("^\\s-*\\(!img\\(?:-[rl]\\)?\\)"
        (1 font-lock-keyword-face nil t))
     ;; note
     '("^\\s-*\\(!note\\)\\(.*\\)$"
        (1 font-lock-keyword-face nil t) (2 font-lock-comment-face nil t))
+    ;; function
+    '("^\\s-*!|\\s-*\\([A-Za-z0-9_]*\\)\\s-*|"
+       (1 font-lock-function-name-face nil t))
+    ;; define
+    '("^\\s-*\\(!define\\)"
+       (1 font-lock-keyword-face nil t))
     ;; style_code
     '("\\(!style_\\(?:code\\|note\\)\\)\\[\\(.*?\\)\\]"
        (1 font-lock-variable-name-face nil t) (2 font-lock-comment-face nil t))
@@ -108,9 +143,21 @@
     ;; strike
     '("\\(--.*?--\\)"
        (1 font-lock-type-face nil t))
+    ;; variable
+    '("\\(\\$\\(?:{[A-Za-z0-9_]*?\\b}\\|[A-Za-z0-9_]*\\b\\)\\)"
+       (1 font-lock-variable-name-face nil t))
+    ;; converter
+    '("\\(\\b[A-Za-z0-9]*:\\)"
+       (1 font-lock-keyword-face nil t))
     ;; link
     '("[^\\.<A-Za-z0-9]\\(\\(?:[\\.<][A-Z][a-zA-Z0-9]*\\)\\(?:\\.[A-Z][a-zA-Z0-9]*\\)*\\(#[0-9]\\)*\\)"
        (1 font-lock-preprocessor-face nil t))
+    ;; text
+    '("^\\s-*\\([^!|\\*].*\\)$"
+       (1 font-lock-string-face nil t))
+    ;; constant
+    '("\\b\\([NEWS]?[0-9\\.]\\{1,\\}\\)\\b"
+       (1 font-lock-constant-face nil t))
     )
   "Keyword for fitnesse-mode.")
 
@@ -119,7 +166,7 @@
     ;; ''' character is punctuation
     (modify-syntax-entry ?\' "." syntax-table)
     ;; '#' character is start of comment
-    ;(modify-syntax-entry ?\# "<" syntax-table)
+    (modify-syntax-entry ?\# "<" syntax-table)
     ;; '\n' character is end of comment
     (modify-syntax-entry ?\n ">" syntax-table)
     ;; '!' character is punctuation
@@ -199,18 +246,60 @@
   (interactive)
   (re-search-forward "^\\s-*\\(\\*+!\\)"))
 
-(defun fitnesse-align ()
-  ""
+(defun fitnesse-insert-debug ()
+  "Insert a debug point.
+!| FitnesseDebug       |
+| breakPoint | etapeId |
+| true       |  |
+"
   (interactive)
-  ;; call external fitformat with current path of file
+  (insert "\n!| FitnesseDebug |\n| breakPoint | etapeId |\n| true       |  |\n\n")
+  (backward-char 4))
+
+(defun fitnesse-insert-get-leg-data ()
+  "Insert get debug info for fpln leg.
+!|Get_LegsData|ACTIVE                                                                                                                                                                                                                                          |
+|legNumber    |legType?|legIdent?|transitionType?|transitionSubtype?|legTerminaisonPosition?|legTerminaisonPositionLatitude?|legTerminaisonPositionLongitude?|turnDirectionConstraint?|trueCourseOrTrueHeading?|courseHdgConstraintType?|discontinuityPresence?|
+|1            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |
+|2            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |
+|3            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |
+|4            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |
+|5            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |
+|6            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |
+"
+  (interactive)
+  (insert "\n!|Get_LegsData|ACTIVE                                                                                                                                                                                                                                          |\n|legNumber    |legType?|legIdent?|transitionType?|transitionSubtype?|legTerminaisonPosition?|legTerminaisonPositionLatitude?|legTerminaisonPositionLongitude?|turnDirectionConstraint?|trueCourseOrTrueHeading?|courseHdgConstraintType?|discontinuityPresence?|\n|1            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |\n|2            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |\n|3            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |\n|4            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |\n|5            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |\n|6            |        |         |               |                  |                       |                               |                                |                        |                        |                        |                      |\n\n")
   )
 
+(defun fitnesse-align ()
+  "Call external tool to pretty print region or buffer."
+  (interactive)
+  (if (use-region-p)
+    (progn
+      (message "align region with %s..." (eval fitnesse-pretty-print-executable))
+      (shell-command-on-region (region-beginning) (region-end)
+        (eval fitnesse-pretty-print-executable) t t t))
+    (progn
+      (shell-command
+        (format "%s %s"
+          (shell-quote-argument (eval fitnesse-pretty-print-executable))
+          (shell-quote-argument (buffer-file-name))))
+      (revert-buffer t t t))))
 
-;; associate context.txt files to fitnesse-mode
-(add-to-list 'auto-mode-alist '("content\\.txt\\'" . fitnesse-mode))
+(defun fitnesse-get-fit-name-from-path ()
+  (shell-command-to-string (format "%s %s %s"
+                             (shell-quote-argument (eval fitnesse-translate-executable))
+                             (shell-quote-argument (eval fitnesse-translate-flags))
+                             (shell-quote-argument (buffer-file-name)))))
 
-;; force open FitNesse files with utf-8 coding
-(modify-coding-system-alist 'file "content\\.txt\\'" 'utf-8)
+(defun fitnesse-browse ()
+  "Open current test in configured browser."
+  (interactive)
+  (let ((fit-name (fitnesse-get-fit-name-from-path)))
+    (browse-url-generic (concat fitnesse-server-url "/" fit-name))
+    )
+  )
+
 
 (provide 'fitnesse-mode)
 

@@ -82,25 +82,6 @@
           ;;("<S-prior>" . sp-beginning-of-previous-sexp)
           ;;("" . sp-end-of-next-sexp (&optional arg)             ;; none
 
-          ;; following should be disable in org-mode
-          ;; move to previous on same level or upper block
-          ("<M-up>"    . sp-backward-sexp)
-          ;; move to next on same level or upper block
-          ("<M-down>"  . sp-next-sexp)
-          ;; move to upper block at begin of block
-          ("<M-left>"  . sp-backward-up-sexp)
-          ;; move to downer block at begin of block
-          ("<M-right>" . sp-down-sexp)
-
-          ;; move to previous on same level or upper block at end of block
-          ("<M-S-up>"    . sp-previous-sexp)
-          ;; move to next on same level or upper block at end of block
-          ("<M-S-down>"  . sp-forward-sexp)
-          ;; move to downer block at end of block
-          ("<M-S-left>"  . sp-backward-down-sexp)
-          ;; move to upper block at end of block
-          ("<M-S-right>" . sp-up-sexp)
-
           ;; move to beginning of expression just after special character
           ("<M-home>" . sp-beginning-of-sexp)
           ;; move to end of expression before special character
@@ -133,6 +114,7 @@
     (add-hook 'smartparens-disabled-hook (lambda () (define-key cperl-mode-map "{" 'cperl-electric-lbrace))))
   ;; add pair < > in lisp mode
   (sp-local-pair 'emacs-lisp-mode "<" ">")
+  (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
   ;; remove pair ' ' in ada mode
   (sp-local-pair 'ada-mode "'" nil :actions nil)
   ;; remove pair ' ' in minibuffer
@@ -141,8 +123,55 @@
   ;; can be used
   ;(sp-local-pair 'fitnesse-mode "'''" "'''")
 
-  ;; to banish smartparent for org-mode (no more used, instead restricted list of shortcuts in org-mode)
-  ;; (with-eval-after-load 'org (add-to-list 'sp-ignore-modes-list #'org-mode))
+  (when tqnr-section-mode-org-mode
+    ;; to banish smartparent for org-mode (no more used, instead restricted list of shortcuts in org-mode)
+    ;; (with-eval-after-load 'org (add-to-list 'sp-ignore-modes-list #'org-mode))
+    ;; steal from http://endlessparentheses.com/define-context-aware-keys-in-emacs.html
+    (defmacro define-key-conditional (keymap key def &rest body)
+      "In KEYMAP, define key sequence KEY as DEF conditionally.
+This is like `define-key', except the definition
+\"disappears\" whenever BODY evaluates to nil."
+      (declare (indent 3)
+        (debug (form form form &rest sexp)))
+      `(define-key ,keymap ,key
+         '(menu-item ,(format "dummy-%s-%s" keymap key)
+            ,(lambda () (interactive) (message "Conditional Key"))
+            :filter (lambda (&optional _)
+                      (when ,(macroexp-progn body)
+                        ,def)))))
+    ;; custom macro to simplify for smartparens into org-mode
+    (defmacro define-key-conditional-smartparens-org (key def)
+      "In KEYMAP, define key sequence KEY as DEF conditionally.
+This is like `define-key', except the definition
+\"disappears\" whenever BODY evaluates to nil."
+      (declare (indent 3)
+        (debug (form form)))
+      `(define-key smartparens-mode-map (kbd ,key)
+         '(menu-item ,(format "dummy-smartparens-%s" key)
+            ,(lambda () (interactive) (message "Conditional Key"))
+            :filter (lambda (&optional _)
+                      (when (not (equal major-mode 'org-mode))
+                        ,def)))))
+
+    ;; move to previous on same level or upper block
+    (define-key-conditional-smartparens-org "<M-up>" #'sp-backward-sexp)
+    ;; move to next on same level or upper block
+    (define-key-conditional-smartparens-org "<M-down>"  #'sp-next-sexp)
+    ;; move to upper block at begin of block
+    (define-key-conditional-smartparens-org "<M-left>"  #'sp-backward-up-sexp)
+    ;; move to downer block at begin of block
+    (define-key-conditional-smartparens-org "<M-right>" #'sp-down-sexp)
+
+    ;; move to previous on same level or upper block at end of block
+    (define-key-conditional-smartparens-org "<M-S-up>"    #'sp-previous-sexp)
+    ;; move to next on same level or upper block at end of block
+    (define-key-conditional-smartparens-org "<M-S-down>"  #'sp-forward-sexp)
+    ;; move to downer block at end of block
+    (define-key-conditional-smartparens-org "<M-S-left>"  #'sp-backward-down-sexp)
+    ;; move to upper block at end of block
+    (define-key-conditional-smartparens-org "<M-S-right>" #'sp-up-sexp)
+
+    ) ;; (when tqnr-section-mode-org-mode
   ) ;; (use-package smartparens
 
 

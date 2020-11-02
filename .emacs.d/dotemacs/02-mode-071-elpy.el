@@ -73,6 +73,11 @@
   (when tqnr-section-mode-elpy-rpc-virtualenv-path
     (setq elpy-rpc-virtualenv-path tqnr-section-mode-elpy-rpc-virtualenv-path))
 
+  ;; use py.exe to execute installed python3 on MS Windows (no need to set PATH)
+  (when tqnr-running-on-ms-windows
+    (setq python-shell-interpreter "py")
+    (setq python-shell-interpreter-args "-3"))
+
   ;; add customize compile command line to execute current python file
   ;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
   :hook

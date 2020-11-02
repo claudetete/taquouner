@@ -31,6 +31,8 @@
 
 ;;; Code:
 (use-package helm
+  :demand t
+
   :bind (:map helm-map
           ;; keep old behavior about change directory instead of lef/right character
           ("<left>" . helm-previous-source)
@@ -64,6 +66,8 @@
   (helm-grep-use-ioccur-style-keys t)
 
   :config
+  ;; needed to load helm correctly
+  (try-require 'helm-config "      ")
   ;; (custom-set-variables
   ;;   '(helm-follow-mode-persistent t))
 
@@ -149,6 +153,33 @@
     (use-package helm-swoop :bind ("C-S-s" . helm-swoop)))
   ) ;; (when tqnr-section-mode-helm-swoop
 
+;; [VARCOMMENT.compile by helm]
+;; [VARIABLE.tqnr-section-mode-helm-compile nil]
+(when tqnr-section-mode-helm-compile
+  (use-package helm-compile
+    :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/helm-compile.el"))
+
+    :bind
+    ("<f10>" . helm-compile)
+
+    :init
+    (when tqnr-section-mode-projectile-direnv
+      ;; Use env variable to get compile command
+      (setq helm-compile-sources
+        (lambda ()
+          (let ((commands (getenv "COMPILE_LIST")))
+            (if commands
+              (s-split "," commands t)
+              '()))))
+      ;; set prefix of each command
+      (setq helm-compile-command-prefixs
+        (lambda ()
+          (getenv "COMPILE_PREFIX")))
+      ) ;; (when tqnr-section-mode-projectile-direnv
+    ) ;; (use-package helm-compile
+  ) ;; (when tqnr-section-mode-helm-compile
+
+
 ;; [VARCOMMENT.replace fuzzy search in find-files by flx, more human matches]
 ;; [VARIABLE.tqnr-section-mode-helm-flx nil]
 (when tqnr-section-mode-helm-flx
@@ -159,7 +190,6 @@
     (setq helm-flx-for-helm-find-files t)
     ) ;; (use-package helm-flx
   ) ;; (when tqnr-section-mode-helm-flx
-
 
 
 ;; [VARCOMMENT.replace yank-pop or browse kill ring by helm-kill-ring]
@@ -199,7 +229,18 @@
 ;; [VARCOMMENT.replace find files C-x C-f]
 ;; [VARIABLE.tqnr-section-mode-helm-find-files nil]
 (when tqnr-section-mode-helm-find-files
-  (use-package helm :bind ("C-x C-f" . helm-find-files)))
+  (use-package helm
+    :init
+    ;; needed to have helm-find-files-map defined
+    (try-require 'helm-files "      ")
+
+    :bind ("C-x C-f" . helm-find-files)
+    ;; hard to use right arrow or C-j to go inside folder (tab key like in a shell)
+    ;; TAB actions can still be show up with C-i
+    (:map helm-find-files-map
+      ("<tab>" . helm-execute-persistent-action)
+      ;; then use Shift+Tab to go back
+      ("<backtab>" . helm-find-files-up-one-level))))
 
 ;; [VARCOMMENT.replace recentf]
 ;; [VARIABLE.tqnr-section-mode-helm-recentf nil]

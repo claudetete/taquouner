@@ -50,6 +50,10 @@
   "When non-nil exported variables are buffer-local."
   :type 'boolean)
 
+(defcustom projectile-direnv-compile-env nil
+  "When non-nil all variables are set into `compilation-environment'."
+  :type 'boolean)
+
 (defvar projectile-direnv-envrc nil
   "Contains the path to the last loaded .envrc.")
 
@@ -107,7 +111,17 @@ file and set as buffer-local."
           (make-local-variable 'exec-path))
         (setq projectile-direnv-envrc envrc)
         (-each envvars #'projectile-direnv-set-env-var)
-        (message "projectile-direnv: export %s" (projectile-direnv-list-exports envvars))))))
+        ;;(message "projectile-direnv: export %s" (projectile-direnv-list-exports envvars))
+        ))))
+
+(defun projectile-direnv-set-compile-environment ()
+  "Take all environment variables and set `compilation-environment'. Only useful
+when `process-environment' is buffer-local and `compilation-environment' does
+not reflect it."
+  (let
+    (when projectile-direnv-make-local
+      (make-local-variable 'compilation-environment))
+    (setq compilation-environment process-environment)))
 
 ;;;###autoload
 (defun projectile-direnv-export-variables ()
@@ -115,7 +129,9 @@ file and set as buffer-local."
 environment variables for any defined exports"
   (interactive)
   (when (projectile-project-p)
-    (projectile-direnv-export-variable-from-dir (projectile-project-root))))
+    (projectile-direnv-export-variable-from-dir (projectile-project-root))
+    (when projectile-direnv-compile-env
+      (projectile-direnv-set-compile-environment))))
 
 (define-minor-mode projectile-direnv-mode
     "Projectile direnv minor mode"

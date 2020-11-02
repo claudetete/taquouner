@@ -114,23 +114,6 @@
     ) ;; (add-hook 'tqnr-after-init-shortcut-hook
   )
 
-;; FitNesse debug point: Insertion of debug point
-(when tqnr-section-mode-fitnesse
-  ;; insert fit deubg point
-  ;; !| FitnesseDebug |
-  ;; | breakPoint | etapeId            |
-  ;; | true       |  |
-  (defun fitnesse-insert-debug ()
-    "Insert a debug point."
-    (interactive)
-    (insert "\n!| FitnesseDebug |\n| breakPoint | etapeId |\n| true       |  |\n\n")
-    (indent-according-to-mode)
-    (backward-char 4))
-
-  (with-eval-after-load "fitnesse-mode"
-    (define-key fitnesse-mode-map (kbd "<f11>") 'fitnesse-insert-debug))
-  ) ;; (when tqnr-section-mode-fitnesse
-
 (if (string-match-p tqnr-profile-name "sagem")
   ;; insert a C comment to add tag for coverage
   (defun tag-insert-shortcut ()

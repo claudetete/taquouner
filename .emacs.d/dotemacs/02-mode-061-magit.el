@@ -77,7 +77,7 @@ Useful until magit can open difftool instead of Ediff."
     (interactive)
     ;; get absolute file path of current file
     (magit-with-toplevel
-      (-if-let (file (concat (file-name-as-directory (magit-toplevel)) (magit-file-relative-name)))
+      (-if-let (file (magit-file-relative-name))
         (magit-run-async-command (concat "GitExtensions.exe filehistory " file) t)
         (user-error "Buffer isn't visiting a file"))))
 

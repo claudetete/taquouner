@@ -219,6 +219,13 @@
 ;; [SUBCOMMENT.EXECUTABLE: Set path of some exe]
 ;; [SUBSECTION.tqnr-section-environment-executable t]
 (when tqnr-section-environment-executable (message "    Executable...")
+  ;; [VARCOMMENT.shell program]
+  ;; [VARIABLE.tqnr-profile-shell-program "bash"]
+  (setq shell-file-name tqnr-profile-shell-program)
+  ;; [VARCOMMENT.shell program arguments]
+  ;; [VARIABLE.tqnr-profile-shell-arguments "-lc"]
+  (setq shell-command-switch tqnr-profile-shell-arguments)
+
   (custom-set-variables
     ;; [VARCOMMENT.diff program]
     ;; [VARIABLE.tqnr-profile-ediff-diff-program "diff"]

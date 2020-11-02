@@ -1108,7 +1108,7 @@ names to which it refers are bound."
       (ivy-action (:foreground ,purple))
       (ivy-confirm-face (:foreground ,green))
       (ivy-current-match (:foreground ,green :inherit highlight :underline t))
-      (ivy-cursor (:background ,contrast-bg))
+      (ivy-cursor (:background ,red))
       (ivy-match-required-face (:foreground ,red :background ,background))
       (ivy-remote (:foreground ,orange))
       (ivy-subdir (:foreground ,purple))

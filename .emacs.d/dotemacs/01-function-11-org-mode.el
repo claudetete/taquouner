@@ -32,34 +32,34 @@
 
 ;;; Code:
 
-;;
-(defun tqnr-function-on-each-lines (func)
-  "Call FUNCTION on each line of region."
-  ;; declare variable
-  (let (end)
-    (save-excursion
-      ;; go to end of region
-      (goto-char (region-end))
-      (if (not (bolp))
-        (forward-line 1))
-      ;; go to begin of current line
-      (beginning-of-line)
-      ;; store last line marker
-      (setq end (copy-marker (point-marker)))
-      ;; go to begin of region
-      (goto-char (region-beginning))
-      ;; go to begin of current line
-      (beginning-of-line)
-      ;; loop on each line of region
-      (while (< (point-marker) end)
-        ;; apply
-        (funcall func)
-        ;; go to next line
-        (forward-line 1)
-        )
-      )
-    )
-  )
+;; ;;
+;; (defun tqnr-function-on-each-lines (func)
+;;   "Call FUNCTION on each line of region."
+;;   ;; declare variable
+;;   (let (end)
+;;     (save-excursion
+;;       ;; go to end of region
+;;       (goto-char (region-end))
+;;       (if (not (bolp))
+;;         (forward-line 1))
+;;       ;; go to begin of current line
+;;       (beginning-of-line)
+;;       ;; store last line marker
+;;       (setq end (copy-marker (point-marker)))
+;;       ;; go to begin of region
+;;       (goto-char (region-beginning))
+;;       ;; go to begin of current line
+;;       (beginning-of-line)
+;;       ;; loop on each line of region
+;;       (while (< (point) end)
+;;         ;; apply
+;;         (funcall func)
+;;         ;; go to next line
+;;         (forward-line 1)
+;;         )
+;;       )
+;;     )
+;;   )
 
 (defun org-shiftright-dwim ()
   "Org Shift Right on current line or all line of region."
@@ -79,6 +79,20 @@
     )
   )
 
+;; (defun org-todo-dwim ()
+;;   "Org TODO on current line or all line of region."
+;;   (interactive)
+;;   (if (use-region-p)
+;;     (tqnr-function-on-each-lines 'org-todo)
+;;     (progn
+;;       (org-todo)
+;;       (hide-subtree))))
+
+(defun my/mark-todo-in-region ()
+  (interactive)
+  (let ((scope (if mark-active 'region 'tree))
+        (state (org-fast-todo-selection)))
+    (org-map-entries (lambda () (org-todo state)) nil scope)))
 
 (provide '01-function-11-org-mode)
 

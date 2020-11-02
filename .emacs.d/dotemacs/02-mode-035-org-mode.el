@@ -66,6 +66,50 @@
   ;; make sure shift is not bind in org mode
   (setq org-support-shift-select 'always)
 
+  ;; enable speed commands, single key bind when cursor is in front of a headlines
+  (setq org-use-speed-commands t)
+
+  ;; cycle TODO state for each headlines in region
+  (setq org-loop-over-headlines-in-active-region t)
+
+  (defun tqnr-function-on-each-lines (func &rest args)
+    "Call FUNCTION on each line of region."
+    ;; declare variable
+    (let (end)
+      (save-excursion
+        ;; go to end of region
+        (goto-char (region-end))
+        (if (not (bolp))
+          (forward-line 1))
+        ;; go to begin of current line
+        (beginning-of-line)
+        ;; store last line marker
+        (setq end (copy-marker (point-marker)))
+        ;; go to begin of region
+        (goto-char (region-beginning))
+        ;; go to begin of current line
+        (beginning-of-line)
+        ;; loop on each line of region
+        (while (< (point-marker) end)
+          ;; apply
+          (apply func args)
+          ;; go to next line
+          (forward-line 1)))))
+
+  (defun org-todo-dwim ()
+    "Org TODO on current line or all line of region."
+    (interactive)
+    (if (use-region-p)
+      (let ((state (completing-read "State: " org-todo-keywords-1)))
+        (tqnr-function-on-each-lines #'org-todo state))
+      (progn
+        (call-interactively #'org-todo)
+        (hide-subtree))))
+
+  (defun org-todo-then-hide-subtree (&optional arg)
+    (interactive "P")
+    )
+
   :hook
   ;; Make windmove work in org-mode:
   (org-shiftup-final    . windmove-up)
@@ -81,13 +125,13 @@
           ("C-c o f" . org-iswitchb)
 
           :map org-mode-map
-          ;; windmove work when S-left/right do nothing in org buffer
-          ("<S-right>" . org-shiftright-dwim)
-          ("<S-left>"  . org-shiftleft-dwim)
-
           ;; add new shortcut to open browse mode
           ("C-c <up>"   . org-goto)
           ("C-c <down>" . org-goto)
+
+          ;; S-left/right are set to windmove and C-c C-t is to hard
+          ("C-\\" . org-todo-dwim)
+
           )
   ) ;; (use-package org
 

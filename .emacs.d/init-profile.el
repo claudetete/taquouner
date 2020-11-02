@@ -74,6 +74,10 @@
   ;; EXECUTABLE: Set path of some exe
   (defvar tqnr-section-environment-executable nil)
   (progn ;; tqnr-section-environment-executable
+    ;; shell program
+    (defvar tqnr-profile-shell-program "")
+    ;; shell program arguments
+    (defvar tqnr-profile-shell-arguments "")
     ;; diff program
     (defvar tqnr-profile-ediff-diff-program "")
     (defvar tqnr-profile-ediff-diff3-program "")
@@ -220,6 +224,8 @@
     (defvar tqnr-section-mode-helm-swoop nil)
     ;; do not have default value when run helm swoop
     (defvar tqnr-section-mode-helm-swoop-without-pre-input nil)
+    ;; compile by helm
+    (defvar tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
     (defvar tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
@@ -298,8 +304,8 @@
   ;; (ex: set in test, semi colon after test...)
   (defvar tqnr-section-mode-cwarn nil)
 
-  ;; C DATA DEBUG: ?? (never manage to make it work)
-  (defvar tqnr-section-mode-c-data-debug nil)
+  ;; SWIPER: Isearch alternative with fuzzy using ivy
+  (defvar tqnr-section-mode-swiper nil)
 
   ;; ICOMPLETION: more completion in minibuffer
   (defvar tqnr-section-mode-icompletion nil)
@@ -329,8 +335,8 @@
     (defvar tqnr-section-mode-gnu-global-ggtags nil)
     ) ;; (progn ;; tqnr-section-mode-gnu-global
 
-  ;; EPROJECT: (grischka): project management mode (never used)
-  (defvar tqnr-section-mode-eproject nil)
+  ;; COUNSEL COMPILE: Use ivy to select a compile command.
+  (defvar tqnr-section-mode-counsel-compile nil)
 
   ;; RTRT SCRIPT: rtrt script mode (syntax coloration)
   (defvar tqnr-section-mode-rtrt-script nil)
@@ -533,6 +539,10 @@
 
   ;; PROJECTILE: Project management, filtered find-file, only with root file from version control
   (defvar tqnr-section-mode-projectile nil)
+  (progn ;; tqnr-section-mode-projectile
+    ;; use fd to index project files
+    (defvar tqnr-profile-projectile-use-fd nil)
+    ) ;; (progn ;; tqnr-section-mode-projectile
 
   ;; COMPANY: Completion mode using external back-ends to have symbol
   (defvar tqnr-section-mode-company nil)

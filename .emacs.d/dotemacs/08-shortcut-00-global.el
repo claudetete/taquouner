@@ -158,7 +158,12 @@
   )
 
 ;; to compile
-(global-set-key       (kbd "<f10>")           'compile)
+(with-eval-after-load "compilation-mode"
+  (define-key compilation-mode-map      (kbd "<M-up>")  #'previous-error-no-select)
+  (define-key compilation-mode-map      (kbd "<M-down>") #'next-error-no-select))
+
+(when (not (or tqnr-section-mode-helm-compile tqnr-section-mode-counsel-compile))
+  (global-set-key       (kbd "<f10>")           'compile))
 
 ;; (by Fabrice Niessen)
 ;; It's more or less a convention that each language mode binds its symbol

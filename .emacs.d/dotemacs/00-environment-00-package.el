@@ -63,9 +63,12 @@
     (setq package-user-dir (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/elpa"))
     ;; init package
     (package-initialize)
+    (assq-delete-all 'org package--builtins)
+    (assq-delete-all 'ada-mode package--builtins)
     ;; refresh package list only when no package were found
     (when (not package-archive-contents)
       (package-refresh-contents))
+    ;; to make sure built-in ada-mode package is not used
     (when (not tqnr-section-mode-use-package)
       ;; install package from list defined in profile
       (mapc #'(lambda (package)

@@ -101,8 +101,9 @@
 ;; shortcuts are put in a hook to be loaded after everything else in init process
 (add-hook 'tqnr-after-init-shortcut-hook
   (lambda ()
-    ;; search the word at point (cannot bind C-M-x still run 'eval-defun)
-    (global-set-key     (kbd "C-M-v")   'isearch-forward-at-point)
+    (when (not tqnr-section-mode-swiper)
+      ;; search the word at point (cannot bind C-M-x still run 'eval-defun)
+      (global-set-key   (kbd "C-M-v")   'isearch-forward-at-point))
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 

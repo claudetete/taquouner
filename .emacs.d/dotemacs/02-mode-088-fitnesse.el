@@ -31,12 +31,24 @@
 
 ;;; Code:
 (use-package fitnesse-mode
-  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/fitnesse-mode.el"))
+  ;;:demand
 
-  :bind (:map fitnesse-mode-map
-          ("C-M-S-i" . iimage-mode))
-  ) ;; (use-package fitnesse-mode
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins"))
 
+  :init
+  ;; associate context.txt files to fitnesse-mode
+  (add-to-list 'auto-mode-alist '("content\\.txt\\'" . fitnesse-mode))
+
+  ;; force open FitNesse files with utf-8 coding
+  (modify-coding-system-alist 'file "content\\.txt\\'" 'utf-8)
+
+  ;; :bind
+  ;; (:map fitnesse-mode-map
+  ;;   ("C-M-S-i" . iimage-mode))
+
+  :custom
+  (fitnesse-pretty-print-executable `(concat (file-name-as-directory (getenv "VIEWPATH")) "bin/fitformat"))
+  )
 
 (provide '02-mode-088-fitnesse)
 

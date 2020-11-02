@@ -49,6 +49,9 @@
   (setq projectile-indexing-method 'hybrid)
   ;; enable cache of files index
   (setq projectile-enable-caching t)
+  ;; needed otherwise repository without submodule crash
+  ;; see https://github.com/msys2/MSYS2-packages/issues/1407
+  (setq projectile-git-submodule-command nil)
   ;; ignore GNU Global file with projectile
   (when tqnr-section-mode-gnu-global
     (dolist (item '("GTAGS" "GRTAGS" "GPATH"))
@@ -65,7 +68,7 @@
 
   :custom
   ;; list all files even in git submodules (remove --others and add --recurse-submodules)
-  (projectile-git-command "git ls-files -z --cached --recurse-submodules --exclude-standard")
+  (projectile-git-command "git ls-files -z --cached --others --exclude-standard")
 
   :bind (:map projectile-mode-map
           ;; add prefix shortcut to C-c p
@@ -73,6 +76,18 @@
 
 
   ) ;; (use-package projectile
+
+;; [VARCOMMENT.use fd to index project files]
+;; [VARIABLE.tqnr-profile-projectile-use-fd nil]
+(when tqnr-profile-projectile-use-fd
+  (use-package projectile
+    :config
+    (setq projectile-indexing-method 'alien)
+    (setq projectile-enable-caching t)
+    (setq projectile-git-command "fd . --color never ---print0")
+    (setq projectile-generic-command "fd ---hidden --ignore-file .projectile --type f --color never -0")
+    ) ;; (use-package projectile
+  ) ;; (when tqnr-profile-projectile-use-fd
 
 
 (provide '02-mode-067-projectile)

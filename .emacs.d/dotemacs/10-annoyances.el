@@ -44,6 +44,11 @@
 ;; do not ask confirmation when I want refresh buffer
 ;(setq revert-without-query '(".*"))
 
+;; I'm not scared of saving everything
+(setq compilation-ask-about-save nil)
+;; Stop on the first error
+(setq compilation-scroll-output 'next-error)
+
 ;;
 ;; remove insert shortcut, no more insertion mode
 (global-set-key [insert] 'ignore)
