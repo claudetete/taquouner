@@ -101,7 +101,6 @@
     ;; universal-ctags as backend of GNU Global
     (setenv "GTAGSCONF" (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/share/gtags/gtags.conf"))
     (setenv "GTAGSLABEL" "new-ctags")
-    (setenv "RIPGREP_CONFIG_PATH" "u:/.ripgreprc")
     ) ;; (when tqnr-section-environment-set-path
   ;; MS WINDOWS PERFORMANCE: MS Windows specific configuration about performance
   (setq tqnr-section-environment-ms-windows-performance t)
@@ -694,7 +693,7 @@
   (setq tqnr-section-mode-dumb-jump t)
 
   ;; ADA: Ada mode for edit/navigate/compile ada source code
-  (setq tqnr-section-mode-ada nil)
+  (setq tqnr-section-mode-ada t)
 
   ;; FITNESSE: FitNesse MarkUp files syntax highlight
   (setq tqnr-section-mode-fitnesse t)
