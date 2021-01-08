@@ -54,14 +54,33 @@
   :custom
   ;; indentation is 3 spaces
   (ada-indent 3)
+  ;; indent broken declaration
+  ;;     declare
+  ;;        A,
+  ;;        >>>>>B : Integer;
+  (ada-broken-decl-indent 0)
   ;; indent broken line with 3 spaces
-  (ada-indent-broken 3)
+  ;;     My_Var : My_Type := (Field1 =>
+  ;;                     >>>>>>>>>Value);
+  (ada-broken-indent 3)
+  ;; indent broken parenthesis with 0 space
+  ;;        Func (Param1,
+  ;;          >>>>>Param2);
+  (ada-continuation-indent 0)
   ;; indent comment following gnat rules
   (ada-indent-comment-gnat t)
+  ;; comment prefix
+  (ada-fill-comment-prefix "-- ")
   ;; indent broken line relative to start of expression (t) or previous line (nil)
   (ada-indent-hanging-rel-exp nil)
   ;; indentation of record
   (ada-indent-record-rel-type 3)
+  ;; indentation of rename
+  (ada-indent-renames 3)
+  ;; ada version
+  (ada-language-version 'ada2005)
+  ;; ada-move-to-start move to sub declaration instead of 'begin'
+  (ada-move-to-declaration t)
   ) ;; (use-package ada-mode
 
 

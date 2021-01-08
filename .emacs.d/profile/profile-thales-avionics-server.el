@@ -50,7 +50,7 @@
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-git-version "2.28.0")
+    (defvar tqnr-profile-portable-git-version "2.30.0")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
@@ -78,7 +78,7 @@
         "j:/MSYS/msys64/usr/bin"
         "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        "j:/GIT_EXTENSIONS/GitExtensions_3.4.2.9737-082cfd97d"
+        "j:/GIT_EXTENSIONS/GitExtensions_4.0.0.10352-ad275d6d4"
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
         ;; GIT linux utils (msys64 override it)

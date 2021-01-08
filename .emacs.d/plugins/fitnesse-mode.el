@@ -281,7 +281,7 @@
         (eval fitnesse-pretty-print-executable) t t t))
     (progn
       (shell-command
-        (format "%s %s"
+        (format "%s --file %s"
           (shell-quote-argument (eval fitnesse-pretty-print-executable))
           (shell-quote-argument (buffer-file-name))))
       (revert-buffer t t t))))

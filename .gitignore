@@ -10,7 +10,7 @@
 /.emacs.d/.history
 /.emacs.d/ede-projects.el
 /.emacs.d/history
-/.emacs.d/plugins/ada-mode/*
+/.emacs.d/plugins/ada-mode*/
 /.emacs.d/plugins/autoload-*
 /.emacs.d/plugins/yasnippet/*
 /.emacs.d/plugins/cflow-mingw-master/*
@@ -41,6 +41,4 @@ __pycache__
 /.emacs.d/plugins/elpa/*
 /.emacs.d/plugins/elpa/*
 /.emacs.d/undo/*
-
 /.emacs.d/elpy/*
-/.emacs.d/plugins/ada-mode*
