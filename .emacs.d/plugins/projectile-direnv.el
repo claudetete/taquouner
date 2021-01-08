@@ -79,7 +79,7 @@ cell where the car is the var name and the cdr is its value."
       (projectile-direnv-delete-env-var name))
     (setenv name value)
     (when (string-equal name "PATH")
-      (let ((separator (if (string-equal system-type "windows-nt") ";" ":")))
+      (let ((separator ":"))
         (setq exec-path (append (s-split separator value t) projectile-direnv-exec-path-mandatory))))))
 
 (defun projectile-direnv-delete-env-var (name)

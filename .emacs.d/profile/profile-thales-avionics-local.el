@@ -50,7 +50,7 @@
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-git-version "2.26.0")
+    (defvar tqnr-profile-portable-git-version "2.30.0")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
@@ -70,6 +70,7 @@
         ;; PYTHON
         "j:/PYTHON/py"
         "j:/PYTHON/PYTHON_3.6.6"
+        "j:/PYTHON/PYTHON_3.6.6/Scripts"
         ;; GIT
         (concat  "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
@@ -78,7 +79,7 @@
 	"j:/MSYS/msys64/usr/bin"
         "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        "j:/GIT_EXTENSIONS/GitExtensions_3.3.1.7897"
+        "j:/GIT_EXTENSIONS/GitExtensions_4.0.0.10352-ad275d6d4"
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
         ;; GIT linux utils (msys64 override it)
@@ -107,6 +108,10 @@
   ;; EXECUTABLE: Set path of some exe
   (setq tqnr-section-environment-executable t)
   (when tqnr-section-environment-executable
+    ;; shell program
+    (setq tqnr-profile-shell-program "bash")
+    ;; shell program arguments
+    (setq tqnr-profile-shell-arguments "-c")
     ;; diff program
     (setq tqnr-profile-ediff-diff-program "diff")
     (setq tqnr-profile-ediff-diff3-program "diff3")
@@ -181,7 +186,7 @@
   (setq tqnr-section-function-auctex nil)
 
   ;; ORG MODE: custom function about org-mode
-  (setq tqnr-section-function-org-mode t)
+  (setq tqnr-section-function-org-mode nil)
 
   ;; MAGNETI MARELLI: custom functions about Magneti Marelli specific needs
   (setq tqnr-section-function-magneti-marelli nil)
@@ -196,7 +201,7 @@
   (setq tqnr-section-function-rtrt nil)
 
   ;; ADA: functions to have multiple compile mode in ada
-  (setq tqnr-section-function-ada t)
+  (setq tqnr-section-function-ada nil)
   (when tqnr-section-function-ada
     ;; BUILD
     ;; Command of build one file in ada
@@ -253,6 +258,8 @@
     (setq tqnr-section-mode-helm-swoop t)
     ;; do not have default value when run helm swoop
     (setq tqnr-section-mode-helm-swoop-without-pre-input t)
+    ;; compile by helm
+    (setq tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx t)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
@@ -331,8 +338,8 @@
   ;; (ex: set in test, semi colon after test...)
   (setq tqnr-section-mode-cwarn nil)
 
-  ;; C DATA DEBUG: ?? (never manage to make it work)
-  (setq tqnr-section-mode-c-data-debug nil)
+  ;; SWIPER: Isearch alternative with fuzzy using ivy
+  (setq tqnr-section-mode-swiper t)
 
   ;; ICOMPLETION: more completion in minibuffer
   (setq tqnr-section-mode-icompletion nil)
@@ -362,8 +369,8 @@
     (setq tqnr-section-mode-gnu-global-ggtags t)
     ) ;; (when tqnr-section-mode-gnu-global
 
-  ;; EPROJECT: (grischka): project management mode (never used)
-  (setq tqnr-section-mode-eproject nil)
+  ;; COUNSEL COMPILE: Use ivy to select a compile command.
+  (setq tqnr-section-mode-counsel-compile t)
 
   ;; RTRT SCRIPT: rtrt script mode (syntax coloration)
   (setq tqnr-section-mode-rtrt-script nil)
@@ -566,6 +573,10 @@
 
   ;; PROJECTILE: Project management, filtered find-file, only with root file from version control
   (setq tqnr-section-mode-projectile t)
+  (when tqnr-section-mode-projectile
+    ;; use fd to index project files
+    (setq tqnr-profile-projectile-use-fd nil)
+    ) ;; (when tqnr-section-mode-projectile
 
   ;; COMPANY: Completion mode using external back-ends to have symbol
   (setq tqnr-section-mode-company t)
@@ -588,7 +599,7 @@
   (when tqnr-section-mode-elpy
     ;; override path for created elpy virtualenv (should have rights to execute)
     (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
-    )
+    ) ;; (when tqnr-section-mode-elpy
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens t)
@@ -659,7 +670,7 @@
     ;; Use Hydra to manage smartparens shortcuts
     (setq tqnr-section-mode-hydra-smartparens t)
     ;; Use Hydra to manage ada compile shortcuts
-    (setq tqnr-section-mode-hydra-ada t)
+    (setq tqnr-section-mode-hydra-ada nil)
     ;; Use Hydra to manage outline shortcuts
     (setq tqnr-section-mode-hydra-outline t)
     ;; Use Hydra to manage org shortcuts
@@ -683,7 +694,7 @@
   (setq tqnr-section-mode-dumb-jump t)
 
   ;; ADA: Ada mode for edit/navigate/compile ada source code
-  (setq tqnr-section-mode-ada t)
+  (setq tqnr-section-mode-ada nil)
 
   ;; FITNESSE: FitNesse MarkUp files syntax highlight
   (setq tqnr-section-mode-fitnesse t)
@@ -726,7 +737,7 @@
   (when tqnr-section-mode-undo-fu-session
     ;; set undo fu session directory where every undo will be stored
     (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
-    ;; set org directory where every org file will goes
+    ;; set file size limit about session save file
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
 
@@ -1078,10 +1089,10 @@
   ;;
   ;; CALENDAR: set latitude/longitude + location + holidays + custom date in
   ;; Modeline lunar phase, sunrise/sunset, time, etc
-  (setq tqnr-section-misc-calendar t)
+  (setq tqnr-section-misc-calendar nil)
   (when tqnr-section-misc-calendar
     ;; FRENCH CALENDAR: set French holidays and day/month/moon phase name
-    (setq tqnr-section-misc-calendar-french t)
+    (setq tqnr-section-misc-calendar-french nil)
     ) ;; (when tqnr-section-misc-calendar
   ;; BOOKMARK: default file, each command to add/modify bookmark save bookmark file
   (setq tqnr-section-misc-bookmark t)
@@ -1139,6 +1150,9 @@
   (setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
   (setq fast-but-imprecise-scrolling t) ; No (less) lag while scrolling lots.
   (setq jit-lock-defer-time 0) ; Just don't even fontify if we're still catching up on user input.
+
+  ;; do not go to warning in compilation mode
+  (setq compilation-skip-threshold 2)
 
   ;; reduce magit slow on windows
   (setq w32-pipe-read-delay 0)
