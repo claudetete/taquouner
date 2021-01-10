@@ -47,7 +47,10 @@
 (custom-set-variables
   '(message-log-max 1000))
 
-
+;; native compile elisp files as they are loaded
+(if (>= emacs-major-version 28)
+  (setq comp-deferred-compilation t))
+  
 ;;
 ;; TRY-REQUIRE DEFINITION
 ;;; attempt to load a feature/library, failing silently (by Fabrice Niessen)
