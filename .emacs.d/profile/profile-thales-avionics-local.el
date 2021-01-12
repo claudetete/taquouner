@@ -1,6 +1,6 @@
 ;;; profile-thales-avionics-local.el --- a config file for profile
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2017-2021 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -75,8 +75,8 @@
         (concat  "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
         "j:/MSYS/msys64/mingw64/bin"
-	"j:/MSYS/msys64/usr/local/bin"
-	"j:/MSYS/msys64/usr/bin"
+	    "j:/MSYS/msys64/usr/local/bin"
+	    "j:/MSYS/msys64/usr/bin"
         "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
         "j:/GIT_EXTENSIONS/GitExtensions_4.0.0.10352-ad275d6d4"
@@ -424,7 +424,7 @@
   ;; CSV: parse/edit/sort CSV file
   (setq tqnr-section-mode-csv t)
 
-  ;; SUBVERSION: support Subversion 1.7
+  ;; SUBVERSION:
   (setq tqnr-section-mode-subversion nil)
 
   ;; DIFF COLOR: add color to diff mode
@@ -720,7 +720,7 @@
   (setq tqnr-section-mode-ialign t)
 
   ;; REALGUD: realgud mode
-  (setq tqnr-section-mode-realgud t)
+  (setq tqnr-section-mode-realgud nil)
 
   ;; MOVE TEXT: realgud mode
   (setq tqnr-section-mode-move-text t)
@@ -1118,13 +1118,8 @@
   ;; to disable all version control
   (setq vc-handled-backends nil)
 
-  ;; U: is thales server home, it contains a function called by .dir-locals.el of some project
-  ;; then avoid ask each time it is modify
-  (add-to-list 'load-path "u:/")
-  (try-require 'project-env "")
-
-  ;; set only one zone program
-  (setq zone-programs [ zone-pgm-putz-with-case ])
+ ;; set only one zone program
+ (setq zone-programs [ zone-pgm-putz-with-case ])
 
   ;; try to unslow emacs when open file
   (remove-hook 'find-file-hooks 'vc-find-file-hook)

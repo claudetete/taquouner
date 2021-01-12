@@ -1,6 +1,6 @@
 ;;; 02-mode-087-ada.el --- configuration of ada mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2017-2021 Claude TETE
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: October 2017
-;; Last-Updated: April 2020
+;; Last-Updated: January 2021
 
 ;;; Commentary:
 ;;
@@ -30,9 +30,17 @@
 
 
 ;;; Code:
+
+;; duplicate otherwise ada-mode is not loaded
 (use-package ada-mode
   ;; make sure it is loaded and custom without searched in package list
-  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins"))
+  :ensure nil
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/")))
+
+(use-package ada-mode
+  ;; make sure it is loaded and custom without searched in package list
+  :ensure nil
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/"))
 
   ;; Mode hooks execute before local variables are processed, so your hooks cannot respond to local vars at that point in time
   ;; Use the regular major mode hook to add a buffer-local hack-local-variables-hook (https://www.emacswiki.org/emacs/LocalVariables)

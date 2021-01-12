@@ -1,6 +1,6 @@
 ;;; 01-function-09-helm.el --- add some function about helm mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2019 Claude Tete
+;; Copyright (c) 2017-2021 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: March 2019
+;; Last-Updated: January 2021
 
 ;;; Commentary:
 ;;
@@ -35,53 +35,45 @@
 ;;
 ;;;
 ;;;; HELM-FILES
-;;; do not display dot paths in list of files with helm
-(defvar helm-ff-directory-no-dots-p t)
-;; rework original function `helm-ff-directory-files'
-(defun helm-ff-directory-files-no-dots (helm-ff-directory-files directory &optional full)
-  "List contents of DIRECTORY.
-Argument FULL mean absolute path.
-It is same as `directory-files' but do not always returns the
-dotted filename '.' and '..' even on root directories in Windows
-systems unlike original function."
-  ;; original code
-  (setq directory (file-name-as-directory
-                    (expand-file-name directory)))
-  ;; original variables
-  (let* (file-error
-         (ls   (condition-case err
-                   (helm-list-directory directory)
-                 ;; Handle file-error from here for Windows
-                 ;; because predicates like `file-readable-p' and friends
-                 ;; seem broken on emacs for Windows systems (always returns t).
-                 ;; This should never be called on GNU/Linux/Unix
-                 ;; as the error is properly intercepted in
-                 ;; `helm-find-files-get-candidates' by `file-readable-p'.
-                 (file-error
-                  (prog1
-                      (list (format "%s:%s"
-                                    (car err)
-                                    (mapconcat 'identity (cdr err) " ")))
-                    (setq file-error t)))))
-          (dot  (concat directory "."))
-          (dot2 (concat directory ".."))
-          ;; new variable
-          ret)
-    (puthash directory (+ (length ls) 2) helm-ff--directory-files-hash)
-    ;; original code
-    ;(append (and (not file-error) (list dot dot2)) ls)))
-    ;; new code
-    (if helm-ff-directory-no-dots-p
-      (setq ret ls)
-      (if (not file-error)
-        (setq ret (append (list dot dot2) ls))
-        (setq ret ls)))
-    ret))
+;; from Spacemacs no-dots (https://github.com/TheBB/spacemacs-layers/tree/master/layers/no-dots)
+(defvar no-dots-whitelist
+  '()
+  "List of helm buffers in which to show dots.")
 
-;; replace helm-ff-directory-files by helm-ff-directory-files-no-dots by using advice
-(advice-add 'helm-ff-directory-files :around #'helm-ff-directory-files-no-dots)
-;; to remove advice on original function
-;(advice-remove 'helm-ff-directory-files #'helm-ff-directory-files-no-dots)
+(require 'cl-lib)
+
+(defun no-dots/whitelistedp ()
+  (member (with-helm-buffer (buffer-name)) no-dots-whitelist))
+
+(defun no-dots/helm-ff-filter-candidate-one-by-one (fcn file &optional reverse skip-boring-check)
+  (when (or (no-dots/whitelistedp)
+            (not (string-match "\\(?:/\\|\\`\\)\\.\\{1,2\\}\\'" file)))
+    (funcall fcn file)))
+
+(defun no-dots/helm-file-completion-source-p (&rest args) t)
+
+(defun no-dots/helm-attrset (fcn attribute-name value &optional src)
+  (let ((src (or src (helm-get-current-source))))
+    (when src
+      (funcall fcn attribute-name value src))))
+
+(defun no-dots/helm-find-files-up-one-level (fcn &rest args)
+  (advice-add 'helm-file-completion-source-p
+              :around 'no-dots/helm-file-completion-source-p)
+  (advice-add 'helm-attrset
+              :around 'no-dots/helm-attrset)
+  (let ((res (apply fcn args)))
+    (advice-remove 'helm-file-completion-source-p
+                   'no-dots/helm-file-completion-source-p)
+    (advice-remove 'helm-attrset
+                   'no-dots/helm-attrset)
+    res))
+
+(with-eval-after-load 'helm-files
+  (advice-add 'helm-ff-filter-candidate-one-by-one
+              :around 'no-dots/helm-ff-filter-candidate-one-by-one)
+  (advice-add 'helm-find-files-up-one-level
+              :around 'no-dots/helm-find-files-up-one-level))
 
 ;;
 ;;;

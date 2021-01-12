@@ -1,6 +1,6 @@
 ;;; 02-mode-101-header2.el --- configuration of header2 mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2020 Claude Tete
+;; Copyright (c) 2020-2021 Claude TETE
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.4
+;; Version: 0.5
 ;; Created: April 2020
-;; Last-Updated: May 2020
+;; Last-Updated: January 2021
 
 ;;; Commentary:
 ;;
@@ -35,6 +35,7 @@
   ("C-x M-s" . update-file-header)
 
   :config
+  ;; no more used see header-date-string2 function
   (setq header-date-format "%B %Y")
   (setq header-copyright-notice "Copyright (c) \n")
 
@@ -66,6 +67,36 @@
     (when header-copyright-notice
       (insert (concat header-prefix-string header-copyright-notice))))
 
+  (defsubst header-creation-date2 ()
+    "Insert today's time, date, and time zone as file creation date."
+    (insert (concat header-prefix-string "Created: "))
+    (insert (header-date-string2) "\n"))
+
+  (defsubst update-last-modified-date2 ()
+    "Update the line that indicates the last-modified date."
+    (delete-and-forget-line)
+    (insert (header-date-string2)))
+
+  (defun header-date-string2 ()
+    "Current date and time."
+    (let ((translate-fr-en '(("janvier"   . "January")
+                             ("février"   . "February")
+                             ("mars"      . "March")
+                             ("avril"     . "April")
+                             ("mai"       . "May")
+                             ("juin"      . "June")
+                             ("juillet"   . "July")
+                             ("août"      . "August")
+                             ("septembre" . "September")
+                             ("octobre"   . "October")
+                             ("novembre"  . "November")
+                              ("décembre"  . "December"))))
+      (concat (cdr (assoc-string
+                     (format-time-string "%B" (current-time))
+                     translate-fr-en))
+        " "
+        (format-time-string "%Y" (current-time)))))
+
   ;; from header2.el to remove section start
   (defsubst header-commentary2 ()
     "Insert \"Commentary: \" line."
@@ -86,8 +117,8 @@
                             header-next-page            ; 
                             header-author               ; ;; Author: (`user-full-name')
                             header-version              ; ;; Version: X.X
-                            header-creation-date        ; ;; Created: MONTH YEAR
-                            header-modification-date    ; ;; Last-Updated: April 2020
+                            header-creation-date2       ; ;; Created: MONTH YEAR
+                            header-modification-date2   ; ;; Last-Updated: April 2020
                             header-next-page            ; 
                             header-commentary2          ; ;; Commentary:
                             header-empty-line           ;
@@ -111,7 +142,7 @@
         (insert (concat year-begin "-" year-end))
         (insert year-end))
       ;; insert name
-      (insert (concat " " user-login-name))))
+      (insert (concat " " user-full-name))))
 
   ;; update version (from https://emacs.stackexchange.com/questions/13599/header2-el-how-to-increment-the-version-number-with-dot)
   (defun header-update-version ()
@@ -125,7 +156,7 @@
   (setq file-header-update-alist ())
   (register-file-header-action "Copyright (c) " #'header-update-copyright)
   (register-file-header-action "Version[ \t]*: " #'header-update-version)
-  (register-file-header-action "Last-Updated[ \t]*: " 'update-last-modified-date)
+  (register-file-header-action "Last-Updated[ \t]*: " 'update-last-modified-date2)
 
   ;; override header2.el to remove call of end-of-line
   (defun header-multiline ()
