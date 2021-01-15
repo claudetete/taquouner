@@ -421,6 +421,10 @@
 
   ;; POWERLINE: fancy modeline
   (defvar tqnr-section-mode-powerline nil)
+  (progn ;; tqnr-section-mode-powerline
+    ;; Height of powerline modeline
+    (defvar tqnr-powerline-height nil)
+    ) ;; (progn ;; tqnr-section-mode-powerline
 
   ;; NYAN: add bar in modeline given position in buffer
   (defvar tqnr-section-mode-nyan nil)

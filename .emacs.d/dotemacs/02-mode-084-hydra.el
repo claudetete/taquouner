@@ -493,7 +493,7 @@
 ;; ADA
 ;;
 ;; [VARCOMMENT.Use Hydra to manage ada compile shortcuts]
-;; [VARIABLE.tqnr-section-mode-hydra-ada t]
+;; [VARIABLE.tqnr-section-mode-hydra-ada nil]
 (when (and tqnr-section-mode-hydra-ada tqnr-section-mode-ada tqnr-section-function-ada)
   (use-package hydra
     :pin melpa
@@ -605,7 +605,7 @@ _d_: subtree
       ;;
       ("q" nil :color blue)
       )
-      
+
     (with-eval-after-load "org-mode"
       (define-key org-mode-map      (kbd "C-c C-J")   'hydra-org-mode/body)
       ) ;; (with-eval-after-load "ada-mode"

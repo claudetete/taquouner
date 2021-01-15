@@ -418,6 +418,10 @@
 
   ;; POWERLINE: fancy modeline
   (setq tqnr-section-mode-powerline t)
+  (when tqnr-section-mode-powerline
+    ;; Height of powerline modeline
+    (setq tqnr-powerline-height 27)
+    ) ;; (when tqnr-section-mode-powerline
 
   ;; NYAN: add bar in modeline given position in buffer
   (setq tqnr-section-mode-nyan nil)
@@ -921,7 +925,7 @@
   (setq tqnr-section-display-color-theme-gruvbox nil)
 
   ;; COLOR THEME SANITYINC TOMORROW: Sanityinc Tomorrow theme config
-  (setq tqnr-section-display-color-theme-sanityinc-tomorrow nil)
+  (setq tqnr-section-display-color-theme-sanityinc-tomorrow t)
   ) ;; (when tqnr-section-display
 
 ;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...
@@ -1096,19 +1100,6 @@
   (setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
   (setq fast-but-imprecise-scrolling t) ; No (less) lag while scrolling lots.
   (setq jit-lock-defer-time 0) ; Just don't even fontify if we're still catching up on user input.
-
-  ;; configure theme
-  (let ((theme-path (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes/color-theme-sanityinc-tomorrow")))
-    ;; load theme file
-    (add-to-list 'load-path theme-path)
-    (when (try-require 'color-theme-sanityinc-tomorrow "    ")
-
-      ;; load theme color
-      (add-to-list 'custom-theme-load-path theme-path)
-      (load-theme 'sanityinc-tomorrow-dark t)
-      (setq powerline-height 27)
-      ;; needed to avoid error in colors
-      (powerline-reset)))
 
   ) ; (defun function-to-call-after-loading-conf ()
 

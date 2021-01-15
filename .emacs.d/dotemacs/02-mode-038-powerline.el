@@ -214,7 +214,10 @@
 
   ;; set arrow fade as separator
   (setq powerline-default-separator 'arrow)
-  (setq powerline-height 24)
+  ;; [VARCOMMENT.Height of powerline modeline]
+  ;; [VARIABLE.tqnr-powerline-height 24]
+  (when tqnr-powerline-height
+    (setq powerline-height tqnr-powerline-height))
   (powerline-my-theme)
   ) ;; (use-package powerline
 
