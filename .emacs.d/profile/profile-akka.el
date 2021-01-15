@@ -548,6 +548,10 @@
 
   ;; PROJECTILE: Project management, filtered find-file, only with root file from version control
   (setq tqnr-section-mode-projectile t)
+  (when tqnr-section-mode-projectile
+    ;; use fd to index project files
+    (setq tqnr-profile-projectile-use-fd nil)
+    ) ;; (when tqnr-section-mode-projectile
 
   ;; COMPANY: Completion mode using external back-ends to have symbol
   (setq tqnr-section-mode-company t)
@@ -723,6 +727,9 @@
 
   ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
   (setq tqnr-section-mode-projectile-direnv nil)
+
+  ;; MATLAB: Matlab mode config
+  (setq tqnr-section-mode-matlab nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish t)
@@ -918,6 +925,12 @@
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
     (setq tqnr-section-display-color-highlight-line nil)
     ) ;; (when tqnr-section-display-color
+
+  ;; COLOR THEME GRUVBOX: Gruvbox theme config
+  (setq tqnr-section-display-color-theme-gruvbox nil)
+
+  ;; COLOR THEME SANITYINC TOMORROW: Sanityinc Tomorrow theme config
+  (setq tqnr-section-display-color-theme-sanityinc-tomorrow nil)
   ) ;; (when tqnr-section-display
 
 ;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...

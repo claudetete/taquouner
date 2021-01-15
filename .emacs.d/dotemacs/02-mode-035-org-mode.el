@@ -1,6 +1,6 @@
 ;;; 02-mode-035-org-mode.el --- configuration of org mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2017-2021 Claude TETE
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: April 2020
+;; Last-Updated: January 2021
 
 ;;; Commentary:
 ;;
@@ -47,6 +47,9 @@
   ;; Which files do I want to be checked for entries when compiling my agenda
   ;; Can be customized with add current buffer "C-c [" or remove current buffer "C-c ]"
   (setq org-agenda-files tqnr-profile-org-agenda-files)
+
+  ;; do not expand all when open up an org file
+  (setq org-startup-folded 'fold)
 
   ;; set timestamp when TODO is DONE
   (setq org-log-done t)

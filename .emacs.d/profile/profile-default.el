@@ -1,6 +1,6 @@
 ;;; profile-default.el --- a config file for profile
 
-;; Copyright (c) 2012-2020 Claude Tete
+;; Copyright (c) 2012-2021 Claude TETE
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete  <claude.tete@gmail.com>
-;; Version: 1.8
+;; Version: 1.9
 ;; Created: June 2012
-;; Last-Updated: February 2020
+;; Last-Updated: January 2021
 
 ;;; Commentary:
 ;; Default profile loaded by init.el
@@ -782,6 +782,9 @@
   ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
   (setq tqnr-section-mode-projectile-direnv nil)
 
+  ;; MATLAB: Matlab mode config
+  (setq tqnr-section-mode-matlab nil)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
   ) ;; (when tqnr-section-mode
@@ -976,6 +979,12 @@
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
     (setq tqnr-section-display-color-highlight-line nil)
     ) ;; (when tqnr-section-display-color
+
+  ;; COLOR THEME GRUVBOX: Gruvbox theme config
+  (setq tqnr-section-display-color-theme-gruvbox nil)
+
+  ;; COLOR THEME SANITYINC TOMORROW: Sanityinc Tomorrow theme config
+  (setq tqnr-section-display-color-theme-sanityinc-tomorrow nil)
   ) ;; (when tqnr-section-display
 
 ;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...

@@ -719,6 +719,9 @@
   ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
   (defvar tqnr-section-mode-projectile-direnv nil)
 
+  ;; MATLAB: Matlab mode config
+  (defvar tqnr-section-mode-matlab nil)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
   ) ;; (progn ;; tqnr-section-mode
@@ -902,6 +905,12 @@
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
     (defvar tqnr-section-display-color-highlight-line nil)
     ) ;; (progn ;; tqnr-section-display-color
+
+  ;; COLOR THEME GRUVBOX: Gruvbox theme config
+  (defvar tqnr-section-display-color-theme-gruvbox nil)
+
+  ;; COLOR THEME SANITYINC TOMORROW: Sanityinc Tomorrow theme config
+  (defvar tqnr-section-display-color-theme-sanityinc-tomorrow nil)
   ) ;; (progn ;; tqnr-section-display
 
 ;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...

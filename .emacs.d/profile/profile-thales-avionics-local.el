@@ -752,6 +752,9 @@
   ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
   (setq tqnr-section-mode-projectile-direnv t)
 
+  ;; MATLAB: Matlab mode config
+  (setq tqnr-section-mode-matlab t)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
   ) ;; (when tqnr-section-mode
@@ -943,7 +946,7 @@
     ;; theme to be used, do not use it with terminal
     ;; (setq tqnr-profile-color-theme "solarized-light")
     ;;(setq tqnr-profile-color-theme "labburn")
-    (setq tqnr-profile-color-theme "gruvbox-dark-hard")
+    ;(setq tqnr-profile-color-theme "gruvbox-dark-hard")
     ;; useful to not have bold or italic in doom theme
     (custom-set-variables
       '(doom-themes-enable-bold nil)
@@ -954,6 +957,12 @@
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
     (setq tqnr-section-display-color-highlight-line nil)
     ) ;; (when tqnr-section-display-color
+
+  ;; COLOR THEME GRUVBOX: Gruvbox theme config
+  (setq tqnr-section-display-color-theme-gruvbox t)
+
+  ;; COLOR THEME SANITYINC TOMORROW: Sanityinc Tomorrow theme config
+  (setq tqnr-section-display-color-theme-sanityinc-tomorrow nil)
   ) ;; (when tqnr-section-display
 
 ;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...

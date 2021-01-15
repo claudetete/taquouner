@@ -752,6 +752,9 @@
   ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
   (setq tqnr-section-mode-projectile-direnv t)
 
+  ;; MATLAB: Matlab mode config
+  (setq tqnr-section-mode-matlab t)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
   ) ;; (when tqnr-section-mode
@@ -995,7 +998,7 @@
     ;;(setq tqnr-profile-color-theme "rippedcasts") ;; same than railcasts (wrong cursor and powerline colors)
     ;; (setq tqnr-profile-color-theme "sanityinc-tomorrow-bright") ;; nice very color dark background (ada not purple/blue/pink)
     ;; (setq tqnr-profile-color-theme "sanityinc-tomorrow-eighties") ;; very nice color a little too low contrast
-    (setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; almost perfect (need to custom powerline color)
+    ;;(setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; almost perfect (need to custom powerline color)
     ;; (setq tqnr-profile-color-theme "smyx") ;; nice color but box and bold are used (need to custom powerline color)
     ;;(setq tqnr-profile-color-theme "spolsky") ;; nice colorful but too light on mode support
     ;;(setq tqnr-profile-color-theme "tango-2") ;; nice tango color (powerline color to revise) and too light on mode support
@@ -1016,6 +1019,12 @@
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
     (setq tqnr-section-display-color-highlight-line nil)
     ) ;; (when tqnr-section-display-color
+
+  ;; COLOR THEME GRUVBOX: Gruvbox theme config
+  (setq tqnr-section-display-color-theme-gruvbox nil)
+
+  ;; COLOR THEME SANITYINC TOMORROW: Sanityinc Tomorrow theme config
+  (setq tqnr-section-display-color-theme-sanityinc-tomorrow t)
   ) ;; (when tqnr-section-display
 
 ;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...

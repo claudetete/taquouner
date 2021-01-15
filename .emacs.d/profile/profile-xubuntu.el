@@ -64,6 +64,10 @@
   ;; EXECUTABLE: Set path of some exe
   (setq tqnr-section-environment-executable t)
   (when tqnr-section-environment-executable
+    ;; shell program
+    (setq tqnr-profile-shell-program "bash")
+    ;; shell program arguments
+    (setq tqnr-profile-shell-arguments "-lc")
     ;; diff program
     (setq tqnr-profile-ediff-diff-program "diff")
     (setq tqnr-profile-ediff-diff3-program "diff3")
@@ -210,6 +214,8 @@
     (setq tqnr-section-mode-helm-swoop nil)
     ;; do not have default value when run helm swoop
     (setq tqnr-section-mode-helm-swoop-without-pre-input nil)
+    ;; compile by helm
+    (setq tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
@@ -288,8 +294,8 @@
   ;; (ex: set in test, semi colon after test...)
   (setq tqnr-section-mode-cwarn nil)
 
-  ;; C DATA DEBUG: ?? (never manage to make it work)
-  (setq tqnr-section-mode-c-data-debug nil)
+  ;; SWIPER: Isearch alternative with fuzzy using ivy
+  (setq tqnr-section-mode-swiper t)
 
   ;; ICOMPLETION: more completion in minibuffer
   (setq tqnr-section-mode-icompletion nil)
@@ -319,8 +325,8 @@
     (setq tqnr-section-mode-gnu-global-ggtags nil)
     ) ;; (when tqnr-section-mode-gnu-global
 
-  ;; EPROJECT: (grischka): project management mode (never used)
-  (setq tqnr-section-mode-eproject nil)
+  ;; COUNSEL COMPILE: Use ivy to select a compile command.
+  (setq tqnr-section-mode-counsel-compile nil)
 
   ;; RTRT SCRIPT: rtrt script mode (syntax coloration)
   (setq tqnr-section-mode-rtrt-script nil)
@@ -523,6 +529,10 @@
 
   ;; PROJECTILE: Project management, filtered find-file, only with root file from version control
   (setq tqnr-section-mode-projectile t)
+  (when tqnr-section-mode-projectile
+    ;; use fd to index project files
+    (setq tqnr-profile-projectile-use-fd nil)
+    ) ;; (when tqnr-section-mode-projectile
 
   ;; COMPANY: Completion mode using external back-ends to have symbol
   (setq tqnr-section-mode-company nil)
@@ -545,7 +555,7 @@
   (when tqnr-section-mode-elpy
     ;; override path for created elpy virtualenv (should have rights to execute)
     (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
-    )
+    ) ;; (when tqnr-section-mode-elpy
 
   ;; SMARTPARENS: useful to have nice navigation through source code structure
   (setq tqnr-section-mode-smartparens nil)
@@ -683,7 +693,7 @@
   (when tqnr-section-mode-undo-fu-session
     ;; set undo fu session directory where every undo will be stored
     (setq tqnr-profile-undo-fu-session-directory (concat (file-name-as-directory tqnr-dotemacs-path) "undo"))
-    ;; set org directory where every org file will goes
+    ;; set file size limit about session save file
     (setq tqnr-profile-undo-fu-session-file-limit 1024)
     ) ;; (when tqnr-section-mode-undo-fu-session
 
@@ -698,6 +708,9 @@
 
   ;; PROJECTILE DIRENV: Projectile direnv mode to set environment variable as found in direnv config
   (setq tqnr-section-mode-projectile-direnv nil)
+
+  ;; MATLAB: Matlab mode config
+  (setq tqnr-section-mode-matlab nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
@@ -893,6 +906,12 @@
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
     (setq tqnr-section-display-color-highlight-line nil)
     ) ;; (when tqnr-section-display-color
+
+  ;; COLOR THEME GRUVBOX: Gruvbox theme config
+  (setq tqnr-section-display-color-theme-gruvbox nil)
+
+  ;; COLOR THEME SANITYINC TOMORROW: Sanityinc Tomorrow theme config
+  (setq tqnr-section-display-color-theme-sanityinc-tomorrow nil)
   ) ;; (when tqnr-section-display
 
 ;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...
