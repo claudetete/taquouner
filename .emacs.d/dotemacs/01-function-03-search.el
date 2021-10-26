@@ -203,6 +203,22 @@
     ((looking-at "\\*!")
       (when (eq major-mode 'fitnesse-mode)
         (find-matching-element 're-search-backward 0 "\\*!" "!\\*")))
+
+    ;;
+    ;; MATLAB
+    ((looking-at "if")
+      (when (eq major-mode 'matlab-mode)
+        (find-matching-element 're-search-forward 2 "\\bif\\b\\|\\bfor\\b\\|\\bfunction\\b" "\\bend\\b")))
+    ((looking-at "for")
+      (when (eq major-mode 'matlab-mode)
+        (find-matching-element 're-search-forward 3 "\\bif\\b\\|\\bfor\\b\\|\\bfunction\\b" "\\bend\\b")))
+    ((looking-at "function")
+      (when (eq major-mode 'matlab-mode)
+        (find-matching-element 're-search-forward 8 "\\bif\\b\\|\\bfor\\b\\|\\bfunction\\b" "\\bend\\b")))
+    ((looking-at "end")
+      (when (eq major-mode 'matlab-mode)
+        (find-matching-element 're-search-backward 0 "\\bend\\b" "\\bif\\b\\|\\bfor\\b\\|\\bfunction\\b")))
+
     ;;
     ;;(t (error "Cursor is not on ASSERT nor RETRACT"))
     (t t))

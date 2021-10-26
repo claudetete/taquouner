@@ -100,6 +100,12 @@
 (message (calc-eval "deg(46@ 30\' 30\")"))
 (message (calc-eval "hms(46.1833332)"))
 
+(eval-after-load "calc-units"
+  '(progn
+     (setq math-additional-units
+       '((mps " m/s" "Meters per second"))
+       math-units-table nil)))
+
 ;; in Calc ("u c" to convert units)
 ;; Nautical mile:    nmi
 ;; Meter:            m
