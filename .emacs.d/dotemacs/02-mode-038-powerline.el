@@ -92,8 +92,7 @@
                    (face-middle (if active 'powerline-active2
                                   'powerline-inactive2))
                    ;; face for highlight
-                   (face-warning `(:height 1.5
-                                    :foreground ,(face-foreground (if active 'powerline-highlight-active0
+                   (face-warning `(:foreground ,(face-foreground (if active 'powerline-highlight-active0
                                                                     'powerline-highlight-inactive0))
                                     :background ,(face-background (if active 'powerline-highlight-active0
                                                                     'powerline-highlight-inactive0))))
@@ -218,6 +217,11 @@
   ;; [VARIABLE.tqnr-powerline-height 24]
   (when tqnr-powerline-height
     (setq powerline-height tqnr-powerline-height))
+
+  ;; [VARCOMMENT.Font for powerline modeline]
+  ;; [VARIABLE.tqnr-powerline-font nil]
+  (when tqnr-powerline-font
+    (set-face-attribute 'mode-line nil :font tqnr-powerline-font))
   (powerline-my-theme)
   ) ;; (use-package powerline
 

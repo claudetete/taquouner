@@ -456,7 +456,9 @@
   (setq tqnr-section-mode-powerline t)
   (when tqnr-section-mode-powerline
     ;; Height of powerline modeline
-    (setq tqnr-powerline-height 24)
+    (setq tqnr-powerline-height 27)
+    ;;
+    (setq tqnr-powerline-font "Iosevka NF-12")
     ) ;; (when tqnr-section-mode-powerline
 
   ;; NYAN: add bar in modeline given position in buffer
@@ -931,6 +933,8 @@
     ;;
     ;;(setq tqnr-profile-font "Iosevka-8")
     (setq tqnr-profile-font "Iosevka NF-8")
+    ;;
+    (setq tqnr-profile-modeline-font nil)
     ;; ANTIALIAS: set antialiasing on font rendering
     (setq tqnr-section-display-font-antialias t)
     ) ;; (when tqnr-section-display-font

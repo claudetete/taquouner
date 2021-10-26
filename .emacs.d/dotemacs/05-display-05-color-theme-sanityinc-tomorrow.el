@@ -54,6 +54,8 @@
     (interactive)
     (color-theme-sanityinc-tomorrow 'dark))
 
+  (add-to-list 'custom-theme-load-path 
+    (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/themes"))
   (load-theme 'sanityinc-tomorrow-dark t)
 
   :custom-face
@@ -83,6 +85,6 @@
     (yascroll:thumb-fringe    ((t (:foreground "#cccccc" :background "#cccccc"))))))
 
 
-(provide '05-display-04-color-theme-gruvbox)
+(provide '05-display-05-color-theme-sanityinc-tomorrow)
 
-;;; 05-display-04-color-theme-gruvbox.el ends here
+;;; 05-display-05-color-theme-sanityinc-tomorrow.el ends here
