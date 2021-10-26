@@ -38,7 +38,7 @@
   ("C-r" . swiper-isearch-backward)
   ("C-M-v" . swiper-isearch-thing-at-point)
 
-  (:map swiper-isearch-map
+  (:map ivy-minibuffer-map
     ;; backward way of swiper-C-s to move with C-r
     ("C-r" . swiper-C-r)
     ("M-S-s" . swiper-isearch-toggle)
@@ -72,6 +72,9 @@ If the input is empty, select the previous history element instead."
       (unless (eq ivy-exit 'done)
         (swiper--remember-search-history (ivy--regex ivy-text)))))
   ) ;; (use-package swiper
+
+(use-package wgrep
+  )
 
 ;; outside of use-package otherwise, it does not work well
 (global-set-key (kbd "C-S-s") #'isearch)

@@ -32,7 +32,7 @@
 ;;; Code:
 (use-package avy
   :bind
-  ("<f12> <f12>"  . avy-goto-char-2)
+  ("<f12> <f12>"  . avy-goto-char-timer)
   ("<f12> <up>"   . avy-goto-char-2-above)
   ("<f12> <down>" . avy-goto-char-2-below)
   ("<S-F12>"      . avy-pop-mark)
@@ -57,6 +57,9 @@
   :config
   ;; do search only in current buffer
   (setq avy-all-windows nil)
+
+  :custom
+  (avy-timeout-seconds 0.3)
   ) ;; (use-package avy
 
 

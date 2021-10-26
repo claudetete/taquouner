@@ -100,7 +100,7 @@
     ;; universal-ctags as backend of GNU Global
     (setenv "GTAGSCONF" (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/share/gtags/gtags.conf"))
     (setenv "GTAGSLABEL" "new-ctags")
-    (setenv "RIPGREP_CONFIG_PATH" "u:/.ripgreprc")
+    ;(setenv "RIPGREP_CONFIG_PATH" "u:/.ripgreprc")
     ) ;; (when tqnr-section-environment-set-path
   ;; MS WINDOWS PERFORMANCE: MS Windows specific configuration about performance
   (setq tqnr-section-environment-ms-windows-performance t)
@@ -260,7 +260,7 @@
     ;; compile by helm
     (setq tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
-    (setq tqnr-section-mode-helm-flx t)
+    (setq tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
     (setq tqnr-section-mode-helm-kill-ring t)
     ;; replace M-x

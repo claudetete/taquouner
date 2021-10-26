@@ -120,6 +120,10 @@
   ;; remove pair ' ' in minibuffer
   (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
 
+  (sp-pair "\"" "\""
+    :trigger "\""
+    :unless '(sp-point-before-word-p
+               sp-point-after-word-p))
   ;; can be used
   ;(sp-local-pair 'fitnesse-mode "'''" "'''")
 
