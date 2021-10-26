@@ -50,45 +50,27 @@
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-git-version "2.30.0")
+    (defvar tqnr-profile-portable-git-version "2.32.0.2")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
         ;; (do not put path which contains gcc otherwise it will be used instead of MSYS2 one)
         ;; emacs useful binary
-        ;;(concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ada-mode")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ripgrep-x86_64")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/pandoc-2.0.3")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/bin")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/universal-ctags-x64_2018-08-22")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/cflow-mingw-master")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/irony-mode/server/build/bin")
+        "j:/CLI/bin"
         ;; gnuplot
         "k:/GNUPLOT/gnuplot_5.3/bin"
-        ;; GNATPRO
-        "k:/GNATPRO/GNATPRO_18.2/bin"
         ;; PYTHON
         "j:/PYTHON/PYTHON_3.6.6"
         "j:/PYTHON/PYTHON_3.6.6/Scripts"
         ;; GIT
-        (concat  "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
+        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
-        "j:/MSYS/msys64/mingw64/bin"
-        "j:/MSYS/msys64/usr/local/bin"
-        "j:/MSYS/msys64/usr/bin"
-        "j:/MSYS/msys64/bin"
+        ;; "j:/MSYS/msys64/mingw64/bin"
+        ;; "j:/MSYS/msys64/usr/local/bin"
+        ;; "j:/MSYS/msys64/usr/bin"
+        ;; "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        "j:/GIT_EXTENSIONS/GitExtensions_4.0.0.10352-ad275d6d4"
-        ;; CYGWIN
-        ;;"D:/App/cygwin/bin"
-        ;; GIT linux utils (msys64 override it)
-        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/cmd")
-        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/mingw64/bin")
-        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/usr/bin")
-        ;; GPS
-        "k:/GPS/GPS_20.0_x64/bin"
-        ;; GNU Emacs
-        "j:/EMACS/emacs-26.3-x86_64/bin"
+        "j:/GIT_EXTENSIONS/GitExtensions_3.5.1.12196-9099a1e76"
         ;; MS Windows usual path
         "C:/WINDOWS"
         "C:/WINDOWS/System32"
@@ -750,7 +732,7 @@
   (setq tqnr-section-mode-header2 t)
 
   ;; LSP MODE: Lsp mode
-  (setq tqnr-section-mode-lsp-mode nil)
+  (setq tqnr-section-mode-lsp-mode t)
 
   ;; LUA MODE: Lua mode
   (setq tqnr-section-mode-lua-mode nil)

@@ -55,11 +55,21 @@
   :config
   (setq ada-build-run-cmd "./${main}.exe")
 
+  (defun ada-mode-after-direnv ()
+    (lsp-register-custom-settings
+      '(("ada.scenarioVariables.BINUTILS_SRC_DIR" "/null")
+         ("ada.scenarioVariables.BUILD_TYPE" project-build-type "Debug")))
+    (setq lsp-ada-project-file (getenv "LSP_ADA_PROJECT_FILE"))
+    (lsp-mode t))
+
   (defun my-ada-mode-hook ()
     ;; fill-column is a automatically local variable when set
-    (set-fill-column 100)
+    (set-fill-column 150)
     ;; tab-width is a automatically local variable when set
     (setq tab-width 7)
+
+    (when (and tqnr-section-mode-lsp-mode tqnr-section-mode-projectile-direnv)
+      (add-hook 'projectile-direnv-after-export-hook 'ada-mode-after-direnv nil t))
     )
 
   :custom

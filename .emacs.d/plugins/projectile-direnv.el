@@ -1,6 +1,6 @@
 ;;; projectile-direnv.el --- Set environment variables from .envrc -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2016-2020 Free Software Foundation, Inc.
+;; Copyright (C) 2016-2021 Free Software Foundation, Inc.
 
 ;; Author: Christian Romney <crommney@pointslope.com>
 ;;         Claude Tete <claude.tete@gmail.com>
@@ -46,6 +46,10 @@
   "List of mandatory element of exec-path."
   :type 'list)
 
+(defcustom projectile-direnv-path-mandatory '()
+  "PATH environment variable mandatory."
+  :type 'string)
+
 (defcustom projectile-direnv-make-local nil
   "When non-nil exported variables are buffer-local."
   :type 'boolean)
@@ -53,6 +57,12 @@
 (defcustom projectile-direnv-compile-env nil
   "When non-nil all variables are set into `compilation-environment'."
   :type 'boolean)
+
+(defvar projectile-direnv-before-export-hook nil
+  "Run before exporting environment variables.")
+
+(defvar projectile-direnv-after-export-hook nil
+  "Run after exporting environment variables.")
 
 (defvar projectile-direnv-envrc nil
   "Contains the path to the last loaded .envrc.")
@@ -77,10 +87,11 @@ cell where the car is the var name and the cdr is its value."
          (value (cdr pair)))
     (when projectile-direnv-make-local
       (projectile-direnv-delete-env-var name))
-    (setenv name value)
-    (when (string-equal name "PATH")
-      (let ((separator ":"))
-        (setq exec-path (append (s-split separator value t) projectile-direnv-exec-path-mandatory))))))
+    (if (string-equal name "PATH")
+      (let ((separator (if (string-equal system-type "windows-nt") ";" ":")))
+        (setenv name (concat value projectile-direnv-path-mandatory))
+        (setq exec-path (append (s-split separator value t) projectile-direnv-exec-path-mandatory)))
+      (setenv name value))))
 
 (defun projectile-direnv-delete-env-var (name)
   "Delete one element into process-environment"
@@ -106,13 +117,15 @@ file and set as buffer-local."
               (lines (s-split "\n" contents))
               (exports (-filter (lambda (l) (s-starts-with? "export" l)) lines))
               (envvars (-map #'projectile-direnv-parse-export exports)))
+        (when (null projectile-direnv-exec-path-mandatory)
+          (setq projectile-direnv-exec-path-mandatory (copy-list exec-path)))
+        (when (null projectile-direnv-path-mandatory)
+          (setq projectile-direnv-path-mandatory (getenv "PATH")))
         (when projectile-direnv-make-local
           (make-local-variable 'process-environment)
           (make-local-variable 'exec-path))
         (setq projectile-direnv-envrc envrc)
-        (-each envvars #'projectile-direnv-set-env-var)
-        ;;(message "projectile-direnv: export %s" (projectile-direnv-list-exports envvars))
-        ))))
+        (-each envvars #'projectile-direnv-set-env-var)))))
 
 (defun projectile-direnv-set-compile-environment ()
   "Take all environment variables and set `compilation-environment'. Only useful
@@ -128,18 +141,19 @@ not reflect it."
   "Reads a .envrc file in the Projectile project root, and sets
 environment variables for any defined exports"
   (interactive)
+  (run-hooks 'projectile-direnv-before-export-hook)
   (when (projectile-project-p)
     (projectile-direnv-export-variable-from-dir (projectile-project-root))
     (when projectile-direnv-compile-env
-      (projectile-direnv-set-compile-environment))))
+      (projectile-direnv-set-compile-environment)))
+  (run-hooks 'projectile-direnv-after-export-hook))
 
 (define-minor-mode projectile-direnv-mode
     "Projectile direnv minor mode"
     ;; If init-value is not set to t, this mode does not get enabled in
     ;; `fundamental-mode' buffers even after doing \"(global-my-mode 1)\".
     ;; More info: http://emacs.stackexchange.com/q/16693/115
-    :init-value t
-   )
+    :init-value t)
 
 ;; global mode is here to replace hook on `projectile-mode-hook'
 ;; see https://github.com/bbatsov/projectile/commit/6986e435e64e2f4ee43bf8093c11e1da5fb266fa
