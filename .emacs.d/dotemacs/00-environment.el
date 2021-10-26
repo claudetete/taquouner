@@ -186,7 +186,6 @@
   ;; need to use (list ) instead of '() to be able to use variable in it see https://stackoverflow.com/questions/24188100/using-mapconcat-to-concatenate-a-list-containing-a-variable
   (setenv "PATH" (concat (mapconcat 'identity tqnr-profile-path ";") ";" (getenv "PATH")))
   ;; emacs can also search in this path exec for external tool
-  (defvar exec-path-init exec-path)
   (setq exec-path (append tqnr-profile-path exec-path))
   ;; [COMMENT.]
   ;; [VARCOMMENT.LOCALE: languages settings about subversion and dired]

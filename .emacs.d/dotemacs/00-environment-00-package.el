@@ -49,6 +49,10 @@
     (add-to-list 'url-proxy-services `("http" . ,tqnr-profile-environment-package-proxy-http) t)
     (add-to-list 'url-proxy-services `("https" . ,tqnr-profile-environment-package-proxy-https) t))
 
+  ;; disable check gpg signature (only on MS Windows, archive-contents.sig no found)
+  (when (and tqnr-section-environment-os-recognition tqnr-running-on-ms-windows)
+    (setq package-check-signature nil))
+    
   (when (try-require 'package "      ")
     (when tqnr-profile-environment-package-local-path
       (setq package-archives nil)
