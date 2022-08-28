@@ -840,6 +840,16 @@
     ;; number of space for indentation in Arduino
     (setq tqnr-profile-arduino-indent-offset 2)
     ) ;; (when tqnr-section-languages-arduino
+  ;;
+  ;; JAVA
+  ;;   set indentation style
+  (setq tqnr-section-languages-java nil)
+  (when tqnr-section-languages-java
+    ;; number of space for indentation in java
+    (setq tqnr-profile-java-indent-offset 4)
+    ;; tab for indentation in java
+    (setq tqnr-profile-java-indent-with-tab t)
+    ) ;; (when tqnr-section-languages-java
   ) ;; (when tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only

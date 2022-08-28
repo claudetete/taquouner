@@ -50,7 +50,7 @@
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-git-version "2.30.0")
+    (defvar tqnr-profile-portable-git-version "2.34.1")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
@@ -79,7 +79,7 @@
 	    "j:/MSYS/msys64/usr/bin"
         "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        "j:/GIT_EXTENSIONS/GitExtensions_4.0.0.10352-ad275d6d4"
+        "j:/GIT_EXTENSIONS/GitExtensions_3.5.4.12724-65f01f399"
         ;; CYGWIN
         ;;"D:/App/cygwin/bin"
         ;; GIT linux utils (msys64 override it)
@@ -110,7 +110,7 @@
     ;; shell program
     (setq tqnr-profile-shell-program "bash")
     ;; shell program arguments
-    (setq tqnr-profile-shell-arguments "-c")
+    (setq tqnr-profile-shell-arguments "-lc")
     ;; diff program
     (setq tqnr-profile-ediff-diff-program "diff")
     (setq tqnr-profile-ediff-diff3-program "diff3")
@@ -260,7 +260,7 @@
     ;; compile by helm
     (setq tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
-    (setq tqnr-section-mode-helm-flx t)
+    (setq tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
     (setq tqnr-section-mode-helm-kill-ring t)
     ;; replace M-x
@@ -424,7 +424,7 @@
   ;; CSV: parse/edit/sort CSV file
   (setq tqnr-section-mode-csv t)
 
-  ;; SUBVERSION:
+  ;; SUBVERSION: support Subversion 1.7
   (setq tqnr-section-mode-subversion nil)
 
   ;; DIFF COLOR: add color to diff mode
@@ -456,7 +456,9 @@
   (setq tqnr-section-mode-powerline t)
   (when tqnr-section-mode-powerline
     ;; Height of powerline modeline
-    (setq tqnr-powerline-height 24)
+    (setq tqnr-powerline-height 27)
+    ;;
+    (setq tqnr-powerline-font "Iosevka NF-12")
     ) ;; (when tqnr-section-mode-powerline
 
   ;; NYAN: add bar in modeline given position in buffer
@@ -839,6 +841,16 @@
     ;; number of space for indentation in Arduino
     (setq tqnr-profile-arduino-indent-offset 2)
     ) ;; (when tqnr-section-languages-arduino
+  ;;
+  ;; JAVA
+  ;;   set indentation style
+  (setq tqnr-section-languages-java t)
+  (when tqnr-section-languages-java
+    ;; number of space for indentation in java
+    (setq tqnr-profile-java-indent-offset 4)
+    ;; tab for indentation in java
+    (setq tqnr-profile-java-indent-with-tab t)
+    ) ;; (when tqnr-section-languages-java
   ) ;; (when tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only
@@ -931,6 +943,8 @@
     ;;
     ;;(setq tqnr-profile-font "Iosevka-8")
     (setq tqnr-profile-font "Iosevka NF-8")
+    ;;
+    (setq tqnr-profile-modeline-font nil)
     ;; ANTIALIAS: set antialiasing on font rendering
     (setq tqnr-section-display-font-antialias t)
     ) ;; (when tqnr-section-display-font

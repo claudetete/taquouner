@@ -227,6 +227,25 @@
   (add-hook 'arduino-mode-hook 'tqnr-arduino-mode)
   (message "    Languages Arduino... Done"))
 
+;; [[SUBCOMMENT.
+;; JAVA
+;;   set indentation style
+;; ]]
+;; [SUBSECTION.tqnr-section-languages-java t]
+(when tqnr-section-languages-java (message "    Languages Java...")
+  ;; [VARCOMMENT.number of space for indentation in java]
+  ;; [VARIABLE.tqnr-profile-java-indent-offset 4]
+  ;; [VARCOMMENT.tab for indentation in java]
+  ;; [VARIABLE.tqnr-profile-java-indent-with-tab t]
+  (defun tqnr-java-mode ()
+    (setq c-basic-offset tqnr-profile-java-indent-offset)
+    (setq tab-width tqnr-profile-java-indent-offset)
+    (setq indent-tabs-mode tqnr-profile-java-indent-with-tab)
+    )
+
+  (add-hook 'java-mode-hook 'tqnr-java-mode)
+  (message "    Languages Java... Done"))
+
 (setq sh-basic-offset 2)
 
 (provide '03-languages)

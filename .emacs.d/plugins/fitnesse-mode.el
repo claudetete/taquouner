@@ -277,8 +277,8 @@
   (if (use-region-p)
     (progn
       (message "align region with %s..." (eval fitnesse-pretty-print-executable))
-      (shell-command-on-region (region-beginning) (region-end)
-        (eval fitnesse-pretty-print-executable) t t t))
+      ;;(shell-command-on-region (region-beginning) (region-end) (eval fitnesse-pretty-print-executable) t t t)
+      )
     (progn
       (shell-command
         (format "%s --file %s"

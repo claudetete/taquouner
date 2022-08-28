@@ -47,7 +47,7 @@
   ;;   ("C-M-S-i" . iimage-mode))
 
   :custom
-  (fitnesse-pretty-print-executable `(concat (file-name-as-directory (getenv "VIEWPATH")) "bin/fitformat"))
+  (fitnesse-pretty-print-executable `(concat "py -3 " (file-name-as-directory (getenv "VIEWPATH")) "bin/fitformat"))
   )
 
 (provide '02-mode-088-fitnesse)
