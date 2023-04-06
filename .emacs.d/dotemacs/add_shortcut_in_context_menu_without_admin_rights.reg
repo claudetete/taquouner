@@ -5,14 +5,14 @@ Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\Software\Classes\*\shell\openwemacs]
 @="Edit with &GNU Emacs"
-# The above value appears in the global context menu, 
+# The above value appears in the global context menu,
 # i.e., when you right click on a file.
 # (The '&' makes the next character a shortcut.)
-"Icon"="J:\\EMACS\\emacs-26.1-x86_64\\bin\\emacs.exe,0"
+"Icon"="J:\\EMACS\\emacs-27.1-x86_64\\bin\\emacs.exe,0"
 # The above uses the icon of the Emacs exe for the context
 # and should match the path used for the command below.
 # The ,0 selects the main icon.
 
 [HKEY_CURRENT_USER\Software\Classes\*\shell\openwemacs\command]
-@="J:\\EMACS\\emacs-26.1-x86_64\\bin\\emacsclientw.exe -n --alternate-editor=\"J:\\EMACS\\emacs-26.1-x86_64\\bin\\runemacs.exe\" -n \"%1\""
+@="J:\\EMACS\\emacs-27.1-x86_64\\bin\\emacsclientw.exe --no-wait --server-file=\"%USERPROFILE%/.emacs.d/server/server\" --alternate-editor=\"runemacs.exe\" \"%1\""
 # The above has to point to where you install Emacs
