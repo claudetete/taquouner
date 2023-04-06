@@ -1,6 +1,6 @@
 ;;; profile-thales-avionics-local.el --- a config file for profile
 
-;; Copyright (c) 2017-2021 Claude Tete
+;; Copyright (c) 2017-2023 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -49,50 +49,15 @@
   ;; SET PATH: Set environment variable PATH
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
-    ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-git-version "2.34.1")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
         ;; (do not put path which contains gcc otherwise it will be used instead of MSYS2 one)
         ;; emacs useful binary
-        ;;(concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ada-mode")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/ripgrep-x86_64")
+        "j:/CLI/bin"
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/pandoc-2.0.3")
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/bin")
         (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/universal-ctags-x64_2018-08-22")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/cflow-mingw-master")
-        (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/irony-mode/server/build/bin")
-        ;; gnuplot
-        "k:/GNUPLOT/gnuplot_5.3/bin"
-        ;; GNATPRO
-        "k:/GNATPRO/GNATPRO_18.2/bin"
-        ;; PYTHON
-        "j:/PYTHON/py"
-        "j:/PYTHON/PYTHON_3.6.6"
-        "j:/PYTHON/PYTHON_3.6.6/Scripts"
-        ;; GIT
-        (concat  "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
-        ;; MSYS (i686)
-        "j:/MSYS/msys64/mingw64/bin"
-	    "j:/MSYS/msys64/usr/local/bin"
-	    "j:/MSYS/msys64/usr/bin"
-        "j:/MSYS/msys64/bin"
-        ;; GITEXTENSIONS
-        "j:/GIT_EXTENSIONS/GitExtensions_3.5.4.12724-65f01f399"
-        ;; CYGWIN
-        ;;"D:/App/cygwin/bin"
-        ;; GIT linux utils (msys64 override it)
-        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/cmd")
-        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/mingw64/bin")
-        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/usr/bin")
-        ;; GPS
-        "k:/GPS/GPS_21.0w-20191210/bin"
-        ;; GNU Emacs
-        "j:/EMACS/emacs-26.3-x86_64/bin"
-        ;; MS Windows usual path
-        "C:/WINDOWS"
-        "C:/WINDOWS/System32"
         )
       ) ;; (setq tqnr-profile-path
     ;;
@@ -120,7 +85,7 @@
   (setq tqnr-section-environment-hyper t)
   ;; SUPER: Enable Super modifier key (Windows key, shortcut with "s-") on MS Windows
   (setq tqnr-section-environment-super t)
-  ;; SERVER: start the emacs server to have only one emacs client instance
+  ;; SERVER: start the emacs server to have only one emacs client instance and/or be able to externally open a file
   (setq tqnr-section-environment-server t)
 
   ;; PACKAGE: package management
@@ -264,7 +229,7 @@
     ;; replace yank-pop or browse kill ring by helm-kill-ring
     (setq tqnr-section-mode-helm-kill-ring t)
     ;; replace M-x
-    (setq tqnr-section-mode-helm-M-x t)
+    (setq tqnr-section-mode-helm-M-x nil)
     ;; replace electric buffer list
     (setq tqnr-section-mode-helm-buffers-list t)
     ;; add helm menu shortcut for function/variable list
@@ -278,7 +243,7 @@
     ;; replace bookmark list
     (setq tqnr-section-mode-helm-bookmark t)
     ;; enable Helm everywhere when asking file
-    (setq tqnr-section-mode-helm-global t)
+    (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
 
   ;; HOME END: add some useful function to home and end keys
@@ -362,10 +327,10 @@
   (setq tqnr-section-mode-dired-plus t)
 
   ;; GNU GLOBAL: Tag management mode
-  (setq tqnr-section-mode-gnu-global t)
+  (setq tqnr-section-mode-gnu-global nil)
   (when tqnr-section-mode-gnu-global
     ;; ggtags interface
-    (setq tqnr-section-mode-gnu-global-ggtags t)
+    (setq tqnr-section-mode-gnu-global-ggtags nil)
     ) ;; (when tqnr-section-mode-gnu-global
 
   ;; COUNSEL COMPILE: Use ivy to select a compile command.
@@ -457,7 +422,7 @@
   (when tqnr-section-mode-powerline
     ;; Height of powerline modeline
     (setq tqnr-powerline-height 27)
-    ;;
+    ;; Font for powerline modeline
     (setq tqnr-powerline-font "Iosevka NF-12")
     ) ;; (when tqnr-section-mode-powerline
 
@@ -760,6 +725,48 @@
 
   ;; MATLAB: Matlab mode config
   (setq tqnr-section-mode-matlab t)
+
+  ;; EGLOT: eglot config
+  (setq tqnr-section-mode-eglot t)
+  (when tqnr-section-mode-eglot
+    ;; Use eglot to manage ada-mode
+    (setq tqnr-section-mode-eglot-ada t)
+    ;; Use eglot to manage python-mode
+    (setq tqnr-section-mode-eglot-python nil)
+    ) ;; (when tqnr-section-mode-eglot
+
+  ;; IVY XREF: ivy xref config
+  (setq tqnr-section-mode-ivy-xref nil)
+
+  ;; VERTICO: vertico: vertical list for completions
+  (setq tqnr-section-mode-vertico t)
+
+  ;; MARGINALIA: marginalia: add info in margin of completions vertico
+  (setq tqnr-section-mode-marginalia t)
+
+  ;; ORDERLESS: orderless: sorting for completions
+  (setq tqnr-section-mode-orderless t)
+
+  ;; EMBARK: embark: contextual actions everywhere
+  (setq tqnr-section-mode-embark t)
+
+  ;; CORFU: corfu: autocompletion like company - overlay list
+  (setq tqnr-section-mode-corfu nil)
+
+  ;; CONSULT: consult: command with filtering like completions
+  (setq tqnr-section-mode-consult t)
+
+  ;; WHICH KEY: which-key: displays key bindings following entered incomplete command
+  (setq tqnr-section-mode-which-key t)
+
+  ;; SAVEHIST: savehist: minibuffer history separate by command
+  (setq tqnr-section-mode-savehist t)
+
+  ;; PYDOC: pydoc: show python documentation of a symbol
+  (setq tqnr-section-mode-pydoc t)
+
+  ;; NUMPYDOC: numpydoc: insert numpy documentation
+  (setq tqnr-section-mode-numpydoc t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
@@ -1130,6 +1137,10 @@
   (setq tqnr-section-misc-screensaver nil)
   ) ;; (when tqnr-section-misc
 
+;; PROJECT PLATFORM
+;; Configure emacs for a specific platform for a project (one by instance)
+(setq tqnr-section-project-platform t)
+
 ;; SAFE LOCAL VARIABLE: all customize settings from any .dir-local.el are put in customize
 (setq tqnr-section-safe-local-variable t)
 
@@ -1145,8 +1156,13 @@
   ;; to disable all version control
   (setq vc-handled-backends nil)
 
- ;; set only one zone program
- (setq zone-programs [ zone-pgm-putz-with-case ])
+  ;; U: is thales server home, it contains a function called by .dir-locals.el of some project
+  ;; then avoid ask each time it is modify
+  (add-to-list 'load-path "u:/")
+  (try-require 'project-env "")
+
+  ;; set only one zone program
+  (setq zone-programs [ zone-pgm-putz-with-case ])
 
   ;; try to unslow emacs when open file
   (remove-hook 'find-file-hooks 'vc-find-file-hook)

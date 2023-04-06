@@ -87,7 +87,7 @@
   (defvar tqnr-section-environment-hyper nil)
   ;; SUPER: Enable Super modifier key (Windows key, shortcut with "s-") on MS Windows
   (defvar tqnr-section-environment-super nil)
-  ;; SERVER: start the emacs server to have only one emacs client instance
+  ;; SERVER: start the emacs server to have only one emacs client instance and/or be able to externally open a file
   (defvar tqnr-section-environment-server nil)
 
   ;; PACKAGE: package management
@@ -214,7 +214,7 @@
 (defvar tqnr-section-mode nil)
 (progn ;; tqnr-section-mode
 
-  ;; USE PACKAGE: Package configuration with simple and tidy macro
+  ;; USE PACKAGE: Package configuration with simple and tidy macro (mandatory)
   (defvar tqnr-section-mode-use-package nil)
 
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
@@ -366,7 +366,7 @@
   ;; FILL COLUMN INDICATOR: show a vertical line at fill-column column or customize it
   (defvar tqnr-section-mode-fill-column-indicator nil)
   (progn ;; tqnr-section-mode-fill-column-indicator
-    ;; pixel width of vertical line default 1 (nil)
+    ;; pixel width of vertical line default is 1 (nil)
     (defvar tqnr-profile-fill-column-indicator-vertical-line-width nil)
     ;; color of vertical line in color format or nil (set comment theme face)
     (defvar tqnr-profile-fill-column-indicator-vertical-line-color nil)
@@ -424,6 +424,8 @@
   (progn ;; tqnr-section-mode-powerline
     ;; Height of powerline modeline
     (defvar tqnr-powerline-height nil)
+    ;; Font for powerline modeline
+    (defvar tqnr-powerline-font nil)
     ) ;; (progn ;; tqnr-section-mode-powerline
 
   ;; NYAN: add bar in modeline given position in buffer
@@ -725,6 +727,48 @@
 
   ;; MATLAB: Matlab mode config
   (defvar tqnr-section-mode-matlab nil)
+
+  ;; EGLOT: eglot config
+  (defvar tqnr-section-mode-eglot nil)
+  (progn ;; tqnr-section-mode-eglot
+    ;; Use eglot to manage ada-mode
+    (defvar tqnr-section-mode-eglot-ada nil)
+    ;; Use eglot to manage python-mode
+    (defvar tqnr-section-mode-eglot-python nil)
+    ) ;; (progn ;; tqnr-section-mode-eglot
+
+  ;; IVY XREF: ivy xref config
+  (defvar tqnr-section-mode-ivy-xref nil)
+
+  ;; VERTICO: vertico: vertical list for completions
+  (defvar tqnr-section-mode-vertico nil)
+
+  ;; MARGINALIA: marginalia: add info in margin of completions vertico
+  (defvar tqnr-section-mode-marginalia nil)
+
+  ;; ORDERLESS: orderless: sorting for completions
+  (defvar tqnr-section-mode-orderless nil)
+
+  ;; EMBARK: embark: contextual actions everywhere
+  (defvar tqnr-section-mode-embark nil)
+
+  ;; CORFU: corfu: autocompletion like company - overlay list
+  (defvar tqnr-section-mode-corfu nil)
+
+  ;; CONSULT: consult: command with filtering like completions
+  (defvar tqnr-section-mode-consult nil)
+
+  ;; WHICH KEY: which-key: displays key bindings following entered incomplete command
+  (defvar tqnr-section-mode-which-key nil)
+
+  ;; SAVEHIST: savehist: minibuffer history separate by command
+  (defvar tqnr-section-mode-savehist nil)
+
+  ;; PYDOC: pydoc: show python documentation of a symbol
+  (defvar tqnr-section-mode-pydoc nil)
+
+  ;; NUMPYDOC: numpydoc: insert numpy documentation
+  (defvar tqnr-section-mode-numpydoc nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
@@ -1085,6 +1129,10 @@
   ;; SCREENSAVER: when idle for 5min some animations on buffer text
   (defvar tqnr-section-misc-screensaver nil)
   ) ;; (progn ;; tqnr-section-misc
+
+;; PROJECT PLATFORM
+;; Configure emacs for a specific platform for a project (one by instance)
+(defvar tqnr-section-project-platform nil)
 
 ;; SAFE LOCAL VARIABLE: all customize settings from any .dir-local.el are put in customize
 (defvar tqnr-section-safe-local-variable nil)

@@ -1,6 +1,6 @@
 ;;; profile-magneti-marelli.el --- a config file for profile
 
-;; Copyright (c) 2012-2020 Claude Tete
+;; Copyright (c) 2012-2023 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -78,7 +78,7 @@
   (setq tqnr-section-environment-hyper t)
   ;; SUPER: Enable Super modifier key (Windows key, shortcut with "s-") on MS Windows
   (setq tqnr-section-environment-super nil)
-  ;; SERVER: start the emacs server to have only one emacs client instance
+  ;; SERVER: start the emacs server to have only one emacs client instance and/or be able to externally open a file
   (setq tqnr-section-environment-server nil)
 
   ;; PACKAGE: package management
@@ -458,6 +458,8 @@
   (when tqnr-section-mode-powerline
     ;; Height of powerline modeline
     (setq tqnr-powerline-height 24)
+    ;; Font for powerline modeline
+    (setq tqnr-powerline-font nil)
     ) ;; (when tqnr-section-mode-powerline
 
   ;; NYAN: add bar in modeline given position in buffer
@@ -759,6 +761,48 @@
 
   ;; MATLAB: Matlab mode config
   (setq tqnr-section-mode-matlab nil)
+
+  ;; EGLOT: eglot config
+  (setq tqnr-section-mode-eglot nil)
+  (when tqnr-section-mode-eglot
+    ;; Use eglot to manage ada-mode
+    (setq tqnr-section-mode-eglot-ada nil)
+    ;; Use eglot to manage python-mode
+    (setq tqnr-section-mode-eglot-python nil)
+    ) ;; (when tqnr-section-mode-eglot
+
+  ;; IVY XREF: ivy xref config
+  (setq tqnr-section-mode-ivy-xref nil)
+
+  ;; VERTICO: vertico: vertical list for completions
+  (setq tqnr-section-mode-vertico nil)
+
+  ;; MARGINALIA: marginalia: add info in margin of completions vertico
+  (setq tqnr-section-mode-marginalia nil)
+
+  ;; ORDERLESS: orderless: sorting for completions
+  (setq tqnr-section-mode-orderless nil)
+
+  ;; EMBARK: embark: contextual actions everywhere
+  (setq tqnr-section-mode-embark nil)
+
+  ;; CORFU: corfu: autocompletion like company - overlay list
+  (setq tqnr-section-mode-corfu nil)
+
+  ;; CONSULT: consult: command with filtering like completions
+  (setq tqnr-section-mode-consult nil)
+
+  ;; WHICH KEY: which-key: displays key bindings following entered incomplete command
+  (setq tqnr-section-mode-which-key nil)
+
+  ;; SAVEHIST: savehist: minibuffer history separate by command
+  (setq tqnr-section-mode-savehist nil)
+
+  ;; PYDOC: pydoc: show python documentation of a symbol
+  (setq tqnr-section-mode-pydoc nil)
+
+  ;; NUMPYDOC: numpydoc: insert numpy documentation
+  (setq tqnr-section-mode-numpydoc nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
@@ -1118,6 +1162,10 @@
   ;; SCREENSAVER: when idle for 5min some animations on buffer text
   (setq tqnr-section-misc-screensaver nil)
   ) ;; (when tqnr-section-misc
+
+;; PROJECT PLATFORM
+;; Configure emacs for a specific platform for a project (one by instance)
+(setq tqnr-section-project-platform nil)
 
 ;; SAFE LOCAL VARIABLE: all customize settings from any .dir-local.el are put in customize
 (setq tqnr-section-safe-local-variable t)

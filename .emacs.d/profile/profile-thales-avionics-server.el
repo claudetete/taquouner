@@ -1,6 +1,6 @@
 ;;; profile-thales-avionics-server.el --- a config file for profile
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2017-2023 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -50,7 +50,7 @@
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
     ;; PATH environment variable concat with current PATH
-    (defvar tqnr-profile-portable-git-version "2.32.0.2")
+    (defvar tqnr-profile-portable-git-version "2.34.1")
     (setq tqnr-profile-path
       (list
         ;; before MSYS2 to make sure to use this version of tools
@@ -70,7 +70,7 @@
         ;; "j:/MSYS/msys64/usr/bin"
         ;; "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        "j:/GIT_EXTENSIONS/GitExtensions_3.5.1.12196-9099a1e76"
+        "k:/GIT_EXTENSIONS/GitExtensions_3.5.4.12724-65f01f399"
         ;; MS Windows usual path
         "C:/WINDOWS"
         "C:/WINDOWS/System32"
@@ -82,7 +82,6 @@
     ;; universal-ctags as backend of GNU Global
     (setenv "GTAGSCONF" (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/gnu_global_662wb/share/gtags/gtags.conf"))
     (setenv "GTAGSLABEL" "new-ctags")
-    ;(setenv "RIPGREP_CONFIG_PATH" "u:/.ripgreprc")
     ) ;; (when tqnr-section-environment-set-path
   ;; MS WINDOWS PERFORMANCE: MS Windows specific configuration about performance
   (setq tqnr-section-environment-ms-windows-performance t)
@@ -102,7 +101,7 @@
   (setq tqnr-section-environment-hyper t)
   ;; SUPER: Enable Super modifier key (Windows key, shortcut with "s-") on MS Windows
   (setq tqnr-section-environment-super t)
-  ;; SERVER: start the emacs server to have only one emacs client instance
+  ;; SERVER: start the emacs server to have only one emacs client instance and/or be able to externally open a file
   (setq tqnr-section-environment-server t)
 
   ;; PACKAGE: package management
@@ -246,7 +245,7 @@
     ;; replace yank-pop or browse kill ring by helm-kill-ring
     (setq tqnr-section-mode-helm-kill-ring t)
     ;; replace M-x
-    (setq tqnr-section-mode-helm-M-x t)
+    (setq tqnr-section-mode-helm-M-x nil)
     ;; replace electric buffer list
     (setq tqnr-section-mode-helm-buffers-list t)
     ;; add helm menu shortcut for function/variable list
@@ -260,7 +259,7 @@
     ;; replace bookmark list
     (setq tqnr-section-mode-helm-bookmark t)
     ;; enable Helm everywhere when asking file
-    (setq tqnr-section-mode-helm-global t)
+    (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
 
   ;; HOME END: add some useful function to home and end keys
@@ -344,10 +343,10 @@
   (setq tqnr-section-mode-dired-plus t)
 
   ;; GNU GLOBAL: Tag management mode
-  (setq tqnr-section-mode-gnu-global t)
+  (setq tqnr-section-mode-gnu-global nil)
   (when tqnr-section-mode-gnu-global
     ;; ggtags interface
-    (setq tqnr-section-mode-gnu-global-ggtags t)
+    (setq tqnr-section-mode-gnu-global-ggtags nil)
     ) ;; (when tqnr-section-mode-gnu-global
 
   ;; COUNSEL COMPILE: Use ivy to select a compile command.
@@ -439,7 +438,7 @@
   (when tqnr-section-mode-powerline
     ;; Height of powerline modeline
     (setq tqnr-powerline-height 27)
-    ;;
+    ;; Font for powerline modeline
     (setq tqnr-powerline-font "Iosevka NF-12")
     ) ;; (when tqnr-section-mode-powerline
 
@@ -708,7 +707,7 @@
   (setq tqnr-section-mode-ialign t)
 
   ;; REALGUD: realgud mode
-  (setq tqnr-section-mode-realgud t)
+  (setq tqnr-section-mode-realgud nil)
 
   ;; MOVE TEXT: realgud mode
   (setq tqnr-section-mode-move-text t)
@@ -732,7 +731,7 @@
   (setq tqnr-section-mode-header2 t)
 
   ;; LSP MODE: Lsp mode
-  (setq tqnr-section-mode-lsp-mode t)
+  (setq tqnr-section-mode-lsp-mode nil)
 
   ;; LUA MODE: Lua mode
   (setq tqnr-section-mode-lua-mode nil)
@@ -742,6 +741,48 @@
 
   ;; MATLAB: Matlab mode config
   (setq tqnr-section-mode-matlab t)
+
+  ;; EGLOT: eglot config
+  (setq tqnr-section-mode-eglot t)
+  (when tqnr-section-mode-eglot
+    ;; Use eglot to manage ada-mode
+    (setq tqnr-section-mode-eglot-ada t)
+    ;; Use eglot to manage python-mode
+    (setq tqnr-section-mode-eglot-python nil)
+    ) ;; (when tqnr-section-mode-eglot
+
+  ;; IVY XREF: ivy xref config
+  (setq tqnr-section-mode-ivy-xref nil)
+
+  ;; VERTICO: vertico: vertical list for completions
+  (setq tqnr-section-mode-vertico t)
+
+  ;; MARGINALIA: marginalia: add info in margin of completions vertico
+  (setq tqnr-section-mode-marginalia t)
+
+  ;; ORDERLESS: orderless: sorting for completions
+  (setq tqnr-section-mode-orderless t)
+
+  ;; EMBARK: embark: contextual actions everywhere
+  (setq tqnr-section-mode-embark t)
+
+  ;; CORFU: corfu: autocompletion like company - overlay list
+  (setq tqnr-section-mode-corfu nil)
+
+  ;; CONSULT: consult: command with filtering like completions
+  (setq tqnr-section-mode-consult t)
+
+  ;; WHICH KEY: which-key: displays key bindings following entered incomplete command
+  (setq tqnr-section-mode-which-key t)
+
+  ;; SAVEHIST: savehist: minibuffer history separate by command
+  (setq tqnr-section-mode-savehist t)
+
+  ;; PYDOC: pydoc: show python documentation of a symbol
+  (setq tqnr-section-mode-pydoc t)
+
+  ;; NUMPYDOC: numpydoc: insert numpy documentation
+  (setq tqnr-section-mode-numpydoc t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
@@ -1173,6 +1214,10 @@
   ;; SCREENSAVER: when idle for 5min some animations on buffer text
   (setq tqnr-section-misc-screensaver nil)
   ) ;; (when tqnr-section-misc
+
+;; PROJECT PLATFORM
+;; Configure emacs for a specific platform for a project (one by instance)
+(setq tqnr-section-project-platform t)
 
 ;; SAFE LOCAL VARIABLE: all customize settings from any .dir-local.el are put in customize
 (setq tqnr-section-safe-local-variable t)

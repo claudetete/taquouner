@@ -180,7 +180,7 @@
   ;; [VARCOMMENT.number of space for indentation in perl]
   ;; [VARIABLE.tqnr-profile-perl-indent-offset 2]
   (setq perl-indent-level tqnr-profile-perl-indent-offset)
-  ;; add customize compile command line to execute current python file
+  ;; add customize compile command line to execute current perl file
   ;; found at http://stackoverflow.com/questions/12756531/using-the-current-buffers-file-name-in-m-x-compile
   (add-hook 'perl-mode-hook
     (lambda ()

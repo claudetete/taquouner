@@ -267,10 +267,13 @@
   (message "    Super... Done"))
 
 ;;
-;; [SUBCOMMENT.SERVER: start the emacs server to have only one emacs client instance]
+;; [SUBCOMMENT.SERVER: start the emacs server to have only one emacs client instance and/or be able to externally open a file]
 ;; [SUBSECTION.tqnr-section-environment-server nil]
 (when tqnr-section-environment-server (message "    Server...")
   (when (and tqnr-section-environment-terminal-vs-graphics tqnr-running-in-graphical)
+    ;; tqnr-profile-project-server-file should be set on command line or in ~/.emacs
+    (when (boundp 'tqnr-profile-project-server-file)
+      (set-variable 'server-name tqnr-profile-project-server-file))
     (server-start)
     (message "* Running with server")
     )

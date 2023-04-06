@@ -49,7 +49,10 @@
 
 ;; native compile elisp files as they are loaded
 (if (>= emacs-major-version 28)
-  (setq comp-deferred-compilation t))
+  (setq native-comp-speed -1)
+  (setq package-native-compile nil)
+  (setq straight-disable-native-compile t) 
+  (setq comp-deferred-compilation nil))
   
 ;;
 ;; TRY-REQUIRE DEFINITION
