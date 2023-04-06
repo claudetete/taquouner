@@ -108,6 +108,8 @@
   (setq p-navigate-consider-symbols nil)
   ;; do not consider comment as sexps
   (setq sp-navigate-comments-as-sexps nil)
+  ;; aggressive-indent-mode not used but set to true to disable indentation after wrap
+  (setq aggressive-indent-mode t)
   ;; replace electric pair in perl by smartparens
   (with-eval-after-load 'cperl-mode
     (add-hook 'smartparens-enabled-hook (lambda () (define-key cperl-mode-map "{" nil)))

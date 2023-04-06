@@ -97,6 +97,9 @@
 (global-set-key         (kbd "C-c [")           'fill-region)
 (global-set-key         (kbd "H-]")             'fill-region-as-paragraph)
 
+;; sort lines
+(global-set-key         (kbd "C-c s")           'sort-lines)
+
 ;; run calc quick
 (global-set-key         (kbd "<M-kp-multiply>") 'quick-calc)
 

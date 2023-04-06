@@ -451,7 +451,7 @@
   (use-package hydra
     :pin melpa
     :bind
-    ("C-c s" . hydra-smartparens/body)
+    ("C-c n" . hydra-smartparens/body)
 
     :config
     (defhydra hydra-smartparens (:color pink

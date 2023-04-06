@@ -68,7 +68,7 @@
 
   :custom
   ;; list all files even in git submodules (remove --others and add --recurse-submodules)
-  (projectile-git-command "NO_ENV=True git ls-files -z --cached --others --exclude-standard")
+  (projectile-git-command "NO_ENV=True NO_PRINT=True NO_USER=True NO_INTERACTION=True git ls-files -z --cached --others --exclude-standard")
 
   :bind (:map projectile-mode-map
           ;; add prefix shortcut to C-c p

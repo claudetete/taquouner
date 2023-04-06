@@ -1275,6 +1275,32 @@
   ;; needed to avoid error in colors
   (powerline-reset)
 
+  (fset 'rel2components
+    (kmacro-lambda-form [M-end ?\C-x ?\C-f ?\C-c ?\C-i ?\S-\C-r ?c ?o ?m ?p ?o ?n ?e ?n ?t ?s return C-right right ?\C-  M-home delete left down M-right] 0 "%d"))
+
+  (global-set-key (kbd "<S-f8>") 'rel2components)
+
+  (fset 'gpr-srcdir2var
+   (kmacro-lambda-form [?\C-w ?\C-w tab ?\M-d tab C-right right ?n backspace ?N ?a ?t ?i ?v ?e ?  ?: ?= ?\M-d ?\M-d down ?\C-w tab ?\M-d tab C-right right ?C ?r ?o ?s ?s ?  ?  ?: ?= ?\M-d ?\M-d down ?\C-w] 0 "%d"))
+
+  (global-set-key (kbd "<C-S-f8>") 'gpr-srcdir2var)
+
+
+  (defun helm-find-file-gpr ()
+    (interactive)
+    (let ((rootpath (projectile-project-root))
+           (filename (thing-at-point 'filename)))
+      (when (and rootpath filename)
+        (helm-find-files-1 (concat (file-name-as-directory rootpath) "components/" filename)))))
+  (global-set-key (kbd "C-x f") #'helm-find-file-gpr)
+
+  (defun sort-gpr-with ()
+    (interactive)
+    (when (not (use-region-p))
+      (mark-paragraph))
+    (sort-regexp-fields nil "^.*\"\\(.*\\)\";$" "\\1" (region-beginning) (region-end)))
+  (global-set-key (kbd "C-c M-s") #'sort-gpr-with)
+
   (message "### END")
   ) ; (defun function-to-call-after-loading-conf ()
 

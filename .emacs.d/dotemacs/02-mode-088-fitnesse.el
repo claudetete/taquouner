@@ -36,6 +36,16 @@
   :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins"))
 
   :init
+  (define-minor-mode gael-mode
+    "Minor mode for editing traceability and review files of GAEL tool."
+    :lighter " gael"
+    (set (make-local-variable 'require-final-newline) nil))
+
+  ;; associate traceability and do-review files to minor mode gael-mode
+  (add-to-list 'auto-mode-alist '("/.traceability/" . gael-mode))
+  (add-to-list 'auto-mode-alist '("/.do_reviews/" . gael-mode))
+
+
   ;; associate context.txt files to fitnesse-mode
   (add-to-list 'auto-mode-alist '("content\\.txt\\'" . fitnesse-mode))
 

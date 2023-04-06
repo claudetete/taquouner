@@ -41,6 +41,7 @@
   ;; make sure it is loaded and custom without searched in package list
   :ensure nil
   :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/"))
+  :mode "\\.gpr\\'"
 
   ;; Mode hooks execute before local variables are processed, so your hooks cannot respond to local vars at that point in time
   ;; Use the regular major mode hook to add a buffer-local hack-local-variables-hook (https://www.emacswiki.org/emacs/LocalVariables)
