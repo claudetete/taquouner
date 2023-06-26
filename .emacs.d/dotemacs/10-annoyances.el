@@ -48,6 +48,8 @@
 (setq compilation-ask-about-save nil)
 ;; Stop on the first error
 (setq compilation-scroll-output 'next-error)
+;; Don't stop on info but only on errors and warnings.
+(setq compilation-skip-threshold 1)
 
 ;;
 ;; remove insert shortcut, no more insertion mode

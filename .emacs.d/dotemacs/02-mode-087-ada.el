@@ -34,14 +34,15 @@
 ;; duplicate otherwise ada-mode is not loaded
 (use-package ada-mode
   ;; make sure it is loaded and custom without searched in package list
-  :ensure nil
-  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/")))
+  ;; :ensure nil
+  ;; :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/"))
+  )
 
 (use-package ada-mode
   ;; make sure it is loaded and custom without searched in package list
-  :ensure nil
-  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/"))
-  :mode "\\.gpr\\'"
+  ;; :ensure nil
+  ;; :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/"))
+  ;;:mode "\\.gpr\\'"
 
   ;; Mode hooks execute before local variables are processed, so your hooks cannot respond to local vars at that point in time
   ;; Use the regular major mode hook to add a buffer-local hack-local-variables-hook (https://www.emacswiki.org/emacs/LocalVariables)
@@ -103,6 +104,12 @@
   (ada-language-version 'ada2005)
   ;; ada-move-to-start move to sub declaration instead of 'begin'
   (ada-move-to-declaration t)
+
+  ;; (ada-diagnostics-backend 'none)
+  ;; (ada-face-backend 'none)
+  ;; (ada-indent-backend 'none)
+  ;; (ada-statement-backend 'none)
+  (ada-xref-backend 'eglot)
   ) ;; (use-package ada-mode
 
 

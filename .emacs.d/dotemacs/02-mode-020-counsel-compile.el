@@ -49,6 +49,9 @@
     (setq counsel-compile-command-prefixs
       (lambda ()
         (getenv "COMPILE_PREFIX")))
+
+    ;; stop scrolling compilation at first error
+    (setq compilation-scroll-output 'first-error)
     ) ;; (when tqnr-section-mode-projectile-direnv
   ) ;; (use-package counsel-compile
 

@@ -181,43 +181,23 @@
   (setq tqnr-section-function-rtrt nil)
 
   ;; ADA: functions to have multiple compile mode in ada
-  (setq tqnr-section-function-ada nil)
+  (setq tqnr-section-function-ada t)
+  ;; COMPILATION
   (when tqnr-section-function-ada
-    ;; BUILD
-    ;; Command of build one file in ada
-    (setq tqnr-ada-gps-build-command "gnat build")
+    ;; Command to compile one file in ada
+    (setq tqnr-ada-compile-command "gnat build")
     ;; Buffer name of build one file in ada
-    (setq tqnr-ada-gps-build-buffer-name "*ada-build*")
+    (setq tqnr-ada-compile-buffer-name "*ada-build*")
     ;; CHECK
-    ;; Command of check one file in ada
-    (setq tqnr-ada-gps-check-command "gnat check")
+    ;; Command to check one file in ada
+    (setq tqnr-ada-check-command "gnat check")
     ;; Buffer name of check one file in ada
-    (setq tqnr-ada-gps-check-buffer-name "*ada-check*")
+    (setq tqnr-ada-check-buffer-name "*ada-check*")
     ;; PRETTY PRINT
-    ;; Command of pretty-print one file in ada
-    (setq tqnr-ada-gps-pretty-print-command "gnat pretty")
+    ;; Command to pretty-print one file in ada
+    (setq tqnr-ada-pretty-print-command "gnat pretty")
     ;; Buffer name of pretty-print one file in ada
-    (setq tqnr-ada-gps-pretty-print-buffer-name "*ada-pretty-print*")
-    ;; BUILD ALL
-    ;; Command of build all project files
-    (setq tqnr-ada-gps-build-all-command "gnat make")
-    ;; Buffer name of build all project files command
-    (setq tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN
-    ;; Command of clean all generated file
-    (setq tqnr-ada-gps-clean-command "gnat clean")
-    ;; Buffer name of clean all generated command
-    (setq tqnr-ada-gps-clean-buffer-name "*ada-clean*")
-    ;; REBUILD ALL
-    ;; Command of rebuild all generated file
-    (setq tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
-    ;; Buffer name of rebuild all generated command
-    (setq tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
-    ;; BUILD NATIVE
-    ;; Command of build for native execution
-    (setq tqnr-ada-gps-build-native-command "gnat clean")
-    ;; Buffer name of native build command
-    (setq tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
+    (setq tqnr-ada-pretty-print-buffer-name "*ada-pretty-print*")
     ) ;; (when tqnr-section-function-ada
 
   ;; CALC: functions to add type support to helm ag for ripgrep
@@ -656,7 +636,7 @@
     ;; Use Hydra to manage smartparens shortcuts
     (setq tqnr-section-mode-hydra-smartparens t)
     ;; Use Hydra to manage ada compile shortcuts
-    (setq tqnr-section-mode-hydra-ada nil)
+    (setq tqnr-section-mode-hydra-ada t)
     ;; Use Hydra to manage outline shortcuts
     (setq tqnr-section-mode-hydra-outline t)
     ;; Use Hydra to manage org shortcuts
@@ -1294,6 +1274,14 @@
         (helm-find-files-1 (concat (file-name-as-directory rootpath) "components/" filename)))))
   (global-set-key (kbd "C-x f") #'helm-find-file-gpr)
 
+  (defun helm-find-file-gpr-csv ()
+    (interactive)
+    (let ((rootpath (projectile-project-root))
+           (filename (thing-at-point 'filename)))
+      (when (and rootpath filename)
+        (helm-find-files-1 (concat (file-name-as-directory rootpath) filename)))))
+  (global-set-key (kbd "C-x M-f") #'helm-find-file-gpr-csv)
+
   (defun sort-gpr-with ()
     (interactive)
     (when (not (use-region-p))
@@ -1301,6 +1289,48 @@
     (sort-regexp-fields nil "^.*\"\\(.*\\)\";$" "\\1" (region-beginning) (region-end)))
   (global-set-key (kbd "C-c M-s") #'sort-gpr-with)
 
+  (when (and tqnr-section-mode-consult tqnr-section-mode-hydra-ada)
+    (require 'consult-compile)
+    (defun ada-compile-dss ()
+      (interactive)
+      (let ((command "build_dss")
+            (prefix (funcall consult-compile-command-prefixs)))
+        (when prefix
+          (setq command (concat prefix " " command)))
+        (compile command)))
+
+    (defun ada-compile-iad ()
+      (interactive)
+      (let ((command "build_iad_release")
+            (prefix (funcall consult-compile-command-prefixs)))
+        (when prefix
+          (setq command (concat prefix " " command)))
+        (compile command)))
+
+    (with-eval-after-load "ada-mode"
+      (define-key ada-mode-map (kbd "<C-f10>") #'ada-compile-dss))
+
+    ;; override the hydra-ada function
+    (defhydra hydra-ada (:color pink
+                          :hint nil)
+      "
+╭──^─────^─┐
+│Ad^a Mod^e│                        ^ ^            [_q_] Quit
+└──^─────^─╯────────────────────────^─^───────────────────────╮
+  [_<f10>_] Launcher               [_p_] Pretty Print (S-f10)
+  [_c_]     Compile file (M-f10)   [_h_] Check (M-S-f10)
+  [_d_]     Compile DSS  (C-f10)   [_i_] Compile IAD
+"
+      ("<f10>" counsel-compile  :color blue)
+      ("c"     ada-compile      :color blue)
+      ("d"     ada-compile-dss  :color blue)
+      ("i"     ada-compile-iad  :color blue)
+      ("p"     ada-pretty-print :color blue)
+      ("h"     ada-check        :color blue)
+      ("q"     nil              :color blue)
+      )
+
+    )
   (message "### END")
   ) ; (defun function-to-call-after-loading-conf ()
 

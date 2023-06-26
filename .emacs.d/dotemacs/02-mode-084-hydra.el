@@ -502,22 +502,17 @@
     (defhydra hydra-ada (:color pink
                           :hint nil)
       "
-╭──^──────^─┐
-│Ada Compile│ Current file   P^r^oject    [_q_] Quit
-└──^──────^─╯──────────────┬──^─^────────────────╮
-  [_<f10>_] Build            [_b_] Build All
-  [_p_] Pretty printer       [_c_] Clean All
-  [_s_] Check syntax         [_n_] Native build
+╭──^─────^─┐
+│Ad^a Mod^e│                        ^ ^            [_q_] Quit
+└──^─────^─╯────────────────────────^─^───────────────────────╮
+  [_<f10>_] Launcher               [_p_] Pretty Print (S-f10)
+  [_c_]     Compile file (M-f10)   [_h_] Check (M-S-f10)
 "
-      ;; Move In/Out
-      ("<f10>" ada-gps-build)
-      ("p"     ada-gps-pretty-print)
-      ("s"     ada-gps-check)
-      ("b"     ada-gps-build-all)
-      ("c"     ada-gps-clean-all)
-      ("n"     ada-gps-build-native)
-      ;;
-      ("q" nil :color blue)
+      ("<f10>" counsel-compile  :color blue)
+      ("c"     ada-compile      :color blue)
+      ("p"     ada-pretty-print :color blue)
+      ("h"     ada-check        :color blue)
+      ("q"     nil              :color blue)
       )
     (with-eval-after-load "ada-mode"
       (define-key ada-mode-map (kbd "<f10>") 'hydra-ada/body)

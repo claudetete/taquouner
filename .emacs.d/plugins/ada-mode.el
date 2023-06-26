@@ -4122,14 +4122,14 @@ Return nil if the private is part of the package name, as in
      ;;  subprogram definition: procedure .... (
      ;; Let's skip back over the first one
      (progn
-       (skip-chars-backward " \t\n")
+       (skip-chars-backward " \t\n\r")
        (if (= (char-before) ?\")
 	   (backward-char 3)
-	 (backward-word-strictly 1))
+	 (forward-symbol -1))
        t)
 
      ;; and now over the second one
-     (backward-word-strictly 1)
+     (forward-symbol -1)
 
      ;; We should ignore the case when the reserved keyword is in a
      ;; comment (for instance, when we have:
@@ -4164,12 +4164,14 @@ If BACKWARDP is non-nil, search backward; search forward otherwise."
 Return value is the position of the first non-ws behind the last unclosed
 parenthesis, or nil."
   (save-excursion
-    (let ((parse (parse-partial-sexp
-		  (point)
-		  (or (car (ada-search-ignore-complex-boolean
-			    "\\<\\(;\\|is\\|then\\|loop\\|begin\\|else\\)\\>"
-			    t))
-		      (point-min)))))
+    (let* ((parse-from (point))
+           (parse-to (or (car (ada-search-ignore-complex-boolean
+			       "\\<\\(;\\|is\\|then\\|loop\\|begin\\|else\\)\\>"
+			       t))
+		         (point-min)))
+           (parse (parse-partial-sexp
+		   parse-to
+		   parse-from)))
 
       (if (nth 1 parse)
 	  (progn

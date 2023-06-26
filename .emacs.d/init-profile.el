@@ -168,42 +168,22 @@
 
   ;; ADA: functions to have multiple compile mode in ada
   (defvar tqnr-section-function-ada nil)
+  ;; COMPILATION
   (progn ;; tqnr-section-function-ada
-    ;; BUILD
-    ;; Command of build one file in ada
-    (defvar tqnr-ada-gps-build-command "gnat build")
+    ;; Command to compile one file in ada
+    (defvar tqnr-ada-compile-command "")
     ;; Buffer name of build one file in ada
-    (defvar tqnr-ada-gps-build-buffer-name "*ada-build*")
+    (defvar tqnr-ada-compile-buffer-name "")
     ;; CHECK
-    ;; Command of check one file in ada
-    (defvar tqnr-ada-gps-check-command "gnat check")
+    ;; Command to check one file in ada
+    (defvar tqnr-ada-check-command "gnat check")
     ;; Buffer name of check one file in ada
-    (defvar tqnr-ada-gps-check-buffer-name "*ada-check*")
+    (defvar tqnr-ada-check-buffer-name "*ada-check*")
     ;; PRETTY PRINT
-    ;; Command of pretty-print one file in ada
-    (defvar tqnr-ada-gps-pretty-print-command "gnat pretty")
+    ;; Command to pretty-print one file in ada
+    (defvar tqnr-ada-pretty-print-command "gnat pretty")
     ;; Buffer name of pretty-print one file in ada
-    (defvar tqnr-ada-gps-pretty-print-buffer-name "*ada-pretty-print*")
-    ;; BUILD ALL
-    ;; Command of build all project files
-    (defvar tqnr-ada-gps-build-all-command "gnat make")
-    ;; Buffer name of build all project files command
-    (defvar tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN
-    ;; Command of clean all generated file
-    (defvar tqnr-ada-gps-clean-command "gnat clean")
-    ;; Buffer name of clean all generated command
-    (defvar tqnr-ada-gps-clean-buffer-name "*ada-clean*")
-    ;; REBUILD ALL
-    ;; Command of rebuild all generated file
-    (defvar tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
-    ;; Buffer name of rebuild all generated command
-    (defvar tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
-    ;; BUILD NATIVE
-    ;; Command of build for native execution
-    (defvar tqnr-ada-gps-build-native-command "gnat clean")
-    ;; Buffer name of native build command
-    (defvar tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
+    (defvar tqnr-ada-pretty-print-buffer-name "*ada-pretty-print*")
     ) ;; (progn ;; tqnr-section-function-ada
 
   ;; CALC: functions to add type support to helm ag for ripgrep
