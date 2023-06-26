@@ -25,15 +25,15 @@
 
 ;;; Commentary:
 ;;
-;; [SUBHEADER.realgud mode]
+;; [SUBHEADER.move-text: move line/region up or down]
 ;; [SUBDEFAULT.nil]
 
 
 ;;; Code:
 (use-package move-text
   :bind
-  ("<C-M-S-up>"   . move-text-up)
-  ("<C-M-S-down>" . move-text-down)
+  ("<C-S-up>"   . move-text-up)
+  ("<C-S-down>" . move-text-down)
   ) ;; (use-package move-text
 
 

@@ -675,7 +675,7 @@
   ;; REALGUD: realgud mode
   (defvar tqnr-section-mode-realgud nil)
 
-  ;; MOVE TEXT: realgud mode
+  ;; MOVE TEXT: move-text: move line/region up or down
   (defvar tqnr-section-mode-move-text nil)
 
   ;; GROOVY: groovy mode
@@ -749,6 +749,15 @@
 
   ;; NUMPYDOC: numpydoc: insert numpy documentation
   (defvar tqnr-section-mode-numpydoc nil)
+
+  ;; GPR MODE: gpr-mode: major mode to edit GNAT project (gpr) file
+  (defvar tqnr-section-mode-gpr-mode nil)
+
+  ;; TREEMACS: treemacs: display file tree on one side
+  (defvar tqnr-section-mode-treemacs nil)
+
+  ;; VUNDO: treemacs: display file tree on one side
+  (defvar tqnr-section-mode-vundo nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)

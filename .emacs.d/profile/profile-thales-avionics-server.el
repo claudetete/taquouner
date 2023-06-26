@@ -60,8 +60,8 @@
         ;; gnuplot
         "k:/GNUPLOT/gnuplot_5.3/bin"
         ;; PYTHON
-        "j:/PYTHON/PYTHON_3.6.6"
-        "j:/PYTHON/PYTHON_3.6.6/Scripts"
+        "j:/PYTHON/PYTHON_3.9.6"
+        "j:/PYTHON/PYTHON_3.9.6/Scripts"
         ;; GIT
         (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
@@ -200,7 +200,7 @@
     (setq tqnr-ada-pretty-print-buffer-name "*ada-pretty-print*")
     ) ;; (when tqnr-section-function-ada
 
-  ;; CALC: functions to add type support to helm ag for ripgrep
+  ;; CALC: functions to add some custom computation (by example WGS84 distance)
   (setq tqnr-section-function-calc t)
   ) ;; (when tqnr-section-function
 
@@ -212,28 +212,28 @@
   (setq tqnr-section-mode-use-package t)
 
   ;; HELM: (fork ANYTHING) choose anything with the same nice interface
-  (setq tqnr-section-mode-helm t)
+  (setq tqnr-section-mode-helm nil)
   (when tqnr-section-mode-helm
     ;; isearch by helm
-    (setq tqnr-section-mode-helm-swoop t)
+    (setq tqnr-section-mode-helm-swoop nil)
     ;; do not have default value when run helm swoop
-    (setq tqnr-section-mode-helm-swoop-without-pre-input t)
+    (setq tqnr-section-mode-helm-swoop-without-pre-input nil)
     ;; compile by helm
     (setq tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
-    (setq tqnr-section-mode-helm-kill-ring t)
+    (setq tqnr-section-mode-helm-kill-ring nil)
     ;; replace M-x
     (setq tqnr-section-mode-helm-M-x nil)
     ;; replace electric buffer list
-    (setq tqnr-section-mode-helm-buffers-list t)
+    (setq tqnr-section-mode-helm-buffers-list nil)
     ;; add helm menu shortcut for function/variable list
     (setq tqnr-section-mode-helm-imenu t)
     ;; replace occur by helm
     (setq tqnr-section-mode-helm-occur t)
     ;; replace find files C-x C-f
-    (setq tqnr-section-mode-helm-find-files t)
+    (setq tqnr-section-mode-helm-find-files nil)
     ;; replace recentf
     (setq tqnr-section-mode-helm-recentf t)
     ;; replace bookmark list
@@ -308,7 +308,7 @@
   (setq tqnr-section-mode-yasnippet nil)
 
   ;; BROWSE KILL RING: mode to browse the kill ring memory yank only on the first left top window...
-  (setq tqnr-section-mode-browse-kill-ring t)
+  (setq tqnr-section-mode-browse-kill-ring nil)
 
   ;; MM EOL: MAGNETI MARELLI, End Of Line file mode
   (setq tqnr-section-mode-mm-eol nil)
@@ -561,7 +561,7 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'elpy t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
-  (setq tqnr-section-mode-elpy t)
+  (setq tqnr-section-mode-elpy nil)
   (when tqnr-section-mode-elpy
     ;; override path for created elpy virtualenv (should have rights to execute)
     (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
@@ -689,7 +689,7 @@
   ;; REALGUD: realgud mode
   (setq tqnr-section-mode-realgud nil)
 
-  ;; MOVE TEXT: realgud mode
+  ;; MOVE TEXT: move-text: move line/region up or down
   (setq tqnr-section-mode-move-text t)
 
   ;; GROOVY: groovy mode
@@ -763,6 +763,15 @@
 
   ;; NUMPYDOC: numpydoc: insert numpy documentation
   (setq tqnr-section-mode-numpydoc t)
+
+  ;; GPR MODE: gpr-mode: major mode to edit GNAT project (gpr) file
+  (setq tqnr-section-mode-gpr-mode nil)
+
+  ;; TREEMACS: treemacs: display file tree on one side
+  (setq tqnr-section-mode-treemacs t)
+
+  ;; VUNDO: treemacs: display file tree on one side
+  (setq tqnr-section-mode-vundo t)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
@@ -1063,7 +1072,7 @@
     ;; %b buffername ; %F frame name ; %l line number ; %c column number
     ;; %p percent of buffer above top ; %m mode name ; %n Narrow mode
     ;; %z coding systems ; %Z %z + end-of-line format ; %- infinitely dashes
-    (setq tqnr-profile-window-title "GNU Emacs - %b")
+    (setq tqnr-profile-window-title (concat (getenv "VIEWNAME") " - " (getenv "PLATFORM") " - " (getenv "COMPILATION") (when (getenv "DAL") (concat " - DAL " (upcase (getenv "DAL"))))))
     ;;
     ;; TRANSPARENCY: the whole emacs window will be transparent
     (setq tqnr-section-interface-transparency nil)
@@ -1331,6 +1340,11 @@
       )
 
     )
+
+  ;; test
+  (use-package visual-regexp
+    :bind (("C-c 5" . #'vr/replace)))
+
   (message "### END")
   ) ; (defun function-to-call-after-loading-conf ()
 

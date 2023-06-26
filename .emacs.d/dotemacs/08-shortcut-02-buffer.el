@@ -36,7 +36,7 @@
 (global-set-key         (kbd "M-`")             'kill-this-buffer)
 ;;
 ;; show a list of buffers in a new window (overrided when helm-buffer-list is used)
-(when (not tqnr-section-mode-helm-buffers-list)
+(when (not (or tqnr-section-mode-helm-buffers-list tqnr-section-mode-consult))
   (global-set-key         (kbd "C-x C-b")         'electric-buffer-list))
 
 ;; show the window of bookmark

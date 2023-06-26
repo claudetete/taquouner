@@ -49,6 +49,8 @@
                            ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.25)
                            ;; helm swoop buffer
                            ("\\`\\*Helm.*?\\*\\'" :regexp t :align t :size 0.25)
+                           ;;
+                           ;("\\`\\*Embark.*?\\*\\'" :regexp t :align t :size 0.25)
                            ))
     (when tqnr-section-mode-helm-swoop
       ;; to be properly displayed by shackle

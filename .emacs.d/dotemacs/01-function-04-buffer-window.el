@@ -207,11 +207,11 @@ middle"
   (lambda ()
     ;; resize window more easily (before we should use `C-x {'...)
     ;; vertical
-    (global-set-key     (kbd "<C-S-up>")        'win-resize-top)
-    (global-set-key     (kbd "<C-S-down>")      'win-resize-bottom)
+    (global-set-key     (kbd "<C-S-M-up>")        'win-resize-top)
+    (global-set-key     (kbd "<C-S-M-down>")      'win-resize-bottom)
     ;; horizontal
-    (global-set-key     (kbd "<C-S-left>")      'win-resize-left)
-    (global-set-key     (kbd "<C-S-right>")     'win-resize-right)
+    (global-set-key     (kbd "<C-S-M-left>")      'win-resize-left)
+    (global-set-key     (kbd "<C-S-M-right>")     'win-resize-right)
     ) ;; (lambda ()
   ) ;; (add-hook 'tqnr-after-init-shortcut-hook
 
@@ -295,9 +295,11 @@ middle"
           ;; when ecb is toggle ecb compile window
           (ecb-goto-window-compilation)
           (if (and tqnr-section-mode-popwin
-                (not (string-match-p (regexp-quote "helm") buffer)))
+                   (not (string-match-p (regexp-quote "helm") buffer)))
             ;; show special buffer in popwin
-            (popwin:display-buffer buffer)
+            (progn
+              (popwin:display-buffer buffer)
+              (popwin:select-popup-window))
             ;; show special buffer using built-in switch
             (switch-to-buffer buffer)))
         )
@@ -324,8 +326,8 @@ middle"
   (if (get-buffer "*compilation*")
     (toggle-special-buffer "*compilation*")
     (if (and tqnr-section-function-ada
-          (get-buffer ada-gps-buffer-name-last))
-      (toggle-special-buffer ada-gps-buffer-name-last)
+          (get-buffer ada-command-buffer-name-last))
+      (toggle-special-buffer ada-command-buffer-name-last)
       (message "Do not switch, no existing compilation buffers."))))
 
 ;; go to the vc or vc diff buffer in special window

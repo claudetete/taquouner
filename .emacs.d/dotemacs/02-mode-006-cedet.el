@@ -137,7 +137,7 @@
     ) ;; (use-package cedet
 
 
-  (when (not tqnr-section-mode-helm)
+  (when (not (or tqnr-section-mode-helm tqnr-section-mode-eglot))
     (use-package cedet
       :bind
       ;; go to the tag

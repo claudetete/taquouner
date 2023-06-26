@@ -47,6 +47,9 @@
   (local-unset-key            (kbd "M-TAB"))
   ;;(elpy-use-ipython)
 
+  ;; disable auto doc show
+  (setq elpy-autodoc-delay 9999)
+
   ;;(setq python-shell-interpreter "C:/WinPython27/python-2.7.10/Scripts/ipython.exe")
   ;;(setq python-shell-interpreter-args "")
   ;;(setq python-shell-interpreter-args "-i")

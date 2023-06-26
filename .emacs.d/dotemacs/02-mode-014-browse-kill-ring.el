@@ -59,7 +59,12 @@
 (when tqnr-section-mode-cedet-ecb
   (use-package browse-kill-ring
     :bind (:map browse-kill-ring-mode-map
-            ("<f2>" . browse-kill-ring-quit))))
+                ("<f2>" . browse-kill-ring-quit))))
+
+(when (not tqnr-section-mode-helm-kill-ring)
+  (use-package browse-kill-ring
+    :bind ("M-y" . browse-kill-ring)))
+  )
 
 
 (provide '02-mode-014-browse-kill-ring)
