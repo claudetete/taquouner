@@ -73,6 +73,7 @@
   (push '("\\s-*\\*undo-tree.*"                 :regexp t :width 0.1 :position right         ) popwin:special-display-config)
   (push '("*Python Doc*"                                                             :stick t) popwin:special-display-config)
   (push '("*pydoc*"                                                                  :stick t) popwin:special-display-config)
+  (push '("*eldoc*"                                                                  :stick t) popwin:special-display-config)
   (push '("*haskell*"                                                                :stick t) popwin:special-display-config)
   (push '("*debug:haskell*"                                                          :stick t) popwin:special-display-config)
   (push '("*magit async*"                                 :height 3                          ) popwin:special-display-config)

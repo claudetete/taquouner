@@ -28,6 +28,7 @@
 ;; [[SUBHEADER.mode to have popup always following same rules
 ;; like popwin but just add constraint to popup not replace the whole thing
 ;; Helm does not like popwin...
+;; Can be used with popper to have same behavior than popwin
 ;; ]]
 ;; [SUBDEFAULT.nil]
 
@@ -39,24 +40,68 @@
   (shackle-mode 1)
 
   :config
-  (when tqnr-section-mode-helm
-    ;; make helm play nice with popup
-    (setq helm-display-function 'pop-to-buffer)
-    ;; rules to add helm
-    (setq shackle-rules '(
-                           ;; use 25% at bottom
-                           ;; all helm buffer
-                           ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.25)
-                           ;; helm swoop buffer
-                           ("\\`\\*Helm.*?\\*\\'" :regexp t :align t :size 0.25)
-                           ;;
-                           ;("\\`\\*Embark.*?\\*\\'" :regexp t :align t :size 0.25)
-                           ))
-    (when tqnr-section-mode-helm-swoop
-      ;; to be properly displayed by shackle
-      (setq helm-swoop-split-window-function 'display-buffer)
-      )
-    ) ;; (when tqnr-section-mode-helm
+  (setq shackle-default-size 0.2)
+  ;; rules to add helm
+  (setq shackle-rules
+    '(
+       (compilation-mode                        :align t               :size 0.3 :select nil)
+       ("*Shell Command Output*"                :align t                         :select nil)
+       (dired-mode                              :align t)
+       ("*Messages*"                            :align t)
+       ("*Calculator*"                          :align t)
+       ("*vc*"                                  :align t)
+       ("*vc-diff*"                             :align t)
+       ("*Apropos*"                             :align t)
+       ("*Occur*"                               :align t)
+       ("*shell*"                               :align t)
+       ("*Help*"                                :align t)
+       ("*Backtrace*"                           :align t)
+       ("*Compile-log*"                         :align t)
+       ("*[Ss]ynergy*"                          :align t     :regexp t)
+       ("\\s-*\\*[Ss]ynergy.*\\*\\s-*"          :align t     :regexp t)
+       ("\\s-*\\*[cC]ompletions*\\*\\s-*"       :align below :regexp t)
+       ("\\*[cC]ompilation.*\\*"                :align t     :regexp t)
+       ("\\*i?grep.*\\*"                        :align t     :regexp t)
+       ("*JDEE Compile Server*"                 :align t)
+       ("*ccm*"                                 :align t)
+       ("\\*GTAGS SELECT\\*.*"                  :align t     :regexp t)
+       ("*Bookmark List*"                       :align t)
+       ("*Semantic Context Analyze*"            :align t)
+       ("*Macroexpansion*"                      :align t)
+       ("\\*Symref .*"                          :align t     :regexp t)
+       ("*ECB Analyse*"                         :align t)
+       ("*Kill Ring*"                           :align t)
+       ("*clearcase-config-spec*"               :align t)
+       ("*ELP Profiling Results*"               :align t)
+       ("$\\s-*\\*[mM]agit.*\\*\\s-*"           :align t     :regexp t)
+       ("*pt-search*"                           :align t)
+       ("$\\s-*\\*[Aa]ck\\*\\s-*"               :align t     :regexp t)
+       ("$\\s-*\\*[Gg]tags.*\\*"                :align t     :regexp t)
+       ("\\s-*\\*undo-tree.*"                   :align right :regexp t :size 0.1)
+       ("*Python Doc*"                          :align t)
+       ("*pydoc*"                               :align t)
+       ("*eldoc*"                               :align t)
+       ("*haskell*"                             :align t)
+       ("*debug:haskell*"                       :align t)
+       ("*magit async*"                         :align t               :size 0.1)
+       ("\\s-*\\*magit.*\\*\\s-*"               :align t     :regexp t :size 0.3)
+       ("\\s-*magit-process:.*"                 :align t     :regexp t :size 0.3)
+       ("\\s-*magit-log:.*"                     :align t     :regexp t :size 0.3)
+       ("\\s-*magit:.*"                         :align t     :regexp t :size 0.3)
+       (tqnr-ada-compile-buffer-name            :align t               :size 0.3)
+       (tqnr-ada-check-buffer-name              :align t               :size 0.3)
+       (tqnr-ada-pretty-print-buffer-name       :align t               :size 0.3)
+       ("\\s-*\\*helpful.*\\*\\s-*"             :align t     :regexp t)
+       ("\\s-*\\*i?pdb.*\\*\\s-*"               :align t     :regexp t)
+       ("\\s-*\\*Embark .*\\*\\s-*"             :align t     :regexp t :size 0.5)
+       ;; use 25% at bottom
+       ;; all helm buffer
+       ("\\`\\*helm.*?\\*\\'"                   :align t     :regexp t :size 0.25)
+       ;; helm swoop buffer
+       ("\\`\\*Helm.*?\\*\\'"                   :align t     :regexp t :size 0.25)
+       ;;
+       ;("\\`\\*Embark.*?\\*\\'"                :align t     :regexp t :size 0.25)
+       ))
   ) ;; (use-package shackle
 
 

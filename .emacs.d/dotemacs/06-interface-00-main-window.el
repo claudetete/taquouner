@@ -45,12 +45,12 @@
 
 ;; maximize a frame when it is created
 (add-hook 'after-make-frame-functions
-  '(lambda (f)
-     (with-selected-frame f
-       (when tqnr-profile-font
-         (set-frame-font tqnr-profile-font))
-       (frame-maximizer)
-       )))
+  #'(lambda (f)
+      (with-selected-frame f
+        (when tqnr-profile-font
+          (set-frame-font tqnr-profile-font))
+        (frame-maximizer)
+        )))
 
 ;; [COMMENT.]
 ;; [VARCOMMENT.DECORATION: remove all mouse interface (toolbar, menubar, scrollbar)]

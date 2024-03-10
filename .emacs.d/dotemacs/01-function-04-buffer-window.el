@@ -463,6 +463,7 @@ session."
     (if (popwin:popup-window-live-p)
       ;; close current popwin
       (popwin:close-popup-window)
+
       ;; is last opened was popwin or helm
       (if (string-equal tqnr-last-popup-type "popwin")
         ;; resume popwin
@@ -488,6 +489,19 @@ session."
     ) ;; (add-hook 'tqnr-after-init-shortcut-hook
   )
 
+;; steal from https://emacs.stackexchange.com/questions/31493/print-elapsed-time-in-compilation-buffer
+(make-variable-buffer-local 'my-compilation-start-time)
+
+(add-hook 'compilation-start-hook #'my-compilation-start-hook)
+(defun my-compilation-start-hook (proc)
+  (setq my-compilation-start-time (current-time)))
+
+(add-hook 'compilation-finish-functions #'my-compilation-finish-function)
+(defun my-compilation-finish-function (buf why)
+  (let* ((elapsed  (time-subtract nil my-compilation-start-time))
+         (msg (format "Elapsed: %s" (format-time-string "%T.%N" elapsed t))))
+    (save-excursion (goto-char (point-max)) (insert msg))
+    (message "Compilation %s: %s" (string-trim-right why) msg)))
 
 (provide '01-function-04-buffer-window)
 

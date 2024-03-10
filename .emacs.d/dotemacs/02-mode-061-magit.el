@@ -47,7 +47,7 @@
   ;; git merge
   ("C-c g m"   . magit-merge-popup)
   ;; magit dispatch
-  ("C-c g SPC" . magit-dispatch-popup)
+  ("C-c g SPC" . magit-dispatch)
   ;; magit diff
   ("C-c g ="   . magit-difftool-buffer-file)
   ;; magit file/buffer
@@ -141,9 +141,15 @@ FILE has to be relative to the top directory of the repository."
               (magit-current-file))))
     (message "%s %s %s %s %s %s" "git" "difftool" "--gui" "--no-prompt" "--" file)
     (magit-run-git-async
-      "difftool" "--gui" "--no-prompt" "--" file))
+     "difftool" "--gui" "--no-prompt" "--" file))
   ) ;; (use-package magit
 
+(use-package magit-delta
+  :ensure t
+  :hook (magit-mode . magit-delta-mode))
+
+(use-package diff-ansi
+  :commands (diff-ansi-mode diff-ansi-buffer))
 
 (provide '02-mode-061-magit)
 

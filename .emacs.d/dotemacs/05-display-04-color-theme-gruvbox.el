@@ -62,6 +62,11 @@
     (yascroll:thumb-text-area ((t (:background "#fabd2f"))))
     (yascroll:thumb-fringe    ((t (:foreground "#fabd2f" :background "#fabd2f"))))))
 
+(when tqnr-section-mode-vertico
+  (use-package gruvbox-theme
+    :custom-face
+    (vertico-current ((t (:inherit region))))))
+
 (use-package gruvbox-theme
   :config
   (load-theme 'gruvbox-dark-hard t))

@@ -32,9 +32,10 @@
 ;;; Code:
 (use-package embark
   :ensure t
-  :bind (("C-." . embark-act)
-         ("C-;" . embark-dwim)
-         ("C-h B" . embark-bindings))
+  :bind (("C-."   . embark-act)
+         ("C-;"   . embark-dwim)
+         ("C-h B" . embark-bindings)
+         ("C-M->" . embark-act-all))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
 
@@ -43,6 +44,9 @@
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t)
 
 (provide '02-mode-111-embark)
 

@@ -118,6 +118,13 @@ Otherwise, signal an error.  The error message is the first line of the output."
     (decf end))
   (substring string start end))
 
+;; steal from https://lists.gnu.org/archive/html/help-gnu-emacs/2008-06/msg00087.html
+;; wrap the function you want an execution time, by example: (measure-time (copmile "make all"))
+(defmacro measure-time (&rest body)
+  "Measure the time it takes to evaluate BODY."
+  `(let ((time (current-time)))
+     ,@body
+     (message "%.06f" (float-time (time-since time)))))
 
 (provide '01-function-05-file)
 

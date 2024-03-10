@@ -171,9 +171,9 @@
   ;; COMPILATION
   (progn ;; tqnr-section-function-ada
     ;; Command to compile one file in ada
-    (defvar tqnr-ada-compile-command "")
+    (defvar tqnr-ada-compile-command "gnat build")
     ;; Buffer name of build one file in ada
-    (defvar tqnr-ada-compile-buffer-name "")
+    (defvar tqnr-ada-compile-buffer-name "*ada-compilation*")
     ;; CHECK
     ;; Command to check one file in ada
     (defvar tqnr-ada-check-command "gnat check")
@@ -186,7 +186,7 @@
     (defvar tqnr-ada-pretty-print-buffer-name "*ada-pretty-print*")
     ) ;; (progn ;; tqnr-section-function-ada
 
-  ;; CALC: functions to add type support to helm ag for ripgrep
+  ;; CALC: functions to add some custom computation (by example WGS84 distance)
   (defvar tqnr-section-function-calc nil)
   ) ;; (progn ;; tqnr-section-function
 
@@ -595,6 +595,7 @@
   ;; mode to have popup always following same rules
   ;; like popwin but just add constraint to popup not replace the whole thing
   ;; Helm does not like popwin...
+  ;; Can be used with popper to have same behavior than popwin
   (defvar tqnr-section-mode-shackle nil)
 
   ;; RIPGREP
@@ -737,6 +738,10 @@
 
   ;; CONSULT: consult: command with filtering like completions
   (defvar tqnr-section-mode-consult nil)
+  (progn ;; tqnr-section-mode-consult
+    ;; configurate the consult-compile-command package
+    (defvar consult-compile-command-configuration 'consult-compile-command-configuration-default)
+    ) ;; (progn ;; tqnr-section-mode-consult
 
   ;; WHICH KEY: which-key: displays key bindings following entered incomplete command
   (defvar tqnr-section-mode-which-key nil)
@@ -758,6 +763,12 @@
 
   ;; VUNDO: treemacs: display file tree on one side
   (defvar tqnr-section-mode-vundo nil)
+
+  ;; POPPER: popper: display buffer as popup (popwin alternative)
+  (defvar tqnr-section-mode-popper nil)
+
+  ;; BURLY: burly: manage frames, windows and buffers
+  (defvar tqnr-section-mode-burly nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
@@ -838,6 +849,14 @@
     ;; tab for indentation in java
     (defvar tqnr-profile-java-indent-with-tab t)
     ) ;; (progn ;; tqnr-section-languages-java
+  ;;
+  ;; JSON
+  ;;   set indentation style
+  (defvar tqnr-section-languages-json nil)
+  (progn ;; tqnr-section-languages-json
+    ;; number of space for indentation in json
+    (defvar tqnr-profile-json-indent-offset 2)
+    ) ;; (progn ;; tqnr-section-languages-json
   ) ;; (progn ;; tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only

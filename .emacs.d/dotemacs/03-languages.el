@@ -130,17 +130,17 @@
 ;; [SUBSECTION.tqnr-section-languages-lisp t]
 (when tqnr-section-languages-lisp (message "    Languages Lisp...")
   (add-hook 'lisp-interaction-mode-hook
-    '(lambda ()
-       ;; [VARCOMMENT.number of space for indentation in lisp]
-       ;; [VARIABLE.tqnr-profile-lisp-indent-offset 2]
-       (setq lisp-indent-offset tqnr-profile-lisp-indent-offset)
-       (when (and tqnr-section-environment-version-recognition (not tqnr-running-on-emacs-23))
-         ;; pair of parenthesis, bracket, etc
-         (electric-pair-mode t))
+    #'(lambda ()
+        ;; [VARCOMMENT.number of space for indentation in lisp]
+        ;; [VARIABLE.tqnr-profile-lisp-indent-offset 2]
+        (setq lisp-indent-offset tqnr-profile-lisp-indent-offset)
+        (when (and tqnr-section-environment-version-recognition (not tqnr-running-on-emacs-23))
+          ;; pair of parenthesis, bracket, etc
+          (electric-pair-mode t))
 
-       ;; hide show minor mode
-       (hs-minor-mode)
-       )
+        ;; hide show minor mode
+        (hs-minor-mode)
+        )
     )
   (message "    Languages Lisp... Done"))
 
@@ -245,6 +245,21 @@
 
   (add-hook 'java-mode-hook 'tqnr-java-mode)
   (message "    Languages Java... Done"))
+
+;; [[SUBCOMMENT.
+;; JSON
+;;   set indentation style
+;; ]]
+;; [SUBSECTION.tqnr-section-languages-json t]
+(when tqnr-section-languages-json (message "    Languages Json...")
+  ;; [VARCOMMENT.number of space for indentation in json]
+  ;; [VARIABLE.tqnr-profile-json-indent-offset 2]
+  (defun tqnr-json-mode ()
+    (setq js-indent-level tqnr-profile-json-indent-offset)
+    )
+
+  (add-hook 'js-json-mode-hook 'tqnr-json-mode)
+  (message "    Languages Json... Done"))
 
 (setq sh-basic-offset 2)
 

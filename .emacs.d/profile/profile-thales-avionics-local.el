@@ -49,8 +49,11 @@
   ;; SET PATH: Set environment variable PATH
   (setq tqnr-section-environment-set-path t)
   (when tqnr-section-environment-set-path
+    ;; PATH environment variable concat with current PATH
     (setq tqnr-profile-path
-      (list
+       (list
+        (concat (file-name-as-directory (getenv "VIEWPATH")) "bin")
+
         ;; before MSYS2 to make sure to use this version of tools
         ;; (do not put path which contains gcc otherwise it will be used instead of MSYS2 one)
         ;; emacs useful binary
@@ -165,46 +168,26 @@
   (setq tqnr-section-function-rtrt nil)
 
   ;; ADA: functions to have multiple compile mode in ada
-  (setq tqnr-section-function-ada nil)
+  (setq tqnr-section-function-ada t)
+  ;; COMPILATION
   (when tqnr-section-function-ada
-    ;; BUILD
-    ;; Command of build one file in ada
-    (setq tqnr-ada-gps-build-command "gnat build")
+    ;; Command to compile one file in ada
+    (setq tqnr-ada-compile-command "gnat build")
     ;; Buffer name of build one file in ada
-    (setq tqnr-ada-gps-build-buffer-name "*ada-build*")
+    (setq tqnr-ada-compile-buffer-name "*ada-build*")
     ;; CHECK
-    ;; Command of check one file in ada
-    (setq tqnr-ada-gps-check-command "gnat check")
+    ;; Command to check one file in ada
+    (setq tqnr-ada-check-command "gnat check")
     ;; Buffer name of check one file in ada
-    (setq tqnr-ada-gps-check-buffer-name "*ada-check*")
+    (setq tqnr-ada-check-buffer-name "*ada-check*")
     ;; PRETTY PRINT
-    ;; Command of pretty-print one file in ada
-    (setq tqnr-ada-gps-pretty-print-command "gnat pretty")
+    ;; Command to pretty-print one file in ada
+    (setq tqnr-ada-pretty-print-command "gnat pretty")
     ;; Buffer name of pretty-print one file in ada
-    (setq tqnr-ada-gps-pretty-print-buffer-name "*ada-pretty-print*")
-    ;; BUILD ALL
-    ;; Command of build all project files
-    (setq tqnr-ada-gps-build-all-command "gnat make")
-    ;; Buffer name of build all project files command
-    (setq tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN
-    ;; Command of clean all generated file
-    (setq tqnr-ada-gps-clean-command "gnat clean")
-    ;; Buffer name of clean all generated command
-    (setq tqnr-ada-gps-clean-buffer-name "*ada-clean*")
-    ;; REBUILD ALL
-    ;; Command of rebuild all generated file
-    (setq tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
-    ;; Buffer name of rebuild all generated command
-    (setq tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
-    ;; BUILD NATIVE
-    ;; Command of build for native execution
-    (setq tqnr-ada-gps-build-native-command "gnat clean")
-    ;; Buffer name of native build command
-    (setq tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
+    (setq tqnr-ada-pretty-print-buffer-name "*ada-pretty-print*")
     ) ;; (when tqnr-section-function-ada
 
-  ;; CALC: functions to add type support to helm ag for ripgrep
+  ;; CALC: functions to add some custom computation (by example WGS84 distance)
   (setq tqnr-section-function-calc t)
   ) ;; (when tqnr-section-function
 
@@ -219,29 +202,29 @@
   (setq tqnr-section-mode-helm t)
   (when tqnr-section-mode-helm
     ;; isearch by helm
-    (setq tqnr-section-mode-helm-swoop t)
+    (setq tqnr-section-mode-helm-swoop nil)
     ;; do not have default value when run helm swoop
-    (setq tqnr-section-mode-helm-swoop-without-pre-input t)
+    (setq tqnr-section-mode-helm-swoop-without-pre-input nil)
     ;; compile by helm
     (setq tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
     (setq tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
-    (setq tqnr-section-mode-helm-kill-ring t)
+    (setq tqnr-section-mode-helm-kill-ring nil)
     ;; replace M-x
     (setq tqnr-section-mode-helm-M-x nil)
     ;; replace electric buffer list
-    (setq tqnr-section-mode-helm-buffers-list t)
+    (setq tqnr-section-mode-helm-buffers-list nil)
     ;; add helm menu shortcut for function/variable list
-    (setq tqnr-section-mode-helm-imenu t)
+    (setq tqnr-section-mode-helm-imenu nil)
     ;; replace occur by helm
-    (setq tqnr-section-mode-helm-occur t)
+    (setq tqnr-section-mode-helm-occur nil)
     ;; replace find files C-x C-f
-    (setq tqnr-section-mode-helm-find-files t)
+    (setq tqnr-section-mode-helm-find-files nil)
     ;; replace recentf
-    (setq tqnr-section-mode-helm-recentf t)
+    (setq tqnr-section-mode-helm-recentf nil)
     ;; replace bookmark list
-    (setq tqnr-section-mode-helm-bookmark t)
+    (setq tqnr-section-mode-helm-bookmark nil)
     ;; enable Helm everywhere when asking file
     (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
@@ -309,10 +292,10 @@
   (setq tqnr-section-mode-icompletion nil)
 
   ;; YASNIPPET: enable snippet for emacs
-  (setq tqnr-section-mode-yasnippet nil)
+  (setq tqnr-section-mode-yasnippet t)
 
   ;; BROWSE KILL RING: mode to browse the kill ring memory yank only on the first left top window...
-  (setq tqnr-section-mode-browse-kill-ring t)
+  (setq tqnr-section-mode-browse-kill-ring nil)
 
   ;; MM EOL: MAGNETI MARELLI, End Of Line file mode
   (setq tqnr-section-mode-mm-eol nil)
@@ -539,7 +522,7 @@
     ) ;; (when tqnr-section-mode-platinum-searcher
 
   ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation buffer)
-  (setq tqnr-section-mode-popwin t)
+  (setq tqnr-section-mode-popwin nil)
 
   ;; PROJECTILE: Project management, filtered find-file, only with root file from version control
   (setq tqnr-section-mode-projectile t)
@@ -565,7 +548,7 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'elpy t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
-  (setq tqnr-section-mode-elpy t)
+  (setq tqnr-section-mode-elpy nil)
   (when tqnr-section-mode-elpy
     ;; override path for created elpy virtualenv (should have rights to execute)
     (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
@@ -613,6 +596,7 @@
   ;; mode to have popup always following same rules
   ;; like popwin but just add constraint to popup not replace the whole thing
   ;; Helm does not like popwin...
+  ;; Can be used with popper to have same behavior than popwin
   (setq tqnr-section-mode-shackle t)
 
   ;; RIPGREP
@@ -640,7 +624,7 @@
     ;; Use Hydra to manage smartparens shortcuts
     (setq tqnr-section-mode-hydra-smartparens t)
     ;; Use Hydra to manage ada compile shortcuts
-    (setq tqnr-section-mode-hydra-ada nil)
+    (setq tqnr-section-mode-hydra-ada t)
     ;; Use Hydra to manage outline shortcuts
     (setq tqnr-section-mode-hydra-outline t)
     ;; Use Hydra to manage org shortcuts
@@ -693,7 +677,7 @@
   ;; REALGUD: realgud mode
   (setq tqnr-section-mode-realgud nil)
 
-  ;; MOVE TEXT: realgud mode
+  ;; MOVE TEXT: move-text: move line/region up or down
   (setq tqnr-section-mode-move-text t)
 
   ;; GROOVY: groovy mode
@@ -755,6 +739,75 @@
 
   ;; CONSULT: consult: command with filtering like completions
   (setq tqnr-section-mode-consult t)
+  (when tqnr-section-mode-consult
+    ;; COMPILE COMMAND CONFIGURATION: Function to configurate the consult-compile-command package
+    (setq consult-compile-command-configuration 'tqnr-consult-compile-command-configuration)
+    (defun tqnr-consult-compile-command-configuration ()
+      ;; Use env variable to get compile command
+      (defun tqnr-consult-compile-command-sources (cmd)
+        (let ((commands (cond
+                         ((string= cmd "launcher")
+                          (getenv "LAUNCHER_LIST"))
+                         ((string= cmd "llt_dss")
+                          (getenv "LLT_LIST"))
+                         ((string= cmd "llt_iad")
+                          (getenv "LLT_LIST"))
+                         (t ""))))
+          (if commands
+              (s-split "," commands t)
+            '())))
+      (setq consult-compile-command-sources 'tqnr-consult-compile-command-sources)
+
+      ;; set prefix of each command
+      (defun tqnr-consult-compile-command-command-prefixes (cmd)
+        (cond
+         ((string= cmd "launcher")
+          (concat (getenv "LAUNCHER_PREFIX") " "))
+         ((string= cmd "llt_dss")
+          (concat (getenv "LAUNCHER_PREFIX") " build_llt_dss no_remote " (getenv "VIEWPATH") "/"))
+         ((string= cmd "llt_iad")
+          (concat (getenv "LAUNCHER_PREFIX") " build_llt_iad no_remote " (getenv "VIEWPATH") "/"))))
+      (setq consult-compile-command-command-prefixs 'tqnr-consult-compile-command-command-prefixes)
+
+      ;; set prefix of each command
+      (defun tqnr-consult-compile-command-command-hook-after-selection (param command)
+        (cond
+         ((string= param "launcher")
+          command)
+         ((string= param "llt_dss")
+          (file-name-directory command))
+         ((string= param "llt_iad")
+          (file-name-directory command))))
+      (setq consult-compile-command-command-hook-after-selection 'tqnr-consult-compile-command-command-hook-after-selection)
+
+      (defun ada-compile-dss ()
+        (interactive)
+        (let ((command "build_dss")
+              (prefix (funcall consult-compile-command-command-prefixs)))
+          (when prefix
+            (setq command (concat prefix " " command)))
+          (compile command)))
+
+      (defun ada-compile-iad ()
+        (interactive)
+        (let ((command "build_iad_release")
+              (prefix (funcall consult-compile-command-command-prefixs)))
+          (when prefix
+            (setq command (concat prefix " " command)))
+          (compile command)))
+
+      (defun ada-coding-rules ()
+        (interactive)
+        (let ((command (concat "coding_rules_iad_files" " " (buffer-file-name)))
+              (prefix (funcall consult-compile-command-command-prefixs)))
+          (when prefix
+            (setq command (concat prefix " " command)))
+          (compile command)))
+
+      (global-set-key (kbd "<C-f10>")   #'ada-compile-dss)
+      (global-set-key (kbd "<C-S-f10>") #'ada-coding-rules)
+      ) ;; (defun consult-compile-command-configuration ()
+    ) ;; (when tqnr-section-mode-consult
 
   ;; WHICH KEY: which-key: displays key bindings following entered incomplete command
   (setq tqnr-section-mode-which-key t)
@@ -767,6 +820,21 @@
 
   ;; NUMPYDOC: numpydoc: insert numpy documentation
   (setq tqnr-section-mode-numpydoc t)
+
+  ;; GPR MODE: gpr-mode: major mode to edit GNAT project (gpr) file
+  (setq tqnr-section-mode-gpr-mode nil)
+
+  ;; TREEMACS: treemacs: display file tree on one side
+  (setq tqnr-section-mode-treemacs t)
+
+  ;; VUNDO: treemacs: display file tree on one side
+  (setq tqnr-section-mode-vundo t)
+
+  ;; POPPER: popper: display buffer as popup (popwin alternative)
+  (setq tqnr-section-mode-popper t)
+
+  ;; BURLY: burly: manage frames, windows and buffers
+  (setq tqnr-section-mode-burly nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
@@ -858,6 +926,14 @@
     ;; tab for indentation in java
     (setq tqnr-profile-java-indent-with-tab t)
     ) ;; (when tqnr-section-languages-java
+  ;;
+  ;; JSON
+  ;;   set indentation style
+  (setq tqnr-section-languages-json t)
+  (when tqnr-section-languages-json
+    ;; number of space for indentation in json
+    (setq tqnr-profile-json-indent-offset 2)
+    ) ;; (when tqnr-section-languages-json
   ) ;; (when tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only
@@ -1005,7 +1081,7 @@
     ;; %b buffername ; %F frame name ; %l line number ; %c column number
     ;; %p percent of buffer above top ; %m mode name ; %n Narrow mode
     ;; %z coding systems ; %Z %z + end-of-line format ; %- infinitely dashes
-    (setq tqnr-profile-window-title "GNU Emacs - %b")
+    (setq tqnr-profile-window-title (concat (getenv "VIEWNAME") " - " (getenv "PLATFORM") " - " (getenv "COMPILATION") (when (getenv "DAL") (concat " - DAL " (upcase (getenv "DAL"))))))
     ;;
     ;; TRANSPARENCY: the whole emacs window will be transparent
     (setq tqnr-section-interface-transparency nil)
@@ -1189,13 +1265,100 @@
   (setq jit-lock-defer-time 0) ; Just don't even fontify if we're still catching up on user input.
 
   ;; do not go to warning in compilation mode
-  (setq compilation-skip-threshold 2)
+  (setq compilation-skip-threshold 1)
 
   ;; reduce magit slow on windows
   (setq w32-pipe-read-delay 0)
 
   ;; needed to avoid error in colors
   (powerline-reset)
+
+  ;; only with helm and isearch-backward bind to C-S-r
+  (fset 'rel2components
+        (kmacro-lambda-form [M-end ?\C-x ?\C-f ?\C-c ?\C-i ?\S-\C-r ?c ?o ?m ?p ?o ?n ?e ?n ?t ?s return C-right right ?\C-  M-home delete left down M-right] 0 "%d"))
+
+  ;; only with embark and isearch-backward bind to C-S-r
+  (fset 'rel2components
+    (kmacro-lambda-form [M-end ?\C-. ?i ?\S-\C-r ?c ?o ?m ?p ?o ?n ?e ?n ?t ?s return C-right right ?\C-  M-home delete left down M-right] 0 "%d"))
+
+  (global-set-key (kbd "<S-f8>") 'rel2components)
+
+  (fset 'gpr-srcdir2var
+   (kmacro-lambda-form [?\C-w ?\C-w tab ?\M-d tab C-right right ?n backspace ?N ?a ?t ?i ?v ?e ?  ?: ?= ?\M-d ?\M-d down ?\C-w tab ?\M-d tab C-right right ?C ?r ?o ?s ?s ?  ?  ?: ?= ?\M-d ?\M-d down ?\C-w] 0 "%d"))
+
+  (global-set-key (kbd "<C-S-f8>") 'gpr-srcdir2var)
+
+
+  (defun helm-find-file-gpr ()
+    (interactive)
+    (let ((rootpath (projectile-project-root))
+           (filename (thing-at-point 'filename)))
+      (when (and rootpath filename)
+        (helm-find-files-1 (concat (file-name-as-directory rootpath) "components/" filename)))))
+  (global-set-key (kbd "C-x f") #'helm-find-file-gpr)
+
+  (defun helm-find-file-gpr-csv ()
+    (interactive)
+    (let ((rootpath (projectile-project-root))
+           (filename (thing-at-point 'filename)))
+      (when (and rootpath filename)
+        (helm-find-files-1 (concat (file-name-as-directory rootpath) filename)))))
+  (global-set-key (kbd "C-x M-f") #'helm-find-file-gpr-csv)
+
+  (defun sort-gpr-with ()
+    (interactive)
+    (when (not (use-region-p))
+      (mark-paragraph))
+    (sort-regexp-fields nil "^.*\"\\(.*\\)\";$" "\\1" (region-beginning) (region-end)))
+  (global-set-key (kbd "C-c M-s") #'sort-gpr-with)
+
+  (when (and tqnr-section-mode-consult tqnr-section-mode-hydra-ada)
+    ;; override the hydra-ada function
+    (defhydra hydra-ada (:color pink
+                          :hint nil)
+      "
+╭──^─────^─┐
+│Ad^a Mod^e│                        ^ ^            [_q_] Quit
+└──^─────^─╯────────────────────────^─^───────────────────────╮
+  [_<f10>_] Launcher               [_p_] Pretty Print (S-f10)
+  [_l_]     Build LLT DSS          [_a_] Build LLT IAD
+  [_c_]     Compile file (M-f10)   [_h_] Check (C-S-f10)
+  [_d_]     Compile DSS  (C-f10)   [_i_] Compile IAD
+"
+      ("<f10>" (consult-compile-command "launcher") :color blue)
+      ("l"     (consult-compile-command "llt_dss")  :color blue)
+      ("a"     (consult-compile-command "llt_iad")  :color blue)
+      ("c"     ada-compile                          :color blue)
+      ("d"     ada-compile-dss                      :color blue)
+      ("i"     ada-compile-iad                      :color blue)
+      ("p"     ada-pretty-print                     :color blue)
+      ("h"     ada-check                            :color blue)
+      ("r"     ada-coding-rules                     :color blue)
+      ("q"     nil                                  :color blue)
+      )
+
+    )
+
+  ;; test
+  (use-package visual-regexp
+    :bind (("C-c 5" . #'vr/replace)))
+
+  ;;DEFAULT_HERMES_APP_REGISTRATION_ID = "13e4dcff-568d-4043-b32e-7c7168ffb7ee";
+  ;;DEFAULT_HERMES_API_REGISTRATION_ID = "77c83f75-9610-4f34-9d03-d6a917e78fb8";
+  ;;DEFAULT_HERMES_API_SERVER_URL = "https://genai-hermes.azure-api.net/api/v1";
+  ;;DEFAULT_HERMES_IDE_SERVER_URL = "wss://api.ghermapic2-prod.eu2.k8saas.thalesdigital.io/ide/ws";
+  ;;DEFAULT_HERMES_GUI_SERVER_URL = "wss://api.ghermapic2-prod.eu2.k8saas.thalesdigital.io/gui/ws";
+  ;; (use-package gptel
+  ;;   :config
+  ;;   (gptel-make-azure "Hermes"             ;Name, whatever you'd like
+  ;;                     :protocol "https"                     ;Optional -- https is the default
+  ;;                     :host "api.ghermapic2-prod.eu2.k8saas.thalesdigital.io/ide/ws"
+  ;;                     :endpoint "/openai/deployments/YOUR_DEPLOYMENT_NAME/chat/completions?api-version=2023-05-15" ;or equivalent
+  ;;                     :stream t                             ;Enable streaming responses
+  ;;                     :key #'gptel-api-key
+  ;;                     :models '("gpt-3.5-turbo" "gpt-4"))
+  ;;   )
+
 
   (message "### END")
   ) ; (defun function-to-call-after-loading-conf ()

@@ -514,9 +514,7 @@
       ("h"     ada-check        :color blue)
       ("q"     nil              :color blue)
       )
-    (with-eval-after-load "ada-mode"
-      (define-key ada-mode-map (kbd "<f10>") 'hydra-ada/body)
-      ) ;; (with-eval-after-load "ada-mode"
+    (global-set-key (kbd "<f10>") #'hydra-ada/body)
     ) ;; (use-package hydra
   ) ;; (when tqnr-section-mode-hydra-spelling
 

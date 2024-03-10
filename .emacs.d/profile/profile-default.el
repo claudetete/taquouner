@@ -200,45 +200,25 @@
 
   ;; ADA: functions to have multiple compile mode in ada
   (setq tqnr-section-function-ada nil)
+  ;; COMPILATION
   (when tqnr-section-function-ada
-    ;; BUILD
-    ;; Command of build one file in ada
-    (setq tqnr-ada-gps-build-command "gnat build")
+    ;; Command to compile one file in ada
+    (setq tqnr-ada-compile-command "gnat build")
     ;; Buffer name of build one file in ada
-    (setq tqnr-ada-gps-build-buffer-name "*ada-build*")
+    (setq tqnr-ada-compile-buffer-name "*ada-compilation*")
     ;; CHECK
-    ;; Command of check one file in ada
-    (setq tqnr-ada-gps-check-command "gnat check")
+    ;; Command to check one file in ada
+    (setq tqnr-ada-check-command "gnat check")
     ;; Buffer name of check one file in ada
-    (setq tqnr-ada-gps-check-buffer-name "*ada-check*")
+    (setq tqnr-ada-check-buffer-name "*ada-check*")
     ;; PRETTY PRINT
-    ;; Command of pretty-print one file in ada
-    (setq tqnr-ada-gps-pretty-print-command "gnat pretty")
+    ;; Command to pretty-print one file in ada
+    (setq tqnr-ada-pretty-print-command "gnat pretty")
     ;; Buffer name of pretty-print one file in ada
-    (setq tqnr-ada-gps-pretty-print-buffer-name "*ada-pretty-print*")
-    ;; BUILD ALL
-    ;; Command of build all project files
-    (setq tqnr-ada-gps-build-all-command "gnat make")
-    ;; Buffer name of build all project files command
-    (setq tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN
-    ;; Command of clean all generated file
-    (setq tqnr-ada-gps-clean-command "gnat clean")
-    ;; Buffer name of clean all generated command
-    (setq tqnr-ada-gps-clean-buffer-name "*ada-clean*")
-    ;; REBUILD ALL
-    ;; Command of rebuild all generated file
-    (setq tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
-    ;; Buffer name of rebuild all generated command
-    (setq tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
-    ;; BUILD NATIVE
-    ;; Command of build for native execution
-    (setq tqnr-ada-gps-build-native-command "gnat clean")
-    ;; Buffer name of native build command
-    (setq tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
+    (setq tqnr-ada-pretty-print-buffer-name "*ada-pretty-print*")
     ) ;; (when tqnr-section-function-ada
 
-  ;; CALC: functions to add type support to helm ag for ripgrep
+  ;; CALC: functions to add some custom computation (by example WGS84 distance)
   (setq tqnr-section-function-calc nil)
   ) ;; (when tqnr-section-function
 
@@ -678,6 +658,7 @@
   ;; mode to have popup always following same rules
   ;; like popwin but just add constraint to popup not replace the whole thing
   ;; Helm does not like popwin...
+  ;; Can be used with popper to have same behavior than popwin
   (setq tqnr-section-mode-shackle nil)
 
   ;; RIPGREP
@@ -758,7 +739,7 @@
   ;; REALGUD: realgud mode
   (setq tqnr-section-mode-realgud nil)
 
-  ;; MOVE TEXT: realgud mode
+  ;; MOVE TEXT: move-text: move line/region up or down
   (setq tqnr-section-mode-move-text nil)
 
   ;; GROOVY: groovy mode
@@ -832,6 +813,21 @@
 
   ;; NUMPYDOC: numpydoc: insert numpy documentation
   (setq tqnr-section-mode-numpydoc nil)
+
+  ;; GPR MODE: gpr-mode: major mode to edit GNAT project (gpr) file
+  (setq tqnr-section-mode-gpr-mode nil)
+
+  ;; TREEMACS: treemacs: display file tree on one side
+  (setq tqnr-section-mode-treemacs nil)
+
+  ;; VUNDO: treemacs: display file tree on one side
+  (setq tqnr-section-mode-vundo nil)
+
+  ;; POPPER: popper: display buffer as popup (popwin alternative)
+  (setq tqnr-section-mode-popper nil)
+
+  ;; BURLY: burly: manage frames, windows and buffers
+  (setq tqnr-section-mode-burly nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
@@ -923,6 +919,14 @@
     ;; tab for indentation in java
     (setq tqnr-profile-java-indent-with-tab t)
     ) ;; (when tqnr-section-languages-java
+  ;; 
+  ;; JSON
+  ;;   set indentation style
+  (setq tqnr-section-languages-json t)
+  (when tqnr-section-languages-json
+    ;; number of space for indentation in json
+    (setq tqnr-profile-json-indent-offset 2)
+    ) ;; (when tqnr-section-languages-json
   ) ;; (when tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only

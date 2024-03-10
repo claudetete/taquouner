@@ -56,21 +56,21 @@
         ;; before MSYS2 to make sure to use this version of tools
         ;; (do not put path which contains gcc otherwise it will be used instead of MSYS2 one)
         ;; emacs useful binary
-        "j:/CLI/bin"
+        ;;"j:/CLI/bin"
         ;; gnuplot
         "k:/GNUPLOT/gnuplot_5.3/bin"
         ;; PYTHON
         "j:/PYTHON/PYTHON_3.9.6"
         "j:/PYTHON/PYTHON_3.9.6/Scripts"
         ;; GIT
-        (concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
+        ;;(concat "k:/GIT/GIT_" tqnr-profile-portable-git-version "/bin")
         ;; MSYS (i686)
         ;; "j:/MSYS/msys64/mingw64/bin"
         ;; "j:/MSYS/msys64/usr/local/bin"
         ;; "j:/MSYS/msys64/usr/bin"
         ;; "j:/MSYS/msys64/bin"
         ;; GITEXTENSIONS
-        "k:/GIT_EXTENSIONS/GitExtensions_3.5.4.12724-65f01f399"
+        ;;"k:/GIT_EXTENSIONS/GitExtensions_3.5.4.12724-65f01f399"
         ;; MS Windows usual path
         "C:/WINDOWS"
         "C:/WINDOWS/System32"
@@ -187,7 +187,7 @@
     ;; Command to compile one file in ada
     (setq tqnr-ada-compile-command "gnat build")
     ;; Buffer name of build one file in ada
-    (setq tqnr-ada-compile-buffer-name "*ada-build*")
+    (setq tqnr-ada-compile-buffer-name "*ada-compilation*")
     ;; CHECK
     ;; Command to check one file in ada
     (setq tqnr-ada-check-command "gnat check")
@@ -229,15 +229,15 @@
     ;; replace electric buffer list
     (setq tqnr-section-mode-helm-buffers-list nil)
     ;; add helm menu shortcut for function/variable list
-    (setq tqnr-section-mode-helm-imenu t)
+    (setq tqnr-section-mode-helm-imenu nil)
     ;; replace occur by helm
-    (setq tqnr-section-mode-helm-occur t)
+    (setq tqnr-section-mode-helm-occur nil)
     ;; replace find files C-x C-f
     (setq tqnr-section-mode-helm-find-files nil)
     ;; replace recentf
-    (setq tqnr-section-mode-helm-recentf t)
+    (setq tqnr-section-mode-helm-recentf nil)
     ;; replace bookmark list
-    (setq tqnr-section-mode-helm-bookmark t)
+    (setq tqnr-section-mode-helm-bookmark nil)
     ;; enable Helm everywhere when asking file
     (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
@@ -535,7 +535,7 @@
     ) ;; (when tqnr-section-mode-platinum-searcher
 
   ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation buffer)
-  (setq tqnr-section-mode-popwin t)
+  (setq tqnr-section-mode-popwin nil)
 
   ;; PROJECTILE: Project management, filtered find-file, only with root file from version control
   (setq tqnr-section-mode-projectile t)
@@ -609,6 +609,7 @@
   ;; mode to have popup always following same rules
   ;; like popwin but just add constraint to popup not replace the whole thing
   ;; Helm does not like popwin...
+  ;; Can be used with popper to have same behavior than popwin
   (setq tqnr-section-mode-shackle t)
 
   ;; RIPGREP
@@ -773,6 +774,12 @@
   ;; VUNDO: treemacs: display file tree on one side
   (setq tqnr-section-mode-vundo t)
 
+  ;; POPPER: popper: display buffer as popup (popwin alternative)
+  (setq tqnr-section-mode-popper t)
+
+  ;; BURLY: burly: manage frames, windows and buffers
+  (setq tqnr-section-mode-burly nil)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
   ) ;; (when tqnr-section-mode
@@ -863,6 +870,14 @@
     ;; tab for indentation in java
     (setq tqnr-profile-java-indent-with-tab t)
     ) ;; (when tqnr-section-languages-java
+  ;; 
+  ;; JSON
+  ;;   set indentation style
+  (setq tqnr-section-languages-json t)
+  (when tqnr-section-languages-json
+    ;; number of space for indentation in json
+    (setq tqnr-profile-json-indent-offset 2)
+    ) ;; (when tqnr-section-languages-json
   ) ;; (when tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only
@@ -1264,8 +1279,13 @@
   ;; needed to avoid error in colors
   (powerline-reset)
 
+  ;; only with helm and isearch-backward bind to C-S-r
   (fset 'rel2components
     (kmacro-lambda-form [M-end ?\C-x ?\C-f ?\C-c ?\C-i ?\S-\C-r ?c ?o ?m ?p ?o ?n ?e ?n ?t ?s return C-right right ?\C-  M-home delete left down M-right] 0 "%d"))
+
+  ;; only with embark and isearch-backward bind to C-S-r
+  (fset 'rel2components
+    (kmacro-lambda-form [M-end ?\C-. ?i ?\S-\C-r ?c ?o ?m ?p ?o ?n ?e ?n ?t ?s return C-right right ?\C-  M-home delete left down M-right] 0 "%d"))
 
   (global-set-key (kbd "<S-f8>") 'rel2components)
 
@@ -1303,7 +1323,7 @@
     (defun ada-compile-dss ()
       (interactive)
       (let ((command "build_dss")
-            (prefix (funcall consult-compile-command-prefixs)))
+            (prefix (funcall consult-compile-command-command-prefixs)))
         (when prefix
           (setq command (concat prefix " " command)))
         (compile command)))
@@ -1311,7 +1331,7 @@
     (defun ada-compile-iad ()
       (interactive)
       (let ((command "build_iad_release")
-            (prefix (funcall consult-compile-command-prefixs)))
+            (prefix (funcall consult-compile-command-command-prefixs)))
         (when prefix
           (setq command (concat prefix " " command)))
         (compile command)))
@@ -1330,13 +1350,13 @@
   [_c_]     Compile file (M-f10)   [_h_] Check (M-S-f10)
   [_d_]     Compile DSS  (C-f10)   [_i_] Compile IAD
 "
-      ("<f10>" counsel-compile  :color blue)
-      ("c"     ada-compile      :color blue)
-      ("d"     ada-compile-dss  :color blue)
-      ("i"     ada-compile-iad  :color blue)
-      ("p"     ada-pretty-print :color blue)
-      ("h"     ada-check        :color blue)
-      ("q"     nil              :color blue)
+      ("<f10>" consult-compile-command :color blue)
+      ("c"     ada-compile             :color blue)
+      ("d"     ada-compile-dss         :color blue)
+      ("i"     ada-compile-iad         :color blue)
+      ("p"     ada-pretty-print        :color blue)
+      ("h"     ada-check               :color blue)
+      ("q"     nil                     :color blue)
       )
 
     )

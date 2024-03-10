@@ -34,23 +34,29 @@
   :pin melpa
 
   :bind
-  ("C-c C-e" 'yas/expand)
-
-  :init
-  (yas/global-mode 1)
+  ("C-c C-e" . yas/expand)
 
   :config
-  ;; Add your own snippets to ~/.emacs.d/plugins/snippets by placing files there or invoking yas-new-snippet.
-  (setq yas-snippet-dirs
-    '(
-       ;; keep default value
-       "~/.emacs.d/snippets"
-       ;; add path to collection of snippets
-       (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/snippets")
-       ))
+  (yas-reload-all)
+  (add-hook 'fitnesse-mode-hook #'yas-minor-mode)
+
+  ;; :config
+  ;; ;; Add your own snippets to ~/.emacs.d/plugins/snippets by placing files there or invoking yas-new-snippet.
+  ;; (setq yas-snippet-dirs
+  ;;   '(
+  ;;      ;; keep default value
+  ;;      "~/.emacs.d/snippets"
+  ;;      ;; add path to collection of snippets
+  ;;      (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/snippets")
+  ;;      ))
 
   ) ;; (use-package yasnippet
 
+;; to test:
+(use-package yasnippet-snippets)
+(use-package yasnippet-capf)
+(use-package consult-yasnippet)
+(use-package auto-yasnippet)
 
 (provide '02-mode-013-yasnippet)
 

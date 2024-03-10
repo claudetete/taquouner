@@ -101,11 +101,11 @@
     ;; define a function to colorize compile buffer
     (defun colorize-compilation-buffer ()
       ;; set to write to add color
-      (toggle-read-only)
+      (read-only-mode)
       ;; apply color on all buffer
       (ansi-color-apply-on-region (point-min) (point-max))
       ;; set read only
-      (toggle-read-only))
+      (read-only-mode))
     ;; add this function to compile buffer filter hook
     :hook (compilation-filter . colorize-compilation-buffer))
   (message "      Ansi color for Compile... Done"))

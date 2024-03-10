@@ -32,7 +32,7 @@
 
 
 ;;; Code:
-(when tqnr-section-mode-helm
+(if tqnr-section-mode-helm
   ;; (setq helm-grep-ag-command "rg --color=always --colors 'match:fg:black' --colors 'match:bg:yellow' --smart-case --no-heading --line-number %s %s %s")
   ;; (setq helm-grep-ag-pipe-cmd-switches '("--colors 'match:fg:black'" "--colors 'match:bg:yellow'")))
 
@@ -45,6 +45,11 @@
     (helm-ag-insert-at-point 'symbol)
     ;; use ripgrep search with helm-ag mode
     (helm-ag-base-command "rg --smart-case --no-heading --line-number"))
+
+  (use-package rg
+    :config
+    (rg-enable-menu))
+
   ) ;; (when tqnr-section-mode-helm
 
 

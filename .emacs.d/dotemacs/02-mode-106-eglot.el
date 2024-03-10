@@ -40,8 +40,17 @@
   ;; [VARIABLE.tqnr-section-mode-eglot-python nil]
   (when tqnr-section-mode-eglot-python
     (add-hook 'python-mode-hook 'eglot-ensure))
+
+  :custom
+  ;; do not display mulitline in echo area, use
+  (eldoc-echo-area-use-multiline-p nil)
   ) ;; (use-package eglot
 
+(use-package eglot-hierarchy
+  ;; make sure it is loaded and custom without searched in package list
+  :ensure nil
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/"))
+  )
 
 (provide '02-mode-106-eglot)
 

@@ -86,12 +86,12 @@
 (setq initial-scratch-message nil)
 ;;; Unkillable scratch buffer, thanks to TN
 (add-hook 'kill-buffer-query-functions
-  '(lambda ()
-     (if (equal (buffer-name (current-buffer)) "*scratch*")
-       (progn
-         (delete-region (point-min) (point-max))
-         nil)
-       t)))
+  #'(lambda ()
+      (if (equal (buffer-name (current-buffer)) "*scratch*")
+          (progn
+            (delete-region (point-min) (point-max))
+            nil)
+        t)))
 
 ;; FIX BUG
 ;; remove warning about undo too long

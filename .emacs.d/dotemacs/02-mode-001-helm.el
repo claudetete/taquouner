@@ -67,7 +67,7 @@
 
   :config
   ;; needed to load helm correctly
-  (try-require 'helm-config "      ")
+  ;; (try-require 'helm-config "      ")
   ;; (custom-set-variables
   ;;   '(helm-follow-mode-persistent t))
 
@@ -79,6 +79,10 @@
     ;; increase number of characters of buffer name before truncate
     (setq helm-buffer-max-length 80)
     )
+  (when tqnr-section-mode-shackle
+    ;; make helm play nice with popup
+    (setq helm-display-function 'pop-to-buffer))
+
   ) ;; (use-package helm
 
 
@@ -144,6 +148,10 @@
 
     ;; If you prefer fuzzy matching
     (setq helm-swoop-use-fuzzy-match t)
+
+    (when tqnr-section-mode-shackle
+      ;; to be properly displayed by shackle
+      (setq helm-swoop-split-window-function 'display-buffer))
     ) ;; (use-package helm-swoop
 
   ;; [VARCOMMENT.do not have default value when run helm swoop]

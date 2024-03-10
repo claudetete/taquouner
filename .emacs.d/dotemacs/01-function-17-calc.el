@@ -26,7 +26,7 @@
 ;;; Commentary:
 ;;
 ;; subsection comment
-;; [SUBHEADER.functions to add type support to helm ag for ripgrep]
+;; [SUBHEADER.functions to add some custom computation (by example WGS84 distance)]
 ;; [SUBDEFAULT.nil]
 
 

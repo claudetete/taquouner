@@ -206,44 +206,44 @@
 
     ;; after create directories buffer
     (add-hook 'ecb-directories-buffer-after-create-hook
-      '(lambda ()
-         ;; remap enter only in ecb directories buffer
-         (local-set-key         (kbd "RET")             'ecb-directories-select)
-         (local-set-key         (kbd "M-RET")           'ecb-dired-directory)
-         (local-set-key         (kbd "ESC")             'ecb-cancel)
-         (local-set-key         (kbd "M-q")             'ecb-toggle-maximize)
-         (local-set-key         (kbd "M-r")             'ecb-update-directories-buffer)
-         ;; hide/show ecb compile window
-         (local-set-key         (kbd "<f2>")            'ecb-toggle-compile)
-         ))
+              #'(lambda ()
+                  ;; remap enter only in ecb directories buffer
+                  (local-set-key         (kbd "RET")             'ecb-directories-select)
+                  (local-set-key         (kbd "M-RET")           'ecb-dired-directory)
+                  (local-set-key         (kbd "ESC")             'ecb-cancel)
+                  (local-set-key         (kbd "M-q")             'ecb-toggle-maximize)
+                  (local-set-key         (kbd "M-r")             'ecb-update-directories-buffer)
+                  ;; hide/show ecb compile window
+                  (local-set-key         (kbd "<f2>")            'ecb-toggle-compile)
+                  ))
 
     ;; after create sources buffer
     (add-hook 'ecb-sources-buffer-after-create-hook
-      '(lambda ()
-         ;; remap enter only in ecb sources buffer
-         (local-set-key         (kbd "RET")             'ecb-select)
-         (local-set-key         (kbd "M-RET")           'ecb-sources-select)
-         (local-set-key         (kbd "ESC")             'ecb-cancel)
-         (local-set-key         (kbd "M-a")             'ecb-toggle-maximize)
-         ))
+              #'(lambda ()
+                  ;; remap enter only in ecb sources buffer
+                  (local-set-key         (kbd "RET")             'ecb-select)
+                  (local-set-key         (kbd "M-RET")           'ecb-sources-select)
+                  (local-set-key         (kbd "ESC")             'ecb-cancel)
+                  (local-set-key         (kbd "M-a")             'ecb-toggle-maximize)
+                  ))
 
     ;; after create methods buffer
     (add-hook 'ecb-methods-buffer-after-create-hook
-      '(lambda ()
-         ;; remap enter only in ecb methods buffer
-         (local-set-key         (kbd "RET")             'ecb-select)
-         (local-set-key         (kbd "ESC")             'ecb-cancel)
-         (local-set-key         (kbd "M-\\")            'ecb-toggle-maximize)
-         ))
+              #'(lambda ()
+                  ;; remap enter only in ecb methods buffer
+                  (local-set-key         (kbd "RET")             'ecb-select)
+                  (local-set-key         (kbd "ESC")             'ecb-cancel)
+                  (local-set-key         (kbd "M-\\")            'ecb-toggle-maximize)
+                  ))
 
     ;; after create history buffer
     (add-hook 'ecb-history-buffer-after-create-hook
-      '(lambda ()
-         ;; remap enter only in ecb history buffer
-         (local-set-key         (kbd "RET")             'ecb-select)
-         (local-set-key         (kbd "ESC")             'ecb-cancel)
-         (local-set-key         (kbd "M-z")             'ecb-toggle-maximize)
-         ))
+              #'(lambda ()
+                  ;; remap enter only in ecb history buffer
+                  (local-set-key         (kbd "RET")             'ecb-select)
+                  (local-set-key         (kbd "ESC")             'ecb-cancel)
+                  (local-set-key         (kbd "M-z")             'ecb-toggle-maximize)
+                  ))
 
     :custom
     (ecb-auto-activate t)

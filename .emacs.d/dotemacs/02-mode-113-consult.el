@@ -31,15 +31,37 @@
 
 ;;; Code:
 (use-package consult
-  :ensure t)
+  :ensure t
 
-(use-package consult-projectile
-  :ensure t)
+  :bind
+  ("C-x C-b" . consult-buffer)
+  ("M-\\"    . consult-imenu)
+
+  :config
+  (defun consult-ripgrep-dwim ()
+    (interactive)
+    (consult-ripgrep (file-name-directory buffer-file-name)))
+  )
+
+;; (use-package consult-projectile
+;;   :ensure t)
 
 (use-package consult-eglot
   :ensure t)
 
+(use-package consult-compile-command
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/"))
 
+  :config
+  ;; [VARCOMMENT.configurate the consult-compile-command package]
+  ;; [VARIABLE.consult-compile-command-configuration 'consult-compile-command-configuration-default]
+  (defun consult-compile-command-configuration-default ()
+    )
+  (funcall consult-compile-command-configuration)
+
+  ;; stop scrolling compilation at first error
+  (setq compilation-scroll-output 'first-error)
+  )
 
 (provide '02-mode-113-consult)
 

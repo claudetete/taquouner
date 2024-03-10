@@ -35,16 +35,39 @@
 
   :init
   (vertico-mode)
+  (vertico-multiform-mode)
   ;; Show more candidates
   (setq vertico-count 20)
   ;; Grow only (never shrink) the Vertico minibuffer
   (setq vertico-resize 'grow-only)
 
-  :bind (:map vertico-map
-              ("<escape>" . minibuffer-keyboard-quit)
-              ;; reproduce helm behavior
-              ("<left>" . vertico-directory-up)
-              ("<right>" . vertico-insert))
+  ;; Change the default sorting function for files (by example in find-file)
+  ;; sort only alphabetically and put folders first
+  (setq vertico-multiform-categories
+        '((file grid)
+          (file (vertico-sort-function . sort-directories-first))))
+
+  ;; Sort directories before files
+  (defvar vertico-sort-function-for-file #'vertico-sort-alpha)
+  (defun sort-directories-first (files)
+    (setq files (vertico-sort-function-for-file files))
+    (nconc (seq-filter (lambda (x) (string-suffix-p "/" x)) files)
+           (seq-remove (lambda (x) (string-suffix-p "/" x)) files)))
+
+  (defun vertico-sort-function-for-file-toggle ()
+    (if (= vertico-sort-function-for-file vertico-sort-alpha)
+      (setq vertico-sort-function-for-file #'vertico-sort-history-alpha)
+      (setq vertico-sort-function-for-file #'vertico-sort-alpha)
+      ))
+
+  :bind
+  (:map vertico-map
+        ("<escape>" . minibuffer-keyboard-quit)
+        ;; reproduce helm behavior
+        ("<left>" . vertico-directory-up)
+        ("<right>" . vertico-insert))
+  (:map vertico-multiform-map
+              ("M-A" . vertico-sort-function-for-file-toggle))
   )
 
 (use-package vertico-directory

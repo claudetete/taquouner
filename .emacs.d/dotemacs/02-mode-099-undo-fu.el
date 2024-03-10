@@ -35,6 +35,10 @@
   ("C-_"   . undo-fu-only-undo)
   ("M-_"   . undo-fu-only-redo)
   ("C-M-_" . undo-fu-only-redo-all)
+
+  ;;:custom
+  ;; too much bug
+  ;(undo-fu-allow-undo-in-region t)
   ) ;; (use-package undo-fu
 
 
