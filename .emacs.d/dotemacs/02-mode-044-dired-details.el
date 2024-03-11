@@ -1,6 +1,6 @@
 ;;; 02-mode-044-dired-details.el --- configuration of dired details mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2017-2024 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: April 2020
+;; Last-Updated: March 2024
 
 ;;; Commentary:
 ;;
@@ -30,7 +30,9 @@
 
 
 ;;; Code:
-(use-package dired-details+)
+(use-package dired-details+
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins"))
+  )
 
 
 (provide '02-mode-044-dired-details)

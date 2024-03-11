@@ -1,6 +1,6 @@
 ;;; 02-mode-007-batch.el --- configuration of batch mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2017-2024 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,14 +19,14 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: April 2020
+;; Last-Updated: March 2024
 
 ;;; Commentary:
 ;;
-;; [SUBHEADER.mode for .bat script in MS Windows]
-;; [SUBDEFAULT.t]
+;; [SUBHEADER.mode for .bat script in MS Windows (deprecated use built-in bat-mode)]
+;; [SUBDEFAULT.nil]
 
 
 ;;; Code:

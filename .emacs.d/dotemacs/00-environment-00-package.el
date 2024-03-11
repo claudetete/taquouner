@@ -54,15 +54,20 @@
     (setq package-check-signature nil))
     
   (when (try-require 'package "      ")
-    (when tqnr-profile-environment-package-local-path
-      (setq package-archives nil)
-      ;; [VARCOMMENT.LOCAL PATH: proxy setting about package management]
-      ;; [VARIABLE.tqnr-profile-environment-package-local-path nil]
-      (add-to-list 'package-archives `("elpa" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "elpa")))
-      (add-to-list 'package-archives `("melpa" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "melpa")))
-      (add-to-list 'package-archives `("org" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "org")))
-      (add-to-list 'package-archives `("emacswiki" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "emacswiki")))
-      ) ;; (when tqnr-profile-environment-package-local-path
+    (if tqnr-profile-environment-package-local-path
+      (progn
+        (setq package-archives nil)
+        ;; [VARCOMMENT.LOCAL PATH: proxy setting about package management]
+        ;; [VARIABLE.tqnr-profile-environment-package-local-path nil]
+        (add-to-list 'package-archives `("elpa" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "elpa")))
+        (add-to-list 'package-archives `("melpa" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "melpa")))
+        (add-to-list 'package-archives `("org" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "org")))
+        (add-to-list 'package-archives `("emacswiki" . ,(concat (file-name-as-directory tqnr-profile-environment-package-local-path) "emacswiki")))
+        )
+      (progn
+        (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+        )
+      ) ;; (if tqnr-profile-environment-package-local-path
     ;; set path where put all packages
     (setq package-user-dir (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/elpa"))
     ;; init package

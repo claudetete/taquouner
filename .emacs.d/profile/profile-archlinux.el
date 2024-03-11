@@ -94,7 +94,7 @@
     (setq tqnr-profile-environment-package-proxy-http nil)
     (setq tqnr-profile-environment-package-proxy-https nil)
     ;; LOCAL PATH: proxy setting about package management
-    (setq tqnr-profile-environment-package-local-path "~/project/emacs-package-archives")
+    (setq tqnr-profile-environment-package-local-path nil)
     ;; PACKAGE LIST: list of package like "'(first-package second-package)" to be installed
     (setq tqnr-profile-environment-package-list '())
     ) ;; (when tqnr-section-environment-package
@@ -165,45 +165,25 @@
 
   ;; ADA: functions to have multiple compile mode in ada
   (setq tqnr-section-function-ada t)
+  ;; COMPILATION
   (when tqnr-section-function-ada
-    ;; BUILD
-    ;; Command of build one file in ada
-    (setq tqnr-ada-gps-build-command "gnat build")
+    ;; Command to compile one file in ada
+    (setq tqnr-ada-compile-command "gnat build")
     ;; Buffer name of build one file in ada
-    (setq tqnr-ada-gps-build-buffer-name "*ada-build*")
+    (setq tqnr-ada-compile-buffer-name "*ada-build*")
     ;; CHECK
-    ;; Command of check one file in ada
-    (setq tqnr-ada-gps-check-command "gnat check")
+    ;; Command to check one file in ada
+    (setq tqnr-ada-check-command "gnat check")
     ;; Buffer name of check one file in ada
-    (setq tqnr-ada-gps-check-buffer-name "*ada-check*")
+    (setq tqnr-ada-check-buffer-name "*ada-check*")
     ;; PRETTY PRINT
-    ;; Command of pretty-print one file in ada
-    (setq tqnr-ada-gps-pretty-print-command "gnat pretty")
+    ;; Command to pretty-print one file in ada
+    (setq tqnr-ada-pretty-print-command "gnat pretty")
     ;; Buffer name of pretty-print one file in ada
-    (setq tqnr-ada-gps-pretty-print-buffer-name "*ada-pretty-print*")
-    ;; BUILD ALL
-    ;; Command of build all project files
-    (setq tqnr-ada-gps-build-all-command "gnat make")
-    ;; Buffer name of build all project files command
-    (setq tqnr-ada-gps-build-all-buffer-name "*ada-build-all*")
-    ;; CLEAN
-    ;; Command of clean all generated file
-    (setq tqnr-ada-gps-clean-command "gnat clean")
-    ;; Buffer name of clean all generated command
-    (setq tqnr-ada-gps-clean-buffer-name "*ada-clean*")
-    ;; REBUILD ALL
-    ;; Command of rebuild all generated file
-    (setq tqnr-ada-gps-rebuild-all-command "gnat clean && gnat make")
-    ;; Buffer name of rebuild all generated command
-    (setq tqnr-ada-gps-rebuild-all-buffer-name "*ada-rebuild-all*")
-    ;; BUILD NATIVE
-    ;; Command of build for native execution
-    (setq tqnr-ada-gps-build-native-command "gnat clean")
-    ;; Buffer name of native build command
-    (setq tqnr-ada-gps-build-native-buffer-name "*ada-build-native*")
+    (setq tqnr-ada-pretty-print-buffer-name "*ada-pretty-print*")
     ) ;; (when tqnr-section-function-ada
 
-  ;; CALC: functions to add type support to helm ag for ripgrep
+  ;; CALC: functions to add some custom computation (by example WGS84 distance)
   (setq tqnr-section-function-calc nil)
   ) ;; (when tqnr-section-function
 
@@ -218,31 +198,31 @@
   (setq tqnr-section-mode-helm t)
   (when tqnr-section-mode-helm
     ;; isearch by helm
-    (setq tqnr-section-mode-helm-swoop t)
+    (setq tqnr-section-mode-helm-swoop nil)
     ;; do not have default value when run helm swoop
-    (setq tqnr-section-mode-helm-swoop-without-pre-input t)
+    (setq tqnr-section-mode-helm-swoop-without-pre-input nil)
     ;; compile by helm
     (setq tqnr-section-mode-helm-compile nil)
     ;; replace fuzzy search in find-files by flx, more human matches
-    (setq tqnr-section-mode-helm-flx t)
+    (setq tqnr-section-mode-helm-flx nil)
     ;; replace yank-pop or browse kill ring by helm-kill-ring
-    (setq tqnr-section-mode-helm-kill-ring t)
+    (setq tqnr-section-mode-helm-kill-ring nil)
     ;; replace M-x
-    (setq tqnr-section-mode-helm-M-x t)
+    (setq tqnr-section-mode-helm-M-x nil)
     ;; replace electric buffer list
-    (setq tqnr-section-mode-helm-buffers-list t)
+    (setq tqnr-section-mode-helm-buffers-list nil)
     ;; add helm menu shortcut for function/variable list
-    (setq tqnr-section-mode-helm-imenu t)
+    (setq tqnr-section-mode-helm-imenu nil)
     ;; replace occur by helm
-    (setq tqnr-section-mode-helm-occur t)
+    (setq tqnr-section-mode-helm-occur nil)
     ;; replace find files C-x C-f
-    (setq tqnr-section-mode-helm-find-files t)
+    (setq tqnr-section-mode-helm-find-files nil)
     ;; replace recentf
-    (setq tqnr-section-mode-helm-recentf t)
+    (setq tqnr-section-mode-helm-recentf nil)
     ;; replace bookmark list
-    (setq tqnr-section-mode-helm-bookmark t)
+    (setq tqnr-section-mode-helm-bookmark nil)
     ;; enable Helm everywhere when asking file
-    (setq tqnr-section-mode-helm-global t)
+    (setq tqnr-section-mode-helm-global nil)
     ) ;; (when tqnr-section-mode-helm
 
   ;; HOME END: add some useful function to home and end keys
@@ -288,7 +268,7 @@
     ) ;; (when tqnr-section-mode-cedet
 
   ;; BATCH: mode for .bat script in MS Windows
-  (setq tqnr-section-mode-batch t)
+  (setq tqnr-section-mode-batch nil)
 
   ;; VISUAL BASIC: mode for VisualBasic and VisualBasicAdvance
   (setq tqnr-section-mode-visual-basic t)
@@ -302,16 +282,16 @@
   (setq tqnr-section-mode-cwarn nil)
 
   ;; SWIPER: Isearch alternative with fuzzy using ivy
-  (setq tqnr-section-mode-swiper nil)
+  (setq tqnr-section-mode-swiper t)
 
   ;; ICOMPLETION: more completion in minibuffer
   (setq tqnr-section-mode-icompletion nil)
 
   ;; YASNIPPET: enable snippet for emacs
-  (setq tqnr-section-mode-yasnippet nil)
+  (setq tqnr-section-mode-yasnippet t)
 
   ;; BROWSE KILL RING: mode to browse the kill ring memory yank only on the first left top window...
-  (setq tqnr-section-mode-browse-kill-ring t)
+  (setq tqnr-section-mode-browse-kill-ring nil)
 
   ;; MM EOL: MAGNETI MARELLI, End Of Line file mode
   (setq tqnr-section-mode-mm-eol nil)
@@ -326,10 +306,10 @@
   (setq tqnr-section-mode-dired-plus t)
 
   ;; GNU GLOBAL: Tag management mode
-  (setq tqnr-section-mode-gnu-global t)
+  (setq tqnr-section-mode-gnu-global nil)
   (when tqnr-section-mode-gnu-global
     ;; ggtags interface
-    (setq tqnr-section-mode-gnu-global-ggtags t)
+    (setq tqnr-section-mode-gnu-global-ggtags nil)
     ) ;; (when tqnr-section-mode-gnu-global
 
   ;; COUNSEL COMPILE: Use ivy to select a compile command.
@@ -441,7 +421,7 @@
   (setq tqnr-section-mode-rainbow-delimiters nil)
 
   ;; DIRED DETAILS: show hide details in dired mode
-  (setq tqnr-section-mode-dired-details t)
+  (setq tqnr-section-mode-dired-details nil)
 
   ;; SMART TAB: expand or indent at the point with tab
   (setq tqnr-section-mode-smart-tab nil)
@@ -538,7 +518,7 @@
     ) ;; (when tqnr-section-mode-platinum-searcher
 
   ;; POPWIN: A pop-up manager for annoying buffer (have like ECB compilation buffer)
-  (setq tqnr-section-mode-popwin t)
+  (setq tqnr-section-mode-popwin nil)
 
   ;; PROJECTILE: Project management, filtered find-file, only with root file from version control
   (setq tqnr-section-mode-projectile t)
@@ -564,7 +544,7 @@
   ;;  (add-to-list 'profile-environment-elpa-package-list 'elpy t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'flycheck t)
   ;;  (add-to-list 'profile-environment-elpa-package-list 'py-autopep8 t)
-  (setq tqnr-section-mode-elpy t)
+  (setq tqnr-section-mode-elpy nil)
   (when tqnr-section-mode-elpy
     ;; override path for created elpy virtualenv (should have rights to execute)
     (setq tqnr-section-mode-elpy-rpc-virtualenv-path (concat (file-name-as-directory tqnr-dotemacs-path) "elpy"))
@@ -612,6 +592,7 @@
   ;; mode to have popup always following same rules
   ;; like popwin but just add constraint to popup not replace the whole thing
   ;; Helm does not like popwin...
+  ;; Can be used with popper to have same behavior than popwin
   (setq tqnr-section-mode-shackle t)
 
   ;; RIPGREP
@@ -692,7 +673,7 @@
   ;; REALGUD: realgud mode
   (setq tqnr-section-mode-realgud nil)
 
-  ;; MOVE TEXT: realgud mode
+  ;; MOVE TEXT: move-text: move line/region up or down
   (setq tqnr-section-mode-move-text t)
 
   ;; GROOVY: groovy mode
@@ -714,7 +695,7 @@
   (setq tqnr-section-mode-header2 t)
 
   ;; LSP MODE: Lsp mode
-  (setq tqnr-section-mode-lsp-mode t)
+  (setq tqnr-section-mode-lsp-mode nil)
 
   ;; LUA MODE: Lua mode
   (setq tqnr-section-mode-lua-mode t)
@@ -726,10 +707,10 @@
   (setq tqnr-section-mode-matlab nil)
 
   ;; EGLOT: eglot config
-  (setq tqnr-section-mode-eglot nil)
+  (setq tqnr-section-mode-eglot t)
   (when tqnr-section-mode-eglot
     ;; Use eglot to manage ada-mode
-    (setq tqnr-section-mode-eglot-ada nil)
+    (setq tqnr-section-mode-eglot-ada t)
     ;; Use eglot to manage python-mode
     (setq tqnr-section-mode-eglot-python nil)
     ) ;; (when tqnr-section-mode-eglot
@@ -738,16 +719,16 @@
   (setq tqnr-section-mode-ivy-xref nil)
 
   ;; VERTICO: vertico: vertical list for completions
-  (setq tqnr-section-mode-vertico nil)
+  (setq tqnr-section-mode-vertico t)
 
   ;; MARGINALIA: marginalia: add info in margin of completions vertico
-  (setq tqnr-section-mode-marginalia nil)
+  (setq tqnr-section-mode-marginalia t)
 
   ;; ORDERLESS: orderless: sorting for completions
-  (setq tqnr-section-mode-orderless nil)
+  (setq tqnr-section-mode-orderless t)
 
   ;; EMBARK: embark: contextual actions everywhere
-  (setq tqnr-section-mode-embark nil)
+  (setq tqnr-section-mode-embark t)
 
   ;; CORFU: corfu: autocompletion like company - overlay list
   (setq tqnr-section-mode-corfu nil)
@@ -756,16 +737,31 @@
   (setq tqnr-section-mode-consult nil)
 
   ;; WHICH KEY: which-key: displays key bindings following entered incomplete command
-  (setq tqnr-section-mode-which-key nil)
+  (setq tqnr-section-mode-which-key t)
 
   ;; SAVEHIST: savehist: minibuffer history separate by command
-  (setq tqnr-section-mode-savehist nil)
+  (setq tqnr-section-mode-savehist t)
 
   ;; PYDOC: pydoc: show python documentation of a symbol
-  (setq tqnr-section-mode-pydoc nil)
+  (setq tqnr-section-mode-pydoc t)
 
   ;; NUMPYDOC: numpydoc: insert numpy documentation
-  (setq tqnr-section-mode-numpydoc nil)
+  (setq tqnr-section-mode-numpydoc t)
+
+  ;; GPR MODE: gpr-mode: major mode to edit GNAT project (gpr) file
+  (setq tqnr-section-mode-gpr-mode nil)
+
+  ;; TREEMACS: treemacs: display file tree on one side
+  (setq tqnr-section-mode-treemacs t)
+
+  ;; VUNDO: treemacs: display file tree on one side
+  (setq tqnr-section-mode-vundo t)
+
+  ;; POPPER: popper: display buffer as popup (popwin alternative)
+  (setq tqnr-section-mode-popper t)
+
+  ;; BURLY: burly: manage frames, windows and buffers
+  (setq tqnr-section-mode-burly nil)
 
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (setq tqnr-section-mode-diminish nil)
@@ -857,6 +853,14 @@
     ;; tab for indentation in java
     (setq tqnr-profile-java-indent-with-tab t)
     ) ;; (when tqnr-section-languages-java
+  ;;
+  ;; JSON
+  ;;   set indentation style
+  (setq tqnr-section-languages-json t)
+  (when tqnr-section-languages-json
+    ;; number of space for indentation in json
+    (setq tqnr-profile-json-indent-offset 2)
+    ) ;; (when tqnr-section-languages-json
   ) ;; (when tqnr-section-languages
 
 ;; SELECTION: selection can be kill + selection is highlight + kill->copy in read only
@@ -947,7 +951,7 @@
     ;; nice can use any variant of this open source font (by example slashed zero, dot zero, empty zero)
     ;; see https://be5invis.github.io/Iosevka/ for more settings
     ;;
-    (setq tqnr-profile-font "Iosevka Term-9")
+    (setq tqnr-profile-font "Iosevka Nerd Font Mono-10")
     ;; ANTIALIAS: set antialiasing on font rendering
     (setq tqnr-section-display-font-antialias t)
     ) ;; (when tqnr-section-display-font
@@ -965,10 +969,14 @@
     ;; COLOR THEME: set color by color-theme mode (or manual settings nil)
     (setq tqnr-section-display-color-theme t)
     ;; theme to be used, do not use it with terminal
-    ;;(setq tqnr-profile-color-theme "solarized-light")
-    ;;(setq tqnr-profile-color-theme "gruvbox-dark-hard")
-    ;;(setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; almost perfect (need to custom powerline color)
-    (setq tqnr-profile-color-theme "sanityinc-tomorrow-dark") ;; use custom theme see function-to-call-after-loading-conf
+    ;; (setq tqnr-profile-color-theme "solarized-light")
+    ;;(setq tqnr-profile-color-theme "labburn")
+    ;(setq tqnr-profile-color-theme "gruvbox-dark-hard")
+    ;; useful to not have bold or italic in doom theme
+    (custom-set-variables
+      '(doom-themes-enable-bold nil)
+      '(doom-themes-enable-italic nil)
+      )
     ;; ANSI COLOR COMPILE WINDOW: have color and no more junk like this ^[[32m
     (setq tqnr-section-display-color-ansi-color-compile t)
     ;; HIGHLIGHT CURRENT LINE: have current line highlighted
@@ -976,10 +984,10 @@
     ) ;; (when tqnr-section-display-color
 
   ;; COLOR THEME GRUVBOX: Gruvbox theme config
-  (setq tqnr-section-display-color-theme-gruvbox nil)
+  (setq tqnr-section-display-color-theme-gruvbox t)
 
   ;; COLOR THEME SANITYINC TOMORROW: Sanityinc Tomorrow theme config
-  (setq tqnr-section-display-color-theme-sanityinc-tomorrow t)
+  (setq tqnr-section-display-color-theme-sanityinc-tomorrow nil)
   ) ;; (when tqnr-section-display
 
 ;; INTERFACE: modification of GNU Emacs interface, size, title, decoration...

@@ -1,6 +1,6 @@
 ;;; 02-mode-018-dired-plus.el --- configuration of dired+ mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2017-2024 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.3
+;; Version: 0.4
 ;; Created: July 2017
-;; Last-Updated: April 2020
+;; Last-Updated: March 2024
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 
 ;;; Code:
 (use-package dired+
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins"))
+
   :bind (:map dired-mode-map
           ;; open with default associated application
           ("H-RET" . dired-w32-browser)
@@ -45,7 +47,8 @@
 
   :init
   ;; to have only one dired buffer by dired instance
-  (toggle-diredp-find-file-reuse-dir t))
+  ;(toggle-diredp-find-file-reuse-dir t)
+  )
 
 
 (provide '02-mode-018-dired-plus)

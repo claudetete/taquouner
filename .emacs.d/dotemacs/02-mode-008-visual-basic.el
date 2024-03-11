@@ -1,6 +1,6 @@
 ;;; 02-mode-008-visual-basic.el --- configuration of vba mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2017-2020 Claude Tete
+;; Copyright (c) 2017-2024 Claude Tete
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.2
+;; Version: 0.3
 ;; Created: July 2017
-;; Last-Updated: April 2020
+;; Last-Updated: March 2024
 
 ;;; Commentary:
 ;;
@@ -35,6 +35,8 @@
 ;;; VISUAL BASIC
 ;; syntax color for sources in VB and VBA
 (use-package visual-basic-mode
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins"))
+  
   :mode "\\.\\(frm\\|bas\\|cls\\)\\'")
 
 

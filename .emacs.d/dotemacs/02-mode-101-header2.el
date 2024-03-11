@@ -1,6 +1,6 @@
 ;;; 02-mode-101-header2.el --- configuration of header2 mode -*- lexical-binding: t -*-
 
-;; Copyright (c) 2020-2021 Claude TETE
+;; Copyright (c) 2020-2024 Claude TETE
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -19,9 +19,9 @@
 ;;
 
 ;; Author: Claude Tete <claude.tete@gmail.com>
-;; Version: 0.5
+;; Version: 0.6
 ;; Created: April 2020
-;; Last-Updated: January 2021
+;; Last-Updated: March 2024
 
 ;;; Commentary:
 ;;
@@ -31,6 +31,8 @@
 
 ;;; Code:
 (use-package header2
+  :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins"))
+  
   :bind
   ("C-x M-s" . update-file-header)
 
