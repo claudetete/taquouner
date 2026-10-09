@@ -147,7 +147,9 @@
                           ;; minor mode
                           ;;(powerline-minor-modes face-between 'l)
                           (powerline-raw " [" face-between)
-                          (powerline-raw (projectile-project-name) face-project)
+                          (if tqnr-section-mode-projectile
+                            (powerline-raw (projectile-project-name) face-project)
+                            (powerline-raw (file-name-nondirectory (directory-file-name (file-name-directory (project-root (project-current))))) face-project))
                           (powerline-raw "]" face-between)
                           ;; narrow mode
                           (powerline-narrow face-between 'l)

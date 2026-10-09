@@ -34,25 +34,35 @@
   :ensure t
 
   :bind (("<f2>" . popper-toggle)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
+         ("M-1"   . popper-cycle))
 
   :init
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$"
+          "*Backtrace*"
           "\\*Async Shell Command\\*"
           helpful-mode
           help-mode
           compilation-mode
           magit-status-mode
-          "\\*helm-ag\\*"))
+          "\\*helm-ag\\*"
+          "\\*EGLOT LSP Hierarchy\\*"
+          "\\*eldoc.*\\*"
+          "\\*xref.*\\*"
+          "\\*Warnings\\*"
+          "\\*Embark Collect Live\\*"
+          "\\*Embark Collect:.*\\*"
+          "\\*Embark Export:.*\\*"
+          ))
   (popper-mode +1)
-  (popper-echo-mode +1)
+  (popper-echo-mode -1)
 
   :config
   ;; only display the popup buffer but do no always select it, let others decide it
   (setq popper-display-function #'popper-display-popup-at-bottom)
+
+  (setq popper-mode-line '(:eval (propertize "" 'face 'mode-line-emphasis)))
 
   (when tqnr-section-mode-shackle
     (setq popper-display-control nil))

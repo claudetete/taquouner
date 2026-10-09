@@ -34,20 +34,50 @@
   :ensure t
 
   :bind
-  ("C-x C-b" . consult-buffer)
-  ("M-\\"    . consult-imenu)
+  ("C-x C-b"        . consult-buffer)
+  ("M-\\"           . consult-imenu)
+  ("C-M-Y"          . consult-register)
+  ("C-S-M-<insert>" . consult-register)
+  ("M-Y"            . consult-register-load)
+  ("C-S-<insert>"   . consult-register-load)
+  ("M-W"            . consult-register-store)
+  ("<M-f3>"         . consult-ripgrep-dir)
 
   :config
-  (defun consult-ripgrep-dwim ()
+  (consult-customize
+   consult-ripgrep consult-git-grep consult-grep consult-man
+   consult--grep consult--ripgrep-make-builder
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   :group nil)
+
+  (defun consult-ripgrep-dir ()
+    "Run `consult-ripgrep' on a selected DIR"
     (interactive)
-    (consult-ripgrep (file-name-directory buffer-file-name)))
+    (let ((string (if (use-region-p)
+                      (thing-at-point 'region)
+                    (thing-at-point 'symbol)))
+          (dir (list (read-directory-name "Run consult-ripgrep in directory: " nil "" t))))
+      (consult-ripgrep dir string)))
   )
 
 ;; (use-package consult-projectile
 ;;   :ensure t)
 
 (use-package consult-eglot
-  :ensure t)
+  :ensure t
+  :config
+  ;; use consult for xref buffer
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref)
+  )
+
+;; (use-package consult-xref-stack
+;;   :vc
+;;   (:url "https://github.com/brett-lempereur/consult-xref-stack" :branch "main")
+;;   :bind
+;;   (("C-," . consult-xref-stack-backward)))
 
 (use-package consult-compile-command
   :load-path (lambda () (concat (file-name-as-directory tqnr-dotemacs-path) "plugins/"))
@@ -62,6 +92,7 @@
   ;; stop scrolling compilation at first error
   (setq compilation-scroll-output 'first-error)
   )
+
 
 (provide '02-mode-113-consult)
 

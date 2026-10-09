@@ -33,7 +33,15 @@
 ;; close the current buffer
 ;; M-` can be used by cinnamon desktop, to disable:
 ;; $ gsettings set org.cinnamon.desktop.keybindings.wm switch-group []
-(global-set-key         (kbd "M-`")             'kill-this-buffer)
+(defun kill-current-buffer-when-using-popper-mode ()
+  (interactive)
+  (if popper-open-popup-alist
+      (if (eq (buffer-name (cdr (car popper-open-popup-alist))) (buffer-name (current-buffer)))
+          (popper-kill-latest-popup)
+        (kill-current-buffer))
+    (kill-current-buffer))
+  )
+(global-set-key         (kbd "M-`")             #'kill-current-buffer-when-using-popper-mode)
 ;;
 ;; show a list of buffers in a new window (overrided when helm-buffer-list is used)
 (when (not (or tqnr-section-mode-helm-buffers-list tqnr-section-mode-consult))

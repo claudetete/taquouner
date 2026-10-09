@@ -770,6 +770,12 @@
   ;; BURLY: burly: manage frames, windows and buffers
   (defvar tqnr-section-mode-burly nil)
 
+  ;; ALERT: alert: manage desktop alert/notification/toast
+  (defvar tqnr-section-mode-alert nil)
+
+  ;; BLACKEN: blacken: mode for black, the uncompromising Python code formatter
+  (defvar tqnr-section-mode-blacken nil)
+
   ;; DIMINISH: shrink major and minor mode name in the modeline
   (defvar tqnr-section-mode-diminish nil)
   ) ;; (progn ;; tqnr-section-mode

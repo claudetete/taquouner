@@ -26,7 +26,7 @@
 ;;; Commentary:
 ;;
 ;; [SUBHEADER.Project management, filtered find-file, only with root file from version control]
-;; [SUBDEFAULT.t]
+;; [SUBDEFAULT.nil]
 
 
 ;;; Code:

@@ -93,7 +93,9 @@
        (tqnr-ada-pretty-print-buffer-name       :align t               :size 0.3)
        ("\\s-*\\*helpful.*\\*\\s-*"             :align t     :regexp t)
        ("\\s-*\\*i?pdb.*\\*\\s-*"               :align t     :regexp t)
-       ("\\s-*\\*Embark .*\\*\\s-*"             :align t     :regexp t :size 0.5)
+       ("\\s-*\\*Embark Actions.*"              :align t     :regexp t :size 0.5 :select t)
+       ("\\s-*\\*Embark Collect:.*"             :align t     :regexp t :size 0.25 :select t)
+       ("\\s-*\\*Embark Export:.*"              :align t     :regexp t :size 0.25 :select t)
        ;; use 25% at bottom
        ;; all helm buffer
        ("\\`\\*helm.*?\\*\\'"                   :align t     :regexp t :size 0.25)
@@ -101,6 +103,10 @@
        ("\\`\\*Helm.*?\\*\\'"                   :align t     :regexp t :size 0.25)
        ;;
        ;("\\`\\*Embark.*?\\*\\'"                :align t     :regexp t :size 0.25)
+       ("*EGLOT LSP Hierarchy*"                 :align t               :size 0.3 :select t)
+       ("\\s-*\\*eldoc.*\\*\\s-*"               :align t     :regexp t)
+       ("\\s-*\\*xref\\*\\s-*"                  :align t     :regexp t)
+       ("*Warnings*"                            :align t)
        ))
   ) ;; (use-package shackle
 

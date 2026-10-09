@@ -190,7 +190,7 @@ With a prefix argument, show the outgoing call hierarchy."
 	(eglot--dbind
 	    (name direction uri selectionRange) (plist-get node :item)
 	  (insert-text-button
-	   name
+	   (concat name "  \t(" (file-relative-name (eglot--uri-to-path uri) (file-name-concat (project-root (project-current)) "components")) ")")
 	   :type 'eglot-hierarchy-file-button
 	   'action
 	   (lambda (btn)

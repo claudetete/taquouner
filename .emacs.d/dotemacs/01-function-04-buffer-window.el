@@ -284,8 +284,8 @@ middle"
             (ecb-toggle-compile)
             ;; else close current window containing special buffer
             (if tqnr-section-mode-popwin
-              ;; when popwin is used
-              (popwin:close-popup-window)
+                ;; when popwin is used
+                (popwin:close-popup-window)
               ;; otherwise delete window
               (delete-window)))
           ;; special buffer in a window but not selected so select this window
@@ -300,8 +300,10 @@ middle"
             (progn
               (popwin:display-buffer buffer)
               (popwin:select-popup-window))
-            ;; show special buffer using built-in switch
-            (switch-to-buffer buffer)))
+            (if tqnr-section-mode-shackle
+                (display-buffer buffer)
+              ;; show special buffer using built-in switch
+              (switch-to-buffer buffer))))
         )
       )
     )
@@ -315,9 +317,17 @@ middle"
   (if (get-buffer "*ack*")
     (toggle-special-buffer "*ack*")
     (if (get-buffer "*helm-ag*")
-      (helm-resume "*helm-ag*")
-      (toggle-special-buffer "*grep*")))
-  )
+        (helm-resume "*helm-ag*")
+      (let ((buffer (get-buffer-regexp "\\*Embark Export:.*\\*")))
+        (if buffer
+            (toggle-special-buffer (buffer-name buffer))
+            (toggle-special-buffer "*grep*"))))))
+
+(defun get-buffer-regexp (regexp)
+  "Return the first buffer whose name matches REGEXP."
+  (seq-find (lambda (buf)
+              (string-match-p regexp (buffer-name buf)))
+            (buffer-list)))
 
 ;; go to the compilation buffer in special window
 (defun toggle-compilation-buffer ()
