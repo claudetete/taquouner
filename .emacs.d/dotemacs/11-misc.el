@@ -102,6 +102,11 @@
 (add-to-list 'backup-directory-alist
   (cons tramp-file-name-regexp nil))
 
+;;;; add smb into gvfs TRAMP management
+;;(customize-set-variable 'tramp-gvfs-enabled t)
+;;(add-to-list 'tramp-gvfs-methods "smb")
+;;(customize-set-variable 'tramp-smb-method nil)
+
 ;; [COMMENT.]
 ;; [VARCOMMENT.WEB: set browser to open url]
 ;; [VARIABLE.tqnr-profile-browser "firefox"]

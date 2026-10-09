@@ -38,7 +38,6 @@
 ;; ]]
 ;; [VARIABLE.tqnr-section-mode-markdown-github t]
 (if tqnr-section-mode-markdown-github
-  (use-package markdown-mode :mode ("\\.md\\'" . gfm-mode))
   (use-package markdown-mode
     :mode
     ("\\.md\\'" . markdown-mode)

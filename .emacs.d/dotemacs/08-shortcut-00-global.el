@@ -56,26 +56,26 @@
 ;; add a new line whitout jump on it
 (global-set-key         (kbd "<S-return>")      'open-line)
 ;; join next line with the current and remove space between except one
-(global-set-key         (kbd "<C-S-return>")      (lambda ()
-                                                    (interactive)
-                                                    (move-end-of-line nil)
-                                                    (next-line)
-                                                    (join-line)
-                                                    (just-one-space 0)
-                                                    ))
+(defun join-line-with-next ()
+  (interactive)
+  (move-end-of-line nil)
+  (next-line)
+  (join-line)
+  (just-one-space 0))
+(global-set-key         (kbd "<C-S-return>")      #'join-line-with-next)
 ;; new line but from anywhere on the previous line
-(global-set-key         (kbd "<M-return>")      (lambda ()
-                                                  (interactive)
-                                                  (end-of-line)
-                                                  (newline)
-                                                  ))
+(defun newline-after ()
+  (interactive)
+  (end-of-line)
+  (newline))
+(global-set-key         (kbd "C-x <M-return>")      #'newline-after)
 
 ;; new line but from anywhere on the next line
-(global-set-key         (kbd "<C-M-return>")    (lambda ()
-                                                  (interactive)
-                                                  (move-beginning-of-line nil)
-                                                  (open-line 1)
-                                                  ))
+(defun newline-before ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (open-line 1))
+(global-set-key         (kbd "C-x <C-M-return>")    #'newline-before)
 
 ;; align a region following regexp
 (global-set-key         (kbd "C-c a a")         'align)
@@ -90,6 +90,9 @@
 
 ;; switch between others header/source files
 (global-set-key         (kbd "<C-f4>")          'ff-find-other-file)
+
+;; browse file at cursor
+(global-set-key         (kbd "C-x f")           #'ffap)
 
 ;; fill paragraph at point
 (global-set-key         (kbd "C-c ]")           'fill-paragraph)
@@ -115,9 +118,10 @@
 (global-set-key         (kbd "C-c i")           'insert-register)
 
 ;; kill backward a line (like C-u C-k)
-(global-set-key         (kbd "<C-backspace>")   (lambda ()
-                                                  (interactive)
-                                                  (kill-line -1)))
+(defun kill-line-before ()
+  (interactive)
+  (kill-line -1))
+(global-set-key         (kbd "<C-backspace>")   #'kill-line-before)
 
 ;; cua rectangle, kill will do cua copy
 (eval-after-load "cua-rect"
@@ -173,10 +177,10 @@
 ;; completion command to `M-TAB' which is a reserved hot key under Windows.
 ;; Way to solve this: when you hit `C-TAB', the command normally bound to
 ;; `M-TAB' will be called.
-(global-set-key         (kbd "C-TAB")
-  (lambda ()
-    (interactive)
-    (call-interactively (key-binding (kbd "M-TAB")))))
+(defun bind-to-meta-tab ()
+  (interactive)
+  (call-interactively (key-binding (kbd "M-TAB"))))
+(global-set-key         (kbd "C-TAB")           #'bind-to-meta-tab)
 
 ;; bind zap-to-char because I use M-z
 (global-set-key         (kbd "H-z")             'zap-to-char)
@@ -185,11 +189,15 @@
 (global-set-key         (kbd "<C-M-prior>")     'backward-page)
 (global-set-key         (kbd "<C-M-next>")      'forward-page)
 
-;; yank menu in popup
-(global-set-key         (kbd "C-M-y")           (lambda ()
-                                                  (interactive)
-                                                  (popup-menu 'yank-menu)))
+;; ;; yank menu in popup
+;; (global-set-key         (kbd "C-M-y")           (lambda ()
+;;                                                   (interactive)
+;;                                                   (popup-menu 'yank-menu)))
 
+;; use latest functions from emacs 28 to replace undo-fu
+(when (or (not tqnr-section-mode-undo-fu) (not tqnr-section-mode-undo-tree))
+  (global-set-key       (kbd "C-_")             'undo-only)
+  (global-set-key       (kbd "M-_")             'undo-redo))
 
 ;;
 ;;; ALIAS

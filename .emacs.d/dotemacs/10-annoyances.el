@@ -61,6 +61,10 @@
 (global-set-key (kbd "<C-prior>") 'ignore)
 
 ;;
+;; do not use Monospace font family: the default is already a monospace
+(set-face-attribute 'fixed-pitch nil :family 'unspecified)
+
+;;
 ;; no more dialog boxes
 (setq use-dialog-box nil)
 ;;
