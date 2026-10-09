@@ -38,7 +38,14 @@
 
   ;;:custom
   ;; too much bug
-  ;(undo-fu-allow-undo-in-region t)
+                                        ;(undo-fu-allow-undo-in-region t)
+  :config
+  ;; 64mb
+  (setq undo-limit 67108864)
+  ;; 96mb
+  (setq undo-strong-limit 100663296)
+  ;; 960mb
+  (setq undo-outer-limit 1006632960)
   ) ;; (use-package undo-fu
 
 
