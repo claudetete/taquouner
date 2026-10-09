@@ -102,62 +102,60 @@
 ;; outline support
 (defvar fitnesse-mode-outline-regexp "\\!\\*+")
 
-(defconst fitnesse-mode-font-lock-keyword
-  (list
+
+(defvar fitnesse-mode-font-lock-keyword
+  `(
     ;; comment
     ;; '("^\\s-*\\(#.*\\)$"
     ;;    (1 font-lock-comment-face nil t))
     ;; code multiline
-    '("^\\s-*\\({{{\\(.\\|\n\\)*?}}}\\)"
-       (1 font-lock-comment-face nil t))
+    ("^\\s-*\\({{{\\(.\\|\n\\)*?}}}\\)"
+     (1 font-lock-comment-face nil t))
     ;; collapsable section start
-    '("^\\s-*\\(!\\*+[><]?\\)\\s-*\\(.*\\)\\s-*$"
-       (1 font-lock-keyword-face nil t) (2 font-lock-string-face nil t))
+    ("^\\s-*\\(!\\*+[><]?\\)\\s-*\\(.*\\)\\s-*$"
+     (1 font-lock-keyword-face nil t) (2 font-lock-string-face nil t))
     ;; collapsable section end
-    '("^\\s-*\\(\\*+!\\)"
-       (1 font-lock-keyword-face nil t))
-    ;; collapsable section end
-    '("^\\s-*\\(\\*+!\\)"
-       (1 font-lock-keyword-face nil t))
+    ("^\\s-*\\(\\*+!\\)"
+     (1 font-lock-keyword-face nil t))
     ;; headers
-    '("^\\s-*\\(![1-9]\\)\\(.*\\)$"
-       (1 font-lock-keyword-face nil t) (2 font-lock-string-face nil t))
+    ("^\\s-*\\(![1-9]\\)\\(.*\\)$"
+     (1 font-lock-keyword-face nil t) (2 font-lock-string-face nil t))
     ;; image
-    '("^\\s-*\\(!img\\(?:-[rl]\\)?\\)"
-       (1 font-lock-keyword-face nil t))
+    ("^\\s-*\\(!img\\(?:-[rl]\\)?\\)"
+     (1 font-lock-keyword-face nil t))
     ;; note
-    '("^\\s-*\\(!note\\)\\(.*\\)$"
-       (1 font-lock-keyword-face nil t) (2 font-lock-comment-face nil t))
+    ("^\\s-*\\(!note\\)\\(.*\\)$"
+     (1 font-lock-keyword-face nil t) (2 font-lock-comment-face nil t))
     ;; function
-    '("^\\s-*!|\\s-*\\([A-Za-z0-9_]*\\)\\s-*|"
-       (1 font-lock-function-name-face nil t))
+    ("^\\s-*!|\\s-*\\([A-Za-z0-9_]*\\)\\s-*|"
+     (1 font-lock-function-name-face nil t))
     ;; define
-    '("^\\s-*\\(!define\\)"
-       (1 font-lock-keyword-face nil t))
+    ("^\\s-*\\(!define\\)"
+     (1 font-lock-keyword-face nil t))
     ;; style_code
-    '("\\(!style_\\(?:code\\|note\\)\\)\\[\\(.*?\\)\\]"
-       (1 font-lock-variable-name-face nil t) (2 font-lock-comment-face nil t))
+    ("\\(!style_\\(?:code\\|note\\)\\)\\[\\(.*?\\)\\]"
+     (1 font-lock-variable-name-face nil t) (2 font-lock-comment-face nil t))
     ;; bold and italics
-    '("\\('''?.*?'?''\\)"
-       (1 font-lock-type-face nil t))
+    ("\\('''?.*?'?''\\)"
+     (1 font-lock-type-face nil t))
     ;; strike
-    '("\\(--.*?--\\)"
-       (1 font-lock-type-face nil t))
+    ("\\(--.*?--\\)"
+     (1 font-lock-type-face nil t))
     ;; variable
-    '("\\(\\$\\(?:{[A-Za-z0-9_]*?\\b}\\|[A-Za-z0-9_]*\\b\\)\\)"
-       (1 font-lock-variable-name-face nil t))
+    ("\\(\\$\\(?:{[A-Za-z0-9_]*?\\b}\\|[A-Za-z0-9_]*\\b\\)\\)"
+     (1 font-lock-variable-name-face nil t))
     ;; converter
-    '("\\(\\b[A-Za-z0-9]*:\\)"
-       (1 font-lock-keyword-face nil t))
+    ("\\(\\b[A-Za-z0-9]*:\\)"
+     (1 font-lock-keyword-face nil t))
     ;; link
-    '("[^\\.<A-Za-z0-9]\\(\\(?:[\\.<][A-Z][a-zA-Z0-9]*\\)\\(?:\\.[A-Z][a-zA-Z0-9]*\\)*\\(#[0-9]\\)*\\)"
-       (1 font-lock-preprocessor-face nil t))
+    ("[^\\.<A-Za-z0-9]\\(\\(?:[\\.<][A-Z][a-zA-Z0-9]*\\)\\(?:\\.[A-Z][a-zA-Z0-9]*\\)*\\(#[0-9]\\)*\\)"
+     (1 font-lock-preprocessor-face nil t))
     ;; text
-    '("^\\s-*\\([^!|\\*].*\\)$"
-       (1 font-lock-string-face nil t))
+    ("^\\s-*\\([^!|\\*].*\\)$"
+     (1 font-lock-string-face nil t))
     ;; constant
-    '("\\b\\([NEWS]?[0-9\\.]\\{1,\\}\\)\\b"
-       (1 font-lock-constant-face nil t))
+    ("\\b\\([NEWS]?[0-9\\.]\\{1,\\}\\)\\b"
+     (1 font-lock-constant-face nil t))
     )
   "Keyword for fitnesse-mode.")
 
@@ -187,32 +185,51 @@
 ;;;; FUNCTION (interactive)
 
 ;;;###autoload
-(defun fitnesse-mode ()
+(define-derived-mode fitnesse-mode prog-mode "FitNesse"
   "Major mode for editing FitNesse wiki files."
-  (interactive)
-  ;; empty environment
-  (kill-all-local-variables)
-  ;; set major mode
-  (setq major-mode 'fitnesse-mode)
-  ;; set name mode
-  (setq mode-name "FitNesse")
-  ;; set comment character
-  ;;(set (make-local-variable 'comment-start) "# ")
-  ;;(set (make-local-variable 'comment-end)   "")
+  ;; Set up font-lock
+  (setq font-lock-defaults '(fitnesse-mode-font-lock-keyword))
+  ;; (setq-local comment-start "#")
+  ;; (setq-local comment-start-skip "#+[\t ]*")
   ;; set key binding
   (use-local-map fitnesse-mode-map)
-  ;; Set up font-lock
-  (make-local-variable 'font-lock-defaults)
-  (setq font-lock-defaults '(fitnesse-mode-font-lock-keyword nil t nil))
   ;; set syntax table (character meanings)
   (set-syntax-table fitnesse-mode-syntax-table)
   ;; outline
   (set (make-local-variable 'outline-regexp) 'fitnesse-mode-outline-regexp)
   ;; show image using builtin iimage mode
   (iimage-mode t)
-  ;(set-buffer-file-coding-system "utf-8")
   ;; run history mode hook
-  (run-hooks 'text-mode-hook 'fitnesse-mode-hook))
+  (run-hooks 'text-mode-hook 'fitnesse-mode-hook)
+  )
+
+;; ;;;###autoload
+;; (defun fitnesse-mode ()
+;;   "Major mode for editing FitNesse wiki files."
+;;   (interactive)
+;;   ;; empty environment
+;;   (kill-all-local-variables)
+;;   ;; set major mode
+;;   (setq major-mode 'fitnesse-mode)
+;;   ;; set name mode
+;;   (setq mode-name "FitNesse")
+;;   ;; set comment character
+;;   ;;(set (make-local-variable 'comment-start) "# ")
+;;   ;;(set (make-local-variable 'comment-end)   "")
+;;   ;; set key binding
+;;   (use-local-map fitnesse-mode-map)
+;;   ;; Set up font-lock
+;;   (make-local-variable 'font-lock-defaults)
+;;   (setq font-lock-defaults '(fitnesse-mode-font-lock-keyword nil t nil))
+;;   ;; set syntax table (character meanings)
+;;   (set-syntax-table fitnesse-mode-syntax-table)
+;;   ;; outline
+;;   (set (make-local-variable 'outline-regexp) 'fitnesse-mode-outline-regexp)
+;;   ;; show image using builtin iimage mode
+;;   (iimage-mode t)
+;;   ;(set-buffer-file-coding-system "utf-8")
+;;   ;; run history mode hook
+;;   (run-hooks 'text-mode-hook 'fitnesse-mode-hook))
 
 (defun fitnesse-goto-link ()
   "Open link at point"

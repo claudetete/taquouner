@@ -55,22 +55,38 @@
         (string= file ".svn")))
   (add-to-list 'treemacs-ignored-file-predicates #'treemacs-ignore-files)
 
-  (defun treemacs-expand-or-goto- ()
+  (defun treemacs-expand-or-go-down (arg)
     (interactive "P")
-    (treemacs-do-for-button-state
-     :on-root-node-open   (treemacs--collapse-root-node btn arg)
-     :on-dir-node-open    (treemacs--collapse-dir-node btn arg)
-     :on-dir-node-closed  (treemacs-goto-parent-node)
-     :on-file-node-open   (treemacs--collapse-file-node btn arg)
-     :on-file-node-closed (treemacs-goto-parent-node)
-     :on-tag-node-open    (treemacs--collapse-tag-node btn arg)
-     :on-tag-node-closed  (treemacs-goto-parent-node)
-     :on-tag-node-leaf    (treemacs-goto-parent-node)
-     :fallback            (treemacs-TAB-action)))
+    (if-let* ((btn (treemacs-current-button)))
+        (treemacs-do-for-button-state
+         :on-root-node-open   (treemacs-next-line 1)
+         :on-root-node-closed (treemacs--expand-root-node btn :recursive arg)
+         :on-dir-node-open    (treemacs-next-line 1)
+         :on-dir-node-closed  (treemacs--expand-dir-node btn :recursive arg)
+         :on-file-node-open   (treemacs-next-line 1)
+         :on-file-node-closed (treemacs--expand-file-node btn :recursive arg)
+         :on-tag-node-open    (treemacs-next-line 1)
+         :on-tag-node-closed  (treemacs--expand-tag-node btn :recursive arg)
+         :fallback            (treemacs-pulse-on-failure "There is nothing to do here."))))
+
+  (defun treemacs-collapse-or-parent (arg)
+    (interactive "P")
+    (if-let* ((btn (treemacs-current-button)))
+        (treemacs-do-for-button-state
+         :on-root-node-open   (treemacs--collapse-root-node btn arg)
+         :on-root-node-closed (treemacs-pulse-on-failure "There is nothing to do here.")
+         :on-dir-node-open    (treemacs--collapse-dir-node btn arg)
+         :on-dir-node-closed  (treemacs-goto-parent-node)
+         :on-file-node-open   (treemacs--collapse-file-node btn arg)
+         :on-file-node-closed (treemacs-goto-parent-node)
+         :on-tag-node-open    (treemacs--collapse-tag-node btn arg)
+         :on-tag-node-closed  (treemacs-goto-parent-node)
+         :on-tag-node-leaf    (treemacs-goto-parent-node)
+         :fallback            (treemacs-TAB-action))))
 
   :custom
   ;; configure default width
-  (treemacs-width 40)
+  (treemacs-width 75)
   ;; enable resizing
   (treemacs-width-is-initially-locked nil)
   ;; close treemacs when the window is selected and call `treemacs-select-window'
@@ -83,8 +99,11 @@
   ("M-1" . treemacs-select-window)
   (:map treemacs-mode-map
         ;; collapse when opened, goto parent when closed
-        ("<left>"  . treemacs-COLLAPSE-action)
-        ("<right>" . treemacs-goto-parent-node)
+        ("<left>"  . treemacs-collapse-or-parent)
+        ("<right>" . treemacs-expand-or-go-down)
+        ("M-1"     . treemacs-quit)
+        ("<prior>" . scroll-down-command)
+        ("<next>"  . scroll-up-command)
         )
   ;; ("C-<f9>" . my/treemacs-find-file)
   )

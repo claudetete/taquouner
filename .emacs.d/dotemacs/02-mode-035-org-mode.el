@@ -59,6 +59,9 @@
   ;; to use ido to do completion for org mode
   (setq org-completion-use-ido t)
 
+  ;; do not put same color than DONE for the rest of the line
+  (setq org-fontify-done-headline nil)
+
   ;; [VARCOMMENT.first buffer to show up is default org file when opening emacs]
   ;; [VARIABLE.tqnr-section-mode-org-default-as-init-buffer t]
   (when tqnr-section-mode-org-default-as-init-buffer
@@ -113,12 +116,27 @@
     (interactive "P")
     )
 
+  ;; to add ditaa dot (graphviz) plantuml inline
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((ditaa . t)
+     (dot . t)
+     (plantuml . t)))
+
+  :custom
+  (org-edit-src-content-indentation 0)
+  (org-plantuml-jar-path "/usr/share/java/plantuml.jar")
+  ;; Do not ask before evaluating a code block
+  (org-confirm-babel-evaluate nil)
+
   :hook
   ;; Make windmove work in org-mode:
   (org-shiftup-final    . windmove-up)
   (org-shiftleft-final  . windmove-left)
   (org-shiftdown-final  . windmove-down)
   (org-shiftright-final . windmove-right)
+
+  (org-babel-after-execute . org-redisplay-inline-images)
 
   :bind (
           ;; to add from everywhere a note/todo into default org file `org-default-notes-file'
