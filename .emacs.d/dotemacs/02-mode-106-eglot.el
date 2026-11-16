@@ -49,40 +49,41 @@
        ;; Ignore the `eglot-hover-eldoc-function' provided ":echo"
        ;; cookie in order to display multi-line documentation.
        (funcall (car r) info))))
-  ;; Workaround completion issues
-  (defun init.el/around-advice/eglot-completion-at-point (oldfun &rest _)
-    (when (or (null init.el/completion-lsp-disallowed-contexts)
-              (let ((status (syntax-ppss)))
-                (seq-every-p
-                 (lambda (context)
-                   (pcase context
-                     ('comment (not (nth 4 status)))
-                     ('string  (not (nth 3 status)))
-                     (_        (error "Unknown context: %s" context))))
-                 init.el/completion-lsp-disallowed-contexts)))
-      (pcase (funcall oldfun)
-        (`(,beg ,end ,table . ,plist)
-         (let (settings case-fold-table)
-           ;; Allow next completion at point function (CAPF) specified
-           ;; in `completion-at-point-functions' to be queried when
-           ;; Language Server doesn't have any completions at point.
-           (setq settings (append settings '(:exclusive no)))
-           ;; When configured, prevent LSP trigger characters from
-           ;; initiating completion before hitting the threshold
-           ;; specified by `init.el/completion-minimum-prefix-length'.
-           (unless init.el/completion-lsp-allow-trigger-chars
-             (setq settings (append settings '(:company-prefix-length nil))))
-           ;; Perform case folding when matching against completion results
-           (setq case-fold-table (completion-table-case-fold table))
-           `(,beg ,end ,case-fold-table ,@settings ,@plist))))))
+
+  ;; ;; Workaround completion issues ??
+  ;; (defun init.el/around-advice/eglot-completion-at-point (oldfun &rest _)
+  ;;   (when (or (null init.el/completion-lsp-disallowed-contexts)
+  ;;             (let ((status (syntax-ppss)))
+  ;;               (seq-every-p
+  ;;                (lambda (context)
+  ;;                  (pcase context
+  ;;                    ('comment (not (nth 4 status)))
+  ;;                    ('string  (not (nth 3 status)))
+  ;;                    (_        (error "Unknown context: %s" context))))
+  ;;                init.el/completion-lsp-disallowed-contexts)))
+  ;;     (pcase (funcall oldfun)
+  ;;       (`(,beg ,end ,table . ,plist)
+  ;;        (let (settings case-fold-table)
+  ;;          ;; Allow next completion at point function (CAPF) specified
+  ;;          ;; in `completion-at-point-functions' to be queried when
+  ;;          ;; Language Server doesn't have any completions at point.
+  ;;          (setq settings (append settings '(:exclusive no)))
+  ;;          ;; When configured, prevent LSP trigger characters from
+  ;;          ;; initiating completion before hitting the threshold
+  ;;          ;; specified by `init.el/completion-minimum-prefix-length'.
+  ;;          (unless init.el/completion-lsp-allow-trigger-chars
+  ;;            (setq settings (append settings '(:company-prefix-length nil))))
+  ;;          ;; Perform case folding when matching against completion results
+  ;;          (setq case-fold-table (completion-table-case-fold table))
+  ;;          `(,beg ,end ,case-fold-table ,@settings ,@plist))))))
 
   :init
   (advice-add 'eglot--format-markup
               :filter-return #'init.el/fix-eol/eglot--format-markup)
   (advice-add 'eglot-hover-eldoc-function
               :filter-args #'init.el/multiline/eglot-hover-eldoc-function)
-  (advice-add 'eglot-completion-at-point
-              :around #'init.el/around-advice/eglot-completion-at-point)
+  ;; (advice-add 'eglot-completion-at-point
+  ;;             :around #'init.el/around-advice/eglot-completion-at-point)
 
   :config
   ;; [VARCOMMENT.Use eglot to manage ada-mode]
@@ -128,7 +129,7 @@
 
   ;; disable Eglot's on-type formatting
   (add-to-list 'eglot-ignored-server-capabilities :documentOnTypeFormattingProvider)
-  
+
   :custom
   ;; do not display mulitline in echo area, use
   (eldoc-echo-area-use-multiline-p nil)

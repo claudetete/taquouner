@@ -60,6 +60,22 @@
                     (thing-at-point 'symbol)))
           (dir (list (read-directory-name "Run consult-ripgrep in directory: " nil "" t))))
       (consult-ripgrep dir string)))
+
+  ;; Plug the consult with `complete-symbol`
+  (setq completion-in-region-function #'consult-completion-in-region)
+
+  ;; from Gemini answer
+  (defun consult-completion-in-region-one-line (orig-fun &rest args)
+    "Force strict one-line candidates in `consult-completion-in-region'."
+    (let ((completions-detailed nil)
+          (completion-extra-properties
+           (plist-put
+            (plist-put (copy-sequence completion-extra-properties)
+                       :annotation-function nil)
+            :affixation-function nil)))
+      (apply orig-fun args)))
+
+  (advice-add 'consult-completion-in-region :around #'consult-completion-in-region-one-line)
   )
 
 ;; (use-package consult-projectile

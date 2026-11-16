@@ -37,7 +37,12 @@
   :init
   (setq completion-styles '(orderless basic))
   (setq completion-category-defaults nil)
-  (setq completion-category-overrides '((file (styles partial-completion)))))
+  (setq completion-category-overrides '((file (styles partial-completion))))
+
+  :config
+  (setq completion-ignore-case t)
+  (setq orderless-smart-case t)
+  )
 
 (provide '02-mode-110-orderless)
 
