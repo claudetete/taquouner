@@ -35,7 +35,7 @@
 
   :custom
   ;; add file names defining a root for project.el
-  (project-vc-extra-root-markers '(".project"))
+  (project-vc-extra-root-markers '(".project.el"))
 
   :config
   ;; use fd instead of find to search files of a project (thanks to https://codeberg.org/woolsweater/.emacs.d/src/commit/ce8620337f0d4a6249fcea39a9c4eb4d910d92bc/modules/conjecture.el#L334-L345)
